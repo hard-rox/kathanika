@@ -1,5 +1,6 @@
 using Serilog;
 using Serilog.Events;
+using Kathanika.Infrastructure.Persistence;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -18,6 +19,8 @@ try
             .ReadFrom.Services(services)
             .Enrich.FromLogContext();
     });
+
+    builder.Services.AddPersistence(builder.Configuration);
 
     var app = builder.Build();
 
