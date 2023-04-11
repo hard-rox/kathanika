@@ -1,13 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\Infrastructure.Services\Kathanika.Infrastructure.Services.csproj" />
-    <ProjectReference Include="..\Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\Infrastructure.GraphQL\Kathanika.Infrastructure.GraphQL.csproj" />
+    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Serilog.AspNetCore" Version="6.1.0" />
+    <ProjectReference Include="..\Application\Kathanika.Application.csproj" />
+    <ProjectReference Include="..\Domain\Kathanika.Domain.csproj" />
+    <ProjectReference Include="..\Infrastructure.GraphQL\Kathanika.Infrastructure.GraphQL.csproj" />
+    <ProjectReference Include="..\Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="..\Infrastructure.Services\Kathanika.Infrastructure.Services.csproj" />
   </ItemGroup>
 
   <PropertyGroup>

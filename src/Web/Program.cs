@@ -1,6 +1,9 @@
 using Serilog;
 using Serilog.Events;
 using Kathanika.Infrastructure.Persistence;
+using Kathanika.Domain.Aggregates.Book;
+using Microsoft.AspNetCore.Mvc;
+using Kathanika.Domain.Repositories;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
@@ -26,7 +29,18 @@ try
 
     app.UseSerilogRequestLogging();
 
-    app.MapGet("/", () => "Hello World!");
+    app.MapGet("/", ([FromServices] IBookRepository repository) =>
+    {
+        return repository.ListAllAsync();
+    });
+    app.MapGet("/add", ([FromServices] IBookRepository repository) =>
+    {
+        return repository.AddAsync(new Book(DateTime.UtcNow.ToString()));
+    });
+    app.MapGet("/add/{id}", ([FromServices] IBookRepository repository, [FromRoute] string id) =>
+    {
+        return repository.GetByIdAsync(id);
+    });
 
     app.Run();
 }
