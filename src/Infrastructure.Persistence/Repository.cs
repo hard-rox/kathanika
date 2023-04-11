@@ -10,10 +10,9 @@ internal abstract class Repository<T> : IRepository<T> where T : class
     private readonly IMongoCollection<T> _collection;
     private readonly ILogger<Repository<T>> _logger;
 
-    public Repository(IMongoDatabase database, string collectionName, ILogger<Repository<T>> logger)
+    public Repository(IMongoDatabase database, string collectionName)
     {
         _collection = database.GetCollection<T>(collectionName.ToLower());
-        _logger = logger;
     }
 
     public async Task<T> GetByIdAsync(string id)

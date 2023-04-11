@@ -35,7 +35,11 @@ try
     });
     app.MapGet("/add", ([FromServices] IBookRepository repository) =>
     {
-        return repository.AddAsync(new Book() { Name = DateTime.UtcNow.ToString()});
+        return repository.AddAsync(new Book(DateTime.UtcNow.ToString()));
+    });
+    app.MapGet("/add/{id}", ([FromServices] IBookRepository repository, [FromRoute] string id) =>
+    {
+        return repository.GetByIdAsync(id);
     });
 
     app.Run();
