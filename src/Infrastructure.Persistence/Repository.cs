@@ -10,36 +10,42 @@ internal abstract class Repository<T> : IRepository<T> where T : class
     private readonly IMongoCollection<T> _collection;
     private readonly ILogger<Repository<T>> _logger;
 
-    public Repository(IMongoDatabase database, string collectionName)
+    public Repository(IMongoDatabase database, string collectionName, ILogger<Repository<T>> logger)
     {
         _collection = database.GetCollection<T>(collectionName.ToLower());
+        _logger = logger;
     }
 
     public async Task<T> GetByIdAsync(string id)
     {
+        _logger.LogInformation("Get By Id method");
         var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
         return await _collection.Find(filter).SingleOrDefaultAsync();
     }
 
     public async Task<IReadOnlyList<T>> ListAllAsync()
     {
+        _logger.LogInformation("ListAllAsync method");
         return await _collection.Find(_ => true).ToListAsync();
     }
 
     public async Task<T> AddAsync(T entity)
     {
+        _logger.LogInformation("Add method");
         await _collection.InsertOneAsync(entity);
         return entity;
     }
 
     public async Task UpdateAsync(string id, T entity)
     {
+        _logger.LogInformation("Update method");
         var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
         await _collection.ReplaceOneAsync(filter, entity);
     }
 
     public async Task DeleteAsync(string id)
     {
+        _logger.LogInformation("Delete method");
         var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
         await _collection.DeleteOneAsync(filter);
     }

@@ -1,15 +1,8 @@
 using Serilog;
-using Serilog.Events;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Domain.Aggregates.Book;
 using Microsoft.AspNetCore.Mvc;
 using Kathanika.Domain.Repositories;
-
-Log.Logger = new LoggerConfiguration()
-    .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-    .Enrich.FromLogContext()
-    .WriteTo.Console()
-    .CreateBootstrapLogger();
 
 try
 {

@@ -1,3 +1,4 @@
+using DnsClient.Internal;
 using Kathanika.Domain.Repositories;
 using Kathanika.Infrastructure.Persistence.BsonClassMaps;
 using Kathanika.Infrastructure.Persistence.Repositories;
@@ -5,6 +6,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
+using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
 
@@ -14,17 +16,29 @@ public static class DependencyInjector
 {
     private static void AddMongoDb(this IServiceCollection services, string? connectionString)
     {
+        var conventionPack = new ConventionPack()
+        {
+            new CamelCaseElementNameConvention(),
+            new StringIdStoredAsObjectIdConvention(),
+        };
+        ConventionRegistry.Register("CamelCaseAndStringIdConventionPack", conventionPack, x => true);
+
         services.AddSingleton<IMongoDatabase>(f =>
-                {
-                    var mongoClientSettings = MongoClientSettings.FromConnectionString(connectionString);
-                    mongoClientSettings.ClusterConfigurator = cc =>
+        {
+            using var loggerFactory = LoggerFactory.Create(loggingBuilder => loggingBuilder
+    .SetMinimumLevel(Microsoft.Extensions.Logging.LogLevel.Trace);
+
+            ILogger logger = loggerFactory.CreateLogger<Program>();
+
+            var mongoClientSettings = MongoClientSettings.FromConnectionString(connectionString);
+            mongoClientSettings.ClusterConfigurator = cc =>
                     {
                         cc.Subscribe<CommandStartedEvent>(e =>
                     {
-                        Console.WriteLine($"CommandStartedEvent\t{e.OperationId}-{e.RequestId}\t{e.CommandName}\t{e.Command.ToJson()}");
-                        // Logger.LogDebug(new EventId(Convert.ToInt32(e.OperationId), nameof(CommandStartedEvent)),
-                        //  "Request ID \"{RequestId}\" MongoDB Command Started \"{CommandName}\". Command \"{Command}\"",
-                        //   e.RequestId, e.CommandName, e.Command.ToJson());
+                        //Console.WriteLine($"CommandStartedEvent\t{e.OperationId}-{e.RequestId}\t{e.CommandName}\t{e.Command.ToJson()}");
+                        logger.LogDebug(new EventId(Convert.ToInt32(e.OperationId), nameof(CommandStartedEvent)),
+                          "Request ID \"{RequestId}\" MongoDB Command Started \"{CommandName}\". Command \"{Command}\"",
+                           e.RequestId, e.CommandName, e.Command.ToJson());
                     });
                         cc.Subscribe<CommandSucceededEvent>(e =>
                         {
