@@ -7,46 +7,56 @@ namespace Kathanika.Infrastructure.Persistence;
 
 internal abstract class Repository<T> : IRepository<T> where T : class
 {
+    private readonly string _collectionName = string.Empty;
     private readonly IMongoCollection<T> _collection;
     private readonly ILogger<Repository<T>> _logger;
 
     public Repository(IMongoDatabase database, string collectionName, ILogger<Repository<T>> logger)
     {
-        _collection = database.GetCollection<T>(collectionName.ToLower());
+        _collectionName = collectionName.ToLower();
+        _collection = database.GetCollection<T>(_collectionName);
         _logger = logger;
     }
 
     public async Task<T> GetByIdAsync(string id)
     {
-        _logger.LogInformation("Get By Id method");
+        _logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
         var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
-        return await _collection.Find(filter).SingleOrDefaultAsync();
+        var document = await _collection.Find(filter).SingleOrDefaultAsync();
+        _logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", document, typeof(T).Name, _collectionName);
+        return document;
     }
 
     public async Task<IReadOnlyList<T>> ListAllAsync()
     {
-        _logger.LogInformation("ListAllAsync method");
-        return await _collection.Find(_ => true).ToListAsync();
+        _logger.LogInformation("Getting all documents of type {@DocumentType} from collection {@CollectionName}", typeof(T).Name, _collectionName);
+        var list = await _collection.Find(_ => true).ToListAsync();
+        return list;
     }
 
     public async Task<T> AddAsync(T entity)
     {
-        _logger.LogInformation("Add method");
+        _logger.LogInformation("Adding new document {@Document} of type {@DocumentType} into collection {@CollectionName}", entity, typeof(T).Name, _collectionName);
         await _collection.InsertOneAsync(entity);
+        _logger.LogInformation("Added new document with _id {@_id} of type {@DocumentType} into collection {@CollectionName}", entity.ToBsonDocument()["_id"].ToJson(), typeof(T).Name, _collectionName);
         return entity;
     }
 
     public async Task UpdateAsync(string id, T entity)
     {
-        _logger.LogInformation("Update method");
+        _logger.LogInformation("Updating document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
+        typeof(T).Name, id, _collectionName, entity);
         var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
         await _collection.ReplaceOneAsync(filter, entity);
+        _logger.LogInformation("Updated document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
+        typeof(T).Name, id, _collectionName, entity);
     }
 
     public async Task DeleteAsync(string id)
     {
-        _logger.LogInformation("Delete method");
+        _logger.LogInformation("Deleting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
         var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
         await _collection.DeleteOneAsync(filter);
+        _logger.LogInformation("Deleted document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
     }
 }
