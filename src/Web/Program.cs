@@ -12,8 +12,7 @@ try
     {
         configuration
             .ReadFrom.Configuration(context.Configuration)
-            .ReadFrom.Services(services)
-            .Enrich.FromLogContext();
+            .ReadFrom.Services(services);
     });
 
     builder.Services.AddPersistence(builder.Configuration);
@@ -26,13 +25,24 @@ try
     {
         return repository.ListAllAsync();
     });
-    app.MapGet("/add", ([FromServices] IBookRepository repository) =>
+    app.MapPost("/", ([FromServices] IBookRepository repository) =>
     {
         return repository.AddAsync(new Book(DateTime.UtcNow.ToString()));
     });
-    app.MapGet("/add/{id}", ([FromServices] IBookRepository repository, [FromRoute] string id) =>
+    app.MapGet("/{id}", ([FromServices] IBookRepository repository, [FromRoute] string id) =>
     {
         return repository.GetByIdAsync(id);
+    });
+    app.MapPut("/{id}", async ([FromServices] IBookRepository repository, [FromRoute] string id) =>
+    {
+        var entity = await repository.GetByIdAsync(id);
+        entity.Title = "Updated at: " + DateTime.UtcNow.ToString();
+        return repository.UpdateAsync(id, entity);
+    });
+
+    app.MapDelete("/{id}", ([FromServices] IBookRepository repository, [FromRoute] string id) =>
+    {
+        return repository.DeleteAsync(id);
     });
 
     app.Run();
