@@ -1,8 +1,6 @@
 using Serilog;
 using Kathanika.Infrastructure.Persistence;
-using Kathanika.Domain.Aggregates.Book;
-using Microsoft.AspNetCore.Mvc;
-using Kathanika.Domain.Repositories;
+using Kathanika.Infrastructure.GraphQL;
 
 try
 {
@@ -15,35 +13,15 @@ try
             .ReadFrom.Services(services);
     });
 
-    builder.Services.AddPersistence(builder.Configuration);
+    builder.Services.AddPersistenceInfrastructure(builder.Configuration);
+
+    builder.Services.AddGraphQLInfrastructure();
 
     var app = builder.Build();
 
     app.UseSerilogRequestLogging();
 
-    app.MapGet("/", ([FromServices] IBookRepository repository) =>
-    {
-        return repository.ListAllAsync();
-    });
-    app.MapPost("/", ([FromServices] IBookRepository repository) =>
-    {
-        return repository.AddAsync(new Book(DateTime.UtcNow.ToString()));
-    });
-    app.MapGet("/{id}", ([FromServices] IBookRepository repository, [FromRoute] string id) =>
-    {
-        return repository.GetByIdAsync(id);
-    });
-    app.MapPut("/{id}", async ([FromServices] IBookRepository repository, [FromRoute] string id) =>
-    {
-        var entity = await repository.GetByIdAsync(id);
-        entity.Title = "Updated at: " + DateTime.UtcNow.ToString();
-        return repository.UpdateAsync(id, entity);
-    });
-
-    app.MapDelete("/{id}", ([FromServices] IBookRepository repository, [FromRoute] string id) =>
-    {
-        return repository.DeleteAsync(id);
-    });
+    app.UseGraphQLInfrastructure();
 
     app.Run();
 }
