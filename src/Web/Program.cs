@@ -1,6 +1,7 @@
 using Serilog;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.GraphQL;
+using Kathanika.Application;
 
 try
 {
@@ -13,9 +14,9 @@ try
             .ReadFrom.Services(services);
     });
 
-    builder.Services.AddPersistenceInfrastructure(builder.Configuration);
-
-    builder.Services.AddGraphQLInfrastructure();
+    builder.Services.AddApplication()
+        .AddGraphQLInfrastructure()
+        .AddPersistenceInfrastructure(builder.Configuration);
 
     var app = builder.Build();
 

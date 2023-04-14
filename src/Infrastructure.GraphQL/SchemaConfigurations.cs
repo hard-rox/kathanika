@@ -25,30 +25,30 @@ internal static class SchemaConfigurations
             .AddGraphQLServer()
             //.AddAuthorization()
             .AddQueryType<Queries>();
-            //.AddMutationType<Mutations>()
-            //.AddTypes()
-            //.AddInputs()
-            //.AddProjections()
-            //.AddFiltering()
-            //.AddSorting()
-            //.ModifyRequestOptions(opt =>
-            //{
-            //    opt.IncludeExceptionDetails = true;
-            //    //opt.TracingPreference = TracingPreference.Always;
-            //})
-            //.ModifyOptions(opt =>
-            //{
-            //    opt.SortFieldsByName = true;
-            //})
-            //.SetPagingOptions(new PagingOptions
-            //{
-            //    MaxPageSize = 100,
-            //    DefaultPageSize = 10,
-            //    IncludeTotalCount = true,
-            //})
-            //.BindRuntimeType<DateTime, DateTimeType>()
-            //.BindRuntimeType<Guid, UuidType>()
-            //.InitializeOnStartup();
+        // .AddMutationType<Mutations>();
+        //.AddTypes()
+        //.AddInputs()
+        //.AddProjections()
+        //.AddFiltering()
+        //.AddSorting()
+        //.ModifyRequestOptions(opt =>
+        //{
+        //    opt.IncludeExceptionDetails = true;
+        //    //opt.TracingPreference = TracingPreference.Always;
+        //})
+        //.ModifyOptions(opt =>
+        //{
+        //    opt.SortFieldsByName = true;
+        //})
+        //.SetPagingOptions(new PagingOptions
+        //{
+        //    MaxPageSize = 100,
+        //    DefaultPageSize = 10,
+        //    IncludeTotalCount = true,
+        //})
+        //.BindRuntimeType<DateTime, DateTimeType>()
+        //.BindRuntimeType<Guid, UuidType>()
+        //.InitializeOnStartup();
     }
 
 }
