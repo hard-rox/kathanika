@@ -1,5 +1,4 @@
-﻿using Kathanika.Domain.Aggregates.Book;
-using Kathanika.Infrastructure.GraphQL.Types;
+﻿using Kathanika.Infrastructure.GraphQL.Types;
 
 namespace Kathanika.Infrastructure.GraphQL.Schema;
 
