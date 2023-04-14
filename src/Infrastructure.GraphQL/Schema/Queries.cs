@@ -1,16 +1,12 @@
-﻿using Kathanika.Infrastructure.GraphQL.Types;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.GraphQL.Schema;
 
 public class Queries
 {
-    public TestType GetBook() =>
-        new TestType()
-        {
-            Title = "C# in depth.",
-            Author = new Author()
-            {
-                Name = "Jon Skeet"
-            }
-        };
+    public async Task<IEnumerable<Author>> GetAuthors([FromServices] IMediator mediator)
+    {
+        var authors = await mediator.Send(new GetAuthorsQuery());
+        return authors;
+    }
 }

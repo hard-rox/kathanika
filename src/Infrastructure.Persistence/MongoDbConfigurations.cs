@@ -13,10 +13,10 @@ internal static class MongoDbConfigurations
     internal static void AddMongoDb(this IServiceCollection services, string? connectionString)
     {
         var conventionPack = new ConventionPack()
-    {
-        new CamelCaseElementNameConvention(),
-        new StringIdStoredAsObjectIdConvention(),
-    };
+        {
+            new CamelCaseElementNameConvention(),
+            new StringIdStoredAsObjectIdConvention(),
+        };
         ConventionRegistry.Register("CamelCaseAndStringIdConventionPack", conventionPack, x => true);
 
         services.AddSingleton<IMongoDatabase>(f =>

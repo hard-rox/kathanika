@@ -2,12 +2,7 @@ namespace Kathanika.Domain.Premitives;
 
 public abstract class Entity : IEquatable<Entity>
 {
-    public string Id { get; private init; }
-
-    protected Entity(string id)
-    {
-        Id = id;
-    }
+    public string Id { get; private init; } = string.Empty;
 
     public static bool operator == (Entity? firstObject, Entity? secondObject)
     {
