@@ -1,28 +1,32 @@
-using Kathanika.Domain;
+using Kathanika.Domain.Premitives;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Driver;
 
 namespace Kathanika.Infrastructure.Persistence;
 
-internal abstract class Repository<T> : IRepository<T> where T : class
+internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 {
     private readonly string _collectionName = string.Empty;
     private readonly IMongoCollection<T> _collection;
-    private readonly ILogger<Repository<T>> _logger;
+    private readonly ILogger<IRepository<T>> _logger;
 
-    public Repository(IMongoDatabase database, string collectionName, ILogger<Repository<T>> logger)
+    public Repository(IMongoDatabase database, string collectionName, ILogger<IRepository<T>> logger)
     {
         _collectionName = collectionName.ToLower();
         _collection = database.GetCollection<T>(_collectionName);
         _logger = logger;
     }
 
+    public IQueryable<T> Get()
+    {
+        return _collection.AsQueryable<T>();
+    }
+
     public async Task<T> GetByIdAsync(string id)
     {
         _logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
-        var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
-        var document = await _collection.Find(filter).SingleOrDefaultAsync();
+        var document = await _collection.Find(x => x.Id == id).SingleOrDefaultAsync();
         _logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", document, typeof(T).Name, _collectionName);
         return document;
     }
