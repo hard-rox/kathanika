@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
+using Kathanika.Infrastructure.GraphQL.Inputs;
 using Kathanika.Infrastructure.GraphQL.Schema;
 using Kathanika.Infrastructure.GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
@@ -10,16 +11,16 @@ internal static class SchemaConfigurations
 {
     private static IRequestExecutorBuilder AddTypes(this IRequestExecutorBuilder builder)
     {
-        return builder
-            .AddTypes(
-                typeof(AuthorType)
-            );
+        builder.AddType<AuthorType>();
+
+        return builder;
     }
 
     private static IRequestExecutorBuilder AddInputs(this IRequestExecutorBuilder builder)
     {
+        builder.AddType<CreateAuthorInput>();
+
         return builder;
-            //.AddType<EventSponsorFilterInput>();
     }
 
     internal static IRequestExecutorBuilder BuildGraphQLSchema(this IServiceCollection services)
@@ -28,9 +29,9 @@ internal static class SchemaConfigurations
             .AddGraphQLServer()
             //.AddAuthorization()
             .AddTypes()
-        //.AddInputs()
+            .AddInputs()
             .AddQueryType<Queries>()
-        // .AddMutationType<Mutations>();
+            .AddMutationType<Mutations>()
             .AddFiltering()
             .AddSorting()
             .ModifyRequestOptions(opt =>
