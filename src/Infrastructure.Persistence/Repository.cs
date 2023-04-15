@@ -9,13 +9,18 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 {
     private readonly string _collectionName = string.Empty;
     private readonly IMongoCollection<T> _collection;
-    private readonly ILogger<Repository<T>> _logger;
+    private readonly ILogger<IRepository<T>> _logger;
 
-    public Repository(IMongoDatabase database, string collectionName, ILogger<Repository<T>> logger)
+    public Repository(IMongoDatabase database, string collectionName, ILogger<IRepository<T>> logger)
     {
         _collectionName = collectionName.ToLower();
         _collection = database.GetCollection<T>(_collectionName);
         _logger = logger;
+    }
+
+    public IQueryable<T> Get()
+    {
+        return _collection.AsQueryable<T>();
     }
 
     public async Task<T> GetByIdAsync(string id)

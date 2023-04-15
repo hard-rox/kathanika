@@ -1,6 +1,6 @@
 namespace Kathanika.Application.Queries;
 
-internal class GetAuthorsQueryHandler : IRequestHandler<GetAuthorsQuery, IEnumerable<Author>>
+internal class GetAuthorsQueryHandler : IRequestHandler<GetAuthorsQuery, IQueryable<Author>>
 {
     private readonly IAuthorRepository authorRepository;
 
@@ -9,9 +9,9 @@ internal class GetAuthorsQueryHandler : IRequestHandler<GetAuthorsQuery, IEnumer
         this.authorRepository = authorRepository;
     }
 
-    public async Task<IEnumerable<Author>> Handle(GetAuthorsQuery request, CancellationToken cancellationToken)
+    public async Task<IQueryable<Author>> Handle(GetAuthorsQuery request, CancellationToken cancellationToken)
     {
-        var authors = await authorRepository.ListAllAsync();
-        return authors;
+        var authorsQuery = await Task.Run(() => authorRepository.Get());
+        return authorsQuery;
     }
 }

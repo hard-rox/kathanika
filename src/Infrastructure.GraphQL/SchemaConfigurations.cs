@@ -1,4 +1,5 @@
 ﻿using HotChocolate.Execution.Configuration;
+using HotChocolate.Types.Pagination;
 using Kathanika.Infrastructure.GraphQL.Schema;
 using Kathanika.Infrastructure.GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,20 +31,19 @@ internal static class SchemaConfigurations
         //.AddInputs()
             .AddQueryType<Queries>()
         // .AddMutationType<Mutations>();
-        //.AddProjections()
-        //.AddFiltering()
-        //.AddSorting()
+            .AddFiltering()
+            .AddSorting()
             .ModifyRequestOptions(opt =>
             {
                 opt.IncludeExceptionDetails = true;
                 //opt.TracingPreference = TracingPreference.Always;
             })
-        //.SetPagingOptions(new PagingOptions
-        //{
-        //    MaxPageSize = 100,
-        //    DefaultPageSize = 10,
-        //    IncludeTotalCount = true,
-        //})
+            .SetPagingOptions(new PagingOptions
+            {
+                MaxPageSize = 100,
+                DefaultPageSize = 10,
+                IncludeTotalCount = true,
+            })
             .BindRuntimeType<DateTime, DateTimeType>()
             .InitializeOnStartup();
     }
