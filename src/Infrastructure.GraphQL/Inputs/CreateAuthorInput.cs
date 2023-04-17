@@ -6,6 +6,5 @@ public sealed class CreateAuthorInput : InputObjectType<CreateAuthorCommand>
     {
         descriptor.Name(nameof(CreateAuthorInput));
         descriptor.Field(x => x.DateOfBirth).Type<NonNullType<DateType>>();
-        descriptor.Field(x => x.DateOfDeath).Type<DateType>();
     }
 }

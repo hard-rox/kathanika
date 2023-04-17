@@ -9,4 +9,10 @@ public sealed class Mutations
         var author = await mediator.Send(input);
         return author;
     }
+
+    public async Task<Author> UpdateAuthor([FromServices]IMediator mediator, UpdateAuthorCommand input)
+    {
+        var author = await mediator.Send(input);
+        return author;
+    }
 }

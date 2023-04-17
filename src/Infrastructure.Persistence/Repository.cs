@@ -46,14 +46,14 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return entity;
     }
 
-    public async Task UpdateAsync(string id, T entity)
+    public async Task UpdateAsync(T entity)
     {
         _logger.LogInformation("Updating document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
-        typeof(T).Name, id, _collectionName, entity);
-        var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(id));
+        typeof(T).Name, entity.Id, _collectionName, entity);
+        var filter = Builders<T>.Filter.Eq("_id", ObjectId.Parse(entity.Id));
         await _collection.ReplaceOneAsync(filter, entity);
         _logger.LogInformation("Updated document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
-        typeof(T).Name, id, _collectionName, entity);
+        typeof(T).Name, entity.Id, _collectionName, entity);
     }
 
     public async Task DeleteAsync(string id)

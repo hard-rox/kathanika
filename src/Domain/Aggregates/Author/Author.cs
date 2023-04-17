@@ -27,4 +27,33 @@ public sealed class Author : AggregateRoot
         Nationality = nationality;
         Biography = biography;
     }
+
+    public void Update(
+        string? firstName = null,
+        string? lastName = null,
+        DateTime? dateOfBirth = null,
+        string? nationality = null,
+        string? biography = null
+    )
+    {
+        FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
+        LastName = !string.IsNullOrEmpty(lastName) ? lastName : LastName;
+        FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
+        FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
+        if(dateOfBirth is not null)
+        {
+            if(((DateTime)dateOfBirth).ToUniversalTime().Date > DateTime.UtcNow.Date)
+                throw new Exception($"dateOfBirth cann't be in future.");
+            
+            DateOfBirth = ((DateTime)dateOfBirth).Date;
+        }
+    }
+
+    public void MakeAsDeceased(DateTime dateOfDeath)
+    {
+        if(dateOfDeath.ToUniversalTime().Date > DateTime.UtcNow.Date)
+            throw new Exception($"dateOfDeath cann't be in future.");
+
+        DateOfDeath = dateOfDeath.Date;
+    }
 }
