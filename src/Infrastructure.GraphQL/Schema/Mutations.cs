@@ -15,4 +15,9 @@ public sealed class Mutations
         var author = await mediator.Send(input);
         return author;
     }
+
+    public async Task DeleteAuthor([FromServices]IMediator mediator, string id)
+    {
+        await mediator.Send(new DeleteAuthorCommand(id));
+    }
 }
