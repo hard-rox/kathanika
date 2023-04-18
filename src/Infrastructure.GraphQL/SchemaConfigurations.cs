@@ -18,7 +18,7 @@ internal static class SchemaConfigurations
 
     private static IRequestExecutorBuilder AddInputs(this IRequestExecutorBuilder builder)
     {
-        builder.AddType<CreateAuthorInput>();
+        builder.AddType<AddAuthorInput>();
         builder.AddType<UpdateAuthorInput>();
 
         return builder;
@@ -47,6 +47,7 @@ internal static class SchemaConfigurations
             IncludeTotalCount = true,
         });
         requestBuilder.BindRuntimeType<DateTime, DateTimeType>();
+        requestBuilder.AddMutationConventions();
         requestBuilder.InitializeOnStartup();
 
         return requestBuilder;

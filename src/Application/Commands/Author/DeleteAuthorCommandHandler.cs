@@ -1,3 +1,6 @@
+using Kathanika.Domain.Exceptions;
+using Kathanika.Domain.Primitives;
+
 namespace Kathanika.Application.Commands;
 
 public sealed class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorCommand>
@@ -11,9 +14,19 @@ public sealed class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorCom
 
     public async Task Handle(DeleteAuthorCommand request, CancellationToken cancellationToken)
     {
-        var author = await authorRepository.GetByIdAsync(request.Id);
-        if(author is null)
-            throw new Exception("No author found with this Id");
+        var errors = new List<DomainException>();
+
+        var existingAuthor = await authorRepository.GetByIdAsync(request.Id);
+
+        if (existingAuthor is null)
+        {
+            errors.Add(new NotFoundWithTheIdException(typeof(Author), request.Id));
+        }
+
+        if (errors.Count > 0)
+        {
+            throw new AggregateException(errors);
+        }
 
         await authorRepository.DeleteAsync(request.Id);
     }
