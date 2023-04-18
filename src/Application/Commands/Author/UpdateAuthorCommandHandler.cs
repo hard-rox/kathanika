@@ -13,16 +13,15 @@ internal sealed class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorC
 
     public async Task<Author> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
     {
-        var existingAuthor = await authorRepository.GetByIdAsync(request.Id);
-        if(existingAuthor is null)
-            throw new Exception("No author found with this Id");
-
+        var existingAuthor = await authorRepository.GetByIdAsync(request.Id)
+            ?? throw new Exception("No author found with this Id");
+        
         existingAuthor.Update(
-            request.FirstName,
-            request.LastName,
-            request.DateOfBirth,
-            request.Nationality,
-            request.Biography
+            request.Data.FirstName,
+            request.Data.LastName,
+            request.Data.DateOfBirth,
+            request.Data.Nationality,
+            request.Data.Biography
         );
 
         await authorRepository.UpdateAsync(existingAuthor);
