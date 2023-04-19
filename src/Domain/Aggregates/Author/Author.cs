@@ -11,6 +11,8 @@ public sealed class Author : AggregateRoot
     public string Nationality { get; private set; } = string.Empty;
     public string Biography { get; private set; } = string.Empty;
 
+    public string FullName => $"{FirstName} {LastName}";
+
     public Author(
         string firstName,
         string lastName,
@@ -38,8 +40,8 @@ public sealed class Author : AggregateRoot
     {
         FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
         LastName = !string.IsNullOrEmpty(lastName) ? lastName : LastName;
-        FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
-        FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
+        Nationality = !string.IsNullOrEmpty(nationality) ? nationality: Nationality;
+        Biography = !string.IsNullOrEmpty(biography) ? biography: Biography;
         if(dateOfBirth is not null)
         {
             if(((DateTime)dateOfBirth).ToUniversalTime().Date > DateTime.UtcNow.Date)
