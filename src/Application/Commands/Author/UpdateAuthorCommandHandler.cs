@@ -16,12 +16,8 @@ internal sealed class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorC
     {
         var errors = new List<DomainException>();
 
-        var existingAuthor = await authorRepository.GetByIdAsync(request.Id);
-
-        if (existingAuthor is null)
-        {
-            errors.Add(new NotFoundWithTheIdException(typeof(Author), request.Id));
-        }
+        var existingAuthor = await authorRepository.GetByIdAsync(request.Id) ??
+            throw new NotFoundWithTheIdException(typeof(Author), request.Id);
         
         if (request.Patch.DateOfBirth?.ToUniversalTime().Date > DateTime.UtcNow.Date)
         {
@@ -33,7 +29,6 @@ internal sealed class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorC
             throw new AggregateException(errors);
         }
 
-#pragma warning disable CS8602 // Dereference of a possibly null reference.
         existingAuthor.Update(
             request.Patch.FirstName,
             request.Patch.LastName,
@@ -41,7 +36,6 @@ internal sealed class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorC
             request.Patch.Nationality,
             request.Patch.Biography
         );
-#pragma warning restore CS8602 // Dereference of a possibly null reference.
 
         await authorRepository.UpdateAsync(existingAuthor);
         return existingAuthor;
