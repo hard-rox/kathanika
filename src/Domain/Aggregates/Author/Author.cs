@@ -1,3 +1,4 @@
+using Kathanika.Domain.Exceptions;
 using Kathanika.Domain.Premitives;
 
 namespace Kathanika.Domain.Aggregates;
@@ -44,9 +45,10 @@ public sealed class Author : AggregateRoot
         Biography = !string.IsNullOrEmpty(biography) ? biography: Biography;
         if(dateOfBirth is not null)
         {
-            if(((DateTime)dateOfBirth).ToUniversalTime().Date > DateTime.UtcNow.Date)
-                throw new Exception($"dateOfBirth cann't be in future.");
-            
+            if (((DateTime)dateOfBirth).ToUniversalTime().Date > DateTime.UtcNow.Date)
+                throw new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date");
+
+
             DateOfBirth = ((DateTime)dateOfBirth).Date;
         }
     }
@@ -54,7 +56,10 @@ public sealed class Author : AggregateRoot
     public void MakeAsDeceased(DateTime dateOfDeath)
     {
         if(dateOfDeath.ToUniversalTime().Date > DateTime.UtcNow.Date)
-            throw new Exception($"dateOfDeath cann't be in future.");
+            throw new InvalidFieldException(nameof(dateOfDeath), $"Cann't be future date");
+
+        if (dateOfDeath <= DateOfBirth)
+            throw new InvalidFieldException(nameof(dateOfDeath), $"DateOfDeath must be after DateOfDeath");
 
         DateOfDeath = dateOfDeath.Date;
     }

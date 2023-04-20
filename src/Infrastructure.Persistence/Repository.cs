@@ -1,7 +1,5 @@
 using Kathanika.Domain.Premitives;
-using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
-using MongoDB.Driver;
 
 namespace Kathanika.Infrastructure.Persistence;
 
@@ -20,7 +18,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public IQueryable<T> Get()
     {
-        return _collection.AsQueryable<T>();
+        return _collection.AsQueryable();
     }
 
     public async Task<T> GetByIdAsync(string id)

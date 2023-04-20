@@ -23,6 +23,10 @@ internal sealed class AddAuthorCommandHandler : IRequestHandler<AddAuthorCommand
         {
             errors.Add(new InvalidFieldException(nameof(request.DateOfDeath), $"Cann't be future date"));
         }
+        if(request.DateOfDeath is not null && request.DateOfDeath?.Date <= request.DateOfBirth)
+        {
+            errors.Add(new InvalidFieldException(nameof(request.DateOfDeath), $"DateOfDeath must be after DateOfDeath"));
+        }
 
         if (errors.Count > 0)
         {
