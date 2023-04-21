@@ -1,4 +1,4 @@
-namespace Kathanika.Domain.Premitives;
+namespace Kathanika.Domain.Primitives;
 
 public abstract class AggregateRoot : Entity
 {

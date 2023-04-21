@@ -1,4 +1,4 @@
-namespace Kathanika.Domain.Premitives;
+namespace Kathanika.Domain.Primitives;
 
 public interface IRepository<T> where T : AggregateRoot
 {

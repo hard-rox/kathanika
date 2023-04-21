@@ -17,12 +17,7 @@ internal sealed class MarkAuthorAsDeceasedCommandHandler
         var existingAuthor = await authorRepository.GetByIdAsync(request.Id) ??
             throw new NotFoundWithTheIdException(typeof(Author), request.Id);
 
-        if (request.DateOfDeath.ToUniversalTime().Date > DateTime.UtcNow.Date)
-        {
-            throw new InvalidFieldException(nameof(request.DateOfDeath), $"Cann't be future date");
-        }
-
-        existingAuthor.MakeAsDeceased(request.DateOfDeath);
+        existingAuthor.MarkAsDeceased(request.DateOfDeath);
 
         await authorRepository.UpdateAsync(existingAuthor);
         return existingAuthor;

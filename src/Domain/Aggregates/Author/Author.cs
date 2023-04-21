@@ -1,5 +1,5 @@
 using Kathanika.Domain.Exceptions;
-using Kathanika.Domain.Premitives;
+using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates;
 
@@ -23,6 +23,25 @@ public sealed class Author : AggregateRoot
         string biography
     )
     {
+        var errors = new List<DomainException>();
+        if (dateOfBirth.ToUniversalTime().Date > DateTime.UtcNow.Date)
+        {
+            errors.Add(new InvalidFieldException(nameof(dateOfBirth), $"Cann't be future date"));
+        }
+        if (dateOfDeath?.ToUniversalTime().Date > DateTime.UtcNow.Date)
+        {
+            errors.Add(new InvalidFieldException(nameof(dateOfBirth), $"Cann't be future date"));
+        }
+        if (dateOfDeath is not null && dateOfDeath?.Date <= dateOfBirth)
+        {
+            errors.Add(new InvalidFieldException(nameof(dateOfDeath), $"DateOfDeath must be after DateOfDeath"));
+        }
+
+        if (errors.Count > 0)
+        {
+            throw new AggregateException(errors);
+        }
+
         FirstName = firstName;
         LastName = lastName;
         DateOfBirth = dateOfBirth;
@@ -53,7 +72,7 @@ public sealed class Author : AggregateRoot
         }
     }
 
-    public void MakeAsDeceased(DateTime dateOfDeath)
+    public void MarkAsDeceased(DateTime dateOfDeath)
     {
         if(dateOfDeath.ToUniversalTime().Date > DateTime.UtcNow.Date)
             throw new InvalidFieldException(nameof(dateOfDeath), $"Cann't be future date");
@@ -62,5 +81,10 @@ public sealed class Author : AggregateRoot
             throw new InvalidFieldException(nameof(dateOfDeath), $"DateOfDeath must be after DateOfDeath");
 
         DateOfDeath = dateOfDeath.Date;
+    }
+
+    public void UnmarkAsDeceased()
+    {
+        DateOfDeath = null;
     }
 }

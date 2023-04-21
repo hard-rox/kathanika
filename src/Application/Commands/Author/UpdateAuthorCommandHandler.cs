@@ -14,21 +14,9 @@ internal sealed class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorC
 
     public async Task<Author> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
     {
-        var errors = new List<DomainException>();
-
         var existingAuthor = await authorRepository.GetByIdAsync(request.Id) ??
             throw new NotFoundWithTheIdException(typeof(Author), request.Id);
         
-        if (request.Patch.DateOfBirth?.ToUniversalTime().Date > DateTime.UtcNow.Date)
-        {
-            errors.Add(new InvalidFieldException(nameof(request.Patch.DateOfBirth), $"Cann't be future date"));
-        }
-
-        if (errors.Count > 0)
-        {
-            throw new AggregateException(errors);
-        }
-
         existingAuthor.Update(
             request.Patch.FirstName,
             request.Patch.LastName,
