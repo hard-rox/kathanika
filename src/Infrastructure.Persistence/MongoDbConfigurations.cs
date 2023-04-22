@@ -1,9 +1,7 @@
 ﻿using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Driver;
 using MongoDB.Driver.Core.Events;
 
 namespace Kathanika.Infrastructure.Persistence;

@@ -13,9 +13,9 @@ public sealed partial class Queries
         return publications;
     }
 
-    //public async Task<Publication?> GetPublication([FromServices] IMediator mediator, string id)
-    //{
-    //    var publication = await mediator.Send(new GetAuthorByIdQuery(id));
-    //    return publication;
-    //}
+    public async Task<Publication> GetPublication([FromServices] IMediator mediator, string id)
+    {
+        var publication = await mediator.Send(new GetPublicationByIdQuery(id));
+        return publication;
+    }
 }

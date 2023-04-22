@@ -1,8 +1,6 @@
 ﻿using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
-using Kathanika.Infrastructure.GraphQL.Inputs;
 using Kathanika.Infrastructure.GraphQL.Schema;
-using Kathanika.Infrastructure.GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 using System.Runtime.CompilerServices;

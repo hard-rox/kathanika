@@ -1,6 +1,4 @@
-﻿using Kathanika.Domain.Primitives;
-
-namespace Kathanika.Infrastructure.Persistence.Repositories;
+﻿namespace Kathanika.Infrastructure.Persistence.Repositories;
 
 internal sealed class PublicationRepository : Repository<Publication>, IPublicationRepository
 {

@@ -13,7 +13,7 @@ public sealed partial class Queries
         return authors;
     }
 
-    public async Task<Author?> GetAuthor([FromServices] IMediator mediator, string id)
+    public async Task<Author> GetAuthor([FromServices] IMediator mediator, string id)
     {
         var author = await mediator.Send(new GetAuthorByIdQuery(id));
         return author;
