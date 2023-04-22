@@ -1,5 +1,4 @@
-﻿using Kathanika.Domain.Aggregates;
-using Kathanika.Infrastructure.GraphQL.Bases;
+﻿using Kathanika.Infrastructure.GraphQL.Bases;
 
 namespace Kathanika.Infrastructure.GraphQL.Payloads;
 

@@ -2,7 +2,7 @@ namespace Kathanika.Domain.Primitives;
 
 public abstract class ValueObject : IEquatable<ValueObject>
 {
-    public abstract IEnumerable<Object> GetAtomicValues();
+    public abstract IEnumerable<object> GetAtomicValues();
 
     private bool ValuesAreEqual(ValueObject other)
     {

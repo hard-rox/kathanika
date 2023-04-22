@@ -4,7 +4,7 @@ using Kathanika.Infrastructure.GraphQL.Payloads;
 
 namespace Kathanika.Infrastructure.GraphQL.Schema;
 
-public sealed class Mutations
+public sealed partial class Mutations
 {
     [Error<InvalidFieldException>]
     public async Task<AddAuthorPayload> AddAuthor([FromServices]IMediator mediator, AddAuthorCommand input)

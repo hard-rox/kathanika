@@ -14,6 +14,7 @@ public static class DependencyInjector
         services.AddMongoDb(connectionString);
 
         services.AddScoped<IAuthorRepository, AuthorRepository>();
+        services.AddScoped<IPublicationRepository, PublicationRepository>();
 
         return services;
     }

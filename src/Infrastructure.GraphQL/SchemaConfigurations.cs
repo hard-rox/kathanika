@@ -4,32 +4,30 @@ using Kathanika.Infrastructure.GraphQL.Inputs;
 using Kathanika.Infrastructure.GraphQL.Schema;
 using Kathanika.Infrastructure.GraphQL.Types;
 using Microsoft.Extensions.DependencyInjection;
+using System.Reflection;
+using System.Runtime.CompilerServices;
 
 namespace Kathanika.Infrastructure.GraphQL;
 
 internal static class SchemaConfigurations
 {
-    private static IRequestExecutorBuilder AddTypes(this IRequestExecutorBuilder builder)
+    private static Type[] GetTypesFromNamespace(string nameSpace)
     {
-        builder.AddType<AuthorType>();
+        var types = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(type => type.Namespace == nameSpace
+                && Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) == null)
+            .ToArray();
 
-        return builder;
-    }
-
-    private static IRequestExecutorBuilder AddInputs(this IRequestExecutorBuilder builder)
-    {
-        builder.AddType<AddAuthorInput>();
-        builder.AddType<UpdateAuthorInput>();
-
-        return builder;
+        return types;
     }
 
     internal static IRequestExecutorBuilder BuildGraphQLSchema(this IServiceCollection services)
     {
         var requestBuilder = services.AddGraphQLServer();
         //requestBuilder.AddAuthorization();
-        requestBuilder.AddTypes();
-        requestBuilder.AddInputs();
+        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.GraphQL.Types"));
+        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.GraphQL.Inputs"));
         requestBuilder.AddQueryType<Queries>();
         requestBuilder.AddMutationType<Mutations>();
         requestBuilder.AddProjections();
@@ -45,6 +43,10 @@ internal static class SchemaConfigurations
             MaxPageSize = 100,
             DefaultPageSize = 10,
             IncludeTotalCount = true,
+        });
+        requestBuilder.ModifyOptions(opt =>
+        {
+            opt.SortFieldsByName = false;
         });
         requestBuilder.BindRuntimeType<DateTime, DateTimeType>();
         requestBuilder.AddMutationConventions();

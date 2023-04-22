@@ -2,7 +2,7 @@
 
 namespace Kathanika.Infrastructure.GraphQL.Schema;
 
-public sealed class Queries
+public sealed partial class Queries
 {
     [UseOffsetPaging]
     [UseFiltering]
