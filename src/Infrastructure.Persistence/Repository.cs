@@ -1,3 +1,4 @@
+using Kathanika.Application.Services;
 using Kathanika.Domain.Primitives;
 using MongoDB.Bson;
 using System.Linq.Expressions;
@@ -9,12 +10,14 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     private readonly string _collectionName = string.Empty;
     private readonly IMongoCollection<T> _collection;
     private readonly ILogger<IRepository<T>> _logger;
+    private readonly ICacheService _cacheService;
 
-    public Repository(IMongoDatabase database, string collectionName, ILogger<IRepository<T>> logger)
+    public Repository(IMongoDatabase database, string collectionName, ILogger<IRepository<T>> logger, ICacheService cacheService)
     {
         _collectionName = collectionName.ToLower();
         _collection = database.GetCollection<T>(_collectionName);
         _logger = logger;
+        _cacheService = cacheService;
     }
 
     public IQueryable<T> Get()
@@ -25,8 +28,24 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     public async Task<T> GetByIdAsync(string id)
     {
         _logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
+        
+        var cacheKey = $"{typeof(T).Name.ToLower()}-{id}";
+        _logger.LogInformation("Trying to get document from cache with cache key: {@CacheKey}", cacheKey);
+        var cachedDocument = _cacheService.Get<T>(cacheKey);
+        if(cachedDocument is not null)
+        {
+            _logger.LogInformation("Got document {@Document} of type {@DocumentType} from cache with cache key: {@CacheKey} ",
+                cachedDocument, typeof(T).Name, cacheKey);
+            return cachedDocument;
+        }
+        _logger.LogInformation("Document not found in cache with cache key: {@CacheKey}", cacheKey);
+        
         var document = await _collection.Find(x => x.Id == id).SingleOrDefaultAsync();
         _logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", document, typeof(T).Name, _collectionName);
+        
+        _logger.LogInformation("Setting document {@Document} into cache with cache key: {@CacheKey}", document, cacheKey);
+        _cacheService.Set(cacheKey, document);
+
         return document;
     }
 
@@ -69,6 +88,14 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         await _collection.ReplaceOneAsync(filter, entity);
         _logger.LogInformation("Updated document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
         typeof(T).Name, entity.Id, _collectionName, entity);
+
+        var cacheKey = $"{typeof(T).Name.ToLower()}-{entity.Id}";
+        var cachedDocument = _cacheService.Get<T>(cacheKey);
+        if(cachedDocument is not null )
+        {
+            _logger.LogInformation("Found updating document in cache with key {@CacheKey}. Updating cached document.", cacheKey);
+            _cacheService.Set(cacheKey, entity);
+        }
     }
 
     public async Task DeleteAsync(string id)
@@ -77,5 +104,13 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         var filter = Builders<T>.Filter.Eq(x => x.Id, id);
         await _collection.DeleteOneAsync(filter);
         _logger.LogInformation("Deleted document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
+
+        var cacheKey = $"{typeof(T).Name.ToLower()}-{id}";
+        var cachedDocument = _cacheService.Get<T>(cacheKey);
+        if (cachedDocument is not null)
+        {
+            _logger.LogInformation("Found deleted document in cache with key {@CacheKey}. Deleting cached document.", cacheKey);
+            _cacheService.Remove(cacheKey);
+        }
     }
 }

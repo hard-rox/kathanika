@@ -7,7 +7,7 @@ namespace Kathanika.Infrastructure.GraphQL.Schema;
 public sealed partial class Mutations
 {
     [Error<InvalidFieldException>]
-    public async Task<AddAuthorPayload> AddAuthor([FromServices]IMediator mediator, AddAuthorCommand input)
+    public async Task<AddAuthorPayload> AddAuthorAsync([FromServices]IMediator mediator, AddAuthorCommand input)
     {
         var author = await mediator.Send(input);
         return new(author);
@@ -15,14 +15,14 @@ public sealed partial class Mutations
 
     [Error<InvalidFieldException>]
     [Error<NotFoundWithTheIdException>]
-    public async Task<UpdateAuthorPayload> UpdateAuthor([FromServices]IMediator mediator, UpdateAuthorCommand input)
+    public async Task<UpdateAuthorPayload> UpdateAuthorAsync([FromServices]IMediator mediator, UpdateAuthorCommand input)
     {
         var author = await mediator.Send(input);
         return new(author);
     }
 
     [Error<NotFoundWithTheIdException>]
-    public async Task<DeleteAuthorPayload> DeleteAuthor([FromServices]IMediator mediator, string id)
+    public async Task<DeleteAuthorPayload> DeleteAuthorAsync([FromServices]IMediator mediator, string id)
     {
         await mediator.Send(new DeleteAuthorCommand(id));
         return new(id);

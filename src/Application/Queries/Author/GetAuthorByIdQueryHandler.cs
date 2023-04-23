@@ -1,3 +1,5 @@
+using Kathanika.Domain.Exceptions;
+
 namespace Kathanika.Application.Queries;
 
 internal class GetAuthorByIdQueryHandler : IRequestHandler<GetAuthorByIdQuery, Author>
@@ -9,9 +11,9 @@ internal class GetAuthorByIdQueryHandler : IRequestHandler<GetAuthorByIdQuery, A
         this.authorRepository = authorRepository;
     }
 
-    public Task<Author> Handle(GetAuthorByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Author> Handle(GetAuthorByIdQuery request, CancellationToken cancellationToken)
     {
-        var author = authorRepository.GetByIdAsync(request.Id);
+        var author = await authorRepository.GetByIdAsync(request.Id);
         return author;
     }
 }
