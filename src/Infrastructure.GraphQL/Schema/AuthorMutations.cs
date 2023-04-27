@@ -22,6 +22,7 @@ public sealed partial class Mutations
     }
 
     [Error<NotFoundWithTheIdException>]
+    [Error<DeletionFailedException>]
     public async Task<DeleteAuthorPayload> DeleteAuthorAsync([FromServices]IMediator mediator, string id)
     {
         await mediator.Send(new DeleteAuthorCommand(id));
