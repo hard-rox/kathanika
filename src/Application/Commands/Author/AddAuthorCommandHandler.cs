@@ -1,13 +1,18 @@
+using Kathanika.Application.Abstractions;
+
 namespace Kathanika.Application.Commands;
 
 internal sealed class AddAuthorCommandHandler : IRequestHandler<AddAuthorCommand, Author>
 {
-    private readonly IAuthorRepository authorRepository;
+    private readonly IUnitOfWork _unitOfWork;
+    private readonly IAuthorRepository _authorRepository;
 
-    public AddAuthorCommandHandler(IAuthorRepository authorRepository)
+    public AddAuthorCommandHandler(IUnitOfWork unitOfWork, IAuthorRepository authorRepository)
     {
-        this.authorRepository = authorRepository;
+        _unitOfWork = unitOfWork;
+        _authorRepository = authorRepository;
     }
+
 
     public async Task<Author> Handle(AddAuthorCommand request, CancellationToken cancellationToken)
     {
@@ -20,7 +25,8 @@ internal sealed class AddAuthorCommandHandler : IRequestHandler<AddAuthorCommand
             request.Biography
         );
 
-        var savedAuthor = await authorRepository.AddAsync(newAuthor);
+        var savedAuthor = await _authorRepository.AddAsync(newAuthor);
+        await _unitOfWork.CommitChangesAsync();
         return savedAuthor;
     }
 }

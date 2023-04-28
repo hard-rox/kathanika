@@ -17,7 +17,7 @@ internal static class MongoDbConfigurations
         };
         ConventionRegistry.Register("CamelCaseAndStringIdConventionPack", conventionPack, x => true);
 
-        services.AddSingleton<IMongoDatabase>(f =>
+        services.AddSingleton<IMongoClient>(x =>
         {
             var sp = services.BuildServiceProvider();
             var logger = sp.GetRequiredService<ILogger<MongoClientSettings>>();
@@ -43,6 +43,13 @@ internal static class MongoDbConfigurations
             };
             mongoClientSettings.RetryWrites = true;
             var mongoClient = new MongoClient(mongoClientSettings);
+            return mongoClient;
+        });
+
+        services.AddSingleton<IMongoDatabase>(f =>
+        {
+            var sp = services.BuildServiceProvider();
+            var mongoClient = sp.GetRequiredService<IMongoClient>();
             var db = mongoClient.GetDatabase("kathanika_book_store");
             return db;
         });
