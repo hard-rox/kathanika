@@ -4,7 +4,7 @@ namespace Kathanika.Domain.Primitives;
 
 public interface IRepository<T> where T : AggregateRoot
 {
-    IQueryable<T> Get();
+    IQueryable<T> AsQueryable();
     Task<T> GetByIdAsync(string id);
     Task<IReadOnlyList<T>> ListAllAsync();
     Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> expression);

@@ -20,7 +20,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _cacheService = cacheService;
     }
 
-    public IQueryable<T> Get()
+    public IQueryable<T> AsQueryable()
     {
         return _collection.AsQueryable();
     }
