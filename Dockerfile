@@ -4,7 +4,7 @@ EXPOSE 80
 
 ENV ASPNETCORE_URLS=http://+:80
 
-FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS api-build
 WORKDIR /kathanika-project
 # RUN ls
 COPY ["Kathanika.sln", "."]
@@ -23,10 +23,27 @@ COPY ["src", "src/"]
 # RUN ls
 RUN dotnet build "src/Web/Kathanika.Web.csproj" -c Release -o /app/build
 
-FROM build AS publish
+FROM api-build AS publish
 RUN dotnet publish "src/Web/Kathanika.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false
+
+FROM node AS app-build
+WORKDIR /usr/src/app
+COPY ["src/Web/kathanika-app/package.json", "."]
+# RUN ls
+RUN npm install
+COPY ["src/Web/kathanika-app", "."]
+# RUN ls
+RUN npm run build
 
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+COPY --from=app-build /usr/src/app/dist/kathanika-app ./wwwroot/
+RUN ls kathanika-app
+RUN ls wwwroot
 ENTRYPOINT ["dotnet", "Kathanika.Web.dll"]
+
+
+
+
+# clear && docker build . -t kathanika:0.0.1 --no-cache --progress=plain
