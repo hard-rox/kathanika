@@ -24,6 +24,7 @@ internal sealed class AddPublicationCommandHandler
             request.PublishedDate,
             request.BuyingPrice,
             request.CopiesPurchased,
+            request.CallNumber,
             authors);
 
         var addedPublication = await publicationRepository.AddAsync(publication);

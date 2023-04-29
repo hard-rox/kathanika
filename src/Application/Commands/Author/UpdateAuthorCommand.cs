@@ -2,6 +2,9 @@ namespace Kathanika.Application.Commands;
 
 public sealed record UpdateAuthorCommand : IRequest<Author>
 {
+    public string Id { get; init; }
+    public AuthorPatch Patch { get; init; }
+    
     public sealed record AuthorPatch(
     string? FirstName = null,
     string? LastName = null,
@@ -9,9 +12,6 @@ public sealed record UpdateAuthorCommand : IRequest<Author>
     string? Nationality = null,
     string? Biography = null
     );
-
-    public string Id { get; init; }
-    public AuthorPatch Patch { get; init; }
 
     public UpdateAuthorCommand(string id, AuthorPatch patch)
     {

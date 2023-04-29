@@ -8,4 +8,5 @@ public sealed record AddPublicationCommand(
     string Publisher,
     DateTime PublishedDate,
     decimal BuyingPrice,
-    int CopiesPurchased) : IRequest<Publication>;
+    int CopiesPurchased,
+    string CallNumber) : IRequest<Publication>;
