@@ -39,8 +39,8 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 COPY --from=app-build /usr/src/app/dist/kathanika-app ./wwwroot/
-RUN ls kathanika-app
-RUN ls wwwroot
+# RUN ls
+# RUN ls wwwroot
 ENTRYPOINT ["dotnet", "Kathanika.Web.dll"]
 
 

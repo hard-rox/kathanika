@@ -17,6 +17,13 @@
     <ProjectReference Include="..\Infrastructure.Services\Kathanika.Infrastructure.Services.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Compile Remove="kathanika-app\**" />
+    <Content Remove="kathanika-app\**" />
+    <EmbeddedResource Remove="kathanika-app\**" />
+    <None Remove="kathanika-app\**" />
+  </ItemGroup>
+
   <PropertyGroup>
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
