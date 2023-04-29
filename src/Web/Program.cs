@@ -26,6 +26,9 @@ try
 
     app.UseGraphQLInfrastructure();
 
+    app.UseStaticFiles();
+    app.MapFallbackToFile("index.html");
+
     app.Run();
 }
 catch (Exception ex)
