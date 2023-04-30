@@ -34,6 +34,7 @@ public sealed class AddAuthorCommandHandlerTests
             dummyAuthor.Biography
             );
         var handler = new AddAuthorCommandHandler(authorRepositoryMock.Object);
+        
         authorRepositoryMock.Setup(x => x.AddAsync(It.IsAny<Author>()))
             .ReturnsAsync(new Author(
                 dummyAuthor.FirstName,
@@ -52,7 +53,7 @@ public sealed class AddAuthorCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handler_Should_Throw_InvalifFieldException_On_SameDateOfDeathAndDateOfBirth()
+    public async Task Handler_Should_Throw_InvalidFieldException_On_SameDateOfDeathAndDateOfBirth()
     {
         // Arrange
         var command = new AddAuthorCommand(
@@ -71,11 +72,11 @@ public sealed class AddAuthorCommandHandlerTests
         // Assert
         Assert.IsType<AggregateException>(ex);
         Assert.IsType<InvalidFieldException>(ex.InnerExceptions[0]);
-        Assert.Equal(nameof(command.DateOfDeath), ((InvalidFieldException)ex.InnerExceptions[0]).FieldName);
+        Assert.Equal(nameof(command.DateOfDeath), ((InvalidFieldException)ex.InnerExceptions[0]).FieldName, true);
     }
 
     [Fact]
-    public async Task Handler_Should_Throw_InvalifFieldException_On_FutureDateOfDeath()
+    public async Task Handler_Should_Throw_InvalidFieldException_On_FutureDateOfDeath()
     {
         // Arrange
         var command = new AddAuthorCommand(
@@ -94,11 +95,11 @@ public sealed class AddAuthorCommandHandlerTests
         // Assert
         Assert.IsType<AggregateException>(ex);
         Assert.IsType<InvalidFieldException>(ex.InnerExceptions[0]);
-        Assert.Equal(nameof(command.DateOfDeath), ((InvalidFieldException)ex.InnerExceptions[0]).FieldName);
+        Assert.Equal(nameof(command.DateOfDeath), ((InvalidFieldException)ex.InnerExceptions[0]).FieldName, true);
     }
 
     [Fact]
-    public async Task Handler_Should_Throw_InvalifFieldException_On_FutureDateOfBirth()
+    public async Task Handler_Should_Throw_InvalidFieldException_On_FutureDateOfBirth()
     {
         // Arrange
         var command = new AddAuthorCommand(
@@ -117,6 +118,6 @@ public sealed class AddAuthorCommandHandlerTests
         // Assert
         Assert.IsType<AggregateException>(ex);
         Assert.IsType<InvalidFieldException>(ex.InnerExceptions[0]);
-        Assert.Equal(nameof(command.DateOfBirth), ((InvalidFieldException)ex.InnerExceptions[0]).FieldName);
+        Assert.Equal(nameof(command.DateOfBirth), ((InvalidFieldException)ex.InnerExceptions[0]).FieldName, true);
     }
 }

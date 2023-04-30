@@ -30,7 +30,7 @@ public sealed class Author : AggregateRoot
         }
         if (dateOfDeath?.ToUniversalTime().Date > DateTime.UtcNow.Date)
         {
-            errors.Add(new InvalidFieldException(nameof(dateOfBirth), $"Cann't be future date"));
+            errors.Add(new InvalidFieldException(nameof(dateOfDeath), $"Cann't be future date"));
         }
         if (dateOfDeath is not null && dateOfDeath?.Date <= dateOfBirth)
         {
