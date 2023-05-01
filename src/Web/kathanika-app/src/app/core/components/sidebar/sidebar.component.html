@@ -1,1 +1,18 @@
-<p>sidebar works!</p>
+<aside
+    class="bg-gray-800 text-white w-64 space-y-6 px-2 py-7 absolute inset-y-0 left-0"
+    id="sidebar">
+    <div class="flex items-center justify-between">
+        <h1 class="text-white text-2xl font-bold">Sidebar</h1>
+        <button class="text-white focus:outline-none" onclick="toggleSidebar()">
+            <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
+                <path id="open" d="M4.928 4.928l14.142 14.142m0 -14.142l-14.142 14.142"></path>
+                <path id="close" d="M5 19.5L18.5 6m0 13.5L5 6"></path>
+            </svg>
+        </button>
+    </div>
+    <nav>
+        <a href="#" class="block py-2.5 px-4 text-sm hover:bg-gray-700">Link 1</a>
+        <a href="#" class="block py-2.5 px-4 text-sm hover:bg-gray-700">Link 2</a>
+        <a href="#" class="block py-2.5 px-4 text-sm hover:bg-gray-700">Link 3</a>
+    </nav>
+</aside>
