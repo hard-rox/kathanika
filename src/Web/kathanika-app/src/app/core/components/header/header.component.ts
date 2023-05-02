@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 
 @Component({
   selector: 'app-header',
@@ -7,4 +7,9 @@ import { Component } from '@angular/core';
 })
 export class HeaderComponent {
 
+  isUserActionsVisible: boolean = false;
+  
+  toggleUserActions() {
+    this.isUserActionsVisible = !this.isUserActionsVisible;
+  }
 }
