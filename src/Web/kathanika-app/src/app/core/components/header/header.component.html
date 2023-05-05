@@ -2,26 +2,14 @@
     <div class="container mx-auto flex justify-between">
         <h1 class="text-2xl font-bold">কথনিকা</h1>
         <div class="flex items-center space-x-2">
-            <button class="rounded-full hover:bg-gray-400 active:bg-gray-500 w-10 h-10 ">
-                <span class="material-symbols-sharp">
-                    notifications
-                </span>
-            </button>
-            <img class="rounded-full border-gray-500 max-w-10 max-h-10" src="https://picsum.photos/200" />
-            <!-- <button class="flex items-center  px-4 py-2">
-                <h2>John Doe</h2>
-                <span class="material-symbols-sharp">
-                    expand_more
-                </span>
-            </button> -->
             <div class="relative inline-block text-left">
                 <div>
-                    <button type="button" (click)="toggleUserActions()"
-                        class="inline-flex items-center w-full justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold hover:bg-gray-400 active:bg-gray-500"
-                        id="menu-button" aria-expanded="true" aria-haspopup="true">
-                        John Doe
+                    <button [ngClass]="{'bg-gray-500': isNotificationVisible}"
+                        (click)="isNotificationVisible = !isNotificationVisible"
+                        (focusout)="isNotificationVisible = false"
+                        class="rounded-full hover:bg-gray-400 active:bg-gray-500 w-10 h-10 ">
                         <span class="material-symbols-sharp">
-                            expand_more
+                            notifications
                         </span>
                     </button>
                 </div>
@@ -36,7 +24,52 @@
                     From: "transform opacity-100 scale-100"
                     To: "transform opacity-0 scale-95"
                 -->
-                <div #userActionsContainer [ngClass]="{'hidden': !isUserActionsVisible}" class="absolute right-0 z-10 mt-2 w-56 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                <div [ngClass]="{'hidden': !isNotificationVisible}"
+                    class="absolute right-0 z-10 mt-2 w-56 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                    role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
+                    <div class="py-1" role="none">
+                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <a href="#"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
+                        <a href="#"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
+                        <a href="#"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            role="menuitem" tabindex="-1" id="menu-item-2">License</a>
+                        <button type="submit"
+                            class="text-gray-700 block w-full px-4 py-2 text-left text-sm active:bg-gray-100 active:text-gray-900"
+                            role="menuitem" tabindex="-1" id="menu-item-3">Sign out</button>
+                    </div>
+                </div>
+            </div>
+            <img class="rounded-full border-gray-500 max-w-10 max-h-10" src="https://picsum.photos/200" />
+            <div class="relative inline-block text-left">
+                <div>
+                    <button type="button" (click)="isUserActionsVisible = !isUserActionsVisible"
+                        (focusout)="isUserActionsVisible = false" [ngClass]="{'bg-gray-500': isUserActionsVisible}"
+                        class="inline-flex items-center w-full justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold hover:bg-gray-400 active:bg-gray-500"
+                        id="menu-button" aria-expanded="true" aria-haspopup="true">
+                        John Doe
+                        <span class="material-symbols-sharp">
+                            {{isUserActionsVisible ? 'expand_less' : 'expand_more'}}
+                        </span>
+                    </button>
+                </div>
+
+                <!--
+                  Dropdown menu, show/hide based on menu state.
+              
+                  Entering: "transition ease-out duration-100"
+                    From: "transform opacity-0 scale-95"
+                    To: "transform opacity-100 scale-100"
+                  Leaving: "transition ease-in duration-75"
+                    From: "transform opacity-100 scale-100"
+                    To: "transform opacity-0 scale-95"
+                -->
+                <div [ngClass]="{'hidden': !isUserActionsVisible}"
+                    class="absolute right-0 z-10 mt-2 w-56 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">
                         <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->

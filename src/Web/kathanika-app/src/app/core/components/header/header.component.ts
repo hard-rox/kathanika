@@ -6,10 +6,6 @@ import { Component, ViewChild } from '@angular/core';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent {
-
   isUserActionsVisible: boolean = false;
-  
-  toggleUserActions() {
-    this.isUserActionsVisible = !this.isUserActionsVisible;
-  }
+  isNotificationVisible: boolean = false;
 }
