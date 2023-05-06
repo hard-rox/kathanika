@@ -2,4 +2,7 @@
 <button (click)="page = page + 1; changePage();">Next</button>
 {{page}}
 
-<pre>{{(authorsQuery | async)?.data | json}}</pre>
+<!-- <pre>{{(authorsQuery | async)?.data | json}}</pre> -->
+
+<app-table [columns]="columns" [data]="(authorsQuery | async)?.data?.authors?.items"/>
+<app-pagination/>

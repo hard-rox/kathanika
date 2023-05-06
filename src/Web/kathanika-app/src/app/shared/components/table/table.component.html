@@ -1,0 +1,27 @@
+<!-- <pre>{{columns | json}}</pre> -->
+
+<table class="table-auto w-full shadow-sm bg-white text-left">
+    <thead>
+        <tr class="border-b">
+            <th *ngFor="let column of columns" scope="col" class="px-6 py-3">
+                {{column.title}}
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngIf="data && data.length > 0;else emptyData">
+            <tr *ngFor="let item of data" class="border-b">
+                <td *ngFor="let column of columns" scope="col" class="px-6 py-3">
+                    {{item | propertyValueGetter: column.dataKey}}
+                </td>
+            </tr>
+        </ng-container>
+        <ng-template #emptyData>
+            <tr>
+                <td colspan="100%" class="px-6 py-3 text-center">
+                    No data to show
+                </td>
+            </tr>
+        </ng-template>
+    </tbody>
+</table>
