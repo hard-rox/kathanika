@@ -475,3 +475,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+
+src/Web/kathanika-app/src/app/graphql/generated.ts
