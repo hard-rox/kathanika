@@ -1,1 +1,5 @@
-<pre>{{authors | json}}</pre>
+<button class="mt-10 ml-10 gap-4" (click)="page = page - 1; changePage();">Prev</button>
+<button (click)="page = page + 1; changePage();">Next</button>
+{{page}}
+
+<pre>{{(authorsQuery | async)?.data | json}}</pre>

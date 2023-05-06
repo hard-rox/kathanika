@@ -1,28 +1,39 @@
 import { Component, OnInit } from '@angular/core';
-import { map } from 'rxjs';
-import { GetAuthorsGQL, SortEnumType } from 'src/app/graphql/generated';
+import { ApolloQueryResult } from '@apollo/client/core';
+import { QueryRef } from 'apollo-angular';
+import { Observable } from 'rxjs';
+import {
+  GetAuthorsGQL,
+  GetAuthorsQuery,
+  SortEnumType,
+} from 'src/app/graphql/generated';
 
 @Component({
   templateUrl: './author-list.component.html',
   styleUrls: ['./author-list.component.scss'],
 })
 export class AuthorListComponent implements OnInit {
-  authors: any;
-
   constructor(private getAuthorsGql: GetAuthorsGQL) {}
 
-  ngOnInit(): void {
-    console.debug('12345')
-    this.getAuthorsGql.watch({
-      skip: 0,
-      take: 3,
-      sortBy: {
-        firstName: SortEnumType.Asc
+  page: number = 1;
+  authorsQueryRef: QueryRef<GetAuthorsQuery, any> = this.getAuthorsGql.watch({
+    skip: (this.page - 1) * 3,
+    take: 3,
+    sortBy: {
+      firstName: SortEnumType.Asc,
+    },
+    filter: {
+      firstName: {
+        ncontains: '/'
       }
-    }).valueChanges.subscribe({
-      next: (res) => {
-        this.authors = res;
-      }
-    });
+    }
+  });
+  authorsQuery: Observable<ApolloQueryResult<GetAuthorsQuery>> =
+    this.authorsQueryRef.valueChanges;
+
+  ngOnInit(): void {}
+
+  changePage() {
+    this.authorsQueryRef.refetch({ skip: (this.page - 1) * 3, take: 3 });
   }
 }
