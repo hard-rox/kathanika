@@ -1,8 +1,43 @@
-<button class="mt-10 ml-10 gap-4" (click)="page = page - 1; changePage();">Prev</button>
-<button (click)="page = page + 1; changePage();">Next</button>
-{{page}}
-
 <!-- <pre>{{(authorsQuery | async)?.data | json}}</pre> -->
+<ng-container *ngIf="authorsQuery | async as authorsQueryResult">
 
-<app-table [columns]="columns" [data]="(authorsQuery | async)?.data?.authors?.items"/>
-<app-pagination/>
+    <table class="table-auto w-full shadow-sm bg-white text-left">
+        <thead>
+            <tr class="border-b border-theme-indigo-dye">
+                <th scope="col" class="px-6 py-3">Serial</th>
+                <th scope="col" class="px-6 py-3">First Name</th>
+                <th scope="col" class="px-6 py-3">Last Name</th>
+                <th scope="col" class="px-6 py-3">Nationality</th>
+                <th scope="col" class="px-6 py-3">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <ng-container *ngIf="authorsQueryResult?.data?.authors?.items as data; else emptyData">
+                <tr *ngFor="let item of data; let idx = index" class="border-b border-theme-indigo-dye">
+                    <td scope="col" class="px-6">{{idx + 1}}</td>
+                    <td scope="col" class="px-6">{{item.firstName}}</td>
+                    <td scope="col" class="px-6">{{item.lastName}}</td>
+                    <td scope="col" class="px-6">{{item.nationality}}</td>
+                    <td scope="col" class="px-6">
+                        <button class="px-3 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue rounded-full">
+                            <span class="material-symbols-sharp">
+                                more_vert
+                            </span>
+                        </button>
+                    </td>
+                </tr>
+            </ng-container>
+            <ng-template #emptyData>
+                <tr>
+                    <td colspan="100%" class="px-6 py-3 text-center">
+                        No data to show
+                    </td>
+                </tr>
+            </ng-template>
+        </tbody>
+    </table>
+
+    <div class="w-full inline-flex justify-center">
+        <app-pagination />
+    </div>
+</ng-container>

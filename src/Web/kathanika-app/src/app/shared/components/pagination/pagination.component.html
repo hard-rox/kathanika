@@ -1,1 +1,27 @@
-<p>pagination works!</p>
+<nav class="bg-white mt-4 inline-flex border border-theme-indigo-dye">
+    <button class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue">
+        <span class="material-symbols-sharp">
+            first_page
+        </span>
+    </button>
+    <button class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue border-l border-theme-indigo-dye">
+        <span class="material-symbols-sharp">
+            chevron_left
+        </span>
+    </button>
+    <button *ngFor="let page of pages"
+        [ngClass]="page === currentPage ? 'bg-theme-sky-blue font-bold' : 'hover:bg-theme-light-blue active:bg-theme-sky-blue'"
+        [disabled]="page === currentPage" class="px-4 py-2 border-l border-theme-indigo-dye">
+        {{page}}
+    </button>
+    <button class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue border-l border-theme-indigo-dye">
+        <span class="material-symbols-sharp">
+            chevron_right
+        </span>
+    </button>
+    <button class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue border-l border-theme-indigo-dye">
+        <span class="material-symbols-sharp">
+            last_page
+        </span>
+    </button>
+</nav>
