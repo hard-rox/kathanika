@@ -38,6 +38,7 @@
     </table>
 
     <div class="w-full inline-flex justify-center">
-        <app-pagination />
+        <app-pagination [totalCount]="authorsQueryResult.data.authors?.totalCount" [pageSizes]="[2, 4, 6]"
+            (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)" />
     </div>
 </ng-container>
