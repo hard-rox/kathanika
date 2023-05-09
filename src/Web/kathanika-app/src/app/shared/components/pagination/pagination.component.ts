@@ -36,6 +36,15 @@ export class PaginationComponent {
     this.lastPage = Math.ceil(this._totalCount / this._pageSize);
   }
 
+  @Input('pageSize')
+  get pageSize(): number {
+    return this._pageSize;
+  }
+  set pageSize(pageSize: number) {
+    this._pageSize = pageSize;
+    this.lastPage = Math.ceil(this._totalCount / this._pageSize);
+  }
+
   @Output('pageChanged')
   private pageChanged: EventEmitter<number> = new EventEmitter<number>();
 
@@ -58,6 +67,7 @@ export class PaginationComponent {
     let selectedPageSize = +(element as HTMLInputElement).value ?? 0;
     if (selectedPageSize > 0 && this.pageSizes.includes(selectedPageSize)) {
       this._pageSize = selectedPageSize;
+      this.currentPage = 1;
       this.lastPage = Math.ceil(this._totalCount / selectedPageSize);
       this.pageSizeChanged.emit(selectedPageSize);
     }
