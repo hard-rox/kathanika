@@ -17,15 +17,15 @@ import {
 export class AuthorListComponent implements OnInit {
   private _queryVariables: GetAuthorsQueryVariables = {
     skip: 0,
-    take: 2,
+    take: 10,
     sortBy: {
-      lastName: SortEnumType.Asc,
+      firstName: SortEnumType.Asc,
     },
   };
-  private _authorsQueryRef: QueryRef<
+  private _queryRef: QueryRef<
     GetAuthorsQuery,
     GetAuthorsQueryVariables
-  > = this.getAuthorsGql.watch(this._queryVariables);
+  > = this.gql.watch(this._queryVariables);
 
   private setQueryVariableFromRouteQueryParams(params: Params) {
     let size = +params['size'];
@@ -47,7 +47,7 @@ export class AuthorListComponent implements OnInit {
             ? 1
             : this._queryVariables.skip / this._queryVariables.take + 1,
         size: this._queryVariables.take,
-        sortBy: 'lastName',
+        sortBy: 'firstName',
         order: SortEnumType.Asc,
       },
       queryParamsHandling: 'merge',
@@ -55,36 +55,37 @@ export class AuthorListComponent implements OnInit {
   }
 
   constructor(
-    private getAuthorsGql: GetAuthorsGQL,
+    private gql: GetAuthorsGQL,
     private activatedRoute: ActivatedRoute,
     private router: Router
   ) {}
 
+  pageSizes: number[] = [10, 20, 50, 100]
   pageSize: number = 0;
 
-  authorsQuery: Observable<ApolloQueryResult<GetAuthorsQuery>> =
-    this._authorsQueryRef.valueChanges;
+  query: Observable<ApolloQueryResult<GetAuthorsQuery>> =
+    this._queryRef.valueChanges;
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe({
       next: (params) => {
         this.setQueryVariableFromRouteQueryParams(params);
         this.setQueryParams();
-        this._authorsQueryRef.refetch(this._queryVariables);
+        this._queryRef.refetch(this._queryVariables);
       },
     });
   }
 
   changePage(pageNumber: number) {
     this._queryVariables.skip = (pageNumber - 1) * this._queryVariables.take;
-    this._authorsQueryRef.refetch(this._queryVariables);
+    this._queryRef.refetch(this._queryVariables);
     this.setQueryParams();
   }
 
   changePageSize(selectedPageSize: number) {
     this._queryVariables.take = selectedPageSize;
     this._queryVariables.skip = 0;
-    this._authorsQueryRef.refetch(this._queryVariables);
+    this._queryRef.refetch(this._queryVariables);
     this.setQueryParams();
   }
 }
