@@ -1,0 +1,14 @@
+{
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
+  "recommendations": [
+    "angular.ng-template",
+    "cyrilletuzi.angular-schematics",
+    "ms-dotnettools.csharp",
+    "GraphQL.vscode-graphql-syntax",
+    "bradlc.vscode-tailwindcss",
+    "hbenl.vscode-test-explorer",
+    "esbenp.prettier-vscode",
+    "lucono.karma-test-explorer",
+    "ms-azuretools.vscode-docker"
+  ]
+}
