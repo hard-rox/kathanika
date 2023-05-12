@@ -1,4 +1,4 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
@@ -6,6 +6,10 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 describe('AppComponent', () => {
+  let component: AppComponent;
+  let fixture: ComponentFixture<AppComponent>;
+  let nativeElement: HTMLElement;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
@@ -14,28 +18,38 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent,
         HeaderComponent,
-        SidebarComponent,
-        FooterComponent
+        FooterComponent,
+        SidebarComponent
       ],
     }).compileComponents();
+
+    component = TestBed.createComponent(AppComponent);
+    fixture = TestBed.createComponent(AppComponent);
+    nativeElement = fixture.nativeElement as HTMLElement;
   });
 
+  beforeEach(() => {
+
+  })
+
   it('should create the app', () => {
-    const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'kathanika-app'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    const app = fixture.componentInstance;
-    expect(app.title).toEqual('kathanika-app');
+  it('should render header', () => {
+    expect(nativeElement.querySelector('app-header')).toBeTruthy();
   });
 
-  xit('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('kathanika-app app is running!');
+  it('should render sidebar', () => {
+    expect(nativeElement.querySelector('app-sidebar')).toBeTruthy();
+  });
+
+  it('should render footer', () => {
+    expect(nativeElement.querySelector('app-footer')).toBeTruthy();
+  });
+
+  it('should have router outlet', () => {
+    expect(nativeElement.querySelector('router-outlet')).toBeTruthy();
   });
 });

@@ -4,7 +4,7 @@ import { of } from 'rxjs';
 
 import { AuthorListComponent } from './author-list.component';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { GetAuthorsGQL } from 'src/app/graphql/generated';
+import { GetAuthorsGQL } from 'src/app/graphql/generated/graphql-operations';
 
 class MockGetAuthorsGQL {
   watch = jasmine.createSpy('watch').and.returnValue({

@@ -8,7 +8,7 @@ import {
   GetAuthorsQuery,
   GetAuthorsQueryVariables,
   SortEnumType,
-} from 'src/app/graphql/generated';
+} from 'src/app/graphql/generated/graphql-operations';
 
 @Component({
   templateUrl: './author-list.component.html',

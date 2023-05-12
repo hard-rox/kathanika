@@ -7,7 +7,7 @@ import {
   GetAuthorGQL,
   GetAuthorQuery,
   GetAuthorQueryVariables,
-} from 'src/app/graphql/generated';
+} from 'src/app/graphql/generated/graphql-operations';
 
 @Component({
   templateUrl: './author-details.component.html',

@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthorDetailsComponent } from './author-details.component';
 import { of } from 'rxjs';
-import { GetAuthorGQL } from 'src/app/graphql/generated';
+import { GetAuthorGQL } from 'src/app/graphql/generated/graphql-operations';
 import { ActivatedRoute } from '@angular/router';
 
 class MockGetAuthorGQL {
