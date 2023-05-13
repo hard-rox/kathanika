@@ -1,24 +1,24 @@
 import { OperationVariables } from "@apollo/client/core";
-import { Apollo, Query, QueryRef } from "apollo-angular";
+import { Query, QueryRef } from "apollo-angular";
 
-export class BaseQueryComponent<TQuery, TQueryVariable extends OperationVariables>{
+export abstract class BaseQueryComponent<TQuery, TQueryVariable extends OperationVariables>{
     private _queryRef!: QueryRef<TQuery, TQueryVariable>;
     public get queryRef() {
         return this._queryRef;
     }
 
-    private _queryVariable!: TQueryVariable;
-    public get queryVariable() {
-        return this._queryVariable;
+    private _queryVariables!: TQueryVariable;
+    public get queryVariables(): TQueryVariable {
+        return this._queryVariables;
     }
-    protected set queryVariable(queryVariable: TQueryVariable | null) {
-        if(queryVariable) this._queryVariable = queryVariable;
+    protected set queryVariables(queryVariable: TQueryVariable | null | undefined) {
+        if(queryVariable) this._queryVariables = queryVariable;
     }
 
     constructor(
         gql: Query<TQuery, TQueryVariable>,
-        queryVariable: TQueryVariable | null) {
-        this._queryVariable = queryVariable as TQueryVariable
-        this._queryRef = gql.watch(this._queryVariable);
+        queryVariables?: TQueryVariable | null) {
+        this.queryVariables = queryVariables;
+        this._queryRef = gql.watch(this._queryVariables);
     }
 }

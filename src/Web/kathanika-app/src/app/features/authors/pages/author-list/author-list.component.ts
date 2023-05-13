@@ -9,32 +9,24 @@ import {
   GetAuthorsQueryVariables,
   SortEnumType,
 } from 'src/app/graphql/generated/graphql-operations';
+import { BaseQueryComponent } from 'src/app/shared/bases/base-query-component';
 
 @Component({
   templateUrl: './author-list.component.html',
   styleUrls: ['./author-list.component.scss'],
 })
-export class AuthorListComponent implements OnInit {
-  private _queryVariables: GetAuthorsQueryVariables = {
-    skip: 0,
-    take: 10,
-    sortBy: {
-      firstName: SortEnumType.Asc,
-    },
-  };
-  private _queryRef: QueryRef<
-    GetAuthorsQuery,
-    GetAuthorsQueryVariables
-  > = this.gql.watch(this._queryVariables);
-
+export class AuthorListComponent
+  extends BaseQueryComponent<GetAuthorsQuery, GetAuthorsQueryVariables>
+  implements OnInit
+{
   private setQueryVariableFromRouteQueryParams(params: Params) {
     let size = +params['size'];
     let page = +params['page'];
     let sortBy = params['sortBy'] as string;
     let order = params['order'] as string;
 
-    if (size && size > 0) this.pageSize = this._queryVariables.take = size;
-    if (page && page > 0) this._queryVariables.skip = (page - 1) * size;
+    if (size && size > 0) this.pageSize = this.queryVariables.take = size;
+    if (page && page > 0) this.queryVariables.skip = (page - 1) * size;
     // if (sortBy && sortBy.length > 0) this._queryVariables.filter = {};
   }
 
@@ -43,10 +35,10 @@ export class AuthorListComponent implements OnInit {
       relativeTo: this.activatedRoute,
       queryParams: {
         page:
-          this._queryVariables.skip == 0
+          this.queryVariables.skip == 0
             ? 1
-            : this._queryVariables.skip / this._queryVariables.take + 1,
-        size: this._queryVariables.take,
+            : this.queryVariables.skip / this.queryVariables.take + 1,
+        size: this.queryVariables.take,
         sortBy: 'firstName',
         order: SortEnumType.Asc,
       },
@@ -55,37 +47,42 @@ export class AuthorListComponent implements OnInit {
   }
 
   constructor(
-    private gql: GetAuthorsGQL,
+    gql: GetAuthorsGQL,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+    super(gql, {
+      skip: 0,
+      take: 10,
+      sortBy: {
+        firstName: SortEnumType.Asc,
+      },
+    });
+  }
 
-  pageSizes: number[] = [10, 20, 50, 100]
+  pageSizes: number[] = [10, 20, 50, 100];
   pageSize: number = 0;
-
-  query: Observable<ApolloQueryResult<GetAuthorsQuery>> =
-    this._queryRef.valueChanges;
 
   ngOnInit(): void {
     this.activatedRoute.queryParams.subscribe({
       next: (params) => {
         this.setQueryVariableFromRouteQueryParams(params);
         this.setQueryParams();
-        this._queryRef.refetch(this._queryVariables);
+        this.queryRef.refetch(this.queryVariables);
       },
     });
   }
 
   changePage(pageNumber: number) {
-    this._queryVariables.skip = (pageNumber - 1) * this._queryVariables.take;
-    this._queryRef.refetch(this._queryVariables);
+    this.queryVariables.skip = (pageNumber - 1) * this.queryVariables.take;
+    this.queryRef.refetch(this.queryVariables);
     this.setQueryParams();
   }
 
   changePageSize(selectedPageSize: number) {
-    this._queryVariables.take = selectedPageSize;
-    this._queryVariables.skip = 0;
-    this._queryRef.refetch(this._queryVariables);
+    this.queryVariables.take = selectedPageSize;
+    this.queryVariables.skip = 0;
+    this.queryRef.refetch(this.queryVariables);
     this.setQueryParams();
   }
 }

@@ -17,16 +17,16 @@ export class AuthorDetailsComponent
 {
   constructor(gql: GetAuthorGQL,
     private activatedRoute: ActivatedRoute) {
-    super(gql, null);
+    super(gql);
   }
 
   ngOnInit(): void {
     const authorId = this.activatedRoute.snapshot.params['id'];
     if (authorId && authorId.length > 0) {
-      this.queryVariable = {
+      this.queryVariables = {
         id: authorId,
       };
-      this.queryRef.refetch(this.queryVariable);
+      this.queryRef.refetch(this.queryVariables);
     }
   }
 }

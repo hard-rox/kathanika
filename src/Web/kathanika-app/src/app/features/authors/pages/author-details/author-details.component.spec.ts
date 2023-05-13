@@ -49,7 +49,7 @@ describe('AuthorDetailsComponent', () => {
   it('should refetch query with route param on ngOnInit', () => {
     const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
     component.ngOnInit();
-    const queryVariable = component.queryVariable;
+    const queryVariable = component.queryVariables;
     expect(queryVariable?.id).toEqual(mockAuthorId);
     expect(queryRefRefetchSpy).toHaveBeenCalledOnceWith(queryVariable);
   });
@@ -60,7 +60,7 @@ describe('AuthorDetailsComponent', () => {
 
     component.ngOnInit();
 
-    const queryVariable = component.queryVariable;
+    const queryVariable = component.queryVariables;
     expect(queryVariable).toBeFalsy();
     expect(queryRefRefetchSpy).not.toHaveBeenCalled();
   });
