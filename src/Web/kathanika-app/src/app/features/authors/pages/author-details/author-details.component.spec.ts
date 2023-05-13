@@ -1,22 +1,21 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthorDetailsComponent } from './author-details.component';
-import { of } from 'rxjs';
 import { GetAuthorGQL } from 'src/app/graphql/generated/graphql-operations';
 import { ActivatedRoute } from '@angular/router';
-
-class MockGetAuthorGQL {
-  watch = jasmine.createSpy('watch').and.returnValue({
-    valueChanges: of({}),
-  });
-}
+import { mockGql } from 'src/test-utils/gql-test-utils';
+import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AuthorDetailsComponent', () => {
   let component: AuthorDetailsComponent;
   let fixture: ComponentFixture<AuthorDetailsComponent>;
+  let activatedRoute: ActivatedRoute;
+
+  const mockAuthorId = '12345';
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [RouterTestingModule],
       declarations: [AuthorDetailsComponent],
       providers: [
         {
@@ -24,24 +23,45 @@ describe('AuthorDetailsComponent', () => {
           useValue: {
             snapshot: {
               params: {
-                id: '',
+                id: mockAuthorId,
               },
             },
           },
         },
         {
           provide: GetAuthorGQL,
-          useClass: MockGetAuthorGQL,
+          useValue: mockGql,
         },
       ],
-    }).compileComponents();
-
-    fixture = TestBed.createComponent(AuthorDetailsComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    })
+      .compileComponents()
+      .then(() => {
+        activatedRoute = TestBed.inject(ActivatedRoute);
+        fixture = TestBed.createComponent(AuthorDetailsComponent);
+        component = fixture.componentInstance;
+      });
   });
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should refetch query with route param on ngOnInit', () => {
+    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
+    component.ngOnInit();
+    const queryVariable = component.queryVariable;
+    expect(queryVariable?.id).toEqual(mockAuthorId);
+    expect(queryRefRefetchSpy).toHaveBeenCalledOnceWith(queryVariable);
+  });
+
+  it('should not refetch query and variable with route param when route param id is valid on ngOnInit', () => {
+    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
+    activatedRoute.snapshot.params['id'] = '';
+
+    component.ngOnInit();
+
+    const queryVariable = component.queryVariable;
+    expect(queryVariable).toBeFalsy();
+    expect(queryRefRefetchSpy).not.toHaveBeenCalled();
   });
 });

@@ -6,6 +6,7 @@ import { GetAuthorsGQL } from 'src/app/graphql/generated/graphql-operations';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
+import { mockGql } from 'src/test-utils/gql-test-utils';
 
 describe('AuthorListComponent', () => {
   let component: AuthorListComponent;
@@ -19,14 +20,7 @@ describe('AuthorListComponent', () => {
       providers: [
         {
           provide: GetAuthorsGQL,
-          useValue: {
-            watch: () => {
-              return {
-                valueChanges: {},
-                refetch: () => {},
-              };
-            },
-          },
+          useValue: mockGql,
         },
         {
           provide: ActivatedRoute,
