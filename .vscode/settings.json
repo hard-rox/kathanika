@@ -13,5 +13,8 @@
         "**/Logs": true,
         "**/node_modules": true,
         "**/.angular": true,
-    }
+    },
+    "karmaTestExplorer.projectWorkspaces":[
+        "src/Web/kathanika-app"
+    ]
 }
