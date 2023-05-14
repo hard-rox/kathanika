@@ -1,0 +1,3 @@
+<ng-container *ngIf="queryRef.valueChanges | async as queryResult">
+    <pre>{{queryResult | json}}</pre>
+</ng-container>

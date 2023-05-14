@@ -1,13 +1,13 @@
-<header class="bg-gray-900 text-white shadow-md py-4 px-6 fixed top-0 left-0 right-0 z-10">
+<header class="bg-theme-rich-black text-white shadow-md py-4 px-6 fixed top-0 left-0 right-0 z-20">
     <div class="container mx-auto flex justify-between">
         <h1 class="text-2xl font-bold">কথনিকা</h1>
         <div class="flex items-center space-x-2">
             <div class="relative inline-block text-left">
                 <div>
-                    <button [ngClass]="{'bg-gray-500': isNotificationVisible}"
+                    <button id="notification-btn" [ngClass]="{'bg-theme-prussian-blue': isNotificationVisible}"
                         (click)="isNotificationVisible = !isNotificationVisible"
                         (focusout)="isNotificationVisible = false"
-                        class="rounded-full hover:bg-gray-400 active:bg-gray-500 w-10 h-10 ">
+                        class="rounded-full hover:bg-theme-indigo-dye active:bg-theme-prussian-blue w-10 h-10 ">
                         <span class="material-symbols-sharp">
                             notifications
                         </span>
@@ -24,7 +24,7 @@
                     From: "transform opacity-100 scale-100"
                     To: "transform opacity-0 scale-95"
                 -->
-                <div [ngClass]="{'hidden': !isNotificationVisible}"
+                <div id="notification-container" *ngIf="isNotificationVisible"
                     class="absolute right-0 z-10 mt-2 w-56 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">
@@ -47,10 +47,10 @@
             <img class="rounded-full border-gray-500 max-w-10 max-h-10" src="https://picsum.photos/200" />
             <div class="relative inline-block text-left">
                 <div>
-                    <button type="button" (click)="isUserActionsVisible = !isUserActionsVisible"
+                    <button id="user-action-btn" type="button" (click)="isUserActionsVisible = !isUserActionsVisible"
                         (focusout)="isUserActionsVisible = false" [ngClass]="{'bg-gray-500': isUserActionsVisible}"
                         class="inline-flex items-center w-full justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold hover:bg-gray-400 active:bg-gray-500"
-                        id="menu-button" aria-expanded="true" aria-haspopup="true">
+                        aria-expanded="true" aria-haspopup="true">
                         John Doe
                         <span class="material-symbols-sharp">
                             {{isUserActionsVisible ? 'expand_less' : 'expand_more'}}
@@ -68,7 +68,7 @@
                     From: "transform opacity-100 scale-100"
                     To: "transform opacity-0 scale-95"
                 -->
-                <div [ngClass]="{'hidden': !isUserActionsVisible}"
+                <div id="user-action-container" *ngIf="isUserActionsVisible"
                     class="absolute right-0 z-10 mt-2 w-56 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">

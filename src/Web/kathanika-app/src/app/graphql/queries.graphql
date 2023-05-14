@@ -18,3 +18,15 @@ query getAuthors(
     totalCount
   }
 }
+
+query getAuthor($id: String!) {
+  author(id: $id) {
+    id
+    firstName
+    lastName
+    dateOfBirth
+    dateOfDeath
+    nationality
+    biography
+  }
+}

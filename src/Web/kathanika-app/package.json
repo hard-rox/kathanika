@@ -6,8 +6,9 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test",
-    "codegen": "graphql-codegen --config codegen.ts"
+    "test": "ng test --code-coverage",
+    "codegen": "graphql-codegen --config codegen.ts",
+    "code-cov": "ng test --no-watch --code-coverage && http-server -p 4201 -c-1 coverage/kathanika-app -o"
   },
   "private": true,
   "dependencies": {
@@ -37,6 +38,7 @@
     "@graphql-codegen/typescript-operations": "^3.0.4",
     "@types/jasmine": "~4.3.0",
     "autoprefixer": "^10.4.14",
+    "http-server": "^14.1.1",
     "jasmine-core": "~4.5.0",
     "karma": "~6.4.0",
     "karma-chrome-launcher": "~3.1.0",

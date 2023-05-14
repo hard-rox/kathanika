@@ -105,7 +105,10 @@
             "styles": [
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [],
+            "codeCoverageExclude": [
+              "src/app/graphql/generated/graphql-operations.ts"
+            ]
           }
         }
       }
