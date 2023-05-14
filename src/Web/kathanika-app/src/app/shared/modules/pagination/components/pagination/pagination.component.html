@@ -1,6 +1,6 @@
 <nav class="bg-white mt-4 inline-flex items-center gap-4 border-b border-theme-indigo-dye">
     <span class="px-4 py-2">Items per page</span>
-    <select (change)="onChangePageSize($event.target)"
+    <select (change)="onPageSizeChanged($event.target)"
         class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue">
         <option *ngFor="let pageSizeItem of pageSizes" [value]="pageSizeItem" [selected]="pageSizeItem == pageSize">
             {{pageSizeItem}}

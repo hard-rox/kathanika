@@ -23,7 +23,7 @@ export class PaginationComponent {
   }
   set totalCount(totalCount: number | undefined) {
     this._totalCount = totalCount ?? 0;
-    this.lastPage = Math.ceil(totalCount ?? 0 / this._pageSize);
+    this.lastPage = totalCount ? Math.ceil(totalCount / this._pageSize) : 1;
   }
 
   @Input('pageSizes')
@@ -63,7 +63,7 @@ export class PaginationComponent {
     }
   }
 
-  onChangePageSize(element: EventTarget | null) {
+  onPageSizeChanged(element: EventTarget | null) {
     let selectedPageSize = +(element as HTMLInputElement).value ?? 0;
     if (selectedPageSize > 0 && this.pageSizes.includes(selectedPageSize)) {
       this._pageSize = selectedPageSize;

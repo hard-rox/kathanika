@@ -1,12 +1,12 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthorListComponent } from './author-list.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { GetAuthorsGQL } from 'src/app/graphql/generated/graphql-operations';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { mockGql } from 'src/test-utils/gql-test-utils';
+import { PaginationModule } from 'src/app/shared/modules/pagination/pagination.module';
 
 describe('AuthorListComponent', () => {
   let component: AuthorListComponent;
@@ -16,7 +16,7 @@ describe('AuthorListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AuthorListComponent],
-      imports: [SharedModule, RouterTestingModule],
+      imports: [PaginationModule, RouterTestingModule],
       providers: [
         {
           provide: GetAuthorsGQL,
@@ -45,7 +45,7 @@ describe('AuthorListComponent', () => {
   });
 
   it('hould change _queryVariables on changePage', () => {
-    let queryVariables = component['_queryVariables'];
+    let queryVariables = component.queryVariables;
     const page = 2;
 
     component.changePage(page);
@@ -53,7 +53,7 @@ describe('AuthorListComponent', () => {
   });
 
   it('should refetch query changePage', () => {
-    const queryRefRefetchSpy = spyOn<any>(component['_queryRef'], 'refetch');
+    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
     const page = 2;
 
     component.changePage(page);
@@ -70,7 +70,7 @@ describe('AuthorListComponent', () => {
   });
 
   it('should change _queryVariables on changePageSize', () => {
-    let queryVariables = component['_queryVariables'];
+    let queryVariables = component.queryVariables;
     const pageSize = 2;
 
     component.changePageSize(pageSize);
@@ -78,7 +78,7 @@ describe('AuthorListComponent', () => {
   });
 
   it('should refetch query on changePageSize', () => {
-    const queryRefRefetchSpy = spyOn<any>(component['_queryRef'], 'refetch');
+    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
     const pageSize = 2;
 
     component.changePageSize(pageSize);
@@ -96,15 +96,15 @@ describe('AuthorListComponent', () => {
 
   it('should change _QueryVariables on ngOnInit', () => {
     // size: 3, page: 2
-    const queryVariables = component['_queryVariables'];
+    const queryVariables = component.queryVariables;
     component.ngOnInit();
     expect(queryVariables.skip).toEqual(3);
     expect(queryVariables.take).toEqual(3);
   });
 
   it('should refetch query on ngOnInit', () => {
-    const queryVariables = component['_queryVariables'];
-    const queryRefRefetchSpy = spyOn<any>(component['_queryRef'], 'refetch');
+    const queryVariables = component.queryVariables;
+    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
     component.ngOnInit();
     expect(queryRefRefetchSpy).toHaveBeenCalledOnceWith(queryVariables);
   });

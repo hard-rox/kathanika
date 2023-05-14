@@ -1,8 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { ApolloQueryResult } from '@apollo/client/core';
-import { QueryRef } from 'apollo-angular';
-import { Observable } from 'rxjs';
 import {
   GetAuthorsGQL,
   GetAuthorsQuery,

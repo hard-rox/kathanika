@@ -3,8 +3,8 @@ import { CommonModule } from '@angular/common';
 
 import { AuthorsRoutingModule } from './authors-routing.module';
 import { AuthorListComponent } from './pages/author-list/author-list.component';
-import { SharedModule } from 'src/app/shared/shared.module';
 import { AuthorDetailsComponent } from './pages/author-details/author-details.component';
+import { PaginationModule } from 'src/app/shared/modules/pagination/pagination.module';
 
 
 @NgModule({
@@ -15,7 +15,7 @@ import { AuthorDetailsComponent } from './pages/author-details/author-details.co
   imports: [
     CommonModule,
     AuthorsRoutingModule,
-    SharedModule
+    PaginationModule
   ]
 })
 export class AuthorsModule { }
