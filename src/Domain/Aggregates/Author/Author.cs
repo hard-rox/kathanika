@@ -14,7 +14,24 @@ public sealed class Author : AggregateRoot
 
     public string FullName => $"{FirstName} {LastName}";
 
-    public Author(
+    private Author(
+        string firstName,
+        string lastName,
+        DateTime dateOfBirth,
+        DateTime? dateOfDeath,
+        string nationality,
+        string biography
+    )
+    {
+        FirstName = firstName;
+        LastName = lastName;
+        DateOfBirth = dateOfBirth;
+        DateOfDeath = dateOfDeath;
+        Nationality = nationality;
+        Biography = biography;
+    }
+
+    public static Author Create(
         string firstName,
         string lastName,
         DateTime dateOfBirth,
@@ -42,12 +59,13 @@ public sealed class Author : AggregateRoot
             throw new AggregateException(errors);
         }
 
-        FirstName = firstName;
-        LastName = lastName;
-        DateOfBirth = dateOfBirth;
-        DateOfDeath = dateOfDeath;
-        Nationality = nationality;
-        Biography = biography;
+        return new Author(
+            firstName,
+            lastName,
+            dateOfBirth,
+            dateOfDeath,
+            nationality,
+            biography);
     }
 
     public void Update(
@@ -60,9 +78,9 @@ public sealed class Author : AggregateRoot
     {
         FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
         LastName = !string.IsNullOrEmpty(lastName) ? lastName : LastName;
-        Nationality = !string.IsNullOrEmpty(nationality) ? nationality: Nationality;
-        Biography = !string.IsNullOrEmpty(biography) ? biography: Biography;
-        if(dateOfBirth is not null)
+        Nationality = !string.IsNullOrEmpty(nationality) ? nationality : Nationality;
+        Biography = !string.IsNullOrEmpty(biography) ? biography : Biography;
+        if (dateOfBirth is not null)
         {
             if (((DateTime)dateOfBirth).ToUniversalTime().Date > DateTime.UtcNow.Date)
                 throw new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date");
@@ -74,7 +92,7 @@ public sealed class Author : AggregateRoot
 
     public void MarkAsDeceased(DateTime dateOfDeath)
     {
-        if(dateOfDeath.ToUniversalTime().Date > DateTime.UtcNow.Date)
+        if (dateOfDeath.ToUniversalTime().Date > DateTime.UtcNow.Date)
             throw new InvalidFieldException(nameof(dateOfDeath), $"Cann't be future date");
 
         if (dateOfDeath <= DateOfBirth)
