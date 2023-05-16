@@ -2,6 +2,7 @@
 using Kathanika.Domain.Primitives;
 using Kathanika.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging.Abstractions;
 using MongoDB.Driver;
 using Moq;
 
@@ -9,7 +10,7 @@ namespace Kathanika.UnitTests.PersistenceUnitTests;
 
 public sealed class BaseRepositoryTests
 {
-    private class DummyEntity : AggregateRoot { public string? Name { get; set; } };
+    public class DummyEntity : AggregateRoot { public string? Name { get; set; } };
     private class DummyRepo : Repository<DummyEntity>
     {
         public DummyRepo(IMongoDatabase database,
@@ -21,30 +22,23 @@ public sealed class BaseRepositoryTests
         }
     }
 
-    private readonly Mock<IMongoDatabase> databaseMock = new();
-    private readonly Mock<ILogger<DummyRepo>> loggerMock = new();
-    private readonly Mock<ICacheService> cacheMock = new();
+    private readonly Mock<IMongoDatabase> _databaseMock = new();
+    private readonly Mock<IMongoCollection<DummyEntity>> _collectionMock = new();
+    private readonly Mock<ICacheService> _cacheMock = new();
+    private readonly ILogger<DummyRepo> _logger = new NullLogger<DummyRepo>();
 
     [Fact]
     public void AsQueryable_Should_Return_Queryable()
     {
         // Arrange
-        var collection = databaseMock.Object.GetCollection<DummyEntity>("dummyCollection");
-
-        var dummyData = new List<DummyEntity>
-        {
-            new DummyEntity { Name = "Hello 1"},
-            new DummyEntity { Name = "Hello 2"},
-            new DummyEntity { Name = "Hello 3"}
-        };
-        collection.InsertMany(dummyData);
-
-        var repo = new DummyRepo(databaseMock.Object, "dummyCollection", loggerMock.Object, cacheMock.Object);
+        _databaseMock.Setup(x => x.GetCollection<DummyEntity>(It.IsAny<string>(), It.IsAny<MongoCollectionSettings>())).Returns(_collectionMock.Object);
+        var repo = new DummyRepo(_databaseMock.Object, "dummyCollection", _logger, _cacheMock.Object);
 
         // Act
         var result = repo.AsQueryable();
 
         // Assert
-        Assert.IsType<IQueryable<DummyEntity>>(result);
+        _databaseMock.Verify(x => x.GetCollection<It.IsSubtype<DummyEntity>>(It.IsAny<string>(), It.IsAny<MongoCollectionSettings>()), Times.Once);
+        _collectionMock.Verify(x => x.AsQueryable(null), Times.Once);
     }
 }
