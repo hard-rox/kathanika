@@ -21,6 +21,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\src\Application\Kathanika.Application.csproj" />
     <ProjectReference Include="..\..\src\Domain\Kathanika.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj" />
   </ItemGroup>
 
 </Project>
