@@ -54,7 +54,7 @@ public sealed class AuthorTests
     }
 
     [Fact]
-    public void Handler_Should_Throw_InvalidFieldException_On_FutureDateOfDeath()
+    public void Create_Should_Throw_InvalidFieldException_On_FutureDateOfDeath()
     {
         // Arrange
 
