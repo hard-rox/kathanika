@@ -51,7 +51,7 @@ public sealed class Author : AggregateRoot
         }
         if (dateOfDeath is not null && dateOfDeath?.Date <= dateOfBirth)
         {
-            errors.Add(new InvalidFieldException(nameof(dateOfDeath), $"DateOfDeath must be after DateOfDeath"));
+            errors.Add(new InvalidFieldException(nameof(dateOfDeath), $"{nameof(DateOfDeath)} must be after {nameof(DateOfBirth)}"));
         }
 
         if (errors.Count > 0)
