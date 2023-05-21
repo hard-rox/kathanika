@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
+using Kathanika.Domain.Primitives;
 using Kathanika.Infrastructure.GraphQL.Schema;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -31,6 +32,18 @@ internal static class SchemaConfigurations
         requestBuilder.AddProjections();
         requestBuilder.AddFiltering();
         requestBuilder.AddSorting();
+        requestBuilder.AddErrorFilter(error =>
+        {
+            if (error.Exception is not DomainException)
+            {
+                return error
+                    .RemoveException()
+                    .RemoveExtensions()
+                    .RemoveLocations()
+                    .WithMessage("Something went terribly wrong. We are trying to fix it...");
+            }
+            return error;
+        });
         requestBuilder.ModifyRequestOptions(opt =>
         {
             opt.IncludeExceptionDetails = true;
