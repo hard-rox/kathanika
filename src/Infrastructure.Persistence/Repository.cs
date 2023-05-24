@@ -40,7 +40,8 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         }
         _logger.LogInformation("Document not found in cache with cache key: {@CacheKey}", cacheKey);
         
-        var document = await _collection.Find(x => x.Id == id).SingleOrDefaultAsync();
+        var cursor = await _collection.FindAsync(x => x.Id == id);
+        var document = await cursor.SingleOrDefaultAsync();
         _logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", document, typeof(T).Name, _collectionName);
         
         _logger.LogInformation("Setting document {@Document} into cache with cache key: {@CacheKey}", document, cacheKey);
