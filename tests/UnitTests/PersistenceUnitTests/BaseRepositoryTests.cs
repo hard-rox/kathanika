@@ -4,6 +4,7 @@ using Kathanika.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using MongoDB.Driver;
+using MongoDB.Driver.Linq;
 using Moq;
 
 namespace Kathanika.UnitTests.PersistenceUnitTests;
@@ -43,6 +44,24 @@ public sealed class BaseRepositoryTests
             .ReturnsAsync(true).ReturnsAsync(false);
     }
 
+    // [Fact]
+    // public void AsQueryable_Should_Call_AsQueryable()
+    // {
+    //     // Arrange
+    //     var queryableMock = new Mock<IMongoQueryable<DummyEntity>>();
+    //     collectionMock.Setup(x => x.AsQueryable(It.IsAny<AggregateOptions>()))
+    //         .Returns(queryableMock.Object)
+    //         .Verifiable();
+
+    //     var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
+
+    //     // Act
+    //     var result = repo.AsQueryable();
+
+    //     // Assert
+    //     collectionMock.Verify(x => x.AsQueryable(It.Is<AggregateOptions>(x => x == null)), Times.Exactly(1));
+    // }
+
     [Fact]
     public async Task GetById_Should_Call_FindAsync()
     {
@@ -61,6 +80,27 @@ public sealed class BaseRepositoryTests
         // Assert
         collectionMock.Verify(x => x.FindAsync(It.IsAny<FilterDefinition<DummyEntity>>(),
             It.IsAny<FindOptions<DummyEntity, DummyEntity>>(),
+            It.IsAny<CancellationToken>()), Times.Exactly(1));
+    }
+
+    [Fact]
+    public async Task ListAllAsync_Should_Call_FindAsync_With_EmptyFilter()
+    {
+        // Arrange
+        collectionMock.Setup(x => x.FindAsync(It.IsAny<FilterDefinition<DummyEntity>>(),
+            It.IsAny<FindOptions<DummyEntity, DummyEntity>>(),
+            It.IsAny<CancellationToken>()))
+            .ReturnsAsync(cursorMock.Object)
+            .Verifiable();
+
+        var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
+
+        // Act
+        var result = await repo.ListAllAsync();
+
+        // Assert
+        collectionMock.Verify(x => x.FindAsync(It.Is<FilterDefinition<DummyEntity>>(x => x == Builders<DummyEntity>.Filter.Empty),
+            It.Is<FindOptions<DummyEntity, DummyEntity>>(x => x == null),
             It.IsAny<CancellationToken>()), Times.Exactly(1));
     }
 }

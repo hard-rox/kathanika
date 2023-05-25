@@ -54,8 +54,8 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     {
         _logger.LogInformation("Getting all documents of type {@DocumentType} from collection {@CollectionName}", typeof(T).Name, _collectionName);
         var filter = Builders<T>.Filter.Empty;
-        var list = await _collection.Find(filter).ToListAsync();
-        return list;
+        var cursor = await _collection.FindAsync(filter);
+        return await cursor.ToListAsync();
     }
 
     public async Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> expression)
