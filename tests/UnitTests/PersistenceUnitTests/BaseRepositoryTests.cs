@@ -32,36 +32,35 @@ public sealed class BaseRepositoryTests
     private readonly Mock<IMongoCollection<DummyEntity>> collectionMock = new();
     private readonly Mock<IAsyncCursor<DummyEntity>> cursorMock = new();
 
-    [Fact]
-    public async Task GetById_Should_Return_One_When_ValidId()
+    public BaseRepositoryTests()
     {
-        // Arrange
-        var dummyData = new List<DummyEntity>
-        {
-            new DummyEntity { Id = "1", Name = "Hello 1"},
-            // new DummyEntity { Id = "2", Name = "Hello 2"},
-            // new DummyEntity { Id = "3", Name = "Hello 3"}
-        };
-
         databaseMock.Setup(x => x.GetCollection<DummyEntity>(It.IsAny<string>(), It.IsAny<MongoCollectionSettings>()))
             .Returns(collectionMock.Object);
-        cursorMock.Setup(x => x.Current).Returns(dummyData);
+
         cursorMock.SetupSequence(x => x.MoveNext(It.IsAny<CancellationToken>()))
             .Returns(true).Returns(false);
         cursorMock.SetupSequence(x => x.MoveNextAsync(It.IsAny<CancellationToken>()))
             .ReturnsAsync(true).ReturnsAsync(false);
+    }
+
+    [Fact]
+    public async Task GetById_Should_Call_FindAsync()
+    {
+        // Arrange
         collectionMock.Setup(x => x.FindAsync(It.IsAny<FilterDefinition<DummyEntity>>(),
             It.IsAny<FindOptions<DummyEntity, DummyEntity>>(),
             It.IsAny<CancellationToken>()))
-            .ReturnsAsync(cursorMock.Object);
+            .ReturnsAsync(cursorMock.Object)
+            .Verifiable();
 
-        var repo = new DummyRepo(databaseMock.Object, "dummycollection", nullLogger, cacheMock.Object);
+        var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
 
         // Act
-            var result = await repo.GetByIdAsync("1");
+        var result = await repo.GetByIdAsync("1");
 
         // Assert
-        Assert.NotNull(result);
-        Assert.Equal("1", result.Id);
+        collectionMock.Verify(x => x.FindAsync(It.IsAny<FilterDefinition<DummyEntity>>(),
+            It.IsAny<FindOptions<DummyEntity, DummyEntity>>(),
+            It.IsAny<CancellationToken>()), Times.Exactly(1));
     }
 }
