@@ -20,14 +20,32 @@ try
         .AddPersistenceInfrastructure(builder.Configuration)
         .AddServicesInfrastructure(builder.Configuration);
 
+    if (builder.Environment.IsDevelopment())
+    {
+        builder.Services.AddCors();
+    }
+
     var app = builder.Build();
 
     app.UseSerilogRequestLogging();
 
     app.UseGraphQLInfrastructure();
 
-    app.UseStaticFiles();
-    app.MapFallbackToFile("index.html");
+    if (builder.Environment.IsDevelopment())
+    {
+        app.UseCors(options =>
+        {
+            options.AllowAnyHeader();
+            options.AllowAnyMethod();
+            options.SetIsOriginAllowed(origin => true);
+            options.AllowCredentials();
+        });
+    }
+    else
+    {
+        app.UseStaticFiles();
+        app.MapFallbackToFile("index.html");
+    }
 
     app.Run();
 }

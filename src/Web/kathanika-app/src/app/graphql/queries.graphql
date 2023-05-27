@@ -1,0 +1,32 @@
+query getAuthors(
+  $skip: Int!
+  $take: Int!
+  $filter: AuthorFilterInput
+  $sortBy: [AuthorSortInput!]
+) {
+  authors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      firstName
+      lastName
+      nationality
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+
+query getAuthor($id: String!) {
+  author(id: $id) {
+    id
+    firstName
+    lastName
+    dateOfBirth
+    dateOfDeath
+    nationality
+    biography
+  }
+}
