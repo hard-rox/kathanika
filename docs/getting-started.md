@@ -52,32 +52,15 @@ Running the Tests
 2.  Navigate to the root of the project directory.
 3.  Run the following command to run all tests:
 
-bashCopy code
+`dotnet test --collect:"XPlat Code Coverage"`
 
-`dotnet test`
-
-Running the GraphQL Server
---------------------------
+Opening Code coverage report for Backend
+-----------------
 
 1.  Open a terminal or command prompt.
-2.  Navigate to the `src/Infrastructure.GraphQL` directory.
-3.  Run the following command to start the GraphQL server:
+2.  Navigate to the root of the project directory.
+3.  Run the following command to run all tests:
 
-arduinoCopy code
-
-`dotnet run`
-
-1.  Open a web browser and navigate to `http://localhost:5001/graphql` to test the GraphQL API.
-
-Running the Background Worker
------------------------------
-
-1.  Open a terminal or command prompt.
-2.  Navigate to the `src/Infrastructure.Workers` directory.
-3.  Run the following command to start the worker:
-
-arduinoCopy code
-
-`dotnet run`
+`dotnet reportgenerator -reports:**/coverage.cobertura.xml -targetdir:tests/coverage`
 
 That's it! You should now have a basic understanding of how to get started with the project.
