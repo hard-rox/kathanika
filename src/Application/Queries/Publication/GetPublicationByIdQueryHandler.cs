@@ -1,6 +1,4 @@
-﻿using Kathanika.Domain.Exceptions;
-
-namespace Kathanika.Application.Queries;
+﻿namespace Kathanika.Application.Queries;
 
 internal sealed class GetPublicationByIdQueryHandler
     : IRequestHandler<GetPublicationByIdQuery, Publication>

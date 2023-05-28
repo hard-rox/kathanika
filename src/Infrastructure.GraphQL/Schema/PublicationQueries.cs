@@ -1,5 +1,4 @@
-﻿using Kathanika.Domain.Exceptions;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.GraphQL.Schema;
 

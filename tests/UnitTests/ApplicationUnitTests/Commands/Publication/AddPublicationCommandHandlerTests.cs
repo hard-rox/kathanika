@@ -62,7 +62,7 @@ public class AddPublicationCommandHandlerTests
 
         var command = new AddPublicationCommand(
             publication.Title,
-            publication.Isbn,
+            publication.Isbn ?? "",
             publication.PublicationType,
             new List<string>(),
             publication.Publisher,
