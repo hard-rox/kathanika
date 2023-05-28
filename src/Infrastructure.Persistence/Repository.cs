@@ -70,6 +70,43 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return await cursor.ToListAsync();
     }
 
+    public async Task<long> CountAsync()
+    {
+        _logger.LogInformation("Getting document count of all documents of type {@DocumentType} from collection {@CollectionName}", typeof(T).Name, _collectionName);
+        var cacheKey = $"{typeof(T).Name.ToLower()}-count";
+        var cachedDocumentCount = _cacheService.Get<long?>(cacheKey);
+        if(cachedDocumentCount is not null)
+        {
+            _logger.LogInformation("Got document count {@DocumentCount} of type {@DocumentType} from cache with cache key: {@CacheKey} ",
+                cachedDocumentCount, typeof(T).Name, cacheKey);
+            return (long)cachedDocumentCount;
+        }
+        _logger.LogInformation("Document count not found in cache with cache key: {@CacheKey}", cacheKey);
+
+        var filter = Builders<T>.Filter.Empty;
+        var documentCount = await _collection.CountDocumentsAsync(filter);
+        
+        _logger.LogInformation("Got document count {@DocumentCount} of type {@DocumentType} from {CollectionName}",
+            documentCount, typeof(T).Name, _collectionName);
+        
+        _logger.LogInformation("Setting document count {@DocumentCount} into cache with cache key: {@CacheKey}", documentCount, cacheKey);
+        _cacheService.Set(cacheKey, documentCount);
+        return documentCount;
+    }
+
+    public async Task<long> CountAsync(Expression<Func<T, bool>> expression)
+    {
+        _logger.LogInformation("Getting document count in condition {@Condition} of type {@DocumentType} from collection {@CollectionName}",
+            expression, typeof(T).Name, _collectionName);
+        var filter = Builders<T>.Filter.Where(expression);
+        var documentCount = await _collection.CountDocumentsAsync(filter);
+        
+        _logger.LogInformation("Got document count {@DocumentCount} in condition {@Condition} of type {@DocumentType} from {CollectionName}",
+            documentCount, expression, typeof(T).Name, _collectionName);
+        
+        return documentCount;
+    }
+    
     public async Task<T> AddAsync(T aggregate)
     {
         _logger.LogInformation("Adding new document {@Document} of type {@DocumentType} into collection {@CollectionName}", aggregate, typeof(T).Name, _collectionName);

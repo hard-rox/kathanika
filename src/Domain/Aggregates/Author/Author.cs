@@ -43,15 +43,15 @@ public sealed class Author : AggregateRoot
         var errors = new List<DomainException>();
         if (dateOfBirth.ToUniversalTime().Date > DateTime.UtcNow.Date)
         {
-            errors.Add(new InvalidFieldException(nameof(dateOfBirth), $"Cann't be future date"));
+            errors.Add(new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date"));
         }
         if (dateOfDeath?.ToUniversalTime().Date > DateTime.UtcNow.Date)
         {
-            errors.Add(new InvalidFieldException(nameof(dateOfDeath), $"Cann't be future date"));
+            errors.Add(new InvalidFieldException(nameof(DateOfDeath), $"Cann't be future date"));
         }
         if (dateOfDeath is not null && dateOfDeath?.Date <= dateOfBirth)
         {
-            errors.Add(new InvalidFieldException(nameof(dateOfDeath), $"{nameof(DateOfDeath)} must be after {nameof(DateOfBirth)}"));
+            errors.Add(new InvalidFieldException(nameof(DateOfDeath), $"{nameof(DateOfDeath)} must be after {nameof(DateOfBirth)}"));
         }
 
         if (errors.Count > 0)
@@ -93,10 +93,10 @@ public sealed class Author : AggregateRoot
     public void MarkAsDeceased(DateTime dateOfDeath)
     {
         if (dateOfDeath.ToUniversalTime().Date > DateTime.UtcNow.Date)
-            throw new InvalidFieldException(nameof(dateOfDeath), $"Cann't be future date");
+            throw new InvalidFieldException(nameof(DateOfDeath), $"Cann't be future date");
 
         if (dateOfDeath <= DateOfBirth)
-            throw new InvalidFieldException(nameof(dateOfDeath), $"DateOfDeath must be after DateOfDeath");
+            throw new InvalidFieldException(nameof(DateOfDeath), $"{nameof(DateOfDeath)} must be after {nameof(DateOfBirth)}");
 
         DateOfDeath = dateOfDeath.Date;
     }
