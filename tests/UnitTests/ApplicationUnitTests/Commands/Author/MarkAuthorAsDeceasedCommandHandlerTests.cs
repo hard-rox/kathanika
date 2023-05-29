@@ -1,7 +1,5 @@
 ﻿using Kathanika.Application.Commands;
-using Kathanika.Domain.Aggregates;
 using Kathanika.Domain.Exceptions;
-using Moq;
 
 namespace Kathanika.UnitTests.ApplicationUnitTests.Commands;
 

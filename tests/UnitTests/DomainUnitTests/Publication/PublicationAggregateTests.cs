@@ -1,5 +1,3 @@
-using Kathanika.Domain.Aggregates;
-
 namespace Kathanika.UnitTests.DomainUnitTests;
 
 public class PublicationAggregateTests

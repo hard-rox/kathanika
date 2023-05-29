@@ -4,7 +4,6 @@ using Kathanika.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using MongoDB.Driver;
-using Moq;
 
 namespace Kathanika.UnitTests.PersistenceUnitTests;
 

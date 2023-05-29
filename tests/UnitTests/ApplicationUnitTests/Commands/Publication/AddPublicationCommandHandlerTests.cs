@@ -1,7 +1,5 @@
 using System.Linq.Expressions;
 using Kathanika.Application.Commands;
-using Kathanika.Domain.Aggregates;
-using Moq;
 
 namespace Kathanika.UnitTests.ApplicationUnitTests.Commands;
 

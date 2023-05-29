@@ -1,5 +1,4 @@
-﻿using Kathanika.Domain.Aggregates;
-using Kathanika.Domain.Exceptions;
+﻿using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.UnitTests.DomainUnitTests;
 
