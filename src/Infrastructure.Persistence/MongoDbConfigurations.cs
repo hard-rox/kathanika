@@ -14,8 +14,9 @@ internal static class MongoDbConfigurations
         {
             new CamelCaseElementNameConvention(),
             new StringIdStoredAsObjectIdConvention(),
+            new IgnoreExtraElementsConvention(true),
         };
-        ConventionRegistry.Register("CamelCaseAndStringIdConventionPack", conventionPack, x => true);
+        ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
 
         services.AddSingleton<IMongoDatabase>(f =>
         {

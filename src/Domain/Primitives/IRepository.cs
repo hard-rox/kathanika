@@ -8,7 +8,9 @@ public interface IRepository<T> where T : AggregateRoot
     Task<T> GetByIdAsync(string id);
     Task<IReadOnlyList<T>> ListAllAsync();
     Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> expression);
-    Task<T> AddAsync(T entity);
-    Task UpdateAsync(T entity);
+    Task<long> CountAsync();
+    Task<long> CountAsync(Expression<Func<T, bool>> expression);
+    Task<T> AddAsync(T aggregate);
+    Task UpdateAsync(T aggregate);
     Task DeleteAsync(string id);
 }

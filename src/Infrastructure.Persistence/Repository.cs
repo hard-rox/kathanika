@@ -39,8 +39,10 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
             return cachedDocument;
         }
         _logger.LogInformation("Document not found in cache with cache key: {@CacheKey}", cacheKey);
-        
-        var document = await _collection.Find(x => x.Id == id).SingleOrDefaultAsync();
+
+        var filter = Builders<T>.Filter.Where(x => x.Id == id);
+        var cursor = await _collection.FindAsync(filter);
+        var document = await cursor.SingleOrDefaultAsync();
         _logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", document, typeof(T).Name, _collectionName);
         
         _logger.LogInformation("Setting document {@Document} into cache with cache key: {@CacheKey}", document, cacheKey);
@@ -53,8 +55,8 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     {
         _logger.LogInformation("Getting all documents of type {@DocumentType} from collection {@CollectionName}", typeof(T).Name, _collectionName);
         var filter = Builders<T>.Filter.Empty;
-        var list = await _collection.Find(filter).ToListAsync();
-        return list;
+        var cursor = await _collection.FindAsync(filter);
+        return await cursor.ToListAsync();
     }
 
     public async Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> expression)
@@ -64,37 +66,74 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
             typeof(T).Name,
             _collectionName);
         var filter = Builders<T>.Filter.Where(expression);
-        var list = await _collection.Find(filter).ToListAsync();
-        return list;
+        var cursor = await _collection.FindAsync(filter);
+        return await cursor.ToListAsync();
     }
 
-    public async Task<T> AddAsync(T entity)
+    public async Task<long> CountAsync()
     {
-        _logger.LogInformation("Adding new document {@Document} of type {@DocumentType} into collection {@CollectionName}", entity, typeof(T).Name, _collectionName);
-        await _collection.InsertOneAsync(entity);
-        _logger.LogInformation("Added new document with _id {@_id} of type {@DocumentType} into collection {@CollectionName}", entity.ToBsonDocument()["_id"].ToJson(), typeof(T).Name, _collectionName);
-        return entity;
+        _logger.LogInformation("Getting document count of all documents of type {@DocumentType} from collection {@CollectionName}", typeof(T).Name, _collectionName);
+        var cacheKey = $"{typeof(T).Name.ToLower()}-count";
+        var cachedDocumentCount = _cacheService.Get<long?>(cacheKey);
+        if(cachedDocumentCount is not null)
+        {
+            _logger.LogInformation("Got document count {@DocumentCount} of type {@DocumentType} from cache with cache key: {@CacheKey} ",
+                cachedDocumentCount, typeof(T).Name, cacheKey);
+            return (long)cachedDocumentCount;
+        }
+        _logger.LogInformation("Document count not found in cache with cache key: {@CacheKey}", cacheKey);
+
+        var filter = Builders<T>.Filter.Empty;
+        var documentCount = await _collection.CountDocumentsAsync(filter);
+        
+        _logger.LogInformation("Got document count {@DocumentCount} of type {@DocumentType} from {CollectionName}",
+            documentCount, typeof(T).Name, _collectionName);
+        
+        _logger.LogInformation("Setting document count {@DocumentCount} into cache with cache key: {@CacheKey}", documentCount, cacheKey);
+        _cacheService.Set(cacheKey, documentCount);
+        return documentCount;
     }
 
-    public async Task UpdateAsync(T entity)
+    public async Task<long> CountAsync(Expression<Func<T, bool>> expression)
+    {
+        _logger.LogInformation("Getting document count in condition {@Condition} of type {@DocumentType} from collection {@CollectionName}",
+            expression, typeof(T).Name, _collectionName);
+        var filter = Builders<T>.Filter.Where(expression);
+        var documentCount = await _collection.CountDocumentsAsync(filter);
+        
+        _logger.LogInformation("Got document count {@DocumentCount} in condition {@Condition} of type {@DocumentType} from {CollectionName}",
+            documentCount, expression, typeof(T).Name, _collectionName);
+        
+        return documentCount;
+    }
+    
+    public async Task<T> AddAsync(T aggregate)
+    {
+        _logger.LogInformation("Adding new document {@Document} of type {@DocumentType} into collection {@CollectionName}", aggregate, typeof(T).Name, _collectionName);
+        await _collection.InsertOneAsync(aggregate);
+        _logger.LogInformation("Added new document with _id {@_id} of type {@DocumentType} into collection {@CollectionName}", aggregate.ToBsonDocument()["_id"].ToJson(), typeof(T).Name, _collectionName);
+        return aggregate;
+    }
+
+    public async Task UpdateAsync(T aggregate)
     {
         _logger.LogInformation("Updating document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
             typeof(T).Name,
-            entity.Id,
+            aggregate.Id,
             _collectionName,
-            entity);
+            aggregate);
 
-        var filter = Builders<T>.Filter.Eq(x => x.Id, entity.Id);
-        await _collection.ReplaceOneAsync(filter, entity);
+        var filter = Builders<T>.Filter.Eq(x => x.Id, aggregate.Id);
+        await _collection.ReplaceOneAsync(filter, aggregate);
         _logger.LogInformation("Updated document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
-        typeof(T).Name, entity.Id, _collectionName, entity);
+        typeof(T).Name, aggregate.Id, _collectionName, aggregate);
 
-        var cacheKey = $"{typeof(T).Name.ToLower()}-{entity.Id}";
+        var cacheKey = $"{typeof(T).Name.ToLower()}-{aggregate.Id}";
         var cachedDocument = _cacheService.Get<T>(cacheKey);
         if(cachedDocument is not null )
         {
             _logger.LogInformation("Found updating document in cache with key {@CacheKey}. Updating cached document.", cacheKey);
-            _cacheService.Set(cacheKey, entity);
+            _cacheService.Set(cacheKey, aggregate);
         }
     }
 
