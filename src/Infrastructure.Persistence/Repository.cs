@@ -29,7 +29,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     {
         _logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
         
-        var cacheKey = $"{typeof(T).Name.ToLower()}-{id}";
+        var cacheKey = $"{typeof(T).Name.ToLower()}:{id}";
         _logger.LogInformation("Trying to get document from cache with cache key: {@CacheKey}", cacheKey);
         var cachedDocument = _cacheService.Get<T>(cacheKey);
         if(cachedDocument is not null)
@@ -73,7 +73,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     public async Task<long> CountAsync(CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Getting document count of all documents of type {@DocumentType} from collection {@CollectionName}", typeof(T).Name, _collectionName);
-        var cacheKey = $"{typeof(T).Name.ToLower()}-count";
+        var cacheKey = $"{typeof(T).Name.ToLower()}:count";
         var cachedDocumentCount = _cacheService.Get<long?>(cacheKey);
         if(cachedDocumentCount is not null)
         {
@@ -128,7 +128,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _logger.LogInformation("Updated document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
         typeof(T).Name, aggregate.Id, _collectionName, aggregate);
 
-        var cacheKey = $"{typeof(T).Name.ToLower()}-{aggregate.Id}";
+        var cacheKey = $"{typeof(T).Name.ToLower()}:{aggregate.Id}";
         var cachedDocument = _cacheService.Get<T>(cacheKey);
         if(cachedDocument is not null )
         {
@@ -144,7 +144,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         await _collection.DeleteOneAsync(filter, cancellationToken: cancellationToken);
         _logger.LogInformation("Deleted document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
 
-        var cacheKey = $"{typeof(T).Name.ToLower()}-{id}";
+        var cacheKey = $"{typeof(T).Name.ToLower()}:{id}";
         var cachedDocument = _cacheService.Get<T>(cacheKey);
         if (cachedDocument is not null)
         {
