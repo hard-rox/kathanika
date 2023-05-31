@@ -39,14 +39,14 @@ public class UpdatePublicationCommandHandlerTests
             new List<Author>()
             );
         var publicationRepositoryMock = new Mock<IPublicationRepository>();
-        publicationRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+        publicationRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(publication)
             .Verifiable();
         var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>()))
+        authorRepositoryMock.Setup(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(new List<Author>())
             .Verifiable();
-        authorRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Author>())).Verifiable();
+        authorRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Author>(), It.IsAny<CancellationToken>())).Verifiable();
         var command = new UpdatePublicationCommand(publicationId, new UpdatePublicationCommand.PublicationPatch(
             "Updated Title", "", PublicationType.Book, "", null, null, null, "" ///TODO: Fix up update in domain...
         ));
@@ -56,7 +56,7 @@ public class UpdatePublicationCommandHandlerTests
 
         Assert.NotNull(updatedPublication);
         Assert.Equal("Updated Title", updatedPublication.Title);
-        publicationRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<string>(x => x == publicationId)), Times.Exactly(1));
-        publicationRepositoryMock.Verify(x => x.UpdateAsync(It.Is<Publication>(x => x == publication)), Times.Exactly(1));
+        publicationRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<string>(x => x == publicationId), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        publicationRepositoryMock.Verify(x => x.UpdateAsync(It.Is<Publication>(x => x == publication), It.IsAny<CancellationToken>()), Times.Exactly(1));
     }
 }

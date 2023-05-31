@@ -20,14 +20,14 @@ public class GetPublicationByIdQueryHandlerTests
         var id = Guid.NewGuid().ToString();
         var query = new GetPublicationByIdQuery(id);
         var publicationRepositoryMock = new Mock<IPublicationRepository>();
-        publicationRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+        publicationRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(publication)
             .Verifiable();
         var handler = new GetPublicationByIdQueryHandler(publicationRepositoryMock.Object);
 
         var returnedPublication = await handler.Handle(query, default);
 
-        publicationRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<string>(x => x == id)), Times.Exactly(1));
+        publicationRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<string>(x => x == id), It.IsAny<CancellationToken>()), Times.Exactly(1));
         Assert.NotNull(returnedPublication);
         Assert.Equal(publication.Title, returnedPublication.Title);
     }

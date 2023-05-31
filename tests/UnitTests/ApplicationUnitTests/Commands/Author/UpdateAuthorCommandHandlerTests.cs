@@ -30,8 +30,8 @@ public class UpdateAuthorCommandHandlerTests
             "",
             "");
         var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>())).ReturnsAsync(author).Verifiable();
-        authorRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Author>())).Verifiable();
+        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(author).Verifiable();
+        authorRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Author>(), It.IsAny<CancellationToken>())).Verifiable();
         var command = new UpdateAuthorCommand(authorId, new UpdateAuthorCommand.AuthorPatch(
             "Updated First Name",
             "Updated Last Name"
@@ -43,7 +43,7 @@ public class UpdateAuthorCommandHandlerTests
         Assert.NotNull(updatedAuthor);
         Assert.Equal("Updated First Name", updatedAuthor.FirstName);
         Assert.Equal("Updated Last Name", updatedAuthor.LastName);
-        authorRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<string>()), Times.Exactly(1));
-        authorRepositoryMock.Verify(x => x.UpdateAsync(It.Is<Author>(x => x == author)), Times.Exactly(1));
+        authorRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        authorRepositoryMock.Verify(x => x.UpdateAsync(It.Is<Author>(x => x == author), It.IsAny<CancellationToken>()), Times.Exactly(1));
     }
 }

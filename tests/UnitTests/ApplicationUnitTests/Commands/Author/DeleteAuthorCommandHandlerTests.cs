@@ -19,19 +19,19 @@ public class DeleteAuthorCommandHandlerTests
             ""
         );
         var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(author);
-        authorRepositoryMock.Setup(x => x.DeleteAsync(It.IsAny<string>()))
+        authorRepositoryMock.Setup(x => x.DeleteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .Verifiable();
         var publicationRepositoryMock = new Mock<IPublicationRepository>();
-        publicationRepositoryMock.Setup(x => x.CountAsync(It.IsAny<Expression<Func<Publication, bool>>>()))
+        publicationRepositoryMock.Setup(x => x.CountAsync(It.IsAny<Expression<Func<Publication, bool>>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(0);
         var command = new DeleteAuthorCommand(id);
         var handler = new DeleteAuthorCommandHandler(authorRepositoryMock.Object, publicationRepositoryMock.Object);
 
         await handler.Handle(command, default);
 
-        authorRepositoryMock.Verify(x => x.DeleteAsync(It.Is<string>(x => x == id)), Times.Exactly(1));
+        authorRepositoryMock.Verify(x => x.DeleteAsync(It.Is<string>(x => x == id), It.IsAny<CancellationToken>()), Times.Exactly(1));
     }
 
     [Fact]
@@ -39,7 +39,7 @@ public class DeleteAuthorCommandHandlerTests
     {
         var id = Guid.NewGuid().ToString();
         var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.DeleteAsync(It.IsAny<string>()))
+        authorRepositoryMock.Setup(x => x.DeleteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .Verifiable();
         var publicationRepositoryMock = new Mock<IPublicationRepository>();
         var command = new DeleteAuthorCommand(id);
@@ -63,12 +63,12 @@ public class DeleteAuthorCommandHandlerTests
             ""
         );
         var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(author);
-        authorRepositoryMock.Setup(x => x.DeleteAsync(It.IsAny<string>()))
+        authorRepositoryMock.Setup(x => x.DeleteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .Verifiable();
         var publicationRepositoryMock = new Mock<IPublicationRepository>();
-        publicationRepositoryMock.Setup(x => x.CountAsync(It.IsAny<Expression<Func<Publication, bool>>>()))
+        publicationRepositoryMock.Setup(x => x.CountAsync(It.IsAny<Expression<Func<Publication, bool>>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(1);
         var command = new DeleteAuthorCommand(id);
         var handler = new DeleteAuthorCommandHandler(authorRepositoryMock.Object, publicationRepositoryMock.Object);
@@ -91,19 +91,19 @@ public class DeleteAuthorCommandHandlerTests
             ""
         );
         var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>()))
+        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(author).Verifiable();
-        authorRepositoryMock.Setup(x => x.DeleteAsync(It.IsAny<string>()))
+        authorRepositoryMock.Setup(x => x.DeleteAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
             .Verifiable();
         var publicationRepositoryMock = new Mock<IPublicationRepository>();
-        publicationRepositoryMock.Setup(x => x.CountAsync(It.IsAny<Expression<Func<Publication, bool>>>()))
+        publicationRepositoryMock.Setup(x => x.CountAsync(It.IsAny<Expression<Func<Publication, bool>>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(0).Verifiable();
         var command = new DeleteAuthorCommand(id);
         var handler = new DeleteAuthorCommandHandler(authorRepositoryMock.Object, publicationRepositoryMock.Object);
 
         await handler.Handle(command, default);
 
-        authorRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<string>(x => x == id)), Times.Exactly(1));
-        publicationRepositoryMock.Verify(x => x.CountAsync(It.IsAny<Expression<Func<Publication, bool>>>()), Times.Exactly(1));
+        authorRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<string>(x => x == id), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        publicationRepositoryMock.Verify(x => x.CountAsync(It.IsAny<Expression<Func<Publication, bool>>>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
     }
 }
