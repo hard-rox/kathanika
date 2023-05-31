@@ -13,7 +13,7 @@ public class DeleteAuthorCommandHandlerTests
         var author = Author.Create(
             "John",
             "Doe",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             null,
             "USA",
             ""
@@ -57,7 +57,7 @@ public class DeleteAuthorCommandHandlerTests
         var author = Author.Create(
             "John",
             "Doe",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             null,
             "USA",
             ""
@@ -85,7 +85,7 @@ public class DeleteAuthorCommandHandlerTests
         var author = Author.Create(
             "John",
             "Doe",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             null,
             "USA",
             ""

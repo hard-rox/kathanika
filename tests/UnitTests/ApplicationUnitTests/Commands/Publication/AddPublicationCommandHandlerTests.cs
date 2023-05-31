@@ -16,7 +16,7 @@ public class AddPublicationCommandHandlerTests
                 Author.Create(
                     "John",
                     "Doe",
-                    DateTime.MinValue,
+                    DateOnly.MinValue,
                     null,
                     "USA",
                     "A good writer"
@@ -24,7 +24,7 @@ public class AddPublicationCommandHandlerTests
                 Author.Create(
                     "Jane",
                     "Doe",
-                    DateTime.MinValue,
+                    DateOnly.MinValue,
                     null,
                     "USA",
                     "Another good writer"
@@ -35,7 +35,7 @@ public class AddPublicationCommandHandlerTests
             "ISBN",
             PublicationType.Book,
             "John Doe",
-            DateTime.Parse("2023-01-01"),
+            DateOnly.Parse("2023-01-01"),
             (decimal)100.50,
             2,
             "ABCD123",

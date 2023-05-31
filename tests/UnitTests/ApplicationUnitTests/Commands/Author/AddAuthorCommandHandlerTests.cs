@@ -18,7 +18,7 @@ public sealed class AddAuthorCommandHandlerTests
         var dummyAuthor = Author.Create(
             "Hello",
             "World",
-            DateTime.Parse("2013-10-10"),
+            DateOnly.Parse("2013-10-10"),
             null,
             "BD",
             "");

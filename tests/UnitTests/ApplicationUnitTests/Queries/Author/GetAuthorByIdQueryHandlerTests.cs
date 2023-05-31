@@ -11,7 +11,7 @@ public class GetAuthorByIdQueryHandlerTests
         var author = Author.Create(
             "First Name",
             "Last Name",
-            DateTime.Parse("2000-01-01"),
+            DateOnly.Parse("2000-01-01"),
             null,
             "",
             ""  

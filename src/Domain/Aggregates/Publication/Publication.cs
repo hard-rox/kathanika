@@ -10,7 +10,7 @@ public sealed class Publication : AggregateRoot
     public string? Isbn { get; private set; } = string.Empty;
     public PublicationType PublicationType { get; private set; }
     public string Publisher { get; private set; } = string.Empty;
-    public DateTime PublishedDate { get; private set; }
+    public DateOnly PublishedDate { get; private set; }
     public string Edition { get; private set; } = string.Empty;
     public string Description { get; private set; } = string.Empty;
     public string Language { get; private set; } = string.Empty;
@@ -35,7 +35,7 @@ public sealed class Publication : AggregateRoot
         string? isbn,
         PublicationType publicationType,
         string publisher,
-        DateTime publishedDate,
+        DateOnly publishedDate,
         decimal buyingPrice,
         int copiesAvailable,
         string callNumber)
@@ -44,7 +44,7 @@ public sealed class Publication : AggregateRoot
         Isbn = isbn;
         PublicationType = publicationType;
         Publisher = publisher;
-        PublishedDate = publishedDate.Date;
+        PublishedDate = publishedDate;
         BuyingPrice = buyingPrice;
         CopiesAvailable = copiesAvailable;
         CallNumber = callNumber;
@@ -55,7 +55,7 @@ public sealed class Publication : AggregateRoot
         string? isbn,
         PublicationType publicationType,
         string publisher,
-        DateTime publishedDate,
+        DateOnly publishedDate,
         decimal buyingPrice,
         int copiesAvailable,
         string callNumber,
@@ -86,21 +86,21 @@ public sealed class Publication : AggregateRoot
     }
 
     public void Update(
-        string title,
-        string isbn,
-        PublicationType publicationType,
-        string publisher,
-        DateTime? publishedDate,
+        string? title,
+        string? isbn,
+        PublicationType? publicationType,
+        string? publisher,
+        DateOnly? publishedDate,
         decimal? buyingPrice,
         int? copiesAvailable,
-        string callNumber,
+        string? callNumber,
         IEnumerable<Author>? authors)
     {
         Title = !string.IsNullOrEmpty(title) ? title : Title;
         Isbn = !string.IsNullOrEmpty(isbn) ? isbn : Isbn;
-        PublicationType = publicationType;
+        PublicationType = publicationType is not null ? (PublicationType)publicationType : PublicationType;
         Publisher = !string.IsNullOrEmpty(publisher) ? publisher : Publisher;
-        PublishedDate = publishedDate is not null ? (DateTime)publishedDate : PublishedDate;
+        PublishedDate = publishedDate is not null ? (DateOnly)publishedDate : PublishedDate;
         BuyingPrice = buyingPrice is not null? (decimal)buyingPrice : BuyingPrice;
         CopiesAvailable = copiesAvailable is not null? (int)copiesAvailable : CopiesAvailable;
         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : CallNumber;

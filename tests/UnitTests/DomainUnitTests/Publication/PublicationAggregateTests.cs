@@ -13,7 +13,7 @@ public class PublicationAggregateTests
             "12345",
             PublicationType.Book,
             "Hello",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             (decimal)102.0,
             1,
             "BACD",
@@ -21,7 +21,7 @@ public class PublicationAggregateTests
                 Author.Create(
                     "John",
                     "Doe",
-                    DateTime.MinValue,
+                    DateOnly.MinValue,
                     null,
                     "",
                     ""
@@ -29,7 +29,7 @@ public class PublicationAggregateTests
                 Author.Create(
                     "John",
                     "Doe",
-                    DateTime.MinValue,
+                    DateOnly.MinValue,
                     null,
                     "",
                     ""
@@ -51,7 +51,7 @@ public class PublicationAggregateTests
             "12345",
             PublicationType.Book,
             "Hello",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             (decimal)102.0,
             1,
             "BACD",
@@ -64,7 +64,7 @@ public class PublicationAggregateTests
             "Updated Isbn",
             PublicationType.Journal,
             "Updated publisher",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             (decimal)10.2,
             3,
             "Updated CallNumber",

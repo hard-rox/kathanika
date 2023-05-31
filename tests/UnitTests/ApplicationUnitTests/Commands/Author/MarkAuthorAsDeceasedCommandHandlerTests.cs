@@ -8,10 +8,10 @@ public class MarkAuthorAsDeceasedCommandHandlerTests
     [Fact]
     public async Task Handler_Should_Call_UpdateAsync_With_Updated_Author_DateOfDeath()
     {
-        var dateOfDeath = DateTime.Parse("2020-01-01");
+        var dateOfDeath = DateOnly.Parse("2020-01-01");
         var author = Author.Create("John",
             "Doe",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             null,
             "",
             "");
@@ -35,7 +35,7 @@ public class MarkAuthorAsDeceasedCommandHandlerTests
     {
         var authorId = Guid.NewGuid().ToString();
         var authorRepositoryMock = new Mock<IAuthorRepository>();
-        var command = new MarkAuthorAsDeceasedCommand(authorId, DateTime.MaxValue);
+        var command = new MarkAuthorAsDeceasedCommand(authorId, DateOnly.MaxValue);
         var handler = new MarkAuthorAsDeceasedCommandHandler(authorRepositoryMock.Object);
 
         var exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));

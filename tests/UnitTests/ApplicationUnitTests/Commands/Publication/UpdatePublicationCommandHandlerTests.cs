@@ -32,7 +32,7 @@ public class UpdatePublicationCommandHandlerTests
             null,
             PublicationType.Book,
             "",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             (decimal)10.2,
             2,
             "ABCD",

@@ -12,7 +12,7 @@ public class GetPublicationByIdQueryHandlerTests
             "",
             PublicationType.Book,
             "",
-            DateTime.Today,
+            DateOnly.MinValue,
             (decimal)102.0,
             1,
             ""

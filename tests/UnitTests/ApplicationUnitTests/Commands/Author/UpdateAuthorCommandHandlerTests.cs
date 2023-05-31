@@ -25,7 +25,7 @@ public class UpdateAuthorCommandHandlerTests
         var authorId = Guid.NewGuid().ToString();
         var author = Author.Create("John",
             "Doe",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             null,
             "",
             "");

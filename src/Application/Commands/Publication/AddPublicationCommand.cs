@@ -6,7 +6,7 @@ public sealed record AddPublicationCommand(
     PublicationType PublicationType,
     IEnumerable<string> AuthorIds,
     string Publisher,
-    DateTime PublishedDate,
+    DateOnly PublishedDate,
     decimal BuyingPrice,
     int CopiesPurchased,
     string CallNumber) : IRequest<Publication>;

@@ -6,8 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test --code-coverage",
-    "test-ci": "ng test --code-coverage --no-watch",
+    "test": "ng test --code-coverage --browsers=ChromeHeadless",
+    "test-ci": "ng test --code-coverage --no-watch --browsers=ChromeHeadless",
     "codegen": "graphql-codegen --config codegen.ts",
     "code-cov": "ng test --no-watch --code-coverage && http-server -p 4201 -c-1 coverage/kathanika-app -o"
   },
