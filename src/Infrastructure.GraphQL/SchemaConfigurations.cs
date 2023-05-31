@@ -60,7 +60,7 @@ internal static class SchemaConfigurations
             opt.SortFieldsByName = false;
         });
         requestBuilder.BindRuntimeType<DateTime, DateTimeType>();
-        requestBuilder.BindRuntimeType<DateTime, DateType>();
+        requestBuilder.BindRuntimeType<DateOnly, DateType>();
         requestBuilder.AddMutationConventions();
         requestBuilder.InitializeOnStartup();
 

@@ -7,8 +7,8 @@ public sealed class Author : AggregateRoot
 {
     public string FirstName { get; private set; } = string.Empty;
     public string LastName { get; private set; } = string.Empty;
-    public DateTime DateOfBirth { get; private set; } = DateTime.MinValue;
-    public DateTime? DateOfDeath { get; private set; }
+    public DateOnly DateOfBirth { get; private set; } = DateOnly.MinValue;
+    public DateOnly? DateOfDeath { get; private set; }
     public string Nationality { get; private set; } = string.Empty;
     public string Biography { get; private set; } = string.Empty;
 
@@ -17,8 +17,8 @@ public sealed class Author : AggregateRoot
     private Author(
         string firstName,
         string lastName,
-        DateTime dateOfBirth,
-        DateTime? dateOfDeath,
+        DateOnly dateOfBirth,
+        DateOnly? dateOfDeath,
         string nationality,
         string biography
     )
@@ -34,22 +34,22 @@ public sealed class Author : AggregateRoot
     public static Author Create(
         string firstName,
         string lastName,
-        DateTime dateOfBirth,
-        DateTime? dateOfDeath,
+        DateOnly dateOfBirth,
+        DateOnly? dateOfDeath,
         string nationality,
         string biography
     )
     {
         var errors = new List<DomainException>();
-        if (dateOfBirth.ToUniversalTime().Date > DateTime.UtcNow.Date)
+        if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
         {
             errors.Add(new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date"));
         }
-        if (dateOfDeath?.ToUniversalTime().Date > DateTime.UtcNow.Date)
+        if (dateOfDeath > DateOnly.FromDateTime(DateTime.UtcNow))
         {
             errors.Add(new InvalidFieldException(nameof(DateOfDeath), $"Cann't be future date"));
         }
-        if (dateOfDeath is not null && dateOfDeath?.Date <= dateOfBirth)
+        if (dateOfDeath is not null && dateOfDeath <= dateOfBirth)
         {
             errors.Add(new InvalidFieldException(nameof(DateOfDeath), $"{nameof(DateOfDeath)} must be after {nameof(DateOfBirth)}"));
         }
@@ -71,7 +71,7 @@ public sealed class Author : AggregateRoot
     public void Update(
         string? firstName = null,
         string? lastName = null,
-        DateTime? dateOfBirth = null,
+        DateOnly? dateOfBirth = null,
         string? nationality = null,
         string? biography = null
     )
@@ -82,23 +82,23 @@ public sealed class Author : AggregateRoot
         Biography = !string.IsNullOrEmpty(biography) ? biography : Biography;
         if (dateOfBirth is not null)
         {
-            if (((DateTime)dateOfBirth).ToUniversalTime().Date > DateTime.UtcNow.Date)
+            if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
                 throw new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date");
 
 
-            DateOfBirth = ((DateTime)dateOfBirth).Date;
+            DateOfBirth = ((DateOnly)dateOfBirth);
         }
     }
 
-    public void MarkAsDeceased(DateTime dateOfDeath)
+    public void MarkAsDeceased(DateOnly dateOfDeath)
     {
-        if (dateOfDeath.ToUniversalTime().Date > DateTime.UtcNow.Date)
+        if (dateOfDeath > DateOnly.FromDateTime(DateTime.UtcNow))
             throw new InvalidFieldException(nameof(DateOfDeath), $"Cann't be future date");
 
         if (dateOfDeath <= DateOfBirth)
             throw new InvalidFieldException(nameof(DateOfDeath), $"{nameof(DateOfDeath)} must be after {nameof(DateOfBirth)}");
 
-        DateOfDeath = dateOfDeath.Date;
+        DateOfDeath = dateOfDeath;
     }
 
     public void UnmarkAsDeceased()

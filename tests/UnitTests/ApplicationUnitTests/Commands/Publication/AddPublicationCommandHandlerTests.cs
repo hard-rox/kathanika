@@ -16,7 +16,7 @@ public class AddPublicationCommandHandlerTests
                 Author.Create(
                     "John",
                     "Doe",
-                    DateTime.MinValue,
+                    DateOnly.MinValue,
                     null,
                     "USA",
                     "A good writer"
@@ -24,7 +24,7 @@ public class AddPublicationCommandHandlerTests
                 Author.Create(
                     "Jane",
                     "Doe",
-                    DateTime.MinValue,
+                    DateOnly.MinValue,
                     null,
                     "USA",
                     "Another good writer"
@@ -35,7 +35,7 @@ public class AddPublicationCommandHandlerTests
             "ISBN",
             PublicationType.Book,
             "John Doe",
-            DateTime.Parse("2023-01-01"),
+            DateOnly.Parse("2023-01-01"),
             (decimal)100.50,
             2,
             "ABCD123",
@@ -43,9 +43,9 @@ public class AddPublicationCommandHandlerTests
         );
 
         var handler = new AddPublicationCommandHandler(publicationRepositoryMock.Object, authorRepositoryMock.Object);
-        authorRepositoryMock.Setup(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>()))
+        authorRepositoryMock.Setup(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(authors).Verifiable();
-        publicationRepositoryMock.Setup(x => x.AddAsync(It.IsAny<Publication>()))
+        publicationRepositoryMock.Setup(x => x.AddAsync(It.IsAny<Publication>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Publication.Create(
             publication.Title,
             publication.Isbn,
@@ -76,7 +76,7 @@ public class AddPublicationCommandHandlerTests
         // Assert
         Assert.NotNull(savedPublication);
         Assert.Equal(publication.Title, savedPublication.Title);
-        publicationRepositoryMock.Verify(x => x.AddAsync(It.Is<Publication>(x => x.Title == publication.Title)), Times.Exactly(1));
-        authorRepositoryMock.Verify(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>()), Times.Exactly(1));
+        publicationRepositoryMock.Verify(x => x.AddAsync(It.Is<Publication>(x => x.Title == publication.Title), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        authorRepositoryMock.Verify(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
     }
 }

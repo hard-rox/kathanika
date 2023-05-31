@@ -11,7 +11,7 @@ internal class GetAuthorsQueryHandler : IRequestHandler<GetAuthorsQuery, IQuerya
 
     public async Task<IQueryable<Author>> Handle(GetAuthorsQuery request, CancellationToken cancellationToken)
     {
-        var authorsQuery = await Task.Run(() => authorRepository.AsQueryable());
+        var authorsQuery = await Task.Run(() => authorRepository.AsQueryable(), cancellationToken);
         return authorsQuery;
     }
 }

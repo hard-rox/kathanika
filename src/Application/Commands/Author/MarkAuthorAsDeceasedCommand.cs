@@ -2,5 +2,5 @@
 
 public sealed record MarkAuthorAsDeceasedCommand(
     string Id,
-    DateTime DateOfDeath
+    DateOnly DateOfDeath
     ) : IRequest<Author>;

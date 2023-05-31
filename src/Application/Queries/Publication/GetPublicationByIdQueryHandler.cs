@@ -12,7 +12,7 @@ internal sealed class GetPublicationByIdQueryHandler
 
     public async Task<Publication> Handle(GetPublicationByIdQuery request, CancellationToken cancellationToken)
     {
-        var publication = await publicationRepository.GetByIdAsync(request.Id);
+        var publication = await publicationRepository.GetByIdAsync(request.Id, cancellationToken);
         return publication;
     }
 }

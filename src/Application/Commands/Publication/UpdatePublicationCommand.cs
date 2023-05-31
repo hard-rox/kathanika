@@ -10,7 +10,7 @@ public sealed record UpdatePublicationCommand : IRequest<Publication>
         string Isbn,
         PublicationType PublicationType,
         string Publisher,
-        DateTime? PublishedDate,
+        DateOnly? PublishedDate,
         decimal? BuyingPrice,
         int? CopiesAvailable,
         string CallNumber,

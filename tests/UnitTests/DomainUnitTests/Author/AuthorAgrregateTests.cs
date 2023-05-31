@@ -15,8 +15,8 @@ public sealed class AuthorAggregateTests
             var command = Author.Create(
                         "Hello",
                         "World",
-                        DateTime.Parse("2013-10-10"),
-                        DateTime.Parse("2013-10-10"),
+                        DateOnly.Parse("2013-10-10"),
+                        DateOnly.Parse("2013-10-10"),
                         "BD",
                         ""
                         );
@@ -39,7 +39,7 @@ public sealed class AuthorAggregateTests
             Author.Create(
             "Hello",
             "World",
-            DateTime.Parse("2090-10-10"),
+            DateOnly.Parse("2090-10-10"),
             null,
             "BD",
             ""
@@ -63,8 +63,8 @@ public sealed class AuthorAggregateTests
             Author.Create(
             "Hello",
             "World",
-            DateTime.Parse("2013-10-10"),
-            DateTime.Parse("2090-10-10"),
+            DateOnly.Parse("2013-10-10"),
+            DateOnly.Parse("2090-10-10"),
             "BD",
             ""
             );
@@ -83,7 +83,7 @@ public sealed class AuthorAggregateTests
         var author = Author.Create(
             "Hello",
             "World",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             null,
             "BD",
             ""
@@ -105,14 +105,14 @@ public sealed class AuthorAggregateTests
         var author = Author.Create(
             "Hello",
             "World",
-            DateTime.MinValue,
+            DateOnly.MinValue,
             null,
             "BD",
             ""
             );
 
         // Act
-        InvalidFieldException ex = Assert.Throws<InvalidFieldException>(() => author.Update(dateOfBirth: DateTime.Parse("2090-01-01")));
+        InvalidFieldException ex = Assert.Throws<InvalidFieldException>(() => author.Update(dateOfBirth: DateOnly.Parse("2090-01-01")));
 
         // Assert
         Assert.IsType<InvalidFieldException>(ex);
@@ -123,11 +123,11 @@ public sealed class AuthorAggregateTests
     public void MarkAsDeceased_Should_Set_DateOfDeath_On_ValidDateOfDeath()
     {
         // Arrange
-        var dateOfDeath = DateTime.Parse("2000-01-01");
+        var dateOfDeath = DateOnly.Parse("2000-01-01");
         var author = Author.Create(
             "Hello",
             "World",
-            DateTime.Parse("1993-01-01"),
+            DateOnly.Parse("1993-01-01"),
             null,
             "BD",
             ""
@@ -148,7 +148,7 @@ public sealed class AuthorAggregateTests
         var author = Author.Create(
             "Hello",
             "World",
-            DateTime.Parse("1993-01-01"),
+            DateOnly.Parse("1993-01-01"),
             null,
             "BD",
             ""
@@ -156,7 +156,7 @@ public sealed class AuthorAggregateTests
 
         // Act
         InvalidFieldException ex = Assert.Throws<InvalidFieldException>(
-            () => author.MarkAsDeceased(DateTime.Parse("2090-01-01")));
+            () => author.MarkAsDeceased(DateOnly.Parse("2090-01-01")));
 
         // Assert
         Assert.IsType<InvalidFieldException>(ex);
@@ -167,11 +167,11 @@ public sealed class AuthorAggregateTests
     public void MarkAsDeceased_Should_Throws_InvalidFieldException_On_InvalidDateOfDeath()
     {
         // Arrange
-        var dateOfDeath = DateTime.Parse("1990-01-01");
+        var dateOfDeath = DateOnly.Parse("1990-01-01");
         var author = Author.Create(
             "Hello",
             "World",
-            DateTime.Parse("1993-01-01"),
+            DateOnly.Parse("1993-01-01"),
             null,
             "BD",
             ""
@@ -193,8 +193,8 @@ public sealed class AuthorAggregateTests
         var author = Author.Create(
             "Hello",
             "World",
-            DateTime.Parse("1993-01-01"),
-            DateTime.Parse("2023-01-01"),
+            DateOnly.Parse("1993-01-01"),
+            DateOnly.Parse("2023-01-01"),
             "BD",
             ""
             );
