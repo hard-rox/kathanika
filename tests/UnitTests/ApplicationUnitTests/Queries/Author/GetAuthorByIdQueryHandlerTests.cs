@@ -1,5 +1,4 @@
 using Kathanika.Application.Queries;
-using Xunit;
 
 namespace Kathanika.UnitTests.ApplicationUnitTests.Queries;
 
