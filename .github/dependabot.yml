@@ -1,0 +1,11 @@
+version: 2
+updates:
+  - package-ecosystem: "dotnet"
+    directory: "/"
+    schedule:
+      interval: "daily"
+
+  - package-ecosystem: "npm"
+    directory: "/src/Web/kathanika-app"
+    schedule:
+      interval: "daily"
