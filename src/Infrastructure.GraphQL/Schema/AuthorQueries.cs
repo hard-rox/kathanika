@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Kathanika.Domain.Exceptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.GraphQL.Schema;
 
@@ -16,6 +17,7 @@ public sealed partial class Queries
         return authors;
     }
 
+    [Error<NotFoundWithTheIdException>]
     public async Task<Author> GetAuthorAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
     {
         var author = await mediator.Send(new GetAuthorByIdQuery(id), cancellationToken);
