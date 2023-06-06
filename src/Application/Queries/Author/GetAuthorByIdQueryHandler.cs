@@ -14,7 +14,6 @@ internal class GetAuthorByIdQueryHandler : IRequestHandler<GetAuthorByIdQuery, A
     public async Task<Author> Handle(GetAuthorByIdQuery request, CancellationToken cancellationToken)
     {
         var author = await authorRepository.GetByIdAsync(request.Id, cancellationToken);
-        if (author is null) throw new NotFoundWithTheIdException(typeof(Author), request.Id);
         return author;
     }
 }
