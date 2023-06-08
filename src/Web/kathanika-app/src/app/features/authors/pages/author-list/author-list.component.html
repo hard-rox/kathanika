@@ -1,48 +1,50 @@
-<!-- <pre>{{(query | async)?.data | json}}</pre> -->
+<div class="flex justify-between">
+  <h2 class="text-xl font-bold">Authors</h2>
+  <a [routerLink]="['add']" class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black text-white px-4 py-2">Add new</a>
+</div>
 <ng-container *ngIf="queryRef.valueChanges | async as queryResult">
-
-    <table class="table-auto w-full shadow-sm bg-white text-left">
-        <thead>
-            <tr class="border-b border-theme-indigo-dye">
-                <th scope="col" class="px-6 py-3">Serial</th>
-                <th scope="col" class="px-6 py-3">First Name</th>
-                <th scope="col" class="px-6 py-3">Last Name</th>
-                <th scope="col" class="px-6 py-3">Nationality</th>
-                <th scope="col" class="px-6 py-3">Action</th>
-            </tr>
-        </thead>
-        <tbody>
-            <ng-container *ngIf="queryResult?.data?.authors?.items as data; else emptyData">
-                <tr *ngFor="let item of data; let idx = index" class="border-b border-theme-indigo-dye">
-                    <td scope="col" class="px-6">{{idx + 1}}</td>
-                    <td scope="col" class="px-6">{{item.firstName}}</td>
-                    <td scope="col" class="px-6">{{item.lastName}}</td>
-                    <td scope="col" class="px-6">{{item.nationality}}</td>
-                    <td scope="col" class="px-6">
-                        <div class="group relative">
-                            <button class="px-3 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue rounded-full">
-                                <span class="material-symbols-sharp">
-                                    more_vert
-                                </span>
-                            </button>
-                            <div tabindex="0"
-                                class="z-10 border bg-white invisible shadow-md w-30 absolute top-0 right-16 transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
-                                <div class="py-2">
-                                    <a routerLink="{{item?.id}}"
-                                        class="flex space-x-2 px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue">
-                                        <span class="material-symbols-sharp">
-                                            visibility
-                                        </span>
-                                        <span class="my-auto">View</span>
-                                    </a>
-                                    <a routerLink="update/{{item?.id}}"
-                                        class="flex space-x-2 px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue">
-                                        <span class="material-symbols-sharp my-auto">
-                                            edit
-                                        </span>
-                                        <span class="my-auto">Update</span>
-                                    </a>
-                                    <!-- <button *ngIf="item?.status == 'INACTIVE'"
+  <table class="table-auto w-full shadow-sm bg-white text-left mt-2">
+    <thead>
+      <tr class="border-b border-theme-rich-black">
+        <th scope="col" class="px-6 py-3">Serial</th>
+        <th scope="col" class="px-6 py-3">First Name</th>
+        <th scope="col" class="px-6 py-3">Last Name</th>
+        <th scope="col" class="px-6 py-3">Nationality</th>
+        <th scope="col" class="px-6 py-3">Action</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="queryResult?.data?.authors?.items as data; else emptyData">
+        <tr *ngFor="let item of data; let idx = index" class="border-b border-theme-rich-black">
+          <td scope="col" class="px-6">{{idx + 1}}</td>
+          <td scope="col" class="px-6">{{item.firstName}}</td>
+          <td scope="col" class="px-6">{{item.lastName}}</td>
+          <td scope="col" class="px-6">{{item.nationality}}</td>
+          <td scope="col" class="px-6">
+            <div class="group relative">
+              <button class="px-3 py-2 hover:bg-theme-silver active:bg-theme-silver rounded-full">
+                <span class="material-symbols-sharp">
+                  more_vert
+                </span>
+              </button>
+              <div tabindex="0"
+                class="z-10 border bg-white invisible shadow-md w-30 absolute top-0 right-16 transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
+                <div class="py-2">
+                  <a routerLink="{{item?.id}}"
+                    class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                    <span class="material-symbols-sharp">
+                      visibility
+                    </span>
+                    <span class="my-auto">View</span>
+                  </a>
+                  <a routerLink="update/{{item?.id}}"
+                    class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                    <span class="material-symbols-sharp my-auto">
+                      edit
+                    </span>
+                    <span class="my-auto">Update</span>
+                  </a>
+                  <!-- <button *ngIf="item?.status == 'INACTIVE'"
                                         (click)="updateStatus(item?.id, itemStatus.Active)"
                                         class="flex space-x-2 px-4 py-2 hover:bg-atlas-neutrals-40">
                                         <span class="material-icons-outlined my-auto">
@@ -58,24 +60,24 @@
                                         </span>
                                         <span class="my-auto">Inactive</span>
                                     </button> -->
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </ng-container>
-            <ng-template #emptyData>
-                <tr>
-                    <td colspan="100%" class="px-6 py-3 text-center">
-                        No data to show
-                    </td>
-                </tr>
-            </ng-template>
-        </tbody>
-    </table>
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #emptyData>
+        <tr>
+          <td colspan="100%" class="px-6 py-3 text-center">
+            No data to show
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
 
-    <div class="w-full inline-flex justify-center">
-        <app-pagination [totalCount]="queryResult.data.authors?.totalCount" [pageSizes]="pageSizes"
-            [pageSize]="pageSize" (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)" />
-    </div>
+  <div class="w-full inline-flex justify-center">
+    <app-pagination [totalCount]="queryResult.data.authors?.totalCount" [pageSizes]="pageSizes" [pageSize]="pageSize"
+      (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)" />
+  </div>
 </ng-container>
