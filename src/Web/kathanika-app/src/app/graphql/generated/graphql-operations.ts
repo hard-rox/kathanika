@@ -436,6 +436,13 @@ export type UpdateAuthorPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
+export type AddAuthorMutationVariables = Exact<{
+  addAuthorInput: AddAuthorInput;
+}>;
+
+
+export type AddAuthorMutation = { __typename?: 'Mutations', addAuthor: { __typename?: 'AddAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+
 export type GetAuthorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -453,6 +460,36 @@ export type GetAuthorQueryVariables = Exact<{
 
 export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string } | null };
 
+export const AddAuthorDocument = gql`
+    mutation addAuthor($addAuthorInput: AddAuthorInput!) {
+  addAuthor(input: $addAuthorInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+        message
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddAuthorGQL extends Apollo.Mutation<AddAuthorMutation, AddAuthorMutationVariables> {
+    document = AddAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetAuthorsDocument = gql`
     query getAuthors($skip: Int!, $take: Int!, $filter: AuthorFilterInput, $sortBy: [AuthorSortInput!]) {
   authors(skip: $skip, take: $take, where: $filter, order: $sortBy) {

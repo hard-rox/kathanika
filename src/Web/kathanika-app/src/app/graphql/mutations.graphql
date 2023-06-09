@@ -1,0 +1,17 @@
+mutation addAuthor($addAuthorInput: AddAuthorInput!) {
+  addAuthor(input: $addAuthorInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+        message
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
