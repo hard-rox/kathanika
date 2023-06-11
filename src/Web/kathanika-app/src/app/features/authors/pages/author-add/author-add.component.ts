@@ -1,9 +1,32 @@
 import { Component } from '@angular/core';
+import { AddAuthorGQL } from 'src/app/graphql/generated/graphql-operations';
+import { AddAuthorInput } from 'src/app/graphql/generated/graphql-operations';
+import { MessageAlertService } from 'src/app/shared/services/message-alert.service';
 
 @Component({
   templateUrl: './author-add.component.html',
-  styleUrls: ['./author-add.component.scss']
+  styleUrls: ['./author-add.component.scss'],
 })
 export class AuthorAddComponent {
+  constructor(
+    private gql: AddAuthorGQL,
+    private alertService: MessageAlertService
+  ) {}
 
+  errors: string[] = [];
+
+  onValidFormSubmit(formValue: AddAuthorInput) {
+    this.gql.mutate({ addAuthorInput: formValue }).subscribe({
+      next: (result) => {
+        if (result.errors) {
+          result.errors.forEach((x) => this.errors.push(x.message));
+        } else {
+          this.alertService.showSuccess(
+            'Author added successfully.',
+            'Author added'
+          );
+        }
+      },
+    });
+  }
 }

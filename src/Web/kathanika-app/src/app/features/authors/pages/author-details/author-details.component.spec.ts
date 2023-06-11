@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthorDetailsComponent } from './author-details.component';
 import { GetAuthorGQL } from 'src/app/graphql/generated/graphql-operations';
 import { ActivatedRoute } from '@angular/router';
-import { mockGql } from 'src/test-utils/gql-test-utils';
+import { mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { RouterTestingModule } from '@angular/router/testing';
 
 describe('AuthorDetailsComponent', () => {
@@ -30,7 +30,7 @@ describe('AuthorDetailsComponent', () => {
         },
         {
           provide: GetAuthorGQL,
-          useValue: mockGql,
+          useValue: mockQueryGql,
         },
       ],
     })

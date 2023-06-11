@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,16 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./author-form.component.scss'],
 })
 export class AuthorFormComponent {
+  @Output('onSubmit')
+  onSubmit = new EventEmitter<{
+    firstName: string;
+    lastName: string;
+    dateOfBirth: Date;
+    dateOfDeath: Date | null;
+    nationality: string;
+    biography: string;
+  }>();
+
   constructor(private formBuilder: FormBuilder) {}
 
   authorFromGroup: FormGroup = this.formBuilder.group({
@@ -23,5 +33,7 @@ export class AuthorFormComponent {
       this.authorFromGroup.markAllAsTouched();
       return;
     }
+
+    this.onSubmit.emit(this.authorFromGroup.value);
   }
 }
