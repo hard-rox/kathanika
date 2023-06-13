@@ -29,6 +29,8 @@ internal static class SchemaConfigurations
         requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.GraphQL.Inputs"));
         requestBuilder.AddQueryType<Queries>();
         requestBuilder.AddMutationType<Mutations>();
+        requestBuilder.AddSubscriptionType<Subscriptions>();
+        requestBuilder.AddInMemorySubscriptions();
         requestBuilder.AddProjections();
         requestBuilder.AddFiltering();
         requestBuilder.AddSorting();
