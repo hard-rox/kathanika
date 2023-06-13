@@ -1,13 +1,14 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Kathanika.Domain.Exceptions;
 using Kathanika.Infrastructure.GraphQL.Payloads;
+using HotChocolate.Subscriptions;
 
 namespace Kathanika.Infrastructure.GraphQL.Schema;
 
 public sealed partial class Mutations
 {
     [Error<InvalidFieldException>]
-    public async Task<AddAuthorPayload> AddAuthorAsync([FromServices]IMediator mediator, AddAuthorCommand input)
+    public async Task<AddAuthorPayload> AddAuthorAsync([FromServices] IMediator mediator, AddAuthorCommand input)
     {
         var author = await mediator.Send(input);
         return new(author);
@@ -15,7 +16,7 @@ public sealed partial class Mutations
 
     [Error<InvalidFieldException>]
     [Error<NotFoundWithTheIdException>]
-    public async Task<UpdateAuthorPayload> UpdateAuthorAsync([FromServices]IMediator mediator, UpdateAuthorCommand input)
+    public async Task<UpdateAuthorPayload> UpdateAuthorAsync([FromServices] IMediator mediator, UpdateAuthorCommand input)
     {
         var author = await mediator.Send(input);
         return new(author);
@@ -23,9 +24,17 @@ public sealed partial class Mutations
 
     [Error<NotFoundWithTheIdException>]
     [Error<DeletionFailedException>]
-    public async Task<DeleteAuthorPayload> DeleteAuthorAsync([FromServices]IMediator mediator, string id)
+    public async Task<DeleteAuthorPayload> DeleteAuthorAsync([FromServices] IMediator mediator, string id)
     {
         await mediator.Send(new DeleteAuthorCommand(id));
         return new(id);
+    }
+
+    [GraphQLDeprecated("Just a dummy for throwing new notification...")]
+    public async Task<Notification> FireNewNotification([FromServices]ITopicEventSender eventSender, string content)
+    {
+        var notification = new Notification() { Message = content };
+        await eventSender.SendAsync("NewNotification", notification);
+        return notification;
     }
 }
