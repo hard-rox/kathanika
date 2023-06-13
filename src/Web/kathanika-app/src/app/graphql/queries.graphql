@@ -22,6 +22,8 @@ query getAuthors(
 query getAuthor($id: String!) {
   author(id: $id) {
     id
+    firstName
+    lastName
     fullName
     dateOfBirth
     dateOfDeath

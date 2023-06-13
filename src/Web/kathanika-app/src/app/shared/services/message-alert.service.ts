@@ -42,13 +42,26 @@ export class MessageAlertService {
   }
 
   showConfirmation(
+    confirmationType: 'warning' | 'question',
     message: string,
     title?: string,
     confirmButtonText?: string,
     cancelButtonText?: string
   ): Observable<boolean> {
-    const promise = this.themedSwal.fire({
-      icon: 'question',
+    const confirmationSwal = Swal.mixin({
+      customClass: {
+        popup: 'rounded-none',
+        confirmButton:
+          confirmationType == 'warning'
+            ? 'bg-theme-fire-red bg-opacity-80 hover:bg-opacity-100 active:bg-opacity-100 px-4 py-2 text-white mx-2'
+            : 'bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black px-4 py-2 text-white mx-2',
+        cancelButton:
+          'bg-theme-davys-gray hover:bg-theme-gunmetal active:bg-theme-rich-black px-4 py-2 text-white mx-2',
+      },
+      buttonsStyling: false,
+    });
+    const promise = confirmationSwal.fire({
+      icon: confirmationType == 'warning' ? 'warning' : 'question',
       title: title ? title : 'Are you sure?',
       text: message,
       showCancelButton: true,

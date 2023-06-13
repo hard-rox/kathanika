@@ -1,16 +1,22 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
 import { AddAuthorGQL } from 'src/app/graphql/generated/graphql-operations';
 import { AddAuthorInput } from 'src/app/graphql/generated/graphql-operations';
 import { MessageAlertService } from 'src/app/shared/services/message-alert.service';
+import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 
 @Component({
   templateUrl: './author-add.component.html',
   styleUrls: ['./author-add.component.scss'],
 })
 export class AuthorAddComponent {
+
+  @ViewChild('authorAddForm') authorAddForm: AuthorFormComponent | undefined;
+
   constructor(
     private gql: AddAuthorGQL,
-    private alertService: MessageAlertService
+    private alertService: MessageAlertService,
+    private router: Router
   ) {}
 
   errors: string[] = [];
@@ -22,9 +28,11 @@ export class AuthorAddComponent {
           result.errors.forEach((x) => this.errors.push(x.message));
         } else {
           this.alertService.showSuccess(
-            'Author added successfully.',
+            result.data?.addAuthor.message ?? 'Author added.',
             'Author added'
           );
+          this.authorAddForm?.resetForm();
+          this.router.navigate([`/authors/${result.data?.addAuthor.data?.id}`]);
         }
       },
     });

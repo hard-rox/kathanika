@@ -1,6 +1,7 @@
 <div class="flex justify-between">
   <h2 class="text-xl font-bold">Authors</h2>
-  <a [routerLink]="['add']" class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black text-white px-4 py-2">Add new</a>
+  <a [routerLink]="['add']"
+    class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black text-white px-4 py-2">Add new</a>
 </div>
 <ng-container *ngIf="queryRef.valueChanges | async as queryResult">
   <table class="table-auto w-full shadow-sm bg-white text-left mt-2">
@@ -44,22 +45,14 @@
                     </span>
                     <span class="my-auto">Update</span>
                   </a>
-                  <!-- <button *ngIf="item?.status == 'INACTIVE'"
-                                        (click)="updateStatus(item?.id, itemStatus.Active)"
-                                        class="flex space-x-2 px-4 py-2 hover:bg-atlas-neutrals-40">
-                                        <span class="material-icons-outlined my-auto">
-                                            done
-                                        </span>
-                                        <span class="my-auto">Active</span>
-                                    </button>
-                                    <button *ngIf="item?.status == 'ACTIVE'"
-                                        (click)="updateStatus(item?.id, itemStatus.Inactive)"
-                                        class="flex space-x-2 px-4 py-2 hover:bg-atlas-neutrals-40">
-                                        <span class="material-icons-outlined my-auto">
-                                            motion_photos_off
-                                        </span>
-                                        <span class="my-auto">Inactive</span>
-                                    </button> -->
+                  <!-- TODO: Pass full name -->
+                  <button (click)="deleteAuthor(item.id, item.firstName)"
+                    class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                    <span class="material-symbols-sharp my-auto">
+                      delete
+                    </span>
+                    <span class="my-auto">Delete</span>
+                  </button>
                 </div>
               </div>
             </div>

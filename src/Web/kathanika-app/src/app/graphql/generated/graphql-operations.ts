@@ -443,6 +443,14 @@ export type AddAuthorMutationVariables = Exact<{
 
 export type AddAuthorMutation = { __typename?: 'Mutations', addAuthor: { __typename?: 'AddAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
+export type UpadateAuthorMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  authorPatch: AuthorPatchInput;
+}>;
+
+
+export type UpadateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+
 export type GetAuthorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -458,7 +466,7 @@ export type GetAuthorQueryVariables = Exact<{
 }>;
 
 
-export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string } | null };
+export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string } | null };
 
 export const AddAuthorDocument = gql`
     mutation addAuthor($addAuthorInput: AddAuthorInput!) {
@@ -485,6 +493,41 @@ export const AddAuthorDocument = gql`
   })
   export class AddAuthorGQL extends Apollo.Mutation<AddAuthorMutation, AddAuthorMutationVariables> {
     document = AddAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpadateAuthorDocument = gql`
+    mutation upadateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
+  updateAuthor(input: {id: $id, patch: $authorPatch}) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on NotFoundWithTheIdError {
+        id
+        objectName
+        message
+      }
+      ... on InvalidFieldError {
+        fieldName
+        message
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpadateAuthorGQL extends Apollo.Mutation<UpadateAuthorMutation, UpadateAuthorMutationVariables> {
+    document = UpadateAuthorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -522,6 +565,8 @@ export const GetAuthorDocument = gql`
     query getAuthor($id: String!) {
   author(id: $id) {
     id
+    firstName
+    lastName
     fullName
     dateOfBirth
     dateOfDeath

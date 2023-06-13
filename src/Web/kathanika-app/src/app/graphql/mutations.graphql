@@ -15,3 +15,26 @@ mutation addAuthor($addAuthorInput: AddAuthorInput!) {
     }
   }
 }
+
+mutation upadateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
+  updateAuthor(input: { id: $id, patch: $authorPatch }) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on NotFoundWithTheIdError {
+        id
+        objectName
+        message
+      }
+      ... on InvalidFieldError {
+        fieldName
+        message
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}

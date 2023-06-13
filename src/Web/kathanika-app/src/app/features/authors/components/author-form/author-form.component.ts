@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
@@ -7,6 +7,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./author-form.component.scss'],
 })
 export class AuthorFormComponent {
+  @Input('author')
+  author:
+    | {
+        firstName: string;
+        lastName: string;
+        dateOfBirth: any;
+        dateOfDeath?: any;
+        nationality: string;
+        biography: string;
+      }
+    | null
+    | undefined;
+
   @Output('onSubmit')
   onSubmit = new EventEmitter<{
     firstName: string;
@@ -35,5 +48,9 @@ export class AuthorFormComponent {
     }
 
     this.onSubmit.emit(this.authorFromGroup.value);
+  }
+
+  resetForm() {
+    this.authorFromGroup.reset();
   }
 }

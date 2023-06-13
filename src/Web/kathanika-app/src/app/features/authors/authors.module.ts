@@ -8,6 +8,7 @@ import { PaginationModule } from 'src/app/shared/modules/pagination/pagination.m
 import { AuthorAddComponent } from './pages/author-add/author-add.component';
 import { AuthorFormComponent } from './components/author-form/author-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AuthorUpdateComponent } from './pages/author-update/author-update.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     AuthorDetailsComponent,
     AuthorAddComponent,
     AuthorFormComponent,
+    AuthorUpdateComponent,
   ],
   imports: [
     CommonModule,

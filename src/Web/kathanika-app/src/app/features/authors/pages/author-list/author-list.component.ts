@@ -7,6 +7,7 @@ import {
   SortEnumType,
 } from 'src/app/graphql/generated/graphql-operations';
 import { BaseQueryComponent } from 'src/app/shared/bases/base-query-component';
+import { MessageAlertService } from 'src/app/shared/services/message-alert.service';
 
 @Component({
   templateUrl: './author-list.component.html',
@@ -44,9 +45,10 @@ export class AuthorListComponent
   }
 
   constructor(
-    gql: GetAuthorsGQL,
+    private gql: GetAuthorsGQL,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private alertService: MessageAlertService
   ) {
     super(gql, {
       skip: 0,
@@ -81,5 +83,22 @@ export class AuthorListComponent
     this.queryVariables.skip = 0;
     this.queryRef.refetch(this.queryVariables);
     this.setQueryParams();
+  }
+
+  deleteAuthor(id: string, name: string) {
+    this.alertService
+      .showConfirmation(
+        'warning',
+        `Are you sure deleting author ${name}? This action is irreversible.`,
+        'Confirm deleting author?',
+        'Yes, Delete'
+      )
+      .subscribe({
+        next: (isConfirmed) => {
+          if (isConfirmed) {
+            //TODO deleting author functionality...
+          }
+        },
+      });
   }
 }
