@@ -30,9 +30,10 @@
           && authorFromGroup.get('dateOfBirth')?.hasError('required')" class="text-theme-fire-red">Date of birth is
         required</span>
     </div>
-    <div class="flex flex-col">
+    <div *ngIf="!isUpdate" class="flex flex-col">
       <label>Date of death</label>
-      <input type="date" formControlName="dateOfDeath" class="border-theme-gunmetal border p-2 focus:ring-theme-rich-black" />
+      <input type="date" formControlName="dateOfDeath"
+        class="border-theme-gunmetal border p-2 focus:ring-theme-rich-black" />
     </div>
     <div class="flex flex-col">
       <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Nationality</label>

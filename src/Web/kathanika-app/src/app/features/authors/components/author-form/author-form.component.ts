@@ -12,6 +12,7 @@ export class AuthorFormComponent {
   @Input('author')
   set author(input: AuthorFormInput | null | undefined) {
     if (input) {
+      this.isUpdate = true;
       this.authorFromGroup.patchValue({
         firstName: input.firstName,
         lastName: input.lastName,

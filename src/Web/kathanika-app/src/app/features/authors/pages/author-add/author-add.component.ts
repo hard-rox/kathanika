@@ -2,7 +2,7 @@ import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddAuthorGQL } from 'src/app/graphql/generated/graphql-operations';
 import { AddAuthorInput } from 'src/app/graphql/generated/graphql-operations';
-import { MessageAlertService } from 'src/app/shared/services/message-alert.service';
+import { MessageAlertService } from 'src/app/core/services/message-alert.service';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 
 @Component({

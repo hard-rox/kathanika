@@ -7,7 +7,7 @@ import {
   SortEnumType,
 } from 'src/app/graphql/generated/graphql-operations';
 import { BaseQueryComponent } from 'src/app/shared/bases/base-query-component';
-import { MessageAlertService } from 'src/app/shared/services/message-alert.service';
+import { MessageAlertService } from 'src/app/core/services/message-alert.service';
 
 @Component({
   templateUrl: './author-list.component.html',
