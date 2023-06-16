@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AuthorFormInput } from '../../types/author-form-input';
+import { AuthorFormOutput } from '../../types/author-form-output';
 
 @Component({
   selector: 'app-author-form',
@@ -8,30 +10,25 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class AuthorFormComponent {
   @Input('author')
-  author:
-    | {
-        firstName: string;
-        lastName: string;
-        dateOfBirth: any;
-        dateOfDeath?: any;
-        nationality: string;
-        biography: string;
-      }
-    | null
-    | undefined;
+  set author(input: AuthorFormInput | null | undefined) {
+    if (input) {
+      this.authorFromGroup.patchValue({
+        firstName: input.firstName,
+        lastName: input.lastName,
+        dateOfBirth: input.dateOfBirth,
+        dateOfDeath: input.dateOfDeath,
+        nationality: input.nationality,
+        biography: input.biography,
+      });
+    }
+  }
 
   @Output('onSubmit')
-  onSubmit = new EventEmitter<{
-    firstName: string;
-    lastName: string;
-    dateOfBirth: Date;
-    dateOfDeath: Date | null;
-    nationality: string;
-    biography: string;
-  }>();
+  onSubmit = new EventEmitter<AuthorFormOutput>();
 
   constructor(private formBuilder: FormBuilder) {}
 
+  isUpdate: boolean = false;
   authorFromGroup: FormGroup = this.formBuilder.group({
     firstName: [null, [Validators.required]],
     lastName: [null, [Validators.required]],
