@@ -36,7 +36,7 @@ internal static class SchemaConfigurations
         requestBuilder.AddSorting();
         requestBuilder.AddErrorFilter(error =>
         {
-            if (error.Exception is not DomainException)
+            if (error.Exception is not null && error.Exception is not DomainException)
             {
                 return error
                     .RemoveException()

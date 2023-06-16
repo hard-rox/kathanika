@@ -24,6 +24,7 @@ query getAuthor($id: String!) {
     id
     firstName
     lastName
+    fullName
     dateOfBirth
     dateOfDeath
     nationality

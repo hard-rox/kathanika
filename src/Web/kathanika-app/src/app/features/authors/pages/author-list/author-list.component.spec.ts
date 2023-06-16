@@ -5,7 +5,7 @@ import { GetAuthorsGQL } from 'src/app/graphql/generated/graphql-operations';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { mockGql } from 'src/test-utils/gql-test-utils';
+import { mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { PaginationModule } from 'src/app/shared/modules/pagination/pagination.module';
 
 describe('AuthorListComponent', () => {
@@ -20,7 +20,7 @@ describe('AuthorListComponent', () => {
       providers: [
         {
           provide: GetAuthorsGQL,
-          useValue: mockGql,
+          useValue: mockQueryGql,
         },
         {
           provide: ActivatedRoute,

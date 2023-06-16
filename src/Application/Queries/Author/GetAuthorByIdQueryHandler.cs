@@ -1,3 +1,5 @@
+using Kathanika.Domain.Exceptions;
+
 namespace Kathanika.Application.Queries;
 
 internal class GetAuthorByIdQueryHandler : IRequestHandler<GetAuthorByIdQuery, Author>

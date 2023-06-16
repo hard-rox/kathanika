@@ -17,7 +17,8 @@
         "**/.vs": true,
         "**/.husky": true,
         "**/.config": true,
-        "**/.vscode": true
+        "**/.vscode": true,
+        "**/.github": true
     },
     "karmaTestExplorer.projectWorkspaces":[
         "src/Web/kathanika-app"
