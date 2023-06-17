@@ -12,7 +12,7 @@ internal sealed class GetPublicationsQueryHandler
 
     public async Task<IQueryable<Publication>> Handle(GetPublicationsQuery request, CancellationToken cancellationToken)
     {
-        var publicationQuery = await Task.Run(() => publicationRepository.AsQueryable());
+        var publicationQuery = await Task.Run(() => publicationRepository.AsQueryable(), cancellationToken);
         return publicationQuery;
     }
 }

@@ -1,32 +1,32 @@
-<nav class="bg-white mt-4 inline-flex items-center gap-4 border-b border-theme-indigo-dye">
+<nav class="bg-white mt-4 inline-flex items-center gap-4 border-b border-theme-rich-black">
     <span class="px-4 py-2">Items per page</span>
     <select (change)="onPageSizeChanged($event.target)"
-        class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue">
+        class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
         <option *ngFor="let pageSizeItem of pageSizes" [value]="pageSizeItem" [selected]="pageSizeItem == pageSize">
             {{pageSizeItem}}
         </option>
     </select>
     <span class="px-4 py-2">Page {{currentPage}} of {{lastPage}}</span>
     <button [disabled]="currentPage == 1" (click)="onPageChanged(1)"
-        class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue disabled:text-gray-400 disabled:pointer-events-none">
+        class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none">
         <span class="material-symbols-sharp">
             first_page
         </span>
     </button>
     <button [disabled]="currentPage == 1" (click)="onPageChanged(currentPage - 1)"
-        class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue disabled:text-gray-400 disabled:pointer-events-none">
+        class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none">
         <span class="material-symbols-sharp">
             chevron_left
         </span>
     </button>
     <button [disabled]="currentPage == lastPage" (click)="onPageChanged(currentPage + 1)"
-        class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue disabled:text-gray-400 disabled:pointer-events-none">
+        class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none">
         <span class="material-symbols-sharp">
             chevron_right
         </span>
     </button>
     <button [disabled]="currentPage == lastPage" (click)="onPageChanged(lastPage)"
-        class="px-4 py-2 hover:bg-theme-light-blue active:bg-theme-sky-blue disabled:text-gray-400 disabled:pointer-events-none">
+        class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none">
         <span class="material-symbols-sharp">
             last_page
         </span>

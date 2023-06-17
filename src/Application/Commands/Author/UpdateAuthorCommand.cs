@@ -8,7 +8,7 @@ public sealed record UpdateAuthorCommand : IRequest<Author>
     public sealed record AuthorPatch(
     string? FirstName = null,
     string? LastName = null,
-    DateTime? DateOfBirth = null,
+    DateOnly? DateOfBirth = null,
     string? Nationality = null,
     string? Biography = null
     );

@@ -1,5 +1,6 @@
 ﻿using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
+using Kathanika.Domain.Primitives;
 using Kathanika.Infrastructure.GraphQL.Schema;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -28,9 +29,23 @@ internal static class SchemaConfigurations
         requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.GraphQL.Inputs"));
         requestBuilder.AddQueryType<Queries>();
         requestBuilder.AddMutationType<Mutations>();
+        requestBuilder.AddSubscriptionType<Subscriptions>();
+        requestBuilder.AddInMemorySubscriptions();
         requestBuilder.AddProjections();
         requestBuilder.AddFiltering();
         requestBuilder.AddSorting();
+        requestBuilder.AddErrorFilter(error =>
+        {
+            if (error.Exception is not null && error.Exception is not DomainException)
+            {
+                return error
+                    .RemoveException()
+                    .RemoveExtensions()
+                    .RemoveLocations()
+                    .WithMessage("Something went terribly wrong. We are trying to fix it...");
+            }
+            return error;
+        });
         requestBuilder.ModifyRequestOptions(opt =>
         {
             opt.IncludeExceptionDetails = true;
@@ -47,6 +62,7 @@ internal static class SchemaConfigurations
             opt.SortFieldsByName = false;
         });
         requestBuilder.BindRuntimeType<DateTime, DateTimeType>();
+        requestBuilder.BindRuntimeType<DateOnly, DateType>();
         requestBuilder.AddMutationConventions();
         requestBuilder.InitializeOnStartup();
 

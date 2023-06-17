@@ -1,6 +1,4 @@
-﻿using Kathanika.Domain.Exceptions;
-
-namespace Kathanika.Application.Queries;
+﻿namespace Kathanika.Application.Queries;
 
 internal sealed class GetPublicationByIdQueryHandler
     : IRequestHandler<GetPublicationByIdQuery, Publication>
@@ -14,7 +12,7 @@ internal sealed class GetPublicationByIdQueryHandler
 
     public async Task<Publication> Handle(GetPublicationByIdQuery request, CancellationToken cancellationToken)
     {
-        var publication = await publicationRepository.GetByIdAsync(request.Id);
+        var publication = await publicationRepository.GetByIdAsync(request.Id, cancellationToken);
         return publication;
     }
 }

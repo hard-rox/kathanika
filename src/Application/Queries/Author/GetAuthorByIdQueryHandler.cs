@@ -13,7 +13,7 @@ internal class GetAuthorByIdQueryHandler : IRequestHandler<GetAuthorByIdQuery, A
 
     public async Task<Author> Handle(GetAuthorByIdQuery request, CancellationToken cancellationToken)
     {
-        var author = await authorRepository.GetByIdAsync(request.Id);
+        var author = await authorRepository.GetByIdAsync(request.Id, cancellationToken);
         return author;
     }
 }

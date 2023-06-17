@@ -1,8 +1,17 @@
-export const mockGql = {
+export const mockQueryGql = {
   watch: () => {
     return {
-      valueChanges: {},
+      valueChanges: {
+        subscribe: () => {},
+      },
       refetch: () => {},
     };
   },
+  fetch: () => {
+    return { subscribe: () => {} };
+  },
+};
+
+export const mockMutatuionGql = {
+  mutate: () => {},
 };

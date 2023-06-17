@@ -1,7 +1,4 @@
 ﻿using Kathanika.Application.Commands;
-using Kathanika.Domain.Aggregates;
-using Kathanika.Domain.Exceptions;
-using Moq;
 
 namespace Kathanika.UnitTests.ApplicationUnitTests.Commands;
 
@@ -21,7 +18,7 @@ public sealed class AddAuthorCommandHandlerTests
         var dummyAuthor = Author.Create(
             "Hello",
             "World",
-            DateTime.Parse("2013-10-10"),
+            DateOnly.Parse("2013-10-10"),
             null,
             "BD",
             "");
@@ -35,7 +32,7 @@ public sealed class AddAuthorCommandHandlerTests
             );
         var handler = new AddAuthorCommandHandler(authorRepositoryMock.Object);
         
-        authorRepositoryMock.Setup(x => x.AddAsync(It.IsAny<Author>()))
+        authorRepositoryMock.Setup(x => x.AddAsync(It.IsAny<Author>(), It.IsAny<CancellationToken>()))
             .ReturnsAsync(Author.Create(
                 dummyAuthor.FirstName,
                 dummyAuthor.LastName,

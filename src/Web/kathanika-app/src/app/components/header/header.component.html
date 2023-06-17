@@ -1,13 +1,13 @@
-<header class="bg-theme-rich-black text-white shadow-md py-4 px-6 fixed top-0 left-0 right-0 z-20">
+<header class="bg-theme-gunmetal text-white shadow-md py-4 px-6 fixed top-0 left-0 right-0 z-20">
     <div class="container mx-auto flex justify-between">
         <h1 class="text-2xl font-bold">কথনিকা</h1>
         <div class="flex items-center space-x-2">
             <div class="relative inline-block text-left">
                 <div>
-                    <button id="notification-btn" [ngClass]="{'bg-theme-prussian-blue': isNotificationVisible}"
+                    <button id="notification-btn" [ngClass]="{'bg-theme-rich-black': isNotificationVisible}"
                         (click)="isNotificationVisible = !isNotificationVisible"
                         (focusout)="isNotificationVisible = false"
-                        class="rounded-full hover:bg-theme-indigo-dye active:bg-theme-prussian-blue w-10 h-10 ">
+                        class="rounded-full hover:bg-theme-rich-black active:bg-theme-rich-black w-10 h-10 ">
                         <span class="material-symbols-sharp">
                             notifications
                         </span>
@@ -16,7 +16,7 @@
 
                 <!--
                   Dropdown menu, show/hide based on menu state.
-              
+
                   Entering: "transition ease-out duration-100"
                     From: "transform opacity-0 scale-95"
                     To: "transform opacity-100 scale-100"
@@ -28,18 +28,18 @@
                     class="absolute right-0 z-10 mt-2 w-56 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">
-                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <!-- Active: "bg-theme-silver text-gray-900", Not Active: "text-gray-700" -->
                         <a href="#"
-                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-theme-silver active:text-gray-900"
                             role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
                         <a href="#"
-                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-theme-silver active:text-gray-900"
                             role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
                         <a href="#"
-                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-theme-silver active:text-gray-900"
                             role="menuitem" tabindex="-1" id="menu-item-2">License</a>
                         <button type="submit"
-                            class="text-gray-700 block w-full px-4 py-2 text-left text-sm active:bg-gray-100 active:text-gray-900"
+                            class="text-gray-700 block w-full px-4 py-2 text-left text-sm active:bg-theme-silver active:text-gray-900"
                             role="menuitem" tabindex="-1" id="menu-item-3">Sign out</button>
                     </div>
                 </div>
@@ -48,8 +48,8 @@
             <div class="relative inline-block text-left">
                 <div>
                     <button id="user-action-btn" type="button" (click)="isUserActionsVisible = !isUserActionsVisible"
-                        (focusout)="isUserActionsVisible = false" [ngClass]="{'bg-gray-500': isUserActionsVisible}"
-                        class="inline-flex items-center w-full justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold hover:bg-gray-400 active:bg-gray-500"
+                        (focusout)="isUserActionsVisible = false" [ngClass]="{'bg-theme-rich-black': isUserActionsVisible}"
+                        class="inline-flex items-center w-full justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold hover:bg-theme-rich-black active:bg-theme-rich-black"
                         aria-expanded="true" aria-haspopup="true">
                         John Doe
                         <span class="material-symbols-sharp">
@@ -60,7 +60,7 @@
 
                 <!--
                   Dropdown menu, show/hide based on menu state.
-              
+
                   Entering: "transition ease-out duration-100"
                     From: "transform opacity-0 scale-95"
                     To: "transform opacity-100 scale-100"
@@ -72,18 +72,18 @@
                     class="absolute right-0 z-10 mt-2 w-56 origin-top-right bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                     role="menu" aria-orientation="vertical" aria-labelledby="menu-button" tabindex="-1">
                     <div class="py-1" role="none">
-                        <!-- Active: "bg-gray-100 text-gray-900", Not Active: "text-gray-700" -->
+                        <!-- Active: "bg-theme-silver text-gray-900", Not Active: "text-gray-700" -->
                         <a href="#"
-                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-theme-silver active:text-gray-900"
                             role="menuitem" tabindex="-1" id="menu-item-0">Account settings</a>
                         <a href="#"
-                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-theme-silver active:text-gray-900"
                             role="menuitem" tabindex="-1" id="menu-item-1">Support</a>
                         <a href="#"
-                            class="text-gray-700 block px-4 py-2 text-sm active:bg-gray-100 active:text-gray-900"
+                            class="text-gray-700 block px-4 py-2 text-sm active:bg-theme-silver active:text-gray-900"
                             role="menuitem" tabindex="-1" id="menu-item-2">License</a>
                         <button type="submit"
-                            class="text-gray-700 block w-full px-4 py-2 text-left text-sm active:bg-gray-100 active:text-gray-900"
+                            class="text-gray-700 block w-full px-4 py-2 text-left text-sm active:bg-theme-silver active:text-gray-900"
                             role="menuitem" tabindex="-1" id="menu-item-3">Sign out</button>
                     </div>
                 </div>

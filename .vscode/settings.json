@@ -13,6 +13,12 @@
         "**/Logs": true,
         "**/node_modules": true,
         "**/.angular": true,
+        "**/TestResults": true,
+        "**/.vs": true,
+        "**/.husky": true,
+        "**/.config": true,
+        "**/.vscode": true,
+        "**/.github": true
     },
     "karmaTestExplorer.projectWorkspaces":[
         "src/Web/kathanika-app"
