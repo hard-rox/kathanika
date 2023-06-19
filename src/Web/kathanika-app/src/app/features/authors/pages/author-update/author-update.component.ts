@@ -50,16 +50,23 @@ export class AuthorUpdateComponent implements OnInit {
     this.mutation
       .mutate({
         id: this.authorId as string,
-        authorPatch: authorOutput,
+        authorPatch: {
+          firstName: authorOutput.firstName,
+          lastName: authorOutput.lastName,
+          dateOfBirth: authorOutput.dateOfBirth,
+          nationality: authorOutput.nationality,
+          biography: authorOutput.biography,
+        },
       })
       .subscribe({
         next: (result) => {
+          console.log(result);
           if (result.errors) {
             result.errors.forEach((x) => this.errors.push(x.message));
           } else {
-            this.alertService.showSuccess(
-              result.data?.updateAuthor.message ?? 'Author updated.',
-              'Author updated'
+            this.alertService.showToast(
+              'success',
+              result.data?.updateAuthor.message ?? 'Author updated.'
             );
             this.authorUpdateForm?.resetForm();
             this.router.navigate([

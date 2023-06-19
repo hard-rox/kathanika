@@ -1,3 +1,9 @@
-<div class="bg-white px-6 py-4 shadow-sm">
-  <app-author-form #authorAddForm (onSubmit)="onValidFormSubmit($event)"/>
-</div>
+<app-alert *ngIf="errors.length > 0">
+  <ul class="mt-1.5 ml-4 list-disc list-inside">
+    <li *ngFor="let error of errors">{{error}}</li>
+  </ul>
+</app-alert>
+
+<app-panel panelTitle="Add Author" [isLoading]="isPanelLoading">
+  <app-author-form #authorAddForm (onSubmit)="onValidFormSubmit($event)" />
+</app-panel>

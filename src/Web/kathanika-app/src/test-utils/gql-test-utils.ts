@@ -7,7 +7,7 @@ export const mockQueryGql = {
       refetch: () => {},
     };
   },
-  fetch: () => {
+  fetch: (variables?: any) => {
     return { subscribe: () => {} };
   },
 };

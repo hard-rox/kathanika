@@ -1,0 +1,9 @@
+<div *ngIf="!isClosed" class="my-2 px-4 py-2 flex justify-between items-start shadow-sm bg-theme-fire-red bg-opacity-30">
+  <ng-content></ng-content>
+  <button (click)="close()"
+    class="flex items-center rounded-full hover:bg-theme-fire-red hover:bg-opacity-40 active:bg-opacity-50 px-1 py-1">
+    <span class="material-symbols-sharp">
+      close
+    </span>
+  </button>
+</div>

@@ -5,6 +5,7 @@ import { AuthorFormComponent } from '../../components/author-form/author-form.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddAuthorGQL } from 'src/app/graphql/generated/graphql-operations';
 import { mockMutatuionGql } from 'src/test-utils/gql-test-utils';
+import { PanelComponent } from 'src/app/shared/modules/panel/components/panel/panel.component';
 
 describe('AuthorAddComponent', () => {
   let component: AuthorAddComponent;
@@ -17,7 +18,8 @@ describe('AuthorAddComponent', () => {
       ],
       declarations: [
         AuthorAddComponent,
-        AuthorFormComponent
+        AuthorFormComponent,
+        PanelComponent
       ],
       providers: [
         {
