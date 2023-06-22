@@ -1,3 +1,9 @@
-<app-panel panelTitle="Author Update">
+<app-alert *ngIf="errors.length > 0">
+  <ul class="mt-1.5 ml-4 list-disc list-inside">
+    <li *ngFor="let error of errors">{{error}}</li>
+  </ul>
+</app-alert>
+
+<app-panel panelTitle="Author Update" [isLoading]="isPanelLoading">
   <app-author-form #authorUpdateForm [author]="authorFormInput" (onSubmit)="onValidFormSubmit($event)"/>
 </app-panel>

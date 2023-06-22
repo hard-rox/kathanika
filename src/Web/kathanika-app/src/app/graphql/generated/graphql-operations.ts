@@ -191,6 +191,15 @@ export type Error = {
   message: Scalars['String']['output'];
 };
 
+export type FireNewNotificationInput = {
+  content: Scalars['String']['input'];
+};
+
+export type FireNewNotificationPayload = {
+  __typename?: 'FireNewNotificationPayload';
+  notification?: Maybe<Notification>;
+};
+
 export type IntOperationFilterInput = {
   eq?: InputMaybe<Scalars['Int']['input']>;
   gt?: InputMaybe<Scalars['Int']['input']>;
@@ -224,6 +233,8 @@ export type Mutations = {
   addAuthor: AddAuthorPayload;
   addPublication: AddPublicationPayload;
   deleteAuthor: DeleteAuthorPayload;
+  /** @deprecated Just a dummy for throwing new notification... */
+  fireNewNotification: FireNewNotificationPayload;
   updateAuthor: UpdateAuthorPayload;
 };
 
@@ -243,6 +254,11 @@ export type MutationsDeleteAuthorArgs = {
 };
 
 
+export type MutationsFireNewNotificationArgs = {
+  input: FireNewNotificationInput;
+};
+
+
 export type MutationsUpdateAuthorArgs = {
   input: UpdateAuthorInput;
 };
@@ -252,6 +268,11 @@ export type NotFoundWithTheIdError = Error & {
   id: Scalars['String']['output'];
   message: Scalars['String']['output'];
   objectName: Scalars['String']['output'];
+};
+
+export type Notification = {
+  __typename?: 'Notification';
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 /** Information about pagination in a connection. */
@@ -422,6 +443,11 @@ export type StringOperationFilterInput = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
+export type Subscriptions = {
+  __typename?: 'Subscriptions';
+  onNewNotification: Notification;
+};
+
 export type UpdateAuthorError = InvalidFieldError | NotFoundWithTheIdError;
 
 export type UpdateAuthorInput = {
@@ -478,7 +504,6 @@ export const AddAuthorDocument = gql`
     errors {
       ... on InvalidFieldError {
         fieldName
-        message
       }
       ... on Error {
         message
@@ -509,11 +534,9 @@ export const UpadateAuthorDocument = gql`
       ... on NotFoundWithTheIdError {
         id
         objectName
-        message
       }
       ... on InvalidFieldError {
         fieldName
-        message
       }
       ... on Error {
         message

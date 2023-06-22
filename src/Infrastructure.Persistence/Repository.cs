@@ -1,4 +1,5 @@
 using Kathanika.Application.Services;
+using Kathanika.Domain.Exceptions;
 using Kathanika.Domain.Primitives;
 using MongoDB.Bson;
 using System.Linq.Expressions;
@@ -20,13 +21,23 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _cacheService = cacheService;
     }
 
+    private bool IsValidMongoObjectId(string id)
+    {
+        if (ObjectId.TryParse(id, out _))
+        {
+            return true;
+        }
+        return false;
+    }
+
     public IQueryable<T> AsQueryable()
     {
         return _collection.AsQueryable();
     }
 
-    public async Task<T> GetByIdAsync(string id, CancellationToken cancellationToken = default)
+    public async Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
+        if(!IsValidMongoObjectId(id)) return null;
         _logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
         
         var cacheKey = $"{typeof(T).Name.ToLower()}:{id}";
@@ -139,6 +150,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
+        if(!IsValidMongoObjectId(id)) throw new NotFoundWithTheIdException(typeof(T), id);
         _logger.LogInformation("Deleting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
         var filter = Builders<T>.Filter.Eq(x => x.Id, id);
         await _collection.DeleteOneAsync(filter, cancellationToken: cancellationToken);
