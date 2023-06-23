@@ -6,6 +6,9 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./alert.component.scss'],
 })
 export class AlertComponent {
+  @Input('closeable')
+  closeable: boolean = false;
+
   @Output('onClosed')
   private onClosed = new EventEmitter<void>();
 

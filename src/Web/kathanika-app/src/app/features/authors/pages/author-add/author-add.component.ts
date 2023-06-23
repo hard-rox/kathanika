@@ -44,4 +44,8 @@ export class AuthorAddComponent {
       },
     });
   }
+
+  closeAlert() {
+    this.errors = [];
+  }
 }

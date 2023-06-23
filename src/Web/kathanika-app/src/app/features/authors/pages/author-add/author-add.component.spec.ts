@@ -107,4 +107,10 @@ describe('AuthorAddComponent', () => {
     component.onValidFormSubmit(formOutput);
     expect(alertServiceSpy).toHaveBeenCalledTimes(1);
   });
+
+  it('should clear errors array on close button click in alert component', () => {
+    component.errors = ['Test error'];
+    component.closeAlert();
+    expect(component.errors.length).toEqual(0);
+  });
 });

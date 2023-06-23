@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  AuthorPatchInput,
   GetAuthorGQL,
   UpadateAuthorGQL,
 } from 'src/app/graphql/generated/graphql-operations';
@@ -69,16 +70,18 @@ export class AuthorUpdateComponent implements OnInit {
 
   onValidFormSubmit(authorOutput: AuthorFormOutput) {
     this.isPanelLoading = true;
+    const authorPatch: AuthorPatchInput = {
+      firstName: authorOutput.firstName,
+      lastName: authorOutput.lastName,
+      dateOfBirth: authorOutput.dateOfBirth,
+      nationality: authorOutput.nationality,
+      biography: authorOutput.biography,
+    };
+
     this.mutation
       .mutate({
         id: this.authorId as string,
-        authorPatch: {
-          firstName: authorOutput.firstName,
-          lastName: authorOutput.lastName,
-          dateOfBirth: authorOutput.dateOfBirth,
-          nationality: authorOutput.nationality,
-          biography: authorOutput.biography,
-        },
+        authorPatch: authorPatch,
       })
       .subscribe({
         next: (result) => {
@@ -112,5 +115,9 @@ export class AuthorUpdateComponent implements OnInit {
           this.isPanelLoading = false;
         },
       });
+  }
+
+  closeAlert() {
+    this.errors = [];
   }
 }

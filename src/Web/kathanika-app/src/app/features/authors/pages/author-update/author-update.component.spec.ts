@@ -146,4 +146,10 @@ describe('AuthorUpdateComponent', () => {
     });
     expect(component.errors.length).toEqual(3);
   });
+
+  it('should clear errors array on close button click in alert component', () => {
+    component.errors = ['Test error'];
+    component.closeAlert();
+    expect(component.errors.length).toEqual(0);
+  });
 });
