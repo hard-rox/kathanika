@@ -45,7 +45,7 @@ export class AuthorUpdateComponent implements OnInit {
               this.alertService.showPopup(
                 'error',
                 result.error?.message ??
-                  (result.errors?.join('<br/>>') as string)
+                  (result.errors?.join('<br/>') as string)
               );
             } else if (result.data.author == null) {
               this.alertService.showPopup(
@@ -60,7 +60,7 @@ export class AuthorUpdateComponent implements OnInit {
             }
           },
           error: (err) => {
-            console.debug(JSON.stringify(err));
+            // console.debug(JSON.stringify(err));
             this.alertService.showPopup('error', err.message);
           },
         });
@@ -82,7 +82,7 @@ export class AuthorUpdateComponent implements OnInit {
       })
       .subscribe({
         next: (result) => {
-          // console.debug(result);
+          // console.debug(JSON.stringify(result));
           if (result.errors || result.data?.updateAuthor.errors) {
             this.errors = [];
             result.data?.updateAuthor.errors?.forEach((x) => {
@@ -94,6 +94,7 @@ export class AuthorUpdateComponent implements OnInit {
                   this.errors.push(`${x.objectName} - ${x.message}`);
                   break;
                 default:
+                  this.errors.push(x.message);
                   break;
               }
             });
