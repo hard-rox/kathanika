@@ -18,4 +18,10 @@ describe('AlertComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should emit onClosed output', () => {
+    const onClosedSpy = spyOn(component['onClosed'], 'emit');
+    component.close();
+    expect(onClosedSpy).toHaveBeenCalledTimes(1);
+  });
 });
