@@ -54,7 +54,7 @@ public sealed class BaseRepositoryTests
         var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
 
         // Act
-        var result = await repo.GetByIdAsync("1");
+        var result = await repo.GetByIdAsync("6487aceb533e0377b58d501c");
 
         // Assert
         collectionMock.Verify(x => x.FindAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
@@ -158,7 +158,7 @@ public sealed class BaseRepositoryTests
         var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
 
         // Act
-        await repo.DeleteAsync("");
+        await repo.DeleteAsync("6487aceb533e0377b58d501c");
 
         // Assert
         collectionMock.Verify(x => x.DeleteOneAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
