@@ -2,4 +2,4 @@
 
 public sealed record GetPublicationByIdQuery(
     string Id
-    ) : IRequest<Publication>;
+    ) : IRequest<Publication?>;
