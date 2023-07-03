@@ -10,7 +10,7 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string; }
+  ID: { input: string; output: string; }
   String: { input: string; output: string; }
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
@@ -89,11 +89,9 @@ export type Author = {
 
 export type AuthorFilterInput = {
   and?: InputMaybe<Array<AuthorFilterInput>>;
-  biography?: InputMaybe<StringOperationFilterInput>;
   dateOfBirth?: InputMaybe<DateOperationFilterInput>;
   dateOfDeath?: InputMaybe<DateOperationFilterInput>;
   firstName?: InputMaybe<StringOperationFilterInput>;
-  fullName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
   lastName?: InputMaybe<StringOperationFilterInput>;
   nationality?: InputMaybe<StringOperationFilterInput>;
@@ -391,7 +389,7 @@ export type Queries = {
   __typename?: 'Queries';
   author?: Maybe<Author>;
   authors?: Maybe<AuthorsCollectionSegment>;
-  publication: Publication;
+  publication?: Maybe<Publication>;
   publications?: Maybe<PublicationsConnection>;
 };
 
