@@ -8,6 +8,7 @@ import {
 } from 'src/app/graphql/generated/graphql-operations';
 import { BaseQueryComponent } from 'src/app/shared/bases/base-query-component';
 import { MessageAlertService } from 'src/app/core/services/message-alert.service';
+import { Subject, debounceTime, distinctUntilChanged, map, switchMap } from 'rxjs';
 
 @Component({
   templateUrl: './author-list.component.html',
@@ -17,15 +18,43 @@ export class AuthorListComponent
   extends BaseQueryComponent<GetAuthorsQuery, GetAuthorsQueryVariables>
   implements OnInit
 {
+  private searchTextSubject = new Subject<string>();
+
+  private setQueryFilter(searchText: string) {
+    if (!searchText || searchText.length == 0) {
+      this.queryVariables.filter = null;
+      return;
+    }
+
+    this.queryVariables.filter = {
+      or: [
+        {
+          firstName: {
+            contains: searchText,
+          },
+        },
+        {
+          lastName: {
+            contains: searchText,
+          },
+        },
+        {
+          nationality: {
+            contains: searchText,
+          },
+        },
+      ],
+    };
+  }
+
   private setQueryVariableFromRouteQueryParams(params: Params) {
-    let size = +params['size'];
-    let page = +params['page'];
-    let sortBy = params['sortBy'] as string;
-    let order = params['order'] as string;
+    const size = +params['size'];
+    const page = +params['page'];
+    const searchText = params['searchText'] as string | null;
 
     if (size && size > 0) this.pageSize = this.queryVariables.take = size;
     if (page && page > 0) this.queryVariables.skip = (page - 1) * size;
-    // if (sortBy && sortBy.length > 0) this._queryVariables.filter = {};
+    if (searchText && searchText.length > 0) this.setQueryFilter(searchText);
   }
 
   private setQueryParams() {
@@ -37,15 +66,14 @@ export class AuthorListComponent
             ? 1
             : this.queryVariables.skip / this.queryVariables.take + 1,
         size: this.queryVariables.take,
-        sortBy: 'firstName',
-        order: SortEnumType.Asc,
+        searchText: this.searchText,
       },
       queryParamsHandling: 'merge',
     });
   }
 
   constructor(
-    private gql: GetAuthorsGQL,
+    gql: GetAuthorsGQL,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private alertService: MessageAlertService
@@ -59,6 +87,7 @@ export class AuthorListComponent
     });
   }
 
+  searchText: string | null = null;
   pageSizes: number[] = [10, 20, 50, 100];
   pageSize: number = 0;
 
@@ -70,6 +99,23 @@ export class AuthorListComponent
         this.queryRef.refetch(this.queryVariables);
       },
     });
+
+    this.searchTextSubject.pipe(
+      debounceTime(700),
+      distinctUntilChanged(),
+      map((value) => {
+        // console.debug(value);
+        this.searchText = value;
+        this.setQueryFilter(value);
+        this.queryRef.refetch(this.queryVariables);
+        this.setQueryParams();
+      })
+    ).subscribe();
+  }
+
+  onSearchTextChanged($event: any) {
+    const searchText = $event.target.value;
+    this.searchTextSubject.next(searchText);
   }
 
   changePage(pageNumber: number) {

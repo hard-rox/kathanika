@@ -13,7 +13,7 @@ public sealed partial class Queries
         return publications;
     }
 
-    public async Task<Publication> GetPublicationAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
+    public async Task<Publication?> GetPublicationAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
     {
         var publication = await mediator.Send(new GetPublicationByIdQuery(id), cancellationToken);
         return publication;
