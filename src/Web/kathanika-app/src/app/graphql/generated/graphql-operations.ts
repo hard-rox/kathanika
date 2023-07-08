@@ -273,19 +273,6 @@ export type Notification = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
-/** Information about pagination in a connection. */
-export type PageInfo = {
-  __typename?: 'PageInfo';
-  /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']['output']>;
-  /** Indicates whether more edges exist following the set defined by the clients arguments. */
-  hasNextPage: Scalars['Boolean']['output'];
-  /** Indicates whether more edges exist prior the set defined by the clients arguments. */
-  hasPreviousPage: Scalars['Boolean']['output'];
-  /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']['output']>;
-};
-
 export type Publication = {
   __typename?: 'Publication';
   authors: Array<PublicationAuthor>;
@@ -363,26 +350,14 @@ export type PublicationTypeOperationFilterInput = {
   nin?: InputMaybe<Array<PublicationType>>;
 };
 
-/** A connection to a list of items. */
-export type PublicationsConnection = {
-  __typename?: 'PublicationsConnection';
-  /** A list of edges. */
-  edges?: Maybe<Array<PublicationsEdge>>;
-  /** A flattened list of the nodes. */
-  nodes?: Maybe<Array<Publication>>;
+/** A segment of a collection. */
+export type PublicationsCollectionSegment = {
+  __typename?: 'PublicationsCollectionSegment';
+  /** A flattened list of the items. */
+  items?: Maybe<Array<Publication>>;
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** Identifies the total count of items in the connection. */
+  pageInfo: CollectionSegmentInfo;
   totalCount: Scalars['Int']['output'];
-};
-
-/** An edge in a connection. */
-export type PublicationsEdge = {
-  __typename?: 'PublicationsEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: Publication;
 };
 
 export type Queries = {
@@ -390,7 +365,7 @@ export type Queries = {
   author?: Maybe<Author>;
   authors?: Maybe<AuthorsCollectionSegment>;
   publication?: Maybe<Publication>;
-  publications?: Maybe<PublicationsConnection>;
+  publications?: Maybe<PublicationsCollectionSegment>;
 };
 
 
@@ -413,11 +388,9 @@ export type QueriesPublicationArgs = {
 
 
 export type QueriesPublicationsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<Array<PublicationSortInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PublicationFilterInput>;
 };
 
@@ -491,6 +464,16 @@ export type GetAuthorQueryVariables = Exact<{
 
 
 export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string } | null };
+
+export type GetPublicationsQueryVariables = Exact<{
+  skip: Scalars['Int']['input'];
+  take: Scalars['Int']['input'];
+  filter?: InputMaybe<PublicationFilterInput>;
+  sortBy?: InputMaybe<Array<PublicationSortInput> | PublicationSortInput>;
+}>;
+
+
+export type GetPublicationsQuery = { __typename?: 'Queries', publications?: { __typename?: 'PublicationsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publication', id: string, title: string, callNumber: string, publicationType: PublicationType, publisher: string, language: string, copiesAvailable: number, authors: Array<{ __typename?: 'PublicationAuthor', firstName: string, lastName: string }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export const AddAuthorDocument = gql`
     mutation addAuthor($addAuthorInput: AddAuthorInput!) {
@@ -602,6 +585,41 @@ export const GetAuthorDocument = gql`
   })
   export class GetAuthorGQL extends Apollo.Query<GetAuthorQuery, GetAuthorQueryVariables> {
     document = GetAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetPublicationsDocument = gql`
+    query getPublications($skip: Int!, $take: Int!, $filter: PublicationFilterInput, $sortBy: [PublicationSortInput!]) {
+  publications(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      title
+      authors {
+        firstName
+        lastName
+      }
+      callNumber
+      publicationType
+      publisher
+      language
+      copiesAvailable
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPublicationsGQL extends Apollo.Query<GetPublicationsQuery, GetPublicationsQueryVariables> {
+    document = GetPublicationsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
