@@ -7,24 +7,24 @@
   <input [value]="searchText" (keyup)="onSearchTextChanged($event)" type="text" placeholder="Search text" class="border-theme-gunmetal border p-2 w-full" />
 </div>
 <ng-container *ngIf="queryRef.valueChanges | async as queryResult">
-  <table class="table-auto w-full shadow-sm bg-white text-left mt-2">
+  <table>
     <thead>
-      <tr class="border-b border-theme-rich-black">
-        <th scope="col" class="px-6 py-3">Serial</th>
-        <th scope="col" class="px-6 py-3">First Name</th>
-        <th scope="col" class="px-6 py-3">Last Name</th>
-        <th scope="col" class="px-6 py-3">Nationality</th>
-        <th scope="col" class="px-6 py-3">Action</th>
+      <tr>
+        <th scope="col">Serial</th>
+        <th scope="col">First Name</th>
+        <th scope="col">Last Name</th>
+        <th scope="col">Nationality</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngIf="queryResult?.data?.authors?.items as data; else emptyData">
-        <tr *ngFor="let item of data; let idx = index" class="border-b border-theme-rich-black">
-          <td scope="col" class="px-6">{{idx + 1}}</td>
-          <td scope="col" class="px-6">{{item.firstName}}</td>
-          <td scope="col" class="px-6">{{item.lastName}}</td>
-          <td scope="col" class="px-6">{{item.nationality}}</td>
-          <td scope="col" class="px-6">
+        <tr *ngFor="let item of data; let idx = index">
+          <td scope="col">{{idx + 1}}</td>
+          <td scope="col">{{item.firstName}}</td>
+          <td scope="col">{{item.lastName}}</td>
+          <td scope="col">{{item.nationality}}</td>
+          <td scope="col">
             <div class="group relative">
               <button class="px-3 py-2 hover:bg-theme-silver active:bg-theme-silver rounded-full">
                 <span class="material-symbols-sharp">
@@ -64,7 +64,7 @@
       </ng-container>
       <ng-template #emptyData>
         <tr>
-          <td colspan="100%" class="px-6 py-3 text-center">
+          <td colspan="100%" class="text-center">
             No data to show
           </td>
         </tr>

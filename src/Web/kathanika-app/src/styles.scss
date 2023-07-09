@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer components {
+  table {
+    @apply table-auto w-full shadow-sm bg-white text-left mt-2
+  }
+
+  tr {
+    @apply border-b border-theme-rich-black
+  }
+
+  th{
+    @apply px-6 py-3
+  }
+
+  td{
+    @apply px-6
+  }
+}

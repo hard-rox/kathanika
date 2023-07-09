@@ -1,32 +1,32 @@
 <ng-container *ngIf="queryRef.valueChanges | async as queryResult">
   <!-- <pre>{{queryResult | json}}</pre> -->
-  <table class="table-auto w-full shadow-sm bg-white text-left mt-2">
+  <table>
     <thead>
-      <tr class="border-b border-theme-rich-black">
-        <th scope="col" class="px-6 py-3">Serial</th>
-        <th scope="col" class="px-6 py-3">Title</th>
-        <th scope="col" class="px-6 py-3">Authors</th>
-        <th scope="col" class="px-6 py-3">Call Number</th>
-        <th scope="col" class="px-6 py-3">Type</th>
-        <th scope="col" class="px-6 py-3">Publisher</th>
-        <th scope="col" class="px-6 py-3">Language</th>
-        <th scope="col" class="px-6 py-3">Copies</th>
+      <tr>
+        <th scope="col">Serial</th>
+        <th scope="col">Title</th>
+        <th scope="col">Authors</th>
+        <th scope="col">Call Number</th>
+        <th scope="col">Type</th>
+        <th scope="col">Publisher</th>
+        <th scope="col">Language</th>
+        <th scope="col">Copies</th>
       </tr>
     </thead>
     <tbody>
       <ng-container *ngIf="queryResult?.data?.publications?.items as data; else emptyData">
-        <tr *ngFor="let item of data; let idx = index" class="border-b border-theme-rich-black">
-          <td scope="col" class="px-6">{{idx + 1}}</td>
-          <td scope="col" class="px-6">{{item.title}}</td>
-          <td scope="col" class="px-6">
+        <tr *ngFor="let item of data; let idx = index">
+          <td scope="col">{{idx + 1}}</td>
+          <td scope="col">{{item.title}}</td>
+          <td scope="col">
             <p *ngFor="let author of item.authors">{{author.firstName + ' ' + author.lastName}}</p>
           </td>
-          <td scope="col" class="px-6">{{item.callNumber}}</td>
-          <td scope="col" class="px-6">{{item.publicationType}}</td>
-          <td scope="col" class="px-6">{{item.publisher}}</td>
-          <td scope="col" class="px-6">{{item.language}}</td>
-          <td scope="col" class="px-6">{{item.copiesAvailable}}</td>
-          <td scope="col" class="px-6">
+          <td scope="col">{{item.callNumber}}</td>
+          <td scope="col">{{item.publicationType}}</td>
+          <td scope="col">{{item.publisher}}</td>
+          <td scope="col">{{item.language}}</td>
+          <td scope="col">{{item.copiesAvailable}}</td>
+          <td scope="col">
             <div class="group relative">
               <button class="px-3 py-2 hover:bg-theme-silver active:bg-theme-silver rounded-full">
                 <span class="material-symbols-sharp">
@@ -66,7 +66,7 @@
       </ng-container>
       <ng-template #emptyData>
         <tr>
-          <td colspan="100%" class="px-6 py-3 text-center">
+          <td colspan="100%" class="text-center">
             No data to show
           </td>
         </tr>
