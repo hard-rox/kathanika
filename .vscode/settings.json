@@ -22,5 +22,6 @@
     },
     "karmaTestExplorer.projectWorkspaces":[
         "src/Web/kathanika-app"
-    ]
+    ],
+    "dotnetAcquisitionExtension.installTimeoutValue": 180
 }
