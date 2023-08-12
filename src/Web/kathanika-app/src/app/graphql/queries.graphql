@@ -59,3 +59,25 @@ query getPublications(
     totalCount
   }
 }
+
+query getPublication($id: String!) {
+  publication(id: $id) {
+    id
+    title
+    publicationType
+    isbn
+    edition
+    callNumber
+    authors {
+      id
+      firstName
+      lastName
+    }
+    language
+    publisher
+    publishedDate
+    buyingPrice
+    copiesAvailable
+    description
+  }
+}

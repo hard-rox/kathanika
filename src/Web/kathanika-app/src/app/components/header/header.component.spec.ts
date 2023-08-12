@@ -1,8 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
-import { DebugElement } from '@angular/core';
-import { By } from '@angular/platform-browser';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -39,7 +37,7 @@ describe('HeaderComponent', () => {
     expect(component.isUserActionsVisible).not.toEqual(oldValue);
   });
 
-  it('should dispay notification container when notification button clicked', () => {
+  fit('should dispay notification container when notification button clicked', () => {
     const notificationBtn = nativeElement.querySelector('#notification-btn') as HTMLElement;
     notificationBtn.click();
     fixture.detectChanges();

@@ -9,12 +9,9 @@ describe('PaginationComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [PaginationComponent],
-    })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PaginationComponent);
-        component = fixture.componentInstance;
-      });
+    }).compileComponents();
+    fixture = TestBed.createComponent(PaginationComponent);
+    component = fixture.componentInstance;
   });
 
   it('should create', () => {
@@ -49,7 +46,9 @@ describe('PaginationComponent', () => {
     fixture.detectChanges();
     const nativeElement = fixture.nativeElement as HTMLElement;
     const pageSizeOptionNodes = nativeElement.querySelectorAll('option');
-    const pageSizeOptionValues = Array.from(pageSizeOptionNodes).map(x => +x.value);
+    const pageSizeOptionValues = Array.from(pageSizeOptionNodes).map(
+      (x) => +x.value
+    );
 
     expect(component.pageSizes).toEqual([5, 10, 50, 100]);
     expect(pageSizeOptionNodes.length).toEqual(4);
@@ -58,7 +57,7 @@ describe('PaginationComponent', () => {
 
   it('should set last page on setting pageSize', () => {
     component.totalCount = 10;
-    component.pageSize = 10
+    component.pageSize = 10;
     fixture.detectChanges();
 
     expect(component.lastPage).toEqual(1);
@@ -68,7 +67,9 @@ describe('PaginationComponent', () => {
     let pageSizeChangedOutputSpy = spyOn(component['pageSizeChanged'], 'emit');
     component.pageSizes = [1, 2, 3];
     fixture.detectChanges();
-    let selectElement = fixture.nativeElement.querySelector('select') as HTMLSelectElement;
+    let selectElement = fixture.nativeElement.querySelector(
+      'select'
+    ) as HTMLSelectElement;
     selectElement.selectedIndex = 1;
     selectElement.dispatchEvent(new Event('change'));
     fixture.detectChanges();

@@ -18,4 +18,8 @@
   td{
     @apply px-6
   }
+
+  input[type="text"], input[type="date"], textarea{
+    @apply border p-2 border-theme-gunmetal focus:ring-theme-rich-black
+  }
 }

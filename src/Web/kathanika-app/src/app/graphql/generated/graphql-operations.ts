@@ -475,6 +475,13 @@ export type GetPublicationsQueryVariables = Exact<{
 
 export type GetPublicationsQuery = { __typename?: 'Queries', publications?: { __typename?: 'PublicationsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publication', id: string, title: string, callNumber: string, publicationType: PublicationType, publisher: string, language: string, copiesAvailable: number, authors: Array<{ __typename?: 'PublicationAuthor', firstName: string, lastName: string }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
+export type GetPublicationQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, buyingPrice: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string }> } | null };
+
 export const AddAuthorDocument = gql`
     mutation addAuthor($addAuthorInput: AddAuthorInput!) {
   addAuthor(input: $addAuthorInput) {
@@ -620,6 +627,40 @@ export const GetPublicationsDocument = gql`
   })
   export class GetPublicationsGQL extends Apollo.Query<GetPublicationsQuery, GetPublicationsQueryVariables> {
     document = GetPublicationsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetPublicationDocument = gql`
+    query getPublication($id: String!) {
+  publication(id: $id) {
+    id
+    title
+    publicationType
+    isbn
+    edition
+    callNumber
+    authors {
+      id
+      firstName
+      lastName
+    }
+    language
+    publisher
+    publishedDate
+    buyingPrice
+    copiesAvailable
+    description
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPublicationGQL extends Apollo.Query<GetPublicationQuery, GetPublicationQueryVariables> {
+    document = GetPublicationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

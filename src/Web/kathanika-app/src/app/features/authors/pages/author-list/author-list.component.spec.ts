@@ -32,12 +32,10 @@ describe('AuthorListComponent', () => {
           },
         },
       ],
-    }).compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(AuthorListComponent);
-        component = fixture.componentInstance;
-        router = TestBed.inject(Router);
-      });
+    }).compileComponents();
+    fixture = TestBed.createComponent(AuthorListComponent);
+    component = fixture.componentInstance;
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {

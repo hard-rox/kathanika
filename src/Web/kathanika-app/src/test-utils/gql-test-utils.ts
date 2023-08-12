@@ -1,6 +1,3 @@
-import { MutationResult } from 'apollo-angular';
-import { AddAuthorMutation } from 'src/app/graphql/generated/graphql-operations';
-
 export const mockQueryGql = {
   watch: () => {
     return {
