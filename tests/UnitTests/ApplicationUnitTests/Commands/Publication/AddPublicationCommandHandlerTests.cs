@@ -5,8 +5,15 @@ namespace Kathanika.UnitTests.ApplicationUnitTests.Commands;
 
 public class AddPublicationCommandHandlerTests
 {
-    private readonly Mock<IPublicationRepository> publicationRepositoryMock = new();
-    private readonly Mock<IAuthorRepository> authorRepositoryMock = new();
+    private readonly IPublicationRepository publicationRepository;
+    private readonly IAuthorRepository authorRepository;
+
+    public AddPublicationCommandHandlerTests()
+    {
+        publicationRepository = Substitute.For<IPublicationRepository>();
+        authorRepository = Substitute.For<IAuthorRepository>();
+    }
+
 
     [Fact]
     public async Task Handler_Should_Return_Saved_Publication_On_Valid_Input()
@@ -42,11 +49,11 @@ public class AddPublicationCommandHandlerTests
             authors
         );
 
-        var handler = new AddPublicationCommandHandler(publicationRepositoryMock.Object, authorRepositoryMock.Object);
-        authorRepositoryMock.Setup(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(authors).Verifiable();
-        publicationRepositoryMock.Setup(x => x.AddAsync(It.IsAny<Publication>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Publication.Create(
+        var handler = new AddPublicationCommandHandler(publicationRepository, authorRepository);
+        authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
+            .Returns(authors);
+        publicationRepository.AddAsync(Arg.Any<Publication>(), Arg.Any<CancellationToken>())
+            .Returns(Publication.Create(
             publication.Title,
             publication.Isbn,
             publication.PublicationType,
@@ -56,7 +63,7 @@ public class AddPublicationCommandHandlerTests
             publication.CopiesAvailable,
             publication.CallNumber,
             authors
-        )).Verifiable();
+        ));
 
         var command = new AddPublicationCommand(
             publication.Title,
@@ -76,7 +83,7 @@ public class AddPublicationCommandHandlerTests
         // Assert
         Assert.NotNull(savedPublication);
         Assert.Equal(publication.Title, savedPublication.Title);
-        publicationRepositoryMock.Verify(x => x.AddAsync(It.Is<Publication>(x => x.Title == publication.Title), It.IsAny<CancellationToken>()), Times.Exactly(1));
-        authorRepositoryMock.Verify(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        await publicationRepository.Received(1).AddAsync(Arg.Is<Publication>(x => x.Title == publication.Title), Arg.Any<CancellationToken>());
+        await authorRepository.Received(1).ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>());
     }
 }

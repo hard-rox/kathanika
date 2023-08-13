@@ -15,28 +15,28 @@ public class MarkAuthorAsDeceasedCommandHandlerTests
             null,
             "",
             "");
-        var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(author).Verifiable();
-        authorRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Author>(), It.IsAny<CancellationToken>())).Verifiable();
+        var authorRepository = Substitute.For<IAuthorRepository>();
+        authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
+        await authorRepository.UpdateAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>());
         var command = new MarkAuthorAsDeceasedCommand("", dateOfDeath);
-        var handler = new MarkAuthorAsDeceasedCommandHandler(authorRepositoryMock.Object);
+        var handler = new MarkAuthorAsDeceasedCommandHandler(authorRepository);
 
         var updatedAuthor = await handler.Handle(command, default);
 
         Assert.NotNull(updatedAuthor);
         Assert.NotNull(updatedAuthor.DateOfDeath);
         Assert.Equal(author.DateOfDeath, dateOfDeath);
-        authorRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-        authorRepositoryMock.Verify(x => x.UpdateAsync(It.Is<Author>(x => x == author), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        await authorRepository.Received(1).GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
+        await authorRepository.Received(1).UpdateAsync(Arg.Is<Author>(x => x == author), Arg.Any<CancellationToken>());
     }
 
     [Fact]
     public async Task Handler_Should_Throw_Exception_On_Invalid_AuthorId()
     {
         var authorId = Guid.NewGuid().ToString();
-        var authorRepositoryMock = new Mock<IAuthorRepository>();
+        var authorRepository = Substitute.For<IAuthorRepository>();
         var command = new MarkAuthorAsDeceasedCommand(authorId, DateOnly.MaxValue);
-        var handler = new MarkAuthorAsDeceasedCommandHandler(authorRepositoryMock.Object);
+        var handler = new MarkAuthorAsDeceasedCommandHandler(authorRepository);
 
         var exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
 

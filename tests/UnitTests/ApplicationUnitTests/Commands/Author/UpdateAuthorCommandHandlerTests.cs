@@ -9,9 +9,9 @@ public class UpdateAuthorCommandHandlerTests
     public async Task Handler_Should_Throw_Exception_On_Invalid_AuthorId()
     {
         var authorId = Guid.NewGuid().ToString();
-        var authorRepositoryMock = new Mock<IAuthorRepository>();
+        var authorRepository = Substitute.For<IAuthorRepository>();
         var command = new UpdateAuthorCommand(authorId, new UpdateAuthorCommand.AuthorPatch());
-        var handler = new UpdateAuthorCommandHandler(authorRepositoryMock.Object);
+        var handler = new UpdateAuthorCommandHandler(authorRepository);
 
         var exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
 
@@ -29,21 +29,21 @@ public class UpdateAuthorCommandHandlerTests
             null,
             "",
             "");
-        var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>())).ReturnsAsync(author).Verifiable();
-        authorRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Author>(), It.IsAny<CancellationToken>())).Verifiable();
+        var authorRepository = Substitute.For<IAuthorRepository>();
+        authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
+        await authorRepository.UpdateAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>());
         var command = new UpdateAuthorCommand(authorId, new UpdateAuthorCommand.AuthorPatch(
             "Updated First Name",
             "Updated Last Name"
         ));
-        var handler = new UpdateAuthorCommandHandler(authorRepositoryMock.Object);
+        var handler = new UpdateAuthorCommandHandler(authorRepository);
 
         var updatedAuthor = await handler.Handle(command, default);
 
         Assert.NotNull(updatedAuthor);
         Assert.Equal("Updated First Name", updatedAuthor.FirstName);
         Assert.Equal("Updated Last Name", updatedAuthor.LastName);
-        authorRepositoryMock.Verify(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()), Times.Exactly(1));
-        authorRepositoryMock.Verify(x => x.UpdateAsync(It.Is<Author>(x => x == author), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        await authorRepository.Received(1).GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
+        await authorRepository.Received(1).UpdateAsync(Arg.Is<Author>(x => x == author), Arg.Any<CancellationToken>());
     }
 }

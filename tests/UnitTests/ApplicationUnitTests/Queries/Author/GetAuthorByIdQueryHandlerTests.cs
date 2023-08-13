@@ -18,15 +18,14 @@ public class GetAuthorByIdQueryHandlerTests
         );
         var id = Guid.NewGuid().ToString();
         var query = new GetAuthorByIdQuery(id);
-        var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(author)
-            .Verifiable();
-        var handler = new GetAuthorByIdQueryHandler(authorRepositoryMock.Object);
+        var authorRepository = Substitute.For<IAuthorRepository>();
+        authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(author);
+        var handler = new GetAuthorByIdQueryHandler(authorRepository);
 
         var returnedAuthor = await handler.Handle(query, default);
 
-        authorRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<string>(x => x == id), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        await authorRepository.Received(1).GetByIdAsync(Arg.Is<string>(x => x == id), Arg.Any<CancellationToken>());
         Assert.NotNull(returnedAuthor);
         Assert.Equal(author.FirstName, returnedAuthor.FirstName);
     }
