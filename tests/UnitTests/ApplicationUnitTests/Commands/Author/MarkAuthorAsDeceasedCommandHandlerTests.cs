@@ -17,7 +17,6 @@ public class MarkAuthorAsDeceasedCommandHandlerTests
             "");
         var authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
-        await authorRepository.UpdateAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>());
         var command = new MarkAuthorAsDeceasedCommand("", dateOfDeath);
         var handler = new MarkAuthorAsDeceasedCommandHandler(authorRepository);
 

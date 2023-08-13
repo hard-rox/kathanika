@@ -44,7 +44,6 @@ public class UpdatePublicationCommandHandlerTests
         var authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(new List<Author>());
-        await authorRepository.UpdateAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>());
         var command = new UpdatePublicationCommand(publicationId, new UpdatePublicationCommand.PublicationPatch(
             "Updated Title", "", PublicationType.Book, "", null, null, null, "" ///TODO: Fix up update in domain...
         ));

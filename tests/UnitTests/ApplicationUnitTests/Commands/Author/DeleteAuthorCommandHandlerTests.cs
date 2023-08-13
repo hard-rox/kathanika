@@ -21,17 +21,14 @@ public class DeleteAuthorCommandHandlerTests
         var authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(author);
-        await authorRepository.DeleteAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
         var publicationRepository = Substitute.For<IPublicationRepository>();
-        publicationRepository.CountAsync(Arg.Any<Expression<Func<Publication, bool>>>(), Arg.Any<CancellationToken>())
-            .Returns(0);
         var command = new DeleteAuthorCommand(id);
         var handler = new DeleteAuthorCommandHandler(authorRepository, publicationRepository);
 
         await handler.Handle(command, default);
 
         await authorRepository.Received(1)
-        .DeleteAsync(Arg.Is<string>(x => x == id), Arg.Any<CancellationToken>());
+            .DeleteAsync(Arg.Is<string>(x => x == id), Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -39,7 +36,6 @@ public class DeleteAuthorCommandHandlerTests
     {
         var id = Guid.NewGuid().ToString();
         var authorRepository = Substitute.For<IAuthorRepository>();
-        await authorRepository.DeleteAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
         var publicationRepository = Substitute.For<IPublicationRepository>();
         var command = new DeleteAuthorCommand(id);
         var handler = new DeleteAuthorCommandHandler(authorRepository, publicationRepository);
@@ -64,9 +60,9 @@ public class DeleteAuthorCommandHandlerTests
         var authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(author);
-        await authorRepository.DeleteAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
         var publicationRepository = Substitute.For<IPublicationRepository>();
-        publicationRepository.CountAsync(Arg.Any<Expression<Func<Publication, bool>>>(), Arg.Any<CancellationToken>()).Returns(1);
+        publicationRepository.CountAsync(Arg.Any<Expression<Func<Publication, bool>>>(), Arg.Any<CancellationToken>())
+            .Returns(1);
         var command = new DeleteAuthorCommand(id);
         var handler = new DeleteAuthorCommandHandler(authorRepository, publicationRepository);
 
@@ -89,7 +85,6 @@ public class DeleteAuthorCommandHandlerTests
         );
         var authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
-        await authorRepository.DeleteAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
         var publicationRepository = Substitute.For<IPublicationRepository>();
         publicationRepository.CountAsync(Arg.Any<Expression<Func<Publication, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(0);
