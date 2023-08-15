@@ -21,9 +21,9 @@ public sealed class Publisher : AggregateRoot
     }
 
     public static Publisher Create(
-        string? publisherName,
-        string? description,
-        string? contactInformation
+        string publisherName,
+        string description,
+        string contactInformation
         )
     {
         var publisher = new Publisher(
