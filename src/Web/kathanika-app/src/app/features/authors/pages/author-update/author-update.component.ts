@@ -1,6 +1,7 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  AuthorPatchInput,
   GetAuthorGQL,
   UpadateAuthorGQL,
 } from 'src/app/graphql/generated/graphql-operations';
@@ -26,6 +27,7 @@ export class AuthorUpdateComponent implements OnInit {
     private router: Router
   ) {}
 
+  isPanelLoading: boolean = true;
   authorId: string | undefined;
   authorFormInput: AuthorFormInput | null | undefined;
   errors: string[] = [];
@@ -40,33 +42,82 @@ export class AuthorUpdateComponent implements OnInit {
         .subscribe({
           next: (result) => {
             // console.debug(result);
-            this.authorFormInput = result.data.author;
+            if (result.error || result.errors) {
+              this.alertService.showPopup(
+                'error',
+                result.error?.message ??
+                  (result.errors?.join('<br/>') as string)
+              );
+            } else if (result.data.author == null) {
+              this.alertService.showPopup(
+                'error',
+                'Returning to list page.',
+                'Author not found'
+              );
+              this.router.navigate(['/authors']);
+            } else {
+              this.authorFormInput = result.data.author;
+              this.isPanelLoading = false;
+            }
+          },
+          error: (err) => {
+            // console.debug(JSON.stringify(err));
+            this.alertService.showPopup('error', err.message);
           },
         });
     }
   }
 
   onValidFormSubmit(authorOutput: AuthorFormOutput) {
+    this.isPanelLoading = true;
+    const authorPatch: AuthorPatchInput = {
+      firstName: authorOutput.firstName,
+      lastName: authorOutput.lastName,
+      dateOfBirth: authorOutput.dateOfBirth,
+      nationality: authorOutput.nationality,
+      biography: authorOutput.biography,
+    };
+
     this.mutation
       .mutate({
         id: this.authorId as string,
-        authorPatch: authorOutput,
+        authorPatch: authorPatch,
       })
       .subscribe({
         next: (result) => {
-          if (result.errors) {
-            result.errors.forEach((x) => this.errors.push(x.message));
+          // console.debug(JSON.stringify(result));
+          if (result.errors || result.data?.updateAuthor.errors) {
+            this.errors = [];
+            result.data?.updateAuthor.errors?.forEach((x) => {
+              switch (x.__typename) {
+                case 'InvalidFieldError':
+                  this.errors.push(`${x.fieldName} - ${x.message}`);
+                  break;
+                case 'NotFoundWithTheIdError':
+                  this.errors.push(`${x.objectName} - ${x.message}`);
+                  break;
+                default:
+                  this.errors.push(x.message);
+                  break;
+              }
+            });
+            result.errors?.forEach((x) => this.errors.push(x.message));
           } else {
-            this.alertService.showSuccess(
-              result.data?.updateAuthor.message ?? 'Author updated.',
-              'Author updated'
+            this.alertService.showToast(
+              'success',
+              result.data?.updateAuthor.message ?? 'Author updated.'
             );
             this.authorUpdateForm?.resetForm();
             this.router.navigate([
               `/authors/${result.data?.updateAuthor.data?.id}`,
             ]);
           }
+          this.isPanelLoading = false;
         },
       });
+  }
+
+  closeAlert() {
+    this.errors = [];
   }
 }

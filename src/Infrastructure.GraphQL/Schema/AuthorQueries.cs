@@ -16,7 +16,7 @@ public sealed partial class Queries
         var authors = await mediator.Send(new GetAuthorsQuery(), cancellationToken);
         return authors;
     }
-
+    
     public async Task<Author?> GetAuthorAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
     {
         var author = await mediator.Send(new GetAuthorByIdQuery(id), cancellationToken);

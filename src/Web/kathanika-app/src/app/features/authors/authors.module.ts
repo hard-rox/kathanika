@@ -9,6 +9,8 @@ import { AuthorAddComponent } from './pages/author-add/author-add.component';
 import { AuthorFormComponent } from './components/author-form/author-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AuthorUpdateComponent } from './pages/author-update/author-update.component';
+import { PanelModule } from 'src/app/shared/modules/panel/panel.module';
+import { AlertModule } from 'src/app/shared/modules/alert/alert.module';
 
 
 @NgModule({
@@ -23,7 +25,9 @@ import { AuthorUpdateComponent } from './pages/author-update/author-update.compo
     CommonModule,
     ReactiveFormsModule,
     AuthorsRoutingModule,
-    PaginationModule
+    PaginationModule,
+    PanelModule,
+    AlertModule
   ]
 })
 export class AuthorsModule { }

@@ -17,26 +17,24 @@ export class MessageAlertService {
     buttonsStyling: false,
   });
 
-  showSuccess(message: string, title?: string) {
+  showPopup(
+    type: 'success' | 'warning' | 'info' | 'question' | 'error',
+    message: string,
+    title?: string
+  ) {
     this.themedSwal.fire({
-      icon: 'success',
-      title: title ? title : 'Success',
-      text: message,
-    });
-  }
-
-  showWarning(message: string, title?: string) {
-    this.themedSwal.fire({
-      icon: 'warning',
-      title: title ? title : 'Warning',
-      text: message,
-    });
-  }
-
-  showError(message: string, title?: string) {
-    this.themedSwal.fire({
-      icon: 'error',
-      title: title ? title : 'Error',
+      icon: type,
+      title: title
+        ? title
+        : type === 'success'
+        ? 'Success'
+        : type === 'warning'
+        ? 'Warning'
+        : type === 'info'
+        ? 'Information'
+        : type === 'question'
+        ? 'Question'
+        : 'Error',
       text: message,
     });
   }
@@ -72,5 +70,26 @@ export class MessageAlertService {
       allowEscapeKey: false,
     });
     return from(promise).pipe(map((swalValue) => swalValue.isConfirmed));
+  }
+
+  showToast(
+    type: 'success' | 'warning' | 'info' | 'question' | 'error',
+    message: string
+  ) {
+    const toastSwal = Swal.mixin({
+      toast: true,
+      position: 'top-end',
+      showConfirmButton: false,
+      timer: 3000,
+      timerProgressBar: true,
+      didOpen: (toast) => {
+        toast.addEventListener('mouseenter', Swal.stopTimer);
+        toast.addEventListener('mouseleave', Swal.resumeTimer);
+      },
+    });
+    toastSwal.fire({
+      icon: type,
+      title: message,
+    });
   }
 }

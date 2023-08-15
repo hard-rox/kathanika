@@ -10,7 +10,7 @@ export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> =
 export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string | number; output: string; }
+  ID: { input: string; output: string; }
   String: { input: string; output: string; }
   Boolean: { input: boolean; output: boolean; }
   Int: { input: number; output: number; }
@@ -89,11 +89,9 @@ export type Author = {
 
 export type AuthorFilterInput = {
   and?: InputMaybe<Array<AuthorFilterInput>>;
-  biography?: InputMaybe<StringOperationFilterInput>;
   dateOfBirth?: InputMaybe<DateOperationFilterInput>;
   dateOfDeath?: InputMaybe<DateOperationFilterInput>;
   firstName?: InputMaybe<StringOperationFilterInput>;
-  fullName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
   lastName?: InputMaybe<StringOperationFilterInput>;
   nationality?: InputMaybe<StringOperationFilterInput>;
@@ -191,6 +189,15 @@ export type Error = {
   message: Scalars['String']['output'];
 };
 
+export type FireNewNotificationInput = {
+  content: Scalars['String']['input'];
+};
+
+export type FireNewNotificationPayload = {
+  __typename?: 'FireNewNotificationPayload';
+  notification?: Maybe<Notification>;
+};
+
 export type IntOperationFilterInput = {
   eq?: InputMaybe<Scalars['Int']['input']>;
   gt?: InputMaybe<Scalars['Int']['input']>;
@@ -224,6 +231,8 @@ export type Mutations = {
   addAuthor: AddAuthorPayload;
   addPublication: AddPublicationPayload;
   deleteAuthor: DeleteAuthorPayload;
+  /** @deprecated Just a dummy for throwing new notification... */
+  fireNewNotification: FireNewNotificationPayload;
   updateAuthor: UpdateAuthorPayload;
 };
 
@@ -243,6 +252,11 @@ export type MutationsDeleteAuthorArgs = {
 };
 
 
+export type MutationsFireNewNotificationArgs = {
+  input: FireNewNotificationInput;
+};
+
+
 export type MutationsUpdateAuthorArgs = {
   input: UpdateAuthorInput;
 };
@@ -252,6 +266,11 @@ export type NotFoundWithTheIdError = Error & {
   id: Scalars['String']['output'];
   message: Scalars['String']['output'];
   objectName: Scalars['String']['output'];
+};
+
+export type Notification = {
+  __typename?: 'Notification';
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 /** Information about pagination in a connection. */
@@ -370,7 +389,7 @@ export type Queries = {
   __typename?: 'Queries';
   author?: Maybe<Author>;
   authors?: Maybe<AuthorsCollectionSegment>;
-  publication: Publication;
+  publication?: Maybe<Publication>;
   publications?: Maybe<PublicationsConnection>;
 };
 
@@ -420,6 +439,11 @@ export type StringOperationFilterInput = {
   nstartsWith?: InputMaybe<Scalars['String']['input']>;
   or?: InputMaybe<Array<StringOperationFilterInput>>;
   startsWith?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type Subscriptions = {
+  __typename?: 'Subscriptions';
+  onNewNotification: Notification;
 };
 
 export type UpdateAuthorError = InvalidFieldError | NotFoundWithTheIdError;
@@ -478,7 +502,6 @@ export const AddAuthorDocument = gql`
     errors {
       ... on InvalidFieldError {
         fieldName
-        message
       }
       ... on Error {
         message
@@ -509,11 +532,9 @@ export const UpadateAuthorDocument = gql`
       ... on NotFoundWithTheIdError {
         id
         objectName
-        message
       }
       ... on InvalidFieldError {
         fieldName
-        message
       }
       ... on Error {
         message

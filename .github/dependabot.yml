@@ -9,3 +9,4 @@ updates:
     directory: "/src/Web/kathanika-app"
     schedule:
       interval: "daily"
+    open-pull-requests-limit: 12

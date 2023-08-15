@@ -1,6 +1,9 @@
-﻿using HotChocolate.Execution.Configuration;
+﻿using HotChocolate.Data.Filters;
+using HotChocolate.Data.Filters.Expressions;
+using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
 using Kathanika.Domain.Primitives;
+using Kathanika.Infrastructure.GraphQL.GraphqlHelpers;
 using Kathanika.Infrastructure.GraphQL.Schema;
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
@@ -61,6 +64,15 @@ internal static class SchemaConfigurations
         {
             opt.SortFieldsByName = false;
         });
+        requestBuilder.AddConvention<IFilterConvention>(
+            new FilterConventionExtension(
+                x => x.AddProviderExtension(
+                    new QueryableFilterProviderExtension(
+                        y => y.AddFieldHandler<QueryableStringInvariantContainsHandler>()
+                    )
+                )
+            )
+        );
         requestBuilder.BindRuntimeType<DateTime, DateTimeType>();
         requestBuilder.BindRuntimeType<DateOnly, DateType>();
         requestBuilder.AddMutationConventions();

@@ -10,7 +10,6 @@ import { AuthorFormComponent } from '../../components/author-form/author-form.co
   styleUrls: ['./author-add.component.scss'],
 })
 export class AuthorAddComponent {
-
   @ViewChild('authorAddForm') authorAddForm: AuthorFormComponent | undefined;
 
   constructor(
@@ -19,22 +18,34 @@ export class AuthorAddComponent {
     private router: Router
   ) {}
 
+  isPanelLoading: boolean = false;
   errors: string[] = [];
 
   onValidFormSubmit(formValue: AddAuthorInput) {
+    this.isPanelLoading = true;
     this.gql.mutate({ addAuthorInput: formValue }).subscribe({
       next: (result) => {
-        if (result.errors) {
-          result.errors.forEach((x) => this.errors.push(x.message));
+        console.debug(result);
+        if (result.errors || result.data?.addAuthor.errors) {
+          this.errors = [];
+          result.data?.addAuthor.errors?.forEach((x) =>
+            this.errors.push(`${x.fieldName} - ${x.message}`)
+          );
+          result.errors?.forEach((x) => this.errors.push(x.message));
         } else {
-          this.alertService.showSuccess(
-            result.data?.addAuthor.message ?? 'Author added.',
-            'Author added'
+          this.alertService.showToast(
+            'success',
+            result.data?.addAuthor.message ?? 'Author added.'
           );
           this.authorAddForm?.resetForm();
           this.router.navigate([`/authors/${result.data?.addAuthor.data?.id}`]);
         }
+        this.isPanelLoading = false;
       },
     });
+  }
+
+  closeAlert() {
+    this.errors = [];
   }
 }
