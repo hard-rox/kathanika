@@ -7,15 +7,13 @@ public class GetPublicationsQueryHandlerTests
     [Fact]
     public async Task Handler_Should_Call_AsQueryable()
     {
-        var publicationRepositoryMock = new Mock<IPublicationRepository>();
-        publicationRepositoryMock.Setup(x => x.AsQueryable())
-            .Verifiable();
+        var publicationRepository = Substitute.For<IPublicationRepository>();
         var query = new GetPublicationsQuery();
-        var handler = new GetPublicationsQueryHandler(publicationRepositoryMock.Object);
+        var handler = new GetPublicationsQueryHandler(publicationRepository);
 
         var queryable = await handler.Handle(query, default);
 
         Assert.NotNull(queryable);
-        publicationRepositoryMock.Verify(x => x.AsQueryable(), Times.Exactly(1));
+        publicationRepository.Received(1).AsQueryable();
     }
 }

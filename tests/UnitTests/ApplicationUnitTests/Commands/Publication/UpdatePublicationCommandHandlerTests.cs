@@ -10,12 +10,12 @@ public class UpdatePublicationCommandHandlerTests
     public async Task Handler_Should_Throw_Exception_On_Invalid_PublicationId()
     {
         var publicationId = Guid.NewGuid().ToString();
-        var authorRepositoryMock = new Mock<IAuthorRepository>();
-        var publicationRepositoryMock = new Mock<IPublicationRepository>();
+        var authorRepository = Substitute.For<IAuthorRepository>();
+        var publicationRepository = Substitute.For<IPublicationRepository>();
         var command = new UpdatePublicationCommand(publicationId, new UpdatePublicationCommand.PublicationPatch(
             "", "", PublicationType.Book, "", null, null, null, "" ///TODO: Fix up update in domain...
         ));
-        var handler = new UpdatePublicationCommandHandler(publicationRepositoryMock.Object, authorRepositoryMock.Object);
+        var handler = new UpdatePublicationCommandHandler(publicationRepository, authorRepository);
 
         var exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
 
@@ -38,25 +38,22 @@ public class UpdatePublicationCommandHandlerTests
             "ABCD",
             new List<Author>()
             );
-        var publicationRepositoryMock = new Mock<IPublicationRepository>();
-        publicationRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<string>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(publication)
-            .Verifiable();
-        var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.ListAllAsync(It.IsAny<Expression<Func<Author, bool>>>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(new List<Author>())
-            .Verifiable();
-        authorRepositoryMock.Setup(x => x.UpdateAsync(It.IsAny<Author>(), It.IsAny<CancellationToken>())).Verifiable();
+        var publicationRepository = Substitute.For<IPublicationRepository>();
+        publicationRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(publication);
+        var authorRepository = Substitute.For<IAuthorRepository>();
+        authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
+            .Returns(new List<Author>());
         var command = new UpdatePublicationCommand(publicationId, new UpdatePublicationCommand.PublicationPatch(
             "Updated Title", "", PublicationType.Book, "", null, null, null, "" ///TODO: Fix up update in domain...
         ));
-        var handler = new UpdatePublicationCommandHandler(publicationRepositoryMock.Object, authorRepositoryMock.Object);
+        var handler = new UpdatePublicationCommandHandler(publicationRepository, authorRepository);
 
         var updatedPublication = await handler.Handle(command, default);
 
         Assert.NotNull(updatedPublication);
         Assert.Equal("Updated Title", updatedPublication.Title);
-        publicationRepositoryMock.Verify(x => x.GetByIdAsync(It.Is<string>(x => x == publicationId), It.IsAny<CancellationToken>()), Times.Exactly(1));
-        publicationRepositoryMock.Verify(x => x.UpdateAsync(It.Is<Publication>(x => x == publication), It.IsAny<CancellationToken>()), Times.Exactly(1));
+        await publicationRepository.Received(1).GetByIdAsync(Arg.Is<string>(x => x == publicationId), Arg.Any<CancellationToken>());
+        await publicationRepository.Received(1).UpdateAsync(Arg.Is<Publication>(x => x == publication), Arg.Any<CancellationToken>());
     }
 }
