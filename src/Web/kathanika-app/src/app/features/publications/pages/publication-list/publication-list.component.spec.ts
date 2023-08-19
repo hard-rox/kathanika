@@ -44,4 +44,10 @@ describe('PublicationListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should call base "init()" on ngOnInit', () => {
+    const spy = spyOn<any>(component, 'init');
+    component.ngOnInit();
+    expect(spy).toHaveBeenCalledTimes(1);
+  });
 });
