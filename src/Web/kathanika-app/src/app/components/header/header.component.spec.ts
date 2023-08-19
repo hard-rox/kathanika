@@ -37,7 +37,7 @@ describe('HeaderComponent', () => {
     expect(component.isUserActionsVisible).not.toEqual(oldValue);
   });
 
-  fit('should dispay notification container when notification button clicked', () => {
+  it('should dispay notification container when notification button clicked', () => {
     const notificationBtn = nativeElement.querySelector('#notification-btn') as HTMLElement;
     notificationBtn.click();
     fixture.detectChanges();

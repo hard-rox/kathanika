@@ -4,7 +4,8 @@
     <a [routerLink]="['add']"
       class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black text-white px-4 py-2">Add new</a>
   </div>
-  <!-- <input [value]="searchText" (keyup)="onSearchTextChanged($event)" type="text" placeholder="Search text" class="border-theme-gunmetal border p-2 w-full" /> -->
+  <input [value]="searchText" (keyup)="onSearchTextChanged($event)" type="text" placeholder="Search text"
+    class="border-theme-gunmetal border p-2 w-full" />
 </div>
 <ng-container *ngIf="queryRef.valueChanges | async as queryResult">
   <!-- <pre>{{queryResult | json}}</pre> -->
@@ -83,7 +84,7 @@
   </table>
 
   <div class="w-full inline-flex justify-center">
-    <app-pagination [totalCount]="queryResult.data.publications?.totalCount" [pageSizes]="pageSizes" [pageSize]="pageSize"
-      (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)" />
+    <app-pagination [totalCount]="queryResult.data.publications?.totalCount" [pageSizes]="pageSizes"
+      [pageSize]="pageSize" (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)" />
   </div>
 </ng-container>
