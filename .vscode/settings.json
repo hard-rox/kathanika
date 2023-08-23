@@ -23,5 +23,11 @@
     "karmaTestExplorer.projectWorkspaces":[
         "src/Web/kathanika-app"
     ],
-    "dotnetAcquisitionExtension.installTimeoutValue": 180
+    "dotnetAcquisitionExtension.installTimeoutValue": 180,
+    "cSpell.words": [
+        "Kathanika",
+        "Rahman",
+        "Rasedur"
+    ],
+    "cSpell.language": "en,en-US,en-GB"
 }
