@@ -44,7 +44,7 @@ describe('AuthorListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('hould change _queryVariables on changePage', () => {
+  it('should change _queryVariables on changePage', () => {
     let queryVariables = component.queryVariables;
     const page = 2;
 

@@ -25,9 +25,34 @@
     ],
     "dotnetAcquisitionExtension.installTimeoutValue": 180,
     "cSpell.words": [
+        "apng",
+        "ASPNETCORE",
+        "asynciterable",
+        "Bson",
+        "cobertura",
+        "codegen",
+        "CQRS",
+        "davys",
         "Kathanika",
+        "MediatR",
+        "ncontains",
+        "nends",
+        "ngsw",
+        "ngte",
+        "nlte",
+        "nstarts",
+        "OPAC",
         "Rahman",
-        "Rasedur"
+        "Rasedur",
+        "reportgenerator",
+        "Serilog",
+        "swal",
+        "sweetalert",
+        "tailwindcss",
+        "targetdir",
+        "webp",
+        "Xunit",
+        "কথনিকা"
     ],
-    "cSpell.language": "en,en-US,en-GB"
+    "cSpell.language": "en,en-US,en-GB,lorem"
 }

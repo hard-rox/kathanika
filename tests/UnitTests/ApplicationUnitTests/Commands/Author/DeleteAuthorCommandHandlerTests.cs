@@ -32,7 +32,7 @@ public class DeleteAuthorCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handler_Should_Thorw_Exception_On_Invalid_Author_Id()
+    public async Task Handler_Should_Throw_Exception_On_Invalid_Author_Id()
     {
         var id = Guid.NewGuid().ToString();
         var authorRepository = Substitute.For<IAuthorRepository>();
@@ -46,7 +46,7 @@ public class DeleteAuthorCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handler_Should_Thorw_Exception_When_Author_Has_Publication()
+    public async Task Handler_Should_Throw_Exception_When_Author_Has_Publication()
     {
         var id = Guid.NewGuid().ToString();
         var author = Author.Create(

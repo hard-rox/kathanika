@@ -15,7 +15,7 @@ mutation addAuthor($addAuthorInput: AddAuthorInput!) {
   }
 }
 
-mutation upadateAuthor($id: String!, $authorPatch: AuthorPatchInput!){
+mutation updateAuthor($id: String!, $authorPatch: AuthorPatchInput!){
   updateAuthor(input: {
     id: $id,
     patch: $authorPatch

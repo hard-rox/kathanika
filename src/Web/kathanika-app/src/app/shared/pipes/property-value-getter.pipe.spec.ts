@@ -6,10 +6,10 @@ describe('PropertyValueGetterPipe', () => {
     expect(pipe).toBeTruthy();
   });
 
-  it('should return property value from onject', () => {
+  it('should return property value from onInject', () => {
     const pipe = new PropertyValueGetterPipe();
     const input = { id: 1, name: 'Hello world' };
-    
+
     const nameOutput = pipe.transform(input, 'name');
     const idOutput = pipe.transform(input, 'id');
 

@@ -16,7 +16,7 @@ public class PublicationAggregateTests
             DateOnly.MinValue,
             (decimal)102.0,
             1,
-            "BACD",
+            "Nt0202",
             new List<Author>(){
                 Author.Create(
                     "John",
@@ -54,7 +54,7 @@ public class PublicationAggregateTests
             DateOnly.MinValue,
             (decimal)102.0,
             1,
-            "BACD",
+            "ANC0123",
             new List<Author>()
         );
 
