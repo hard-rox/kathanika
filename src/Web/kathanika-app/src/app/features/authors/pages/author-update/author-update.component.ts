@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   AuthorPatchInput,
   GetAuthorGQL,
-  UpadateAuthorGQL,
+  UpdateAuthorGQL,
 } from 'src/app/graphql/generated/graphql-operations';
 import { AuthorFormInput } from '../../types/author-form-input';
 import { AuthorFormOutput } from '../../types/author-form-output';
@@ -21,7 +21,7 @@ export class AuthorUpdateComponent implements OnInit {
 
   constructor(
     private gql: GetAuthorGQL,
-    private mutation: UpadateAuthorGQL,
+    private mutation: UpdateAuthorGQL,
     private alertService: MessageAlertService,
     private activatedRoute: ActivatedRoute,
     private router: Router

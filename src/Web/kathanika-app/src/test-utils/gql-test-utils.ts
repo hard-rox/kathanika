@@ -12,7 +12,7 @@ export const mockQueryGql = {
   },
 };
 
-export const mockMutatuionGql = {
+export const mockMutationGql = {
   mutate: () => {
     return { subscribe: ({}) => {} };
   },

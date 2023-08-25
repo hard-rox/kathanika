@@ -37,7 +37,7 @@ describe('HeaderComponent', () => {
     expect(component.isUserActionsVisible).not.toEqual(oldValue);
   });
 
-  it('should dispay notification container when notification button clicked', () => {
+  it('should display notification container when notification button clicked', () => {
     const notificationBtn = nativeElement.querySelector('#notification-btn') as HTMLElement;
     notificationBtn.click();
     fixture.detectChanges();
@@ -54,7 +54,7 @@ describe('HeaderComponent', () => {
     expect(notificationContainer).toBeFalsy();
   });
 
-  it('should dispay user action container when user name dropdown clicked', () => {
+  it('should display user action container when user name dropdown clicked', () => {
     const userActionBtn = nativeElement.querySelector('#user-action-btn') as HTMLElement;
     userActionBtn.click();
     fixture.detectChanges();

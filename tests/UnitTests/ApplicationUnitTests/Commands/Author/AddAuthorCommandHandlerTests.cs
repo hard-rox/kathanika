@@ -4,11 +4,11 @@ namespace Kathanika.UnitTests.ApplicationUnitTests.Commands;
 
 public sealed class AddAuthorCommandHandlerTests
 {
-    private readonly Mock<IAuthorRepository> authorRepositoryMock;
+    private readonly IAuthorRepository authorRepository;
 
     public AddAuthorCommandHandlerTests()
     {
-        authorRepositoryMock = new();
+        authorRepository = Substitute.For<IAuthorRepository>();
     }
 
     [Fact]
@@ -30,10 +30,10 @@ public sealed class AddAuthorCommandHandlerTests
             dummyAuthor.Nationality, 
             dummyAuthor.Biography
             );
-        var handler = new AddAuthorCommandHandler(authorRepositoryMock.Object);
+        var handler = new AddAuthorCommandHandler(authorRepository);
         
-        authorRepositoryMock.Setup(x => x.AddAsync(It.IsAny<Author>(), It.IsAny<CancellationToken>()))
-            .ReturnsAsync(Author.Create(
+        authorRepository.AddAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>())
+            .Returns(Author.Create(
                 dummyAuthor.FirstName,
                 dummyAuthor.LastName,
                 dummyAuthor.DateOfBirth,

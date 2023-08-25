@@ -5,10 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import {
   GetAuthorGQL,
   GetAuthorQuery,
-  UpadateAuthorGQL,
-  UpadateAuthorMutation,
+  UpdateAuthorGQL,
+  UpdateAuthorMutation,
 } from 'src/app/graphql/generated/graphql-operations';
-import { mockMutatuionGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
+import { mockMutationGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { PanelComponent } from 'src/app/shared/modules/panel/components/panel/panel.component';
@@ -45,8 +45,8 @@ describe('AuthorUpdateComponent', () => {
           useValue: mockQueryGql,
         },
         {
-          provide: UpadateAuthorGQL,
-          useValue: mockMutatuionGql,
+          provide: UpdateAuthorGQL,
+          useValue: mockMutationGql,
         },
       ],
     });
@@ -84,7 +84,7 @@ describe('AuthorUpdateComponent', () => {
 
   it('should call "showToast" on onValidFormSubmit when no errors', () => {
     const alertServiceSpy = spyOn(component['alertService'], 'showToast');
-    const mutationResult: MutationResult<UpadateAuthorMutation> = {
+    const mutationResult: MutationResult<UpdateAuthorMutation> = {
       data: {
         updateAuthor: {
           message: 'Author Hello World updated successfully.',
@@ -109,7 +109,7 @@ describe('AuthorUpdateComponent', () => {
   });
 
   it('should populate errors array on onValidFormSubmit when errors', () => {
-    const mutationResult: MutationResult<UpadateAuthorMutation> = {
+    const mutationResult: MutationResult<UpdateAuthorMutation> = {
       data: {
         updateAuthor: {
           data: null,

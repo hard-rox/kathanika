@@ -7,15 +7,13 @@ public class GetAuthorsQueryHandlerTests
     [Fact]
     public async Task Handler_Should_Call_AsQueryable()
     {
-        var authorRepositoryMock = new Mock<IAuthorRepository>();
-        authorRepositoryMock.Setup(x => x.AsQueryable())
-            .Verifiable();
+        var authorRepository = Substitute.For<IAuthorRepository>();
         var query = new GetAuthorsQuery();
-        var handler = new GetAuthorsQueryHandler(authorRepositoryMock.Object);
+        var handler = new GetAuthorsQueryHandler(authorRepository);
 
         var queryable = await handler.Handle(query, default);
 
         Assert.NotNull(queryable);
-        authorRepositoryMock.Verify(x => x.AsQueryable(), Times.Exactly(1));
+        authorRepository.Received(1).AsQueryable();
     }
 }

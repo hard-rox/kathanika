@@ -440,13 +440,13 @@ export type AddAuthorMutationVariables = Exact<{
 
 export type AddAuthorMutation = { __typename?: 'Mutations', addAuthor: { __typename?: 'AddAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
-export type UpadateAuthorMutationVariables = Exact<{
+export type UpdateAuthorMutationVariables = Exact<{
   id: Scalars['String']['input'];
   authorPatch: AuthorPatchInput;
 }>;
 
 
-export type UpadateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+export type UpdateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
 export type GetAuthorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -511,8 +511,8 @@ export const AddAuthorDocument = gql`
       super(apollo);
     }
   }
-export const UpadateAuthorDocument = gql`
-    mutation upadateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
+export const UpdateAuthorDocument = gql`
+    mutation updateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
   updateAuthor(input: {id: $id, patch: $authorPatch}) {
     message
     data {
@@ -537,8 +537,8 @@ export const UpadateAuthorDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class UpadateAuthorGQL extends Apollo.Mutation<UpadateAuthorMutation, UpadateAuthorMutationVariables> {
-    document = UpadateAuthorDocument;
+  export class UpdateAuthorGQL extends Apollo.Mutation<UpdateAuthorMutation, UpdateAuthorMutationVariables> {
+    document = UpdateAuthorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

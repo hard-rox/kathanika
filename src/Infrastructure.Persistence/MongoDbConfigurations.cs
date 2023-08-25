@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using Kathanika.Infrastructure.Persistence.MongoDbConventions;
+using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization.Conventions;
@@ -15,6 +16,7 @@ internal static class MongoDbConfigurations
             new CamelCaseElementNameConvention(),
             new StringIdStoredAsObjectIdConvention(),
             new IgnoreExtraElementsConvention(true),
+            new ValueObjectIdConvention(),
         };
         ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
 
