@@ -20,10 +20,10 @@ export class PublicationDetailsComponent
   }
 
   ngOnInit(): void {
-    const authorId = this.activatedRoute.snapshot.params['id'];
-    if (authorId && authorId.length > 0) {
+    const publicationId = this.activatedRoute.snapshot.params['id'];
+    if (publicationId && publicationId.length > 0) {
       this.queryVariables = {
-        id: authorId,
+        id: publicationId,
       };
       this.queryRef.refetch(this.queryVariables);
     }

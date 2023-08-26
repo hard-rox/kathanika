@@ -23,7 +23,6 @@ export abstract class BasePaginatedListComponent<TQuery, TQueryVariables extends
   }
 
   private setQueryParams() {
-    console.log(this.searchText);
     this.router.navigate([], {
       relativeTo: this.activatedRoute,
       queryParams: {
