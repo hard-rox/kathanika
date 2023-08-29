@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { GetPublicationsGQL } from 'src/app/graphql/generated/graphql-operations';
 import { mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PaginationModule } from 'src/app/shared/modules/pagination/pagination.module';
+import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 
 describe('PublicationListComponent', () => {
   let component: PublicationListComponent;
@@ -16,7 +16,7 @@ describe('PublicationListComponent', () => {
   beforeEach(async () => {
     TestBed.configureTestingModule({
       declarations: [PublicationListComponent],
-      imports: [PaginationModule, RouterTestingModule],
+      imports: [PaginationComponent, RouterTestingModule],
       providers: [
         {
           provide: GetPublicationsGQL,

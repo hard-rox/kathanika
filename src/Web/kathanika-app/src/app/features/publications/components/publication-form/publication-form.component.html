@@ -1,0 +1,118 @@
+<form [formGroup]="publicationFromGroup" (ngSubmit)="submitForm()">
+  <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Title</label>
+      <input type="text" placeholder="Title" formControlName="title" [ngClass]="(publicationFromGroup.get('title')?.dirty || publicationFromGroup.get('title')?.touched)
+          && !publicationFromGroup.get('title')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('title')?.dirty || publicationFromGroup.get('title')?.touched)
+          && publicationFromGroup.get('title')?.hasError('required')" class="text-theme-fire-red">Title is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Publication Type</label>
+      <input type="text" placeholder="Publication Type" formControlName="publicationType" [ngClass]="(publicationFromGroup.get('publicationType')?.dirty || publicationFromGroup.get('publicationType')?.touched)
+          && !publicationFromGroup.get('publicationType')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('publicationType')?.dirty || publicationFromGroup.get('publicationType')?.touched)
+          && publicationFromGroup.get('publicationType')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="publishedDate" [ngClass]="(publicationFromGroup.get('publishedDate')?.dirty || publicationFromGroup.get('publishedDate')?.touched)
+          && !publicationFromGroup.get('publishedDate')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('publishedDate')?.dirty || publicationFromGroup.get('publishedDate')?.touched)
+          && publicationFromGroup.get('publishedDate')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="publisher" [ngClass]="(publicationFromGroup.get('publisher')?.dirty || publicationFromGroup.get('publisher')?.touched)
+          && !publicationFromGroup.get('publisher')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('publisher')?.dirty || publicationFromGroup.get('publisher')?.touched)
+          && publicationFromGroup.get('publisher')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="isbn" [ngClass]="(publicationFromGroup.get('isbn')?.dirty || publicationFromGroup.get('isbn')?.touched)
+          && !publicationFromGroup.get('isbn')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('isbn')?.dirty || publicationFromGroup.get('isbn')?.touched)
+          && publicationFromGroup.get('isbn')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="edition" [ngClass]="(publicationFromGroup.get('edition')?.dirty || publicationFromGroup.get('edition')?.touched)
+          && !publicationFromGroup.get('edition')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('edition')?.dirty || publicationFromGroup.get('edition')?.touched)
+          && publicationFromGroup.get('edition')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="language" [ngClass]="(publicationFromGroup.get('language')?.dirty || publicationFromGroup.get('language')?.touched)
+          && !publicationFromGroup.get('language')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('language')?.dirty || publicationFromGroup.get('language')?.touched)
+          && publicationFromGroup.get('language')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="authors" [ngClass]="(publicationFromGroup.get('authors')?.dirty || publicationFromGroup.get('authors')?.touched)
+          && !publicationFromGroup.get('authors')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('authors')?.dirty || publicationFromGroup.get('authors')?.touched)
+          && publicationFromGroup.get('authors')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="buyingPrice" [ngClass]="(publicationFromGroup.get('buyingPrice')?.dirty || publicationFromGroup.get('buyingPrice')?.touched)
+          && !publicationFromGroup.get('buyingPrice')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('buyingPrice')?.dirty || publicationFromGroup.get('buyingPrice')?.touched)
+          && publicationFromGroup.get('buyingPrice')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="callNumber" [ngClass]="(publicationFromGroup.get('callNumber')?.dirty || publicationFromGroup.get('callNumber')?.touched)
+          && !publicationFromGroup.get('callNumber')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('callNumber')?.dirty || publicationFromGroup.get('callNumber')?.touched)
+          && publicationFromGroup.get('callNumber')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+    <div class="flex flex-col">
+      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Roxy</label>
+      <input type="text" placeholder="Roxy" formControlName="copiesAvailable" [ngClass]="(publicationFromGroup.get('copiesAvailable')?.dirty || publicationFromGroup.get('copiesAvaiable')?.touched)
+          && !publicationFromGroup.get('copiesAvailable')?.valid ?
+          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+          : 'border-theme-gunmetal'" class="peer" />
+      <span *ngIf="(publicationFromGroup.get('copiesAvailable')?.dirty || publicationFromGroup.get('copiesAvailable')?.touched)
+          && publicationFromGroup.get('copiesAvailable')?.hasError('required')" class="text-theme-fire-red">First name is
+        required</span>
+    </div>
+  </div>
+  <div class="flex flex-row-reverse mt-2">
+    <input type="submit" value="Save"
+      class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black px-4 py-2 text-white" />
+  </div>
+</form>

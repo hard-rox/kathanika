@@ -1,3 +1,4 @@
+import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -7,10 +8,12 @@ import {
 } from '@angular/core';
 
 @Component({
+  standalone: true,
   selector: 'app-pagination',
   templateUrl: './pagination.component.html',
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CommonModule]
 })
 export class PaginationComponent {
   private _totalCount: number = 0;

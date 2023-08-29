@@ -11,10 +11,10 @@ import {
 import { mockMutationGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PanelComponent } from 'src/app/shared/modules/panel/components/panel/panel.component';
 import { of } from 'rxjs';
 import { MutationResult } from 'apollo-angular/types';
 import { ApolloQueryResult } from '@apollo/client/core/types';
+import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
 
 describe('AuthorUpdateComponent', () => {
   const routeParam = '12345';
@@ -23,11 +23,13 @@ describe('AuthorUpdateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        PanelComponent,
+      ],
       declarations: [
         AuthorFormComponent,
         AuthorUpdateComponent,
-        PanelComponent,
       ],
       providers: [
         {

@@ -6,7 +6,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { mockQueryGql } from 'src/test-utils/gql-test-utils';
-import { PaginationModule } from 'src/app/shared/modules/pagination/pagination.module';
+import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 
 describe('AuthorListComponent', () => {
   let component: AuthorListComponent;
@@ -16,7 +16,7 @@ describe('AuthorListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AuthorListComponent],
-      imports: [PaginationModule, RouterTestingModule],
+      imports: [PaginationComponent, RouterTestingModule],
       providers: [
         {
           provide: GetAuthorsGQL,
