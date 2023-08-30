@@ -33,7 +33,7 @@
   "devDependencies": {
     "@angular-devkit/build-angular": "^16.2.0",
     "@angular/cli": "~16.2.0",
-    "@angular/compiler-cli": "^16.2.2",
+    "@angular/compiler-cli": "^16.2.3",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-apollo-angular": "^3.5.6",
