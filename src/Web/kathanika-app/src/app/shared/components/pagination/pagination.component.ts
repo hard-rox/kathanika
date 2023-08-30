@@ -9,7 +9,7 @@ import {
 
 @Component({
   standalone: true,
-  selector: 'app-pagination',
+  selector: 'kn-pagination',
   templateUrl: './pagination.component.html',
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,

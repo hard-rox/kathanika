@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   standalone: true,
-  selector: 'app-alert',
+  selector: 'kn-alert',
   templateUrl: './alert.component.html',
   styleUrls: ['./alert.component.scss'],
   imports: [CommonModule]

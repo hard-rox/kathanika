@@ -84,7 +84,7 @@
   </table>
 
   <div class="w-full inline-flex justify-center">
-    <app-pagination [totalCount]="queryResult.data.publications?.totalCount" [pageSizes]="pageSizes"
+    <kn-pagination [totalCount]="queryResult.data.publications?.totalCount" [pageSizes]="pageSizes"
       [pageSize]="pageSize" (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)" />
   </div>
 </ng-container>

@@ -4,7 +4,7 @@ import { AuthorFormInput } from '../../types/author-form-input';
 import { AuthorFormOutput } from '../../types/author-form-output';
 
 @Component({
-  selector: 'app-author-form',
+  selector: 'kn-author-form',
   templateUrl: './author-form.component.html',
   styleUrls: ['./author-form.component.scss'],
 })

@@ -3,7 +3,7 @@ import { Component, Input } from '@angular/core';
 
 @Component({
   standalone: true,
-  selector: 'app-panel',
+  selector: 'kn-panel',
   templateUrl: './panel.component.html',
   styleUrls: ['./panel.component.scss'],
   imports: [CommonModule]

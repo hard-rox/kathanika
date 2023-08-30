@@ -1,11 +1,11 @@
 <div *ngIf="errors.length > 0" class="mb-2">
-  <app-alert [closeable]="true" (onClosed)="closeAlert()">
+  <kn-alert [closeable]="true" (onClosed)="closeAlert()">
     <ul class="mt-1.5 ml-4 list-disc list-inside">
       <li *ngFor="let error of errors">{{error}}</li>
     </ul>
-  </app-alert>
+  </kn-alert>
 </div>
 
-<app-panel panelTitle="Add Author" [isLoading]="isPanelLoading">
-  <app-author-form #authorAddForm (onSubmit)="onValidFormSubmit($event)" />
-</app-panel>
+<kn-panel panelTitle="Add Author" [isLoading]="isPanelLoading">
+  <kn-author-form #authorAddForm (onSubmit)="onValidFormSubmit($event)" />
+</kn-panel>

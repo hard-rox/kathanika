@@ -38,15 +38,15 @@ describe('AppComponent', () => {
   });
 
   it('should render header', () => {
-    expect(nativeElement.querySelector('app-header')).toBeTruthy();
+    expect(nativeElement.querySelector('kn-header')).toBeTruthy();
   });
 
   it('should render sidebar', () => {
-    expect(nativeElement.querySelector('app-sidebar')).toBeTruthy();
+    expect(nativeElement.querySelector('kn-sidebar')).toBeTruthy();
   });
 
   it('should render footer', () => {
-    expect(nativeElement.querySelector('app-footer')).toBeTruthy();
+    expect(nativeElement.querySelector('kn-footer')).toBeTruthy();
   });
 
   it('should have router outlet', () => {

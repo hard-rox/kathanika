@@ -4,7 +4,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PublicationFormOutput } from '../../types/publication-form-output';
 
 @Component({
-  selector: 'app-publication-form',
+  selector: 'kn-publication-form',
   templateUrl: './publication-form.component.html',
   styleUrls: ['./publication-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
