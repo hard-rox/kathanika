@@ -1,62 +1,15 @@
+<!-- <pre>{{authorFromGroup.value | json}}</pre> -->
+
 <form [formGroup]="authorFromGroup" (ngSubmit)="submitForm()">
   <div class="grid grid-cols-2 gap-x-6 gap-y-4">
-    <div class="flex flex-col">
-      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">First Name</label>
-      <input type="text" placeholder="First Name" formControlName="firstName" [ngClass]="(authorFromGroup.get('firstName')?.dirty || authorFromGroup.get('firstName')?.touched)
-          && !authorFromGroup.get('firstName')?.valid ?
-          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
-          : 'border-theme-gunmetal'" class="peer" />
-      <span *ngIf="(authorFromGroup.get('firstName')?.dirty || authorFromGroup.get('firstName')?.touched)
-          && authorFromGroup.get('firstName')?.hasError('required')" class="text-theme-fire-red">First name is
-        required</span>
-    </div>
-    <div class="flex flex-col">
-      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Last Name</label>
-      <input type="text" placeholder="Last Name" formControlName="lastName" [ngClass]="(authorFromGroup.get('lastName')?.dirty || authorFromGroup.get('lastName')?.touched)
-          && !authorFromGroup.get('lastName')?.valid ?
-          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
-          : 'border-theme-gunmetal'" class="peer" />
-      <span *ngIf="(authorFromGroup.get('lastName')?.dirty || authorFromGroup.get('lastName')?.touched)
-          && authorFromGroup.get('lastName')?.hasError('required')" class="text-theme-fire-red">Last name is
-        required</span>
-    </div>
-    <div class="flex flex-col">
-      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Date of birth</label>
-      <input type="date" formControlName="dateOfBirth" [ngClass]="(authorFromGroup.get('dateOfBirth')?.dirty || authorFromGroup.get('dateOfBirth')?.touched)
-          && !authorFromGroup.get('dateOfBirth')?.valid ?
-          'border-theme-fire-red text-theme-fire-red'
-          : 'border-theme-gunmetal'" class="peer" />
-      <span *ngIf="(authorFromGroup.get('dateOfBirth')?.dirty || authorFromGroup.get('dateOfBirth')?.touched)
-          && authorFromGroup.get('dateOfBirth')?.hasError('required')" class="text-theme-fire-red">Date of birth is
-        required</span>
-    </div>
-    <div *ngIf="!isUpdate" class="flex flex-col">
-      <label>Date of death</label>
-      <input type="date" formControlName="dateOfDeath"/>
-    </div>
-    <div class="flex flex-col">
-      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Nationality</label>
-      <input type="text" placeholder="Nationality" formControlName="nationality" [ngClass]="(authorFromGroup.get('nationality')?.dirty || authorFromGroup.get('nationality')?.touched)
-          && !authorFromGroup.get('nationality')?.valid ?
-          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
-          : 'border-theme-gunmetal'" class="peer" />
-      <span *ngIf="(authorFromGroup.get('nationality')?.dirty || authorFromGroup.get('nationality')?.touched)
-          && authorFromGroup.get('nationality')?.hasError('required')" class="text-theme-fire-red">Nationality is
-        required</span>
-    </div>
-    <div class="flex flex-col">
-      <label class="after:content-['*'] after:ml-0.5 after:text-theme-fire-red">Biography</label>
-      <textarea type="text" placeholder="Biography" formControlName="biography" [ngClass]="(authorFromGroup.get('biography')?.dirty || authorFromGroup.get('biography')?.touched)
-          && !authorFromGroup.get('biography')?.valid ?
-          'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
-          : 'border-theme-gunmetal'" class="peer"></textarea>
-      <span *ngIf="(authorFromGroup.get('biography')?.dirty || authorFromGroup.get('biography')?.touched)
-          && authorFromGroup.get('biography')?.hasError('required')" class="text-theme-fire-red">Nationality is
-        required</span>
-    </div>
+    <kn-text-input label="First Name" formControlName="firstName" />
+    <kn-text-input label="Last Name" formControlName="lastName" />
+    <kn-date-input label="Date of Birth" formControlName="dateOfBirth" />
+    <kn-date-input label="Date of death" formControlName="dateOfDeath" />
+    <kn-text-input label="Nationality" formControlName="nationality" />
+    <kn-textarea-input label="Biography" formControlName="biography"/>
   </div>
   <div class="flex flex-row-reverse mt-2">
-    <input type="submit" value="Save"
-      class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black px-4 py-2 text-white" />
+    <input type="submit" value="Save" />
   </div>
 </form>

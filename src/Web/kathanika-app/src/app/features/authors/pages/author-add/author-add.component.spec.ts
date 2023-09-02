@@ -11,6 +11,9 @@ import { mockMutationGql } from 'src/test-utils/gql-test-utils';
 import { of } from 'rxjs';
 import { MutationResult } from 'apollo-angular';
 import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
+import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
+import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
+import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 
 describe('AuthorAddComponent', () => {
   let component: AuthorAddComponent;
@@ -27,7 +30,13 @@ describe('AuthorAddComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, PanelComponent],
+      imports: [
+        ReactiveFormsModule,
+        PanelComponent,
+        TextInputComponent,
+        DateInputComponent,
+        TextareaInputComponent
+      ],
       declarations: [AuthorAddComponent, AuthorFormComponent],
       providers: [
         {

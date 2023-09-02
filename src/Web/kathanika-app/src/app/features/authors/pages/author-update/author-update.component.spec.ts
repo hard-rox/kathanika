@@ -15,6 +15,9 @@ import { of } from 'rxjs';
 import { MutationResult } from 'apollo-angular/types';
 import { ApolloQueryResult } from '@apollo/client/core/types';
 import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
+import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
+import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
+import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 
 describe('AuthorUpdateComponent', () => {
   const routeParam = '12345';
@@ -26,6 +29,9 @@ describe('AuthorUpdateComponent', () => {
       imports: [
         ReactiveFormsModule,
         PanelComponent,
+        TextInputComponent,
+        DateInputComponent,
+        TextareaInputComponent
       ],
       declarations: [
         AuthorFormComponent,
@@ -63,7 +69,7 @@ describe('AuthorUpdateComponent', () => {
 
   it('should fetch with valid route param id in ngOnInit', () => {
     const gqlSpy = spyOn<any>(component['gql'], 'fetch').and.returnValue({
-      subscribe: () => {},
+      subscribe: () => { },
     });
     component.ngOnInit();
     expect(gqlSpy).toHaveBeenCalledOnceWith({ id: routeParam });

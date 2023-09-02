@@ -11,6 +11,9 @@ import { AuthorUpdateComponent } from './pages/author-update/author-update.compo
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
+import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
+import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
+import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 
 
 @NgModule({
@@ -27,7 +30,10 @@ import { PanelComponent } from 'src/app/shared/components/panel/panel.component'
     AuthorsRoutingModule,
     PaginationComponent,
     AlertComponent,
-    PanelComponent
+    PanelComponent,
+    TextInputComponent,
+    DateInputComponent,
+    TextareaInputComponent
   ]
 })
 export class AuthorsModule { }

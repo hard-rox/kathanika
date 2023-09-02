@@ -19,7 +19,7 @@
     @apply px-6
   }
 
-  input[type="text"], input[type="date"], textarea{
-    @apply border p-2 border-theme-gunmetal focus:ring-theme-rich-black
+  input[type="submit"]{
+    @apply bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black px-4 py-2 text-white
   }
 }
