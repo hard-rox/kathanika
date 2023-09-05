@@ -3,11 +3,12 @@
     {{label}}
     <span *ngIf="isRequired()" class="text-theme-fire-red">*</span>
   </label>
-  <textarea [id]="control?.name" [placeholder]="placeholder.length > 0? placeholder : label" [ngModel]="value"
-    (ngModelChange)="onModelChange($event)" (blur)="onBlur()" [ngClass]="(control?.dirty || control?.touched)
+  <select [id]="control?.name" [(ngModel)]="value" (ngModelChange)="onModelChange($event)" (blur)="onBlur()" [ngClass]="(control?.dirty || control?.touched)
   && !control?.valid ?
   'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
-  : 'border-theme-gunmetal'" class="peer border p-2 focus:ring-theme-rich-black"></textarea>
+  : 'border-theme-gunmetal'" class="peer border p-2 focus:ring-theme-rich-black">
+    <ng-content select="option"></ng-content>
+  </select>
   <span *ngIf="(control?.dirty || control?.touched)
   && control?.hasError('required')" class="text-theme-fire-red">{{label}} is
     required</span>

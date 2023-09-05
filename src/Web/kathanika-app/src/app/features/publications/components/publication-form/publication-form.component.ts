@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from 
 import { PublicationFormInput } from '../../types/publication-form-input';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PublicationFormOutput } from '../../types/publication-form-output';
+import { PublicationType } from 'src/app/graphql/generated/graphql-operations';
 
 @Component({
   selector: 'kn-publication-form',
@@ -23,26 +24,36 @@ export class PublicationFormComponent {
   @Output('onSubmit')
   onSubmit = new EventEmitter<PublicationFormOutput>();
 
-  constructor(private formBuilder: FormBuilder) {}
+  publicationTypes: string[] = Object.values(PublicationType);
+
+  constructor(private formBuilder: FormBuilder) { }
 
   isUpdate: boolean = false;
   publicationFromGroup: FormGroup = this.formBuilder.group({
-    title: ['', Validators.required],
-      publicationType: ['', Validators.required],
-      publishedDate: ['', Validators.required],
-      publisher: ['', Validators.required],
-      isbn: [''],
-      edition: ['', Validators.required],
-      language: ['', Validators.required],
-      description: ['', Validators.required],
-      authors: [[]],
-      buyingPrice: ['', [Validators.required, Validators.min(0)]],
-      callNumber: ['', Validators.required],
-      copiesAvailable: ['', [Validators.required, Validators.min(0)]],
+    title: [null, Validators.required],
+    publicationType: [null, Validators.required],
+    publishedDate: [null, Validators.required],
+    publisher: [null, Validators.required],
+    isbn: [null],
+    edition: [null, Validators.required],
+    language: [null, Validators.required],
+    // description: [null, Validators.required],
+    authors: [[]],
+    buyingPrice: [null, [Validators.required, Validators.min(0)]],
+    callNumber: [null, Validators.required],
+    copiesAvailable: [null, [Validators.required, Validators.min(0)]],
   });
 
   submitForm() {
     if (!this.publicationFromGroup.valid) {
+      Object.keys(this.publicationFromGroup.controls).forEach(key => {
+        const controlErrors: any = this.publicationFromGroup.get(key)?.errors;
+        if (controlErrors != null) {
+          Object.keys(controlErrors).forEach(keyError => {
+            console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
+          });
+        }
+      });
       this.publicationFromGroup.markAllAsTouched();
       return;
     }

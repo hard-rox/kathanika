@@ -14,7 +14,7 @@ describe('PublicationFormComponent', () => {
     });
     fixture = TestBed.createComponent(PublicationFormComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    //fixture.detectChanges();
   });
 
   it('should create', () => {

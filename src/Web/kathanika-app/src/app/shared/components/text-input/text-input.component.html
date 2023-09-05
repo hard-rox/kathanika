@@ -1,6 +1,9 @@
 <div class="flex flex-col">
-  <label [ngClass]="{'after:content-[\'*\'] after:ml-0.5 after:text-theme-fire-red': isRequired()}">{{label}}</label>
-  <input type="text" [placeholder]="placeholder.length > 0? placeholder : label" [ngModel]="value"
+  <label [for]="control?.name">
+    {{label}}
+    <span *ngIf="isRequired()" class="text-theme-fire-red">*</span>
+  </label>
+  <input type="text" [id]="control?.name" [placeholder]="placeholder.length > 0? placeholder : label" [ngModel]="value"
     (ngModelChange)="onModelChange($event)" (blur)="onBlur()" [ngClass]="(control?.dirty || control?.touched)
   && !control?.valid ?
   'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'

@@ -1,7 +1,9 @@
 <div class="flex flex-col">
-  <label [ngClass]="{'after:content-[\'*\'] after:ml-0.5 after:text-theme-fire-red': isRequired()}">{{label}}</label>
-  <input type="date" [ngModel]="value"
-    (ngModelChange)="onModelChange($event)" (blur)="onBlur()" [ngClass]="(control?.dirty || control?.touched)
+  <label [for]="control?.name">
+    {{label}}
+    <span *ngIf="isRequired()" class="text-theme-fire-red">*</span>
+  </label>
+  <input type="date" [id]="control?.name" [ngModel]="value" (ngModelChange)="onModelChange($event)" (blur)="onBlur()" [ngClass]="(control?.dirty || control?.touched)
   && !control?.valid ?
   'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
   : 'border-theme-gunmetal'" class="peer border p-2 focus:ring-theme-rich-black" />

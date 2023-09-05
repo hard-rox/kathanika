@@ -41,7 +41,9 @@ export type AddAuthorPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
-export type AddPublicationCommandInput = {
+export type AddPublicationError = InvalidFieldError;
+
+export type AddPublicationInput = {
   authorIds: Array<Scalars['String']['input']>;
   buyingPrice: Scalars['Decimal']['input'];
   callNumber: Scalars['String']['input'];
@@ -51,21 +53,6 @@ export type AddPublicationCommandInput = {
   publishedDate: Scalars['Date']['input'];
   publisher: Scalars['String']['input'];
   title: Scalars['String']['input'];
-};
-
-export type AddPublicationError = InvalidFieldError;
-
-export type AddPublicationInput = {
-  __typename?: 'AddPublicationInput';
-  authorIds: Array<Scalars['String']['output']>;
-  buyingPrice: Scalars['Decimal']['output'];
-  callNumber: Scalars['String']['output'];
-  copiesPurchased: Scalars['Int']['output'];
-  isbn: Scalars['String']['output'];
-  publicationType: PublicationType;
-  publishedDate: Scalars['Date']['output'];
-  publisher: Scalars['String']['output'];
-  title: Scalars['String']['output'];
 };
 
 export type AddPublicationPayload = {
@@ -243,7 +230,7 @@ export type MutationsAddAuthorArgs = {
 
 
 export type MutationsAddPublicationArgs = {
-  input: AddPublicationCommandInput;
+  input: AddPublicationInput;
 };
 
 
@@ -448,6 +435,13 @@ export type UpdateAuthorMutationVariables = Exact<{
 
 export type UpdateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
+export type AddPublicationMutationVariables = Exact<{
+  addPublicationInput: AddPublicationInput;
+}>;
+
+
+export type AddPublicationMutation = { __typename?: 'Mutations', addPublication: { __typename?: 'AddPublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+
 export type GetAuthorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -539,6 +533,35 @@ export const UpdateAuthorDocument = gql`
   })
   export class UpdateAuthorGQL extends Apollo.Mutation<UpdateAuthorMutation, UpdateAuthorMutationVariables> {
     document = UpdateAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddPublicationDocument = gql`
+    mutation addPublication($addPublicationInput: AddPublicationInput!) {
+  addPublication(input: $addPublicationInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddPublicationGQL extends Apollo.Mutation<AddPublicationMutation, AddPublicationMutationVariables> {
+    document = AddPublicationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

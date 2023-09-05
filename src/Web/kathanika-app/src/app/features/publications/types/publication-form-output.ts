@@ -5,12 +5,12 @@ export type PublicationFormOutput = {
   publicationType: PublicationType;
   publishedDate: Date;
   publisher: string;
-  isbn?: string;
-  edition: string;
-  language: string;
-  description: string;
-  authors: [];
+  isbn: string;
+  // edition: string;
+  // language: string;
+  // description: string;
+  authorIds: [];
   buyingPrice: number;
   callNumber: string;
-  copiesAvailable: number;
+  copiesPurchased: number;
 }

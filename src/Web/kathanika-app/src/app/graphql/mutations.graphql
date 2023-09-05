@@ -38,3 +38,20 @@ mutation updateAuthor($id: String!, $authorPatch: AuthorPatchInput!){
     }
   }
 }
+
+mutation addPublication($addPublicationInput: AddPublicationInput!) {
+  addPublication(input: $addPublicationInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
