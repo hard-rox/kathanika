@@ -221,6 +221,7 @@ export type Mutations = {
   /** @deprecated Just a dummy for throwing new notification... */
   fireNewNotification: FireNewNotificationPayload;
   updateAuthor: UpdateAuthorPayload;
+  updatePublication: UpdatePublicationPayload;
 };
 
 
@@ -246,6 +247,11 @@ export type MutationsFireNewNotificationArgs = {
 
 export type MutationsUpdateAuthorArgs = {
   input: UpdateAuthorInput;
+};
+
+
+export type MutationsUpdatePublicationArgs = {
+  input: UpdatePublicationInput;
 };
 
 export type NotFoundWithTheIdError = Error & {
@@ -308,6 +314,18 @@ export type PublicationFilterInput = {
   publishedDate?: InputMaybe<DateOperationFilterInput>;
   publisher?: InputMaybe<StringOperationFilterInput>;
   title?: InputMaybe<StringOperationFilterInput>;
+};
+
+export type PublicationPatchInput = {
+  authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  buyingPrice?: InputMaybe<Scalars['Decimal']['input']>;
+  callNumber: Scalars['String']['input'];
+  copiesAvailable?: InputMaybe<Scalars['Int']['input']>;
+  isbn: Scalars['String']['input'];
+  publicationType: PublicationType;
+  publishedDate?: InputMaybe<Scalars['Date']['input']>;
+  publisher: Scalars['String']['input'];
+  title: Scalars['String']['input'];
 };
 
 export type PublicationSortInput = {
@@ -420,6 +438,20 @@ export type UpdateAuthorPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
+export type UpdatePublicationError = InvalidFieldError | NotFoundWithTheIdError;
+
+export type UpdatePublicationInput = {
+  id: Scalars['String']['input'];
+  patch: PublicationPatchInput;
+};
+
+export type UpdatePublicationPayload = {
+  __typename?: 'UpdatePublicationPayload';
+  data?: Maybe<Publication>;
+  errors?: Maybe<Array<UpdatePublicationError>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 export type AddAuthorMutationVariables = Exact<{
   addAuthorInput: AddAuthorInput;
 }>;
@@ -441,6 +473,14 @@ export type AddPublicationMutationVariables = Exact<{
 
 
 export type AddPublicationMutation = { __typename?: 'Mutations', addPublication: { __typename?: 'AddPublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+
+export type UpdatePublicationMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  publicationPatch: PublicationPatchInput;
+}>;
+
+
+export type UpdatePublicationMutation = { __typename?: 'Mutations', updatePublication: { __typename?: 'UpdatePublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
 export type GetAuthorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -562,6 +602,39 @@ export const AddPublicationDocument = gql`
   })
   export class AddPublicationGQL extends Apollo.Mutation<AddPublicationMutation, AddPublicationMutationVariables> {
     document = AddPublicationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdatePublicationDocument = gql`
+    mutation updatePublication($id: String!, $publicationPatch: PublicationPatchInput!) {
+  updatePublication(input: {id: $id, patch: $publicationPatch}) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on NotFoundWithTheIdError {
+        id
+        objectName
+      }
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdatePublicationGQL extends Apollo.Mutation<UpdatePublicationMutation, UpdatePublicationMutationVariables> {
+    document = UpdatePublicationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

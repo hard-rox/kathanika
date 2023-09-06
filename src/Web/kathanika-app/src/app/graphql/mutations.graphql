@@ -55,3 +55,27 @@ mutation addPublication($addPublicationInput: AddPublicationInput!) {
     }
   }
 }
+
+mutation updatePublication($id: String!, $publicationPatch: PublicationPatchInput!){
+  updatePublication(input: {
+    id: $id,
+    patch: $publicationPatch
+  }){
+    message
+    data {
+      id
+    }
+    errors{
+      ...on NotFoundWithTheIdError{
+        id
+        objectName
+      }
+      ...on InvalidFieldError {
+        fieldName
+      }
+      ...on Error{
+        message
+      }
+    }
+  }
+}

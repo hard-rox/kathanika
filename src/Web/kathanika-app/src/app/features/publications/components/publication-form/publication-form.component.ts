@@ -15,9 +15,7 @@ export class PublicationFormComponent {
   set publication(input: PublicationFormInput | null | undefined) {
     if (input) {
       this.isUpdate = true;
-      this.publicationFromGroup.patchValue({
-
-      });
+      this.publicationFromGroup.setValue(input);
     }
   }
 
