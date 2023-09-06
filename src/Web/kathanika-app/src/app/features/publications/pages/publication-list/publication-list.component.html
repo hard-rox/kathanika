@@ -1,0 +1,90 @@
+<div class="space-y-2">
+  <div class="flex justify-between">
+    <h2 class="text-xl font-bold">Publications</h2>
+    <a [routerLink]="['add']"
+      class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black text-white px-4 py-2">Add new</a>
+  </div>
+  <input [value]="searchText" (keyup)="onSearchTextChanged($event)" type="text" placeholder="Search text"
+    class="border-theme-gunmetal border p-2 w-full" />
+</div>
+<ng-container *ngIf="queryRef.valueChanges | async as queryResult">
+  <!-- <pre>{{queryResult | json}}</pre> -->
+  <table>
+    <thead>
+      <tr>
+        <th scope="col">Serial</th>
+        <th scope="col">Title</th>
+        <th scope="col">Authors</th>
+        <th scope="col">Call Number</th>
+        <th scope="col">Type</th>
+        <th scope="col">Publisher</th>
+        <th scope="col">Language</th>
+        <th scope="col">Copies</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngIf="queryResult?.data?.publications?.items as data; else emptyData">
+        <tr *ngFor="let item of data; let idx = index">
+          <td scope="col">{{idx + 1}}</td>
+          <td scope="col">{{item.title}}</td>
+          <td scope="col">
+            <p *ngFor="let author of item.authors">{{author.firstName + ' ' + author.lastName}}</p>
+          </td>
+          <td scope="col">{{item.callNumber}}</td>
+          <td scope="col">{{item.publicationType}}</td>
+          <td scope="col">{{item.publisher}}</td>
+          <td scope="col">{{item.language}}</td>
+          <td scope="col">{{item.copiesAvailable}}</td>
+          <td scope="col">
+            <div class="group relative">
+              <button class="px-3 py-2 hover:bg-theme-silver active:bg-theme-silver rounded-full">
+                <span class="material-symbols-sharp">
+                  more_vert
+                </span>
+              </button>
+              <div tabindex="0"
+                class="z-10 border bg-white invisible shadow-md w-30 absolute top-0 right-16 transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
+                <div class="py-2">
+                  <a routerLink="{{item?.id}}"
+                    class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                    <span class="material-symbols-sharp">
+                      visibility
+                    </span>
+                    <span class="my-auto">View</span>
+                  </a>
+                  <a routerLink="update/{{item?.id}}"
+                    class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                    <span class="material-symbols-sharp my-auto">
+                      edit
+                    </span>
+                    <span class="my-auto">Update</span>
+                  </a>
+                  <!-- TODO: Pass full name -->
+                  <!-- <button (click)="deleteAuthor(item.id, item.firstName)"
+                    class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                    <span class="material-symbols-sharp my-auto">
+                      delete
+                    </span>
+                    <span class="my-auto">Delete</span>
+                  </button> -->
+                </div>
+              </div>
+            </div>
+          </td>
+        </tr>
+      </ng-container>
+      <ng-template #emptyData>
+        <tr>
+          <td colspan="100%" class="text-center">
+            No data to show
+          </td>
+        </tr>
+      </ng-template>
+    </tbody>
+  </table>
+
+  <div class="w-full inline-flex justify-center">
+    <kn-pagination [totalCount]="queryResult.data.publications?.totalCount" [pageSizes]="pageSizes"
+      [pageSize]="pageSize" (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)" />
+  </div>
+</ng-container>

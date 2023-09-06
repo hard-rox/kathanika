@@ -8,16 +8,17 @@ describe('DashboardComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DashboardComponent ]
-    })
-    .compileComponents();
+      declarations: [DashboardComponent],
+    }).compileComponents();
 
+    console.debug('beforeEach', new Date().getMilliseconds());
     fixture = TestBed.createComponent(DashboardComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
 
   it('should create', () => {
+    console.debug('it', new Date().getMilliseconds());
     expect(component).toBeTruthy();
   });
 });

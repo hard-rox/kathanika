@@ -8,9 +8,12 @@ import {
   AddAuthorMutation,
 } from 'src/app/graphql/generated/graphql-operations';
 import { mockMutationGql } from 'src/test-utils/gql-test-utils';
-import { PanelComponent } from 'src/app/shared/modules/panel/components/panel/panel.component';
 import { of } from 'rxjs';
 import { MutationResult } from 'apollo-angular';
+import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
+import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
+import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
+import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 
 describe('AuthorAddComponent', () => {
   let component: AuthorAddComponent;
@@ -27,8 +30,14 @@ describe('AuthorAddComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [AuthorAddComponent, AuthorFormComponent, PanelComponent],
+      imports: [
+        ReactiveFormsModule,
+        PanelComponent,
+        TextInputComponent,
+        DateInputComponent,
+        TextareaInputComponent
+      ],
+      declarations: [AuthorAddComponent, AuthorFormComponent],
       providers: [
         {
           provide: AddAuthorGQL,

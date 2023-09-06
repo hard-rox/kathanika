@@ -33,13 +33,11 @@ describe('AuthorDetailsComponent', () => {
           useValue: mockQueryGql,
         },
       ],
-    })
-      .compileComponents()
-      .then(() => {
-        activatedRoute = TestBed.inject(ActivatedRoute);
-        fixture = TestBed.createComponent(AuthorDetailsComponent);
-        component = fixture.componentInstance;
-      });
+    }).compileComponents();
+
+    activatedRoute = TestBed.inject(ActivatedRoute);
+    fixture = TestBed.createComponent(AuthorDetailsComponent);
+    component = fixture.componentInstance;
   });
 
   it('should create', () => {
@@ -54,7 +52,7 @@ describe('AuthorDetailsComponent', () => {
     expect(queryRefRefetchSpy).toHaveBeenCalledOnceWith(queryVariable);
   });
 
-  it('should not refetch query and variable with route param when route param id is valid on ngOnInit', () => {
+  it('should not refetch query and variable with route param when route param id is invalid on ngOnInit', () => {
     const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
     activatedRoute.snapshot.params['id'] = '';
 

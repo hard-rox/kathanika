@@ -2,6 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthorFormComponent } from './author-form.component';
+import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
+import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
+import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 
 describe('AuthorFormComponent', () => {
   let component: AuthorFormComponent;
@@ -9,7 +12,12 @@ describe('AuthorFormComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        TextInputComponent,
+        DateInputComponent,
+        TextareaInputComponent
+      ],
       declarations: [AuthorFormComponent],
     });
     fixture = TestBed.createComponent(AuthorFormComponent);
