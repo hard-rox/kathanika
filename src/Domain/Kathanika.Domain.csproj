@@ -11,5 +11,8 @@
 			<_Parameter1>Kathanika.UnitTests</_Parameter1>
 		</AssemblyAttribute>
 	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="MediatR" Version="12.1.1" />
+	</ItemGroup>
 
 </Project>
