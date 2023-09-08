@@ -67,8 +67,7 @@ public class PublicationAggregateTests
             DateOnly.MinValue,
             (decimal)10.2,
             3,
-            "Updated CallNumber",
-            null
+            "Updated CallNumber"
         );
 
         // Assert

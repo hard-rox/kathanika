@@ -69,11 +69,13 @@ public sealed class Publication : AggregateRoot
             publishedDate,
             buyingPrice,
             copiesAvailable,
-            callNumber);
-
+            callNumber)
+        {
+            _authors = new()
+        };
+        
         if (authors is not null)
         {
-            publication._authors = new();
             foreach (var author in authors)
             {
                 publication._authors.Add(new PublicationAuthor(author.Id,
@@ -93,28 +95,32 @@ public sealed class Publication : AggregateRoot
         DateOnly? publishedDate,
         decimal? buyingPrice,
         int? copiesAvailable,
-        string? callNumber,
-        IEnumerable<Author>? authors)
+        string? callNumber)
     {
         Title = !string.IsNullOrEmpty(title) ? title : Title;
         Isbn = !string.IsNullOrEmpty(isbn) ? isbn : Isbn;
         PublicationType = publicationType is not null ? (PublicationType)publicationType : PublicationType;
         Publisher = !string.IsNullOrEmpty(publisher) ? publisher : Publisher;
         PublishedDate = publishedDate is not null ? (DateOnly)publishedDate : PublishedDate;
-        BuyingPrice = buyingPrice is not null? (decimal)buyingPrice : BuyingPrice;
-        CopiesAvailable = copiesAvailable is not null? (int)copiesAvailable : CopiesAvailable;
+        BuyingPrice = buyingPrice is not null ? (decimal)buyingPrice : BuyingPrice;
+        CopiesAvailable = copiesAvailable is not null ? (int)copiesAvailable : CopiesAvailable;
         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : CallNumber;
+    }
 
-        if (authors is not null && authors.Count() > 0)
+    public void AddOrUpdateAuthors(params Author[] authors)
+    {
+        foreach (Author author in authors)
         {
-            _authors = new();
-            foreach (var author in authors)
+            PublicationAuthor? publicationAuthor = _authors.FirstOrDefault(x => x.Id == author.Id);
+
+            if (publicationAuthor is not null)
             {
-                _authors.Add(new PublicationAuthor(author.Id,
+                _authors.Remove(publicationAuthor);
+            }
+
+            _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
                     author.LastName));
-            }
         }
-        else _authors = new();
     }
 }

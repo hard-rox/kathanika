@@ -9,9 +9,9 @@ namespace Kathanika.Infrastructure.Persistence;
 internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 {
     private readonly string _collectionName = string.Empty;
-    private readonly IMongoCollection<T> _collection;
-    private readonly ILogger<IRepository<T>> _logger;
-    private readonly ICacheService _cacheService;
+    protected readonly IMongoCollection<T> _collection;
+    protected readonly ILogger<IRepository<T>> _logger;
+    protected readonly ICacheService _cacheService;
 
     public Repository(IMongoDatabase database, string collectionName, ILogger<IRepository<T>> logger, ICacheService cacheService)
     {

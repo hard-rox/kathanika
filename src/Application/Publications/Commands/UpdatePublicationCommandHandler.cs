@@ -30,9 +30,13 @@ internal sealed class UpdatePublicationCommandHandler : IRequestHandler<UpdatePu
             request.Patch.PublishedDate,
             request.Patch.BuyingPrice,
             request.Patch.CopiesAvailable,
-            request.Patch.CallNumber,
-            authors
+            request.Patch.CallNumber
         );
+
+        if (authors is not null && authors.Count > 0)
+        {
+            publication.AddOrUpdateAuthors(authors.ToArray());
+        }
 
         await _publicationRepository.UpdateAsync(publication);
 
