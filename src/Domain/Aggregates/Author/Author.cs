@@ -1,3 +1,4 @@
+using Kathanika.Domain.DomainEvents;
 using Kathanika.Domain.Exceptions;
 using Kathanika.Domain.Primitives;
 
@@ -85,9 +86,10 @@ public sealed class Author : AggregateRoot
             if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
                 throw new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date");
 
-
-            DateOfBirth = ((DateOnly)dateOfBirth);
+            DateOfBirth = (DateOnly)dateOfBirth;
         }
+
+        AddDomainEvent(new AuthorUpdatedDomainEvent(Id));
     }
 
     public void MarkAsDeceased(DateOnly dateOfDeath)

@@ -37,6 +37,7 @@
         "MediatR",
         "ncontains",
         "nends",
+        "Newtonsoft",
         "ngsw",
         "ngte",
         "nlte",
