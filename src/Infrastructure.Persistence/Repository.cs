@@ -19,7 +19,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     public Repository(IMongoDatabase database, string collectionName, ILogger<IRepository<T>> logger, ICacheService cacheService)
     {
         _collectionName = collectionName.ToLower();
-        _outboxMessageCollection = database.GetCollection<OutboxMessage>("outboxMessages");
+        _outboxMessageCollection = database.GetCollection<OutboxMessage>(Constants.OutboxMessageCollectionName);
         _collection = database.GetCollection<T>(_collectionName);
         _logger = logger;
         _cacheService = cacheService;

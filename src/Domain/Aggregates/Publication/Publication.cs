@@ -111,12 +111,7 @@ public sealed class Publication : AggregateRoot
     {
         foreach (Author author in authors)
         {
-            PublicationAuthor? publicationAuthor = _authors.FirstOrDefault(x => x.Id == author.Id);
-
-            if (publicationAuthor is not null)
-            {
-                _authors.Remove(publicationAuthor);
-            }
+            _authors.RemoveAll(x => x.Id == author.Id);
 
             _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,

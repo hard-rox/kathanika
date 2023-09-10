@@ -1,4 +1,5 @@
 using Kathanika.Infrastructure.Persistence.BsonClassMaps;
+using Kathanika.Infrastructure.Persistence.Outbox;
 using Kathanika.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,6 +13,8 @@ public static class DependencyInjector
 
         var connectionString = configuration.GetConnectionString("mongoDbConnection");
         services.AddMongoDb(connectionString);
+
+        services.AddScoped<IOutboxMessageService, OutboxMessageService>();
 
         services.AddScoped<IAuthorRepository, AuthorRepository>();
         services.AddScoped<IPublicationRepository, PublicationRepository>();
