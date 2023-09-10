@@ -17,6 +17,7 @@ internal sealed class AuthorUpdatedDomainEventHandler : INotificationHandler<Aut
     public async Task Handle(AuthorUpdatedDomainEvent notification, CancellationToken cancellationToken)
     {
         Author? author = await _authorRepository.GetByIdAsync(notification.AuthorId);
+        
         if (author is null) return;
 
         IReadOnlyList<Publication> publications = await _publicationRepository

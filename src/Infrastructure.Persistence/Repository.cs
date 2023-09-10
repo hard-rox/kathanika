@@ -146,7 +146,10 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _logger.LogInformation("Added new document with _id {@_id} of type {@DocumentType} into collection {@CollectionName}", aggregate.ToBsonDocument()["_id"].ToJson(), typeof(T).Name, _collectionName);
 
         List<OutboxMessage> outboxMessages = GetOutboxMessagesFromAggregate(aggregate);
-        await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
+        if (outboxMessages.Count > 0)
+        {
+            await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
+        }
 
         return aggregate;
     }
@@ -165,7 +168,10 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         typeof(T).Name, aggregate.Id, _collectionName, aggregate);
 
         List<OutboxMessage> outboxMessages = GetOutboxMessagesFromAggregate(aggregate);
-        await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
+        if (outboxMessages.Count > 0)
+        {
+            await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
+        }
 
         var cacheKey = $"{typeof(T).Name.ToLower()}:{aggregate.Id}";
         var cachedDocument = _cacheService.Get<T>(cacheKey);
