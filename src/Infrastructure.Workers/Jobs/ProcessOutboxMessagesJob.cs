@@ -33,9 +33,15 @@ internal sealed class ProcessOutboxMessagesJob : IJob
 
             if (domainEvent is null) continue;
 
-            await _publisher.Publish(domainEvent, context.CancellationToken);
-
-            await _outboxMessageService.SetOutboxMessageProcessed(message.Id);
+            try
+            {
+                await _publisher.Publish(domainEvent, context.CancellationToken);
+                await _outboxMessageService.SetOutboxMessageProcessed(message.Id);
+            }
+            catch (Exception ex)
+            {
+                await _outboxMessageService.SetOutboxMessageErrors(message.Id, ex);
+            }
         }
     }
 }

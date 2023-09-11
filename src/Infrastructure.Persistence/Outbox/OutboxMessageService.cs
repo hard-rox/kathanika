@@ -1,3 +1,5 @@
+using Newtonsoft.Json;
+
 namespace Kathanika.Infrastructure.Persistence.Outbox;
 
 //TODO: Should be in good way...
@@ -13,15 +15,35 @@ internal sealed class OutboxMessageService : IOutboxMessageService
     {
         FilterDefinition<OutboxMessage> filter = Builders<OutboxMessage>
             .Filter
-            .Eq(x => x.ProcessedAt, null);
+            .And(
+                Builders<OutboxMessage>.Filter.Eq(x => x.ProcessedAt, null),
+                Builders<OutboxMessage>.Filter.Lt(x => x.ProcessAttempt, 5) //TODO: ProcessAttempt value will get from appSettings.json.
+            );
 
         List<OutboxMessage>? result = await _outboxMessageCollection
             .Find(filter)
             .Skip(0)
-            .Limit(20)
+            .Limit(20) //TODO: Limit value will get from appSettings.json.
             .ToListAsync(cancellationToken);
 
         return result ?? new();
+    }
+
+    public async Task SetOutboxMessageErrors(string id, Exception exception)
+    {
+        string exceptionJson = JsonConvert.SerializeObject(exception,
+            new JsonSerializerSettings()
+            {
+                TypeNameHandling = TypeNameHandling.All
+            });
+        FilterDefinition<OutboxMessage> filter = Builders<OutboxMessage>
+            .Filter
+            .Eq(x => x.Id, id);
+        UpdateDefinition<OutboxMessage> updateDefinition = Builders<OutboxMessage>
+            .Update
+            .Set(x => x.LastOccurredError, exceptionJson)
+            .Inc(x => x.ProcessAttempt, 1);
+        UpdateResult result = await _outboxMessageCollection.UpdateOneAsync(filter, updateDefinition);
     }
 
     public async Task SetOutboxMessageProcessed(string id)
@@ -31,7 +53,8 @@ internal sealed class OutboxMessageService : IOutboxMessageService
             .Eq(x => x.Id, id);
         UpdateDefinition<OutboxMessage> updateDefinition = Builders<OutboxMessage>
             .Update
-            .Set(x => x.ProcessedAt, DateTimeOffset.Now);
+            .Set(x => x.ProcessedAt, DateTimeOffset.Now)
+            .Inc(x => x.ProcessAttempt, 1);
         UpdateResult result = await _outboxMessageCollection.UpdateOneAsync(filter, updateDefinition);
     }
 }

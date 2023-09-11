@@ -7,5 +7,6 @@ public class OutboxMessage
     public string Content { get; init; } = string.Empty;
     public DateTimeOffset OccurredAt { get; set; }
     public DateTimeOffset? ProcessedAt { get; set; }
-    public string[]? Errors { get; init; }
+    public int ProcessAttempt { get; init; } = 0;
+    public string? LastOccurredError { get; init; }
 }
