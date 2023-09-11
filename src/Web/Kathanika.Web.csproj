@@ -13,7 +13,6 @@
     <ProjectReference Include="..\Domain\Kathanika.Domain.csproj" />
     <ProjectReference Include="..\Infrastructure.GraphQL\Kathanika.Infrastructure.GraphQL.csproj" />
     <ProjectReference Include="..\Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj" />
-    <ProjectReference Include="..\Infrastructure.Services\Kathanika.Infrastructure.Services.csproj" />
     <ProjectReference Include="..\Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj" />
   </ItemGroup>
   <ItemGroup>

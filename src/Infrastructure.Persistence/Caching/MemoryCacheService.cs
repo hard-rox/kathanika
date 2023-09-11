@@ -1,7 +1,7 @@
 ﻿using Kathanika.Application.Services;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Kathanika.Infrastructure.Services.ServiceImplementations;
+namespace Kathanika.Infrastructure.Persistence.Caching;
 
 internal sealed class MemoryCacheService : ICacheService
 {
