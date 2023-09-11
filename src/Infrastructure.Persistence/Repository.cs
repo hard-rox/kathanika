@@ -1,7 +1,9 @@
 using Kathanika.Application.Services;
 using Kathanika.Domain.Exceptions;
 using Kathanika.Domain.Primitives;
+using Kathanika.Infrastructure.Persistence.Outbox;
 using MongoDB.Bson;
+using Newtonsoft.Json;
 using System.Linq.Expressions;
 
 namespace Kathanika.Infrastructure.Persistence;
@@ -9,13 +11,15 @@ namespace Kathanika.Infrastructure.Persistence;
 internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 {
     private readonly string _collectionName = string.Empty;
-    private readonly IMongoCollection<T> _collection;
-    private readonly ILogger<IRepository<T>> _logger;
-    private readonly ICacheService _cacheService;
+    private readonly IMongoCollection<OutboxMessage> _outboxMessageCollection;
+    protected readonly IMongoCollection<T> _collection;
+    protected readonly ILogger<IRepository<T>> _logger;
+    protected readonly ICacheService _cacheService;
 
     public Repository(IMongoDatabase database, string collectionName, ILogger<IRepository<T>> logger, ICacheService cacheService)
     {
         _collectionName = collectionName.ToLower();
+        _outboxMessageCollection = database.GetCollection<OutboxMessage>(Constants.OutboxMessageCollectionName);
         _collection = database.GetCollection<T>(_collectionName);
         _logger = logger;
         _cacheService = cacheService;
@@ -30,6 +34,23 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return false;
     }
 
+    private List<OutboxMessage> GetOutboxMessagesFromAggregate(T aggregate)
+    {
+        List<IDomainEvent> domainEvents = aggregate.GetDomainEvents();
+        List<OutboxMessage> outboxMessages = domainEvents.Select(domainEvent => new OutboxMessage
+        {
+            OccurredAt = DateTimeOffset.Now,
+            Type = domainEvent.GetType().Name,
+            Content = JsonConvert.SerializeObject(domainEvent,
+                new JsonSerializerSettings()
+                {
+                    TypeNameHandling = TypeNameHandling.All
+                }),
+        }).ToList();
+        aggregate.ClearDomainEvents();
+        return outboxMessages;
+    }
+
     public IQueryable<T> AsQueryable()
     {
         return _collection.AsQueryable();
@@ -37,13 +58,13 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
-        if(!IsValidMongoObjectId(id)) return null;
+        if (!IsValidMongoObjectId(id)) return null;
         _logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
-        
+
         var cacheKey = $"{typeof(T).Name.ToLower()}:{id}";
         _logger.LogInformation("Trying to get document from cache with cache key: {@CacheKey}", cacheKey);
         var cachedDocument = _cacheService.Get<T>(cacheKey);
-        if(cachedDocument is not null)
+        if (cachedDocument is not null)
         {
             _logger.LogInformation("Got document {@Document} of type {@DocumentType} from cache with cache key: {@CacheKey} ",
                 cachedDocument, typeof(T).Name, cacheKey);
@@ -55,7 +76,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         var cursor = await _collection.FindAsync(filter, cancellationToken: cancellationToken);
         var document = await cursor.SingleOrDefaultAsync(cancellationToken: cancellationToken);
         _logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", document, typeof(T).Name, _collectionName);
-        
+
         _logger.LogInformation("Setting document {@Document} into cache with cache key: {@CacheKey}", document, cacheKey);
         _cacheService.Set(cacheKey, document);
 
@@ -86,7 +107,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _logger.LogInformation("Getting document count of all documents of type {@DocumentType} from collection {@CollectionName}", typeof(T).Name, _collectionName);
         var cacheKey = $"{typeof(T).Name.ToLower()}:count";
         var cachedDocumentCount = _cacheService.Get<long?>(cacheKey);
-        if(cachedDocumentCount is not null)
+        if (cachedDocumentCount is not null)
         {
             _logger.LogInformation("Got document count {@DocumentCount} of type {@DocumentType} from cache with cache key: {@CacheKey} ",
                 cachedDocumentCount, typeof(T).Name, cacheKey);
@@ -96,10 +117,10 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
         var filter = Builders<T>.Filter.Empty;
         var documentCount = await _collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
-        
+
         _logger.LogInformation("Got document count {@DocumentCount} of type {@DocumentType} from {CollectionName}",
             documentCount, typeof(T).Name, _collectionName);
-        
+
         _logger.LogInformation("Setting document count {@DocumentCount} into cache with cache key: {@CacheKey}", documentCount, cacheKey);
         _cacheService.Set(cacheKey, documentCount);
         return documentCount;
@@ -111,18 +132,25 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
             expression, typeof(T).Name, _collectionName);
         var filter = Builders<T>.Filter.Where(expression);
         var documentCount = await _collection.CountDocumentsAsync(filter, cancellationToken: cancellationToken);
-        
+
         _logger.LogInformation("Got document count {@DocumentCount} in condition {@Condition} of type {@DocumentType} from {CollectionName}",
             documentCount, expression, typeof(T).Name, _collectionName);
-        
+
         return documentCount;
     }
-    
+
     public async Task<T> AddAsync(T aggregate, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Adding new document {@Document} of type {@DocumentType} into collection {@CollectionName}", aggregate, typeof(T).Name, _collectionName);
         await _collection.InsertOneAsync(aggregate, cancellationToken: cancellationToken);
         _logger.LogInformation("Added new document with _id {@_id} of type {@DocumentType} into collection {@CollectionName}", aggregate.ToBsonDocument()["_id"].ToJson(), typeof(T).Name, _collectionName);
+
+        List<OutboxMessage> outboxMessages = GetOutboxMessagesFromAggregate(aggregate);
+        if (outboxMessages.Count > 0)
+        {
+            await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
+        }
+
         return aggregate;
     }
 
@@ -139,9 +167,15 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _logger.LogInformation("Updated document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
         typeof(T).Name, aggregate.Id, _collectionName, aggregate);
 
+        List<OutboxMessage> outboxMessages = GetOutboxMessagesFromAggregate(aggregate);
+        if (outboxMessages.Count > 0)
+        {
+            await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
+        }
+
         var cacheKey = $"{typeof(T).Name.ToLower()}:{aggregate.Id}";
         var cachedDocument = _cacheService.Get<T>(cacheKey);
-        if(cachedDocument is not null )
+        if (cachedDocument is not null)
         {
             _logger.LogInformation("Found updating document in cache with key {@CacheKey}. Updating cached document.", cacheKey);
             _cacheService.Set(cacheKey, aggregate);
@@ -150,7 +184,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
-        if(!IsValidMongoObjectId(id)) throw new NotFoundWithTheIdException(typeof(T), id);
+        if (!IsValidMongoObjectId(id)) throw new NotFoundWithTheIdException(typeof(T), id);
         _logger.LogInformation("Deleting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
         var filter = Builders<T>.Filter.Eq(x => x.Id, id);
         await _collection.DeleteOneAsync(filter, cancellationToken: cancellationToken);
