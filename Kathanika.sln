@@ -17,11 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kathanika.Web", "src\Web\Ka
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B38BBD6-2FA3-4AAE-960B-B264155C6802}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.UnitTests", "tests\UnitTests\Kathanika.UnitTests.csproj", "{7FF2C6BB-0DA3-4A3D-99DD-145B6ED7CF0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kathanika.UnitTests", "tests\UnitTests\Kathanika.UnitTests.csproj", "{7FF2C6BB-0DA3-4A3D-99DD-145B6ED7CF0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Workers", "src\Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj", "{C2215B36-B98E-4417-90CB-6808B00551C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kathanika.Infrastructure.Workers", "src\Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj", "{C2215B36-B98E-4417-90CB-6808B00551C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.ArchitectureConventionTests", "tests\ArchitectureConventionTests\Kathanika.ArchitectureConventionTests.csproj", "{F74927DB-D09F-47D1-B3F6-46C5F2A6EA47}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kathanika.ArchitectureConventionTests", "tests\ArchitectureConventionTests\Kathanika.ArchitectureConventionTests.csproj", "{F74927DB-D09F-47D1-B3F6-46C5F2A6EA47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
