@@ -4,9 +4,25 @@ updates:
     directory: "/"
     schedule:
       interval: "daily"
+    groups:
+      hotchocolate-deps:
+        patterns:
+          - "HotChocolate.*"
+        update-types:
+        - "minor"
+        - "patch"
       
   - package-ecosystem: "npm"
     directory: "/src/Web/kathanika-app"
     schedule:
       interval: "daily"
+    groups:
+      angular-deps: 
+        patterns: 
+          - "@angular/*"
+          - "@angular-devkit/build-angular"
+          - "@schematics/angular"
+        update-types:
+        - "minor"
+        - "patch"
     open-pull-requests-limit: 12
