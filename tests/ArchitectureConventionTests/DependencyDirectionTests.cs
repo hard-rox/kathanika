@@ -1,11 +1,10 @@
 using Kathanika.Application.Authors.Commands;
 using Kathanika.Domain.Primitives;
 using Kathanika.Infrastructure.GraphQL;
-using Kathanika.Infrastructure.GraphQL.Types;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers.Jobs;
 
-namespace Kathanika.ArchitectureConventionTests.ArchitectureTests;
+namespace Kathanika.ArchitectureConventionTests;
 
 public sealed class DependencyDirectionTests
 {
@@ -25,24 +24,12 @@ public sealed class DependencyDirectionTests
     }
 
     [Fact]
-    public void Domain_ShouldNot_HaveDependencyOnWeb()
-    {
-        Assembly webAssembly = typeof(Program).Assembly;
-
-        TestResult result = Types.InAssembly(_domainAssembly)
-            .ShouldNot()
-            .HaveDependencyOn(webAssembly.GetName().Name)
-            .GetResult();
-
-        Assert.True(result.IsSuccessful);
-    }
-
-    [Fact]
     public void Domain_ShouldNot_HaveDependencyOnInfrastructure()
     {
         Assembly graphqlInfraAssembly = typeof(SchemaConfigurations).Assembly;
         Assembly persistenceInfraAssembly = typeof(MongoDbConfigurations).Assembly;
         Assembly workersInfraAssembly = typeof(ProcessOutboxMessagesJob).Assembly;
+        Assembly webAssembly = typeof(Program).Assembly;
 
         TestResult graphqlInfraDepsResult = Types.InAssembly(_domainAssembly)
             .ShouldNot()
@@ -56,10 +43,15 @@ public sealed class DependencyDirectionTests
             .ShouldNot()
             .HaveDependencyOn(workersInfraAssembly.GetName().Name)
             .GetResult();
+        TestResult webResult = Types.InAssembly(_domainAssembly)
+            .ShouldNot()
+            .HaveDependencyOn(webAssembly.GetName().Name)
+            .GetResult();
 
         Assert.True(graphqlInfraDepsResult.IsSuccessful);
         Assert.True(persistenceInfraDepsResult.IsSuccessful);
         Assert.True(workerInfraDepsResult.IsSuccessful);
+        Assert.True(webResult.IsSuccessful);
     }
 
     [Fact]
