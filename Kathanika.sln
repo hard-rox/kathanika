@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kathanika.Web", "src\Web\Ka
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{0B38BBD6-2FA3-4AAE-960B-B264155C6802}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.UnitTests", "tests\UnitTests\Kathanika.UnitTests.csproj", "{7FF2C6BB-0DA3-4A3D-99DD-145B6ED7CF0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kathanika.UnitTests", "tests\UnitTests\Kathanika.UnitTests.csproj", "{7FF2C6BB-0DA3-4A3D-99DD-145B6ED7CF0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Workers", "src\Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj", "{C2215B36-B98E-4417-90CB-6808B00551C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kathanika.Infrastructure.Workers", "src\Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj", "{C2215B36-B98E-4417-90CB-6808B00551C2}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Kathanika.ArchitectureConventionTests", "tests\ArchitectureConventionTests\Kathanika.ArchitectureConventionTests.csproj", "{F74927DB-D09F-47D1-B3F6-46C5F2A6EA47}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -55,6 +57,10 @@ Global
 		{C2215B36-B98E-4417-90CB-6808B00551C2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2215B36-B98E-4417-90CB-6808B00551C2}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2215B36-B98E-4417-90CB-6808B00551C2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F74927DB-D09F-47D1-B3F6-46C5F2A6EA47}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F74927DB-D09F-47D1-B3F6-46C5F2A6EA47}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F74927DB-D09F-47D1-B3F6-46C5F2A6EA47}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F74927DB-D09F-47D1-B3F6-46C5F2A6EA47}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,6 +73,7 @@ Global
 		{F12B6A05-AB25-4D95-85FD-FA1BD7164FE2} = {84114477-D195-4565-83C3-0F045FC52EA4}
 		{7FF2C6BB-0DA3-4A3D-99DD-145B6ED7CF0D} = {0B38BBD6-2FA3-4AAE-960B-B264155C6802}
 		{C2215B36-B98E-4417-90CB-6808B00551C2} = {84114477-D195-4565-83C3-0F045FC52EA4}
+		{F74927DB-D09F-47D1-B3F6-46C5F2A6EA47} = {0B38BBD6-2FA3-4AAE-960B-B264155C6802}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2C2A906C-04EB-4D54-A78C-E8FE0CC2ED68}

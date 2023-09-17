@@ -57,3 +57,5 @@ finally
 {
     Log.CloseAndFlush();
 }
+
+public static partial class Program { }
