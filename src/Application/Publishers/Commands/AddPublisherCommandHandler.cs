@@ -13,7 +13,7 @@ internal sealed class AddPublisherCommandHandler
     public async Task<Publisher> Handle(AddPublisherCommand request, CancellationToken cancellationToken)
     {
         var publisher = Publisher.Create(
-            request.PublisherName,
+            request.Name,
             request.Description,
             request.ContactInformation
             );
