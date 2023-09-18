@@ -10,7 +10,7 @@ Version 1.0.0
 -   [x]  Author Details
 -   [x]  Author Create
 -   [x]  Author Update
--   [x]  Author Delete
+-   [ ]  Author Delete
 -   [ ]  Popular Author auto generation from online
 
 #### Publication Module
@@ -18,8 +18,15 @@ Version 1.0.0
 -   [x]  Publication Details
 -   [x]  Publication Create
 -   [x]  Publication Update
--   [x]  Publication Delete
+-   [ ]  Publication Delete
 -   [ ]  Known publication types
+
+#### Publisher Module
+-   [x]  Publisher List
+-   [x]  Publisher Details
+-   [x]  Publisher Create
+-   [x]  Publisher Update
+-   [x]  Publisher Delete
 
 Version 2.0.0
 -----------
