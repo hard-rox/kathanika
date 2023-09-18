@@ -4,25 +4,25 @@ namespace Kathanika.Domain.Aggregates;
 
 public sealed class Publisher : AggregateRoot
 {
-    public string PublisherName { get; private set; } = string.Empty;
-    public string Description { get; private set; } = string.Empty;
-    public string ContactInformation { get; private set; } = string.Empty;
+    public string Name { get; private set; } = string.Empty;
+    public string? Description { get; private set; }
+    public string? ContactInformation { get; private set; }
 
     private Publisher(
         string publisherName,
-        string description,
-        string contactInformation
+        string? description,
+        string? contactInformation
     )
     {
-        PublisherName = publisherName;
+        Name = publisherName;
         Description = description;
         ContactInformation = contactInformation;
     }
 
     public static Publisher Create(
         string publisherName,
-        string description,
-        string contactInformation
+        string? description,
+        string? contactInformation
     )
     {
         var publisher = new Publisher(
@@ -38,7 +38,7 @@ public sealed class Publisher : AggregateRoot
         string? contactInformation = null
     )
     {
-        PublisherName = !string.IsNullOrEmpty(publisherName) ? publisherName :PublisherName;
+        Name = !string.IsNullOrEmpty(publisherName) ? publisherName :Name;
         Description = !string.IsNullOrEmpty(description) ? description : Description;
         ContactInformation = !string.IsNullOrEmpty(contactInformation) ? contactInformation : ContactInformation;
     }

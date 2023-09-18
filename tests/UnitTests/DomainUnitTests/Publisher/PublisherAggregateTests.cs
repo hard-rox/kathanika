@@ -15,7 +15,7 @@ public class PublisherAggregateTests
             );
 
         //Assert
-        Assert.Equal("Seba", publisher.PublisherName);
+        Assert.Equal("Seba", publisher.Name);
     }
 
     [Fact]

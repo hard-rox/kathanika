@@ -4,7 +4,7 @@ namespace Kathanika.Infrastructure.GraphQL.Schema;
 
 public sealed partial class Queries
 {
-    [UsePaging]
+    [UseOffsetPaging]
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<Publisher>> GetPublishersAsync([FromServices] IMediator mediator)

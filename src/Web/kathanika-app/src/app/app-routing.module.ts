@@ -29,10 +29,17 @@ const routes: Routes = [
         (x) => x.PublicationsModule
       ),
   },
+  {
+    path: 'publishers',
+    loadChildren: () =>
+      import('./features/publishers/publishers.module').then(
+        (x) => x.PublishersModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
   exports: [RouterModule],
 })
-export class AppRoutingModule {}
+export class AppRoutingModule { }

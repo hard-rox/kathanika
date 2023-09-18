@@ -6,9 +6,9 @@ public sealed record UpdatePublisherCommand : IRequest<Publisher>
     public PublisherPatch Patch { get; init; }
 
     public sealed record PublisherPatch(
-        string PublisherName,
-        string Description,
-        string ContactInformation
+        string Name,
+        string? Description,
+        string? ContactInformation
     );
 
     public UpdatePublisherCommand(string id, PublisherPatch patch)

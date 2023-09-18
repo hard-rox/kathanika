@@ -17,7 +17,7 @@ internal sealed class UpdatePublisherCommandHandle : IRequestHandler<UpdatePubli
             throw new NotFoundWithTheIdException(typeof(Publisher), request.Id);
 
         publisher.Update(
-            request.Patch.PublisherName,
+            request.Patch.Name,
             request.Patch.Description,
             request.Patch.ContactInformation
             );
