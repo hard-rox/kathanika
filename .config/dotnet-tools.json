@@ -3,13 +3,13 @@
   "isRoot": true,
   "tools": {
     "husky": {
-      "version": "0.5.4",
+      "version": "0.6.1",
       "commands": [
         "husky"
       ]
     },
     "dotnet-reportgenerator-globaltool": {
-      "version": "5.1.23",
+      "version": "5.1.25",
       "commands": [
         "reportgenerator"
       ]

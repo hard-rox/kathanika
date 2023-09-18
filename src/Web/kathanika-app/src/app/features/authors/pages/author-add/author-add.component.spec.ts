@@ -7,10 +7,13 @@ import {
   AddAuthorGQL,
   AddAuthorMutation,
 } from 'src/app/graphql/generated/graphql-operations';
-import { mockMutatuionGql } from 'src/test-utils/gql-test-utils';
-import { PanelComponent } from 'src/app/shared/modules/panel/components/panel/panel.component';
+import { mockMutationGql } from 'src/test-utils/gql-test-utils';
 import { of } from 'rxjs';
 import { MutationResult } from 'apollo-angular';
+import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
+import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
+import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
+import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 
 describe('AuthorAddComponent', () => {
   let component: AuthorAddComponent;
@@ -27,12 +30,18 @@ describe('AuthorAddComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
-      declarations: [AuthorAddComponent, AuthorFormComponent, PanelComponent],
+      imports: [
+        ReactiveFormsModule,
+        PanelComponent,
+        TextInputComponent,
+        DateInputComponent,
+        TextareaInputComponent
+      ],
+      declarations: [AuthorAddComponent, AuthorFormComponent],
       providers: [
         {
           provide: AddAuthorGQL,
-          useValue: mockMutatuionGql,
+          useValue: mockMutationGql,
         },
       ],
     });
@@ -65,7 +74,7 @@ describe('AuthorAddComponent', () => {
     expect(component.isPanelLoading).not.toBeTrue();
   });
 
-  it('should fill error array on error in mutaion subscribe', () => {
+  it('should fill error array on error in mutation subscribe', () => {
     const mockMutationResult: MutationResult<AddAuthorMutation> = {
       loading: false,
       data: {

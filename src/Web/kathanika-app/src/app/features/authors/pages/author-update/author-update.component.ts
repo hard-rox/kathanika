@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import {
   AuthorPatchInput,
   GetAuthorGQL,
-  UpadateAuthorGQL,
+  UpdateAuthorGQL,
 } from 'src/app/graphql/generated/graphql-operations';
 import { AuthorFormInput } from '../../types/author-form-input';
 import { AuthorFormOutput } from '../../types/author-form-output';
@@ -21,11 +21,11 @@ export class AuthorUpdateComponent implements OnInit {
 
   constructor(
     private gql: GetAuthorGQL,
-    private mutation: UpadateAuthorGQL,
+    private mutation: UpdateAuthorGQL,
     private alertService: MessageAlertService,
     private activatedRoute: ActivatedRoute,
     private router: Router
-  ) {}
+  ) { }
 
   isPanelLoading: boolean = true;
   authorId: string | undefined;
@@ -46,7 +46,7 @@ export class AuthorUpdateComponent implements OnInit {
               this.alertService.showPopup(
                 'error',
                 result.error?.message ??
-                  (result.errors?.join('<br/>') as string)
+                (result.errors?.join('<br/>') as string)
               );
             } else if (result.data.author == null) {
               this.alertService.showPopup(
@@ -56,7 +56,7 @@ export class AuthorUpdateComponent implements OnInit {
               );
               this.router.navigate(['/authors']);
             } else {
-              this.authorFormInput = result.data.author;
+              this.authorFormInput = { ...result.data.author };
               this.isPanelLoading = false;
             }
           },
@@ -71,11 +71,7 @@ export class AuthorUpdateComponent implements OnInit {
   onValidFormSubmit(authorOutput: AuthorFormOutput) {
     this.isPanelLoading = true;
     const authorPatch: AuthorPatchInput = {
-      firstName: authorOutput.firstName,
-      lastName: authorOutput.lastName,
-      dateOfBirth: authorOutput.dateOfBirth,
-      nationality: authorOutput.nationality,
-      biography: authorOutput.biography,
+      ...authorOutput
     };
 
     this.mutation

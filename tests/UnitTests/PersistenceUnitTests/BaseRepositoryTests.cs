@@ -25,83 +25,57 @@ public sealed class BaseRepositoryTests
     }
 
     private readonly ILogger<DummyRepo> nullLogger = new NullLogger<DummyRepo>();
-    private readonly Mock<ICacheService> cacheMock = new();
-    private readonly Mock<IMongoDatabase> databaseMock = new();
-    private readonly Mock<IMongoCollection<DummyAggregate>> collectionMock = new();
-    private readonly Mock<IAsyncCursor<DummyAggregate>> cursorMock = new();
+    private readonly ICacheService cache = Substitute.For<ICacheService>();
+    private readonly IMongoDatabase database = Substitute.For<IMongoDatabase>();
+    private readonly IMongoCollection<DummyAggregate> collection = Substitute.For<IMongoCollection<DummyAggregate>>();
 
     public BaseRepositoryTests()
     {
-        databaseMock.Setup(x => x.GetCollection<DummyAggregate>(It.IsAny<string>(), It.IsAny<MongoCollectionSettings>()))
-            .Returns(collectionMock.Object);
-
-        cursorMock.SetupSequence(x => x.MoveNext(It.IsAny<CancellationToken>()))
-            .Returns(true).Returns(false);
-        cursorMock.SetupSequence(x => x.MoveNextAsync(It.IsAny<CancellationToken>()))
-            .ReturnsAsync(true).ReturnsAsync(false);
+        database.GetCollection<DummyAggregate>(Arg.Any<string>(), Arg.Any<MongoCollectionSettings>())
+            .Returns(collection);
     }
 
     [Fact]
     public async Task GetById_Should_Call_FindAsync()
     {
-        // Arrange
-        collectionMock.Setup(x => x.FindAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.IsAny<FindOptions<DummyAggregate, DummyAggregate>>(),
-            It.IsAny<CancellationToken>()))
-            .ReturnsAsync(cursorMock.Object)
-            .Verifiable();
-
-        var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
+        var repo = new DummyRepo(database, "", nullLogger, cache);
 
         // Act
-        var result = await repo.GetByIdAsync("6487aceb533e0377b58d501c");
+        await repo.GetByIdAsync("6487aceb533e0377b58d501c");
 
         // Assert
-        collectionMock.Verify(x => x.FindAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.Is<FindOptions<DummyAggregate, DummyAggregate>>(x => x == null),
-            It.Is<CancellationToken>(x => x == default)), Times.Exactly(1));
+        await collection.Received(1).FindAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),
+            Arg.Is<FindOptions<DummyAggregate, DummyAggregate>>(x => x == null),
+            Arg.Is<CancellationToken>(x => x == default));
     }
 
     [Fact]
     public async Task ListAllAsync_Should_Call_FindAsync_With_EmptyFilter()
     {
-        // Arrange
-        collectionMock.Setup(x => x.FindAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.IsAny<FindOptions<DummyAggregate, DummyAggregate>>(),
-            It.IsAny<CancellationToken>()))
-            .ReturnsAsync(cursorMock.Object)
-            .Verifiable();
-
-        var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
+        var repo = new DummyRepo(database, "", nullLogger, cache);
 
         // Act
-        var result = await repo.ListAllAsync();
+        await repo.ListAllAsync();
 
         // Assert
-        collectionMock.Verify(x => x.FindAsync(It.Is<FilterDefinition<DummyAggregate>>(x => x == Builders<DummyAggregate>.Filter.Empty),
-            It.Is<FindOptions<DummyAggregate, DummyAggregate>>(x => x == null),
-            It.IsAny<CancellationToken>()), Times.Exactly(1));
+        await collection.Received(1)
+            .FindAsync(Arg.Is<FilterDefinition<DummyAggregate>>(x => x == Builders<DummyAggregate>.Filter.Empty),
+                Arg.Is<FindOptions<DummyAggregate, DummyAggregate>>(x => x == null),
+                Arg.Any<CancellationToken>());
     }
 
     [Fact]
     public async Task ListAllAsync_Should_Call_FindAsync_With_Expression()
     {
-        // Arrange
-        collectionMock.Setup(x => x.FindAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.IsAny<FindOptions<DummyAggregate, DummyAggregate>>(),
-            It.IsAny<CancellationToken>()))
-            .ReturnsAsync(cursorMock.Object)
-            .Verifiable();
-
-        var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
+        var repo = new DummyRepo(database, "", nullLogger, cache);
 
         // Act
-        var result = await repo.ListAllAsync(x => x.Id == "1");
+        await repo.ListAllAsync(x => x.Id == "1");
 
         // Assert
-        collectionMock.Verify(x => x.FindAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.Is<FindOptions<DummyAggregate, DummyAggregate>>(x => x == null),
-            It.IsAny<CancellationToken>()), Times.Exactly(1));
+        await collection.Received(1).FindAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),
+            Arg.Is<FindOptions<DummyAggregate, DummyAggregate>>(x => x == null),
+            Arg.Any<CancellationToken>());
     }
 
     [Fact]
@@ -109,19 +83,14 @@ public sealed class BaseRepositoryTests
     {
         // Arrange
         var aggregate = new DummyAggregate() { Name = "" };
-        collectionMock.Setup(x => x.InsertOneAsync(It.IsAny<DummyAggregate>(),
-            It.IsAny<InsertOneOptions>(),
-            It.IsAny<CancellationToken>()))
-            .Verifiable();
-
-        var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
+        var repo = new DummyRepo(database, "", nullLogger, cache);
 
         // Act
-        var result = await repo.AddAsync(aggregate);
+        await repo.AddAsync(aggregate);
 
         // Assert
-        collectionMock.Verify(x => x.InsertOneAsync(It.Is<DummyAggregate>(x => x == aggregate),
-            It.Is<InsertOneOptions>(x => x == null), It.Is<CancellationToken>(x => x == default)), Times.Exactly(1));
+        await collection.Received(1).InsertOneAsync(Arg.Is<DummyAggregate>(x => x == aggregate),
+            Arg.Is<InsertOneOptions>(x => x == null), Arg.Is<CancellationToken>(x => x == default));
     }
 
     [Fact]
@@ -129,39 +98,29 @@ public sealed class BaseRepositoryTests
     {
         // Arrange
         var aggregate = new DummyAggregate() { Name = "" };
-        collectionMock.Setup(x => x.ReplaceOneAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.IsAny<DummyAggregate>(),
-            It.IsAny<ReplaceOptions>(),
-            It.IsAny<CancellationToken>()))
-            .Verifiable();
-
-        var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
+        var repo = new DummyRepo(database, "", nullLogger, cache);
 
         // Act
         await repo.UpdateAsync(aggregate);
 
         // Assert
-        collectionMock.Verify(x => x.ReplaceOneAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.Is<DummyAggregate>(x => x == aggregate),
-            It.Is<ReplaceOptions>(x => x == null),
-            It.Is<CancellationToken>(x => x == default)), Times.Exactly(1));
+        await collection.Received(1).ReplaceOneAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),
+            Arg.Is<DummyAggregate>(x => x == aggregate),
+            Arg.Is<ReplaceOptions>(x => x == null),
+            Arg.Is<CancellationToken>(x => x == default));
     }
 
     [Fact]
     public async Task DeleteAsync_Should_Call_DeleteOneAsync()
     {
         // Arrange
-        collectionMock.Setup(x => x.DeleteOneAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.IsAny<CancellationToken>()))
-            .Verifiable();
-
-        var repo = new DummyRepo(databaseMock.Object, "", nullLogger, cacheMock.Object);
+        var repo = new DummyRepo(database, "", nullLogger, cache);
 
         // Act
         await repo.DeleteAsync("6487aceb533e0377b58d501c");
 
         // Assert
-        collectionMock.Verify(x => x.DeleteOneAsync(It.IsAny<FilterDefinition<DummyAggregate>>(),
-            It.Is<CancellationToken>(x => x == default)), Times.Exactly(1));
+        await collection.Received(1).DeleteOneAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),
+            Arg.Is<CancellationToken>(x => x == default));
     }
 }

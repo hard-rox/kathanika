@@ -1,7 +1,7 @@
 using Kathanika.Application;
 using Kathanika.Infrastructure.GraphQL;
 using Kathanika.Infrastructure.Persistence;
-using Kathanika.Infrastructure.Services;
+using Kathanika.Infrastructure.Workers;
 using Serilog;
 
 try
@@ -18,7 +18,7 @@ try
     builder.Services.AddApplication()
         .AddGraphQLInfrastructure()
         .AddPersistenceInfrastructure(builder.Configuration)
-        .AddServicesInfrastructure(builder.Configuration);
+        .AddWorkers(builder.Configuration);
 
     if (builder.Environment.IsDevelopment())
     {
@@ -57,3 +57,5 @@ finally
 {
     Log.CloseAndFlush();
 }
+
+public static partial class Program { }

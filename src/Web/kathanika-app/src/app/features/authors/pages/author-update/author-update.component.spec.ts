@@ -5,16 +5,19 @@ import { ActivatedRoute } from '@angular/router';
 import {
   GetAuthorGQL,
   GetAuthorQuery,
-  UpadateAuthorGQL,
-  UpadateAuthorMutation,
+  UpdateAuthorGQL,
+  UpdateAuthorMutation,
 } from 'src/app/graphql/generated/graphql-operations';
-import { mockMutatuionGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
+import { mockMutationGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PanelComponent } from 'src/app/shared/modules/panel/components/panel/panel.component';
 import { of } from 'rxjs';
 import { MutationResult } from 'apollo-angular/types';
 import { ApolloQueryResult } from '@apollo/client/core/types';
+import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
+import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
+import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
+import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 
 describe('AuthorUpdateComponent', () => {
   const routeParam = '12345';
@@ -23,11 +26,16 @@ describe('AuthorUpdateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule],
+      imports: [
+        ReactiveFormsModule,
+        PanelComponent,
+        TextInputComponent,
+        DateInputComponent,
+        TextareaInputComponent
+      ],
       declarations: [
         AuthorFormComponent,
         AuthorUpdateComponent,
-        PanelComponent,
       ],
       providers: [
         {
@@ -45,8 +53,8 @@ describe('AuthorUpdateComponent', () => {
           useValue: mockQueryGql,
         },
         {
-          provide: UpadateAuthorGQL,
-          useValue: mockMutatuionGql,
+          provide: UpdateAuthorGQL,
+          useValue: mockMutationGql,
         },
       ],
     });
@@ -61,7 +69,7 @@ describe('AuthorUpdateComponent', () => {
 
   it('should fetch with valid route param id in ngOnInit', () => {
     const gqlSpy = spyOn<any>(component['gql'], 'fetch').and.returnValue({
-      subscribe: () => {},
+      subscribe: () => { },
     });
     component.ngOnInit();
     expect(gqlSpy).toHaveBeenCalledOnceWith({ id: routeParam });
@@ -84,7 +92,7 @@ describe('AuthorUpdateComponent', () => {
 
   it('should call "showToast" on onValidFormSubmit when no errors', () => {
     const alertServiceSpy = spyOn(component['alertService'], 'showToast');
-    const mutationResult: MutationResult<UpadateAuthorMutation> = {
+    const mutationResult: MutationResult<UpdateAuthorMutation> = {
       data: {
         updateAuthor: {
           message: 'Author Hello World updated successfully.',
@@ -109,7 +117,7 @@ describe('AuthorUpdateComponent', () => {
   });
 
   it('should populate errors array on onValidFormSubmit when errors', () => {
-    const mutationResult: MutationResult<UpadateAuthorMutation> = {
+    const mutationResult: MutationResult<UpdateAuthorMutation> = {
       data: {
         updateAuthor: {
           data: null,

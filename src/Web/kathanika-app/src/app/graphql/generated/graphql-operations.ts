@@ -41,7 +41,9 @@ export type AddAuthorPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
-export type AddPublicationCommandInput = {
+export type AddPublicationError = InvalidFieldError;
+
+export type AddPublicationInput = {
   authorIds: Array<Scalars['String']['input']>;
   buyingPrice: Scalars['Decimal']['input'];
   callNumber: Scalars['String']['input'];
@@ -51,21 +53,6 @@ export type AddPublicationCommandInput = {
   publishedDate: Scalars['Date']['input'];
   publisher: Scalars['String']['input'];
   title: Scalars['String']['input'];
-};
-
-export type AddPublicationError = InvalidFieldError;
-
-export type AddPublicationInput = {
-  __typename?: 'AddPublicationInput';
-  authorIds: Array<Scalars['String']['output']>;
-  buyingPrice: Scalars['Decimal']['output'];
-  callNumber: Scalars['String']['output'];
-  copiesPurchased: Scalars['Int']['output'];
-  isbn: Scalars['String']['output'];
-  publicationType: PublicationType;
-  publishedDate: Scalars['Date']['output'];
-  publisher: Scalars['String']['output'];
-  title: Scalars['String']['output'];
 };
 
 export type AddPublicationPayload = {
@@ -234,6 +221,7 @@ export type Mutations = {
   /** @deprecated Just a dummy for throwing new notification... */
   fireNewNotification: FireNewNotificationPayload;
   updateAuthor: UpdateAuthorPayload;
+  updatePublication: UpdatePublicationPayload;
 };
 
 
@@ -243,7 +231,7 @@ export type MutationsAddAuthorArgs = {
 
 
 export type MutationsAddPublicationArgs = {
-  input: AddPublicationCommandInput;
+  input: AddPublicationInput;
 };
 
 
@@ -261,6 +249,11 @@ export type MutationsUpdateAuthorArgs = {
   input: UpdateAuthorInput;
 };
 
+
+export type MutationsUpdatePublicationArgs = {
+  input: UpdatePublicationInput;
+};
+
 export type NotFoundWithTheIdError = Error & {
   __typename?: 'NotFoundWithTheIdError';
   id: Scalars['String']['output'];
@@ -271,19 +264,6 @@ export type NotFoundWithTheIdError = Error & {
 export type Notification = {
   __typename?: 'Notification';
   message?: Maybe<Scalars['String']['output']>;
-};
-
-/** Information about pagination in a connection. */
-export type PageInfo = {
-  __typename?: 'PageInfo';
-  /** When paginating forwards, the cursor to continue. */
-  endCursor?: Maybe<Scalars['String']['output']>;
-  /** Indicates whether more edges exist following the set defined by the clients arguments. */
-  hasNextPage: Scalars['Boolean']['output'];
-  /** Indicates whether more edges exist prior the set defined by the clients arguments. */
-  hasPreviousPage: Scalars['Boolean']['output'];
-  /** When paginating backwards, the cursor to continue. */
-  startCursor?: Maybe<Scalars['String']['output']>;
 };
 
 export type Publication = {
@@ -336,6 +316,18 @@ export type PublicationFilterInput = {
   title?: InputMaybe<StringOperationFilterInput>;
 };
 
+export type PublicationPatchInput = {
+  authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  buyingPrice?: InputMaybe<Scalars['Decimal']['input']>;
+  callNumber: Scalars['String']['input'];
+  copiesAvailable?: InputMaybe<Scalars['Int']['input']>;
+  isbn: Scalars['String']['input'];
+  publicationType: PublicationType;
+  publishedDate?: InputMaybe<Scalars['Date']['input']>;
+  publisher: Scalars['String']['input'];
+  title: Scalars['String']['input'];
+};
+
 export type PublicationSortInput = {
   buyingPrice?: InputMaybe<SortEnumType>;
   callNumber?: InputMaybe<SortEnumType>;
@@ -363,26 +355,14 @@ export type PublicationTypeOperationFilterInput = {
   nin?: InputMaybe<Array<PublicationType>>;
 };
 
-/** A connection to a list of items. */
-export type PublicationsConnection = {
-  __typename?: 'PublicationsConnection';
-  /** A list of edges. */
-  edges?: Maybe<Array<PublicationsEdge>>;
-  /** A flattened list of the nodes. */
-  nodes?: Maybe<Array<Publication>>;
+/** A segment of a collection. */
+export type PublicationsCollectionSegment = {
+  __typename?: 'PublicationsCollectionSegment';
+  /** A flattened list of the items. */
+  items?: Maybe<Array<Publication>>;
   /** Information to aid in pagination. */
-  pageInfo: PageInfo;
-  /** Identifies the total count of items in the connection. */
+  pageInfo: CollectionSegmentInfo;
   totalCount: Scalars['Int']['output'];
-};
-
-/** An edge in a connection. */
-export type PublicationsEdge = {
-  __typename?: 'PublicationsEdge';
-  /** A cursor for use in pagination. */
-  cursor: Scalars['String']['output'];
-  /** The item at the end of the edge. */
-  node: Publication;
 };
 
 export type Queries = {
@@ -390,7 +370,7 @@ export type Queries = {
   author?: Maybe<Author>;
   authors?: Maybe<AuthorsCollectionSegment>;
   publication?: Maybe<Publication>;
-  publications?: Maybe<PublicationsConnection>;
+  publications?: Maybe<PublicationsCollectionSegment>;
 };
 
 
@@ -413,11 +393,9 @@ export type QueriesPublicationArgs = {
 
 
 export type QueriesPublicationsArgs = {
-  after?: InputMaybe<Scalars['String']['input']>;
-  before?: InputMaybe<Scalars['String']['input']>;
-  first?: InputMaybe<Scalars['Int']['input']>;
-  last?: InputMaybe<Scalars['Int']['input']>;
   order?: InputMaybe<Array<PublicationSortInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PublicationFilterInput>;
 };
 
@@ -460,6 +438,20 @@ export type UpdateAuthorPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
+export type UpdatePublicationError = InvalidFieldError | NotFoundWithTheIdError;
+
+export type UpdatePublicationInput = {
+  id: Scalars['String']['input'];
+  patch: PublicationPatchInput;
+};
+
+export type UpdatePublicationPayload = {
+  __typename?: 'UpdatePublicationPayload';
+  data?: Maybe<Publication>;
+  errors?: Maybe<Array<UpdatePublicationError>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 export type AddAuthorMutationVariables = Exact<{
   addAuthorInput: AddAuthorInput;
 }>;
@@ -467,13 +459,28 @@ export type AddAuthorMutationVariables = Exact<{
 
 export type AddAuthorMutation = { __typename?: 'Mutations', addAuthor: { __typename?: 'AddAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
-export type UpadateAuthorMutationVariables = Exact<{
+export type UpdateAuthorMutationVariables = Exact<{
   id: Scalars['String']['input'];
   authorPatch: AuthorPatchInput;
 }>;
 
 
-export type UpadateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+export type UpdateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+
+export type AddPublicationMutationVariables = Exact<{
+  addPublicationInput: AddPublicationInput;
+}>;
+
+
+export type AddPublicationMutation = { __typename?: 'Mutations', addPublication: { __typename?: 'AddPublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+
+export type UpdatePublicationMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+  publicationPatch: PublicationPatchInput;
+}>;
+
+
+export type UpdatePublicationMutation = { __typename?: 'Mutations', updatePublication: { __typename?: 'UpdatePublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
 export type GetAuthorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -491,6 +498,23 @@ export type GetAuthorQueryVariables = Exact<{
 
 
 export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string } | null };
+
+export type GetPublicationsQueryVariables = Exact<{
+  skip: Scalars['Int']['input'];
+  take: Scalars['Int']['input'];
+  filter?: InputMaybe<PublicationFilterInput>;
+  sortBy?: InputMaybe<Array<PublicationSortInput> | PublicationSortInput>;
+}>;
+
+
+export type GetPublicationsQuery = { __typename?: 'Queries', publications?: { __typename?: 'PublicationsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publication', id: string, title: string, callNumber: string, publicationType: PublicationType, publisher: string, language: string, copiesAvailable: number, authors: Array<{ __typename?: 'PublicationAuthor', firstName: string, lastName: string }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+
+export type GetPublicationQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, buyingPrice: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string }> } | null };
 
 export const AddAuthorDocument = gql`
     mutation addAuthor($addAuthorInput: AddAuthorInput!) {
@@ -521,8 +545,8 @@ export const AddAuthorDocument = gql`
       super(apollo);
     }
   }
-export const UpadateAuthorDocument = gql`
-    mutation upadateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
+export const UpdateAuthorDocument = gql`
+    mutation updateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
   updateAuthor(input: {id: $id, patch: $authorPatch}) {
     message
     data {
@@ -547,8 +571,70 @@ export const UpadateAuthorDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class UpadateAuthorGQL extends Apollo.Mutation<UpadateAuthorMutation, UpadateAuthorMutationVariables> {
-    document = UpadateAuthorDocument;
+  export class UpdateAuthorGQL extends Apollo.Mutation<UpdateAuthorMutation, UpdateAuthorMutationVariables> {
+    document = UpdateAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const AddPublicationDocument = gql`
+    mutation addPublication($addPublicationInput: AddPublicationInput!) {
+  addPublication(input: $addPublicationInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddPublicationGQL extends Apollo.Mutation<AddPublicationMutation, AddPublicationMutationVariables> {
+    document = AddPublicationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdatePublicationDocument = gql`
+    mutation updatePublication($id: String!, $publicationPatch: PublicationPatchInput!) {
+  updatePublication(input: {id: $id, patch: $publicationPatch}) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on NotFoundWithTheIdError {
+        id
+        objectName
+      }
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdatePublicationGQL extends Apollo.Mutation<UpdatePublicationMutation, UpdatePublicationMutationVariables> {
+    document = UpdatePublicationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -602,6 +688,75 @@ export const GetAuthorDocument = gql`
   })
   export class GetAuthorGQL extends Apollo.Query<GetAuthorQuery, GetAuthorQueryVariables> {
     document = GetAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetPublicationsDocument = gql`
+    query getPublications($skip: Int!, $take: Int!, $filter: PublicationFilterInput, $sortBy: [PublicationSortInput!]) {
+  publications(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      title
+      authors {
+        firstName
+        lastName
+      }
+      callNumber
+      publicationType
+      publisher
+      language
+      copiesAvailable
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPublicationsGQL extends Apollo.Query<GetPublicationsQuery, GetPublicationsQueryVariables> {
+    document = GetPublicationsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetPublicationDocument = gql`
+    query getPublication($id: String!) {
+  publication(id: $id) {
+    id
+    title
+    publicationType
+    isbn
+    edition
+    callNumber
+    authors {
+      id
+      firstName
+      lastName
+    }
+    language
+    publisher
+    publishedDate
+    buyingPrice
+    copiesAvailable
+    description
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPublicationGQL extends Apollo.Query<GetPublicationQuery, GetPublicationQueryVariables> {
+    document = GetPublicationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

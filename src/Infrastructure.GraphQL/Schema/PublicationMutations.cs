@@ -12,4 +12,12 @@ public sealed partial class Mutations
         var publication = await mediator.Send(input);
         return new AddPublicationPayload(publication);
     }
+
+    [Error<InvalidFieldException>]
+    [Error<NotFoundWithTheIdException>]
+    public async Task<UpdatePublicationPayload> UpdatePublicationAsync([FromServices] IMediator mediator, UpdatePublicationCommand input)
+    {
+        var publication = await mediator.Send(input);
+        return new(publication);
+    }
 }

@@ -1,5 +1,4 @@
 using HotChocolate.Data.Filters;
-using HotChocolate.Types.Descriptors;
 
 namespace Kathanika.Infrastructure.GraphQL.Inputs;
 
