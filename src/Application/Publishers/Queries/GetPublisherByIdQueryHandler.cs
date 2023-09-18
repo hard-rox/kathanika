@@ -1,6 +1,6 @@
-﻿namespace Kathanika.Application.Queries;
+﻿namespace Kathanika.Application.Publishers.Queries;
 
-internal sealed class GetPublisherByIdQueryHandler : IRequestHandler<GetPublisherByIdQuery, Publisher>
+internal sealed class GetPublisherByIdQueryHandler : IRequestHandler<GetPublisherByIdQuery, Publisher?>
 {
     private readonly IPublisherRepository publisherRepository;
 
@@ -9,7 +9,7 @@ internal sealed class GetPublisherByIdQueryHandler : IRequestHandler<GetPublishe
         this.publisherRepository = publisherRepository;
     }
 
-    public async Task<Publisher> Handle(GetPublisherByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Publisher?> Handle(GetPublisherByIdQuery request, CancellationToken cancellationToken)
     {
         var publisher = await publisherRepository.GetByIdAsync(request.Id);
         return publisher;

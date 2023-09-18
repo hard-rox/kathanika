@@ -1,6 +1,6 @@
 ﻿using Kathanika.Domain.Exceptions;
 
-namespace Kathanika.Application.Commands;
+namespace Kathanika.Application.Publishers.Commands;
 
 internal sealed class DeletePublisherCommandHandler : IRequestHandler<DeletePublisherCommand>
 {

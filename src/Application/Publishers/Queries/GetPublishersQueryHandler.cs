@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Application.Queries;
+﻿namespace Kathanika.Application.Publishers.Queries;
 
 internal sealed class GetPublishersQueryHandler : IRequestHandler<GetPublishersQuery, IQueryable<Publisher>>
 {

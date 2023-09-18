@@ -1,4 +1,6 @@
-﻿namespace Kathanika.Application.Commands;
+﻿using Kathanika.Domain.Exceptions;
+
+namespace Kathanika.Application.Publishers.Commands;
 
 internal sealed class UpdatePublisherCommandHandle : IRequestHandler<UpdatePublisherCommand, Publisher>
 {
@@ -11,7 +13,8 @@ internal sealed class UpdatePublisherCommandHandle : IRequestHandler<UpdatePubli
 
     public async Task<Publisher> Handle(UpdatePublisherCommand request, CancellationToken cancellationToken)
     {
-        var publisher = await publisherRepository.GetByIdAsync(request.Id);
+        var publisher = await publisherRepository.GetByIdAsync(request.Id) ??
+            throw new NotFoundWithTheIdException(typeof(Publisher), request.Id);
 
         publisher.Update(
             request.Patch.PublisherName,
