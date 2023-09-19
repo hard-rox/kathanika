@@ -28,6 +28,16 @@ Version 1.0.0
 -   [x]  Publisher Update
 -   [x]  Publisher Delete
 
+#### Dashboard Module
+-   [ ]  Dashboard
+
+#### File upload feature
+-   [ ]  File upload to local storage
+
+#### Notification System
+-   [ ]  Showing notifications in header
+-   [ ]  Managing notifications in API
+
 Version 2.0.0
 -----------
 ### Circulation Management
