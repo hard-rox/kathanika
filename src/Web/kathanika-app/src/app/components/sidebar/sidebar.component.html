@@ -1,16 +1,37 @@
-<aside
-    class="bg-theme-gunmetal text-white h-full w-64 fixed z-10 top-0 left-0 overflow-x-hidden py-20 px-5"
-    id="sidebar">
-    <div class="flex items-center justify-between">
-        <h1 class="text-white text-2xl font-bold">Sidebar</h1>
-        <button class="text-white focus:outline-none" onclick="toggleSidebar()">
-            <svg class="h-6 w-6 fill-current" viewBox="0 0 24 24">
-                <path id="open" d="M4.928 4.928l14.142 14.142m0 -14.142l-14.142 14.142"></path>
-                <path id="close" d="M5 19.5L18.5 6m0 13.5L5 6"></path>
-            </svg>
-        </button>
-    </div>
+<aside class="bg-theme-gunmetal text-white h-full w-64 fixed z-10 top-0 left-0 overflow-x-hidden py-20 px-5">
     <nav>
-        <a href="#" class="block py-2.5 px-4 text-sm hover:bg-theme-rich-black">Link 1</a>
+        <ul class="space-y-2 font-medium">
+            <li *ngFor="let menu of menus; let idx = index">
+                <a *ngIf="!menu.children || menu.children.length == 0; else multilevelMenu" [routerLink]="menu.link"
+                    [routerLinkActive]="menu.link??''"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-100 group">
+                    <span class="material-symbols-sharp">
+                        {{menu.icon}}
+                    </span>
+                    <span class="ml-3">{{menu.text}}</span>
+                </a>
+
+                <ng-template #multilevelMenu>
+                    <button type="button" (click)="selectedIndex = idx"
+                        class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                        <span class="material-symbols-sharp">
+                            {{menu.icon}}
+                        </span>
+                        <span class="flex-1 ml-3 text-left whitespace-nowrap">{{menu.text}}</span>
+                        <span class="material-symbols-sharp">
+                            {{false ? 'expand_less' : 'expand_more'}}
+                        </span>
+                    </button>
+                    <ul class="py-2 space-y-2" [ngClass]="selectedIndex === idx ? 'block': 'hidden'">
+                        <li *ngFor="let childMenu of menu.children">
+                            <a [routerLink]="childMenu.link" [routerLinkActive]="childMenu.link"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 active:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                {{childMenu.text}}
+                            </a>
+                        </li>
+                    </ul>
+                </ng-template>
+            </li>
+        </ul>
     </nav>
 </aside>
