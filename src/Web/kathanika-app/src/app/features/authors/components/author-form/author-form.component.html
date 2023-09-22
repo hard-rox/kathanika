@@ -1,11 +1,11 @@
 <!-- <pre>{{authorFromGroup.value | json}}</pre> -->
 
 <form [formGroup]="authorFromGroup" (ngSubmit)="submitForm()">
-  <div class="grid grid-cols-2 gap-x-6 gap-y-4">
+  <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
     <kn-text-input label="First Name" formControlName="firstName" />
     <kn-text-input label="Last Name" formControlName="lastName" />
     <kn-date-input label="Date of Birth" formControlName="dateOfBirth" />
-    <kn-date-input label="Date of death" formControlName="dateOfDeath" />
+    <kn-date-input *ngIf="!isUpdate" label="Date of death" formControlName="dateOfDeath" />
     <kn-text-input label="Nationality" formControlName="nationality" />
     <kn-textarea-input label="Biography" formControlName="biography"/>
   </div>
