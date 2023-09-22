@@ -71,7 +71,11 @@ export class AuthorUpdateComponent implements OnInit {
   onValidFormSubmit(authorOutput: AuthorFormOutput) {
     this.isPanelLoading = true;
     const authorPatch: AuthorPatchInput = {
-      ...authorOutput
+      firstName: authorOutput.firstName,
+      lastName: authorOutput.lastName,
+      dateOfBirth: authorOutput.dateOfBirth,
+      nationality: authorOutput.nationality,
+      biography: authorOutput.biography
     };
 
     this.mutation
@@ -98,6 +102,7 @@ export class AuthorUpdateComponent implements OnInit {
               }
             });
             result.errors?.forEach((x) => this.errors.push(x.message));
+            this.isPanelLoading = false;
           } else {
             this.alertService.showToast(
               'success',
@@ -110,6 +115,10 @@ export class AuthorUpdateComponent implements OnInit {
           }
           this.isPanelLoading = false;
         },
+        error: (err) => {
+          this.errors.push('Something wrong happened.');
+          this.isPanelLoading = false;
+        }
       });
   }
 
