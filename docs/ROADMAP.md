@@ -19,14 +19,14 @@ Version 1.0.0
 -   [x]  Publication Create
 -   [x]  Publication Update
 -   [ ]  Publication Delete
--   [ ]  Known publication types
+-   [x]  Known publication types
 
 #### Publisher Module
 -   [x]  Publisher List
 -   [x]  Publisher Details
 -   [x]  Publisher Create
 -   [x]  Publisher Update
--   [x]  Publisher Delete
+-   [ ]  Publisher Delete
 
 ### Dashboard Module
 -   [ ]  Dashboard
