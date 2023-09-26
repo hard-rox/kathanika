@@ -1,4 +1,4 @@
-using Kathanika.Application.Publications.Commands;
+using Kathanika.Application.Features.Publications.Commands;
 using Kathanika.Domain.Exceptions;
 using System.Linq.Expressions;
 

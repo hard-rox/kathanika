@@ -1,5 +1,5 @@
 using System.Linq.Expressions;
-using Kathanika.Application.Publications.Commands;
+using Kathanika.Application.Features.Publications.Commands;
 
 namespace Kathanika.UnitTests.ApplicationUnitTests.Commands;
 

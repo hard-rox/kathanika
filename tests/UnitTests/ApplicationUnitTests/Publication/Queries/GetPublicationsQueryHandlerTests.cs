@@ -1,4 +1,4 @@
-using Kathanika.Application.Publications.Queries;
+using Kathanika.Application.Features.Publications.Queries;
 
 namespace Kathanika.UnitTests.ApplicationUnitTests.Queries;
 

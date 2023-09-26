@@ -1,3 +1,0 @@
-﻿namespace Kathanika.Application.Publishers.Queries;
-
-public sealed record GetPublisherByIdQuery(string Id) : IRequest<Publisher>;

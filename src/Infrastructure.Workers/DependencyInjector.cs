@@ -13,10 +13,10 @@ public static class DependencyInjector
         {
             JobKey jobKey = new(nameof(ProcessOutboxMessagesJob));
 
-            configure.AddJob<ProcessOutboxMessagesJob>(jobKey)
-                .AddTrigger(trigger => trigger.ForJob(jobKey)
-                    .WithSimpleSchedule(schedule => schedule.WithIntervalInSeconds(10)
-                        .RepeatForever()));                        
+            // configure.AddJob<ProcessOutboxMessagesJob>(jobKey)
+            //     .AddTrigger(trigger => trigger.ForJob(jobKey)
+            //         .WithSimpleSchedule(schedule => schedule.WithIntervalInSeconds(10)
+            //             .RepeatForever()));                        
         });
 
         services.AddQuartzHostedService();
