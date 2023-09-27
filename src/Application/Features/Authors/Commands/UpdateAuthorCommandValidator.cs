@@ -10,10 +10,8 @@ internal class UpdateAuthorCommandValidator : AbstractValidator<UpdateAuthorComm
         RuleFor(x => x.Id)
             .NotNull()
             .NotEmpty()
-            .MustAsync(async (id, _) =>
-            {
-                return await authorRepository.GetByIdAsync(id) is not null;
-            });
+            .MustAsync(authorRepository.ExistsAsync)
+            .WithMessage("Invalid Author Id");
 
         RuleFor(x => x.Patch)
             .SetValidator(new AuthorPatchValidator());
@@ -26,7 +24,9 @@ internal class AuthorPatchValidator : AbstractValidator<UpdateAuthorCommand.Auth
     {
         RuleFor(x => x.DateOfDeath)
             .NotNull()
+            .When(x => x.MarkedAsDeceased)
             .LessThan(x => DateOnly.FromDateTime(DateTime.Today))
-            .When(x => x.MarkedAsDeceased);
+            .GreaterThan(x => x.DateOfBirth)
+            .When(x => x.DateOfBirth is not null);
     }
 }
