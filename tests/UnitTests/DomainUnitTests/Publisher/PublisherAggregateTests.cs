@@ -8,14 +8,14 @@ public class PublisherAggregateTests
         //Arrange
 
         //Act
-        var publisher = Publisher.Create(
-            "Seba",
+        Publisher publisher = Publisher.Create(
+            "Sheba",
             "Description",
             "12345678"
             );
 
         //Assert
-        Assert.Equal("Seba", publisher.Name);
+        Assert.Equal("Sheba", publisher.Name);
     }
 
     [Fact]
@@ -23,7 +23,7 @@ public class PublisherAggregateTests
     {
         ////Arrange
         //var publisher = Publisher.Create(
-        //    "Seba",
+        //    "Sheba",
         //    "Description",
         //    "12345678"
         //    );

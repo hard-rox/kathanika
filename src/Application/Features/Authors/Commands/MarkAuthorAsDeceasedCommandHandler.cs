@@ -14,7 +14,7 @@ internal sealed class MarkAuthorAsDeceasedCommandHandler
 
     public async Task<Author> Handle(MarkAuthorAsDeceasedCommand request, CancellationToken cancellationToken)
     {
-        var existingAuthor = await authorRepository.GetByIdAsync(request.Id) ??
+        Author existingAuthor = await authorRepository.GetByIdAsync(request.Id) ??
             throw new NotFoundWithTheIdException(typeof(Author), request.Id);
 
         existingAuthor.MarkAsDeceased(request.DateOfDeath);

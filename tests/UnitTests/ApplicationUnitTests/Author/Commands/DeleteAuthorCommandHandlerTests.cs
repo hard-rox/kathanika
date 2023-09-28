@@ -9,8 +9,8 @@ public class DeleteAuthorCommandHandlerTests
     [Fact]
     public async Task Handler_Should_Call_DeleteAsync()
     {
-        var id = Guid.NewGuid().ToString();
-        var author = Author.Create(
+        string id = Guid.NewGuid().ToString();
+        Author author = Author.Create(
             "John",
             "Doe",
             DateOnly.MinValue,
@@ -18,12 +18,12 @@ public class DeleteAuthorCommandHandlerTests
             "USA",
             ""
         );
-        var authorRepository = Substitute.For<IAuthorRepository>();
+        IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(author);
-        var publicationRepository = Substitute.For<IPublicationRepository>();
-        var command = new DeleteAuthorCommand(id);
-        var handler = new DeleteAuthorCommandHandler(authorRepository, publicationRepository);
+        IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
+        DeleteAuthorCommand command = new(id);
+        DeleteAuthorCommandHandler handler = new(authorRepository, publicationRepository);
 
         await handler.Handle(command, default);
 
@@ -34,13 +34,13 @@ public class DeleteAuthorCommandHandlerTests
     [Fact]
     public async Task Handler_Should_Throw_Exception_On_Invalid_Author_Id()
     {
-        var id = Guid.NewGuid().ToString();
-        var authorRepository = Substitute.For<IAuthorRepository>();
-        var publicationRepository = Substitute.For<IPublicationRepository>();
-        var command = new DeleteAuthorCommand(id);
-        var handler = new DeleteAuthorCommandHandler(authorRepository, publicationRepository);
+        string id = Guid.NewGuid().ToString();
+        IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
+        IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
+        DeleteAuthorCommand command = new(id);
+        DeleteAuthorCommandHandler handler = new(authorRepository, publicationRepository);
 
-        var exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => { await handler.Handle(command, default); });
+        NotFoundWithTheIdException exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => { await handler.Handle(command, default); });
 
         Assert.IsAssignableFrom<NotFoundWithTheIdException>(exception);
     }
@@ -48,8 +48,8 @@ public class DeleteAuthorCommandHandlerTests
     [Fact]
     public async Task Handler_Should_Throw_Exception_When_Author_Has_Publication()
     {
-        var id = Guid.NewGuid().ToString();
-        var author = Author.Create(
+        string id = Guid.NewGuid().ToString();
+        Author author = Author.Create(
             "John",
             "Doe",
             DateOnly.MinValue,
@@ -57,16 +57,16 @@ public class DeleteAuthorCommandHandlerTests
             "USA",
             ""
         );
-        var authorRepository = Substitute.For<IAuthorRepository>();
+        IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(author);
-        var publicationRepository = Substitute.For<IPublicationRepository>();
+        IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
         publicationRepository.CountAsync(Arg.Any<Expression<Func<Publication, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(1);
-        var command = new DeleteAuthorCommand(id);
-        var handler = new DeleteAuthorCommandHandler(authorRepository, publicationRepository);
+        DeleteAuthorCommand command = new(id);
+        DeleteAuthorCommandHandler handler = new(authorRepository, publicationRepository);
 
-        var exception = await Assert.ThrowsAsync<DeletionFailedException>(async () => { await handler.Handle(command, default); });
+        DeletionFailedException exception = await Assert.ThrowsAsync<DeletionFailedException>(async () => { await handler.Handle(command, default); });
 
         Assert.IsAssignableFrom<DeletionFailedException>(exception);
     }
@@ -74,8 +74,8 @@ public class DeleteAuthorCommandHandlerTests
     [Fact]
     public async Task Handler_Should_Check_AuthorExistence_And_Publication()
     {
-        var id = Guid.NewGuid().ToString();
-        var author = Author.Create(
+        string id = Guid.NewGuid().ToString();
+        Author author = Author.Create(
             "John",
             "Doe",
             DateOnly.MinValue,
@@ -83,13 +83,13 @@ public class DeleteAuthorCommandHandlerTests
             "USA",
             ""
         );
-        var authorRepository = Substitute.For<IAuthorRepository>();
+        IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
-        var publicationRepository = Substitute.For<IPublicationRepository>();
+        IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
         publicationRepository.CountAsync(Arg.Any<Expression<Func<Publication, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(0);
-        var command = new DeleteAuthorCommand(id);
-        var handler = new DeleteAuthorCommandHandler(authorRepository, publicationRepository);
+        DeleteAuthorCommand command = new(id);
+        DeleteAuthorCommandHandler handler = new(authorRepository, publicationRepository);
 
         await handler.Handle(command, default);
 

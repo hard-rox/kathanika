@@ -8,7 +8,7 @@ public class PublicationAggregateTests
         // Arrange
 
         // Act
-        var publication = Publication.Create(
+        Publication publication = Publication.Create(
             "Title",
             "12345",
             PublicationType.Book,
@@ -46,7 +46,7 @@ public class PublicationAggregateTests
     public void Update_Should_Return_Publication_On_Valid_Input()
     {
         // Arrange
-        var publication = Publication.Create(
+        Publication publication = Publication.Create(
             "Title",
             "12345",
             PublicationType.Book,

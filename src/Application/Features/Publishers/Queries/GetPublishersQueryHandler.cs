@@ -11,7 +11,7 @@ internal sealed class GetPublishersQueryHandler : IRequestHandler<GetPublishersQ
 
     public async Task<IQueryable<Publisher>> Handle(GetPublishersQuery request, CancellationToken cancellationToken)
     {
-        var publisherQuery = await Task.Run(() => publisherRepository.AsQueryable());
+        IQueryable<Publisher> publisherQuery = await Task.Run(() => publisherRepository.AsQueryable());
         return publisherQuery;
     }
 }

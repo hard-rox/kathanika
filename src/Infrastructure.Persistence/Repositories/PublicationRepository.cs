@@ -12,10 +12,10 @@ internal sealed class PublicationRepository : Repository<Publication>, IPublicat
     public async Task<IReadOnlyList<Publication>> ListAllByAuthorIdAsync(string authorId, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Getting all Publications with author ID {@AuthorId}",authorId);
-        var filter = Builders<Publication>.Filter
+        FilterDefinition<Publication> filter = Builders<Publication>.Filter
             .ElemMatch(x => x.Authors,
                 Builders<PublicationAuthor>.Filter.Eq(x => x.Id, authorId));
-        var filteredPublications = await _collection.Find(filter)
+        List<Publication> filteredPublications = await _collection.Find(filter)
             .ToListAsync(cancellationToken);
 
         return filteredPublications;

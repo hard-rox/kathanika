@@ -6,7 +6,7 @@ using Serilog;
 
 try
 {
-    var builder = WebApplication.CreateBuilder(args);
+    WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
     builder.Host.UseSerilog((context, services, configuration) =>
     {
@@ -25,7 +25,7 @@ try
         builder.Services.AddCors();
     }
 
-    var app = builder.Build();
+    WebApplication app = builder.Build();
 
     app.UseSerilogRequestLogging();
 

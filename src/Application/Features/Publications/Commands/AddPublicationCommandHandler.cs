@@ -16,7 +16,7 @@ internal sealed class AddPublicationCommandHandler
     {
         var authors = await authorRepository.ListAllAsync(x => request.AuthorIds.Contains(x.Id));
 
-        var publication = Publication.Create(
+        Publication publication = Publication.Create(
             request.Title,
             request.Isbn,
             request.PublicationType,

@@ -18,7 +18,7 @@ public sealed class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorCom
         _ = await authorRepository.GetByIdAsync(request.Id) ??
             throw new NotFoundWithTheIdException(typeof(Author), request.Id);
 
-        var hasPublication = (await publicationRepository.CountAsync(x => x.Authors.Any(y => y.Id == request.Id))) > 0;
+        bool hasPublication = (await publicationRepository.CountAsync(x => x.Authors.Any(y => y.Id == request.Id))) > 0;
         if(hasPublication) throw new DeletionFailedException(typeof(Author), "This author has multiple publications in this library.");
 
         await authorRepository.DeleteAsync(request.Id);

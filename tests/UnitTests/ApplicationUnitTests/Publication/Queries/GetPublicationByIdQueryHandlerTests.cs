@@ -7,7 +7,7 @@ public class GetPublicationByIdQueryHandlerTests
     [Fact]
     public async Task Handler_Should_Return_Publication_With_Specific_Id()
     {
-        var publication = Publication.Create(
+        Publication publication = Publication.Create(
             "Title",
             "",
             PublicationType.Book,
@@ -17,13 +17,13 @@ public class GetPublicationByIdQueryHandlerTests
             1,
             ""
         );
-        var id = Guid.NewGuid().ToString();
-        var query = new GetPublicationByIdQuery(id);
-        var publicationRepository = Substitute.For<IPublicationRepository>();
+        string id = Guid.NewGuid().ToString();
+        GetPublicationByIdQuery query = new(id);
+        IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
         publicationRepository.GetByIdAsync(Arg.Any<string>(), default).Returns(publication);
-        var handler = new GetPublicationByIdQueryHandler(publicationRepository);
+        GetPublicationByIdQueryHandler handler = new(publicationRepository);
 
-        var returnedPublication = await handler.Handle(query, default);
+        Publication? returnedPublication = await handler.Handle(query, default);
 
         await publicationRepository.Received(1).GetByIdAsync(Arg.Is<string>(x => x == id), Arg.Any<CancellationToken>());
         Assert.NotNull(returnedPublication);

@@ -18,7 +18,7 @@ internal sealed class DeletePublisherCommandHandler : IRequestHandler<DeletePubl
         _ = await publisherRepository.GetByIdAsync(request.Id) ??
         throw new NotFoundWithTheIdException(typeof(Publisher),request.Id);
 
-        //var hasPublication = (await publicationRepository.ListAllAsync(x => x.Publisher)) todo
+        ///TODO: var hasPublication = (await publicationRepository.ListAllAsync(x => x.Publisher))
         await publisherRepository.DeleteAsync(request.Id);
     }
 }

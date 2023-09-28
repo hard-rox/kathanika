@@ -25,7 +25,7 @@ public sealed class Publisher : AggregateRoot
         string? contactInformation
     )
     {
-        var publisher = new Publisher(
+        Publisher publisher = new(
             publisherName,
             description,
             contactInformation

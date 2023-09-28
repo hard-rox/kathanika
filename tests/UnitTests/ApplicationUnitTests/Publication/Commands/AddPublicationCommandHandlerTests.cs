@@ -19,7 +19,7 @@ public class AddPublicationCommandHandlerTests
     public async Task Handler_Should_Return_Saved_Publication_On_Valid_Input()
     {
         // Arrange
-        var authors = new List<Author>(){
+        List<Author> authors = new(){
                 Author.Create(
                     "John",
                     "Doe",
@@ -37,7 +37,7 @@ public class AddPublicationCommandHandlerTests
                     "Another good writer"
                 )
             };
-        var publication = Publication.Create(
+        Publication publication = Publication.Create(
             "Title",
             "ISBN",
             PublicationType.Book,
@@ -49,7 +49,7 @@ public class AddPublicationCommandHandlerTests
             authors
         );
 
-        var handler = new AddPublicationCommandHandler(publicationRepository, authorRepository);
+        AddPublicationCommandHandler handler = new(publicationRepository, authorRepository);
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(authors);
         publicationRepository.AddAsync(Arg.Any<Publication>(), Arg.Any<CancellationToken>())
@@ -65,7 +65,7 @@ public class AddPublicationCommandHandlerTests
             authors
         ));
 
-        var command = new AddPublicationCommand(
+        AddPublicationCommand command = new(
             publication.Title,
             publication.Isbn ?? "",
             publication.PublicationType,
@@ -78,7 +78,7 @@ public class AddPublicationCommandHandlerTests
         );
 
         // Act
-        var savedPublication = await handler.Handle(command, default);
+        Publication savedPublication = await handler.Handle(command, default);
 
         // Assert
         Assert.NotNull(savedPublication);

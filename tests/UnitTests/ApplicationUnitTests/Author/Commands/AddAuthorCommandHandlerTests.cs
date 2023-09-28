@@ -15,14 +15,14 @@ public sealed class AddAuthorCommandHandlerTests
     public async Task Handler_Should_Return_Author_On_SavingNewAuthor()
     {
         // Arrange
-        var dummyAuthor = Author.Create(
+        Author dummyAuthor = Author.Create(
             "Hello",
             "World",
             DateOnly.Parse("2013-10-10"),
             null,
             "BD",
             "");
-        var command = new AddAuthorCommand(
+        AddAuthorCommand command = new(
             dummyAuthor.FirstName, 
             dummyAuthor.LastName, 
             dummyAuthor.DateOfBirth, 
@@ -30,7 +30,7 @@ public sealed class AddAuthorCommandHandlerTests
             dummyAuthor.Nationality, 
             dummyAuthor.Biography
             );
-        var handler = new AddAuthorCommandHandler(authorRepository);
+        AddAuthorCommandHandler handler = new(authorRepository);
         
         authorRepository.AddAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>())
             .Returns(Author.Create(
@@ -42,7 +42,7 @@ public sealed class AddAuthorCommandHandlerTests
                 dummyAuthor.Biography));
 
         // Act
-        var savedAuthor = await handler.Handle(command, default);
+        Author savedAuthor = await handler.Handle(command, default);
 
         // Assert
         Assert.NotNull(savedAuthor);

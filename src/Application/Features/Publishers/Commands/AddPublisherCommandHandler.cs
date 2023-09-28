@@ -12,13 +12,13 @@ internal sealed class AddPublisherCommandHandler
 
     public async Task<Publisher> Handle(AddPublisherCommand request, CancellationToken cancellationToken)
     {
-        var publisher = Publisher.Create(
+        Publisher publisher = Publisher.Create(
             request.Name,
             request.Description,
             request.ContactInformation
             );
 
-        var addPublisher = await publisherRepository.AddAsync(publisher);
+        Publisher addPublisher = await publisherRepository.AddAsync(publisher);
         return addPublisher;
     }
 }

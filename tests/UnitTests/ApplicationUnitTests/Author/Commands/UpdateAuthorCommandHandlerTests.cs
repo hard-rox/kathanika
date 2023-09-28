@@ -8,10 +8,10 @@ public class UpdateAuthorCommandHandlerTests
     [Fact]
     public async Task Handler_Should_Throw_Exception_On_Invalid_AuthorId()
     {
-        var authorId = Guid.NewGuid().ToString();
-        var authorRepository = Substitute.For<IAuthorRepository>();
-        var command = new UpdateAuthorCommand(authorId, new UpdateAuthorCommand.AuthorPatch());
-        var handler = new UpdateAuthorCommandHandler(authorRepository);
+        string authorId = Guid.NewGuid().ToString();
+        IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
+        UpdateAuthorCommand command = new(authorId, new UpdateAuthorCommand.AuthorPatch());
+        UpdateAuthorCommandHandler handler = new(authorRepository);
 
         var exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
 
@@ -22,23 +22,23 @@ public class UpdateAuthorCommandHandlerTests
     [Fact]
     public async Task Handler_Should_Call_UpdateAsync_With_Updated_Author_DateOfDeath()
     {
-        var authorId = Guid.NewGuid().ToString();
-        var author = Author.Create("John",
+        string authorId = Guid.NewGuid().ToString();
+        Author author = Author.Create("John",
             "Doe",
             DateOnly.MinValue,
             null,
             "",
             "");
-        var authorRepository = Substitute.For<IAuthorRepository>();
+        IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
         await authorRepository.UpdateAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>());
-        var command = new UpdateAuthorCommand(authorId, new UpdateAuthorCommand.AuthorPatch(
+        UpdateAuthorCommand command = new(authorId, new UpdateAuthorCommand.AuthorPatch(
             "Updated First Name",
             "Updated Last Name"
         ));
-        var handler = new UpdateAuthorCommandHandler(authorRepository);
+        UpdateAuthorCommandHandler handler = new(authorRepository);
 
-        var updatedAuthor = await handler.Handle(command, default);
+        Author updatedAuthor = await handler.Handle(command, default);
 
         Assert.NotNull(updatedAuthor);
         Assert.Equal("Updated First Name", updatedAuthor.FirstName);

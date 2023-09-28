@@ -11,7 +11,7 @@ internal sealed class AddAuthorCommandHandler : IRequestHandler<AddAuthorCommand
 
     public async Task<Author> Handle(AddAuthorCommand request, CancellationToken cancellationToken)
     {
-        var newAuthor = Author.Create(
+        Author newAuthor = Author.Create(
             request.FirstName,
             request.LastName,
             request.DateOfBirth,

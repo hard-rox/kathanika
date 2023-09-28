@@ -13,7 +13,7 @@ internal sealed class UpdatePublisherCommandHandle : IRequestHandler<UpdatePubli
 
     public async Task<Publisher> Handle(UpdatePublisherCommand request, CancellationToken cancellationToken)
     {
-        var publisher = await publisherRepository.GetByIdAsync(request.Id) ??
+        Publisher publisher = await publisherRepository.GetByIdAsync(request.Id) ??
             throw new NotFoundWithTheIdException(typeof(Publisher), request.Id);
 
         publisher.Update(
