@@ -1,35 +1,32 @@
-import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Inject, Injector, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'kn-text-input',
+  selector: 'kn-toggle',
   standalone: true,
   imports: [CommonModule, FormsModule],
-  templateUrl: './text-input.component.html',
-  styleUrls: ['./text-input.component.scss'],
+  templateUrl: './toggle.component.html',
+  styleUrls: ['./toggle.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: TextInputComponent
+      useExisting: ToggleComponent
     }
   ]
 })
-export class TextInputComponent implements ControlValueAccessor, OnInit {
+export class ToggleComponent implements ControlValueAccessor, OnInit {
 
   @Input('label')
   label: string = '';
 
-  @Input('placeholder')
-  placeholder: string = '';
-
-  value: string | null = null;
+  value: boolean = false;
   isDisabled: boolean = false;
 
   control: NgControl | null = null;
 
-  private onChange = (value: string) => { };
+  private onChange = (value: boolean) => { };
   private onTouched = () => { };
 
   constructor(@Inject(Injector) private injector: Injector) { }
@@ -38,11 +35,11 @@ export class TextInputComponent implements ControlValueAccessor, OnInit {
     this.control = this.injector.get(NgControl);
   }
 
-  writeValue(obj: string): void {
+  writeValue(obj: boolean): void {
     this.value = obj;
   }
 
-  registerOnChange(fn: (value: string) => void): void {
+  registerOnChange(fn: (value: boolean) => void): void {
     this.onChange = fn;
   }
 
@@ -65,6 +62,6 @@ export class TextInputComponent implements ControlValueAccessor, OnInit {
   }
 
   isRequired(): boolean{
-    return this.control?.control?.hasValidator(Validators.required) ?? false;
+    return true;
   }
 }

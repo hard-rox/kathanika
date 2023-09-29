@@ -70,13 +70,7 @@ export class AuthorUpdateComponent implements OnInit {
 
   onValidFormSubmit(authorOutput: AuthorFormOutput) {
     this.isPanelLoading = true;
-    const authorPatch: AuthorPatchInput = {
-      firstName: authorOutput.firstName,
-      lastName: authorOutput.lastName,
-      dateOfBirth: authorOutput.dateOfBirth,
-      nationality: authorOutput.nationality,
-      biography: authorOutput.biography
-    };
+    const authorPatch: AuthorPatchInput = { ...authorOutput };
 
     this.mutation
       .mutate({

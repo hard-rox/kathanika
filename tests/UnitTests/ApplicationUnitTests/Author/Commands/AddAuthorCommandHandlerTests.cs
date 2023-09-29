@@ -25,10 +25,10 @@ public sealed class AddAuthorCommandHandlerTests
         AddAuthorCommand command = new(
             dummyAuthor.FirstName, 
             dummyAuthor.LastName, 
-            dummyAuthor.DateOfBirth, 
-            dummyAuthor.DateOfDeath, 
+            dummyAuthor.DateOfBirth,
             dummyAuthor.Nationality, 
-            dummyAuthor.Biography
+            dummyAuthor.Biography,
+            dummyAuthor.DateOfDeath
             );
         AddAuthorCommandHandler handler = new(authorRepository);
         

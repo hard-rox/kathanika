@@ -15,7 +15,7 @@ internal sealed class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorC
     {
         Author existingAuthor = await authorRepository.GetByIdAsync(request.Id, cancellationToken) ??
             throw new NotFoundWithTheIdException(typeof(Author), request.Id);
-        
+
         existingAuthor.Update(
             request.Patch.FirstName,
             request.Patch.LastName,
@@ -24,8 +24,13 @@ internal sealed class UpdateAuthorCommandHandler : IRequestHandler<UpdateAuthorC
             request.Patch.Biography
         );
 
-        if(request.Patch.MarkedAsDeceased){
+        if (request.Patch.MarkedAsDeceased)
+        {
             existingAuthor.MarkAsDeceased(request.Patch.DateOfDeath ?? new DateOnly());
+        }
+        else
+        {
+            existingAuthor.UnmarkAsDeceased();
         }
 
         await authorRepository.UpdateAsync(existingAuthor, cancellationToken);

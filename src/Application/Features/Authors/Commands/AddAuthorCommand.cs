@@ -4,7 +4,8 @@ public sealed record AddAuthorCommand(
     string FirstName,
     string LastName,
     DateOnly DateOfBirth,
-    DateOnly? DateOfDeath,
     string Nationality,
-    string Biography
+    string Biography,
+    DateOnly? DateOfDeath,
+    bool MarkedAsDeceased = false
 ) : IRequest<Author>;

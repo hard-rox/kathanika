@@ -4,6 +4,7 @@ import { AddAuthorGQL } from 'src/app/graphql/generated/graphql-operations';
 import { AddAuthorInput } from 'src/app/graphql/generated/graphql-operations';
 import { MessageAlertService } from 'src/app/core/services/message-alert.service';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
+import { AuthorFormOutput } from '../../types/author-form-output';
 
 @Component({
   templateUrl: './author-add.component.html',
@@ -21,9 +22,9 @@ export class AuthorAddComponent {
   isPanelLoading: boolean = false;
   errors: string[] = [];
 
-  onValidFormSubmit(formValue: AddAuthorInput) {
+  onValidFormSubmit(formValue: AuthorFormOutput) {
     this.isPanelLoading = true;
-    this.gql.mutate({ addAuthorInput: formValue }).subscribe({
+    this.gql.mutate({ addAuthorInput: {...formValue} }).subscribe({
       next: (result) => {
         console.debug(result);
         if (result.errors || result.data?.addAuthor.errors) {

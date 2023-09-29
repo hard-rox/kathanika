@@ -1,9 +1,8 @@
-using FluentValidation;
 using Kathanika.Application.Features.Authors.Commands;
 
 namespace Kathanika.Application.Features.Authors;
 
-internal class UpdateAuthorCommandValidator : AbstractValidator<UpdateAuthorCommand>
+internal sealed class UpdateAuthorCommandValidator : AbstractValidator<UpdateAuthorCommand>
 {
     public UpdateAuthorCommandValidator(IAuthorRepository authorRepository)
     {
@@ -25,7 +24,7 @@ internal class AuthorPatchValidator : AbstractValidator<UpdateAuthorCommand.Auth
         RuleFor(x => x.DateOfDeath)
             .NotNull()
             .When(x => x.MarkedAsDeceased)
-            .LessThan(x => DateOnly.FromDateTime(DateTime.Today))
+            .LessThanOrEqualTo(x => DateOnly.FromDateTime(DateTime.Today))
             .GreaterThan(x => x.DateOfBirth)
             .When(x => x.DateOfBirth is not null);
     }

@@ -5,6 +5,10 @@ import { AuthorFormComponent } from './author-form.component';
 import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
 import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
+import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
+import { AuthorFormOutput } from '../../types/author-form-output';
+import { AuthorFormInput } from '../../types/author-form-input';
+import { printFormGroupValidationErrors } from 'src/app/shared/utilities/formGroupUtils';
 
 describe('AuthorFormComponent', () => {
   let component: AuthorFormComponent;
@@ -16,7 +20,8 @@ describe('AuthorFormComponent', () => {
         ReactiveFormsModule,
         TextInputComponent,
         DateInputComponent,
-        TextareaInputComponent
+        TextareaInputComponent,
+        ToggleComponent
       ],
       declarations: [AuthorFormComponent],
     });
@@ -43,10 +48,11 @@ describe('AuthorFormComponent', () => {
   });
 
   it('should patch authorFormGroup on setting author input', () => {
-    const author = {
+    const author: AuthorFormOutput = {
       firstName: 'Hello',
       lastName: 'World',
       dateOfBirth: '2023-01-01',
+      markedAsDeceased: false,
       dateOfDeath: null,
       biography: '',
       nationality: ''
@@ -64,15 +70,15 @@ describe('AuthorFormComponent', () => {
 
   it('should emit "onSubmit" on valid submit', () => {
     const onSubmitSpy = spyOn(component.onSubmit, 'emit');
-    const author = {
+    component.authorFromGroup.patchValue({
       firstName: 'Hello',
       lastName: 'World',
       dateOfBirth: '2023-01-01',
+      markedAsDeceased: false,
       dateOfDeath: null,
-      biography: 'test',
-      nationality: 'test'
-    }
-    component.authorFromGroup.setValue(author);
+      biography: ' ',
+      nationality: ' '
+    });
     component.submitForm();
     expect(onSubmitSpy).toHaveBeenCalledTimes(1);
   });

@@ -18,6 +18,7 @@ import { PanelComponent } from 'src/app/shared/components/panel/panel.component'
 import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
 import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
+import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
 
 describe('AuthorUpdateComponent', () => {
   const routeParam = '12345';
@@ -31,7 +32,8 @@ describe('AuthorUpdateComponent', () => {
         PanelComponent,
         TextInputComponent,
         DateInputComponent,
-        TextareaInputComponent
+        TextareaInputComponent,
+        ToggleComponent
       ],
       declarations: [
         AuthorFormComponent,
@@ -109,6 +111,7 @@ describe('AuthorUpdateComponent', () => {
       firstName: '',
       lastName: '',
       dateOfBirth: '',
+      markedAsDeceased: false,
       dateOfDeath: null,
       nationality: '',
       biography: '',
@@ -148,6 +151,7 @@ describe('AuthorUpdateComponent', () => {
       firstName: '',
       lastName: '',
       dateOfBirth: '',
+      markedAsDeceased: false,
       dateOfDeath: null,
       nationality: '',
       biography: '',
