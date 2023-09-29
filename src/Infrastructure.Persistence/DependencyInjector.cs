@@ -13,7 +13,7 @@ public static class DependencyInjector
     {
         ClassMaps.MapClasses();
 
-        var connectionString = configuration.GetConnectionString("mongoDbConnection");
+        string? connectionString = configuration.GetConnectionString("mongoDbConnection");
         services.AddMongoDb(connectionString);
 
         services.AddMemoryCache();

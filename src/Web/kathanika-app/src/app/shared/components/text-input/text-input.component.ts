@@ -1,6 +1,6 @@
-import { Component, Inject, Injector, Input, OnInit, forwardRef } from '@angular/core';
+import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ControlValueAccessor, FormControl, FormsModule, NG_VALIDATORS, NG_VALUE_ACCESSOR, NgControl, Validators } from '@angular/forms';
+import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, NgControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'kn-text-input',

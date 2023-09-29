@@ -10,7 +10,7 @@ public sealed partial class Mutations
     [Error<InvalidFieldException>]
     public async Task<AddAuthorPayload> AddAuthorAsync([FromServices] IMediator mediator, AddAuthorCommand input)
     {
-        var author = await mediator.Send(input);
+        Author author = await mediator.Send(input);
         return new(author);
     }
 
@@ -18,7 +18,7 @@ public sealed partial class Mutations
     [Error<NotFoundWithTheIdException>]
     public async Task<UpdateAuthorPayload> UpdateAuthorAsync([FromServices] IMediator mediator, UpdateAuthorCommand input)
     {
-        var author = await mediator.Send(input);
+        Author author = await mediator.Send(input);
         return new(author);
     }
 
@@ -33,7 +33,7 @@ public sealed partial class Mutations
     [GraphQLDeprecated("Just a dummy for throwing new notification...")]
     public async Task<Notification> FireNewNotification([FromServices]ITopicEventSender eventSender, string content)
     {
-        var notification = new Notification() { Message = content };
+        Notification notification = new() { Message = content };
         await eventSender.SendAsync("NewNotification", notification);
         return notification;
     }

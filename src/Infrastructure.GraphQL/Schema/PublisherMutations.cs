@@ -9,7 +9,7 @@ public sealed partial class Mutations
     [Error<InvalidFieldException>]
     public async Task<AddPublisherPayload> AddPublisherAsync([FromServices] IMediator mediator, AddPublisherCommand input)
     {
-        var publisher = await mediator.Send(input);
+        Publisher publisher = await mediator.Send(input);
         return new(publisher);
     }
 
@@ -17,7 +17,7 @@ public sealed partial class Mutations
     [Error<NotFoundWithTheIdException>]
     public async Task<UpdatePublisherPayload> UpdatePublisherAsync([FromServices] IMediator mediator, UpdatePublisherCommand input)
     {
-        var publisher = await mediator.Send(input);
+        Publisher publisher = await mediator.Send(input);
         return new(publisher);
     }
 

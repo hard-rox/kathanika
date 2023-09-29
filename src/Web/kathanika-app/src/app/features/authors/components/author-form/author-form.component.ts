@@ -17,6 +17,7 @@ export class AuthorFormComponent {
         firstName: input.firstName,
         lastName: input.lastName,
         dateOfBirth: input.dateOfBirth,
+        markedAsDeceased: input.dateOfDeath != null && input.dateOfDeath != undefined,
         dateOfDeath: input.dateOfDeath,
         nationality: input.nationality,
         biography: input.biography,
@@ -34,7 +35,8 @@ export class AuthorFormComponent {
     firstName: [null, [Validators.required]],
     lastName: [null, [Validators.required]],
     dateOfBirth: [null, [Validators.required]],
-    dateOfDeath: [],
+    markedAsDeceased: [false],
+    dateOfDeath: [null],
     nationality: [null, [Validators.required]],
     biography: [null, [Validators.required]],
   });

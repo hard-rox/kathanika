@@ -14,6 +14,7 @@ import { PanelComponent } from 'src/app/shared/components/panel/panel.component'
 import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
 import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
+import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
 
 
 @NgModule({
@@ -33,7 +34,8 @@ import { TextareaInputComponent } from 'src/app/shared/components/textarea-input
     PanelComponent,
     TextInputComponent,
     DateInputComponent,
-    TextareaInputComponent
+    TextareaInputComponent,
+    ToggleComponent
   ]
 })
 export class AuthorsModule { }

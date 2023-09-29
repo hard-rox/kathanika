@@ -1,4 +1,6 @@
 using System.Reflection;
+using FluentValidation;
+using Kathanika.Application.Behaviours;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kathanika.Application;
@@ -11,6 +13,9 @@ public static class DependencyInjector
         {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
         });
+
+        services.AddScoped(typeof(IPipelineBehavior<,>), typeof(ValidationPipelineBehaviours<,>));
+        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly(), includeInternalTypes: true);
 
         return services;
     }

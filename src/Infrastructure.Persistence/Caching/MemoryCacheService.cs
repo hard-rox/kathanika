@@ -15,7 +15,7 @@ internal sealed class MemoryCacheService : ICacheService
 
     public T? Get<T>(string key)
     {
-        var item = memoryCache.Get<T>(key);
+        T? item = memoryCache.Get<T>(key);
         return item;
     }
 

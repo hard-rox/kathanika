@@ -14,15 +14,18 @@ import { PanelComponent } from 'src/app/shared/components/panel/panel.component'
 import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
 import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
+import { AuthorFormOutput } from '../../types/author-form-output';
+import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
 
 describe('AuthorAddComponent', () => {
   let component: AuthorAddComponent;
   let fixture: ComponentFixture<AuthorAddComponent>;
 
-  const formOutput = {
+  const formOutput: AuthorFormOutput = {
     firstName: 'Hello',
     lastName: 'world',
     dateOfBirth: '2023-01-01',
+    markedAsDeceased: false,
     dateOfDeath: null,
     nationality: 'USA',
     biography: 'Test',
@@ -35,7 +38,8 @@ describe('AuthorAddComponent', () => {
         PanelComponent,
         TextInputComponent,
         DateInputComponent,
-        TextareaInputComponent
+        TextareaInputComponent,
+        ToggleComponent
       ],
       declarations: [AuthorAddComponent, AuthorFormComponent],
       providers: [

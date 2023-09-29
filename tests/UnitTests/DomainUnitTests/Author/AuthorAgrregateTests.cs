@@ -10,9 +10,9 @@ public sealed class AuthorAggregateTests
         // Arrange
 
         // Act
-        var ex = Assert.Throws<AggregateException>(() =>
+        AggregateException ex = Assert.Throws<AggregateException>(() =>
         {
-            var command = Author.Create(
+            Author command = Author.Create(
                         "Hello",
                         "World",
                         DateOnly.Parse("2013-10-10"),
@@ -34,7 +34,7 @@ public sealed class AuthorAggregateTests
         // Arrange
 
         // Act
-        var ex = Assert.Throws<AggregateException>(() =>
+        AggregateException ex = Assert.Throws<AggregateException>(() =>
         {
             Author.Create(
             "Hello",
@@ -58,7 +58,7 @@ public sealed class AuthorAggregateTests
         // Arrange
 
         // Act
-        var ex = Assert.Throws<AggregateException>(() =>
+        AggregateException ex = Assert.Throws<AggregateException>(() =>
         {
             Author.Create(
             "Hello",
@@ -80,7 +80,7 @@ public sealed class AuthorAggregateTests
     public void UpdateAuthor_Should_Return_UpdatedAuthor_On_ValidInput()
     {
         // Arrange
-        var author = Author.Create(
+        Author author = Author.Create(
             "Hello",
             "World",
             DateOnly.MinValue,
@@ -89,7 +89,7 @@ public sealed class AuthorAggregateTests
             ""
             );
 
-        var updatedFirstName = "Updated Hello";
+        string updatedFirstName = "Updated Hello";
 
         // Act
         author.Update(updatedFirstName);
@@ -102,7 +102,7 @@ public sealed class AuthorAggregateTests
     public void UpdateAuthor_Should_Throw_InvalidFieldException_On_FutureDateOfBirth()
     {
         // Arrange
-        var author = Author.Create(
+        Author author = Author.Create(
             "Hello",
             "World",
             DateOnly.MinValue,
@@ -123,8 +123,8 @@ public sealed class AuthorAggregateTests
     public void MarkAsDeceased_Should_Set_DateOfDeath_On_ValidDateOfDeath()
     {
         // Arrange
-        var dateOfDeath = DateOnly.Parse("2000-01-01");
-        var author = Author.Create(
+        DateOnly dateOfDeath = DateOnly.Parse("2000-01-01");
+        Author author = Author.Create(
             "Hello",
             "World",
             DateOnly.Parse("1993-01-01"),
@@ -144,8 +144,8 @@ public sealed class AuthorAggregateTests
     public void MarkAsDeceased_Should_Throws_InvalidFieldException_On_FutureDateOfDeath()
     {
         // Arrange
-        var dateOfDeath = DateTime.Parse("2000-01-01");
-        var author = Author.Create(
+        DateTime dateOfDeath = DateTime.Parse("2000-01-01");
+        Author author = Author.Create(
             "Hello",
             "World",
             DateOnly.Parse("1993-01-01"),
@@ -167,8 +167,8 @@ public sealed class AuthorAggregateTests
     public void MarkAsDeceased_Should_Throws_InvalidFieldException_On_InvalidDateOfDeath()
     {
         // Arrange
-        var dateOfDeath = DateOnly.Parse("1990-01-01");
-        var author = Author.Create(
+        DateOnly dateOfDeath = DateOnly.Parse("1990-01-01");
+        Author author = Author.Create(
             "Hello",
             "World",
             DateOnly.Parse("1993-01-01"),
@@ -190,7 +190,7 @@ public sealed class AuthorAggregateTests
     public void UnmarkAsDeceased_Should_Sets_DateOfDeath_Null()
     {
         // Arrange
-        var author = Author.Create(
+        Author author = Author.Create(
             "Hello",
             "World",
             DateOnly.Parse("1993-01-01"),

@@ -103,8 +103,10 @@ export type AuthorFilterInput = {
 export type AuthorPatchInput = {
   biography?: InputMaybe<Scalars['String']['input']>;
   dateOfBirth?: InputMaybe<Scalars['Date']['input']>;
+  dateOfDeath?: InputMaybe<Scalars['Date']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
+  markedAsDeceased?: Scalars['Boolean']['input'];
   nationality?: InputMaybe<Scalars['String']['input']>;
 };
 

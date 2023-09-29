@@ -11,7 +11,7 @@ internal static class MongoDbConfigurations
 {
     internal static void AddMongoDb(this IServiceCollection services, string? connectionString)
     {
-        var conventionPack = new ConventionPack()
+        ConventionPack conventionPack = new()
         {
             new CamelCaseElementNameConvention(),
             new StringIdStoredAsObjectIdConvention(),
@@ -22,10 +22,10 @@ internal static class MongoDbConfigurations
 
         services.AddSingleton<IMongoDatabase>(f =>
         {
-            var sp = services.BuildServiceProvider();
-            var logger = sp.GetRequiredService<ILogger<MongoClientSettings>>();
+            ServiceProvider sp = services.BuildServiceProvider();
+            ILogger<MongoClientSettings> logger = sp.GetRequiredService<ILogger<MongoClientSettings>>();
 
-            var mongoClientSettings = MongoClientSettings.FromConnectionString(connectionString);
+            MongoClientSettings mongoClientSettings = MongoClientSettings.FromConnectionString(connectionString);
             mongoClientSettings.ClusterConfigurator = cc =>
             {
                 cc.Subscribe<CommandStartedEvent>(e =>
@@ -45,8 +45,8 @@ internal static class MongoDbConfigurations
                 });
             };
             mongoClientSettings.RetryWrites = true;
-            var mongoClient = new MongoClient(mongoClientSettings);
-            var db = mongoClient.GetDatabase("kathanika_book_store");
+            MongoClient mongoClient = new(mongoClientSettings);
+            IMongoDatabase db = mongoClient.GetDatabase("kathanika_book_store");
             return db;
         });
     }

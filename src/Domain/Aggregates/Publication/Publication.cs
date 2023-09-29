@@ -61,7 +61,7 @@ public sealed class Publication : AggregateRoot
         string callNumber,
         IEnumerable<Author>? authors = null)
     {
-        var publication = new Publication(
+        Publication publication = new(
             title,
             isbn,
             publicationType,

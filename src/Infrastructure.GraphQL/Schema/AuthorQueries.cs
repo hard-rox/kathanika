@@ -12,13 +12,13 @@ public sealed partial class Queries
         CancellationToken cancellationToken
     )
     {
-        var authors = await mediator.Send(new GetAuthorsQuery(), cancellationToken);
+        IQueryable<Author> authors = await mediator.Send(new GetAuthorsQuery(), cancellationToken);
         return authors;
     }
     
     public async Task<Author?> GetAuthorAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
     {
-        var author = await mediator.Send(new GetAuthorByIdQuery(id), cancellationToken);
+        Author? author = await mediator.Send(new GetAuthorByIdQuery(id), cancellationToken);
         return author;
     }
 }

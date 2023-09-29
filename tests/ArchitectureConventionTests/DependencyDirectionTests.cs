@@ -1,4 +1,4 @@
-using Kathanika.Application.Authors.Commands;
+using Kathanika.Application.Features.Authors.Commands;
 using Kathanika.Domain.Primitives;
 using Kathanika.Infrastructure.GraphQL;
 using Kathanika.Infrastructure.Persistence;

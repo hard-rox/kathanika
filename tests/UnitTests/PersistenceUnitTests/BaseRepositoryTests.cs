@@ -38,7 +38,7 @@ public sealed class BaseRepositoryTests
     [Fact]
     public async Task GetById_Should_Call_FindAsync()
     {
-        var repo = new DummyRepo(database, "", nullLogger, cache);
+        DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
         await repo.GetByIdAsync("6487aceb533e0377b58d501c");
@@ -52,7 +52,7 @@ public sealed class BaseRepositoryTests
     [Fact]
     public async Task ListAllAsync_Should_Call_FindAsync_With_EmptyFilter()
     {
-        var repo = new DummyRepo(database, "", nullLogger, cache);
+        DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
         await repo.ListAllAsync();
@@ -67,7 +67,7 @@ public sealed class BaseRepositoryTests
     [Fact]
     public async Task ListAllAsync_Should_Call_FindAsync_With_Expression()
     {
-        var repo = new DummyRepo(database, "", nullLogger, cache);
+        DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
         await repo.ListAllAsync(x => x.Id == "1");
@@ -82,8 +82,8 @@ public sealed class BaseRepositoryTests
     public async Task AddAsync_Should_Call_InsertOneAsync()
     {
         // Arrange
-        var aggregate = new DummyAggregate() { Name = "" };
-        var repo = new DummyRepo(database, "", nullLogger, cache);
+        DummyAggregate aggregate = new() { Name = "" };
+        DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
         await repo.AddAsync(aggregate);
@@ -97,8 +97,8 @@ public sealed class BaseRepositoryTests
     public async Task UpdateAsync_Should_Call_ReplaceOneAsync()
     {
         // Arrange
-        var aggregate = new DummyAggregate() { Name = "" };
-        var repo = new DummyRepo(database, "", nullLogger, cache);
+        DummyAggregate aggregate = new() { Name = "" };
+        DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
         await repo.UpdateAsync(aggregate);
@@ -114,7 +114,7 @@ public sealed class BaseRepositoryTests
     public async Task DeleteAsync_Should_Call_DeleteOneAsync()
     {
         // Arrange
-        var repo = new DummyRepo(database, "", nullLogger, cache);
+        DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
         await repo.DeleteAsync("6487aceb533e0377b58d501c");
