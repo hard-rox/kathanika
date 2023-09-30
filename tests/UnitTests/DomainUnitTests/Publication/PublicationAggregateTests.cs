@@ -14,6 +14,7 @@ public class PublicationAggregateTests
             PublicationType.Book,
             "Hello",
             DateOnly.MinValue,
+            "",
             (decimal)102.0,
             1,
             "Nt0202",
@@ -52,6 +53,7 @@ public class PublicationAggregateTests
             PublicationType.Book,
             "Hello",
             DateOnly.MinValue,
+            "",
             (decimal)102.0,
             1,
             "ANC0123",
@@ -65,6 +67,7 @@ public class PublicationAggregateTests
             PublicationType.Journal,
             "Updated publisher",
             DateOnly.MinValue,
+            null,
             (decimal)10.2,
             3,
             "Updated CallNumber"

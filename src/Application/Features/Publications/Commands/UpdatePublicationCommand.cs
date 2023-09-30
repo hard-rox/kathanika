@@ -11,6 +11,7 @@ public sealed record UpdatePublicationCommand : IRequest<Publication>
         PublicationType PublicationType,
         string Publisher,
         DateOnly? PublishedDate,
+        string? Edition,
         decimal? BuyingPrice,
         int? CopiesAvailable,
         string CallNumber,

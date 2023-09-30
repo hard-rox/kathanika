@@ -2,7 +2,8 @@ import { Component, ViewChild } from '@angular/core';
 import { PublicationFormComponent } from '../../components/publication-form/publication-form.component';
 import { MessageAlertService } from 'src/app/core/services/message-alert.service';
 import { Router } from '@angular/router';
-import { AddPublicationGQL, AddPublicationInput } from 'src/app/graphql/generated/graphql-operations';
+import { AddPublicationGQL } from 'src/app/graphql/generated/graphql-operations';
+import { PublicationFormOutput } from '../../types/publication-form-output';
 
 @Component({
   templateUrl: './publication-add.component.html',
@@ -20,7 +21,8 @@ export class PublicationAddComponent {
   isPanelLoading: boolean = false;
   errors: string[] = [];
 
-  onValidFormSubmit(formValue: AddPublicationInput) {
+  onValidFormSubmit(formValue: PublicationFormOutput) {
+    console.debug(formValue);
     this.isPanelLoading = true;
     this.gql.mutate({ addPublicationInput: formValue }).subscribe({
       next: (result) => {

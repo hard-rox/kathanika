@@ -15,7 +15,10 @@ export class PublicationFormComponent {
   set publication(input: PublicationFormInput | null | undefined) {
     if (input) {
       this.isUpdate = true;
-      this.publicationFromGroup.setValue(input);
+      this.publicationFromGroup.patchValue({
+        ...input,
+        authorsIds: input.authors,
+      });
     }
   }
 
@@ -35,28 +38,24 @@ export class PublicationFormComponent {
     isbn: [null],
     edition: [null, Validators.required],
     language: [null, Validators.required],
-    // description: [null, Validators.required],
-    authors: [[]],
+    description: [null],
+    authorIds: [[]],
     buyingPrice: [null, [Validators.required, Validators.min(0)]],
     callNumber: [null, Validators.required],
-    copiesAvailable: [null, [Validators.required, Validators.min(0)]],
+    copiesPurchased: [null, [Validators.required, Validators.min(0)]],
   });
 
   submitForm() {
+    console.debug(this.publicationFromGroup.value);
     if (!this.publicationFromGroup.valid) {
-      Object.keys(this.publicationFromGroup.controls).forEach(key => {
-        const controlErrors: any = this.publicationFromGroup.get(key)?.errors;
-        if (controlErrors != null) {
-          Object.keys(controlErrors).forEach(keyError => {
-            console.log('Key control: ' + key + ', keyError: ' + keyError + ', err value: ', controlErrors[keyError]);
-          });
-        }
-      });
       this.publicationFromGroup.markAllAsTouched();
       return;
     }
-
-    this.onSubmit.emit(this.publicationFromGroup.value);
+    this.onSubmit.emit({
+      ...this.publicationFromGroup.value,
+      buyingPrice: +this.publicationFromGroup.value.buyingPrice,
+      copiesPurchased: +this.publicationFromGroup.value.copiesPurchased
+    });
   }
 
   resetForm() {

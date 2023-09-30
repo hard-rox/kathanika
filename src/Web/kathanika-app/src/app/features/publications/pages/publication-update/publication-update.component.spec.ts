@@ -11,6 +11,7 @@ import { TextInputComponent } from 'src/app/shared/components/text-input/text-in
 import { SelectInputComponent } from 'src/app/shared/components/select-input/select-input.component';
 import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 
 describe('PublicationUpdateComponent', () => {
   let component: PublicationUpdateComponent;
@@ -26,7 +27,8 @@ describe('PublicationUpdateComponent', () => {
         AlertComponent,
         TextInputComponent,
         SelectInputComponent,
-        DateInputComponent
+        DateInputComponent,
+        TextareaInputComponent
       ],
       providers: [
         {
