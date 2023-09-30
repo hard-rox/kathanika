@@ -6,6 +6,7 @@ public interface IRepository<T> where T : AggregateRoot
 {
     IQueryable<T> AsQueryable();
     Task<bool> ExistsAsync(string id, CancellationToken cancellationToken = default);
+    Task<bool> ExistsAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
     Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<T>> ListAllAsync(CancellationToken cancellationToken = default);
     Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
