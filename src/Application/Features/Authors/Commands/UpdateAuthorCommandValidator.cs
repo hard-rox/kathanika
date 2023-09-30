@@ -10,7 +10,7 @@ internal sealed class UpdateAuthorCommandValidator : AbstractValidator<UpdateAut
             .NotNull()
             .NotEmpty()
             .MustAsync(authorRepository.ExistsAsync)
-            .WithMessage("Invalid Author Id");
+            .WithMessage("Invalid Author");
 
         RuleFor(x => x.Patch)
             .SetValidator(new AuthorPatchValidator());

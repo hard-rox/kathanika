@@ -68,6 +68,17 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return count > 0;
     }
 
+    public async Task<bool> ExistsAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default)
+    {
+        FilterDefinition<T> filterDefinition = Builders<T>.Filter.Where(expression);
+        CountOptions countOptions = new()
+        {
+            Limit = 1
+        };
+        long count = await _collection.CountDocumentsAsync(filterDefinition, countOptions, cancellationToken);
+        return count > 0;
+    }
+
     public async Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         if (!IsValidMongoObjectId(id)) return null;
