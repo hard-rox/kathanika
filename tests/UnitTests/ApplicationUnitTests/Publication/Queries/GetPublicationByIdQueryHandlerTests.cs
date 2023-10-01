@@ -13,6 +13,7 @@ public class GetPublicationByIdQueryHandlerTests
             PublicationType.Book,
             "",
             DateOnly.MinValue,
+            "",
             (decimal)102.0,
             1,
             ""

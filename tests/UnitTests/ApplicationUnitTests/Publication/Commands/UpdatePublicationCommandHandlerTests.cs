@@ -13,7 +13,7 @@ public class UpdatePublicationCommandHandlerTests
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
         UpdatePublicationCommand command = new(publicationId, new UpdatePublicationCommand.PublicationPatch(
-            "", "", PublicationType.Book, "", null, null, null, "" ///TODO: Fix up update in domain...
+            "", "", PublicationType.Book, "", null, null, null, null, "" ///TODO: Fix up update in domain...
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository);
 
@@ -33,6 +33,7 @@ public class UpdatePublicationCommandHandlerTests
             PublicationType.Book,
             "",
             DateOnly.MinValue,
+            "",
             (decimal)10.2,
             2,
             "ABCD",
@@ -45,7 +46,7 @@ public class UpdatePublicationCommandHandlerTests
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(new List<Author>());
         UpdatePublicationCommand command = new(publicationId, new UpdatePublicationCommand.PublicationPatch(
-            "Updated Title", "", PublicationType.Book, "", null, null, null, "" ///TODO: Fix up update in domain...
+            "Updated Title", "", PublicationType.Book, "", null, null, null, null, "" ///TODO: Fix up update in domain...
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository);
 

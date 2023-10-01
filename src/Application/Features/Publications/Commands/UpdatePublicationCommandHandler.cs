@@ -28,6 +28,7 @@ internal sealed class UpdatePublicationCommandHandler : IRequestHandler<UpdatePu
             request.Patch.PublicationType,
             request.Patch.Publisher,
             request.Patch.PublishedDate,
+            request.Patch.Edition,
             request.Patch.BuyingPrice,
             request.Patch.CopiesAvailable,
             request.Patch.CallNumber

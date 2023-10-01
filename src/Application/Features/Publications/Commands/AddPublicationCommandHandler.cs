@@ -22,6 +22,7 @@ internal sealed class AddPublicationCommandHandler
             request.PublicationType,
             request.Publisher,
             request.PublishedDate,
+            request.Edition,
             request.BuyingPrice,
             request.CopiesPurchased,
             request.CallNumber,

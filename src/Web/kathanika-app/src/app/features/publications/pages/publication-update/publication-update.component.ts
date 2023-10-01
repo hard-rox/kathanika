@@ -53,7 +53,17 @@ export class PublicationUpdateComponent {
               this.router.navigate(['/publications']);
             } else {
               this.publicationFormInput = {
-                ...result.data.publication,
+                title: result.data.publication.title,
+                publicationType: result.data.publication.publicationType,
+                isbn: result.data.publication.isbn,
+                edition: result.data.publication.edition,
+                callNumber: result.data.publication.callNumber,
+                language: result.data.publication.language,
+                publisher: result.data.publication.publisher,
+                publishedDate: result.data.publication.publishedDate,
+                buyingPrice: result.data.publication.buyingPrice,
+                copiesAvailable: result.data.publication.copiesAvailable,
+                description: result.data.publication.description,
                 authors: result.data.publication.authors.map(x => x.id)
               };
               this.isPanelLoading = false;
@@ -68,6 +78,7 @@ export class PublicationUpdateComponent {
   }
 
   onValidFormSubmit(publicationOutput: PublicationFormOutput) {
+    console.debug(publicationOutput);
     this.isPanelLoading = true;
     const publicationPatch: PublicationPatchInput = {
       ...publicationOutput

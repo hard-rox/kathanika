@@ -36,6 +36,7 @@ public sealed class Publication : AggregateRoot
         PublicationType publicationType,
         string publisher,
         DateOnly publishedDate,
+        string edition,
         decimal buyingPrice,
         int copiesAvailable,
         string callNumber)
@@ -56,6 +57,7 @@ public sealed class Publication : AggregateRoot
         PublicationType publicationType,
         string publisher,
         DateOnly publishedDate,
+        string edition,
         decimal buyingPrice,
         int copiesAvailable,
         string callNumber,
@@ -67,6 +69,7 @@ public sealed class Publication : AggregateRoot
             publicationType,
             publisher,
             publishedDate,
+            edition,
             buyingPrice,
             copiesAvailable,
             callNumber)
@@ -76,7 +79,7 @@ public sealed class Publication : AggregateRoot
         
         if (authors is not null)
         {
-            foreach (var author in authors)
+            foreach (Author author in authors)
             {
                 publication._authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
@@ -93,6 +96,7 @@ public sealed class Publication : AggregateRoot
         PublicationType? publicationType,
         string? publisher,
         DateOnly? publishedDate,
+        string? edition,
         decimal? buyingPrice,
         int? copiesAvailable,
         string? callNumber)
@@ -102,6 +106,7 @@ public sealed class Publication : AggregateRoot
         PublicationType = publicationType is not null ? (PublicationType)publicationType : PublicationType;
         Publisher = !string.IsNullOrEmpty(publisher) ? publisher : Publisher;
         PublishedDate = publishedDate is not null ? (DateOnly)publishedDate : PublishedDate;
+        Edition = edition is not null ? edition : Edition;
         BuyingPrice = buyingPrice is not null ? (decimal)buyingPrice : BuyingPrice;
         CopiesAvailable = copiesAvailable is not null ? (int)copiesAvailable : CopiesAvailable;
         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : CallNumber;
