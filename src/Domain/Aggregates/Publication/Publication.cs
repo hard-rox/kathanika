@@ -6,14 +6,14 @@ public sealed class Publication : AggregateRoot
 {
     private List<PublicationAuthor> _authors = new();
 
-    public string Title { get; private set; } = string.Empty;
-    public string? Isbn { get; private set; } = string.Empty;
+    public string Title { get; private set; }
+    public string? Isbn { get; private set; }
     public PublicationType PublicationType { get; private set; }
-    public string Publisher { get; private set; } = string.Empty;
+    public string Publisher { get; private set; }
     public DateOnly PublishedDate { get; private set; }
-    public string Edition { get; private set; } = string.Empty;
-    public string Description { get; private set; } = string.Empty;
-    public string Language { get; private set; } = string.Empty;
+    public string Edition { get; private set; }
+    public string Description { get; private set; }
+    public string Language { get; private set; }
     public decimal BuyingPrice { get; private set; }
     public int CopiesAvailable { get; private set; }
     public string CallNumber { get; private set; }
@@ -39,16 +39,21 @@ public sealed class Publication : AggregateRoot
         string edition,
         decimal buyingPrice,
         int copiesAvailable,
-        string callNumber)
+        string callNumber,
+        string description,
+        string language)
     {
         Title = title;
         Isbn = isbn;
         PublicationType = publicationType;
         Publisher = publisher;
         PublishedDate = publishedDate;
+        Edition = edition;
         BuyingPrice = buyingPrice;
         CopiesAvailable = copiesAvailable;
         CallNumber = callNumber;
+        Description = description;
+        Language = language;
     }
 
     public static Publication Create(
@@ -61,6 +66,8 @@ public sealed class Publication : AggregateRoot
         decimal buyingPrice,
         int copiesAvailable,
         string callNumber,
+        string description,
+        string language,
         IEnumerable<Author>? authors = null)
     {
         Publication publication = new(
@@ -72,7 +79,9 @@ public sealed class Publication : AggregateRoot
             edition,
             buyingPrice,
             copiesAvailable,
-            callNumber)
+            callNumber,
+            description,
+            language)
         {
             _authors = new()
         };

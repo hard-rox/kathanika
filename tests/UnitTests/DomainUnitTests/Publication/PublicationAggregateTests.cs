@@ -18,6 +18,8 @@ public class PublicationAggregateTests
             (decimal)102.0,
             1,
             "Nt0202",
+            string.Empty,
+            string.Empty,
             new List<Author>(){
                 Author.Create(
                     "John",
@@ -57,6 +59,8 @@ public class PublicationAggregateTests
             (decimal)102.0,
             1,
             "ANC0123",
+            string.Empty,
+            string.Empty,
             new List<Author>()
         );
 

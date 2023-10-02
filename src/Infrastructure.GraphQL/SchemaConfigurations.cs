@@ -26,7 +26,7 @@ internal static class SchemaConfigurations
 
     internal static IRequestExecutorBuilder BuildGraphQLSchema(this IServiceCollection services)
     {
-        var requestBuilder = services.AddGraphQLServer();
+        IRequestExecutorBuilder requestBuilder = services.AddGraphQLServer();
         //requestBuilder.AddAuthorization();
         requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.GraphQL.Types"));
         requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.GraphQL.Inputs"));
@@ -52,7 +52,6 @@ internal static class SchemaConfigurations
         requestBuilder.ModifyRequestOptions(opt =>
         {
             opt.IncludeExceptionDetails = true;
-            //opt.TracingPreference = TracingPreference.Always;
         });
         requestBuilder.SetPagingOptions(new PagingOptions
         {

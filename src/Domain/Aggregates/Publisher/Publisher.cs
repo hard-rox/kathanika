@@ -4,7 +4,7 @@ namespace Kathanika.Domain.Aggregates;
 
 public sealed class Publisher : AggregateRoot
 {
-    public string Name { get; private set; } = string.Empty;
+    public string Name { get; private set; }
     public string? Description { get; private set; }
     public string? ContactInformation { get; private set; }
 

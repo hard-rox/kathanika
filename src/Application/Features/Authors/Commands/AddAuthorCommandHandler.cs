@@ -20,7 +20,7 @@ internal sealed class AddAuthorCommandHandler : IRequestHandler<AddAuthorCommand
             request.Biography
         );
 
-        Author savedAuthor = await authorRepository.AddAsync(newAuthor);
+        Author savedAuthor = await authorRepository.AddAsync(newAuthor, cancellationToken);
         return savedAuthor;
     }
 }

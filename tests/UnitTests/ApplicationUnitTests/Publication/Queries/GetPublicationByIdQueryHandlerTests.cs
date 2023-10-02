@@ -16,7 +16,9 @@ public class GetPublicationByIdQueryHandlerTests
             "",
             (decimal)102.0,
             1,
-            ""
+            "",
+            string.Empty,
+            string.Empty
         );
         string id = Guid.NewGuid().ToString();
         GetPublicationByIdQuery query = new(id);

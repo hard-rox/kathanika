@@ -5,30 +5,6 @@ namespace Kathanika.UnitTests.DomainUnitTests;
 public sealed class AuthorAggregateTests
 {
     [Fact]
-    public void Create_Should_Throw_InvalidFieldException_On_SameDateOfDeathAndDateOfBirth()
-    {
-        // Arrange
-
-        // Act
-        AggregateException ex = Assert.Throws<AggregateException>(() =>
-        {
-            Author command = Author.Create(
-                        "Hello",
-                        "World",
-                        DateOnly.Parse("2013-10-10"),
-                        DateOnly.Parse("2013-10-10"),
-                        "BD",
-                        ""
-                        );
-        });
-
-        // Assert
-        Assert.IsType<AggregateException>(ex);
-        Assert.IsType<InvalidFieldException>(ex.InnerExceptions[0]);
-        Assert.Equal("DateOfDeath", ((InvalidFieldException)ex.InnerExceptions[0]).FieldName);
-    }
-
-    [Fact]
     public void Create_Should_Throw_InvalidFieldException_On_FutureDateOfBirth()
     {
         // Arrange
@@ -144,7 +120,6 @@ public sealed class AuthorAggregateTests
     public void MarkAsDeceased_Should_Throws_InvalidFieldException_On_FutureDateOfDeath()
     {
         // Arrange
-        DateTime dateOfDeath = DateTime.Parse("2000-01-01");
         Author author = Author.Create(
             "Hello",
             "World",

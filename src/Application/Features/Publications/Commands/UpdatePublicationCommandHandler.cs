@@ -15,11 +15,11 @@ internal sealed class UpdatePublicationCommandHandler : IRequestHandler<UpdatePu
 
     public async Task<Publication> Handle(UpdatePublicationCommand request, CancellationToken cancellationToken)
     {
-        Publication publication = await _publicationRepository.GetByIdAsync(request.Id)
+        Publication publication = await _publicationRepository.GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundWithTheIdException(typeof(Publication), request.Id);
 
         IReadOnlyList<Author>? authors = request.Patch.AuthorIds is not null ?
-            await _authorRepository.ListAllAsync(x => request.Patch.AuthorIds.Contains(x.Id))
+            await _authorRepository.ListAllAsync(x => request.Patch.AuthorIds.Contains(x.Id), cancellationToken)
             : null;
 
         publication.Update(
@@ -39,7 +39,7 @@ internal sealed class UpdatePublicationCommandHandler : IRequestHandler<UpdatePu
             publication.AddOrUpdateAuthors(authors.ToArray());
         }
 
-        await _publicationRepository.UpdateAsync(publication);
+        await _publicationRepository.UpdateAsync(publication, cancellationToken);
 
         return publication;
     }

@@ -27,13 +27,13 @@ internal sealed class UpdatePublicationCommandValidator : AbstractValidator<Upda
             .WithMessage("Duplicate publication information {PropertyName}. Consider updating existing publication's 'Copies Available' field.");
 
         RuleFor(x => x.Patch)
-            .SetValidator(new PublicationPatchValidator(publicationRepository));
+            .SetValidator(new PublicationPatchValidator());
     }
 }
 
 internal sealed class PublicationPatchValidator : AbstractValidator<UpdatePublicationCommand.PublicationPatch>
 {
-    public PublicationPatchValidator(IPublicationRepository publicationRepository)
+    public PublicationPatchValidator()
     {
         RuleFor(x => x.Title)
             .NotNull()

@@ -28,13 +28,13 @@ internal sealed class UpdateAuthorCommandValidator : AbstractValidator<UpdateAut
             .WithMessage("Duplicate author information {PropertyName}");
 
         RuleFor(x => x.Patch)
-            .SetValidator(new AuthorPatchValidator(authorRepository));
+            .SetValidator(new AuthorPatchValidator());
     }
 }
 
 internal class AuthorPatchValidator : AbstractValidator<UpdateAuthorCommand.AuthorPatch>
 {
-    public AuthorPatchValidator(IAuthorRepository authorRepository)
+    public AuthorPatchValidator()
     {
         RuleFor(x => x.DateOfDeath)
             .NotNull()

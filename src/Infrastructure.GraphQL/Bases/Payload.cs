@@ -4,7 +4,7 @@ public abstract class Payload
 {
     public string Message { get; init; }
 
-    public Payload(string message)
+    protected Payload(string message)
     {
         Message = message;
     }

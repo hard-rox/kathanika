@@ -44,6 +44,10 @@ internal sealed class OutboxMessageService : IOutboxMessageService
             .Set(x => x.LastOccurredError, exceptionJson)
             .Inc(x => x.ProcessAttempt, 1);
         UpdateResult result = await _outboxMessageCollection.UpdateOneAsync(filter, updateDefinition);
+        if (!result.IsAcknowledged)
+        {
+            //TODO: Log...
+        }
     }
 
     public async Task SetOutboxMessageProcessed(string id)
@@ -56,5 +60,9 @@ internal sealed class OutboxMessageService : IOutboxMessageService
             .Set(x => x.ProcessedAt, DateTimeOffset.Now)
             .Inc(x => x.ProcessAttempt, 1);
         UpdateResult result = await _outboxMessageCollection.UpdateOneAsync(filter, updateDefinition);
+        if (!result.IsAcknowledged)
+        {
+            //TODO: Log...
+        }
     }
 }

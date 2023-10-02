@@ -14,7 +14,6 @@ public class AddPublicationCommandHandlerTests
         authorRepository = Substitute.For<IAuthorRepository>();
     }
 
-
     [Fact]
     public async Task Handler_Should_Return_Saved_Publication_On_Valid_Input()
     {
@@ -47,6 +46,8 @@ public class AddPublicationCommandHandlerTests
             (decimal)100.50,
             2,
             "ABCD123",
+            string.Empty,
+            string.Empty,
             authors
         );
 
@@ -64,6 +65,8 @@ public class AddPublicationCommandHandlerTests
             publication.BuyingPrice,
             publication.CopiesAvailable,
             publication.CallNumber,
+            publication.Description,
+            publication.Language,
             authors
         ));
 
