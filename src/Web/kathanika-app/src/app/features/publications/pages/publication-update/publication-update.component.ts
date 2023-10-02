@@ -78,10 +78,11 @@ export class PublicationUpdateComponent {
   }
 
   onValidFormSubmit(publicationOutput: PublicationFormOutput) {
-    console.debug(publicationOutput);
     this.isPanelLoading = true;
     const publicationPatch: PublicationPatchInput = {
-      ...publicationOutput
+      ...publicationOutput,
+      copiesAvailable: publicationOutput.copiesPurchased,
+      isbn: publicationOutput.isbn ?? '', ///TODO: Fixing to typed...
     };
 
     this.mutation

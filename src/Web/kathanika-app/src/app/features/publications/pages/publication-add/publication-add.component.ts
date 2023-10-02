@@ -24,7 +24,13 @@ export class PublicationAddComponent {
   onValidFormSubmit(formValue: PublicationFormOutput) {
     console.debug(formValue);
     this.isPanelLoading = true;
-    this.gql.mutate({ addPublicationInput: formValue }).subscribe({
+    this.gql.mutate({
+      addPublicationInput: {
+        ...formValue,
+        authorIds: formValue.authorIds ?? [], ///TODO: Fix to typed...
+        isbn: formValue.isbn ?? ''
+      }
+    }).subscribe({
       next: (result) => {
         console.debug(result);
         if (result.errors || result.data?.addPublication.errors) {

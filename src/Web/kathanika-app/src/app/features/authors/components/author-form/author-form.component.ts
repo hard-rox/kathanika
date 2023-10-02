@@ -1,19 +1,34 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthorFormInput } from '../../types/author-form-input';
 import { AuthorFormOutput } from '../../types/author-form-output';
-
+import { BaseFormComponent, ControlsOf } from 'src/app/shared/bases/base-form-component';
 @Component({
   selector: 'kn-author-form',
   templateUrl: './author-form.component.html',
   styleUrls: ['./author-form.component.scss'],
 })
-export class AuthorFormComponent {
+export class AuthorFormComponent
+  extends BaseFormComponent<AuthorFormOutput>
+  implements OnInit {
+
+  protected createFormGroup(): FormGroup<ControlsOf<AuthorFormOutput>> {
+    return new FormGroup<ControlsOf<AuthorFormOutput>>({
+      firstName: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+      lastName: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+      dateOfBirth: new FormControl<Date | null>(null, {nonNullable: true, validators: [Validators.required]}),
+      markedAsDeceased: new FormControl<boolean>(false, { nonNullable: true }),
+      dateOfDeath: new FormControl<Date | null>(null, {nonNullable: false}),
+      nationality: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+      biography: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+    });
+  }
+
   @Input('author')
   set author(input: AuthorFormInput | null | undefined) {
     if (input) {
       this.isUpdate = true;
-      this.authorFromGroup.patchValue({
+      this.formGroup.patchValue({
         firstName: input.firstName,
         lastName: input.lastName,
         dateOfBirth: input.dateOfBirth,
@@ -26,31 +41,23 @@ export class AuthorFormComponent {
   }
 
   @Output('onSubmit')
-  onSubmit = new EventEmitter<AuthorFormOutput>();
+  onSubmit = this.submitEventEmitter;
 
-  constructor(private formBuilder: FormBuilder) {}
-
-  isUpdate: boolean = false;
-  authorFromGroup: FormGroup = this.formBuilder.group({
-    firstName: [null, [Validators.required]],
-    lastName: [null, [Validators.required]],
-    dateOfBirth: [null, [Validators.required]],
-    markedAsDeceased: [false],
-    dateOfDeath: [null],
-    nationality: [null, [Validators.required]],
-    biography: [null, [Validators.required]],
-  });
-
-  submitForm() {
-    if (!this.authorFromGroup.valid) {
-      this.authorFromGroup.markAllAsTouched();
-      return;
-    }
-
-    this.onSubmit.emit(this.authorFromGroup.value);
+  constructor() {
+    super();
   }
 
-  resetForm() {
-    this.authorFromGroup.reset();
+  isUpdate: boolean = false;
+
+  ngOnInit(): void {
+    this.formGroup.valueChanges.subscribe({
+      next: (value) => {
+        if (value.markedAsDeceased) {
+          this.formGroup.controls.dateOfDeath.addValidators([Validators.required]);
+        } else {
+          this.formGroup.controls.dateOfDeath.removeValidators([Validators.required]);
+        }
+      }
+    })
   }
 }

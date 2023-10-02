@@ -1,9 +1,9 @@
 export type AuthorFormOutput = {
   firstName: string;
   lastName: string;
-  dateOfBirth: any;
+  dateOfBirth: Date | null;
   markedAsDeceased: boolean;
-  dateOfDeath: any;
+  dateOfDeath: Date | null;
   nationality: string;
   biography: string;
 };

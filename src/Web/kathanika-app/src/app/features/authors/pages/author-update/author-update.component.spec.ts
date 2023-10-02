@@ -110,7 +110,7 @@ describe('AuthorUpdateComponent', () => {
     component.onValidFormSubmit({
       firstName: '',
       lastName: '',
-      dateOfBirth: '',
+      dateOfBirth: new Date(),
       markedAsDeceased: false,
       dateOfDeath: null,
       nationality: '',
@@ -150,7 +150,7 @@ describe('AuthorUpdateComponent', () => {
     component.onValidFormSubmit({
       firstName: '',
       lastName: '',
-      dateOfBirth: '',
+      dateOfBirth: new Date(),
       markedAsDeceased: false,
       dateOfDeath: null,
       nationality: '',

@@ -24,7 +24,7 @@ describe('AuthorAddComponent', () => {
   const formOutput: AuthorFormOutput = {
     firstName: 'Hello',
     lastName: 'world',
-    dateOfBirth: '2023-01-01',
+    dateOfBirth: new Date('2023-01-01'),
     markedAsDeceased: false,
     dateOfDeath: null,
     nationality: 'USA',
