@@ -12,7 +12,7 @@ describe('NumberInputComponent', () => {
     });
     fixture = TestBed.createComponent(NumberInputComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -15,6 +15,7 @@ import { DateInputComponent } from 'src/app/shared/components/date-input/date-in
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
 import { PanelComponent } from "../../shared/components/panel/panel.component";
 import { SelectInputComponent } from 'src/app/shared/components/select-input/select-input.component';
+import { NumberInputComponent } from 'src/app/shared/components/number-input/number-input.component';
 
 
 @NgModule({
@@ -36,6 +37,7 @@ import { SelectInputComponent } from 'src/app/shared/components/select-input/sel
     AlertComponent,
     PanelComponent,
     SelectInputComponent,
+    NumberInputComponent
   ]
 })
 export class PublicationsModule { }

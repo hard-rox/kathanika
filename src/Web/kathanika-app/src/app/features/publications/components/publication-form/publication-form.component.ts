@@ -4,6 +4,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { PublicationFormOutput } from '../../types/publication-form-output';
 import { PublicationType } from 'src/app/graphql/generated/graphql-operations';
 import { BaseFormComponent, ControlsOf } from 'src/app/shared/bases/base-form-component';
+import { KnValidators } from 'src/app/shared/validators/kn-validators';
 
 @Component({
   selector: 'kn-publication-form',
@@ -48,7 +49,7 @@ export class PublicationFormComponent
       authorIds: new FormControl<string[]>([], { nonNullable: true }),
       buyingPrice: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required, Validators.min(0)] }),
       callNumber: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
-      copiesPurchased: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required, Validators.min(0)] }),
+      copiesPurchased: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required, Validators.min(1), KnValidators.integerOnly] }),
     })
   }
 
