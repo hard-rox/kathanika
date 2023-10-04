@@ -39,7 +39,7 @@
     "@graphql-codegen/typescript-apollo-angular": "^4.0.0",
     "@graphql-codegen/typescript-operations": "^4.0.1",
     "@schematics/angular": "^16.2.4",
-    "@types/jasmine": "~4.3.6",
+    "@types/jasmine": "~5.1.0",
     "autoprefixer": "^10.4.16",
     "http-server": "^14.1.1",
     "jasmine-core": "~5.1.1",
