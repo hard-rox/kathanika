@@ -18,7 +18,6 @@ export class PublicationFormComponent
   @Input('publication')
   set publication(input: PublicationFormInput | null | undefined) {
     if (input) {
-      this.isUpdate = true;
       this.formGroup.patchValue({
         ...input,
         authorIds: input.authors,
@@ -31,10 +30,6 @@ export class PublicationFormComponent
   onSubmit = this.submitEventEmitter;
 
   publicationTypes: string[] = Object.values(PublicationType);
-
-  constructor(private formBuilder: FormBuilder) {
-    super();
-  }
 
   protected createFormGroup(): FormGroup<ControlsOf<PublicationFormOutput>> {
     return new FormGroup<ControlsOf<PublicationFormOutput>>({
@@ -52,6 +47,4 @@ export class PublicationFormComponent
       copiesPurchased: new FormControl<number>(0, { nonNullable: true, validators: [Validators.required, Validators.min(1), KnValidators.integerOnly] }),
     })
   }
-
-  isUpdate: boolean = false;
 }

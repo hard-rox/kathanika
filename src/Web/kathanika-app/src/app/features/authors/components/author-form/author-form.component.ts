@@ -12,18 +12,6 @@ export class AuthorFormComponent
   extends BaseFormComponent<AuthorFormOutput>
   implements OnInit {
 
-  protected createFormGroup(): FormGroup<ControlsOf<AuthorFormOutput>> {
-    return new FormGroup<ControlsOf<AuthorFormOutput>>({
-      firstName: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-      lastName: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-      dateOfBirth: new FormControl<Date | null>(null, {nonNullable: true, validators: [Validators.required]}),
-      markedAsDeceased: new FormControl<boolean>(false, { nonNullable: true }),
-      dateOfDeath: new FormControl<Date | null>(null, {nonNullable: false}),
-      nationality: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-      biography: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-    });
-  }
-
   @Input('author')
   set author(input: AuthorFormInput | null | undefined) {
     if (input) {
@@ -43,8 +31,16 @@ export class AuthorFormComponent
   @Output('onSubmit')
   onSubmit = this.submitEventEmitter;
 
-  constructor() {
-    super();
+  protected createFormGroup(): FormGroup<ControlsOf<AuthorFormOutput>> {
+    return new FormGroup<ControlsOf<AuthorFormOutput>>({
+      firstName: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+      lastName: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+      dateOfBirth: new FormControl<Date | null>(null, {nonNullable: true, validators: [Validators.required]}),
+      markedAsDeceased: new FormControl<boolean>(false, { nonNullable: true }),
+      dateOfDeath: new FormControl<Date | null>(null, {nonNullable: false}),
+      nationality: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+      biography: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+    });
   }
 
   isUpdate: boolean = false;

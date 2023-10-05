@@ -1,7 +1,8 @@
-import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
 import { PublisherFormInput } from '../../types/publisher-form-input';
 import { PublisherFormOutput } from '../../types/publisher-form-output';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BaseFormComponent, ControlsOf } from 'src/app/shared/bases/base-form-component';
 
 @Component({
   selector: 'kn-publisher-form',
@@ -9,37 +10,24 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./publisher-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class PublisherFormComponent {
+export class PublisherFormComponent extends BaseFormComponent<PublisherFormOutput> {
+
   @Input('publisher')
   set publisher(input: PublisherFormInput | null | undefined) {
     if (input) {
-      this.isUpdate = true;
-      this.publisherFromGroup.setValue(input);
+      this.formGroup.patchValue(input);
     }
   }
 
   @Output('onSubmit')
-  onSubmit = new EventEmitter<PublisherFormOutput>();
+  onSubmit = this.submitEventEmitter;
 
-  constructor(private formBuilder: FormBuilder) { }
-
-  isUpdate: boolean = false;
-  publisherFromGroup: FormGroup = this.formBuilder.group({
-    name: [null, Validators.required],
-    description: [null],
-    contactInformation: [null]
-  });
-
-  submitForm() {
-    if (!this.publisherFromGroup.valid) {
-      this.publisherFromGroup.markAllAsTouched();
-      return;
-    }
-
-    this.onSubmit.emit(this.publisherFromGroup.value);
-  }
-
-  resetForm() {
-    this.publisherFromGroup.reset();
+  protected createFormGroup(): FormGroup<ControlsOf<PublisherFormOutput>> {
+    const formGroup = new FormGroup<ControlsOf<PublisherFormOutput>>({
+      name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+      description: new FormControl<string | null>(null, { nonNullable: false }),
+      contactInformation: new FormControl<string | null>(null, { nonNullable: false }),
+    });
+    return formGroup;
   }
 }

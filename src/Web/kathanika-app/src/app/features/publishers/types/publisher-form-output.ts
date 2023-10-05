@@ -1,5 +1,5 @@
 export type PublisherFormOutput = {
     name: string;
-    description?: string;
-    contactInformation?: string;
+    description: string | null;
+    contactInformation?: string | null;
 };
