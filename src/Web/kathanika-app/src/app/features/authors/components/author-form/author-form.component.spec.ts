@@ -32,19 +32,6 @@ describe('AuthorFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should set update to "true" on setting author input', () => {
-    component.author = {
-      firstName: 'Hello',
-      lastName: 'World',
-      dateOfBirth: '2023-01-01',
-      dateOfDeath: null,
-      biography: '',
-      nationality: ''
-    }
-
-    expect(component.isUpdate).toBeTrue();
-  });
-
   ///TODO: Move to base class
   it('should patch authorFormGroup on setting author input', () => {
     // const author: AuthorFormOutput = {

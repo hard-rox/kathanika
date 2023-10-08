@@ -1,18 +1,18 @@
 import { EventEmitter } from "@angular/core";
-import { FormGroup, FormControl } from "@angular/forms";
+import { FormGroup, ɵElement } from "@angular/forms";
 
-export abstract class BaseFormComponent<TOutput extends Record<string, any>>{
-  protected formGroup: FormGroup<ControlsOf<TOutput>>;
+export abstract class BaseFormComponent<TOutput>{
+  protected formGroup: FormGroup<{
+    [K in keyof TOutput]: ɵElement<TOutput[K], null>;
+  }>;
   protected submitEventEmitter: EventEmitter<TOutput> = new EventEmitter<TOutput>;
 
-  protected abstract createFormGroup(): FormGroup<ControlsOf<TOutput>>;
-
   constructor() {
-    this.formGroup = this.createFormGroup();
+    this.formGroup = new FormGroup({}) as any;
   }
 
-  submitForm(): void{
-    if (!this.formGroup?.valid) {
+  submitForm(): void {
+    if (!this.formGroup.valid) {
       this.formGroup.markAllAsTouched();
       return;
     }
@@ -24,9 +24,3 @@ export abstract class BaseFormComponent<TOutput extends Record<string, any>>{
     this.formGroup.reset();
   }
 }
-
-export type ControlsOf<T extends Record<string, any>> = {
-  [K in keyof T]: T[K] extends Record<any, any>
-  ? FormGroup<ControlsOf<T[K]>>
-  : FormControl<T[K]>;
-};

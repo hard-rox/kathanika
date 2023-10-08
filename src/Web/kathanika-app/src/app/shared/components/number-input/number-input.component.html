@@ -8,13 +8,14 @@
   && !control?.valid ?
   'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30 focus:ring-theme-fire-red focus:ring-opacity-50'
   : 'border-theme-gunmetal focus:ring-theme-rich-black'" class="peer border p-2" />
-  <span *ngIf="(control?.dirty || control?.touched)
+  <ul class="list-disc ml-4">
+    <li *ngIf="(control?.dirty || control?.touched)
   && control?.hasError('required')" class="text-theme-fire-red">{{label}} is
-    required</span>
-    <ul class="list-disc">
-      <li *ngIf="(!control?.dirty || control?.touched)
+      required</li>
+    <li *ngIf="(control?.dirty || control?.touched)
         && control?.hasError('integerOnly')" class="text-theme-fire-red">{{label}} must not be fractional number</li>
-      <li *ngIf="!(control?.dirty || control?.touched)
-        && control?.hasError('max')" class="text-theme-fire-red">{{label}} {{control?.errors | json}}</li>
-    </ul>
+    <li *ngIf="(control?.dirty || control?.touched)
+      && control?.hasError('min')" class="text-theme-fire-red">{{label}} must be at least
+      {{control?.getError('min')?.min}}</li>
+  </ul>
 </div>

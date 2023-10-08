@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PublisherFormComponent } from '../../components/publisher-form/publisher-form.component';
-import { GetPublisherGQL, PublisherPatchInput, UpdatePublisherGQL } from 'src/app/graphql/generated/graphql-operations';
+import { GetPublisherGQL, UpdatePublisherGQL } from 'src/app/graphql/generated/graphql-operations';
 import { MessageAlertService } from 'src/app/core/services/message-alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublisherFormInput } from '../../types/publisher-form-input';
@@ -70,14 +70,11 @@ export class PublisherUpdateComponent implements OnInit {
 
   onValidFormSubmit(publisherOutput: PublisherFormOutput) {
     this.isPanelLoading = true;
-    const publisherPatch: PublisherPatchInput = {
-      ...publisherOutput
-    };
 
     this.mutation
       .mutate({
         id: this.publisherId as string,
-        publisherPatch: publisherPatch,
+        publisherPatch: publisherOutput,
       })
       .subscribe({
         next: (result) => {

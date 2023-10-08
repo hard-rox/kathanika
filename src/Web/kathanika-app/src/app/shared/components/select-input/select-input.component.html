@@ -9,7 +9,9 @@
   : 'border-theme-gunmetal'" class="peer border p-2 focus:ring-theme-rich-black">
     <ng-content select="option"></ng-content>
   </select>
-  <span *ngIf="(control?.dirty || control?.touched)
-  && control?.hasError('required')" class="text-theme-fire-red">{{label}} is
-    required</span>
+  <ul class="list-disc ml-4">
+    <li *ngIf="(control?.dirty || control?.touched)
+    && control?.hasError('required')" class="text-theme-fire-red">{{label}} is
+      required</li>
+  </ul>
 </div>

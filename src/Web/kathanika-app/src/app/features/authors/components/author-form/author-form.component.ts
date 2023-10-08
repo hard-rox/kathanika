@@ -1,8 +1,8 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 import { AuthorFormInput } from '../../types/author-form-input';
 import { AuthorFormOutput } from '../../types/author-form-output';
-import { BaseFormComponent, ControlsOf } from 'src/app/shared/bases/base-form-component';
+import { BaseFormComponent } from 'src/app/shared/bases/base-form-component';
 @Component({
   selector: 'kn-author-form',
   templateUrl: './author-form.component.html',
@@ -15,7 +15,6 @@ export class AuthorFormComponent
   @Input('author')
   set author(input: AuthorFormInput | null | undefined) {
     if (input) {
-      this.isUpdate = true;
       this.formGroup.patchValue({
         firstName: input.firstName,
         lastName: input.lastName,
@@ -31,19 +30,20 @@ export class AuthorFormComponent
   @Output('onSubmit')
   onSubmit = this.submitEventEmitter;
 
-  protected createFormGroup(): FormGroup<ControlsOf<AuthorFormOutput>> {
-    return new FormGroup<ControlsOf<AuthorFormOutput>>({
-      firstName: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-      lastName: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-      dateOfBirth: new FormControl<Date | null>(null, {nonNullable: true, validators: [Validators.required]}),
-      markedAsDeceased: new FormControl<boolean>(false, { nonNullable: true }),
-      dateOfDeath: new FormControl<Date | null>(null, {nonNullable: false}),
-      nationality: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-      biography: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-    });
+  constructor() {
+    super();
+    this.addControlsToForm();
   }
 
-  isUpdate: boolean = false;
+  private addControlsToForm() {
+    this.formGroup.addControl('firstName', new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }));
+    this.formGroup.addControl('lastName', new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }));
+    this.formGroup.addControl('dateOfBirth', new FormControl<Date | null>(null, { nonNullable: true, validators: [Validators.required] }));
+    this.formGroup.addControl('markedAsDeceased', new FormControl<boolean>(false, { nonNullable: true }));
+    this.formGroup.addControl('dateOfDeath', new FormControl<Date | null>(null, { nonNullable: false }));
+    this.formGroup.addControl('nationality', new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }));
+    this.formGroup.addControl('biography', new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }));
+  }
 
   ngOnInit(): void {
     this.formGroup.valueChanges.subscribe({

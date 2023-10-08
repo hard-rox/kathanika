@@ -8,5 +8,5 @@ export class KnValidators {
 
 function integerOnlyValidator(control: AbstractControl): ValidationErrors | null {
   const isValid: boolean = /^-?\d+$/.test(control.value);
-  return !isValid ? { integerOnly: { value: control.value } } : null;
+  return !isValid ? { integerOnly: true } : null;
 };

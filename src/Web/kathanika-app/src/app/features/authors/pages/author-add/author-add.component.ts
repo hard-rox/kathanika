@@ -24,7 +24,7 @@ export class AuthorAddComponent {
 
   onValidFormSubmit(formValue: AuthorFormOutput) {
     this.isPanelLoading = true;
-    this.gql.mutate({ addAuthorInput: {...formValue} }).subscribe({
+    this.gql.mutate({ addAuthorInput: formValue }).subscribe({
       next: (result) => {
         // console.debug(result);
         if (result.errors || result.data?.addAuthor.errors) {

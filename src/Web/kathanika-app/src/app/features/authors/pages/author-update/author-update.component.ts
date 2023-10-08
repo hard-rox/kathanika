@@ -70,12 +70,11 @@ export class AuthorUpdateComponent implements OnInit {
 
   onValidFormSubmit(authorOutput: AuthorFormOutput) {
     this.isPanelLoading = true;
-    const authorPatch: AuthorPatchInput = { ...authorOutput };
 
     this.mutation
       .mutate({
         id: this.authorId as string,
-        authorPatch: authorPatch,
+        authorPatch: authorOutput,
       })
       .subscribe({
         next: (result) => {
