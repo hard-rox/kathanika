@@ -2,14 +2,10 @@ import { EventEmitter } from "@angular/core";
 import { FormGroup, ɵElement } from "@angular/forms";
 
 export abstract class BaseFormComponent<TOutput>{
-  protected formGroup: FormGroup<{
+  protected readonly formGroup: FormGroup<{
     [K in keyof TOutput]: ɵElement<TOutput[K], null>;
-  }>;
+  }> = new FormGroup({}) as any;
   protected submitEventEmitter: EventEmitter<TOutput> = new EventEmitter<TOutput>;
-
-  constructor() {
-    this.formGroup = new FormGroup({}) as any;
-  }
 
   submitForm(): void {
     if (!this.formGroup.valid) {
