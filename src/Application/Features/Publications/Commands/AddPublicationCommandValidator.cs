@@ -12,6 +12,9 @@ internal sealed class AddPublicationCommandValidator : AbstractValidator<AddPubl
         RuleFor(x => x.PublicationType)
             .NotNull()
             .IsInEnum();
+        RuleFor(x => x.CopiesPurchased)
+            .NotNull()
+            .GreaterThan(0);
 
         RuleFor(x => new { x.Title, x.Isbn, x.PublicationType, x.Edition })
             .MustAsync(async (props, cancellationToken) =>

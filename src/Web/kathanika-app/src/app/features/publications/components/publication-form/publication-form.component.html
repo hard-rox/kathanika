@@ -1,6 +1,7 @@
-<!-- <pre>{{publicationFromGroup.valid| json}}</pre>
-<pre>{{publicationFromGroup.value | json}}</pre> -->
-<form [formGroup]="publicationFromGroup" (ngSubmit)="submitForm()">
+<!-- <pre>{{formGroup.valid| json}}</pre> -->
+<!-- <pre>{{formGroup.value | json}}</pre> -->
+
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
   <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
     <kn-text-input label="Title" formControlName="title" />
     <kn-select-input label="Publication Type" formControlName="publicationType">
@@ -13,9 +14,9 @@
     <kn-text-input label="Edition" formControlName="edition" />
     <kn-text-input label="Language" formControlName="language" />
     <kn-text-input label="Authors" formControlName="authorIds" />
-    <kn-text-input label="Buying Price" formControlName="buyingPrice" />
+    <kn-number-input label="Buying Price" formControlName="buyingPrice" />
     <kn-text-input label="Call Number" formControlName="callNumber" />
-    <kn-text-input label="Copies Available" formControlName="copiesPurchased" />
+    <kn-number-input label="Copies Available" formControlName="copiesPurchased" />
     <kn-textarea-input label="Description" formControlName="description" />
   </div>
   <div class="flex flex-row-reverse mt-2">

@@ -1,6 +1,6 @@
-<!-- <pre>{{authorFromGroup.value | json}}</pre> -->
+<!-- <pre>{{formGroup.value | json}}</pre> -->
 
-<form [formGroup]="authorFromGroup" (ngSubmit)="submitForm()">
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
   <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
     <kn-text-input label="First Name" formControlName="firstName" />
     <kn-text-input label="Last Name" formControlName="lastName" />
@@ -9,7 +9,7 @@
     <kn-textarea-input label="Biography" formControlName="biography" />
     <div>
       <kn-toggle formControlName="markedAsDeceased" label="Mark author as deceased"/>
-      <kn-date-input *ngIf="authorFromGroup.get('markedAsDeceased')?.value" label="Date of death" formControlName="dateOfDeath" />
+      <kn-date-input *ngIf="formGroup.get('markedAsDeceased')?.value" label="Date of death" formControlName="dateOfDeath" />
     </div>
   </div>
   <div class="flex flex-row-reverse mt-2">

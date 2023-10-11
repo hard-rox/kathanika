@@ -3,13 +3,13 @@ import { PublicationType } from "src/app/graphql/generated/graphql-operations";
 export type PublicationFormOutput = {
   title: string;
   publicationType: PublicationType;
-  publishedDate: Date;
+  publishedDate: Date | null;
   publisher: string;
-  isbn: string;
+  isbn: string | null;
   edition: string;
   language: string;
-  description: string;
-  authorIds: [];
+  description: string | null;
+  authorIds: string[] | null;
   buyingPrice: number;
   callNumber: string;
   copiesPurchased: number;

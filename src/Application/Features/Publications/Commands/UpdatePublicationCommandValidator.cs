@@ -11,15 +11,29 @@ internal sealed class UpdatePublicationCommandValidator : AbstractValidator<Upda
             .NotEmpty()
             .MustAsync(publicationRepository.ExistsAsync)
             .WithMessage("Invalid publication");
+        RuleFor(x => new {x.Id, x.Patch})
+            .MustAsync(async (props, cancellationToken) =>
+            {
+                Expression<Func<Publication, bool>> expression = p =>
+                    p.Id != props.Id
+                    && p.Title == props.Patch.Title
+                    && p.Isbn == props.Patch.Isbn
+                    && p.PublicationType == props.Patch.PublicationType
+                    && p.Edition == props.Patch.Edition;
+                bool isDuplicate = await publicationRepository.ExistsAsync(expression, cancellationToken);
+                return !isDuplicate;
+            })
+            .WithName("Title, ISBN, PublicationType, Edition")
+            .WithMessage("Duplicate publication information {PropertyName}. Consider updating existing publication's 'Copies Available' field.");
 
         RuleFor(x => x.Patch)
-            .SetValidator(new PublicationPatchValidator(publicationRepository));
+            .SetValidator(new PublicationPatchValidator());
     }
 }
 
 internal sealed class PublicationPatchValidator : AbstractValidator<UpdatePublicationCommand.PublicationPatch>
 {
-    public PublicationPatchValidator(IPublicationRepository publicationRepository)
+    public PublicationPatchValidator()
     {
         RuleFor(x => x.Title)
             .NotNull()
@@ -27,19 +41,8 @@ internal sealed class PublicationPatchValidator : AbstractValidator<UpdatePublic
         RuleFor(x => x.PublicationType)
             .NotNull()
             .IsInEnum();
-
-        RuleFor(x => new { x.Title, x.Isbn, x.PublicationType, x.Edition })
-            .MustAsync(async (props, cancellationToken) =>
-            {
-                Expression<Func<Publication, bool>> expression = p =>
-                    p.Title == props.Title
-                    && p.Isbn == props.Isbn
-                    && p.PublicationType == props.PublicationType
-                    && p.Edition == props.Edition;
-                bool isDuplicate = await publicationRepository.ExistsAsync(expression, cancellationToken);
-                return !isDuplicate;
-            })
-            .WithName("Title, ISBN, PublicationType, Edition")
-            .WithMessage("Duplicate publication information {PropertyName}. Consider updating existing publication's 'Copies Available' field.");
+        RuleFor(x => x.CopiesAvailable)
+            .NotNull()
+            .GreaterThan(0);
     }
 }

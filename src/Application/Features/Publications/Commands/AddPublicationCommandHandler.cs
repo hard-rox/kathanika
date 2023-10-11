@@ -14,7 +14,7 @@ internal sealed class AddPublicationCommandHandler
 
     public async Task<Publication> Handle(AddPublicationCommand request, CancellationToken cancellationToken)
     {
-        var authors = await authorRepository.ListAllAsync(x => request.AuthorIds.Contains(x.Id));
+        IReadOnlyList<Author> authors = await authorRepository.ListAllAsync(x => request.AuthorIds.Contains(x.Id), cancellationToken);
 
         Publication publication = Publication.Create(
             request.Title,
@@ -26,9 +26,11 @@ internal sealed class AddPublicationCommandHandler
             request.BuyingPrice,
             request.CopiesPurchased,
             request.CallNumber,
+            string.Empty, //TODO: Should be in request...
+            string.Empty,
             authors);
 
-        var addedPublication = await publicationRepository.AddAsync(publication);
+        Publication addedPublication = await publicationRepository.AddAsync(publication, cancellationToken);
         return addedPublication;
     }
 }

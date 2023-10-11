@@ -1,4 +1,7 @@
-<form [formGroup]="publisherFromGroup" (ngSubmit)="submitForm()">
+<!-- <pre>{{formGroup.valid}}</pre>
+<pre>{{formGroup.value | json}}</pre> -->
+
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
     <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
         <kn-text-input label="Name" formControlName="name" />
         <kn-text-input label="Description" formControlName="description" />

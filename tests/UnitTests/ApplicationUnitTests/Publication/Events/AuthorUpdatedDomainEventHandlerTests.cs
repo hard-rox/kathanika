@@ -12,7 +12,7 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
     private readonly ILogger<AuthorUpdatedDomainEventHandler> _nullLogger = new NullLogger<AuthorUpdatedDomainEventHandler>();
 
     [Fact]
-    public async void Handler_Should_Return_When_No_Author_Found()
+    public async Task Handler_Should_Return_When_No_Author_Found()
     {
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
@@ -26,7 +26,7 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
     }
 
     [Fact]
-    public async void Handler_Should_Update_All_Publication_When_Author_Found()
+    public async Task Handler_Should_Update_All_Publication_When_Author_Found()
     {
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
@@ -52,6 +52,8 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
                 factoryMethod.Random.Number(1000),
                 factoryMethod.Random.Number(1, 5),
                 factoryMethod.Random.AlphaNumeric(5),
+                factoryMethod.Lorem.Sentences(5),
+                factoryMethod.Locale,
                 null
             )).GenerateBetween(2, 10);
 

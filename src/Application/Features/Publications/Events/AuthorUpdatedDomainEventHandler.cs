@@ -16,12 +16,13 @@ internal sealed class AuthorUpdatedDomainEventHandler : INotificationHandler<Aut
     }
     public async Task Handle(AuthorUpdatedDomainEvent notification, CancellationToken cancellationToken)
     {
-        Author? author = await _authorRepository.GetByIdAsync(notification.AuthorId);
+        //TODO: Logging and optimize performance in loop.
+        Author? author = await _authorRepository.GetByIdAsync(notification.AuthorId, cancellationToken);
         
         if (author is null) return;
 
         IReadOnlyList<Publication> publications = await _publicationRepository
-            .ListAllByAuthorIdAsync(notification.AuthorId);
+            .ListAllByAuthorIdAsync(notification.AuthorId, cancellationToken);
         
         foreach (Publication publication in publications)
         {
@@ -29,7 +30,7 @@ internal sealed class AuthorUpdatedDomainEventHandler : INotificationHandler<Aut
 
             publication.AddOrUpdateAuthors(author);
 
-            await _publicationRepository.UpdateAsync(publication);
+            await _publicationRepository.UpdateAsync(publication, cancellationToken);
         }
     }
 }

@@ -24,7 +24,7 @@ export class PublisherAddComponent {
     this.isPanelLoading = true;
     this.gql.mutate({ addPublisherInput: formValue }).subscribe({
       next: (result) => {
-        console.debug(result);
+        // console.debug(result);
         if (result.errors || result.data?.addPublisher.errors) {
           this.errors = [];
           result.data?.addPublisher.errors?.forEach((x) =>

@@ -10,7 +10,7 @@ namespace Kathanika.Infrastructure.Persistence;
 
 internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 {
-    private readonly string _collectionName = string.Empty;
+    private readonly string _collectionName;
     private readonly IMongoCollection<OutboxMessage> _outboxMessageCollection;
     protected readonly IMongoCollection<T> _collection;
     protected readonly ILogger<IRepository<T>> _logger;

@@ -57,7 +57,7 @@ describe('BasePaginatedListComponent', () => {
     router = TestBed.inject(Router);
   });
 
-  it('hould change _queryVariables on changePage', () => {
+  it('should change _queryVariables on changePage', () => {
     let queryVariables = component.queryVariables;
     const page = 2;
 

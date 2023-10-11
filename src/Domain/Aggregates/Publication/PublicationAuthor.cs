@@ -4,9 +4,9 @@ namespace Kathanika.Domain.Aggregates;
 
 public sealed class PublicationAuthor : ValueObject
 {
-    public string Id { get; init; } = string.Empty;
-    public string FirstName { get; init; } = string.Empty;
-    public string LastName { get; init; } = string.Empty;
+    public string Id { get; init; }
+    public string FirstName { get; init; }
+    public string LastName { get; init; }
 
     internal PublicationAuthor(
         string id,

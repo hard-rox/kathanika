@@ -18,7 +18,7 @@ internal sealed class AddPublisherCommandHandler
             request.ContactInformation
             );
 
-        Publisher addPublisher = await publisherRepository.AddAsync(publisher);
+        Publisher addPublisher = await publisherRepository.AddAsync(publisher, cancellationToken);
         return addPublisher;
     }
 }

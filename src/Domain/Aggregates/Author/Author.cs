@@ -6,12 +6,12 @@ namespace Kathanika.Domain.Aggregates;
 
 public sealed class Author : AggregateRoot
 {
-    public string FirstName { get; private set; } = string.Empty;
-    public string LastName { get; private set; } = string.Empty;
-    public DateOnly DateOfBirth { get; private set; } = DateOnly.MinValue;
+    public string FirstName { get; private set; }
+    public string LastName { get; private set; }
+    public DateOnly DateOfBirth { get; private set; }
     public DateOnly? DateOfDeath { get; private set; }
-    public string Nationality { get; private set; } = string.Empty;
-    public string Biography { get; private set; } = string.Empty;
+    public string Nationality { get; private set; }
+    public string Biography { get; private set; }
 
     public string FullName => $"{FirstName} {LastName}";
 

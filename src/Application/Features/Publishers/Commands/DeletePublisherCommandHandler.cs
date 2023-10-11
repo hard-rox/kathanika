@@ -5,20 +5,18 @@ namespace Kathanika.Application.Features.Publishers.Commands;
 internal sealed class DeletePublisherCommandHandler : IRequestHandler<DeletePublisherCommand>
 {
     private readonly IPublisherRepository publisherRepository;
-    private readonly IPublicationRepository publicationRepository;
 
-    public DeletePublisherCommandHandler(IPublisherRepository publisherRepository, IPublicationRepository publicationRepository)
+    public DeletePublisherCommandHandler(IPublisherRepository publisherRepository)
     {
         this.publisherRepository = publisherRepository;
-        this.publicationRepository = publicationRepository;
     }
 
     public async Task Handle(DeletePublisherCommand request, CancellationToken cancellationToken)
     {
-        _ = await publisherRepository.GetByIdAsync(request.Id) ??
+        _ = await publisherRepository.GetByIdAsync(request.Id, cancellationToken) ??
         throw new NotFoundWithTheIdException(typeof(Publisher),request.Id);
 
-        ///TODO: var hasPublication = (await publicationRepository.ListAllAsync(x => x.Publisher))
-        await publisherRepository.DeleteAsync(request.Id);
+        //TODO: var hasPublication = (await publicationRepository.ListAllAsync(x => x.Publisher))
+        await publisherRepository.DeleteAsync(request.Id, cancellationToken);
     }
 }

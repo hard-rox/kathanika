@@ -11,15 +11,19 @@
     @apply border-b border-theme-rich-black
   }
 
-  th{
+  th {
     @apply px-6 py-3
   }
 
-  td{
+  td {
     @apply px-6
   }
 
-  input[type="submit"]{
+  input, select, textarea {
+    @apply border p-2
+  }
+
+  input[type="submit"] {
     @apply bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black px-4 py-2 text-white
   }
 }

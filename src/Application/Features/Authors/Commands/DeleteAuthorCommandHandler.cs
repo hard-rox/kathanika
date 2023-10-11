@@ -15,12 +15,12 @@ public sealed class DeleteAuthorCommandHandler : IRequestHandler<DeleteAuthorCom
 
     public async Task Handle(DeleteAuthorCommand request, CancellationToken cancellationToken)
     {
-        _ = await authorRepository.GetByIdAsync(request.Id) ??
+        _ = await authorRepository.GetByIdAsync(request.Id, cancellationToken) ??
             throw new NotFoundWithTheIdException(typeof(Author), request.Id);
 
-        bool hasPublication = (await publicationRepository.CountAsync(x => x.Authors.Any(y => y.Id == request.Id))) > 0;
+        bool hasPublication = (await publicationRepository.CountAsync(x => x.Authors.Any(y => y.Id == request.Id), cancellationToken)) > 0;
         if(hasPublication) throw new DeletionFailedException(typeof(Author), "This author has multiple publications in this library.");
 
-        await authorRepository.DeleteAsync(request.Id);
+        await authorRepository.DeleteAsync(request.Id, cancellationToken);
     }
 }
