@@ -1,8 +1,8 @@
 import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
 import { PublisherFormInput } from '../../types/publisher-form-input';
 import { PublisherFormOutput } from '../../types/publisher-form-output';
-import { FormControl, Validators } from '@angular/forms';
-import { BaseFormComponent } from 'src/app/shared/bases/base-form-component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { BaseFormComponent, FormGroupModel } from 'src/app/shared/bases/base-form-component';
 
 @Component({
   selector: 'kn-publisher-form',
@@ -22,14 +22,12 @@ export class PublisherFormComponent extends BaseFormComponent<PublisherFormOutpu
   @Output('onSubmit')
   onSubmit = this.submitEventEmitter;
 
-  constructor() {
-    super();
-    this.addControlsToForm();
-  }
-
-  private addControlsToForm() {
-    this.formGroup.addControl('name', new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }));
-    this.formGroup.addControl('description', new FormControl<string | null>(null, { nonNullable: false }));
-    this.formGroup.addControl('contactInformation', new FormControl<string | null>(null, { nonNullable: false }));
+  protected createFormGroup(): FormGroupModel<PublisherFormOutput> {
+    const group = new FormGroup({
+      name: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
+      description: new FormControl<string | null>(null, { nonNullable: false }),
+      contactInformation: new FormControl<string | null>(null, { nonNullable: false }),
+    });
+    return group;
   }
 }

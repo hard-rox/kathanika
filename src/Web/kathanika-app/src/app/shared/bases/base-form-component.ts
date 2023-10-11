@@ -1,11 +1,17 @@
 import { EventEmitter } from "@angular/core";
-import { FormGroup, ɵElement } from "@angular/forms";
+import { FormGroup, FormControl } from "@angular/forms";
 
 export abstract class BaseFormComponent<TOutput>{
   protected readonly formGroup: FormGroup<{
-    [K in keyof TOutput]: ɵElement<TOutput[K], null>;
-  }> = new FormGroup({}) as any;
+    [K in keyof TOutput]: FormControl<TOutput[K]>;
+  }>;
   protected submitEventEmitter: EventEmitter<TOutput> = new EventEmitter<TOutput>;
+
+  protected abstract createFormGroup(): FormGroupModel<TOutput>;
+
+  constructor() {
+    this.formGroup = this.createFormGroup();
+  }
 
   submitForm(): void {
     if (!this.formGroup.valid) {
@@ -20,3 +26,7 @@ export abstract class BaseFormComponent<TOutput>{
     this.formGroup.reset();
   }
 }
+
+export interface FormGroupModel<TOutput> extends FormGroup<{
+  [K in keyof TOutput]: FormControl<TOutput[K]>;
+}> { }
