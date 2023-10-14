@@ -8,11 +8,11 @@ describe('MultiselectAutocompleteComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [MultiselectAutocompleteComponent]
+      declarations: [MultiselectAutocompleteComponent]
     });
     fixture = TestBed.createComponent(MultiselectAutocompleteComponent);
     component = fixture.componentInstance;
-    fixture.detectChanges();
+    // fixture.detectChanges();
   });
 
   it('should create', () => {

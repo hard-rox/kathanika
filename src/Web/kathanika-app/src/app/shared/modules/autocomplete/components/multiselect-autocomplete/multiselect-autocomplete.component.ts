@@ -20,10 +20,10 @@ export class MultiselectAutocompleteComponent
   extends BaseInputComponent<string[]>
   implements OnInit, AfterContentInit {
 
-  private _selectedValues: string[] = [];
   private _searchInputSubject: Subject<string> = new Subject<string>();
 
   protected searchInputValue: string = '';
+  protected selectedOptions: AutocompleteOptionComponent[] = [];
 
   @Input('label')
   set labelValue(value: string) {
@@ -45,18 +45,19 @@ export class MultiselectAutocompleteComponent
   }
 
   private addSubscriberToOptions() {
-    this.options.map(opt => {
-      if (!opt.selected.observed) {
+    this.options
+      .filter(opt => !opt.selected.observed)
+      .map(opt => {
         opt.selected.subscribe({
           next: (selectedOptionValue: string) => {
-            if (this._selectedValues?.findIndex(x => x == selectedOptionValue) < 0) {
-              this._selectedValues.push(selectedOptionValue);
-              this.onModelChange(this._selectedValues);
-            }
+            if (this.selectedOptions?.findIndex(x => x.value == selectedOptionValue) >= 0)
+              return;
+
+            this.selectedOptions.push(opt);
+            this.onModelChange(this.selectedOptions.map(x => x.value ?? ''));
           }
         });
-      }
-    });
+      });
   }
 
   protected onInputChange() {
@@ -77,7 +78,7 @@ export class MultiselectAutocompleteComponent
   ngAfterContentInit(): void {
     this.addSubscriberToOptions();
     this.options.changes.subscribe(_ => {
-      // console.debug(_)
+      console.debug(_)
       this.addSubscriberToOptions();
     });
   }
