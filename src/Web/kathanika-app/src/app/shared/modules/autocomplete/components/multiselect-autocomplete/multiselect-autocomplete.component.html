@@ -1,0 +1,26 @@
+<!-- <pre>{{options.length | json}}</pre> -->
+
+<div class="flex flex-col">
+  <label [for]="control?.name">
+    {{label}}
+    <span *ngIf="isRequired()" class="text-theme-fire-red">*</span>
+  </label>
+  <div class="group relative">
+    <input type="text" autocomplete="off" [id]="control?.name+'-search'" [(ngModel)]="searchInputValue"
+      (input)="onInputChange()" [placeholder]="placeholder.length > 0? placeholder : label" [disabled]="isDisabled"
+      (blur)="onBlur()" [ngClass]="(control?.dirty || control?.touched)
+  && !control?.valid ?
+  'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+  : isDisabled ? 'border-theme-davys-gray border-opacity-50 bg-gray-200': 'border-theme-gunmetal'"
+      class="peer w-full" />
+    <div tabindex="0" *ngIf="options && options.length > 0"
+      class="z-10 w-full border bg-white invisible shadow-md absolute top-12 transition-all opacity-0 flex flex-col group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
+      <ng-content select="kn-autocomplete-option"></ng-content>
+    </div>
+  </div>
+  <ul class="list-disc ml-4">
+    <li *ngIf="(control?.dirty || control?.touched)
+    && control?.hasError('required')" class="text-theme-fire-red">{{label}} is
+      required</li>
+  </ul>
+</div>

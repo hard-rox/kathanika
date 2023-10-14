@@ -1,8 +1,8 @@
 import { BaseQueryComponent } from "./base-query-component";
 import { ActivatedRoute, Params, Router } from "@angular/router";
+import { OperationVariables } from "@apollo/client/core";
 import { Query } from "apollo-angular";
 import { Subject, debounceTime, distinctUntilChanged, map } from "rxjs";
-import { PaginationQueryVariables } from "../types/pagination-query-variables";
 
 export abstract class BasePaginatedListComponent<TQuery, TQueryVariables extends PaginationQueryVariables>
   extends BaseQueryComponent<TQuery, TQueryVariables> {
@@ -91,4 +91,9 @@ export abstract class BasePaginatedListComponent<TQuery, TQueryVariables extends
     this.queryRef.refetch(this.queryVariables);
     this.setQueryParams();
   }
+}
+
+export interface PaginationQueryVariables extends OperationVariables {
+  skip: number,
+  take: number
 }

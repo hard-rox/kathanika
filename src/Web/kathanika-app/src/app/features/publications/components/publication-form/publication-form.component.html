@@ -1,5 +1,5 @@
 <!-- <pre>{{formGroup.valid| json}}</pre> -->
-<!-- <pre>{{formGroup.value | json}}</pre> -->
+<pre>{{formGroup.value | json}}</pre>
 
 <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
   <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
@@ -13,7 +13,14 @@
     <kn-text-input label="ISBN" formControlName="isbn" />
     <kn-text-input label="Edition" formControlName="edition" />
     <kn-text-input label="Language" formControlName="language" />
-    <kn-text-input label="Authors" formControlName="authorIds" />
+    <kn-multiselect-autocomplete label="Authors" formControlName="authorIds" (searchTextChanged)="filter($event)">
+      <kn-autocomplete-option *ngFor="let author of (authorSearchQueryRef.valueChanges | async)?.data?.authors?.items"
+        [value]="author.id">
+        <div class="flex space-x-2">
+          <span class="my-auto">{{author.fullName}}</span>
+        </div>
+      </kn-autocomplete-option>
+    </kn-multiselect-autocomplete>
     <kn-number-input label="Buying Price" formControlName="buyingPrice" />
     <kn-text-input label="Call Number" formControlName="callNumber" />
     <kn-number-input label="Copies Available" formControlName="copiesPurchased" />
