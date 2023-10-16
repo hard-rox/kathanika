@@ -1,4 +1,4 @@
-import { AfterContentInit, Component, ContentChildren, EventEmitter, Inject, Injector, Input, OnInit, Output, QueryList } from '@angular/core';
+import { AfterContentInit, Component, ContentChildren, ElementRef, EventEmitter, Inject, Injector, Input, OnInit, Output, QueryList, ViewChild } from '@angular/core';
 import { BaseInputComponent } from '../../../../bases/base-input-component';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { AutocompleteOptionComponent } from '../autocomplete-option/autocomplete-option.component';
@@ -20,11 +20,6 @@ export class MultiselectAutocompleteComponent
   extends BaseInputComponent<string[]>
   implements OnInit, AfterContentInit {
 
-  private _searchInputSubject: Subject<string> = new Subject<string>();
-
-  protected searchInputValue: string = '';
-  protected selectedOptions: AutocompleteOptionComponent[] = [];
-
   @Input('label')
   set labelValue(value: string) {
     this.label = value;
@@ -39,6 +34,11 @@ export class MultiselectAutocompleteComponent
 
   @ContentChildren(AutocompleteOptionComponent) protected options: QueryList<AutocompleteOptionComponent>
     = new QueryList<AutocompleteOptionComponent>(false);
+
+  private _searchInputSubject: Subject<string> = new Subject<string>();
+
+  protected searchInputValue: string = '';
+  protected selectedOptions: AutocompleteOptionComponent[] = [];
 
   constructor(@Inject(Injector) injector: Injector) {
     super(injector);
@@ -60,10 +60,6 @@ export class MultiselectAutocompleteComponent
       });
   }
 
-  protected onInputChange() {
-    this._searchInputSubject.next(this.searchInputValue);
-  }
-
   ngOnInit(): void {
     this.init();
     this.value = [];
@@ -78,8 +74,19 @@ export class MultiselectAutocompleteComponent
   ngAfterContentInit(): void {
     this.addSubscriberToOptions();
     this.options.changes.subscribe(_ => {
-      console.debug(_)
       this.addSubscriberToOptions();
     });
+  }
+
+  protected onInputChange() {
+    this._searchInputSubject.next(this.searchInputValue);
+  }
+
+  protected removeSelection(item: AutocompleteOptionComponent) {
+    const itemIndex = this.selectedOptions.indexOf(item);
+    if (itemIndex <= -1) return;
+
+    this.selectedOptions.splice(itemIndex, 1);
+    this.onModelChange(this.selectedOptions.map(x => x.value ?? ''));
   }
 }
