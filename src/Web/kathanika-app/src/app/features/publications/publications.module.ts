@@ -16,7 +16,7 @@ import { AlertComponent } from 'src/app/shared/components/alert/alert.component'
 import { PanelComponent } from "../../shared/components/panel/panel.component";
 import { SelectInputComponent } from 'src/app/shared/components/select-input/select-input.component';
 import { NumberInputComponent } from 'src/app/shared/components/number-input/number-input.component';
-
+import { AutocompleteModule } from 'src/app/shared/modules/autocomplete/autocomplete.module';
 
 @NgModule({
   declarations: [
@@ -37,7 +37,8 @@ import { NumberInputComponent } from 'src/app/shared/components/number-input/num
     AlertComponent,
     PanelComponent,
     SelectInputComponent,
-    NumberInputComponent
+    NumberInputComponent,
+    AutocompleteModule
   ]
 })
 export class PublicationsModule { }

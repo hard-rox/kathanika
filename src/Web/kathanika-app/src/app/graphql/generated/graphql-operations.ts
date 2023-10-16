@@ -31,6 +31,7 @@ export type AddAuthorInput = {
   dateOfDeath?: InputMaybe<Scalars['Date']['input']>;
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
+  markedAsDeceased?: Scalars['Boolean']['input'];
   nationality: Scalars['String']['input'];
 };
 
@@ -48,6 +49,7 @@ export type AddPublicationInput = {
   buyingPrice: Scalars['Decimal']['input'];
   callNumber: Scalars['String']['input'];
   copiesPurchased: Scalars['Int']['input'];
+  edition: Scalars['String']['input'];
   isbn: Scalars['String']['input'];
   publicationType: PublicationType;
   publishedDate: Scalars['Date']['input'];
@@ -373,6 +375,7 @@ export type PublicationPatchInput = {
   buyingPrice?: InputMaybe<Scalars['Decimal']['input']>;
   callNumber: Scalars['String']['input'];
   copiesAvailable?: InputMaybe<Scalars['Int']['input']>;
+  edition?: InputMaybe<Scalars['String']['input']>;
   isbn: Scalars['String']['input'];
   publicationType: PublicationType;
   publishedDate?: InputMaybe<Scalars['Date']['input']>;
@@ -651,6 +654,13 @@ export type GetAuthorsQueryVariables = Exact<{
 
 export type GetAuthorsQuery = { __typename?: 'Queries', authors?: { __typename?: 'AuthorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Author', id: string, firstName: string, lastName: string, nationality: string }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
+export type SearchAuthorsQueryVariables = Exact<{
+  filterText: Scalars['String']['input'];
+}>;
+
+
+export type SearchAuthorsQuery = { __typename?: 'Queries', authors?: { __typename?: 'AuthorsCollectionSegment', items?: Array<{ __typename?: 'Author', id: string, fullName: string }> | null } | null };
+
 export type GetAuthorQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
@@ -901,6 +911,32 @@ export const GetAuthorsDocument = gql`
   })
   export class GetAuthorsGQL extends Apollo.Query<GetAuthorsQuery, GetAuthorsQueryVariables> {
     document = GetAuthorsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SearchAuthorsDocument = gql`
+    query searchAuthors($filterText: String!) {
+  authors(
+    skip: 0
+    take: 5
+    where: {or: [{firstName: {contains: $filterText}}, {lastName: {contains: $filterText}}]}
+    order: {firstName: ASC}
+  ) {
+    items {
+      id
+      fullName
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SearchAuthorsGQL extends Apollo.Query<SearchAuthorsQuery, SearchAuthorsQueryVariables> {
+    document = SearchAuthorsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

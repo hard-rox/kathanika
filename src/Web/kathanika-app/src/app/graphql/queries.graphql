@@ -19,6 +19,25 @@ query getAuthors(
   }
 }
 
+query searchAuthors($filterText: String!) {
+  authors(
+    skip: 0
+    take: 5
+    where: {
+      or: [
+        { firstName: { contains: $filterText } }
+        { lastName: { contains: $filterText } }
+      ]
+    }
+    order: { firstName: ASC }
+  ) {
+    items {
+      id
+      fullName
+    }
+  }
+}
+
 query getAuthor($id: String!) {
   author(id: $id) {
     id

@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from "@angular/core/testing";
-import { BasePaginatedListComponent } from "./base-paginated-list-component";
+import { BasePaginatedListComponent, PaginationQueryVariables } from "./base-paginated-list-component";
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Component } from "@angular/core";
 import { mockQueryGql } from "src/test-utils/gql-test-utils";
 import { of } from "rxjs";
 import { Query } from "apollo-angular";
-import { PaginationQueryVariables } from "../types/pagination-query-variables";
 
 @Component({})
 class BasePaginatedListTestingComponent extends BasePaginatedListComponent<any, any>{

@@ -23,7 +23,7 @@ export abstract class BaseInputComponent<TValueType> implements ControlValueAcce
     this.onTouched();
   }
 
-  protected onModelChange(value: any) {
+  protected onModelChange(value: TValueType) {
     this.value = value;
     this.onChange(value);
     this.onTouched();

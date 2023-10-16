@@ -1,10 +1,11 @@
-import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from '@angular/core';
 import { PublicationFormInput } from '../../types/publication-form-input';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { PublicationFormOutput } from '../../types/publication-form-output';
-import { PublicationType } from 'src/app/graphql/generated/graphql-operations';
+import { GetAuthorsGQL, GetAuthorsQuery, GetAuthorsQueryVariables, PublicationType, SearchAuthorsGQL, SearchAuthorsQuery, SearchAuthorsQueryVariables } from 'src/app/graphql/generated/graphql-operations';
 import { BaseFormComponent, FormGroupModel } from 'src/app/shared/bases/base-form-component';
 import { KnValidators } from 'src/app/shared/validators/kn-validators';
+import { QueryRef } from 'apollo-angular';
 
 @Component({
   selector: 'kn-publication-form',
@@ -29,12 +30,18 @@ export class PublicationFormComponent
   @Output('onSubmit')
   onSubmit = this.submitEventEmitter;
 
-  publicationTypes: string[] = Object.values(PublicationType);
+  protected publicationTypes: string[] = Object.values(PublicationType);
+  protected authorSearchQueryRef: QueryRef<SearchAuthorsQuery, SearchAuthorsQueryVariables>;
 
-  protected createFormGroup(): FormGroupModel<PublicationFormOutput> | any{
-    return new FormGroup({
+  constructor(authorsGql: SearchAuthorsGQL) {
+    super();
+    this.authorSearchQueryRef = authorsGql.watch({ filterText: '' });
+  }
+
+  protected createFormGroup(): FormGroupModel<PublicationFormOutput> {
+    const group: FormGroupModel<PublicationFormOutput> = new FormGroup({
       title: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
-      publicationType: new FormControl<PublicationType | null>(null, { nonNullable: true, validators: [Validators.required] }),
+      publicationType: new FormControl<PublicationType | any>(null, { nonNullable: true, validators: [Validators.required] }),
       publishedDate: new FormControl<Date | null>(null, { nonNullable: true, validators: [Validators.required] }),
       publisher: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
       isbn: new FormControl<string | null>(null, { nonNullable: false }),
@@ -42,9 +49,17 @@ export class PublicationFormComponent
       language: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
       description: new FormControl<string | null>(null, { nonNullable: false }),
       authorIds: new FormControl<string[]>([], { nonNullable: true }),
-      buyingPrice: new FormControl<number | null>(null, { nonNullable: true, validators: [Validators.required, Validators.min(0)] }),
+      buyingPrice: new FormControl<number | any>(null, { nonNullable: true, validators: [Validators.required, Validators.min(0)] }),
       callNumber: new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }),
-      copiesPurchased: new FormControl<number | null>(null, { nonNullable: true, validators: [Validators.required, Validators.min(1), KnValidators.integerOnly] }),
+      copiesPurchased: new FormControl<number | any>(null, { nonNullable: true, validators: [Validators.required, Validators.min(1), KnValidators.integerOnly] }),
     });
+    return group;
+  }
+
+  protected filter(filterText: string) {
+    const queryVariable: SearchAuthorsQueryVariables = {
+      filterText: filterText
+    };
+    this.authorSearchQueryRef.refetch(queryVariable);
   }
 }

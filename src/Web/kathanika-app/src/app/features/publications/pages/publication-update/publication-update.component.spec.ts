@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublicationUpdateComponent } from './publication-update.component';
-import { GetPublicationGQL, UpdatePublicationGQL } from 'src/app/graphql/generated/graphql-operations';
+import { GetPublicationGQL, SearchAuthorsGQL, UpdatePublicationGQL } from 'src/app/graphql/generated/graphql-operations';
 import { mockMutationGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
@@ -13,6 +13,7 @@ import { DateInputComponent } from 'src/app/shared/components/date-input/date-in
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 import { NumberInputComponent } from 'src/app/shared/components/number-input/number-input.component';
+import { AutocompleteModule } from 'src/app/shared/modules/autocomplete/autocomplete.module';
 
 describe('PublicationUpdateComponent', () => {
   let component: PublicationUpdateComponent;
@@ -30,7 +31,8 @@ describe('PublicationUpdateComponent', () => {
         SelectInputComponent,
         DateInputComponent,
         TextareaInputComponent,
-        NumberInputComponent
+        NumberInputComponent,
+        AutocompleteModule
       ],
       providers: [
         {
@@ -40,6 +42,10 @@ describe('PublicationUpdateComponent', () => {
         {
           provide: UpdatePublicationGQL,
           useValue: mockMutationGql
+        },
+        {
+          provide: SearchAuthorsGQL,
+          useValue: mockQueryGql,
         }
       ]
     });
