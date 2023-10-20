@@ -11,6 +11,12 @@ updates:
         update-types:
         - "minor"
         - "patch"
+      fluentValidation-deps:
+        patterns:
+          - "FluentValidation*"
+        update-types:
+        - "minor"
+        - "patch"
       
   - package-ecosystem: "npm"
     directory: "/src/Web/kathanika-app"
