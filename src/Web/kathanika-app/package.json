@@ -21,7 +21,7 @@
     "@angular/platform-browser": "^16.2.10",
     "@angular/platform-browser-dynamic": "^16.2.10",
     "@angular/router": "^16.2.10",
-    "@angular/service-worker": "^16.2.10",
+    "@angular/service-worker": "^16.2.11",
     "@apollo/client": "^3.8.6",
     "apollo-angular": "^5.0.2",
     "graphql": "^16",
