@@ -2,9 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublicationFormComponent } from './publication-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AutocompleteModule } from 'src/app/shared/modules/autocomplete/autocomplete.module';
 import { SearchAuthorsGQL } from 'src/app/graphql/generated/graphql-operations';
 import { mockQueryGql } from 'src/test-utils/gql-test-utils';
+import { SearchbarModule } from 'src/app/shared/modules/searchbar/searchbar.module';
+import { ChipComponent } from 'src/app/shared/components/chip/chip.component';
 
 describe('PublicationFormComponent', () => {
   let component: PublicationFormComponent;
@@ -13,7 +14,11 @@ describe('PublicationFormComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [PublicationFormComponent],
-      imports: [ReactiveFormsModule, AutocompleteModule],
+      imports: [
+        ReactiveFormsModule,
+        SearchbarModule,
+        ChipComponent
+      ],
       providers: [
         {
           provide: SearchAuthorsGQL,

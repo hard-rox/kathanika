@@ -64,7 +64,7 @@ export class PublicationUpdateComponent {
                 buyingPrice: result.data.publication.buyingPrice,
                 copiesAvailable: result.data.publication.copiesAvailable,
                 description: result.data.publication.description,
-                authors: result.data.publication.authors.map(x => x.id)
+                authors: result.data.publication.authors
               };
               this.isPanelLoading = false;
             }

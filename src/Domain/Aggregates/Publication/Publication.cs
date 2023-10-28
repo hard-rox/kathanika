@@ -85,7 +85,7 @@ public sealed class Publication : AggregateRoot
         {
             _authors = new()
         };
-        
+
         if (authors is not null)
         {
             foreach (Author author in authors)
@@ -121,15 +121,25 @@ public sealed class Publication : AggregateRoot
         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : CallNumber;
     }
 
-    public void AddOrUpdateAuthors(params Author[] authors)
+    public void UpdateAuthors(Author[] authors)
     {
+        _authors.Clear();
+
         foreach (Author author in authors)
         {
-            _authors.RemoveAll(x => x.Id == author.Id);
-
             _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
                     author.LastName));
         }
+    }
+
+    public void UpdateAuthorInfo(Author author)
+    {
+        PublicationAuthor? publicationAuthor = _authors.FirstOrDefault(x => x.Id == author.Id);
+        if (publicationAuthor is null) return;
+        _authors.Remove(publicationAuthor);
+        _authors.Add(new PublicationAuthor(author.Id,
+                    author.FirstName,
+                    author.LastName));
     }
 }

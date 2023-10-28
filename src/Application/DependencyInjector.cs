@@ -1,5 +1,4 @@
 using System.Reflection;
-using FluentValidation;
 using Kathanika.Application.Behaviours;
 using Microsoft.Extensions.DependencyInjection;
 

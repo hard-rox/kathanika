@@ -6,6 +6,7 @@ import { GetAuthorsGQL, GetAuthorsQuery, GetAuthorsQueryVariables, PublicationTy
 import { BaseFormComponent, FormGroupModel } from 'src/app/shared/bases/base-form-component';
 import { KnValidators } from 'src/app/shared/validators/kn-validators';
 import { QueryRef } from 'apollo-angular';
+import { PublicationAuthor } from '../../types/publication-author';
 
 @Component({
   selector: 'kn-publication-form',
@@ -19,9 +20,10 @@ export class PublicationFormComponent
   @Input('publication')
   set publication(input: PublicationFormInput | null | undefined) {
     if (input) {
+      this.selectedAuthors = input.authors;
       this.formGroup.patchValue({
         ...input,
-        authorIds: input.authors,
+        authorIds: input.authors.map(x => x.id),
         copiesPurchased: input.copiesAvailable
       });
     }
@@ -32,6 +34,7 @@ export class PublicationFormComponent
 
   protected publicationTypes: string[] = Object.values(PublicationType);
   protected authorSearchQueryRef: QueryRef<SearchAuthorsQuery, SearchAuthorsQueryVariables>;
+  protected selectedAuthors: PublicationAuthor[] = [];
 
   constructor(authorsGql: SearchAuthorsGQL) {
     super();
@@ -61,5 +64,21 @@ export class PublicationFormComponent
       filterText: filterText
     };
     this.authorSearchQueryRef.refetch(queryVariable);
+  }
+
+  protected addAuthor(author: PublicationAuthor) {
+    const index = this.selectedAuthors.findIndex(x => x.id == author.id);
+    if (index >= 0) return;
+    this.selectedAuthors.push(author);
+    this.formGroup.controls.authorIds.value?.push(author.id);
+  }
+
+  protected removeAuthor(authorId: string) {
+    const selectedAuthorIndex = this.selectedAuthors.findIndex(x => x.id == authorId);
+    const formValueIndex = this.formGroup.controls.authorIds.value?.findIndex(x => x == authorId);
+    if (selectedAuthorIndex < 0 || (formValueIndex && formValueIndex < 0)) return;
+
+    this.selectedAuthors.splice(selectedAuthorIndex, 1);
+    this.formGroup.controls.authorIds.value?.splice(formValueIndex ?? -1, 1);
   }
 }

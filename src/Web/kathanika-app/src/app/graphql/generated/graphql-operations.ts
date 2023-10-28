@@ -340,6 +340,7 @@ export type Publication = {
 export type PublicationAuthor = {
   __typename?: 'PublicationAuthor';
   firstName: Scalars['String']['output'];
+  fullName: Scalars['String']['output'];
   id: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
 };
@@ -347,6 +348,7 @@ export type PublicationAuthor = {
 export type PublicationAuthorFilterInput = {
   and?: InputMaybe<Array<PublicationAuthorFilterInput>>;
   firstName?: InputMaybe<StringOperationFilterInput>;
+  fullName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
   lastName?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<PublicationAuthorFilterInput>>;
@@ -683,7 +685,7 @@ export type GetPublicationQueryVariables = Exact<{
 }>;
 
 
-export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, buyingPrice: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string }> } | null };
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, buyingPrice: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }> } | null };
 
 export type GetPublishersQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -1015,6 +1017,7 @@ export const GetPublicationDocument = gql`
       id
       firstName
       lastName
+      fullName
     }
     language
     publisher

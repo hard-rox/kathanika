@@ -13,18 +13,26 @@
     <kn-text-input label="ISBN" formControlName="isbn" />
     <kn-text-input label="Edition" formControlName="edition" />
     <kn-text-input label="Language" formControlName="language" />
-    <kn-multiselect-autocomplete label="Authors" formControlName="authorIds" (searchTextChanged)="filter($event)">
-      <kn-autocomplete-option *ngFor="let author of (authorSearchQueryRef.valueChanges | async)?.data?.authors?.items"
-        [value]="author.id">
-        <div class="flex space-x-2">
-          <span class="my-auto">{{author.fullName}}</span>
-        </div>
-      </kn-autocomplete-option>
-    </kn-multiselect-autocomplete>
     <kn-number-input label="Buying Price" formControlName="buyingPrice" />
     <kn-text-input label="Call Number" formControlName="callNumber" />
     <kn-number-input label="Copies Available" formControlName="copiesPurchased" />
     <kn-textarea-input label="Description" formControlName="description" />
+
+    <div>
+      <label>Authors</label>
+      <div class="flex justify-start flex-wrap gap-1 mb-1">
+        <kn-chip *ngFor="let author of selectedAuthors" [key]="author.id"
+          (onActionPerformed)="removeAuthor($event)">{{author.fullName}}</kn-chip>
+      </div>
+      <kn-searchbar (searchTextChanged)="filter($event)" (resultSelected)="addAuthor($event)">
+        <kn-searchbar-result *ngFor="let author of (authorSearchQueryRef.valueChanges | async)?.data?.authors?.items"
+          [value]="author">
+          <div class="flex space-x-2">
+            <span class="my-auto">{{author.fullName}}</span>
+          </div>
+        </kn-searchbar-result>
+      </kn-searchbar>
+    </div>
   </div>
   <div class="flex flex-row-reverse mt-2">
     <input type="submit" value="Save" />

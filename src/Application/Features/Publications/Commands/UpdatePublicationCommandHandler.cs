@@ -34,9 +34,9 @@ internal sealed class UpdatePublicationCommandHandler : IRequestHandler<UpdatePu
             request.Patch.CallNumber
         );
 
-        if (authors is not null && authors.Count > 0)
+        if (authors is not null)
         {
-            publication.AddOrUpdateAuthors(authors.ToArray());
+            publication.UpdateAuthors(authors.ToArray());
         }
 
         await _publicationRepository.UpdateAsync(publication, cancellationToken);
