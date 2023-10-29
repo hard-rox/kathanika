@@ -18,9 +18,9 @@ body:
         1. Step 1
         2. Step 2
         3. ...
+      render: markdown
     validations:
       required: true
-    render: markdown
   - type: textarea
     id: expected
     attributes:
