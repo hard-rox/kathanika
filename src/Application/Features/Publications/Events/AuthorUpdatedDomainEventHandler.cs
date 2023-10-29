@@ -28,7 +28,7 @@ internal sealed class AuthorUpdatedDomainEventHandler : INotificationHandler<Aut
         {
             if (publication is null) continue;
 
-            publication.AddOrUpdateAuthors(author);
+            publication.UpdateAuthorInfo(author);
 
             await _publicationRepository.UpdateAsync(publication, cancellationToken);
         }

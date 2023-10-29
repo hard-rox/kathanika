@@ -1,5 +1,3 @@
-
-using FluentValidation;
 using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.Application.Behaviours;

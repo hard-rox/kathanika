@@ -7,6 +7,7 @@ public sealed class PublicationAuthor : ValueObject
     public string Id { get; init; }
     public string FirstName { get; init; }
     public string LastName { get; init; }
+    public string FullName => $"{FirstName} {LastName}";
 
     internal PublicationAuthor(
         string id,

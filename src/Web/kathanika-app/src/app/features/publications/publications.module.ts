@@ -16,7 +16,8 @@ import { AlertComponent } from 'src/app/shared/components/alert/alert.component'
 import { PanelComponent } from "../../shared/components/panel/panel.component";
 import { SelectInputComponent } from 'src/app/shared/components/select-input/select-input.component';
 import { NumberInputComponent } from 'src/app/shared/components/number-input/number-input.component';
-import { AutocompleteModule } from 'src/app/shared/modules/autocomplete/autocomplete.module';
+import { SearchbarModule } from 'src/app/shared/modules/searchbar/searchbar.module';
+import { ChipComponent } from 'src/app/shared/components/chip/chip.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { AutocompleteModule } from 'src/app/shared/modules/autocomplete/autocomp
     PanelComponent,
     SelectInputComponent,
     NumberInputComponent,
-    AutocompleteModule
+    ChipComponent,
+    SearchbarModule
   ]
 })
 export class PublicationsModule { }

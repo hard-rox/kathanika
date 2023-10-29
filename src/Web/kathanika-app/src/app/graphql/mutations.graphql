@@ -39,6 +39,27 @@ mutation updateAuthor($id: String!, $authorPatch: AuthorPatchInput!){
   }
 }
 
+mutation deleteAuthor($id: String!) {
+  deleteAuthor(input: { id: $id }) {
+    message
+    errors {
+      ... on NotFoundWithTheIdError {
+        id
+        objectName
+        message
+      }
+      ... on DeletionFailedError {
+        objectName
+        reason
+        message
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+
 mutation addPublication($addPublicationInput: AddPublicationInput!) {
   addPublication(input: $addPublicationInput) {
     message

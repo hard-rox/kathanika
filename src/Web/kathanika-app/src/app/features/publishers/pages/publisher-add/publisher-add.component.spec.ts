@@ -14,8 +14,15 @@ describe('PublisherAddComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublisherAddComponent, PublisherFormComponent],
-      imports: [ReactiveFormsModule, PanelComponent, AlertComponent],
+      declarations: [
+        PublisherAddComponent,
+        PublisherFormComponent
+      ],
+      imports: [
+        ReactiveFormsModule,
+        PanelComponent,
+        AlertComponent
+      ],
       providers: [
         {
           provide: AddPublisherGQL,

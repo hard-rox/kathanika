@@ -1,4 +1,5 @@
 import { PublicationType } from "src/app/graphql/generated/graphql-operations";
+import { PublicationAuthor } from "./publication-author";
 
 export type PublicationFormInput = {
   title: string;
@@ -9,7 +10,7 @@ export type PublicationFormInput = {
   edition: string;
   language: string;
   description: string;
-  authors: string[];
+  authors: PublicationAuthor[];
   buyingPrice: number;
   callNumber: string;
   copiesAvailable: number;

@@ -13,7 +13,8 @@ import { DateInputComponent } from 'src/app/shared/components/date-input/date-in
 import { ReactiveFormsModule } from '@angular/forms';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 import { NumberInputComponent } from 'src/app/shared/components/number-input/number-input.component';
-import { AutocompleteModule } from 'src/app/shared/modules/autocomplete/autocomplete.module';
+import { SearchbarModule } from 'src/app/shared/modules/searchbar/searchbar.module';
+import { ChipComponent } from 'src/app/shared/components/chip/chip.component';
 
 describe('PublicationUpdateComponent', () => {
   let component: PublicationUpdateComponent;
@@ -32,7 +33,8 @@ describe('PublicationUpdateComponent', () => {
         DateInputComponent,
         TextareaInputComponent,
         NumberInputComponent,
-        AutocompleteModule
+        SearchbarModule,
+        ChipComponent
       ],
       providers: [
         {

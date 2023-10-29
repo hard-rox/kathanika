@@ -91,6 +91,7 @@ query getPublication($id: String!) {
       id
       firstName
       lastName
+      fullName
     }
     language
     publisher

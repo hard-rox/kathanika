@@ -1,11 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthorListComponent } from './author-list.component';
-import { GetAuthorsGQL } from 'src/app/graphql/generated/graphql-operations';
+import { DeleteAuthorGQL, GetAuthorsGQL } from 'src/app/graphql/generated/graphql-operations';
 import { ActivatedRoute, Router } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { mockQueryGql } from 'src/test-utils/gql-test-utils';
+import { mockMutationGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 
 describe('AuthorListComponent', () => {
@@ -21,6 +21,10 @@ describe('AuthorListComponent', () => {
         {
           provide: GetAuthorsGQL,
           useValue: mockQueryGql,
+        },
+        {
+          provide: DeleteAuthorGQL,
+          useValue: mockMutationGql
         },
         {
           provide: ActivatedRoute,
