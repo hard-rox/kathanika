@@ -3,7 +3,7 @@ description: File a bug report
 title: "[Bug]: "
 labels: ["bug"]
 projects: ["kathanika"]
-assignees:
+assignees: ["hard-rox"]
 body:
   - type: textarea
     id: bug-description
@@ -14,13 +14,13 @@ body:
   - type: markdown
     id: reproduction-steps
     attributes:
-      label: To Reproduce
       value: |
         1. Step 1
         2. Step 2
         3. ...
     validations:
       required: true
+    render: markdown
   - type: textarea
     id: expected
     attributes:
@@ -33,12 +33,12 @@ body:
       description: |
         examples:
           - **OS**: Ubuntu 20.04
-          - **Node**: 13.14.0
-          - **npm**: 7.6.3
+          - **Docker**: 24.0.7
+          - **kathanika**: latest
       value: |
           - OS:
-          - Node:
-          - npm:
+          - Docker:
+          - kathanika:
       render: markdown
     validations:
       required: false
