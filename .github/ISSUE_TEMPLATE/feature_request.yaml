@@ -11,10 +11,9 @@ body:
       label: Description
     validations:
       required: true
-  - type: textarea
+  - type: markdown
     id: requirements
     attributes:
-      label: Requirements
       value: |
         [] Task 1
         [] Task 2
