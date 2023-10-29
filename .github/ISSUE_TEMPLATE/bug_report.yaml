@@ -11,9 +11,10 @@ body:
       label: Describe the bug
     validations:
       required: true
-  - type: markdown
+  - type: textarea
     id: reproduction-steps
     attributes:
+      label: To Reproduce
       value: |
         1. Step 1
         2. Step 2
