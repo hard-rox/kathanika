@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
+  DeleteAuthorGQL,
   GetAuthorsGQL,
   GetAuthorsQuery,
   GetAuthorsQueryVariables,
@@ -46,6 +47,7 @@ export class AuthorListComponent
 
   constructor(
     gql: GetAuthorsGQL,
+    private deleteAuthorGql: DeleteAuthorGQL,
     activatedRoute: ActivatedRoute,
     router: Router,
     private alertService: MessageAlertService
@@ -74,7 +76,24 @@ export class AuthorListComponent
       .subscribe({
         next: (isConfirmed) => {
           if (isConfirmed) {
-            //TODO deleting author functionality...
+            this.deleteAuthorGql.mutate({
+              id: id
+            }).subscribe({
+              next: (result) => {
+                if (result.data?.deleteAuthor.message) {
+                  this.alertService.showPopup(
+                    'success',
+                    result.data?.deleteAuthor.message,
+                    'Deleted successfully');
+                } else {
+                  this.alertService.showPopup(
+                    'error',
+                    result.data?.deleteAuthor.errors?.map(x => x.message).join(',') ?? 'Deletion failed',
+                    'Deletion failed'
+                  );
+                }
+              }
+            })
           }
         },
       });

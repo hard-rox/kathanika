@@ -23,11 +23,19 @@ class BasePaginatedListTestingComponent extends BasePaginatedListComponent<any, 
       take: 10
     });
   }
+
+  changePage(pageNumber: number): void {
+    super.changePage(pageNumber);
+  }
+
+  changePageSize(selectedPageSize: number): void {
+    super.changePageSize(selectedPageSize);
+  }
 }
 
 describe('BasePaginatedListComponent', () => {
-  let component: BasePaginatedListComponent<any, any>;
-  let fixture: ComponentFixture<BasePaginatedListComponent<any, any>>;
+  let component: BasePaginatedListTestingComponent;
+  let fixture: ComponentFixture<BasePaginatedListTestingComponent>;
   let router: Router;
 
   beforeEach(async () => {

@@ -616,6 +616,13 @@ export type UpdateAuthorMutationVariables = Exact<{
 
 export type UpdateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
+export type DeleteAuthorMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type DeleteAuthorMutation = { __typename?: 'Mutations', deleteAuthor: { __typename?: 'DeleteAuthorPayload', message?: string | null, errors?: Array<{ __typename?: 'DeletionFailedError', objectName: string, reason: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+
 export type AddPublicationMutationVariables = Exact<{
   addPublicationInput: AddPublicationInput;
 }>;
@@ -761,6 +768,39 @@ export const UpdateAuthorDocument = gql`
   })
   export class UpdateAuthorGQL extends Apollo.Mutation<UpdateAuthorMutation, UpdateAuthorMutationVariables> {
     document = UpdateAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const DeleteAuthorDocument = gql`
+    mutation deleteAuthor($id: String!) {
+  deleteAuthor(input: {id: $id}) {
+    message
+    errors {
+      ... on NotFoundWithTheIdError {
+        id
+        objectName
+        message
+      }
+      ... on DeletionFailedError {
+        objectName
+        reason
+        message
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteAuthorGQL extends Apollo.Mutation<DeleteAuthorMutation, DeleteAuthorMutationVariables> {
+    document = DeleteAuthorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

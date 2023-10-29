@@ -74,18 +74,18 @@ export abstract class BasePaginatedListComponent<TQuery, TQueryVariables extends
   pageSizes: number[] = [10, 20, 50, 100];
   pageSize: number = 0;
 
-  onSearchTextChanged($event: any) {
+  protected onSearchTextChanged($event: any) {
     const searchText = $event.target.value;
     this.searchTextSubject.next(searchText);
   }
 
-  changePage(pageNumber: number) {
+  protected changePage(pageNumber: number) {
     this.queryVariables.skip = (pageNumber - 1) * this.queryVariables.take;
     this.queryRef.refetch(this.queryVariables);
     this.setQueryParams();
   }
 
-  changePageSize(selectedPageSize: number) {
+  protected changePageSize(selectedPageSize: number) {
     this.queryVariables.take = selectedPageSize;
     this.queryVariables.skip = 0;
     this.queryRef.refetch(this.queryVariables);
