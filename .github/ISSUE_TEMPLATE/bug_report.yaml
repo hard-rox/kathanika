@@ -6,13 +6,13 @@ projects: ["kathanika"]
 assignees:
 body:
   - type: textarea
-    id: bug-description
+    id: bug_description
     attributes:
       label: Describe the bug
     validations:
       required: true
   - type: markdown
-    id: reproduction-steps
+    id: reproduction_steps
     attributes:
       label: To Reproduce
       value: |
