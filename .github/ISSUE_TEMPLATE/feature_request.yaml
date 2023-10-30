@@ -37,10 +37,10 @@ body:
     attributes:
       label: Acceptance Criteria
       value: |
-        - [ ] Task 1 done
-        - [ ] Task 2 done
-        - [ ] Task 3 done
-        - [ ] ...
+        1. Task 1 done
+        2. Task 2 done
+        3. Task 3 done
+        4. ...
     validations:
       required: true
   - type: textarea
