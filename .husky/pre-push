@@ -19,7 +19,7 @@
 ## or put your custom commands -------------------
 #echo 'Husky.Net is awesome!'
 
-echo 'Pre commit hook in progress...'
+echo 'Pre push hook in progress...'
 dotnet build
 dotnet test
 npm --prefix src/Web/kathanika-app run build
