@@ -24,6 +24,7 @@ public static class DependencyInjector
         services.AddScoped<IAuthorRepository, AuthorRepository>();
         services.AddScoped<IPublicationRepository, PublicationRepository>();
         services.AddScoped<IPublisherRepository, PublisherRepository>();
+        services.AddScoped<IMemberRepository, MemberRepository>();
 
         return services;
     }

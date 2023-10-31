@@ -1,4 +1,4 @@
-namespace Kathanika.Domain.Aggregates.Member;
+namespace Kathanika.Domain.Aggregates;
 
 public enum MembershipStatus
 {

@@ -1,6 +1,6 @@
 using Kathanika.Domain.Primitives;
 
-namespace Kathanika.Domain.Aggregates.Member;
+namespace Kathanika.Domain.Aggregates;
 
 public sealed class BorrowingRecord : ValueObject
 {
