@@ -6,3 +6,5 @@ global using Kathanika.Application.Features.Publications.Commands;
 global using Kathanika.Application.Features.Publications.Queries;
 global using Kathanika.Application.Features.Publishers.Commands;
 global using Kathanika.Application.Features.Publishers.Queries;
+global using Kathanika.Application.Features.Members.Queries;
+global using Kathanika.Application.Features.Members.Commands;

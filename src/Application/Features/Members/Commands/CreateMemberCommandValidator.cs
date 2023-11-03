@@ -1,8 +1,8 @@
 namespace Kathanika.Application.Features.Members.Commands;
 
-internal sealed class AddMemberCommandValidator : AbstractValidator<AddMemberCommand>
+internal sealed class CreateMemberCommandValidator : AbstractValidator<CreateMemberCommand>
 {
-    public AddMemberCommandValidator(IMemberRepository memberRepository)
+    public CreateMemberCommandValidator(IMemberRepository memberRepository)
     {
         RuleFor(x => x.DateOfBirth)
             .LessThanOrEqualTo(DateOnly.FromDateTime(DateTime.Today))

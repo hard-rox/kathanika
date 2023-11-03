@@ -3,7 +3,7 @@ using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.Application.Features.Members.Commands;
 
-internal sealed class SuspendMembershipCommandHandler : IRequestHandler<SuspendMembershipCommand>
+internal sealed class SuspendMembershipCommandHandler : IRequestHandler<SuspendMembershipCommand, Member>
 {
     private readonly IMemberRepository memberRepository;
 
@@ -12,7 +12,7 @@ internal sealed class SuspendMembershipCommandHandler : IRequestHandler<SuspendM
         this.memberRepository = memberRepository;
     }
 
-    public async Task Handle(SuspendMembershipCommand request, CancellationToken cancellationToken)
+    public async Task<Member> Handle(SuspendMembershipCommand request, CancellationToken cancellationToken)
     {
         Member member = await memberRepository.GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundWithTheIdException(typeof(Member), request.Id);
@@ -20,5 +20,6 @@ internal sealed class SuspendMembershipCommandHandler : IRequestHandler<SuspendM
         member.SuspendMembership();
 
         await memberRepository.UpdateAsync(member, cancellationToken);
+        return member;
     }
 }

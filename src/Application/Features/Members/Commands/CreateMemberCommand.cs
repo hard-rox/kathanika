@@ -1,6 +1,6 @@
 namespace Kathanika.Application.Features.Members.Commands;
 
-public sealed record AddMemberCommand(
+public sealed record CreateMemberCommand(
     string FirstName,
     string LastName,
     DateOnly DateOfBirth,

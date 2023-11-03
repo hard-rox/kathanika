@@ -15,7 +15,7 @@ internal static class SchemaConfigurations
 {
     private static Type[] GetTypesFromNamespace(string nameSpace)
     {
-        var types = Assembly.GetExecutingAssembly()
+        Type[] types = Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(type => type.Namespace == nameSpace
                 && Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) == null)

@@ -1,5 +1,3 @@
-using System.Data;
-
 namespace Kathanika.Application.Features.Members.Commands;
 
 internal sealed class UpdateMemberCommandValidator : AbstractValidator<UpdateMemberCommand>

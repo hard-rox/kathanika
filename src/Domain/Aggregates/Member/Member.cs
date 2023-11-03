@@ -12,10 +12,12 @@ public sealed class Member : AggregateRoot
     public string Address { get; private set; }
     public string ContactNumber { get; private set; }
     public string Email { get; private set; }
-    public DateTimeOffset MembershipStartDate { get; private init; } = DateTimeOffset.Now;
-    public DateTimeOffset? MembershipCancellationDate { get; private set; }
-    public DateTimeOffset? LastMembershipSuspensionDate { get; private set; }
+    public DateTimeOffset MembershipStartDateTime { get; private init; } = DateTimeOffset.Now;
+    public DateTimeOffset? MembershipCancellationDateTime { get; private set; }
+    public DateTimeOffset? LastMembershipSuspensionDateTime { get; private set; }
     public MembershipStatus Status { get; private set; } = MembershipStatus.Active;
+
+    public string FullName => $"{FirstName} {LastName}";
 
     private Member(
         string firstName,
@@ -75,7 +77,7 @@ public sealed class Member : AggregateRoot
             throw new MemberHasIssuedPublicationsException(_currentlyIssuedPublications.ToArray());
         }
         Status = MembershipStatus.Cancelled;
-        MembershipCancellationDate = DateTimeOffset.Now;
+        MembershipCancellationDateTime = DateTimeOffset.Now;
     }
 
     public void SuspendMembership()
@@ -85,7 +87,7 @@ public sealed class Member : AggregateRoot
             throw new MemberHasIssuedPublicationsException(_currentlyIssuedPublications.ToArray());
         }
         Status = MembershipStatus.Suspended;
-        LastMembershipSuspensionDate = DateTimeOffset.Now;
+        LastMembershipSuspensionDateTime = DateTimeOffset.Now;
     }
 
     public void RenewMembership()
