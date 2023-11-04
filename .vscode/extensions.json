@@ -4,13 +4,14 @@
     "angular.ng-template",
     "cyrilletuzi.angular-schematics",
     "ms-dotnettools.csharp",
-    "GraphQL.vscode-graphql-syntax",
+    "graphql.vscode-graphql-syntax",
     "bradlc.vscode-tailwindcss",
     "hbenl.vscode-test-explorer",
     "esbenp.prettier-vscode",
     "lucono.karma-test-explorer",
     "ms-azuretools.vscode-docker",
     "streetsidesoftware.code-spell-checker",
-    "EditorConfig.EditorConfig"
+    "editorconfig.editorconfig",
+    "ms-dotnettools.csdevkit"
   ]
 }

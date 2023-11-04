@@ -3,6 +3,7 @@ using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
 using Kathanika.Domain.Primitives;
+using Kathanika.Infrastructure.GraphQL.Bases;
 using Kathanika.Infrastructure.GraphQL.GraphqlHelpers;
 using Kathanika.Infrastructure.GraphQL.Schema;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,7 +16,7 @@ internal static class SchemaConfigurations
 {
     private static Type[] GetTypesFromNamespace(string nameSpace)
     {
-        var types = Assembly.GetExecutingAssembly()
+        Type[] types = Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(type => type.Namespace == nameSpace
                 && Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) == null)

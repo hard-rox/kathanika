@@ -35,7 +35,8 @@
                 "--project",
                 "${workspaceFolder}/src/Web/Kathanika.Web.csproj"
             ],
-            "problemMatcher": "$msCompile"
+            "problemMatcher": "$msCompile",
+            "options": {"cwd": "${workspaceFolder}/src/"}
         },
         {
             "type": "docker-build",
