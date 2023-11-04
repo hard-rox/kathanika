@@ -6,6 +6,7 @@ public sealed class MemberType : ObjectType<Member>
     {
         descriptor.BindFieldsExplicitly();
 
+        descriptor.Field(x => x.Id);
         descriptor.Field(x => x.FirstName);
         descriptor.Field(x => x.LastName);
         descriptor.Field(x => x.FullName);

@@ -30,11 +30,11 @@ public sealed partial class Mutations
         return new(id);
     }
 
-    [GraphQLDeprecated("Just a dummy for throwing new notification...")]
-    public async Task<Notification> FireNewNotification([FromServices]ITopicEventSender eventSender, string content)
-    {
-        Notification notification = new() { Message = content };
-        await eventSender.SendAsync("NewNotification", notification);
-        return notification;
-    }
+    // [GraphQLDeprecated("Just a dummy for throwing new notification...")]
+    // public async Task<Notification> FireNewNotification([FromServices]ITopicEventSender eventSender, string content)
+    // {
+    //     Notification notification = new() { Message = content };
+    //     await eventSender.SendAsync("NewNotification", notification);
+    //     return notification;
+    // }
 }
