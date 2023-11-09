@@ -13,14 +13,12 @@ describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
-      ],
-      declarations: [
+        RouterTestingModule,
         AppComponent,
         HeaderComponent,
         FooterComponent,
         SidebarComponent
-      ],
+      ]
     }).compileComponents();
 
     component = TestBed.createComponent(AppComponent);

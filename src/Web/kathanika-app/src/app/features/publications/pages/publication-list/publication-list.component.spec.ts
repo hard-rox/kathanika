@@ -33,12 +33,10 @@ describe('PublicationListComponent', () => {
         },
       ],
     })
-      .compileComponents()
-      .then(() => {
-        fixture = TestBed.createComponent(PublicationListComponent);
-        component = fixture.componentInstance;
-        router = TestBed.inject(Router);
-      });
+      .compileComponents();
+    fixture = TestBed.createComponent(PublicationListComponent);
+    component = fixture.componentInstance;
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
