@@ -133,6 +133,18 @@ export type AuthorsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type CancelMembershipError = InvalidFieldError;
+
+export type CancelMembershipInput = {
+  id: Scalars['String']['input'];
+};
+
+export type CancelMembershipPayload = {
+  __typename?: 'CancelMembershipPayload';
+  errors?: Maybe<Array<CancelMembershipError>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 /** Information about the offset pagination. */
 export type CollectionSegmentInfo = {
   __typename?: 'CollectionSegmentInfo';
@@ -140,6 +152,24 @@ export type CollectionSegmentInfo = {
   hasNextPage: Scalars['Boolean']['output'];
   /** Indicates whether more items exist prior the set defined by the clients arguments. */
   hasPreviousPage: Scalars['Boolean']['output'];
+};
+
+export type CreateMemberError = InvalidFieldError;
+
+export type CreateMemberInput = {
+  address: Scalars['String']['input'];
+  contactNumber: Scalars['String']['input'];
+  dateOfBirth: Scalars['Date']['input'];
+  email: Scalars['String']['input'];
+  firstName: Scalars['String']['input'];
+  lastName: Scalars['String']['input'];
+};
+
+export type CreateMemberPayload = {
+  __typename?: 'CreateMemberPayload';
+  data?: Maybe<Member>;
+  errors?: Maybe<Array<CreateMemberError>>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type DateOperationFilterInput = {
@@ -155,6 +185,21 @@ export type DateOperationFilterInput = {
   nin?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
   nlt?: InputMaybe<Scalars['Date']['input']>;
   nlte?: InputMaybe<Scalars['Date']['input']>;
+};
+
+export type DateTimeOperationFilterInput = {
+  eq?: InputMaybe<Scalars['DateTime']['input']>;
+  gt?: InputMaybe<Scalars['DateTime']['input']>;
+  gte?: InputMaybe<Scalars['DateTime']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  lt?: InputMaybe<Scalars['DateTime']['input']>;
+  lte?: InputMaybe<Scalars['DateTime']['input']>;
+  neq?: InputMaybe<Scalars['DateTime']['input']>;
+  ngt?: InputMaybe<Scalars['DateTime']['input']>;
+  ngte?: InputMaybe<Scalars['DateTime']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
+  nlt?: InputMaybe<Scalars['DateTime']['input']>;
+  nlte?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
 export type DecimalOperationFilterInput = {
@@ -184,11 +229,6 @@ export type DeleteAuthorPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
-export type DeletePublisherCommand = {
-  __typename?: 'DeletePublisherCommand';
-  id: Scalars['String']['output'];
-};
-
 export type DeletePublisherError = DeletionFailedError | NotFoundWithTheIdError;
 
 export type DeletePublisherInput = {
@@ -197,8 +237,8 @@ export type DeletePublisherInput = {
 
 export type DeletePublisherPayload = {
   __typename?: 'DeletePublisherPayload';
-  deletePublisherCommand?: Maybe<DeletePublisherCommand>;
   errors?: Maybe<Array<DeletePublisherError>>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type DeletionFailedError = Error & {
@@ -210,15 +250,6 @@ export type DeletionFailedError = Error & {
 
 export type Error = {
   message: Scalars['String']['output'];
-};
-
-export type FireNewNotificationInput = {
-  content: Scalars['String']['input'];
-};
-
-export type FireNewNotificationPayload = {
-  __typename?: 'FireNewNotificationPayload';
-  notification?: Maybe<Notification>;
 };
 
 export type IntOperationFilterInput = {
@@ -249,16 +280,96 @@ export type ListFilterInputTypeOfPublicationAuthorFilterInput = {
   some?: InputMaybe<PublicationAuthorFilterInput>;
 };
 
+export type Member = {
+  __typename?: 'Member';
+  address: Scalars['String']['output'];
+  contactNumber: Scalars['String']['output'];
+  dateOfBirth: Scalars['Date']['output'];
+  email: Scalars['String']['output'];
+  firstName: Scalars['String']['output'];
+  fullName: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  lastName: Scalars['String']['output'];
+  status: MembershipStatus;
+};
+
+export type MemberFilterInput = {
+  address?: InputMaybe<StringOperationFilterInput>;
+  and?: InputMaybe<Array<MemberFilterInput>>;
+  contactNumber?: InputMaybe<StringOperationFilterInput>;
+  dateOfBirth?: InputMaybe<DateOperationFilterInput>;
+  email?: InputMaybe<StringOperationFilterInput>;
+  firstName?: InputMaybe<StringOperationFilterInput>;
+  fullName?: InputMaybe<StringOperationFilterInput>;
+  id?: InputMaybe<StringOperationFilterInput>;
+  lastMembershipSuspensionDateTime?: InputMaybe<DateTimeOperationFilterInput>;
+  lastName?: InputMaybe<StringOperationFilterInput>;
+  membershipCancellationDateTime?: InputMaybe<DateTimeOperationFilterInput>;
+  membershipStartDateTime?: InputMaybe<DateTimeOperationFilterInput>;
+  or?: InputMaybe<Array<MemberFilterInput>>;
+  status?: InputMaybe<MembershipStatusOperationFilterInput>;
+};
+
+export type MemberPatchInput = {
+  address?: InputMaybe<Scalars['String']['input']>;
+  contactNumber?: InputMaybe<Scalars['String']['input']>;
+  dateOfBirth?: InputMaybe<Scalars['Date']['input']>;
+  email?: InputMaybe<Scalars['String']['input']>;
+  firstName?: InputMaybe<Scalars['String']['input']>;
+  lastName?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type MemberSortInput = {
+  address?: InputMaybe<SortEnumType>;
+  contactNumber?: InputMaybe<SortEnumType>;
+  dateOfBirth?: InputMaybe<SortEnumType>;
+  email?: InputMaybe<SortEnumType>;
+  firstName?: InputMaybe<SortEnumType>;
+  fullName?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  lastMembershipSuspensionDateTime?: InputMaybe<SortEnumType>;
+  lastName?: InputMaybe<SortEnumType>;
+  membershipCancellationDateTime?: InputMaybe<SortEnumType>;
+  membershipStartDateTime?: InputMaybe<SortEnumType>;
+  status?: InputMaybe<SortEnumType>;
+};
+
+/** A segment of a collection. */
+export type MembersCollectionSegment = {
+  __typename?: 'MembersCollectionSegment';
+  /** A flattened list of the items. */
+  items?: Maybe<Array<Member>>;
+  /** Information to aid in pagination. */
+  pageInfo: CollectionSegmentInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
+export enum MembershipStatus {
+  Active = 'ACTIVE',
+  Cancelled = 'CANCELLED',
+  Suspended = 'SUSPENDED'
+}
+
+export type MembershipStatusOperationFilterInput = {
+  eq?: InputMaybe<MembershipStatus>;
+  in?: InputMaybe<Array<MembershipStatus>>;
+  neq?: InputMaybe<MembershipStatus>;
+  nin?: InputMaybe<Array<MembershipStatus>>;
+};
+
 export type Mutations = {
   __typename?: 'Mutations';
   addAuthor: AddAuthorPayload;
   addPublication: AddPublicationPayload;
   addPublisher: AddPublisherPayload;
+  cancelMembership: CancelMembershipPayload;
+  createMember: CreateMemberPayload;
   deleteAuthor: DeleteAuthorPayload;
   deletePublisher: DeletePublisherPayload;
-  /** @deprecated Just a dummy for throwing new notification... */
-  fireNewNotification: FireNewNotificationPayload;
+  renewMembership: RenewMembershipPayload;
+  suspendMembership: SuspendMembershipPayload;
   updateAuthor: UpdateAuthorPayload;
+  updateMember: UpdateMemberPayload;
   updatePublication: UpdatePublicationPayload;
   updatePublisher: UpdatePublisherPayload;
 };
@@ -279,6 +390,16 @@ export type MutationsAddPublisherArgs = {
 };
 
 
+export type MutationsCancelMembershipArgs = {
+  input: CancelMembershipInput;
+};
+
+
+export type MutationsCreateMemberArgs = {
+  input: CreateMemberInput;
+};
+
+
 export type MutationsDeleteAuthorArgs = {
   input: DeleteAuthorInput;
 };
@@ -289,13 +410,23 @@ export type MutationsDeletePublisherArgs = {
 };
 
 
-export type MutationsFireNewNotificationArgs = {
-  input: FireNewNotificationInput;
+export type MutationsRenewMembershipArgs = {
+  input: RenewMembershipInput;
+};
+
+
+export type MutationsSuspendMembershipArgs = {
+  input: SuspendMembershipInput;
 };
 
 
 export type MutationsUpdateAuthorArgs = {
   input: UpdateAuthorInput;
+};
+
+
+export type MutationsUpdateMemberArgs = {
+  input: UpdateMemberInput;
 };
 
 
@@ -489,6 +620,8 @@ export type Queries = {
   __typename?: 'Queries';
   author?: Maybe<Author>;
   authors?: Maybe<AuthorsCollectionSegment>;
+  member?: Maybe<Member>;
+  members?: Maybe<MembersCollectionSegment>;
   publication?: Maybe<Publication>;
   publications?: Maybe<PublicationsCollectionSegment>;
   publisher: Publisher;
@@ -506,6 +639,19 @@ export type QueriesAuthorsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<AuthorFilterInput>;
+};
+
+
+export type QueriesMemberArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueriesMembersArgs = {
+  order?: InputMaybe<Array<MemberSortInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<MemberFilterInput>;
 };
 
 
@@ -534,6 +680,18 @@ export type QueriesPublishersArgs = {
   where?: InputMaybe<PublisherFilterInput>;
 };
 
+export type RenewMembershipError = InvalidFieldError;
+
+export type RenewMembershipInput = {
+  id: Scalars['String']['input'];
+};
+
+export type RenewMembershipPayload = {
+  __typename?: 'RenewMembershipPayload';
+  errors?: Maybe<Array<RenewMembershipError>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 export enum SortEnumType {
   Asc = 'ASC',
   Desc = 'DESC'
@@ -559,6 +717,18 @@ export type Subscriptions = {
   onNewNotification: Notification;
 };
 
+export type SuspendMembershipError = InvalidFieldError;
+
+export type SuspendMembershipInput = {
+  id: Scalars['String']['input'];
+};
+
+export type SuspendMembershipPayload = {
+  __typename?: 'SuspendMembershipPayload';
+  errors?: Maybe<Array<SuspendMembershipError>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 export type UpdateAuthorError = InvalidFieldError | NotFoundWithTheIdError;
 
 export type UpdateAuthorInput = {
@@ -570,6 +740,20 @@ export type UpdateAuthorPayload = {
   __typename?: 'UpdateAuthorPayload';
   data?: Maybe<Author>;
   errors?: Maybe<Array<UpdateAuthorError>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdateMemberError = InvalidFieldError;
+
+export type UpdateMemberInput = {
+  id: Scalars['String']['input'];
+  patch: MemberPatchInput;
+};
+
+export type UpdateMemberPayload = {
+  __typename?: 'UpdateMemberPayload';
+  data?: Maybe<Member>;
+  errors?: Maybe<Array<UpdateMemberError>>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
