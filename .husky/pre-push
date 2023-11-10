@@ -22,5 +22,6 @@
 echo 'Pre push hook in progress...'
 dotnet build
 dotnet test
+npm --prefix src/Web/kathanika-app run lint
 npm --prefix src/Web/kathanika-app run build
 npm --prefix src/Web/kathanika-app run test-ci
