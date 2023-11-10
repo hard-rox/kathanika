@@ -25,7 +25,7 @@
       <div class="flex justify-start flex-wrap gap-1 mb-1">
         @for (author of selectedAuthors; track author) {
   <kn-chip [key]="author.id"
-          (onActionPerformed)="removeAuthor($event)">{{author.fullName}}</kn-chip>
+          (actionPerformed)="removeAuthor($event)">{{author.fullName}}</kn-chip>
 }
       </div>
       <kn-searchbar (searchTextChanged)="filter($event)" (resultSelected)="addAuthor($event)">

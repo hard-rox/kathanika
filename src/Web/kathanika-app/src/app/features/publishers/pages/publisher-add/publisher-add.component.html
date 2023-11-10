@@ -11,5 +11,5 @@
 }
 
 <kn-panel panelTitle="Add Author" [isLoading]="isPanelLoading">
-    <kn-publisher-form #authorAddForm (onSubmit)="onValidFormSubmit($event)" />
+    <kn-publisher-form #authorAddForm (formSubmit)="onValidFormSubmit($event)" />
 </kn-panel>

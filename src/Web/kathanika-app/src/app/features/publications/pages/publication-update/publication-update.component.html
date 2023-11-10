@@ -11,5 +11,5 @@
 }
 
 <kn-panel panelTitle="Publication Update" [isLoading]="isPanelLoading">
-  <kn-publication-form #publicationUpdateForm [publication]="publicationFormInput" (onSubmit)="onValidFormSubmit($event)" />
+  <kn-publication-form #publicationUpdateForm [publication]="publicationFormInput" (formSubmit)="onValidFormSubmit($event)" />
 </kn-panel>
