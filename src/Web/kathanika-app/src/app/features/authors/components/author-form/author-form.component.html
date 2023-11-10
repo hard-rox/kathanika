@@ -9,7 +9,9 @@
     <kn-textarea-input label="Biography" formControlName="biography" />
     <div>
       <kn-toggle formControlName="markedAsDeceased" label="Mark author as deceased"/>
-      <kn-date-input *ngIf="formGroup.get('markedAsDeceased')?.value" label="Date of death" formControlName="dateOfDeath" />
+      @if (formGroup.get('markedAsDeceased')?.value) {
+<kn-date-input label="Date of death" formControlName="dateOfDeath" />
+}
     </div>
   </div>
   <div class="flex flex-row-reverse mt-2">

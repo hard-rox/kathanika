@@ -57,5 +57,6 @@
     "Xunit",
     "কথনিকা"
   ],
-  "cSpell.language": "en,en-US,en-GB,lorem"
+  "cSpell.language": "en,en-US,en-GB,lorem",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

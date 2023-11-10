@@ -1,16 +1,22 @@
 <!-- <pre>{{queryRef.valueChanges | async | json}}</pre> -->
-<ng-container *ngIf="queryRef.valueChanges | async as queryResult; else loading">
-  <div *ngIf="!queryResult.error && !queryResult.errors && queryResult.data as data" class="w-full shadow-sm bg-white">
+@if (queryRef.valueChanges | async; as queryResult) {
+
+  @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
+<div class="w-full shadow-sm bg-white">
     <div class="flex gap-4">
       <img class="m-6 max-h-100 w-auto shadow-2xl" src="https://picsum.photos/300/500" />
       <div class="px-4 py-4 space-y-4">
         <h4 class="text-xl font-bold">{{data.publication?.title}}</h4>
         <div class="w-full flex items-center gap-4">
           <div class="flex -space-x-2 overflow-hidden">
-            <img *ngFor="let author of data.publication?.authors" class="inline-block max-h-14 rounded-full w-auto ring-2 ring-white" src="https://picsum.photos/400" />
+            @for (author of data.publication?.authors; track author) {
+  <img class="inline-block max-h-14 rounded-full w-auto ring-2 ring-white" src="https://picsum.photos/400" />
+}
           </div>
           <h5 class="space-x-2">
-            <span *ngFor="let author of data.publication?.authors">{{author.firstName + ' ' + author.lastName}}</span>
+            @for (author of data.publication?.authors; track author) {
+  <span>{{author.firstName + ' ' + author.lastName}}</span>
+}
           </h5>
         </div>
         <p class="mt-3 text-justify">{{data.publication?.description}}</p>
@@ -51,7 +57,10 @@
       </div>
     </div>
   </div>
-</ng-container>
-<ng-template #loading>
+}
 
-</ng-template>
+} @else {
+
+
+
+}

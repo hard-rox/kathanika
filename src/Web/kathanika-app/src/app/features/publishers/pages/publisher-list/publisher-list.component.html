@@ -8,7 +8,8 @@
     <input [value]="searchText" (keyup)="onSearchTextChanged($event)" type="text" placeholder="Search text"
         class="border-theme-gunmetal border p-2 w-full" />
 </div>
-<ng-container *ngIf="queryRef.valueChanges | async as queryResult">
+@if (queryRef.valueChanges | async; as queryResult) {
+
     <!-- <pre>{{queryResult | json}}</pre> -->
     <table>
         <thead>
@@ -19,8 +20,10 @@
             </tr>
         </thead>
         <tbody>
-            <ng-container *ngIf="queryResult?.data?.publishers?.items as data; else emptyData">
-                <tr *ngFor="let item of data; let idx = index">
+            @if (queryResult?.data?.publishers?.items; as data) {
+
+                @for (item of data; track item; let idx = $index) {
+  <tr>
                     <td scope="col">{{idx + 1}}</td>
                     <td scope="col">{{item.name}}</td>
                     <td scope="col">{{item.description}}</td>
@@ -55,19 +58,23 @@
                         </div>
                     </td>
                 </tr>
-            </ng-container>
-            <ng-template #emptyData>
+}
+            
+} @else {
+
                 <tr>
                     <td colspan="100%" class="text-center">
                         No data to show
                     </td>
                 </tr>
-            </ng-template>
-        </tbody>
+            
+}
+                    </tbody>
     </table>
 
     <div class="w-full inline-flex justify-center">
         <kn-pagination [totalCount]="queryResult.data.publishers?.totalCount" [pageSizes]="pageSizes"
             [pageSize]="pageSize" (pageChanged)="changePage($event)" (pageSizeChanged)="changePageSize($event)" />
     </div>
-</ng-container>
+
+}

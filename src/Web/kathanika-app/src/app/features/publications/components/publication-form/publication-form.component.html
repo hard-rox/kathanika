@@ -6,7 +6,9 @@
     <kn-text-input label="Title" formControlName="title" />
     <kn-select-input label="Publication Type" formControlName="publicationType">
       <option selected [value]="null">Select Type</option>
-      <option *ngFor="let publicationType of publicationTypes" [value]="publicationType">{{publicationType}}</option>
+      @for (publicationType of publicationTypes; track publicationType) {
+  <option [value]="publicationType">{{publicationType}}</option>
+}
     </kn-select-input>
     <kn-date-input label="Published Date" formControlName="publishedDate" />
     <kn-text-input label="Publisher" formControlName="publisher" />
@@ -21,16 +23,20 @@
     <div>
       <label>Authors</label>
       <div class="flex justify-start flex-wrap gap-1 mb-1">
-        <kn-chip *ngFor="let author of selectedAuthors" [key]="author.id"
+        @for (author of selectedAuthors; track author) {
+  <kn-chip [key]="author.id"
           (onActionPerformed)="removeAuthor($event)">{{author.fullName}}</kn-chip>
+}
       </div>
       <kn-searchbar (searchTextChanged)="filter($event)" (resultSelected)="addAuthor($event)">
-        <kn-searchbar-result *ngFor="let author of (authorSearchQueryRef.valueChanges | async)?.data?.authors?.items"
+        @for (author of (authorSearchQueryRef.valueChanges | async)?.data?.authors?.items; track author) {
+  <kn-searchbar-result
           [value]="author">
           <div class="flex space-x-2">
             <span class="my-auto">{{author.fullName}}</span>
           </div>
         </kn-searchbar-result>
+}
       </kn-searchbar>
     </div>
   </div>

@@ -1,7 +1,9 @@
 <div class="flex flex-col">
   <label [for]="control?.name">
     {{label}}
-    <span *ngIf="isRequired()" class="text-theme-fire-red">*</span>
+    @if (isRequired()) {
+<span class="text-theme-fire-red">*</span>
+}
   </label>
   <select [id]="control?.name" [(ngModel)]="value" (ngModelChange)="onModelChange($event)" (blur)="onBlur()" [ngClass]="(control?.dirty || control?.touched)
   && !control?.valid ?
@@ -10,8 +12,10 @@
     <ng-content select="option"></ng-content>
   </select>
   <ul class="list-disc ml-4">
-    <li *ngIf="(control?.dirty || control?.touched)
-    && control?.hasError('required')" class="text-theme-fire-red">{{label}} is
+    @if ((control?.dirty || control?.touched)
+    && control?.hasError('required')) {
+<li class="text-theme-fire-red">{{label}} is
       required</li>
+}
   </ul>
 </div>
