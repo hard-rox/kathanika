@@ -24,11 +24,11 @@
 
                 @for (item of data; track item; let idx = $index) {
   <tr>
-                    <td scope="col">{{idx + 1}}</td>
-                    <td scope="col">{{item.name}}</td>
-                    <td scope="col">{{item.description}}</td>
-                    <td scope="col">{{item.contactInformation}}</td>
-                    <td scope="col">
+                    <td>{{idx + 1}}</td>
+                    <td>{{item.name}}</td>
+                    <td>{{item.description}}</td>
+                    <td>{{item.contactInformation}}</td>
+                    <td>
                         <div class="group relative">
                             <button class="px-3 py-2 hover:bg-theme-silver active:bg-theme-silver rounded-full">
                                 <span class="material-symbols-sharp">
@@ -59,7 +59,7 @@
                     </td>
                 </tr>
 }
-            
+
 } @else {
 
                 <tr>
@@ -67,7 +67,7 @@
                         No data to show
                     </td>
                 </tr>
-            
+
 }
                     </tbody>
     </table>

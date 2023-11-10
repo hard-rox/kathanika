@@ -6,7 +6,6 @@ import { TextInputComponent } from 'src/app/shared/components/text-input/text-in
 import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
-import { AuthorFormOutput } from '../../types/author-form-output';
 
 describe('AuthorFormComponent', () => {
   let component: AuthorFormComponent;

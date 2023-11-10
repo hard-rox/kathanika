@@ -11,5 +11,5 @@ import { CommonModule } from '@angular/common';
 })
 export class ChipComponent {
   @Input() key: string | undefined;
-  @Output() onActionPerformed: EventEmitter<string> = new EventEmitter<string>();
+  @Output() actionPerformed: EventEmitter<string> = new EventEmitter<string>();
 }

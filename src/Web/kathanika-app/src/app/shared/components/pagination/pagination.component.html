@@ -3,31 +3,31 @@
     <select (change)="onPageSizeChanged($event.target)"
         class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
         @for (pageSizeItem of pageSizes; track pageSizeItem) {
-  <option [value]="pageSizeItem" [selected]="pageSizeItem == pageSize">
+  <option [value]="pageSizeItem" [selected]="pageSizeItem === pageSize">
             {{pageSizeItem}}
         </option>
 }
     </select>
     <span class="px-4 py-2">Page {{currentPage}} of {{lastPage}}</span>
-    <button [disabled]="currentPage == 1" (click)="onPageChanged(1)"
+    <button [disabled]="currentPage === 1" (click)="onPageChanged(1)"
         class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none">
         <span class="material-symbols-sharp">
             first_page
         </span>
     </button>
-    <button [disabled]="currentPage == 1" (click)="onPageChanged(currentPage - 1)"
+    <button [disabled]="currentPage === 1" (click)="onPageChanged(currentPage - 1)"
         class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none">
         <span class="material-symbols-sharp">
             chevron_left
         </span>
     </button>
-    <button [disabled]="currentPage == lastPage" (click)="onPageChanged(currentPage + 1)"
+    <button [disabled]="currentPage === lastPage" (click)="onPageChanged(currentPage + 1)"
         class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none">
         <span class="material-symbols-sharp">
             chevron_right
         </span>
     </button>
-    <button [disabled]="currentPage == lastPage" (click)="onPageChanged(lastPage)"
+    <button [disabled]="currentPage === lastPage" (click)="onPageChanged(lastPage)"
         class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none">
         <span class="material-symbols-sharp">
             last_page

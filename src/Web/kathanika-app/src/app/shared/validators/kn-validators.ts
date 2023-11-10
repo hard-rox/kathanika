@@ -1,4 +1,4 @@
-import { AbstractControl, ValidationErrors, ValidatorFn } from "@angular/forms";
+import { AbstractControl, ValidationErrors } from "@angular/forms";
 
 export class KnValidators {
   static integerOnly(control: AbstractControl): ValidationErrors | null {
@@ -9,4 +9,4 @@ export class KnValidators {
 function integerOnlyValidator(control: AbstractControl): ValidationErrors | null {
   const isValid: boolean = /^-?\d+$/.test(control.value);
   return !isValid ? { integerOnly: true } : null;
-};
+}

@@ -12,15 +12,15 @@ import { BaseFormComponent, FormGroupModel } from 'src/app/shared/bases/base-for
 })
 export class PublisherFormComponent extends BaseFormComponent<PublisherFormOutput> {
 
-  @Input('publisher')
+  @Input()
   set publisher(input: PublisherFormInput | null | undefined) {
     if (input) {
       this.formGroup.patchValue(input);
     }
   }
 
-  @Output('onSubmit')
-  onSubmit = this.submitEventEmitter;
+  @Output()
+  formSubmit = this.submitEventEmitter;
 
   protected createFormGroup(): FormGroupModel<PublisherFormOutput> {
     const group = new FormGroup({

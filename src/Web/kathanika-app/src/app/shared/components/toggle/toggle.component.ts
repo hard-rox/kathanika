@@ -19,7 +19,7 @@ import { BaseInputComponent } from '../../bases/base-input-component';
 })
 export class ToggleComponent extends BaseInputComponent<boolean> implements OnInit {
 
-  @Input('label')
+  @Input()
   set labelValue(value: string) {
     this.label = value;
   }

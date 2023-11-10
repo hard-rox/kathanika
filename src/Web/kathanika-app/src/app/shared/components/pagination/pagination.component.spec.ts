@@ -64,10 +64,10 @@ describe('PaginationComponent', () => {
   });
 
   it('should emit pageSizeChanged on pageSize change', () => {
-    let pageSizeChangedOutputSpy = spyOn(component['pageSizeChanged'], 'emit');
+    const pageSizeChangedOutputSpy = spyOn(component['pageSizeChanged'], 'emit');
     component.pageSizes = [1, 2, 3];
     fixture.detectChanges();
-    let selectElement = fixture.nativeElement.querySelector(
+    const selectElement = fixture.nativeElement.querySelector(
       'select'
     ) as HTMLSelectElement;
     selectElement.selectedIndex = 1;
@@ -78,7 +78,7 @@ describe('PaginationComponent', () => {
   });
 
   it('should emit pageChanged on page change', () => {
-    let pageChangedOutputSpy = spyOn(component['pageChanged'], 'emit');
+    const pageChangedOutputSpy = spyOn(component['pageChanged'], 'emit');
     component.onPageChanged(1);
     fixture.detectChanges();
 
@@ -86,7 +86,7 @@ describe('PaginationComponent', () => {
   });
 
   it('should not emit pageChanged on page change when pageNumber is greater than lastPage', () => {
-    let pageChangedOutputSpy = spyOn(component['pageChanged'], 'emit');
+    const pageChangedOutputSpy = spyOn(component['pageChanged'], 'emit');
     component.onPageChanged(3);
     fixture.detectChanges();
 

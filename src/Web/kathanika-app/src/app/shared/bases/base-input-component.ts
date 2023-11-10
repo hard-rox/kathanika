@@ -10,6 +10,7 @@ export abstract class BaseInputComponent<TValueType> implements ControlValueAcce
 
   protected control: NgControl | null = null;
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   private onChange = (value: TValueType) => { };
   private onTouched = () => { };
 

@@ -1,7 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import {
-  AuthorPatchInput,
   GetAuthorGQL,
   UpdateAuthorGQL,
 } from 'src/app/graphql/generated/graphql-operations';
@@ -108,7 +107,7 @@ export class AuthorUpdateComponent implements OnInit {
           }
           this.isPanelLoading = false;
         },
-        error: (err) => {
+        error: () => {
           this.errors.push('Something wrong happened.');
           this.isPanelLoading = false;
         }

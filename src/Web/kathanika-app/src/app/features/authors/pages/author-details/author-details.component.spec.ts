@@ -45,7 +45,7 @@ describe('AuthorDetailsComponent', () => {
   });
 
   it('should refetch query with route param on ngOnInit', () => {
-    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
     component.ngOnInit();
     const queryVariable = component.queryVariables;
     expect(queryVariable?.id).toEqual(mockAuthorId);
@@ -53,7 +53,7 @@ describe('AuthorDetailsComponent', () => {
   });
 
   it('should not refetch query and variable with route param when route param id is invalid on ngOnInit', () => {
-    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
     activatedRoute.snapshot.params['id'] = '';
 
     component.ngOnInit();

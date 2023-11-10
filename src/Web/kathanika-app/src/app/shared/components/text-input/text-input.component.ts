@@ -19,12 +19,12 @@ import { BaseInputComponent } from '../../bases/base-input-component';
 })
 export class TextInputComponent extends BaseInputComponent<string> implements OnInit{
 
-  @Input('label')
+  @Input()
   set labelValue(value: string) {
     this.label = value;
   }
 
-  @Input('placeholder')
+  @Input()
   set placeholderValue(value: string) {
     this.placeholder = value;
   }

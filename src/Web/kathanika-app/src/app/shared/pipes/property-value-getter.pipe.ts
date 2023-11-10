@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from '@angular/core';
 })
 export class PropertyValueGetterPipe implements PipeTransform {
 
-  transform(value: any, propertyName: string): any {
+  transform(value: never, propertyName: string): unknown {
     return value[propertyName];
   }
 

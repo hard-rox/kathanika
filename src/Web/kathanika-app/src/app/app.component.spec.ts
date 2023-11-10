@@ -6,7 +6,6 @@ import { SidebarComponent } from './components/sidebar/sidebar.component';
 import { FooterComponent } from './components/footer/footer.component';
 
 describe('AppComponent', () => {
-  let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
   let nativeElement: HTMLElement;
 
@@ -21,7 +20,6 @@ describe('AppComponent', () => {
       ]
     }).compileComponents();
 
-    component = TestBed.createComponent(AppComponent);
     fixture = TestBed.createComponent(AppComponent);
     nativeElement = fixture.nativeElement as HTMLElement;
   });

@@ -18,12 +18,12 @@ import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
   ]
 })
 export class NumberInputComponent extends BaseInputComponent<number> implements OnInit {
-  @Input('label')
+  @Input()
   set labelValue(value: string) {
     this.label = value;
   }
 
-  @Input('placeholder')
+  @Input()
   set placeholderValue(value: string) {
     this.placeholder = value;
   }
