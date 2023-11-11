@@ -1,7 +1,7 @@
-import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { BaseInputComponent } from '../../bases/base-input-component';
+import { AbstractInputComponent } from '../../bases/base-input-component';
 
 @Component({
   selector: 'kn-date-input',
@@ -17,18 +17,4 @@ import { BaseInputComponent } from '../../bases/base-input-component';
     }
   ]
 })
-export class DateInputComponent extends BaseInputComponent<Date> implements OnInit{
-
-  @Input()
-  set labelValue(value: string) {
-    this.label = value;
-  }
-
-  constructor(@Inject(Injector) injector: Injector) {
-    super(injector);
-  }
-
-  ngOnInit(): void {
-    this.init();
-  }
-}
+export class DateInputComponent extends AbstractInputComponent<Date> { }

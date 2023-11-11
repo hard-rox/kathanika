@@ -1,9 +1,16 @@
-import { Inject, Injector } from "@angular/core";
+import { Component, Inject, Injector, Input, OnInit } from "@angular/core";
 import { ControlValueAccessor, NgControl, Validators } from "@angular/forms";
 
-export abstract class BaseInputComponent<TValueType> implements ControlValueAccessor {
-  protected label: string = '';
-  protected placeholder: string = '';
+@Component({
+  template: ''
+})
+export abstract class AbstractInputComponent<TValueType>
+  implements ControlValueAccessor, OnInit {
+  @Input()
+  label: string = '';
+
+  @Input()
+  placeholder: string = '';
 
   protected value: TValueType | null = null;
   protected isDisabled: boolean = false;
@@ -16,7 +23,7 @@ export abstract class BaseInputComponent<TValueType> implements ControlValueAcce
 
   constructor(@Inject(Injector) private injector: Injector) { }
 
-  protected init() {
+  ngOnInit() {
     this.control = this.injector.get(NgControl);
   }
 
