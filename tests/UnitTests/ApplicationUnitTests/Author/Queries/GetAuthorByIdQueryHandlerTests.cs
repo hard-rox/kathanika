@@ -13,7 +13,7 @@ public class GetAuthorByIdQueryHandlerTests
             DateOnly.Parse("2000-01-01"),
             null,
             "",
-            ""  
+            ""
         );
         string id = Guid.NewGuid().ToString();
         GetAuthorByIdQuery query = new(id);

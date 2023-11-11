@@ -11,7 +11,7 @@ internal sealed class UpdatePublicationCommandValidator : AbstractValidator<Upda
             .NotEmpty()
             .MustAsync(publicationRepository.ExistsAsync)
             .WithMessage("Invalid publication");
-        RuleFor(x => new {x.Id, x.Patch})
+        RuleFor(x => new { x.Id, x.Patch })
             .MustAsync(async (props, cancellationToken) =>
             {
                 Expression<Func<Publication, bool>> expression = p =>

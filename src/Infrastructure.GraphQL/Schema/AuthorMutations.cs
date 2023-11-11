@@ -1,7 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using HotChocolate.Subscriptions;
 using Kathanika.Domain.Exceptions;
 using Kathanika.Infrastructure.GraphQL.Payloads;
-using HotChocolate.Subscriptions;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.GraphQL.Schema;
 

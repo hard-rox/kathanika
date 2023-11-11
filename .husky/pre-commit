@@ -19,9 +19,8 @@
 ## or put your custom commands -------------------
 #echo 'Husky.Net is awesome!'
 
-echo 'Pre push hook in progress...'
+echo 'Pre commit hook in progress...'
+dotnet format
 dotnet build
-dotnet test --no-build
 npm --prefix src/Web/kathanika-app run lint
 npm --prefix src/Web/kathanika-app run build
-npm --prefix src/Web/kathanika-app run test-ci

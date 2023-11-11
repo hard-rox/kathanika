@@ -9,7 +9,7 @@ namespace Kathanika.ArchitectureConventionTests;
 public sealed class DependencyDirectionTests
 {
     private readonly Assembly _domainAssembly = typeof(AggregateRoot).Assembly;
-    
+
     [Fact]
     public void Domain_ShouldNot_HaveDependencyOnApplication()
     {

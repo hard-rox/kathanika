@@ -1,4 +1,6 @@
-﻿using HotChocolate.Data.Filters;
+﻿using System.Reflection;
+using System.Runtime.CompilerServices;
+using HotChocolate.Data.Filters;
 using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
@@ -7,8 +9,6 @@ using Kathanika.Infrastructure.GraphQL.Bases;
 using Kathanika.Infrastructure.GraphQL.GraphqlHelpers;
 using Kathanika.Infrastructure.GraphQL.Schema;
 using Microsoft.Extensions.DependencyInjection;
-using System.Reflection;
-using System.Runtime.CompilerServices;
 
 namespace Kathanika.Infrastructure.GraphQL;
 

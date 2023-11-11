@@ -10,7 +10,7 @@ internal class ValueObjectIdConvention : ConventionBase, IClassMapConvention
 {
     public void Apply(BsonClassMap classMap)
     {
-        if (classMap.ClassType.BaseType == typeof(ValueObject) 
+        if (classMap.ClassType.BaseType == typeof(ValueObject)
             && classMap.GetMemberMap("Id") is not null)
         {
             classMap.MapProperty("Id")
