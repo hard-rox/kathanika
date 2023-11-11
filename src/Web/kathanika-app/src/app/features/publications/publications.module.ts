@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PublicationsRoutingModule } from './publications-routing.module';
 import { PublicationListComponent } from './pages/publication-list/publication-list.component';
 import { PublicationAddComponent } from './pages/publication-add/publication-add.component';
 import { PublicationUpdateComponent } from './pages/publication-update/publication-update.component';
@@ -18,6 +17,8 @@ import { SelectInputComponent } from 'src/app/shared/components/select-input/sel
 import { NumberInputComponent } from 'src/app/shared/components/number-input/number-input.component';
 import { SearchbarModule } from 'src/app/shared/modules/searchbar/searchbar.module';
 import { ChipComponent } from 'src/app/shared/components/chip/chip.component';
+import { RouterModule } from '@angular/router';
+import { routes } from './publications.routes';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,7 @@ import { ChipComponent } from 'src/app/shared/components/chip/chip.component';
   ],
   imports: [
     CommonModule,
-    PublicationsRoutingModule,
+    RouterModule.forChild(routes),
     ReactiveFormsModule,
     PaginationComponent,
     TextInputComponent,

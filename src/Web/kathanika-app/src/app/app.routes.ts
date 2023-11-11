@@ -9,12 +9,14 @@ export const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./features/home/home.module').then((x) => x.HomeModule),
+      import('./features/home/home.module')
+        .then((x) => x.HomeModule),
   },
   {
     path: 'auth',
     loadChildren: () =>
-      import('./features/auth/auth.module').then((x) => x.AuthModule),
+      import('./features/auth/auth.routes')
+        .then(x => x.routes),
   },
   {
     path: 'authors',
