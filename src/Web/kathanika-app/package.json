@@ -10,7 +10,8 @@
     "test-ci": "ng test --code-coverage --no-watch --browsers=ChromeHeadless",
     "codegen": "graphql-codegen --config codegen.ts",
     "code-cov": "ng test --no-watch --code-coverage && http-server -p 4201 -c-1 coverage/kathanika-app -o",
-    "lint": "ng lint"
+    "lint": "ng lint",
+    "commitlint": "commitlint --edit ${1}"
   },
   "private": true,
   "dependencies": {
@@ -43,6 +44,8 @@
     "@angular-eslint/template-parser": "17.0.1",
     "@angular/cli": "^17.0.0",
     "@angular/compiler-cli": "^17.0.0",
+    "@commitlint/cli": "^18.4.0",
+    "@commitlint/config-conventional": "^18.4.0",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-apollo-angular": "^4.0.0",

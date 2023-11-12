@@ -29,6 +29,7 @@
     "Bson",
     "cobertura",
     "codegen",
+    "commitlint",
     "CQRS",
     "davys",
     "hotchocolate",
