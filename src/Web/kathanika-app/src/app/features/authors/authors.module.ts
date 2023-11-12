@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { AuthorsRoutingModule } from './authors-routing.module';
 import { AuthorListComponent } from './pages/author-list/author-list.component';
 import { AuthorDetailsComponent } from './pages/author-details/author-details.component';
 import { AuthorAddComponent } from './pages/author-add/author-add.component';
@@ -15,6 +14,8 @@ import { TextInputComponent } from 'src/app/shared/components/text-input/text-in
 import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
 import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
+import { RouterModule } from '@angular/router';
+import { routes } from './authors.routes';
 
 
 @NgModule({
@@ -27,8 +28,8 @@ import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.compone
   ],
   imports: [
     CommonModule,
+    RouterModule.forChild(routes),
     ReactiveFormsModule,
-    AuthorsRoutingModule,
     PaginationComponent,
     AlertComponent,
     PanelComponent,

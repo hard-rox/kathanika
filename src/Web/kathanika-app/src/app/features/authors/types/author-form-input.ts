@@ -1,8 +1,8 @@
 export type AuthorFormInput = {
   firstName: string;
   lastName: string;
-  dateOfBirth: any;
-  dateOfDeath?: any;
+  dateOfBirth: Date;
+  dateOfDeath?: Date;
   nationality: string;
   biography: string;
 };

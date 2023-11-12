@@ -18,12 +18,12 @@ internal sealed class AuthorUpdatedDomainEventHandler : INotificationHandler<Aut
     {
         //TODO: Logging and optimize performance in loop.
         Author? author = await _authorRepository.GetByIdAsync(notification.AuthorId, cancellationToken);
-        
+
         if (author is null) return;
 
         IReadOnlyList<Publication> publications = await _publicationRepository
             .ListAllByAuthorIdAsync(notification.AuthorId, cancellationToken);
-        
+
         foreach (Publication publication in publications)
         {
             if (publication is null) continue;

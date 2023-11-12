@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { HomeRoutingModule } from './home-routing.module';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { DashboardTileComponent } from './components/dashboard-tile/dashboard-tile.component';
+import { RouterModule } from '@angular/router';
+import { routes } from './home.routes';
 
 
 @NgModule({
@@ -13,7 +14,7 @@ import { DashboardTileComponent } from './components/dashboard-tile/dashboard-ti
   ],
   imports: [
     CommonModule,
-    HomeRoutingModule
+    RouterModule.forChild(routes)
   ]
 })
 export class HomeModule { }

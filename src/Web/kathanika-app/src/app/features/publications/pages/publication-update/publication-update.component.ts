@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { PublicationFormComponent } from '../../components/publication-form/publication-form.component';
 import { GetPublicationGQL, PublicationPatchInput, UpdatePublicationGQL } from 'src/app/graphql/generated/graphql-operations';
 import { MessageAlertService } from 'src/app/core/services/message-alert.service';
@@ -10,7 +10,7 @@ import { PublicationFormOutput } from '../../types/publication-form-output';
   templateUrl: './publication-update.component.html',
   styleUrls: ['./publication-update.component.scss']
 })
-export class PublicationUpdateComponent {
+export class PublicationUpdateComponent implements OnInit {
   @ViewChild('publicationUpdateForm') publicationUpdateForm:
     | PublicationFormComponent
     | undefined;

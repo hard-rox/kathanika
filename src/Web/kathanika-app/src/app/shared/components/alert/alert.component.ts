@@ -9,13 +9,13 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   imports: [CommonModule]
 })
 export class AlertComponent {
-  @Input('closeable')
+  @Input()
   closeable: boolean = false;
 
-  @Output('onClosed')
-  private onClosed = new EventEmitter<void>();
+  @Output()
+  private closed = new EventEmitter<void>();
 
   close() {
-    this.onClosed.emit();
+    this.closed.emit();
   }
 }

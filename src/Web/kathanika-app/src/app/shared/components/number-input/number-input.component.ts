@@ -1,6 +1,6 @@
-import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { BaseInputComponent } from '../../bases/base-input-component';
+import { AbstractInputComponent } from '../../bases/base-input-component';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -17,22 +17,4 @@ import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
     }
   ]
 })
-export class NumberInputComponent extends BaseInputComponent<number> implements OnInit {
-  @Input('label')
-  set labelValue(value: string) {
-    this.label = value;
-  }
-
-  @Input('placeholder')
-  set placeholderValue(value: string) {
-    this.placeholder = value;
-  }
-
-  constructor(@Inject(Injector) injector: Injector) {
-    super(injector);
-  }
-
-  ngOnInit(): void {
-    this.init();
-  }
-}
+export class NumberInputComponent extends AbstractInputComponent<number> { }

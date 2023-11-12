@@ -4,12 +4,12 @@ import { MessageAlertService } from './message-alert.service';
 
 describe('MessageAlertService', () => {
   let service: MessageAlertService;
-  let swalSpy: jasmine.Spy<any>;
+  let swalSpy: jasmine.Spy;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(MessageAlertService);
-    swalSpy = spyOn<any>(service['themedSwal'], 'fire');
+    swalSpy = spyOn(service['themedSwal'], 'fire');
   });
 
   it('should be created', () => {

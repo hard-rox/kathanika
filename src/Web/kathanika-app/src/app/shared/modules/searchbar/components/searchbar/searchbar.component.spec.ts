@@ -3,8 +3,8 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { SearchbarComponent } from './searchbar.component';
 
 describe('SearchbarComponent', () => {
-  let component: SearchbarComponent<any>;
-  let fixture: ComponentFixture<SearchbarComponent<any>>;
+  let component: SearchbarComponent<unknown>;
+  let fixture: ComponentFixture<SearchbarComponent<unknown>>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

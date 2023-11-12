@@ -11,7 +11,7 @@ internal sealed class PublicationRepository : Repository<Publication>, IPublicat
 
     public async Task<IReadOnlyList<Publication>> ListAllByAuthorIdAsync(string authorId, CancellationToken cancellationToken = default)
     {
-        _logger.LogInformation("Getting all Publications with author ID {@AuthorId}",authorId);
+        _logger.LogInformation("Getting all Publications with author ID {@AuthorId}", authorId);
         FilterDefinition<Publication> filter = Builders<Publication>.Filter
             .ElemMatch(x => x.Authors,
                 Builders<PublicationAuthor>.Filter.Eq(x => x.Id, authorId));

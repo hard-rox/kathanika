@@ -38,7 +38,7 @@ public sealed class Publisher : AggregateRoot
         string? contactInformation = null
     )
     {
-        Name = !string.IsNullOrEmpty(publisherName) ? publisherName :Name;
+        Name = !string.IsNullOrEmpty(publisherName) ? publisherName : Name;
         Description = !string.IsNullOrEmpty(description) ? description : Description;
         ContactInformation = !string.IsNullOrEmpty(contactInformation) ? contactInformation : ContactInformation;
     }

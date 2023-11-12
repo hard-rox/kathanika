@@ -4,8 +4,8 @@ import { SearchbarResultComponent } from './searchbar-result.component';
 import { SearchbarComponent } from '../searchbar/searchbar.component';
 
 describe('SearchbarResultComponent', () => {
-  let component: SearchbarResultComponent<any>;
-  let fixture: ComponentFixture<SearchbarResultComponent<any>>;
+  let component: SearchbarResultComponent<unknown>;
+  let fixture: ComponentFixture<SearchbarResultComponent<unknown>>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({

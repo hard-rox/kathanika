@@ -8,13 +8,13 @@ import { of } from "rxjs";
 import { Query } from "apollo-angular";
 
 @Component({})
-class BasePaginatedListTestingComponent extends BasePaginatedListComponent<any, any>{
+class BasePaginatedListTestingComponent extends BasePaginatedListComponent<unknown, PaginationQueryVariables>{
   protected setSearchTextQueryFilter(searchText: string): void {
-    throw new Error("Method not implemented.");
+    throw new Error(`Method not implemented. ${searchText}`);
   }
 
   constructor(
-    gql: Query<any, PaginationQueryVariables>,
+    gql: Query<unknown, PaginationQueryVariables>,
     activatedRoute: ActivatedRoute,
     router: Router,
   ) {
@@ -44,7 +44,7 @@ describe('BasePaginatedListComponent', () => {
       imports: [RouterTestingModule],
       providers: [
         {
-          provide: Query<any, PaginationQueryVariables>,
+          provide: Query<never, PaginationQueryVariables>,
           useValue: mockQueryGql,
         },
         {
@@ -65,7 +65,7 @@ describe('BasePaginatedListComponent', () => {
   });
 
   it('should change _queryVariables on changePage', () => {
-    let queryVariables = component.queryVariables;
+    const queryVariables = component.queryVariables;
     const page = 2;
 
     component.changePage(page);
@@ -73,7 +73,7 @@ describe('BasePaginatedListComponent', () => {
   });
 
   it('should refetch query changePage', () => {
-    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
     const page = 2;
 
     component.changePage(page);
@@ -90,7 +90,7 @@ describe('BasePaginatedListComponent', () => {
   });
 
   it('should change _queryVariables on changePageSize', () => {
-    let queryVariables = component.queryVariables;
+    const queryVariables = component.queryVariables;
     const pageSize = 2;
 
     component.changePageSize(pageSize);
@@ -98,7 +98,7 @@ describe('BasePaginatedListComponent', () => {
   });
 
   it('should refetch query on changePageSize', () => {
-    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
     const pageSize = 2;
 
     component.changePageSize(pageSize);
@@ -124,7 +124,7 @@ describe('BasePaginatedListComponent', () => {
 
   it('should refetch query on init', () => {
     const queryVariables = component.queryVariables;
-    const queryRefRefetchSpy = spyOn<any>(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
     component['init']();
     expect(queryRefRefetchSpy).toHaveBeenCalledOnceWith(queryVariables);
   });

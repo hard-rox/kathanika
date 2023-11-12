@@ -29,6 +29,7 @@
     "Bson",
     "cobertura",
     "codegen",
+    "commitlint",
     "CQRS",
     "davys",
     "hotchocolate",
@@ -44,6 +45,7 @@
     "nlte",
     "nstarts",
     "OPAC",
+    "prerender",
     "Rahman",
     "Rasedur",
     "reportgenerator",
@@ -56,5 +58,6 @@
     "Xunit",
     "কথনিকা"
   ],
-  "cSpell.language": "en,en-US,en-GB,lorem"
+  "cSpell.language": "en,en-US,en-GB,lorem",
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
 }

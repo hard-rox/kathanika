@@ -4,7 +4,7 @@ internal sealed class UpdatePublisherCommandValidator : AbstractValidator<Update
 {
     public UpdatePublisherCommandValidator(IPublisherRepository publisherRepository)
     {
-        RuleFor(x => new {x.Id, x.Patch})
+        RuleFor(x => new { x.Id, x.Patch })
             .MustAsync(async (props, CancellationToken) =>
             {
                 bool isDuplicate = await publisherRepository.ExistsAsync(x => x.Name == props.Patch.Name, CancellationToken);

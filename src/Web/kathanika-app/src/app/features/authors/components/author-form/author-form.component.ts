@@ -12,7 +12,7 @@ export class AuthorFormComponent
   extends BaseFormComponent<AuthorFormOutput>
   implements OnInit {
 
-  @Input('author')
+  @Input()
   set author(input: AuthorFormInput | null | undefined) {
     if (input) {
       this.formGroup.patchValue({
@@ -27,8 +27,8 @@ export class AuthorFormComponent
     }
   }
 
-  @Output('onSubmit')
-  onSubmit = this.submitEventEmitter;
+  @Output()
+  formSubmit = this.submitEventEmitter;
 
   protected createFormGroup(): FormGroupModel<AuthorFormOutput> {
     const group: FormGroupModel<AuthorFormOutput> = new FormGroup({

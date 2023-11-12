@@ -23,15 +23,15 @@ public sealed class AddAuthorCommandHandlerTests
             "BD",
             "");
         AddAuthorCommand command = new(
-            dummyAuthor.FirstName, 
-            dummyAuthor.LastName, 
+            dummyAuthor.FirstName,
+            dummyAuthor.LastName,
             dummyAuthor.DateOfBirth,
-            dummyAuthor.Nationality, 
+            dummyAuthor.Nationality,
             dummyAuthor.Biography,
             dummyAuthor.DateOfDeath
             );
         AddAuthorCommandHandler handler = new(authorRepository);
-        
+
         authorRepository.AddAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>())
             .Returns(Author.Create(
                 dummyAuthor.FirstName,

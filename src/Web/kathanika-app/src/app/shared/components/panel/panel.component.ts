@@ -9,9 +9,9 @@ import { Component, Input } from '@angular/core';
   imports: [CommonModule]
 })
 export class PanelComponent {
-  @Input('panelTitle')
+  @Input()
   panelTitle: string | null = null;
 
-  @Input('isLoading')
+  @Input()
   isLoading: boolean = false;
 }

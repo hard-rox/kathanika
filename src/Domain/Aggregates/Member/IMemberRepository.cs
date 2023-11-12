@@ -4,5 +4,5 @@ namespace Kathanika.Domain.Aggregates;
 
 public interface IMemberRepository : IRepository<Member>
 {
-    
+
 }

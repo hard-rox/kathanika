@@ -12,7 +12,7 @@ internal sealed class UpdateAuthorCommandValidator : AbstractValidator<UpdateAut
             .NotEmpty()
             .MustAsync(authorRepository.ExistsAsync)
             .WithMessage("Invalid Author");
-        RuleFor(x => new {x.Id, x.Patch})
+        RuleFor(x => new { x.Id, x.Patch })
             .MustAsync(async (props, CancellationToken) =>
             {
                 Expression<Func<Author, bool>> expression = a =>

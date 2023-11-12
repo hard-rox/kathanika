@@ -1,7 +1,6 @@
-import { NgModule } from '@angular/core';
-import { RouterModule, Routes } from '@angular/router';
+import { Routes } from '@angular/router';
 
-const routes: Routes = [
+export const routes: Routes = [
   {
     path: '',
     redirectTo: 'home',
@@ -10,12 +9,14 @@ const routes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('./features/home/home.module').then((x) => x.HomeModule),
+      import('./features/home/home.module')
+        .then((x) => x.HomeModule),
   },
   {
     path: 'auth',
     loadChildren: () =>
-      import('./features/auth/auth.module').then((x) => x.AuthModule),
+      import('./features/auth/auth.routes')
+        .then(x => x.routes),
   },
   {
     path: 'authors',
@@ -37,9 +38,3 @@ const routes: Routes = [
       ),
   },
 ];
-
-@NgModule({
-  imports: [RouterModule.forRoot(routes)],
-  exports: [RouterModule],
-})
-export class AppRoutingModule { }

@@ -1,6 +1,6 @@
+using System.Linq.Expressions;
 using Kathanika.Application.Features.Publications.Commands;
 using Kathanika.Domain.Exceptions;
-using System.Linq.Expressions;
 
 namespace Kathanika.UnitTests.ApplicationUnitTests.Commands;
 

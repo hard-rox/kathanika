@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PublishersRoutingModule } from './publishers-routing.module';
 import { PublisherFormComponent } from './components/publisher-form/publisher-form.component';
 import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
 import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
@@ -12,6 +11,8 @@ import { PublisherAddComponent } from './pages/publisher-add/publisher-add.compo
 import { PublisherUpdateComponent } from './pages/publisher-update/publisher-update.component';
 import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
 import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
+import { RouterModule } from '@angular/router';
+import { routes } from './publishers.routes';
 
 
 @NgModule({
@@ -23,7 +24,7 @@ import { AlertComponent } from 'src/app/shared/components/alert/alert.component'
   ],
   imports: [
     CommonModule,
-    PublishersRoutingModule,
+    RouterModule.forChild(routes),
     ReactiveFormsModule,
     PaginationComponent,
     TextInputComponent,
