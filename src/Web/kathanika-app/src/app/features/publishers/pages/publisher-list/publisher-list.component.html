@@ -20,55 +20,50 @@
             </tr>
         </thead>
         <tbody>
-            @if (queryResult?.data?.publishers?.items; as data) {
-
-                @for (item of data; track item; let idx = $index) {
-  <tr>
-                    <td>{{idx + 1}}</td>
-                    <td>{{item.name}}</td>
-                    <td>{{item.description}}</td>
-                    <td>{{item.contactInformation}}</td>
-                    <td>
-                        <div class="group relative">
-                            <button class="px-3 py-2 hover:bg-theme-silver active:bg-theme-silver rounded-full">
-                                <span class="material-symbols-sharp">
-                                    more_vert
+          @for (item of queryResult?.data?.publishers?.items; track item; let idx = $index) {
+            <tr>
+                              <td>{{idx + 1}}</td>
+                              <td>{{item.name}}</td>
+                              <td>{{item.description}}</td>
+                              <td>{{item.contactInformation}}</td>
+                              <td>
+                                  <div class="group relative">
+                                      <button class="px-3 py-2 hover:bg-theme-silver active:bg-theme-silver rounded-full">
+                                          <span class="material-symbols-sharp">
+                                              more_vert
+                                          </span>
+                                      </button>
+                                      <div tabindex="0"
+                                          class="z-10 border bg-white invisible shadow-md w-30 absolute top-0 right-16 transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
+                                          <div class="py-2">
+                                              <a routerLink="update/{{item?.id}}"
+                                                  class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                                                  <span class="material-symbols-sharp my-auto">
+                                                      edit
+                                                  </span>
+                                                  <span class="my-auto">Update</span>
+                                              </a>
+                                              <!-- TODO: Pass full name -->
+                                              <!-- <button (click)="deleteAuthor(item.id, item.firstName)"
+                                class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                                <span class="material-symbols-sharp my-auto">
+                                  delete
                                 </span>
-                            </button>
-                            <div tabindex="0"
-                                class="z-10 border bg-white invisible shadow-md w-30 absolute top-0 right-16 transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
-                                <div class="py-2">
-                                    <a routerLink="update/{{item?.id}}"
-                                        class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
-                                        <span class="material-symbols-sharp my-auto">
-                                            edit
-                                        </span>
-                                        <span class="my-auto">Update</span>
-                                    </a>
-                                    <!-- TODO: Pass full name -->
-                                    <!-- <button (click)="deleteAuthor(item.id, item.firstName)"
-                      class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
-                      <span class="material-symbols-sharp my-auto">
-                        delete
-                      </span>
-                      <span class="my-auto">Delete</span>
-                    </button> -->
-                                </div>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-}
-
-} @else {
-
-                <tr>
-                    <td colspan="100%" class="text-center">
-                        No data to show
-                    </td>
-                </tr>
-
-}
+                                <span class="my-auto">Delete</span>
+                              </button> -->
+                                          </div>
+                                      </div>
+                                  </div>
+                              </td>
+                          </tr>
+          }
+          @empty {
+            <tr>
+              <td colspan="100%" class="text-center">
+                  No data to show
+              </td>
+          </tr>
+          }
                     </tbody>
     </table>
 
