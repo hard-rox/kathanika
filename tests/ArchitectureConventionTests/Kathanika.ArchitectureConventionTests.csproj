@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
 
@@ -31,5 +31,4 @@
     <ProjectReference Include="..\..\src\Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj" />
     <ProjectReference Include="..\..\src\Web\Kathanika.Web.csproj" />
   </ItemGroup>
-
 </Project>
