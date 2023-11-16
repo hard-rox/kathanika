@@ -31,4 +31,10 @@ updates:
         update-types:
         - "minor"
         - "patch"
+      eslint-deps: 
+        patterns: 
+          - "@angular-eslint/*"
+        update-types:
+        - "minor"
+        - "patch"
     open-pull-requests-limit: 12
