@@ -13,14 +13,13 @@
     "**/Logs": true,
     "**/node_modules": true,
     "**/.angular": true,
-    "**/TestResults": true,
     "**/.vs": true,
     "**/.husky": true,
     "**/.config": true,
     "**/.vscode": true,
-    "**/.github": true
+    "**/.github": true,
+    "**/.nx":true
   },
-  "karmaTestExplorer.projectWorkspaces": ["src/Web/kathanika-app"],
   "dotnetAcquisitionExtension.installTimeoutValue": 180,
   "cSpell.words": [
     "apng",

@@ -1,17 +1,12 @@
 {
-  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=827846
   "recommendations": [
-    "angular.ng-template",
-    "cyrilletuzi.angular-schematics",
-    "ms-dotnettools.csharp",
-    "graphql.vscode-graphql-syntax",
-    "bradlc.vscode-tailwindcss",
-    "hbenl.vscode-test-explorer",
+    "nrwl.angular-console",
     "esbenp.prettier-vscode",
-    "lucono.karma-test-explorer",
-    "ms-azuretools.vscode-docker",
+    "firsttris.vscode-jest-runner",
+    "dbaeumer.vscode-eslint",
     "streetsidesoftware.code-spell-checker",
+    "ms-dotnettools.csharp",
+    "bradlc.vscode-tailwindcss",
     "editorconfig.editorconfig",
-    "ms-dotnettools.csdevkit"
   ]
 }

@@ -15,7 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@kathanika/kn-ui": ["libs/client/shared/kn-ui/src/index.ts"]
+      "@kathanika/kn-ui": ["libs/client/shared/kn-ui/src/index.ts"],
+      "@kathanika/tailwind-preset": [
+        "libs/client/shared/tailwind-preset/tailwind-preset.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]

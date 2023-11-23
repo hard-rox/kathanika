@@ -1,0 +1,29 @@
+{
+  "name": "tailwind-preset",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/client/shared/tailwind-preset/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/client/shared/tailwind-preset",
+        "main": "libs/client/shared/tailwind-preset/src/index.ts",
+        "tsConfig": "libs/client/shared/tailwind-preset/tsconfig.lib.json",
+        "assets": ["libs/client/shared/tailwind-preset/*.md"]
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/client/shared/tailwind-preset/**/*.ts",
+          "libs/client/shared/tailwind-preset/package.json"
+        ]
+      }
+    }
+  },
+  "tags": []
+}
