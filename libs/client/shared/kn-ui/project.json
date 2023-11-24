@@ -6,6 +6,23 @@
   "tags": [],
   "projectType": "library",
   "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/client/shared/kn-ui/ng-package.json",
+        "tailwindConfig": "libs/client/shared/kn-ui/tailwind.config.js"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/client/shared/kn-ui/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/client/shared/kn-ui/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
     "test": {
       "executor": "@nx/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
@@ -19,7 +36,8 @@
       "options": {
         "lintFilePatterns": [
           "libs/client/shared/kn-ui/**/*.ts",
-          "libs/client/shared/kn-ui/**/*.html"
+          "libs/client/shared/kn-ui/**/*.html",
+          "libs/client/shared/kn-ui/package.json"
         ]
       }
     }
