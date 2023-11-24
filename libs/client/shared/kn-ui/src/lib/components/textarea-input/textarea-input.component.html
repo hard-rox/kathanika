@@ -1,0 +1,21 @@
+<div class="flex flex-col">
+  <label [for]="control?.name">
+    {{label}}
+    @if (isRequired()) {
+<span class="text-theme-fire-red">*</span>
+}
+  </label>
+  <textarea [id]="control?.name" [placeholder]="placeholder.length > 0? placeholder : label" [ngModel]="value"
+    [disabled]="isDisabled" (ngModelChange)="onModelChange($event)" (blur)="onBlur()" [ngClass]="(control?.dirty || control?.touched)
+  && !control?.valid ?
+  'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+  : isDisabled ? 'border-theme-davys-gray border-opacity-50 bg-gray-200': 'border-theme-gunmetal'"
+    class="peer"></textarea>
+  <ul class="list-disc ml-4">
+    @if ((control?.dirty || control?.touched)
+    && control?.hasError('required')) {
+<li class="text-theme-fire-red">{{label}} is
+      required</li>
+}
+  </ul>
+</div>

@@ -1,0 +1,26 @@
+<div class="flex flex-col">
+  @if (label) {
+<label [for]="label +'-search'">
+    {{label}}
+  </label>
+}
+
+  <div class="group relative">
+    <div class="relative">
+      <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
+        <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+          fill="none" viewBox="0 0 20 20">
+          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+            d="m19 19-4-4m0-7A7 7 0 1 1 1 8a7 7 0 0 1 14 0Z" />
+        </svg>
+      </div>
+      <input type="search" autocomplete="off" [id]="label +'-search'" [(ngModel)]="searchInputValue"
+        (input)="onInputChange()" [placeholder]="placeholder && placeholder.length > 0? placeholder : label"
+        class="block pl-8 w-full border-theme-gunmetal" />
+    </div>
+    <div tabindex="0"
+      class="z-10 w-full border bg-white invisible shadow-md absolute top-12 transition-all opacity-0 flex flex-col group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
+      <ng-content select="kn-searchbar-result"></ng-content>
+    </div>
+  </div>
+</div>
