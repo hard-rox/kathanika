@@ -1,0 +1,133 @@
+query getAuthors(
+  $skip: Int!
+  $take: Int!
+  $filter: AuthorFilterInput
+  $sortBy: [AuthorSortInput!]
+) {
+  authors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      firstName
+      lastName
+      nationality
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+
+query searchAuthors($filterText: String!) {
+  authors(
+    skip: 0
+    take: 5
+    where: {
+      or: [
+        { firstName: { contains: $filterText } }
+        { lastName: { contains: $filterText } }
+      ]
+    }
+    order: { firstName: ASC }
+  ) {
+    items {
+      id
+      fullName
+    }
+  }
+}
+
+query getAuthor($id: String!) {
+  author(id: $id) {
+    id
+    firstName
+    lastName
+    fullName
+    dateOfBirth
+    dateOfDeath
+    nationality
+    biography
+  }
+}
+
+query getPublications(
+  $skip: Int!
+  $take: Int!
+  $filter: PublicationFilterInput
+  $sortBy: [PublicationSortInput!]
+) {
+  publications(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      title
+      authors {
+        firstName
+        lastName
+      }
+      callNumber
+      publicationType
+      publisher
+      language
+      copiesAvailable
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+
+query getPublication($id: String!) {
+  publication(id: $id) {
+    id
+    title
+    publicationType
+    isbn
+    edition
+    callNumber
+    authors {
+      id
+      firstName
+      lastName
+      fullName
+    }
+    language
+    publisher
+    publishedDate
+    buyingPrice
+    copiesAvailable
+    description
+  }
+}
+
+query getPublishers(
+  $skip: Int!
+  $take: Int!
+  $filter: PublisherFilterInput
+  $sortBy: [PublisherSortInput!]
+) {
+  publishers(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      name
+      description
+      contactInformation
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+
+query getPublisher($id: String!){
+  publisher(id: $id){
+    id
+    name
+    description
+    contactInformation
+  }
+}

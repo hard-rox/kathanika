@@ -32,6 +32,12 @@
           "libs/client/shared/graphql-consumer/package.json"
         ]
       }
+    },
+    "codegen":{
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "graphql-codegen --config libs/client/shared/graphql-consumer/codegen.ts"
+      }
     }
   }
 }
