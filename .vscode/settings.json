@@ -18,7 +18,8 @@
     "**/.config": true,
     "**/.vscode": true,
     "**/.github": true,
-    "**/.nx":true
+    "**/.nx":true,
+    "**/tmp":true
   },
   "dotnetAcquisitionExtension.installTimeoutValue": 180,
   "cSpell.words": [
