@@ -1,0 +1,37 @@
+{
+  "name": "graphql-consumer",
+  "$schema": "../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/client/shared/graphql-consumer/src",
+  "prefix": "kn",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/client/shared/graphql-consumer/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/client/shared/graphql-consumer/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/client/shared/graphql-consumer/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/client/shared/graphql-consumer/**/*.ts",
+          "libs/client/shared/graphql-consumer/**/*.html",
+          "libs/client/shared/graphql-consumer/package.json"
+        ]
+      }
+    }
+  }
+}
