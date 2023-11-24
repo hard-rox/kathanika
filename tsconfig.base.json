@@ -18,6 +18,7 @@
       "@kathanika/graphql-consumer": [
         "libs/client/shared/graphql-consumer/src/index.ts"
       ],
+      "@kathanika/ils": ["libs/client/ils/src/index.ts"],
       "@kathanika/kn-ui": ["libs/client/shared/kn-ui/src/index.ts"],
       "@kathanika/tailwind-preset": [
         "libs/client/shared/tailwind-preset/tailwind-preset.ts"
