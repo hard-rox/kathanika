@@ -1,1 +1,1 @@
-libs/client/shared/graphql-consumer/src/lib/graphql/generated
+libs/client/shared/graphql-consumer/src/lib/graphql/generated/*.ts

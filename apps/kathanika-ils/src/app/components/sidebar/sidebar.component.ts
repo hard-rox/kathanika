@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
 @Component({
-  selector: 'kn-sidebar',
+  selector: 'kathanika-sidebar',
   standalone: true,
   imports: [
     CommonModule,
