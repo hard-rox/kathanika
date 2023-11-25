@@ -919,7 +919,7 @@ export const AddAuthorDocument = gql`
   })
   export class AddAuthorGQL extends Apollo.Mutation<AddAuthorMutation, AddAuthorMutationVariables> {
     document = AddAuthorDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -952,7 +952,7 @@ export const UpdateAuthorDocument = gql`
   })
   export class UpdateAuthorGQL extends Apollo.Mutation<UpdateAuthorMutation, UpdateAuthorMutationVariables> {
     document = UpdateAuthorDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -985,7 +985,7 @@ export const DeleteAuthorDocument = gql`
   })
   export class DeleteAuthorGQL extends Apollo.Mutation<DeleteAuthorMutation, DeleteAuthorMutationVariables> {
     document = DeleteAuthorDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1014,7 +1014,7 @@ export const AddPublicationDocument = gql`
   })
   export class AddPublicationGQL extends Apollo.Mutation<AddPublicationMutation, AddPublicationMutationVariables> {
     document = AddPublicationDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1047,7 +1047,7 @@ export const UpdatePublicationDocument = gql`
   })
   export class UpdatePublicationGQL extends Apollo.Mutation<UpdatePublicationMutation, UpdatePublicationMutationVariables> {
     document = UpdatePublicationDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1076,7 +1076,7 @@ export const AddPublisherDocument = gql`
   })
   export class AddPublisherGQL extends Apollo.Mutation<AddPublisherMutation, AddPublisherMutationVariables> {
     document = AddPublisherDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1109,7 +1109,7 @@ export const UpdatePublisherDocument = gql`
   })
   export class UpdatePublisherGQL extends Apollo.Mutation<UpdatePublisherMutation, UpdatePublisherMutationVariables> {
     document = UpdatePublisherDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1137,7 +1137,7 @@ export const GetAuthorsDocument = gql`
   })
   export class GetAuthorsGQL extends Apollo.Query<GetAuthorsQuery, GetAuthorsQueryVariables> {
     document = GetAuthorsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1163,7 +1163,7 @@ export const SearchAuthorsDocument = gql`
   })
   export class SearchAuthorsGQL extends Apollo.Query<SearchAuthorsQuery, SearchAuthorsQueryVariables> {
     document = SearchAuthorsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1188,7 +1188,7 @@ export const GetAuthorDocument = gql`
   })
   export class GetAuthorGQL extends Apollo.Query<GetAuthorQuery, GetAuthorQueryVariables> {
     document = GetAuthorDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1223,7 +1223,7 @@ export const GetPublicationsDocument = gql`
   })
   export class GetPublicationsGQL extends Apollo.Query<GetPublicationsQuery, GetPublicationsQueryVariables> {
     document = GetPublicationsDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1258,7 +1258,7 @@ export const GetPublicationDocument = gql`
   })
   export class GetPublicationGQL extends Apollo.Query<GetPublicationQuery, GetPublicationQueryVariables> {
     document = GetPublicationDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1286,7 +1286,7 @@ export const GetPublishersDocument = gql`
   })
   export class GetPublishersGQL extends Apollo.Query<GetPublishersQuery, GetPublishersQueryVariables> {
     document = GetPublishersDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1307,7 +1307,7 @@ export const GetPublisherDocument = gql`
   })
   export class GetPublisherGQL extends Apollo.Query<GetPublisherQuery, GetPublisherQueryVariables> {
     document = GetPublisherDocument;
-    
+
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
