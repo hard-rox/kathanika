@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Domain.Aggregates;
+namespace Kathanika.Domain.Aggregates;
 
 public enum PublicationType
 {

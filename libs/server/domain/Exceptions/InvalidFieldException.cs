@@ -1,4 +1,4 @@
-﻿using Kathanika.Domain.Primitives;
+using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Exceptions;
 

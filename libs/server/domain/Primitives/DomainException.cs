@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Domain.Primitives;
+namespace Kathanika.Domain.Primitives;
 
 public abstract class DomainException : Exception
 {

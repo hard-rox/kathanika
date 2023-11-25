@@ -1,4 +1,4 @@
-﻿using Kathanika.Application.Services;
+using Kathanika.Application.Services;
 using Microsoft.Extensions.Caching.Memory;
 
 namespace Kathanika.Infrastructure.Persistence.Caching;

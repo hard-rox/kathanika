@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Application.Features.Publications.Commands;
+namespace Kathanika.Application.Features.Publications.Commands;
 
 public sealed record AddPublicationCommand(
     string Title,

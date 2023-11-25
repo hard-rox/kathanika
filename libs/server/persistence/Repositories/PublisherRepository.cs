@@ -1,4 +1,4 @@
-﻿using Kathanika.Application.Services;
+using Kathanika.Application.Services;
 
 namespace Kathanika.Infrastructure.Persistence.Repositories;
 

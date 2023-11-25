@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Application.Features.Publications.Queries;
+namespace Kathanika.Application.Features.Publications.Queries;
 
 internal sealed class GetPublicationByIdQueryHandler
     : IRequestHandler<GetPublicationByIdQuery, Publication?>

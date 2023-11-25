@@ -1,4 +1,4 @@
-﻿using Kathanika.Domain.Exceptions;
+using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.Application.Features.Publishers.Commands;
 

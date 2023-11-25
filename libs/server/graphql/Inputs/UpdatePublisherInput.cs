@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Infrastructure.GraphQL.Inputs;
+namespace Kathanika.Infrastructure.GraphQL.Inputs;
 
 public sealed class UpdatePublisherInput : InputObjectType<UpdatePublisherCommand>
 {

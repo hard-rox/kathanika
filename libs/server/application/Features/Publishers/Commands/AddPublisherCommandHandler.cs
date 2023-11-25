@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Application.Features.Publishers.Commands;
+namespace Kathanika.Application.Features.Publishers.Commands;
 
 internal sealed class AddPublisherCommandHandler
     : IRequestHandler<AddPublisherCommand, Publisher>

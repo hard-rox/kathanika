@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Application.Services;
+namespace Kathanika.Application.Services;
 
 public interface ICacheService
 {

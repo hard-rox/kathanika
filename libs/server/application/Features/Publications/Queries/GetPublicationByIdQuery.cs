@@ -1,4 +1,4 @@
-﻿namespace Kathanika.Application.Features.Publications.Queries;
+namespace Kathanika.Application.Features.Publications.Queries;
 
 public sealed record GetPublicationByIdQuery(
     string Id

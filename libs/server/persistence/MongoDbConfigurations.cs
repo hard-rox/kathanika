@@ -1,4 +1,4 @@
-﻿using Kathanika.Infrastructure.Persistence.MongoDbConventions;
+using Kathanika.Infrastructure.Persistence.MongoDbConventions;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
