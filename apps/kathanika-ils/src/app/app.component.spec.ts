@@ -1,27 +1,51 @@
-import { TestBed } from '@angular/core/testing';
-import { AppComponent } from './app.component';
-import { NxWelcomeComponent } from './nx-welcome.component';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
+import { AppComponent } from './app.component';
+import { HeaderComponent } from './components/header/header.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let nativeElement: HTMLElement;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, NxWelcomeComponent, RouterTestingModule],
+      imports: [
+        RouterTestingModule,
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        SidebarComponent
+      ]
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    nativeElement = fixture.nativeElement as HTMLElement;
   });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome kathanika-ils'
-    );
-  });
+  beforeEach(() => {
 
-  it(`should have as title 'kathanika-ils'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  })
+
+  it('should create the app', () => {
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('kathanika-ils');
+    expect(app).toBeTruthy();
+  });
+
+  it('should render header', () => {
+    expect(nativeElement.querySelector('kn-header')).toBeTruthy();
+  });
+
+  it('should render sidebar', () => {
+    expect(nativeElement.querySelector('kn-sidebar')).toBeTruthy();
+  });
+
+  it('should render footer', () => {
+    expect(nativeElement.querySelector('kn-footer')).toBeTruthy();
+  });
+
+  it('should have router outlet', () => {
+    expect(nativeElement.querySelector('router-outlet')).toBeTruthy();
   });
 });

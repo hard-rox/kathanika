@@ -10,6 +10,9 @@ const config: CodegenConfig = {
         'typescript-operations',
         'typescript-apollo-angular',
       ],
+      config: {
+        addExplicitOverride: true
+      }
     },
   },
 };

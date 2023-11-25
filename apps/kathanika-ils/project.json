@@ -25,7 +25,7 @@
           "apps/kathanika-ils/src/manifest.webmanifest"
         ],
         "styles": [
-          "apps/kathanika-ils/src/styles.css"
+          "apps/kathanika-ils/src/styles.scss"
         ],
         "scripts": [],
         "server": "apps/kathanika-ils/src/main.server.ts",

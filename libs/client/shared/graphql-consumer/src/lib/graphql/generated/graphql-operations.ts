@@ -918,8 +918,8 @@ export const AddAuthorDocument = gql`
     providedIn: 'root'
   })
   export class AddAuthorGQL extends Apollo.Mutation<AddAuthorMutation, AddAuthorMutationVariables> {
-    document = AddAuthorDocument;
-
+    override document = AddAuthorDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -951,8 +951,8 @@ export const UpdateAuthorDocument = gql`
     providedIn: 'root'
   })
   export class UpdateAuthorGQL extends Apollo.Mutation<UpdateAuthorMutation, UpdateAuthorMutationVariables> {
-    document = UpdateAuthorDocument;
-
+    override document = UpdateAuthorDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -984,8 +984,8 @@ export const DeleteAuthorDocument = gql`
     providedIn: 'root'
   })
   export class DeleteAuthorGQL extends Apollo.Mutation<DeleteAuthorMutation, DeleteAuthorMutationVariables> {
-    document = DeleteAuthorDocument;
-
+    override document = DeleteAuthorDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1013,8 +1013,8 @@ export const AddPublicationDocument = gql`
     providedIn: 'root'
   })
   export class AddPublicationGQL extends Apollo.Mutation<AddPublicationMutation, AddPublicationMutationVariables> {
-    document = AddPublicationDocument;
-
+    override document = AddPublicationDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1046,8 +1046,8 @@ export const UpdatePublicationDocument = gql`
     providedIn: 'root'
   })
   export class UpdatePublicationGQL extends Apollo.Mutation<UpdatePublicationMutation, UpdatePublicationMutationVariables> {
-    document = UpdatePublicationDocument;
-
+    override document = UpdatePublicationDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1075,8 +1075,8 @@ export const AddPublisherDocument = gql`
     providedIn: 'root'
   })
   export class AddPublisherGQL extends Apollo.Mutation<AddPublisherMutation, AddPublisherMutationVariables> {
-    document = AddPublisherDocument;
-
+    override document = AddPublisherDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1108,8 +1108,8 @@ export const UpdatePublisherDocument = gql`
     providedIn: 'root'
   })
   export class UpdatePublisherGQL extends Apollo.Mutation<UpdatePublisherMutation, UpdatePublisherMutationVariables> {
-    document = UpdatePublisherDocument;
-
+    override document = UpdatePublisherDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1136,8 +1136,8 @@ export const GetAuthorsDocument = gql`
     providedIn: 'root'
   })
   export class GetAuthorsGQL extends Apollo.Query<GetAuthorsQuery, GetAuthorsQueryVariables> {
-    document = GetAuthorsDocument;
-
+    override document = GetAuthorsDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1162,8 +1162,8 @@ export const SearchAuthorsDocument = gql`
     providedIn: 'root'
   })
   export class SearchAuthorsGQL extends Apollo.Query<SearchAuthorsQuery, SearchAuthorsQueryVariables> {
-    document = SearchAuthorsDocument;
-
+    override document = SearchAuthorsDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1187,8 +1187,8 @@ export const GetAuthorDocument = gql`
     providedIn: 'root'
   })
   export class GetAuthorGQL extends Apollo.Query<GetAuthorQuery, GetAuthorQueryVariables> {
-    document = GetAuthorDocument;
-
+    override document = GetAuthorDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1222,8 +1222,8 @@ export const GetPublicationsDocument = gql`
     providedIn: 'root'
   })
   export class GetPublicationsGQL extends Apollo.Query<GetPublicationsQuery, GetPublicationsQueryVariables> {
-    document = GetPublicationsDocument;
-
+    override document = GetPublicationsDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1257,8 +1257,8 @@ export const GetPublicationDocument = gql`
     providedIn: 'root'
   })
   export class GetPublicationGQL extends Apollo.Query<GetPublicationQuery, GetPublicationQueryVariables> {
-    document = GetPublicationDocument;
-
+    override document = GetPublicationDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1285,8 +1285,8 @@ export const GetPublishersDocument = gql`
     providedIn: 'root'
   })
   export class GetPublishersGQL extends Apollo.Query<GetPublishersQuery, GetPublishersQueryVariables> {
-    document = GetPublishersDocument;
-
+    override document = GetPublishersDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
@@ -1306,8 +1306,8 @@ export const GetPublisherDocument = gql`
     providedIn: 'root'
   })
   export class GetPublisherGQL extends Apollo.Query<GetPublisherQuery, GetPublisherQueryVariables> {
-    document = GetPublisherDocument;
-
+    override document = GetPublisherDocument;
+    
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }

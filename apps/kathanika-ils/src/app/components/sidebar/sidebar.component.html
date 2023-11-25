@@ -1,0 +1,44 @@
+<aside class="bg-theme-gunmetal text-white h-full w-64 fixed z-10 top-0 left-0 overflow-x-hidden py-20 px-5">
+    <nav>
+        <ul class="space-y-2 font-medium">
+            @for (menu of menus; track menu; let idx = $index) {
+  <li>
+                @if (!menu.children || menu.children.length == 0) {
+<a [routerLink]="menu.link"
+                    [routerLinkActive]="menu.link??''"
+                    class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 active:bg-gray-100 group">
+                    <span class="material-symbols-sharp">
+                        {{menu.icon}}
+                    </span>
+                    <span class="ml-3">{{menu.text}}</span>
+                </a>
+} @else {
+
+                    <button type="button" (click)="selectedIndex = idx"
+                        class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                        <span class="material-symbols-sharp">
+                            {{menu.icon}}
+                        </span>
+                        <span class="flex-1 ml-3 text-left whitespace-nowrap">{{menu.text}}</span>
+                        <span class="material-symbols-sharp">
+                            {{false ? 'expand_less' : 'expand_more'}}
+                        </span>
+                    </button>
+                    <ul class="py-2 space-y-2" [ngClass]="selectedIndex === idx ? 'block': 'hidden'">
+                        @for (childMenu of menu.children; track childMenu) {
+  <li>
+                            <a [routerLink]="childMenu.link" [routerLinkActive]="childMenu.link"
+                                class="flex items-center w-full p-2 text-gray-900 transition duration-75 rounded-lg pl-11 group hover:bg-gray-100 active:bg-gray-100 dark:text-white dark:hover:bg-gray-700">
+                                {{childMenu.text}}
+                            </a>
+                        </li>
+}
+                    </ul>
+                
+}
+
+                            </li>
+}
+        </ul>
+    </nav>
+</aside>
