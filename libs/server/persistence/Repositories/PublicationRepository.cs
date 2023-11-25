@@ -2,12 +2,9 @@ using Kathanika.Application.Services;
 
 namespace Kathanika.Infrastructure.Persistence.Repositories;
 
-internal sealed class PublicationRepository : Repository<Publication>, IPublicationRepository
+internal sealed class PublicationRepository(IMongoDatabase database, ILogger<PublicationRepository> logger, ICacheService cacheService) : Repository<Publication>(database, collectionName, logger, cacheService), IPublicationRepository
 {
     private const string collectionName = "publications";
-    public PublicationRepository(IMongoDatabase database, ILogger<PublicationRepository> logger, ICacheService cacheService) : base(database, collectionName, logger, cacheService)
-    {
-    }
 
     public async Task<IReadOnlyList<Publication>> ListAllByAuthorIdAsync(string authorId, CancellationToken cancellationToken = default)
     {

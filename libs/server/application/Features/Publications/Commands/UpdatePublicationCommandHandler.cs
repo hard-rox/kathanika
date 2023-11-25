@@ -2,24 +2,15 @@ using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.Application.Features.Publications.Commands;
 
-internal sealed class UpdatePublicationCommandHandler : IRequestHandler<UpdatePublicationCommand, Publication>
+internal sealed class UpdatePublicationCommandHandler(IPublicationRepository publicationRepository, IAuthorRepository authorRepository) : IRequestHandler<UpdatePublicationCommand, Publication>
 {
-    private readonly IPublicationRepository _publicationRepository;
-    private readonly IAuthorRepository _authorRepository;
-
-    public UpdatePublicationCommandHandler(IPublicationRepository publicationRepository, IAuthorRepository authorRepository)
-    {
-        _publicationRepository = publicationRepository;
-        _authorRepository = authorRepository;
-    }
-
     public async Task<Publication> Handle(UpdatePublicationCommand request, CancellationToken cancellationToken)
     {
-        Publication publication = await _publicationRepository.GetByIdAsync(request.Id, cancellationToken)
+        Publication publication = await publicationRepository.GetByIdAsync(request.Id, cancellationToken)
             ?? throw new NotFoundWithTheIdException(typeof(Publication), request.Id);
 
         IReadOnlyList<Author>? authors = request.Patch.AuthorIds is not null ?
-            await _authorRepository.ListAllAsync(x => request.Patch.AuthorIds.Contains(x.Id), cancellationToken)
+            await authorRepository.ListAllAsync(x => request.Patch.AuthorIds.Contains(x.Id), cancellationToken)
             : null;
 
         publication.Update(
@@ -39,7 +30,7 @@ internal sealed class UpdatePublicationCommandHandler : IRequestHandler<UpdatePu
             publication.UpdateAuthors(authors.ToArray());
         }
 
-        await _publicationRepository.UpdateAsync(publication, cancellationToken);
+        await publicationRepository.UpdateAsync(publication, cancellationToken);
 
         return publication;
     }

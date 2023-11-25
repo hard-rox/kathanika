@@ -2,24 +2,16 @@ using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates;
 
-public sealed class IssuedPublication : ValueObject
+public sealed class IssuedPublication(
+string id,
+string title,
+PublicationType publicationType,
+string callNumber) : ValueObject
 {
-    public required string Id { get; init; }
-    public required string Title { get; init; }
-    public required PublicationType PublicationType { get; init; }
-    public required string CallNumber { get; init; }
-
-    public IssuedPublication(
-    string id,
-    string title,
-    PublicationType publicationType,
-    string callNumber)
-    {
-        Id = id;
-        Title = title;
-        PublicationType = publicationType;
-        CallNumber = callNumber;
-    }
+    public required string Id { get; init; } = id;
+    public required string Title { get; init; } = title;
+    public required PublicationType PublicationType { get; init; } = publicationType;
+    public required string CallNumber { get; init; } = callNumber;
 
     public override IEnumerable<object> GetAtomicValues()
     {

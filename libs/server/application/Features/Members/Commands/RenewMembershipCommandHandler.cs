@@ -1,15 +1,8 @@
 using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.Application.Features.Members.Commands;
-internal sealed class RenewMembershipCommandHandler : IRequestHandler<RenewMembershipCommand, Member>
+internal sealed class RenewMembershipCommandHandler(IMemberRepository memberRepository) : IRequestHandler<RenewMembershipCommand, Member>
 {
-    private readonly IMemberRepository memberRepository;
-
-    public RenewMembershipCommandHandler(IMemberRepository memberRepository)
-    {
-        this.memberRepository = memberRepository;
-    }
-
     public async Task<Member> Handle(RenewMembershipCommand request, CancellationToken cancellationToken)
     {
         Member member = await memberRepository.GetByIdAsync(request.Id, cancellationToken)

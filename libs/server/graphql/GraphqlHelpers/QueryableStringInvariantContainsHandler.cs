@@ -6,7 +6,7 @@ using HotChocolate.Language;
 
 namespace Kathanika.Infrastructure.GraphQL.GraphqlHelpers;
 
-internal sealed class QueryableStringInvariantContainsHandler : QueryableStringOperationHandler
+internal sealed class QueryableStringInvariantContainsHandler(InputParser parser) : QueryableStringOperationHandler(parser)
 {
     private static readonly MethodInfo _toLower = typeof(string)
         .GetMethods()
@@ -14,11 +14,6 @@ internal sealed class QueryableStringInvariantContainsHandler : QueryableStringO
             x => x.Name == nameof(string.ToLower) &&
             x.GetParameters().Length == 0);
     protected override int Operation => DefaultFilterOperations.Contains;
-
-    public QueryableStringInvariantContainsHandler(InputParser parser) : base(parser)
-    {
-
-    }
 
     public override Expression HandleOperation(QueryableFilterContext context,
         IFilterOperationField field,

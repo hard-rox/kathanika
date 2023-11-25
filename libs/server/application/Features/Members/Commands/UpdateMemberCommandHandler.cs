@@ -2,15 +2,8 @@ using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.Application.Features.Members.Commands;
 
-internal sealed class UpdateMemberCommandHandler : IRequestHandler<UpdateMemberCommand, Member>
+internal sealed class UpdateMemberCommandHandler(IMemberRepository memberRepository) : IRequestHandler<UpdateMemberCommand, Member>
 {
-    private readonly IMemberRepository memberRepository;
-
-    public UpdateMemberCommandHandler(IMemberRepository memberRepository)
-    {
-        this.memberRepository = memberRepository;
-    }
-
     public async Task<Member> Handle(UpdateMemberCommand request, CancellationToken cancellationToken)
     {
         Member member = await memberRepository.GetByIdAsync(request.Id, cancellationToken)

@@ -1,14 +1,7 @@
 namespace Kathanika.Application.Features.Publishers.Queries;
 
-internal sealed class GetPublishersQueryHandler : IRequestHandler<GetPublishersQuery, IQueryable<Publisher>>
+internal sealed class GetPublishersQueryHandler(IPublisherRepository publisherRepository) : IRequestHandler<GetPublishersQuery, IQueryable<Publisher>>
 {
-    private readonly IPublisherRepository publisherRepository;
-
-    public GetPublishersQueryHandler(IPublisherRepository publisherRepository)
-    {
-        this.publisherRepository = publisherRepository;
-    }
-
     public async Task<IQueryable<Publisher>> Handle(GetPublishersQuery request, CancellationToken cancellationToken)
     {
         IQueryable<Publisher> publisherQuery = await Task.Run(() => publisherRepository.AsQueryable());

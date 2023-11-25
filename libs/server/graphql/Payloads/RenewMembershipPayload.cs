@@ -2,10 +2,6 @@ using Kathanika.Infrastructure.GraphQL.Bases;
 
 namespace Kathanika.Infrastructure.GraphQL.Payloads;
 
-public sealed class RenewMembershipPayload : Payload
+public sealed class RenewMembershipPayload(Member member) : Payload($"Member {member.FullName}'s membership status renewed successfully.")
 {
-    public RenewMembershipPayload(Member member)
-        : base($"Member {member.FullName}'s membership status renewed successfully.")
-    {
-    }
 }

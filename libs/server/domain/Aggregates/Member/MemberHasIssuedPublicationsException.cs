@@ -2,12 +2,7 @@ using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates;
 
-public sealed class MemberHasIssuedPublicationsException : DomainException
+public sealed class MemberHasIssuedPublicationsException(IssuedPublication[] issuedPublications) : DomainException($"Member has issued {issuedPublications.Length} publications.")
 {
-    public IEnumerable<IssuedPublication> IssuedPublications { get; init; }
-    public MemberHasIssuedPublicationsException(IssuedPublication[] issuedPublications)
-        : base($"Member has issued {issuedPublications.Length} publications.")
-    {
-        IssuedPublications = issuedPublications;
-    }
+    public IEnumerable<IssuedPublication> IssuedPublications { get; init; } = issuedPublications;
 }

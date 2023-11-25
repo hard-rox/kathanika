@@ -3,15 +3,9 @@ using Microsoft.Extensions.Caching.Memory;
 
 namespace Kathanika.Infrastructure.Persistence.Caching;
 
-internal sealed class MemoryCacheService : ICacheService
+internal sealed class MemoryCacheService(IMemoryCache memoryCache) : ICacheService
 {
     private readonly TimeSpan defaultExpirationTime = TimeSpan.FromSeconds(120);
-    private readonly IMemoryCache memoryCache;
-
-    public MemoryCacheService(IMemoryCache memoryCache)
-    {
-        this.memoryCache = memoryCache;
-    }
 
     public T? Get<T>(string key)
     {

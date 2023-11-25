@@ -7,20 +7,11 @@ using Quartz;
 namespace Kathanika.Infrastructure.Workers.Jobs;
 
 [DisallowConcurrentExecution]
-internal sealed class ProcessOutboxMessagesJob : IJob
+internal sealed class ProcessOutboxMessagesJob(IPublisher publisher, IOutboxMessageService outboxMessageService) : IJob
 {
-    private readonly IPublisher _publisher;
-    private readonly IOutboxMessageService _outboxMessageService;
-
-    public ProcessOutboxMessagesJob(IPublisher publisher, IOutboxMessageService outboxMessageService)
-    {
-        _publisher = publisher;
-        _outboxMessageService = outboxMessageService;
-    }
-
     public async Task Execute(IJobExecutionContext context)
     {
-        IReadOnlyList<OutboxMessage> outboxMessages = await _outboxMessageService
+        IReadOnlyList<OutboxMessage> outboxMessages = await outboxMessageService
             .GetUnprocessedOutboxMessagesFromDb();
 
         foreach (OutboxMessage message in outboxMessages)
@@ -35,12 +26,12 @@ internal sealed class ProcessOutboxMessagesJob : IJob
 
             try
             {
-                await _publisher.Publish(domainEvent, context.CancellationToken);
-                await _outboxMessageService.SetOutboxMessageProcessed(message.Id);
+                await publisher.Publish(domainEvent, context.CancellationToken);
+                await outboxMessageService.SetOutboxMessageProcessed(message.Id);
             }
             catch (Exception ex)
             {
-                await _outboxMessageService.SetOutboxMessageErrors(message.Id, ex);
+                await outboxMessageService.SetOutboxMessageErrors(message.Id, ex);
             }
         }
     }

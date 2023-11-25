@@ -1,14 +1,7 @@
 namespace Kathanika.Application.Features.Authors.Commands;
 
-internal sealed class AddAuthorCommandHandler : IRequestHandler<AddAuthorCommand, Author>
+internal sealed class AddAuthorCommandHandler(IAuthorRepository authorRepository) : IRequestHandler<AddAuthorCommand, Author>
 {
-    private readonly IAuthorRepository authorRepository;
-
-    public AddAuthorCommandHandler(IAuthorRepository authorRepository)
-    {
-        this.authorRepository = authorRepository;
-    }
-
     public async Task<Author> Handle(AddAuthorCommand request, CancellationToken cancellationToken)
     {
         Author newAuthor = Author.Create(
