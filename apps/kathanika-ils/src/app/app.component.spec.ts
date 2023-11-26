@@ -34,15 +34,15 @@ describe('AppComponent', () => {
   });
 
   it('should render header', () => {
-    expect(nativeElement.querySelector('kn-header')).toBeTruthy();
+    expect(nativeElement.querySelector('kathanika-header')).toBeTruthy();
   });
 
   it('should render sidebar', () => {
-    expect(nativeElement.querySelector('kn-sidebar')).toBeTruthy();
+    expect(nativeElement.querySelector('kathanika-sidebar')).toBeTruthy();
   });
 
   it('should render footer', () => {
-    expect(nativeElement.querySelector('kn-footer')).toBeTruthy();
+    expect(nativeElement.querySelector('kathanika-footer')).toBeTruthy();
   });
 
   it('should have router outlet', () => {

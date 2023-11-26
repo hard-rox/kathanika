@@ -4,11 +4,8 @@ import { PublicationAddComponent } from './publication-add.component';
 import { PublicationFormComponent } from '../../components/publication-form/publication-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddPublicationGQL, SearchAuthorsGQL } from '@kathanika/graphql-consumer';
-import { mockMutationGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
-import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import { SearchbarModule } from 'src/app/shared/modules/searchbar/searchbar.module';
-import { ChipComponent } from 'src/app/shared/components/chip/chip.component';
+import { PanelComponent, AlertComponent, SearchbarModule, ChipComponent } from '@kathanika/kn-ui';
+import { mockMutationGql, mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('PublicationAddComponent', () => {
   let component: PublicationAddComponent;

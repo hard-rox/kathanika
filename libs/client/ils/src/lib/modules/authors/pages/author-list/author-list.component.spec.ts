@@ -5,8 +5,8 @@ import { DeleteAuthorGQL, GetAuthorsGQL } from '@kathanika/graphql-consumer';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { mockMutationGql, mockQueryGql } from 'src/test-utils/gql-test-utils';
-import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
+import { PaginationComponent } from '@kathanika/kn-ui';
+import { mockQueryGql, mockMutationGql } from '../../../../test-utils/gql-test-utils';
 
 describe('AuthorListComponent', () => {
   let component: AuthorListComponent;

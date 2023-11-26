@@ -3,12 +3,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PublisherUpdateComponent } from './publisher-update.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
-import { GetPublisherGQL, UpdatePublisherGQL } from '@kathanika/graphql-consumer';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
-import { mockQueryGql, mockMutationGql } from 'src/test-utils/gql-test-utils';
 import { PublisherFormComponent } from '../../components/publisher-form/publisher-form.component';
+import { GetPublisherGQL, UpdatePublisherGQL } from '@kathanika/graphql-consumer';
+import { PanelComponent, AlertComponent, TextInputComponent } from '@kathanika/kn-ui';
+import { mockQueryGql, mockMutationGql } from '../../../../test-utils/gql-test-utils';
 
 describe('PublisherUpdateComponent', () => {
   let component: PublisherUpdateComponent;

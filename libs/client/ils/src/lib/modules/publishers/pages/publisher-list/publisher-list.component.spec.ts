@@ -2,11 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublisherListComponent } from './publisher-list.component';
 import { GetPublishersGQL } from '@kathanika/graphql-consumer';
-import { mockQueryGql } from 'src/test-utils/gql-test-utils';
-import { of } from 'rxjs';
-import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
+import { PaginationComponent } from '@kathanika/kn-ui';
+import { of } from 'rxjs';
+import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('PublisherListComponent', () => {
   let component: PublisherListComponent;

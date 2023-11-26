@@ -7,15 +7,11 @@ import {
   AddAuthorGQL,
   AddAuthorMutation,
 } from '@kathanika/graphql-consumer';
-import { mockMutationGql } from 'src/test-utils/gql-test-utils';
-import { of } from 'rxjs';
+import { PanelComponent, TextInputComponent, DateInputComponent, TextareaInputComponent, ToggleComponent } from '@kathanika/kn-ui';
 import { MutationResult } from 'apollo-angular';
-import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
-import { DateInputComponent } from 'src/app/shared/components/date-input/date-input.component';
-import { TextInputComponent } from 'src/app/shared/components/text-input/text-input.component';
-import { TextareaInputComponent } from 'src/app/shared/components/textarea-input/textarea-input.component';
+import { of } from 'rxjs';
+import { mockMutationGql } from '../../../../test-utils/gql-test-utils';
 import { AuthorFormOutput } from '../../types/author-form-output';
-import { ToggleComponent } from 'src/app/shared/components/toggle/toggle.component';
 
 describe('AuthorAddComponent', () => {
   let component: AuthorAddComponent;
@@ -70,12 +66,12 @@ describe('AuthorAddComponent', () => {
         },
       }
     };
-    spyOn(component['router'], 'navigate');
-    spyOn(component['gql'], 'mutate').and.returnValue(of(mockMutationResult));
+    jest.spyOn(component['router'], 'navigate');
+    jest.spyOn(component['gql'], 'mutate').mockReturnValue(of(mockMutationResult));
 
-    expect(component.isPanelLoading).not.toBeTrue();
+    expect(component.isPanelLoading).not.toBeTruthy();
     component.onValidFormSubmit(formOutput);
-    expect(component.isPanelLoading).not.toBeTrue();
+    expect(component.isPanelLoading).not.toBeTruthy();
   });
 
   it('should fill error array on error in mutation subscribe', () => {
@@ -96,7 +92,7 @@ describe('AuthorAddComponent', () => {
         },
       },
     };
-    spyOn(component['gql'], 'mutate').and.returnValue(of(mockMutationResult));
+    jest.spyOn(component['gql'], 'mutate').mockReturnValue(of(mockMutationResult));
     component.onValidFormSubmit(formOutput);
     expect(component.errors.length).toEqual(1);
   });
@@ -113,9 +109,9 @@ describe('AuthorAddComponent', () => {
         },
       }
     };
-    spyOn(component['router'], 'navigate');
-    spyOn(component['gql'], 'mutate').and.returnValue(of(mockMutationResult));
-    const alertServiceSpy = spyOn(component['alertService'], 'showToast');
+    jest.spyOn(component['router'], 'navigate');
+    jest.spyOn(component['gql'], 'mutate').mockReturnValue(of(mockMutationResult));
+    const alertServiceSpy = jest.spyOn(component['alertService'], 'showToast');
 
     component.onValidFormSubmit(formOutput);
     expect(alertServiceSpy).toHaveBeenCalledTimes(1);

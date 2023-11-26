@@ -4,12 +4,12 @@ import { MessageAlertService } from './message-alert.service';
 
 describe('MessageAlertService', () => {
   let service: MessageAlertService;
-  let swalSpy: jasmine.Spy;
+  let swalSpy: jest.SpyInstance;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
     service = TestBed.inject(MessageAlertService);
-    swalSpy = spyOn(service['themedSwal'], 'fire');
+    swalSpy = jest.spyOn(service['themedSwal'], 'fire');
   });
 
   it('should be created', () => {
@@ -23,39 +23,39 @@ describe('MessageAlertService', () => {
 
   it('showPopup should call themesSwal.fire with parameter value', () => {
     service.showPopup('error', 'Test message');
-    expect(swalSpy).toHaveBeenCalledOnceWith({
+    expect(swalSpy).toHaveBeenCalledWith({
       icon: 'error',
       title: 'Error',
       text: 'Test message',
     });
 
-    swalSpy.calls.reset();
+    swalSpy.mockReset();
     service.showPopup('info', 'Test message');
-    expect(swalSpy).toHaveBeenCalledOnceWith({
+    expect(swalSpy).toHaveBeenCalledWith({
       icon: 'info',
       title: 'Information',
       text: 'Test message',
     });
 
-    swalSpy.calls.reset();
+    swalSpy.mockReset();
     service.showPopup('question', 'Test message');
-    expect(swalSpy).toHaveBeenCalledOnceWith({
+    expect(swalSpy).toHaveBeenCalledWith({
       icon: 'question',
       title: 'Question',
       text: 'Test message',
     });
 
-    swalSpy.calls.reset();
+    swalSpy.mockReset();
     service.showPopup('success', 'Test message');
-    expect(swalSpy).toHaveBeenCalledOnceWith({
+    expect(swalSpy).toHaveBeenCalledWith({
       icon: 'success',
       title: 'Success',
       text: 'Test message',
     });
 
-    swalSpy.calls.reset();
+    swalSpy.mockReset();
     service.showPopup('warning', 'Test message');
-    expect(swalSpy).toHaveBeenCalledOnceWith({
+    expect(swalSpy).toHaveBeenCalledWith({
       icon: 'warning',
       title: 'Warning',
       text: 'Test message',

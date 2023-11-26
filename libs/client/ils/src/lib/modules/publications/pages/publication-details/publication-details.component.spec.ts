@@ -2,9 +2,9 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { GetPublicationGQL } from '@kathanika/graphql-consumer';
 import { ActivatedRoute } from '@angular/router';
-import { mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PublicationDetailsComponent } from './publication-details.component';
+import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('PublicationDetailsComponent', () => {
   let component: PublicationDetailsComponent;
@@ -45,15 +45,15 @@ describe('PublicationDetailsComponent', () => {
   });
 
   it('should refetch query with route param on ngOnInit', () => {
-    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = jest.spyOn(component.queryRef, 'refetch');
     component.ngOnInit();
     const queryVariable = component.queryVariables;
     expect(queryVariable?.id).toEqual(mockPublicationId);
-    expect(queryRefRefetchSpy).toHaveBeenCalledOnceWith(queryVariable);
+    expect(queryRefRefetchSpy).toHaveBeenCalledWith(queryVariable);
   });
 
   it('should not refetch query and variable with route param when route param id is invalid on ngOnInit', () => {
-    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = jest.spyOn(component.queryRef, 'refetch');
     activatedRoute.snapshot.params['id'] = '';
 
     component.ngOnInit();

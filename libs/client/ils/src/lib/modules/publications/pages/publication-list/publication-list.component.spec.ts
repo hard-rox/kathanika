@@ -4,9 +4,9 @@ import { PublicationListComponent } from './publication-list.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { GetPublicationsGQL } from '@kathanika/graphql-consumer';
-import { mockQueryGql } from 'src/test-utils/gql-test-utils';
 import { RouterTestingModule } from '@angular/router/testing';
-import { PaginationComponent } from 'src/app/shared/components/pagination/pagination.component';
+import { PaginationComponent } from '@kathanika/kn-ui';
+import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('PublicationListComponent', () => {
   let component: PublicationListComponent;

@@ -3,9 +3,9 @@ import { BasePaginatedListComponent, PaginationQueryVariables } from "./base-pag
 import { ActivatedRoute, Params, Router } from "@angular/router";
 import { RouterTestingModule } from "@angular/router/testing";
 import { Component } from "@angular/core";
-import { mockQueryGql } from "src/test-utils/gql-test-utils";
 import { of } from "rxjs";
 import { Query } from "apollo-angular";
+import { mockQueryGql } from "../test-utils/gql-test-utils";
 
 @Component({})
 class BasePaginatedListTestingComponent extends BasePaginatedListComponent<unknown, PaginationQueryVariables>{
@@ -24,11 +24,11 @@ class BasePaginatedListTestingComponent extends BasePaginatedListComponent<unkno
     });
   }
 
-  changePage(pageNumber: number): void {
+  override changePage(pageNumber: number): void {
     super.changePage(pageNumber);
   }
 
-  changePageSize(selectedPageSize: number): void {
+  override changePageSize(selectedPageSize: number): void {
     super.changePageSize(selectedPageSize);
   }
 }
@@ -73,7 +73,7 @@ describe('BasePaginatedListComponent', () => {
   });
 
   it('should refetch query changePage', () => {
-    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = jest.spyOn(component.queryRef, 'refetch');
     const page = 2;
 
     component.changePage(page);
@@ -98,7 +98,7 @@ describe('BasePaginatedListComponent', () => {
   });
 
   it('should refetch query on changePageSize', () => {
-    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = jest.spyOn(component.queryRef, 'refetch');
     const pageSize = 2;
 
     component.changePageSize(pageSize);
@@ -124,8 +124,8 @@ describe('BasePaginatedListComponent', () => {
 
   it('should refetch query on init', () => {
     const queryVariables = component.queryVariables;
-    const queryRefRefetchSpy = spyOn(component.queryRef, 'refetch');
+    const queryRefRefetchSpy = jest.spyOn(component.queryRef, 'refetch');
     component['init']();
-    expect(queryRefRefetchSpy).toHaveBeenCalledOnceWith(queryVariables);
+    expect(queryRefRefetchSpy).toHaveBeenCalledWith(queryVariables);
   });
 });

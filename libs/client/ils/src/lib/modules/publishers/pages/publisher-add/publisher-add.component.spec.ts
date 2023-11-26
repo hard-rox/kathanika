@@ -2,11 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublisherAddComponent } from './publisher-add.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { PanelComponent } from 'src/app/shared/components/panel/panel.component';
-import { AlertComponent } from 'src/app/shared/components/alert/alert.component';
-import { mockMutationGql } from 'src/test-utils/gql-test-utils';
 import { AddPublisherGQL } from '@kathanika/graphql-consumer';
 import { PublisherFormComponent } from '../../components/publisher-form/publisher-form.component';
+import { PanelComponent, AlertComponent } from '@kathanika/kn-ui';
+import { mockMutationGql } from '../../../../test-utils/gql-test-utils';
 
 describe('PublisherAddComponent', () => {
   let component: PublisherAddComponent;
