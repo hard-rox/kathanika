@@ -1,4 +1,4 @@
-namespace Kathanika.Infrastructure.GraphQL.Inputs;
+namespace Kathanika.GraphQL.Inputs;
 
 public sealed class UpdateMemberInput : InputObjectType<UpdateMemberCommand>
 {

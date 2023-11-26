@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kathanika.Infrastructure.GraphQL.Schema;
+namespace Kathanika.GraphQL.Schema;
 
 public sealed partial class Queries
 {

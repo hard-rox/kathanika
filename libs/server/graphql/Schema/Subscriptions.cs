@@ -1,4 +1,4 @@
-namespace Kathanika.Infrastructure.GraphQL.Schema;
+namespace Kathanika.GraphQL.Schema;
 
 public class Notification
 {

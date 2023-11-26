@@ -1,10 +1,10 @@
 using Kathanika.Domain.Primitives;
-using Kathanika.Infrastructure.Persistence.Outbox;
+using Kathanika.Persistence.Outbox;
 using MediatR;
 using Newtonsoft.Json;
 using Quartz;
 
-namespace Kathanika.Infrastructure.Workers.Jobs;
+namespace Kathanika.Workers.Jobs;
 
 [DisallowConcurrentExecution]
 internal sealed class ProcessOutboxMessagesJob(IPublisher publisher, IOutboxMessageService outboxMessageService) : IJob

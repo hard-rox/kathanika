@@ -1,4 +1,4 @@
-namespace Kathanika.Infrastructure.GraphQL.Bases;
+namespace Kathanika.GraphQL.Bases;
 
 public abstract class Payload
 {

@@ -1,6 +1,6 @@
-using Kathanika.Infrastructure.GraphQL.Bases;
+using Kathanika.GraphQL.Bases;
 
-namespace Kathanika.Infrastructure.GraphQL.Payloads;
+namespace Kathanika.GraphQL.Payloads;
 
 public sealed class SuspendMembershipPayload(Member member) : Payload($"Member {member.FullName}'s membership status suspended successfully.")
 {

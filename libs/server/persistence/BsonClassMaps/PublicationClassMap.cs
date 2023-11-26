@@ -1,4 +1,4 @@
-namespace Kathanika.Infrastructure.Persistence.BsonClassMaps;
+namespace Kathanika.Persistence.BsonClassMaps;
 
 internal static partial class ClassMaps
 {

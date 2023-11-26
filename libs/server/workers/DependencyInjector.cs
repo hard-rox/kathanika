@@ -1,9 +1,9 @@
-using Kathanika.Infrastructure.Workers.Jobs;
+using Kathanika.Workers.Jobs;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Quartz;
 
-namespace Kathanika.Infrastructure.Workers;
+namespace Kathanika.Workers;
 
 public static class DependencyInjector
 {
@@ -16,7 +16,7 @@ public static class DependencyInjector
             // configure.AddJob<ProcessOutboxMessagesJob>(jobKey)
             //     .AddTrigger(trigger => trigger.ForJob(jobKey)
             //         .WithSimpleSchedule(schedule => schedule.WithIntervalInSeconds(10)
-            //             .RepeatForever()));                        
+            //             .RepeatForever()));
         });
 
         services.AddQuartzHostedService();

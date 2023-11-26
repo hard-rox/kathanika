@@ -4,7 +4,7 @@ using HotChocolate.Data.Filters;
 using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Language;
 
-namespace Kathanika.Infrastructure.GraphQL.GraphqlHelpers;
+namespace Kathanika.GraphQL.GraphqlHelpers;
 
 internal sealed class QueryableStringInvariantContainsHandler(InputParser parser) : QueryableStringOperationHandler(parser)
 {

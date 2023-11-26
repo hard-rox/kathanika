@@ -1,4 +1,4 @@
-namespace Kathanika.Infrastructure.GraphQL.Types;
+namespace Kathanika.GraphQL.Types;
 
 public sealed class AuthorType : ObjectType<Author>
 {

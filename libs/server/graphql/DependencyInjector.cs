@@ -1,7 +1,7 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Kathanika.Infrastructure.GraphQL;
+namespace Kathanika.GraphQL;
 
 public static class DependencyInjector
 {

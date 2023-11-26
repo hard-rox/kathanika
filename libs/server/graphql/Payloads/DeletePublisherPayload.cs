@@ -1,6 +1,6 @@
-using Kathanika.Infrastructure.GraphQL.Bases;
+using Kathanika.GraphQL.Bases;
 
-namespace Kathanika.Infrastructure.GraphQL.Payloads;
+namespace Kathanika.GraphQL.Payloads;
 
 public sealed class DeletePublisherPayload(string id) : Payload($"Publisher with Id: {id} deleted.")
 {

@@ -1,11 +1,11 @@
-using Kathanika.Infrastructure.Persistence.MongoDbConventions;
+using Kathanika.Persistence.MongoDbConventions;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Driver.Core.Events;
 
-namespace Kathanika.Infrastructure.Persistence;
+namespace Kathanika.Persistence;
 
 internal static class MongoDbConfigurations
 {

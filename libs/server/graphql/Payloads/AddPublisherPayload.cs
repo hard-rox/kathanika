@@ -1,6 +1,6 @@
-using Kathanika.Infrastructure.GraphQL.Bases;
+using Kathanika.GraphQL.Bases;
 
-namespace Kathanika.Infrastructure.GraphQL.Payloads;
+namespace Kathanika.GraphQL.Payloads;
 
 public sealed class AddPublisherPayload(Publisher data) : Payload<Publisher>($"New author {data.Name} added successfully.", data)
 {

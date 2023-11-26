@@ -1,6 +1,6 @@
 using HotChocolate.Data.Filters;
 
-namespace Kathanika.Infrastructure.GraphQL.Inputs;
+namespace Kathanika.GraphQL.Inputs;
 
 public sealed class AuthorFilterInput : FilterInputType<Author>
 {

@@ -1,11 +1,11 @@
 using Kathanika.Application.Services;
-using Kathanika.Infrastructure.Persistence.BsonClassMaps;
-using Kathanika.Infrastructure.Persistence.Caching;
-using Kathanika.Infrastructure.Persistence.Outbox;
-using Kathanika.Infrastructure.Persistence.Repositories;
+using Kathanika.Persistence.BsonClassMaps;
+using Kathanika.Persistence.Caching;
+using Kathanika.Persistence.Outbox;
+using Kathanika.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-namespace Kathanika.Infrastructure.Persistence;
+namespace Kathanika.Persistence;
 
 public static class DependencyInjector
 {

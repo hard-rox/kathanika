@@ -1,4 +1,4 @@
-namespace Kathanika.Infrastructure.Persistence.Outbox;
+namespace Kathanika.Persistence.Outbox;
 
 internal static class Constants
 {

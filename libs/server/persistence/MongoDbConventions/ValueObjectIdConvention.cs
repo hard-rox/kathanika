@@ -4,7 +4,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 
-namespace Kathanika.Infrastructure.Persistence.MongoDbConventions;
+namespace Kathanika.Persistence.MongoDbConventions;
 
 internal class ValueObjectIdConvention : ConventionBase, IClassMapConvention
 {

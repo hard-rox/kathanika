@@ -5,12 +5,12 @@ using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
 using Kathanika.Domain.Primitives;
-using Kathanika.Infrastructure.GraphQL.Bases;
-using Kathanika.Infrastructure.GraphQL.GraphqlHelpers;
-using Kathanika.Infrastructure.GraphQL.Schema;
+using Kathanika.GraphQL.Bases;
+using Kathanika.GraphQL.GraphqlHelpers;
+using Kathanika.GraphQL.Schema;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Kathanika.Infrastructure.GraphQL;
+namespace Kathanika.GraphQL;
 
 internal static class SchemaConfigurations
 {
@@ -29,8 +29,8 @@ internal static class SchemaConfigurations
     {
         IRequestExecutorBuilder requestBuilder = services.AddGraphQLServer();
         //requestBuilder.AddAuthorization();
-        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.GraphQL.Types"));
-        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.GraphQL.Inputs"));
+        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.GraphQL.Types"));
+        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.GraphQL.Inputs"));
         requestBuilder.AddQueryType<Queries>();
         requestBuilder.AddMutationType<Mutations>();
         requestBuilder.AddSubscriptionType<Subscriptions>();

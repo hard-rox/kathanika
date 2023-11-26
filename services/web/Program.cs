@@ -1,7 +1,7 @@
 using Kathanika.Application;
-using Kathanika.Infrastructure.GraphQL;
-using Kathanika.Infrastructure.Persistence;
-using Kathanika.Infrastructure.Workers;
+using Kathanika.GraphQL;
+using Kathanika.Persistence;
+using Kathanika.Workers;
 using Serilog;
 
 try

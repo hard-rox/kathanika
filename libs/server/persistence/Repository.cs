@@ -2,11 +2,11 @@ using System.Linq.Expressions;
 using Kathanika.Application.Services;
 using Kathanika.Domain.Exceptions;
 using Kathanika.Domain.Primitives;
-using Kathanika.Infrastructure.Persistence.Outbox;
+using Kathanika.Persistence.Outbox;
 using MongoDB.Bson;
 using Newtonsoft.Json;
 
-namespace Kathanika.Infrastructure.Persistence;
+namespace Kathanika.Persistence;
 
 internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 {

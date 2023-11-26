@@ -1,8 +1,8 @@
 using Kathanika.Domain.Exceptions;
-using Kathanika.Infrastructure.GraphQL.Payloads;
+using Kathanika.GraphQL.Payloads;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Kathanika.Infrastructure.GraphQL.Schema;
+namespace Kathanika.GraphQL.Schema;
 
 public sealed partial class Mutations
 {

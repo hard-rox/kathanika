@@ -1,6 +1,6 @@
 using Newtonsoft.Json;
 
-namespace Kathanika.Infrastructure.Persistence.Outbox;
+namespace Kathanika.Persistence.Outbox;
 
 //TODO: Should be in good way...
 internal sealed class OutboxMessageService(IMongoDatabase mongoDatabase) : IOutboxMessageService
