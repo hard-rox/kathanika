@@ -1,4 +1,3 @@
-using HotChocolate.Subscriptions;
 using Kathanika.Domain.Exceptions;
 using Kathanika.GraphQL.Payloads;
 using Microsoft.AspNetCore.Mvc;

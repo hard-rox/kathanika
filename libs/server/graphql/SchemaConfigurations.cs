@@ -5,7 +5,6 @@ using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Pagination;
 using Kathanika.Domain.Primitives;
-using Kathanika.GraphQL.Bases;
 using Kathanika.GraphQL.GraphqlHelpers;
 using Kathanika.GraphQL.Schema;
 using Microsoft.Extensions.DependencyInjection;
