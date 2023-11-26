@@ -3,7 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "prepare": "nx g @nx-dotnet/core:restore",
+    "prepare": "nx g @nx-dotnet/core:restore && husky install",
+    "lint": "nx run-many -t lint --parallel",
+    "build": "nx run-many -t build --parallel",
+    "test": "nx run-many -t test --parallel",
     "codegen": "nx run graphql-consumer:codegen"
   },
   "private": true,
@@ -57,7 +60,8 @@
     "tailwindcss": "^3.0.2",
     "ts-jest": "^29.1.0",
     "ts-node": "10.9.1",
-    "typescript": "~5.2.2"
+    "typescript": "~5.2.2",
+    "husky": "^8.0.0"
   },
   "dependencies": {
     "@angular/animations": "~17.0.0",
