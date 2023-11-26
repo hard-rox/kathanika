@@ -1,4 +1,4 @@
-﻿using Kathanika.Application.Features.Authors.Commands;
+using Kathanika.Application.Features.Authors.Commands;
 
 namespace Kathanika.Application.Test.Commands;
 

@@ -1,4 +1,4 @@
-﻿using Kathanika.Application.Services;
+using Kathanika.Application.Services;
 using Kathanika.Domain.Primitives;
 using Kathanika.Persistence;
 using Microsoft.Extensions.Logging;
