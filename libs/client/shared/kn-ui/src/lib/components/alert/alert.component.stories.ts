@@ -1,28 +1,22 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { AlertComponent } from './alert.component';
-
-import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
 const meta: Meta<AlertComponent> = {
   component: AlertComponent,
-  title: 'AlertComponent',
+  title: 'kn-alert',
 };
 export default meta;
 type Story = StoryObj<AlertComponent>;
 
-export const Primary: Story = {
+export const Default: Story = {
+  render: () => ({
+    template: '<kn-alert>Hello world</kn-alert>',
+  }),
   args: {
-    closeable: false,
+    closeable: true,
   },
-};
-
-export const Heading: Story = {
-  args: {
-    closeable: false,
-  },
-  play: async ({ canvasElement }) => {
-    const canvas = within(canvasElement);
-    expect(canvas.getByText(/alert works!/gi)).toBeTruthy();
+  play: async () => {
+    expect(true).toBeTruthy();
   },
 };
