@@ -40,6 +40,53 @@
           "libs/client/shared/kn-ui/package.json"
         ]
       }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/client/shared/kn-ui/.storybook",
+        "browserTarget": "kn-ui:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/kn-ui",
+        "configDir": "libs/client/shared/kn-ui/.storybook",
+        "browserTarget": "kn-ui:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c libs/client/shared/kn-ui/.storybook --url=http://localhost:4400"
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "kn-ui:build-storybook",
+        "staticFilePath": "dist/storybook/kn-ui"
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "kn-ui:build-storybook:ci"
+        }
+      }
     }
   }
 }
