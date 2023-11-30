@@ -13,7 +13,7 @@ COPY ["src/Domain/Kathanika.Domain.csproj", "src/Domain/"]
 COPY ["src/Infrastructure.GraphQL/Kathanika.GraphQL.csproj", "src/Infrastructure.GraphQL/"]
 COPY ["src/Infrastructure.Persistence/Kathanika.Persistence.csproj", "src/Infrastructure.Persistence/"]
 COPY ["src/Infrastructure.Services/Kathanika.Infrastructure.Services.csproj", "src/Infrastructure.Services/"]
-COPY ["src/Web/Kathanika.Web.csproj", "src/Web/"]
+COPY ["services/web/Kathanika.Web.csproj", "src/Web/"]
 COPY ["tests/UnitTests/Kathanika.UnitTests.csproj", "tests/UnitTests/"]
 
 # RUN ls
@@ -21,10 +21,10 @@ RUN dotnet restore "Kathanika.sln"
 
 COPY ["src", "src/"]
 # RUN ls
-RUN dotnet build "src/Web/Kathanika.Web.csproj" -c Release -o /app/build
+RUN dotnet build "services/web/Kathanika.Web.csproj" -c Release -o /app/build
 
 FROM api-build AS publish
-RUN dotnet publish "src/Web/Kathanika.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "services/web/Kathanika.Web.csproj" -c Release -o /app/publish /p:UseAppHost=false
 
 FROM node AS app-build
 WORKDIR /usr/src/app

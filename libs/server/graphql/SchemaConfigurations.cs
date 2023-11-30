@@ -39,12 +39,19 @@ internal static class SchemaConfigurations
         requestBuilder.AddSorting();
         requestBuilder.AddErrorFilter(error =>
         {
-            if (error.Exception is not null && error.Exception is not DomainException)
-            {
-                return error
+            Exception? exception = error.Exception;
+            IError errorResult = error
                     .RemoveException()
                     .RemoveExtensions()
-                    .RemoveLocations()
+                    .RemoveLocations();
+            if(exception is System.TimeoutException && exception.Source == "MongoDB.Driver.Core")
+            {
+                return errorResult
+                    .WithMessage("Looks like MongoDB is offline. Make sure database is online to enjoy.");
+            }
+            if (error.Exception is not null && error.Exception is not DomainException)
+            {
+                return errorResult
                     .WithMessage("Something went terribly wrong. We are trying to fix it...");
             }
             return error;

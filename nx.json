@@ -59,7 +59,7 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudAccessToken": "NTgzOTU5MTYtMzMzZS00Y2ZhLWE3MDgtYTg3Yjk1MjNhNzg3fHJlYWQtd3JpdGU=",
+  "nxCloudAccessToken": "",
   "plugins": ["@nx-dotnet/core"],
   "generators": {
     "@nx/angular:application": {
