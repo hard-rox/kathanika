@@ -9,9 +9,9 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Web/bin/Debug/net8.0/Kathanika.Web.dll",
+            "program": "${workspaceFolder}/services/web/bin/Debug/net8.0/Kathanika.Web.dll",
             "args": [],
-            "cwd": "${workspaceFolder}/src/Web",
+            "cwd": "${workspaceFolder}/services/web",
             "stopAtEntry": false,
             "serverReadyAction": {
                 "action": "openExternally",

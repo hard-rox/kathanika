@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Web/Kathanika.Web.csproj",
+                "${workspaceFolder}/services/web/Kathanika.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Web/Kathanika.Web.csproj",
+                "${workspaceFolder}/services/web/Kathanika.Web.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -33,7 +33,7 @@
                 "watch",
                 "run",
                 "--project",
-                "${workspaceFolder}/src/Web/Kathanika.Web.csproj"
+                "${workspaceFolder}/services/web/Kathanika.Web.csproj"
             ],
             "problemMatcher": "$msCompile",
             "options": {"cwd": "${workspaceFolder}/src/"}
@@ -52,7 +52,7 @@
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Web/Kathanika.Web.csproj"
+                "appProject": "${workspaceFolder}/services/web/Kathanika.Web.csproj"
             }
         },
         {
@@ -69,7 +69,7 @@
                 "pull": true
             },
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Web/Kathanika.Web.csproj"
+                "appProject": "${workspaceFolder}/services/web/Kathanika.Web.csproj"
             }
         },
         {
@@ -80,7 +80,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Web/Kathanika.Web.csproj",
+                "appProject": "${workspaceFolder}/services/web/Kathanika.Web.csproj",
                 "enableDebugging": true,
                 "configureSsl": false
             }
@@ -93,7 +93,7 @@
             ],
             "dockerRun": {},
             "netCore": {
-                "appProject": "${workspaceFolder}/src/Web/Kathanika.Web.csproj"
+                "appProject": "${workspaceFolder}/services/web/Kathanika.Web.csproj"
             }
         }
     ]
