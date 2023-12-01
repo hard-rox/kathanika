@@ -4,6 +4,7 @@
   "license": "MIT",
   "scripts": {
     "prepare": "nx g @nx-dotnet/core:restore && husky install",
+    "cz": "cz",
     "start": "nx run-many -t serve -p web kathanika-ils --parallel",
     "lint": "nx run-many -t lint --parallel",
     "build": "nx run-many -t build --parallel",
@@ -21,6 +22,8 @@
     "@angular/cli": "~17.0.5",
     "@angular/compiler-cli": "~17.0.5",
     "@angular/language-service": "~17.0.5",
+    "@commitlint/cli": "^18.4.3",
+    "@commitlint/config-conventional": "^18.4.3",
     "@graphql-codegen/cli": "^5.0.0",
     "@graphql-codegen/typescript": "^4.0.1",
     "@graphql-codegen/typescript-apollo-angular": "^4.0.0",
@@ -52,6 +55,7 @@
     "@typescript-eslint/parser": "^6.13.1",
     "autoprefixer": "^10.4.0",
     "cypress": "^13.0.0",
+    "cz-conventional-changelog": "^3.3.0",
     "eslint": "~8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.13.4",
@@ -95,6 +99,10 @@
     "sweetalert2": "^11.10.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.0"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
-
