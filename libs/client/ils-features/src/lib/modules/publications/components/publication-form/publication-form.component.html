@@ -1,0 +1,56 @@
+<!-- <pre>{{formGroup.valid| json}}</pre> -->
+<!-- <pre>{{formGroup.value | json}}</pre> -->
+
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+  <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
+    <kn-text-input label="Title" formControlName="title" />
+    <kn-select-input label="Publication Type" formControlName="publicationType">
+      <option selected [value]="null">Select Type</option>
+      @for (publicationType of publicationTypes; track publicationType) {
+        <option [value]="publicationType">{{ publicationType }}</option>
+      }
+    </kn-select-input>
+    <kn-date-input label="Published Date" formControlName="publishedDate" />
+    <kn-text-input label="Publisher" formControlName="publisher" />
+    <kn-text-input label="ISBN" formControlName="isbn" />
+    <kn-text-input label="Edition" formControlName="edition" />
+    <kn-text-input label="Language" formControlName="language" />
+    <kn-number-input label="Buying Price" formControlName="buyingPrice" />
+    <kn-text-input label="Call Number" formControlName="callNumber" />
+    <kn-number-input
+      label="Copies Available"
+      formControlName="copiesPurchased"
+    />
+    <kn-textarea-input label="Description" formControlName="description" />
+
+    <div>
+      <h3>Authors</h3>
+      <div class="flex justify-start flex-wrap gap-1 mb-1">
+        @for (author of selectedAuthors; track author) {
+          <kn-chip [key]="author.id" (actionPerformed)="removeAuthor($event)">{{
+            author.fullName
+          }}</kn-chip>
+        }
+      </div>
+      <kn-searchbar
+        (searchTextChanged)="filter($event)"
+        (resultSelected)="addAuthor($event)"
+      >
+        @for (
+          author of (authorSearchQueryRef.valueChanges | async)?.data?.authors
+            ?.items;
+          track author
+        ) {
+          <kn-searchbar-result [value]="author">
+            <div class="flex space-x-2">
+              <span class="my-auto">{{ author.fullName }}</span>
+            </div>
+          </kn-searchbar-result>
+        }
+      </kn-searchbar>
+    </div>
+  </div>
+  <div class="flex flex-row-reverse mt-2">
+    <input type="submit" value="Save" />
+  </div>
+</form>

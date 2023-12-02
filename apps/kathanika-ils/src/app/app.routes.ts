@@ -9,32 +9,26 @@ export const appRoutes: Routes = [
   {
     path: 'home',
     loadChildren: () =>
-      import('@kathanika/ils')
-        .then((x) => x.HomeModule),
+      import('@kathanika/ils-features').then((x) => x.HomeModule),
   },
   {
     path: 'auth',
     loadChildren: () =>
-      import('@kathanika/ils')
-        .then(x => x.AuthModule),
+      import('@kathanika/ils-features').then((x) => x.AuthModule),
   },
   {
     path: 'authors',
     loadChildren: () =>
-      import('@kathanika/ils').then((x) => x.AuthorsModule),
+      import('@kathanika/ils-features').then((x) => x.AuthorsModule),
   },
   {
     path: 'publications',
     loadChildren: () =>
-      import('@kathanika/ils').then(
-        (x) => x.PublicationsModule
-      ),
+      import('@kathanika/ils-features').then((x) => x.PublicationsModule),
   },
   {
     path: 'publishers',
     loadChildren: () =>
-      import('@kathanika/ils').then(
-        (x) => x.PublishersModule
-      ),
+      import('@kathanika/ils-features').then((x) => x.PublishersModule),
   },
 ];

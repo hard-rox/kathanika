@@ -37,4 +37,17 @@ updates:
         update-types:
         - "minor"
         - "patch"
+      react-deps:
+        patterns:
+          - "react*"
+        update-types:
+          - "major"
+          - "minor"
+          - "patch"
+      nx-deps:
+        patterns:
+          - "@nx/*"
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 12
