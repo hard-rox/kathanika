@@ -4,7 +4,6 @@
   "license": "MIT",
   "scripts": {
     "prepare": "nx g @nx-dotnet/core:restore && husky install",
-    "cz": "cz",
     "start": "nx run-many -t serve -p web kathanika-ils --parallel",
     "lint": "nx run-many -t lint --parallel",
     "build": "nx run-many -t build --parallel",
@@ -55,7 +54,6 @@
     "@typescript-eslint/parser": "^6.13.1",
     "autoprefixer": "^10.4.0",
     "cypress": "^13.0.0",
-    "cz-conventional-changelog": "^3.3.0",
     "eslint": "~8.54.0",
     "eslint-config-prettier": "^9.0.0",
     "eslint-plugin-cypress": "^2.13.4",
@@ -99,10 +97,5 @@
     "sweetalert2": "^11.10.1",
     "tslib": "^2.3.0",
     "zone.js": "~0.14.0"
-  },
-  "config": {
-    "commitizen": {
-      "path": "./node_modules/cz-conventional-changelog"
-    }
   }
 }
