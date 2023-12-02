@@ -1,4 +1,5 @@
 export * from './lib/components/alert/alert.component';
+export * from './lib/components/badge/badge.component';
 export * from './lib/components/chip/chip.component';
 export * from './lib/components/date-input/date-input.component';
 export * from './lib/components/number-input/number-input.component';

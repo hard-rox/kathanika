@@ -31,4 +31,9 @@ export const appRoutes: Routes = [
     loadChildren: () =>
       import('@kathanika/ils-features').then((x) => x.PublishersModule),
   },
+  {
+    path: 'members',
+    loadChildren: () =>
+      import('@kathanika/ils-features').then((x) => x.MembersModule),
+  },
 ];

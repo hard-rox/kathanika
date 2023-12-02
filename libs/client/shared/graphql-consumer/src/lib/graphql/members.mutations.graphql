@@ -1,0 +1,36 @@
+mutation createMember($addMemberInput: CreateMemberInput!) {
+  createMember(input: $addMemberInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+
+mutation updateMember($id: String!, $memberPatch: MemberPatchInput!){
+  updateMember(input: {
+    id: $id,
+    patch: $memberPatch
+  }){
+    message
+    data {
+      id
+    }
+    errors{
+      ...on InvalidFieldError {
+        fieldName
+      }
+      ...on Error{
+        message
+      }
+    }
+  }
+}

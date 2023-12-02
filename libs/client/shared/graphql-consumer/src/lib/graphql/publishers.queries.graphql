@@ -1,0 +1,29 @@
+query getPublishers(
+  $skip: Int!
+  $take: Int!
+  $filter: PublisherFilterInput
+  $sortBy: [PublisherSortInput!]
+) {
+  publishers(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      name
+      description
+      contactInformation
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+
+query getPublisher($id: String!){
+  publisher(id: $id){
+    id
+    name
+    description
+    contactInformation
+  }
+}
