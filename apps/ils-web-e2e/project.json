@@ -1,22 +1,22 @@
 {
-  "name": "ils-e2e",
+  "name": "ils-web-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/ils-e2e/src",
+  "sourceRoot": "apps/ils-web-e2e/src",
   "targets": {
     "e2e": {
       "executor": "@nx/cypress:cypress",
       "options": {
-        "cypressConfig": "apps/ils-e2e/cypress.config.ts",
+        "cypressConfig": "apps/ils-web-e2e/cypress.config.ts",
         "testingType": "e2e",
-        "devServerTarget": "ils:serve:development"
+        "devServerTarget": "ils-web:serve:development"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "ils:serve:production"
+          "devServerTarget": "ils-web:serve:production"
         },
         "ci": {
-          "devServerTarget": "ils:serve-static"
+          "devServerTarget": "ils-web:serve-static"
         }
       }
     },
@@ -24,10 +24,10 @@
       "executor": "@nx/eslint:lint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/ils-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/ils-web-e2e/**/*.{js,ts}"]
       }
     }
   },
   "tags": [],
-  "implicitDependencies": ["ils"]
+  "implicitDependencies": ["ils-web"]
 }
