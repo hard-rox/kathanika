@@ -15,10 +15,10 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@kathanika/graphql-consumer": [
-        "libs/client/shared/graphql-consumer/src/index.ts"
+      "@kathanika/graphql-ts-client": [
+        "libs/shared/graphql-ts-client/src/index.ts"
       ],
-      "@kathanika/ils-features": ["libs/client/ils-features/src/index.ts"],
+      "@kathanika/ils-features": ["libs/ils-features/src/index.ts"],
       "@kathanika/kn-ui": ["libs/shared/kn-ui/src/index.ts"],
       "@kathanika/theming": ["libs/shared/theming/src/index.ts"]
     }

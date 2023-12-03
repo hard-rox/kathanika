@@ -57,5 +57,20 @@ export class SidebarComponent {
         },
       ],
     },
+    {
+      text: 'Members',
+      icon: 'person',
+      link: null,
+      children: [
+        {
+          text: 'List',
+          link: 'members'
+        },
+        {
+          text: 'Add',
+          link: 'members/add'
+        }
+      ]
+    },
   ];
 }

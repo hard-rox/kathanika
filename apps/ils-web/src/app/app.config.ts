@@ -9,7 +9,7 @@ import { appRoutes } from './app.routes';
 import { provideClientHydration } from '@angular/platform-browser';
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideHttpClient, withFetch } from '@angular/common/http';
-import { GraphQLModule } from '@kathanika/graphql-consumer';
+import { GraphQLModule } from '@kathanika/graphql-ts-client';
 import { environment } from '../environments/environment.development';
 
 export const appConfig: ApplicationConfig = {
