@@ -3,7 +3,7 @@ export default {
   displayName: 'kathanika-ils',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/kathanika-ils',
+  coverageDirectory: '../../coverage/apps/ils',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

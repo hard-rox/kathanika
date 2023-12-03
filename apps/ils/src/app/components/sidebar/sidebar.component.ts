@@ -5,11 +5,7 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
 @Component({
   selector: 'kathanika-sidebar',
   standalone: true,
-  imports: [
-    CommonModule,
-    RouterLink,
-    RouterLinkActive
-  ],
+  imports: [CommonModule, RouterLink, RouterLinkActive],
   templateUrl: './sidebar.component.html',
   styleUrls: ['./sidebar.component.scss'],
 })
@@ -23,13 +19,13 @@ export class SidebarComponent {
       children: [
         {
           text: 'List',
-          link: 'authors'
+          link: 'authors',
         },
         {
           text: 'Add',
-          link: 'authors/add'
-        }
-      ]
+          link: 'authors/add',
+        },
+      ],
     },
     {
       text: 'Publication',
@@ -38,13 +34,13 @@ export class SidebarComponent {
       children: [
         {
           text: 'List',
-          link: 'publications'
+          link: 'publications',
         },
         {
           text: 'Add',
-          link: 'publications/add'
-        }
-      ]
+          link: 'publications/add',
+        },
+      ],
     },
     {
       text: 'Publishers',
@@ -53,13 +49,13 @@ export class SidebarComponent {
       children: [
         {
           text: 'List',
-          link: 'publishers'
+          link: 'publishers',
         },
         {
           text: 'Add',
-          link: 'publishers/add'
-        }
-      ]
+          link: 'publishers/add',
+        },
+      ],
     },
-  ]
+  ];
 }

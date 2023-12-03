@@ -16,17 +16,15 @@ describe('AppComponent', () => {
         AppComponent,
         HeaderComponent,
         FooterComponent,
-        SidebarComponent
-      ]
+        SidebarComponent,
+      ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(AppComponent);
     nativeElement = fixture.nativeElement as HTMLElement;
   });
 
-  beforeEach(() => {
-
-  })
+  beforeEach(() => {});
 
   it('should create the app', () => {
     const app = fixture.componentInstance;

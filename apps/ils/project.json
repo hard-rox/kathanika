@@ -3,35 +3,29 @@
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "kn",
-  "sourceRoot": "apps/kathanika-ils/src",
+  "sourceRoot": "apps/ils/src",
   "tags": [],
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": [
-        "{options.outputPath}"
-      ],
+      "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/kathanika-ils",
-        "index": "apps/kathanika-ils/src/index.html",
-        "browser": "apps/kathanika-ils/src/main.ts",
-        "polyfills": [
-          "zone.js"
-        ],
-        "tsConfig": "apps/kathanika-ils/tsconfig.app.json",
+        "outputPath": "dist/apps/ils",
+        "index": "apps/ils/src/index.html",
+        "browser": "apps/ils/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/ils/tsconfig.app.json",
         "assets": [
-          "apps/kathanika-ils/src/favicon.ico",
-          "apps/kathanika-ils/src/assets",
-          "apps/kathanika-ils/src/manifest.webmanifest"
+          "apps/ils/src/favicon.ico",
+          "apps/ils/src/assets",
+          "apps/ils/src/manifest.webmanifest"
         ],
-        "styles": [
-          "apps/kathanika-ils/src/styles.scss"
-        ],
+        "styles": ["apps/ils/src/styles.scss"],
         "scripts": [],
-        "server": "apps/kathanika-ils/src/main.server.ts",
+        "server": "apps/ils/src/main.server.ts",
         "prerender": true,
         "ssr": {
-          "entry": "apps/kathanika-ils/server.ts"
+          "entry": "apps/ils/server.ts"
         }
       },
       "configurations": {
@@ -49,7 +43,7 @@
             }
           ],
           "outputHashing": "all",
-          "serviceWorker": "apps/kathanika-ils/ngsw-config.json"
+          "serviceWorker": "apps/ils/ngsw-config.json"
         },
         "development": {
           "optimization": false,
@@ -79,30 +73,23 @@
     },
     "lint": {
       "executor": "@nx/eslint:lint",
-      "outputs": [
-        "{options.outputFile}"
-      ],
+      "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": [
-          "apps/kathanika-ils/**/*.ts",
-          "apps/kathanika-ils/**/*.html"
-        ]
+        "lintFilePatterns": ["apps/ils/**/*.ts", "apps/ils/**/*.html"]
       }
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": [
-        "{workspaceRoot}/coverage/{projectRoot}"
-      ],
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/kathanika-ils/jest.config.ts"
+        "jestConfig": "apps/ils/jest.config.ts"
       }
     },
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "kathanika-ils:build",
-        "staticFilePath": "dist/apps/kathanika-ils/browser"
+        "staticFilePath": "dist/apps/ils/browser"
       }
     }
   }

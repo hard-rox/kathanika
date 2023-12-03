@@ -9,9 +9,7 @@ describe('HeaderComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [
-        HeaderComponent
-      ],
+      imports: [HeaderComponent],
     })
       .compileComponents()
       .then(() => {
@@ -27,7 +25,9 @@ describe('HeaderComponent', () => {
 
   it('should change isNotificationVisible value when notification button clicked', () => {
     const oldValue = component.isNotificationVisible;
-    const notificationBtn = nativeElement.querySelector('#notification-btn') as HTMLElement;
+    const notificationBtn = nativeElement.querySelector(
+      '#notification-btn',
+    ) as HTMLElement;
     notificationBtn.click();
     expect(component.isNotificationVisible).not.toEqual(oldValue);
   });
@@ -40,36 +40,52 @@ describe('HeaderComponent', () => {
   });
 
   it('should display notification container when notification button clicked', () => {
-    const notificationBtn = nativeElement.querySelector('#notification-btn') as HTMLElement;
+    const notificationBtn = nativeElement.querySelector(
+      '#notification-btn',
+    ) as HTMLElement;
     notificationBtn.click();
     fixture.detectChanges();
-    const notificationContainer = nativeElement.querySelector('#notification-container');
+    const notificationContainer = nativeElement.querySelector(
+      '#notification-container',
+    );
     expect(notificationContainer).toBeTruthy();
   });
 
   it('should hide notification container when notification button clicked twice', () => {
-    const notificationBtn = nativeElement.querySelector('#notification-btn') as HTMLElement;
+    const notificationBtn = nativeElement.querySelector(
+      '#notification-btn',
+    ) as HTMLElement;
     notificationBtn.click();
     notificationBtn.click();
     fixture.detectChanges();
-    const notificationContainer = nativeElement.querySelector('#notification-container');
+    const notificationContainer = nativeElement.querySelector(
+      '#notification-container',
+    );
     expect(notificationContainer).toBeFalsy();
   });
 
   it('should display user action container when user name dropdown clicked', () => {
-    const userActionBtn = nativeElement.querySelector('#user-action-btn') as HTMLElement;
+    const userActionBtn = nativeElement.querySelector(
+      '#user-action-btn',
+    ) as HTMLElement;
     userActionBtn.click();
     fixture.detectChanges();
-    const userActionContainer = nativeElement.querySelector('#user-action-container');
+    const userActionContainer = nativeElement.querySelector(
+      '#user-action-container',
+    );
     expect(userActionContainer).toBeTruthy();
   });
 
   it('should hide user action container when user name dropdown clicked twice', () => {
-    const userActionBtn = nativeElement.querySelector('#user-action-btn') as HTMLElement;
+    const userActionBtn = nativeElement.querySelector(
+      '#user-action-btn',
+    ) as HTMLElement;
     userActionBtn.click();
     userActionBtn.click();
     fixture.detectChanges();
-    const userActionContainer = nativeElement.querySelector('#user-action-container');
+    const userActionContainer = nativeElement.querySelector(
+      '#user-action-container',
+    );
     expect(userActionContainer).toBeFalsy();
   });
 });

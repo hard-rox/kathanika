@@ -4,11 +4,9 @@ import { Component } from '@angular/core';
 @Component({
   selector: 'kathanika-header',
   standalone: true,
-  imports: [
-    CommonModule
-  ],
+  imports: [CommonModule],
   templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss']
+  styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
   isUserActionsVisible: boolean = false;
