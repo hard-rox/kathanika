@@ -1,5 +1,5 @@
 {
-  "name": "kathanika-ils-e2e",
+  "name": "ils-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "sourceRoot": "apps/ils-e2e/src",
@@ -9,14 +9,14 @@
       "options": {
         "cypressConfig": "apps/ils-e2e/cypress.config.ts",
         "testingType": "e2e",
-        "devServerTarget": "kathanika-ils:serve:development"
+        "devServerTarget": "ils:serve:development"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "kathanika-ils:serve:production"
+          "devServerTarget": "ils:serve:production"
         },
         "ci": {
-          "devServerTarget": "kathanika-ils:serve-static"
+          "devServerTarget": "ils:serve-static"
         }
       }
     },
@@ -29,5 +29,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["kathanika-ils"]
+  "implicitDependencies": ["ils"]
 }

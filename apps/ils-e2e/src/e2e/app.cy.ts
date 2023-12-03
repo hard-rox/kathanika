@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po';
 
-describe('kathanika-ils-e2e', () => {
+describe('ils-e2e', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {

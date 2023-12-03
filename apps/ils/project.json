@@ -1,5 +1,5 @@
 {
-  "name": "kathanika-ils",
+  "name": "ils",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
   "prefix": "kn",
@@ -57,10 +57,10 @@
       "executor": "@angular-devkit/build-angular:dev-server",
       "configurations": {
         "production": {
-          "buildTarget": "kathanika-ils:build:production"
+          "buildTarget": "ils:build:production"
         },
         "development": {
-          "buildTarget": "kathanika-ils:build:development"
+          "buildTarget": "ils:build:development"
         }
       },
       "defaultConfiguration": "development"
@@ -68,7 +68,7 @@
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "buildTarget": "kathanika-ils:build"
+        "buildTarget": "ils:build"
       }
     },
     "lint": {
@@ -88,7 +88,7 @@
     "serve-static": {
       "executor": "@nx/web:file-server",
       "options": {
-        "buildTarget": "kathanika-ils:build",
+        "buildTarget": "ils:build",
         "staticFilePath": "dist/apps/ils/browser"
       }
     }

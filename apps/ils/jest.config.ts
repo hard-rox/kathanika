@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'kathanika-ils',
+  displayName: 'ils',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory: '../../coverage/apps/ils',
