@@ -1,0 +1,93 @@
+{
+  "name": "kn-ui",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/kn-ui/src",
+  "prefix": "kn",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/shared/kn-ui/ng-package.json",
+        "tailwindConfig": "libs/shared/kn-ui/tailwind.config.js"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/shared/kn-ui/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/shared/kn-ui/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/shared/kn-ui/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/kn-ui/**/*.ts",
+          "libs/shared/kn-ui/**/*.html",
+          "libs/shared/kn-ui/package.json"
+        ]
+      }
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "libs/shared/kn-ui/.storybook",
+        "browserTarget": "kn-ui:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/kn-ui",
+        "configDir": "libs/shared/kn-ui/.storybook",
+        "browserTarget": "kn-ui:build-storybook",
+        "compodoc": false,
+        "styles": ["libs/shared/kn-ui/src/styles.scss"]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c libs/shared/kn-ui/.storybook --url=http://localhost:4400"
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "kn-ui:build-storybook",
+        "staticFilePath": "dist/storybook/kn-ui"
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "kn-ui:build-storybook:ci"
+        }
+      }
+    }
+  }
+}

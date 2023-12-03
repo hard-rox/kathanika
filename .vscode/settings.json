@@ -65,6 +65,7 @@
   "cSpell.language": "en,en-US,en-GB,lorem",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
   "conventionalCommits.scopes": [
-    "ils"
+    "ils",
+    "kn-ui"
   ]
 }

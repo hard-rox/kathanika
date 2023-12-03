@@ -19,8 +19,8 @@
         "libs/client/shared/graphql-consumer/src/index.ts"
       ],
       "@kathanika/ils-features": ["libs/client/ils-features/src/index.ts"],
-      "@kathanika/kn-ui": ["libs/client/shared/kn-ui/src/index.ts"],
-      "@kathanika/theming": ["libs/client/shared/theming/src/index.ts"]
+      "@kathanika/kn-ui": ["libs/shared/kn-ui/src/index.ts"],
+      "@kathanika/theming": ["libs/shared/theming/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
