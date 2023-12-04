@@ -63,7 +63,7 @@
         "configDir": "libs/shared/kn-ui/.storybook",
         "browserTarget": "kn-ui:build-storybook",
         "compodoc": false,
-        "styles": ["libs/shared/kn-ui/src/styles.scss"]
+        "styles": ["libs/shared/theming/src/styles.scss"]
       },
       "configurations": {
         "ci": {
