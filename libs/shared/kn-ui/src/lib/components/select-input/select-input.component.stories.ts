@@ -6,17 +6,16 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<SelectInputComponent> = {
   component: SelectInputComponent,
-  title: 'SelectInputComponent',
+  title: 'kn-select-input',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<SelectInputComponent>;
 
-export const Primary: Story = {
-  args: {},
-};
-
-export const Heading: Story = {
-  args: {},
+export const Default: Story = {
+  args: {
+    label: 'Select Input',
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByText(/select-input works!/gi)).toBeTruthy();

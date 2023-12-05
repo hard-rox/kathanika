@@ -6,12 +6,13 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<PanelComponent> = {
   component: PanelComponent,
-  title: 'PanelComponent',
+  title: 'kn-panel',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<PanelComponent>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     panelTitle: null,
     isLoading: false,
@@ -20,7 +21,7 @@ export const Primary: Story = {
 
 export const Heading: Story = {
   args: {
-    panelTitle: null,
+    panelTitle: "Panel Title",
     isLoading: false,
   },
   play: async ({ canvasElement }) => {

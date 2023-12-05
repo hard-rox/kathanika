@@ -18,7 +18,21 @@
     (click)="onPageChanged(1)"
     class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver disabled:text-gray-400 disabled:pointer-events-none"
   >
-    <span class="material-symbols-sharp"> first_page </span>
+  <svg
+  class="w-3 h-3 text-gray-800"
+  aria-hidden="true"
+  xmlns="http://www.w3.org/2000/svg"
+  fill="none"
+  viewBox="0 0 14 14"
+>
+  <path
+    stroke="currentColor"
+    stroke-linecap="round"
+    stroke-linejoin="round"
+    stroke-width="1"
+    d="M7.987 8.5l6.146 6.146-0.707 0.707-6.853-6.853 6.854-6.854 0.707 0.707-6.147 6.147zM9.29 2.353l-0.707-0.707-6.854 6.854 6.854 6.854 0.707-0.707-6.146-6.147 6.146-6.147z"
+  />
+</svg>
   </button>
   <button
     [disabled]="currentPage === 1"

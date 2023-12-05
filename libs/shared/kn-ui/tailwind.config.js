@@ -1,9 +1,12 @@
-const { tailwindConfig, content } = require('../theming/src/index');
+const { tailwindConfig } = require('../theming/src/index');
+const { join } = require('path');
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   presets: [tailwindConfig],
-  content: [...content],
+  content: [
+    join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}')
+  ],
   theme: {},
   plugins: [],
 };

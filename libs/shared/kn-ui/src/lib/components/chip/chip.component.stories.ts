@@ -6,17 +6,16 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<ChipComponent> = {
   component: ChipComponent,
-  title: 'ChipComponent',
+  title: 'kn-chip',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<ChipComponent>;
 
-export const Primary: Story = {
-  args: {},
-};
-
-export const Heading: Story = {
-  args: {},
+export const Default: Story = {
+  args: {
+    key: '1'
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByText(/chip works!/gi)).toBeTruthy();

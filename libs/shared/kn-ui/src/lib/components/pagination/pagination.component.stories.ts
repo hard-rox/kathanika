@@ -6,15 +6,16 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<PaginationComponent> = {
   component: PaginationComponent,
-  title: 'PaginationComponent',
+  title: 'kn-pagination',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<PaginationComponent>;
 
 export const Primary: Story = {
   args: {
-    totalCount: 0,
-    pageSize: 0,
+    totalCount: 100,
+    pageSize: 10,
   },
 };
 

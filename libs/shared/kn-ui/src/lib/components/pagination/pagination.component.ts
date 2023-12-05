@@ -29,7 +29,7 @@ export class PaginationComponent {
     this.lastPage = totalCount ? Math.ceil(totalCount / this._pageSize) : 1;
   }
 
-  @Input('pageSizes')
+  @Input({required: true})
   get pageSizes(): number[] {
     return this._pageSizes;
   }
