@@ -7,6 +7,7 @@ import { expect } from '@storybook/jest';
 const meta: Meta<SelectInputComponent> = {
   component: SelectInputComponent,
   title: 'kn-select-input',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<SelectInputComponent>;

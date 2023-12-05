@@ -7,6 +7,7 @@ import { expect } from '@storybook/jest';
 const meta: Meta<ToggleComponent> = {
   component: ToggleComponent,
   title: 'kn-toggle',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<ToggleComponent>;

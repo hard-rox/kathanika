@@ -7,11 +7,12 @@ import { expect } from '@storybook/jest';
 const meta: Meta<PanelComponent> = {
   component: PanelComponent,
   title: 'kn-panel',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<PanelComponent>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
     panelTitle: null,
     isLoading: false,

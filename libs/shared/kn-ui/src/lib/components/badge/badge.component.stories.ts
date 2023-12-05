@@ -7,6 +7,7 @@ import { expect } from '@storybook/jest';
 const meta: Meta<BadgeComponent> = {
   component: BadgeComponent,
   title: 'kn-badge',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<BadgeComponent>;

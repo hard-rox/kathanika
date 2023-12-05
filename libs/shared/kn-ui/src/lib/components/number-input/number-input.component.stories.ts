@@ -7,6 +7,7 @@ import { expect } from '@storybook/jest';
 const meta: Meta<NumberInputComponent> = {
   component: NumberInputComponent,
   title: 'kn-number-input',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<NumberInputComponent>;

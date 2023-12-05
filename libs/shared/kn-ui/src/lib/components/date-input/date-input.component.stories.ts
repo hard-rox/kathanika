@@ -7,6 +7,7 @@ import { expect } from '@storybook/jest';
 const meta: Meta<DateInputComponent> = {
   component: DateInputComponent,
   title: 'kn-date-input',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<DateInputComponent>;

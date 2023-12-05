@@ -7,6 +7,7 @@ import { expect } from '@storybook/jest';
 const meta: Meta<SearchbarComponent<string>> = {
   component: SearchbarComponent,
   title: 'kn-searchbar',
+  tags: ['autodocs']
 };
 export default meta;
 type Story = StoryObj<SearchbarComponent<string>>;

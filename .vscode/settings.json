@@ -27,6 +27,7 @@
     "ASPNETCORE",
     "asynciterable",
     "autobuild",
+    "autodocs",
     "Bson",
     "cobertura",
     "codegen",

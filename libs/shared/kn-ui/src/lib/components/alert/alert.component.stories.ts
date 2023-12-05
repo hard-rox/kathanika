@@ -7,6 +7,7 @@ import { expect } from '@storybook/jest';
 const meta: Meta<AlertComponent> = {
   component: AlertComponent,
   title: 'kn-alert',
+  tags: ['autodocs'],
   render: (args: AlertComponent) => ({
     props: { ...args },
     template: `<kn-alert ${argsToTemplate(args)}>Hello</kn-alert>`
