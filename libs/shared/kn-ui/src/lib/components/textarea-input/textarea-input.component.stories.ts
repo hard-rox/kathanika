@@ -6,17 +6,15 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<TextareaInputComponent> = {
   component: TextareaInputComponent,
-  title: 'TextareaInputComponent',
+  title: 'kn-textarea-input',
 };
 export default meta;
 type Story = StoryObj<TextareaInputComponent>;
 
-export const Primary: Story = {
-  args: {},
-};
-
-export const Heading: Story = {
-  args: {},
+export const Default: Story = {
+  args: {
+    label: 'Address'
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByText(/textarea-input works!/gi)).toBeTruthy();

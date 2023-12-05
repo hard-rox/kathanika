@@ -6,22 +6,48 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<BadgeComponent> = {
   component: BadgeComponent,
-  title: 'BadgeComponent',
+  title: 'kn-badge',
 };
 export default meta;
 type Story = StoryObj<BadgeComponent>;
 
-export const Primary: Story = {
+export const Info: Story = {
   args: {
-    content: '',
+    content: 'Info',
     type: 'info',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByText(/badge works!/gi)).toBeTruthy();
   },
 };
 
-export const Heading: Story = {
+export const Success: Story = {
   args: {
-    content: '',
-    type: 'info',
+    content: 'Success',
+    type: 'success',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByText(/badge works!/gi)).toBeTruthy();
+  },
+};
+
+export const Warning: Story = {
+  args: {
+    content: 'Warning',
+    type: 'warning',
+  },
+  play: async ({ canvasElement }) => {
+    const canvas = within(canvasElement);
+    expect(canvas.getByText(/badge works!/gi)).toBeTruthy();
+  },
+};
+
+export const Error: Story = {
+  args: {
+    content: 'Error',
+    type: 'error',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);

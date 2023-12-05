@@ -6,17 +6,15 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<ToggleComponent> = {
   component: ToggleComponent,
-  title: 'ToggleComponent',
+  title: 'kn-toggle',
 };
 export default meta;
 type Story = StoryObj<ToggleComponent>;
 
-export const Primary: Story = {
-  args: {},
-};
-
-export const Heading: Story = {
-  args: {},
+export const Default: Story = {
+  args: {
+    label: 'Switch'
+  },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
     expect(canvas.getByText(/toggle works!/gi)).toBeTruthy();

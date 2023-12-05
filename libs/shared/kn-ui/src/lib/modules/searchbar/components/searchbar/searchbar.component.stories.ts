@@ -6,21 +6,14 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<SearchbarComponent<string>> = {
   component: SearchbarComponent,
-  title: 'SearchbarComponent',
+  title: 'kn-searchbar',
 };
 export default meta;
 type Story = StoryObj<SearchbarComponent<string>>;
 
-export const Primary: Story = {
+export const Default: Story = {
   args: {
-    label: null,
-    placeholder: 'Search...',
-  },
-};
-
-export const Heading: Story = {
-  args: {
-    label: null,
+    label: 'Search',
     placeholder: 'Search...',
   },
   play: async ({ canvasElement }) => {
