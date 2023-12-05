@@ -1,0 +1,43 @@
+{
+  "name": "graphql-ts-client",
+  "$schema": "../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/shared/graphql-ts-client/src",
+  "prefix": "kn",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/shared/graphql-ts-client/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/shared/graphql-ts-client/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/shared/graphql-ts-client/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/shared/graphql-ts-client/**/*.ts",
+          "libs/shared/graphql-ts-client/**/*.html",
+          "libs/shared/graphql-ts-client/package.json"
+        ]
+      }
+    },
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "graphql-codegen --config libs/shared/graphql-ts-client/codegen.ts"
+      }
+    }
+  }
+}

@@ -1,0 +1,96 @@
+{
+  "name": "ils-web",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "kn",
+  "sourceRoot": "apps/ils-web/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:application",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/ils-web",
+        "index": "apps/ils-web/src/index.html",
+        "browser": "apps/ils-web/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/ils-web/tsconfig.app.json",
+        "assets": [
+          "apps/ils-web/src/favicon.ico",
+          "apps/ils-web/src/assets",
+          "apps/ils-web/src/manifest.webmanifest"
+        ],
+        "styles": ["apps/ils-web/src/styles.scss"],
+        "scripts": [],
+        "server": "apps/ils-web/src/main.server.ts",
+        "prerender": true,
+        "ssr": {
+          "entry": "apps/ils-web/server.ts"
+        }
+      },
+      "configurations": {
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all",
+          "serviceWorker": "apps/ils-web/ngsw-config.json"
+        },
+        "development": {
+          "optimization": false,
+          "extractLicenses": false,
+          "sourceMap": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "buildTarget": "ils-web:build:production"
+        },
+        "development": {
+          "buildTarget": "ils-web:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "buildTarget": "ils-web:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/ils-web/**/*.ts", "apps/ils-web/**/*.html"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/ils-web/jest.config.ts"
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "ils-web:build",
+        "staticFilePath": "dist/apps/ils-web/browser"
+      }
+    }
+  }
+}

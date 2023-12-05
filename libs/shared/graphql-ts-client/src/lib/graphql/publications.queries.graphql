@@ -1,0 +1,50 @@
+query getPublications(
+  $skip: Int!
+  $take: Int!
+  $filter: PublicationFilterInput
+  $sortBy: [PublicationSortInput!]
+) {
+  publications(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      title
+      authors {
+        firstName
+        lastName
+      }
+      callNumber
+      publicationType
+      publisher
+      language
+      copiesAvailable
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+
+query getPublication($id: String!) {
+  publication(id: $id) {
+    id
+    title
+    publicationType
+    isbn
+    edition
+    callNumber
+    authors {
+      id
+      firstName
+      lastName
+      fullName
+    }
+    language
+    publisher
+    publishedDate
+    buyingPrice
+    copiesAvailable
+    description
+  }
+}

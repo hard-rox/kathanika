@@ -1,0 +1,44 @@
+{
+  "name": "ils-features",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/ils-features/src",
+  "prefix": "kn",
+  "tags": [],
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "libs/ils-features/ng-package.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "libs/ils-features/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "libs/ils-features/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/ils-features/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/ils-features/**/*.ts",
+          "libs/ils-features/**/*.html",
+          "libs/ils-features/package.json"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,32 @@
+query getMembers(
+  $skip: Int!
+  $take: Int!
+  $filter: MemberFilterInput
+  $sortBy: [MemberSortInput!]
+) {
+  members(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      firstName
+      lastName
+      contactNumber
+      email
+      status
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+
+query getMember($id: String!) {
+  member(id: $id) {
+    id
+    firstName
+    lastName
+    fullName
+    dateOfBirth
+  }
+}

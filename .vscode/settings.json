@@ -63,5 +63,9 @@
     "কথনিকা"
   ],
   "cSpell.language": "en,en-US,en-GB,lorem",
-  "editor.defaultFormatter": "esbenp.prettier-vscode"
+  "editor.defaultFormatter": "esbenp.prettier-vscode",
+  "conventionalCommits.scopes": [
+    "ils",
+    "kn-ui"
+  ]
 }

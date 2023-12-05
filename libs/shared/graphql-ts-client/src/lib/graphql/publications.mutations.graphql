@@ -1,0 +1,40 @@
+mutation addPublication($addPublicationInput: AddPublicationInput!) {
+  addPublication(input: $addPublicationInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+
+mutation updatePublication(
+  $id: String!
+  $publicationPatch: PublicationPatchInput!
+) {
+  updatePublication(input: { id: $id, patch: $publicationPatch }) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on NotFoundWithTheIdError {
+        id
+        objectName
+      }
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
