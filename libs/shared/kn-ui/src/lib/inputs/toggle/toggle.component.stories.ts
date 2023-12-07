@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TextareaInputComponent } from './textarea-input.component';
+import { ToggleComponent } from './toggle.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<TextareaInputComponent> = {
-  component: TextareaInputComponent,
-  title: 'kn-textarea-input',
+const meta: Meta<ToggleComponent> = {
+  component: ToggleComponent,
+  title: 'inputs/kn-toggle',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<TextareaInputComponent>;
+type Story = StoryObj<ToggleComponent>;
 
 export const Default: Story = {
   args: {
-    label: 'Address'
+    label: 'Switch'
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByText(/textarea-input works!/gi)).toBeTruthy();
+    expect(canvas.getByText(/toggle works!/gi)).toBeTruthy();
   },
 };

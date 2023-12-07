@@ -1,23 +1,23 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TextInputComponent } from './text-input.component';
+import { SelectInputComponent } from './select-input.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<TextInputComponent> = {
-  component: TextInputComponent,
-  title: 'kn-text-input',
+const meta: Meta<SelectInputComponent> = {
+  component: SelectInputComponent,
+  title: 'inputs/kn-select-input',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<TextInputComponent>;
+type Story = StoryObj<SelectInputComponent>;
 
 export const Default: Story = {
   args: {
-    label: 'Insert Text'
+    label: 'Select Input',
   },
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByText(/text-input works!/gi)).toBeTruthy();
+    expect(canvas.getByText(/select-input works!/gi)).toBeTruthy();
   },
 };

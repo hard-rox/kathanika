@@ -6,7 +6,7 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<PaginationComponent> = {
   component: PaginationComponent,
-  title: 'kn-pagination',
+  title: 'components/kn-pagination',
   tags: ['autodocs']
 };
 export default meta;

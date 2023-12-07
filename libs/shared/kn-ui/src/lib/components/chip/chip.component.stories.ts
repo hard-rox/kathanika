@@ -6,7 +6,7 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<ChipComponent> = {
   component: ChipComponent,
-  title: 'kn-chip',
+  title: 'components/kn-chip',
   tags: ['autodocs']
 };
 export default meta;

@@ -6,7 +6,7 @@ import { expect } from '@storybook/jest';
 
 const meta: Meta<PanelComponent> = {
   component: PanelComponent,
-  title: 'kn-panel',
+  title: 'components/kn-panel',
   tags: ['autodocs']
 };
 export default meta;
