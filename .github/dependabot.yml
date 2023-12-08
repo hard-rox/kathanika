@@ -47,6 +47,7 @@ updates:
       nx-deps:
         patterns:
           - "@nx/*"
+          - "nx"
         update-types:
           - "minor"
           - "patch"
