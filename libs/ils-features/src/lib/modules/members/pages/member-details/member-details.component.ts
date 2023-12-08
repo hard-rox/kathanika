@@ -4,6 +4,7 @@ import {
   GetMemberQuery,
   GetMemberQueryVariables,
   GetMemberGQL,
+  MembershipStatus,
 } from '@kathanika/graphql-ts-client';
 import { BaseQueryComponent } from '../../../../abstractions/base-query-component';
 
@@ -15,6 +16,7 @@ export class MemberDetailsComponent
   extends BaseQueryComponent<GetMemberQuery, GetMemberQueryVariables>
   implements OnInit
 {
+  membershipStatus = MembershipStatus
   constructor(
     gql: GetMemberGQL,
     private activatedRoute: ActivatedRoute,

@@ -3,37 +3,24 @@ import { Injectable } from '@angular/core';
 import * as Apollo from 'apollo-angular';
 export type Maybe<T> = T | null;
 export type InputMaybe<T> = Maybe<T>;
-export type Exact<T extends { [key: string]: unknown }> = {
-  [K in keyof T]: T[K];
-};
-export type MakeOptional<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]?: Maybe<T[SubKey]>;
-};
-export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & {
-  [SubKey in K]: Maybe<T[SubKey]>;
-};
-export type MakeEmpty<
-  T extends { [key: string]: unknown },
-  K extends keyof T,
-> = { [_ in K]?: never };
-export type Incremental<T> =
-  | T
-  | {
-      [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never;
-    };
+export type Exact<T extends { [key: string]: unknown }> = { [K in keyof T]: T[K] };
+export type MakeOptional<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]?: Maybe<T[SubKey]> };
+export type MakeMaybe<T, K extends keyof T> = Omit<T, K> & { [SubKey in K]: Maybe<T[SubKey]> };
+export type MakeEmpty<T extends { [key: string]: unknown }, K extends keyof T> = { [_ in K]?: never };
+export type Incremental<T> = T | { [P in keyof T]?: P extends ' $fragmentName' | '__typename' ? T[P] : never };
 /** All built-in and custom scalars, mapped to their actual values */
 export type Scalars = {
-  ID: { input: string; output: string };
-  String: { input: string; output: string };
-  Boolean: { input: boolean; output: boolean };
-  Int: { input: number; output: number };
-  Float: { input: number; output: number };
+  ID: { input: string; output: string; }
+  String: { input: string; output: string; }
+  Boolean: { input: boolean; output: boolean; }
+  Int: { input: number; output: number; }
+  Float: { input: number; output: number; }
   /** The `Date` scalar represents an ISO-8601 compliant date type. */
-  Date: { input: any; output: any };
+  Date: { input: any; output: any; }
   /** The `DateTime` scalar represents an ISO-8601 compliant date time type. */
-  DateTime: { input: any; output: any };
+  DateTime: { input: any; output: any; }
   /** The built-in `Decimal` scalar type. */
-  Decimal: { input: any; output: any };
+  Decimal: { input: any; output: any; }
 };
 
 export type AddAuthorError = InvalidFieldError;
@@ -360,7 +347,7 @@ export type MembersCollectionSegment = {
 export enum MembershipStatus {
   Active = 'ACTIVE',
   Cancelled = 'CANCELLED',
-  Suspended = 'SUSPENDED',
+  Suspended = 'SUSPENDED'
 }
 
 export type MembershipStatusOperationFilterInput = {
@@ -387,53 +374,66 @@ export type Mutations = {
   updatePublisher: UpdatePublisherPayload;
 };
 
+
 export type MutationsAddAuthorArgs = {
   input: AddAuthorInput;
 };
+
 
 export type MutationsAddPublicationArgs = {
   input: AddPublicationInput;
 };
 
+
 export type MutationsAddPublisherArgs = {
   input: AddPublisherInput;
 };
+
 
 export type MutationsCancelMembershipArgs = {
   input: CancelMembershipInput;
 };
 
+
 export type MutationsCreateMemberArgs = {
   input: CreateMemberInput;
 };
+
 
 export type MutationsDeleteAuthorArgs = {
   input: DeleteAuthorInput;
 };
 
+
 export type MutationsDeletePublisherArgs = {
   input: DeletePublisherInput;
 };
+
 
 export type MutationsRenewMembershipArgs = {
   input: RenewMembershipInput;
 };
 
+
 export type MutationsSuspendMembershipArgs = {
   input: SuspendMembershipInput;
 };
+
 
 export type MutationsUpdateAuthorArgs = {
   input: UpdateAuthorInput;
 };
 
+
 export type MutationsUpdateMemberArgs = {
   input: UpdateMemberInput;
 };
 
+
 export type MutationsUpdatePublicationArgs = {
   input: UpdatePublicationInput;
 };
+
 
 export type MutationsUpdatePublisherArgs = {
   input: UpdatePublisherInput;
@@ -556,7 +556,7 @@ export enum PublicationType {
   Thesis = 'THESIS',
   Website = 'WEBSITE',
   WhitePaper = 'WHITE_PAPER',
-  Zine = 'ZINE',
+  Zine = 'ZINE'
 }
 
 export type PublicationTypeOperationFilterInput = {
@@ -628,9 +628,11 @@ export type Queries = {
   publishers?: Maybe<PublishersCollectionSegment>;
 };
 
+
 export type QueriesAuthorArgs = {
   id: Scalars['String']['input'];
 };
+
 
 export type QueriesAuthorsArgs = {
   order?: InputMaybe<Array<AuthorSortInput>>;
@@ -639,9 +641,11 @@ export type QueriesAuthorsArgs = {
   where?: InputMaybe<AuthorFilterInput>;
 };
 
+
 export type QueriesMemberArgs = {
   id: Scalars['String']['input'];
 };
+
 
 export type QueriesMembersArgs = {
   order?: InputMaybe<Array<MemberSortInput>>;
@@ -650,9 +654,11 @@ export type QueriesMembersArgs = {
   where?: InputMaybe<MemberFilterInput>;
 };
 
+
 export type QueriesPublicationArgs = {
   id: Scalars['String']['input'];
 };
+
 
 export type QueriesPublicationsArgs = {
   order?: InputMaybe<Array<PublicationSortInput>>;
@@ -661,9 +667,11 @@ export type QueriesPublicationsArgs = {
   where?: InputMaybe<PublicationFilterInput>;
 };
 
+
 export type QueriesPublisherArgs = {
   id: Scalars['String']['input'];
 };
+
 
 export type QueriesPublishersArgs = {
   order?: InputMaybe<Array<PublisherSortInput>>;
@@ -686,7 +694,7 @@ export type RenewMembershipPayload = {
 
 export enum SortEnumType {
   Asc = 'ASC',
-  Desc = 'DESC',
+  Desc = 'DESC'
 }
 
 export type StringOperationFilterInput = {
@@ -781,68 +789,23 @@ export type AddAuthorMutationVariables = Exact<{
   addAuthorInput: AddAuthorInput;
 }>;
 
-export type AddAuthorMutation = {
-  __typename?: 'Mutations';
-  addAuthor: {
-    __typename?: 'AddAuthorPayload';
-    message?: string | null;
-    data?: { __typename?: 'Author'; id: string } | null;
-    errors?: Array<{
-      __typename?: 'InvalidFieldError';
-      fieldName: string;
-      message: string;
-    }> | null;
-  };
-};
+
+export type AddAuthorMutation = { __typename?: 'Mutations', addAuthor: { __typename?: 'AddAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
 export type UpdateAuthorMutationVariables = Exact<{
   id: Scalars['String']['input'];
   authorPatch: AuthorPatchInput;
 }>;
 
-export type UpdateAuthorMutation = {
-  __typename?: 'Mutations';
-  updateAuthor: {
-    __typename?: 'UpdateAuthorPayload';
-    message?: string | null;
-    data?: { __typename?: 'Author'; id: string } | null;
-    errors?: Array<
-      | { __typename?: 'InvalidFieldError'; fieldName: string; message: string }
-      | {
-          __typename?: 'NotFoundWithTheIdError';
-          id: string;
-          objectName: string;
-          message: string;
-        }
-    > | null;
-  };
-};
+
+export type UpdateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
 export type DeleteAuthorMutationVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
-export type DeleteAuthorMutation = {
-  __typename?: 'Mutations';
-  deleteAuthor: {
-    __typename?: 'DeleteAuthorPayload';
-    message?: string | null;
-    errors?: Array<
-      | {
-          __typename?: 'DeletionFailedError';
-          objectName: string;
-          reason: string;
-          message: string;
-        }
-      | {
-          __typename?: 'NotFoundWithTheIdError';
-          id: string;
-          objectName: string;
-          message: string;
-        }
-    > | null;
-  };
-};
+
+export type DeleteAuthorMutation = { __typename?: 'Mutations', deleteAuthor: { __typename?: 'DeleteAuthorPayload', message?: string | null, errors?: Array<{ __typename?: 'DeletionFailedError', objectName: string, reason: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
 export type GetAuthorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -851,97 +814,37 @@ export type GetAuthorsQueryVariables = Exact<{
   sortBy?: InputMaybe<Array<AuthorSortInput> | AuthorSortInput>;
 }>;
 
-export type GetAuthorsQuery = {
-  __typename?: 'Queries';
-  authors?: {
-    __typename?: 'AuthorsCollectionSegment';
-    totalCount: number;
-    items?: Array<{
-      __typename?: 'Author';
-      id: string;
-      firstName: string;
-      lastName: string;
-      nationality: string;
-    }> | null;
-    pageInfo: {
-      __typename?: 'CollectionSegmentInfo';
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-    };
-  } | null;
-};
+
+export type GetAuthorsQuery = { __typename?: 'Queries', authors?: { __typename?: 'AuthorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Author', id: string, firstName: string, lastName: string, nationality: string }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type SearchAuthorsQueryVariables = Exact<{
   filterText: Scalars['String']['input'];
 }>;
 
-export type SearchAuthorsQuery = {
-  __typename?: 'Queries';
-  authors?: {
-    __typename?: 'AuthorsCollectionSegment';
-    items?: Array<{
-      __typename?: 'Author';
-      id: string;
-      fullName: string;
-    }> | null;
-  } | null;
-};
+
+export type SearchAuthorsQuery = { __typename?: 'Queries', authors?: { __typename?: 'AuthorsCollectionSegment', items?: Array<{ __typename?: 'Author', id: string, fullName: string }> | null } | null };
 
 export type GetAuthorQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
-export type GetAuthorQuery = {
-  __typename?: 'Queries';
-  author?: {
-    __typename?: 'Author';
-    id: string;
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    dateOfBirth: any;
-    dateOfDeath?: any | null;
-    nationality: string;
-    biography: string;
-  } | null;
-};
+
+export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string } | null };
 
 export type CreateMemberMutationVariables = Exact<{
   addMemberInput: CreateMemberInput;
 }>;
 
-export type CreateMemberMutation = {
-  __typename?: 'Mutations';
-  createMember: {
-    __typename?: 'CreateMemberPayload';
-    message?: string | null;
-    data?: { __typename?: 'Member'; id: string } | null;
-    errors?: Array<{
-      __typename?: 'InvalidFieldError';
-      fieldName: string;
-      message: string;
-    }> | null;
-  };
-};
+
+export type CreateMemberMutation = { __typename?: 'Mutations', createMember: { __typename?: 'CreateMemberPayload', message?: string | null, data?: { __typename?: 'Member', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
 export type UpdateMemberMutationVariables = Exact<{
   id: Scalars['String']['input'];
   memberPatch: MemberPatchInput;
 }>;
 
-export type UpdateMemberMutation = {
-  __typename?: 'Mutations';
-  updateMember: {
-    __typename?: 'UpdateMemberPayload';
-    message?: string | null;
-    data?: { __typename?: 'Member'; id: string } | null;
-    errors?: Array<{
-      __typename?: 'InvalidFieldError';
-      fieldName: string;
-      message: string;
-    }> | null;
-  };
-};
+
+export type UpdateMemberMutation = { __typename?: 'Mutations', updateMember: { __typename?: 'UpdateMemberPayload', message?: string | null, data?: { __typename?: 'Member', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
 export type GetMembersQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -950,84 +853,30 @@ export type GetMembersQueryVariables = Exact<{
   sortBy?: InputMaybe<Array<MemberSortInput> | MemberSortInput>;
 }>;
 
-export type GetMembersQuery = {
-  __typename?: 'Queries';
-  members?: {
-    __typename?: 'MembersCollectionSegment';
-    totalCount: number;
-    items?: Array<{
-      __typename?: 'Member';
-      id: string;
-      firstName: string;
-      lastName: string;
-      contactNumber: string;
-      email: string;
-      status: MembershipStatus;
-    }> | null;
-    pageInfo: {
-      __typename?: 'CollectionSegmentInfo';
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-    };
-  } | null;
-};
+
+export type GetMembersQuery = { __typename?: 'Queries', members?: { __typename?: 'MembersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Member', id: string, firstName: string, lastName: string, contactNumber: string, email: string, status: MembershipStatus }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type GetMemberQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
-export type GetMemberQuery = {
-  __typename?: 'Queries';
-  member?: {
-    __typename?: 'Member';
-    id: string;
-    firstName: string;
-    lastName: string;
-    fullName: string;
-    dateOfBirth: any;
-  } | null;
-};
+
+export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, status: MembershipStatus, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
 
 export type AddPublicationMutationVariables = Exact<{
   addPublicationInput: AddPublicationInput;
 }>;
 
-export type AddPublicationMutation = {
-  __typename?: 'Mutations';
-  addPublication: {
-    __typename?: 'AddPublicationPayload';
-    message?: string | null;
-    data?: { __typename?: 'Publication'; id: string } | null;
-    errors?: Array<{
-      __typename?: 'InvalidFieldError';
-      fieldName: string;
-      message: string;
-    }> | null;
-  };
-};
+
+export type AddPublicationMutation = { __typename?: 'Mutations', addPublication: { __typename?: 'AddPublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
 export type UpdatePublicationMutationVariables = Exact<{
   id: Scalars['String']['input'];
   publicationPatch: PublicationPatchInput;
 }>;
 
-export type UpdatePublicationMutation = {
-  __typename?: 'Mutations';
-  updatePublication: {
-    __typename?: 'UpdatePublicationPayload';
-    message?: string | null;
-    data?: { __typename?: 'Publication'; id: string } | null;
-    errors?: Array<
-      | { __typename?: 'InvalidFieldError'; fieldName: string; message: string }
-      | {
-          __typename?: 'NotFoundWithTheIdError';
-          id: string;
-          objectName: string;
-          message: string;
-        }
-    > | null;
-  };
-};
+
+export type UpdatePublicationMutation = { __typename?: 'Mutations', updatePublication: { __typename?: 'UpdatePublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
 export type GetPublicationsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -1036,104 +885,30 @@ export type GetPublicationsQueryVariables = Exact<{
   sortBy?: InputMaybe<Array<PublicationSortInput> | PublicationSortInput>;
 }>;
 
-export type GetPublicationsQuery = {
-  __typename?: 'Queries';
-  publications?: {
-    __typename?: 'PublicationsCollectionSegment';
-    totalCount: number;
-    items?: Array<{
-      __typename?: 'Publication';
-      id: string;
-      title: string;
-      callNumber: string;
-      publicationType: PublicationType;
-      publisher: string;
-      language: string;
-      copiesAvailable: number;
-      authors: Array<{
-        __typename?: 'PublicationAuthor';
-        firstName: string;
-        lastName: string;
-      }>;
-    }> | null;
-    pageInfo: {
-      __typename?: 'CollectionSegmentInfo';
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-    };
-  } | null;
-};
+
+export type GetPublicationsQuery = { __typename?: 'Queries', publications?: { __typename?: 'PublicationsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publication', id: string, title: string, callNumber: string, publicationType: PublicationType, publisher: string, language: string, copiesAvailable: number, authors: Array<{ __typename?: 'PublicationAuthor', firstName: string, lastName: string }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type GetPublicationQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
-export type GetPublicationQuery = {
-  __typename?: 'Queries';
-  publication?: {
-    __typename?: 'Publication';
-    id: string;
-    title: string;
-    publicationType: PublicationType;
-    isbn?: string | null;
-    edition: string;
-    callNumber: string;
-    language: string;
-    publisher: string;
-    publishedDate: any;
-    buyingPrice: any;
-    copiesAvailable: number;
-    description: string;
-    authors: Array<{
-      __typename?: 'PublicationAuthor';
-      id: string;
-      firstName: string;
-      lastName: string;
-      fullName: string;
-    }>;
-  } | null;
-};
+
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, buyingPrice: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }> } | null };
 
 export type AddPublisherMutationVariables = Exact<{
   addPublisherInput: AddPublisherInput;
 }>;
 
-export type AddPublisherMutation = {
-  __typename?: 'Mutations';
-  addPublisher: {
-    __typename?: 'AddPublisherPayload';
-    message?: string | null;
-    data?: { __typename?: 'Publisher'; id: string } | null;
-    errors?: Array<{
-      __typename?: 'InvalidFieldError';
-      fieldName: string;
-      message: string;
-    }> | null;
-  };
-};
+
+export type AddPublisherMutation = { __typename?: 'Mutations', addPublisher: { __typename?: 'AddPublisherPayload', message?: string | null, data?: { __typename?: 'Publisher', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
 export type UpdatePublisherMutationVariables = Exact<{
   id: Scalars['String']['input'];
   publisherPatch: PublisherPatchInput;
 }>;
 
-export type UpdatePublisherMutation = {
-  __typename?: 'Mutations';
-  updatePublisher: {
-    __typename?: 'UpdatePublisherPayload';
-    message?: string | null;
-    data?: { __typename?: 'Publisher'; id: string } | null;
-    errors?: Array<
-      | { __typename?: 'InvalidFieldError'; fieldName: string; message: string }
-      | {
-          __typename?: 'NotFoundWithTheIdError';
-          id: string;
-          objectName: string;
-          message: string;
-        }
-    > | null;
-  };
-};
+
+export type UpdatePublisherMutation = { __typename?: 'Mutations', updatePublisher: { __typename?: 'UpdatePublisherPayload', message?: string | null, data?: { __typename?: 'Publisher', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
 
 export type GetPublishersQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -1142,650 +917,542 @@ export type GetPublishersQueryVariables = Exact<{
   sortBy?: InputMaybe<Array<PublisherSortInput> | PublisherSortInput>;
 }>;
 
-export type GetPublishersQuery = {
-  __typename?: 'Queries';
-  publishers?: {
-    __typename?: 'PublishersCollectionSegment';
-    totalCount: number;
-    items?: Array<{
-      __typename?: 'Publisher';
-      id: string;
-      name: string;
-      description?: string | null;
-      contactInformation?: string | null;
-    }> | null;
-    pageInfo: {
-      __typename?: 'CollectionSegmentInfo';
-      hasNextPage: boolean;
-      hasPreviousPage: boolean;
-    };
-  } | null;
-};
+
+export type GetPublishersQuery = { __typename?: 'Queries', publishers?: { __typename?: 'PublishersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type GetPublisherQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
-export type GetPublisherQuery = {
-  __typename?: 'Queries';
-  publisher: {
-    __typename?: 'Publisher';
-    id: string;
-    name: string;
-    description?: string | null;
-    contactInformation?: string | null;
-  };
-};
+
+export type GetPublisherQuery = { __typename?: 'Queries', publisher: { __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null } };
 
 export const AddAuthorDocument = gql`
-  mutation addAuthor($addAuthorInput: AddAuthorInput!) {
-    addAuthor(input: $addAuthorInput) {
-      message
-      data {
-        id
+    mutation addAuthor($addAuthorInput: AddAuthorInput!) {
+  addAuthor(input: $addAuthorInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
       }
-      errors {
-        ... on InvalidFieldError {
-          fieldName
-        }
-        ... on Error {
-          message
-        }
+      ... on Error {
+        message
       }
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class AddAuthorGQL extends Apollo.Mutation<
-  AddAuthorMutation,
-  AddAuthorMutationVariables
-> {
-  override document = AddAuthorDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddAuthorGQL extends Apollo.Mutation<AddAuthorMutation, AddAuthorMutationVariables> {
+    override document = AddAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const UpdateAuthorDocument = gql`
-  mutation updateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
-    updateAuthor(input: { id: $id, patch: $authorPatch }) {
-      message
-      data {
+    mutation updateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
+  updateAuthor(input: {id: $id, patch: $authorPatch}) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on NotFoundWithTheIdError {
         id
+        objectName
       }
-      errors {
-        ... on NotFoundWithTheIdError {
-          id
-          objectName
-        }
-        ... on InvalidFieldError {
-          fieldName
-        }
-        ... on Error {
-          message
-        }
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
       }
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class UpdateAuthorGQL extends Apollo.Mutation<
-  UpdateAuthorMutation,
-  UpdateAuthorMutationVariables
-> {
-  override document = UpdateAuthorDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateAuthorGQL extends Apollo.Mutation<UpdateAuthorMutation, UpdateAuthorMutationVariables> {
+    override document = UpdateAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const DeleteAuthorDocument = gql`
-  mutation deleteAuthor($id: String!) {
-    deleteAuthor(input: { id: $id }) {
-      message
-      errors {
-        ... on NotFoundWithTheIdError {
-          id
-          objectName
-          message
-        }
-        ... on DeletionFailedError {
-          objectName
-          reason
-          message
-        }
-        ... on Error {
-          message
-        }
+    mutation deleteAuthor($id: String!) {
+  deleteAuthor(input: {id: $id}) {
+    message
+    errors {
+      ... on NotFoundWithTheIdError {
+        id
+        objectName
+        message
+      }
+      ... on DeletionFailedError {
+        objectName
+        reason
+        message
+      }
+      ... on Error {
+        message
       }
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class DeleteAuthorGQL extends Apollo.Mutation<
-  DeleteAuthorMutation,
-  DeleteAuthorMutationVariables
-> {
-  override document = DeleteAuthorDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class DeleteAuthorGQL extends Apollo.Mutation<DeleteAuthorMutation, DeleteAuthorMutationVariables> {
+    override document = DeleteAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetAuthorsDocument = gql`
-  query getAuthors(
-    $skip: Int!
-    $take: Int!
-    $filter: AuthorFilterInput
-    $sortBy: [AuthorSortInput!]
-  ) {
-    authors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
-      items {
-        id
-        firstName
-        lastName
-        nationality
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-      }
-      totalCount
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetAuthorsGQL extends Apollo.Query<
-  GetAuthorsQuery,
-  GetAuthorsQueryVariables
-> {
-  override document = GetAuthorsDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const SearchAuthorsDocument = gql`
-  query searchAuthors($filterText: String!) {
-    authors(
-      skip: 0
-      take: 5
-      where: {
-        or: [
-          { firstName: { contains: $filterText } }
-          { lastName: { contains: $filterText } }
-        ]
-      }
-      order: { firstName: ASC }
-    ) {
-      items {
-        id
-        fullName
-      }
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class SearchAuthorsGQL extends Apollo.Query<
-  SearchAuthorsQuery,
-  SearchAuthorsQueryVariables
-> {
-  override document = SearchAuthorsDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const GetAuthorDocument = gql`
-  query getAuthor($id: String!) {
-    author(id: $id) {
+    query getAuthors($skip: Int!, $take: Int!, $filter: AuthorFilterInput, $sortBy: [AuthorSortInput!]) {
+  authors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
       id
       firstName
       lastName
-      fullName
-      dateOfBirth
-      dateOfDeath
       nationality
-      biography
     }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetAuthorGQL extends Apollo.Query<
-  GetAuthorQuery,
-  GetAuthorQueryVariables
-> {
-  override document = GetAuthorDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
   }
 }
-export const CreateMemberDocument = gql`
-  mutation createMember($addMemberInput: CreateMemberInput!) {
-    createMember(input: $addMemberInput) {
-      message
-      data {
-        id
-      }
-      errors {
-        ... on InvalidFieldError {
-          fieldName
-        }
-        ... on Error {
-          message
-        }
-      }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAuthorsGQL extends Apollo.Query<GetAuthorsQuery, GetAuthorsQueryVariables> {
+    override document = GetAuthorsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class CreateMemberGQL extends Apollo.Mutation<
-  CreateMemberMutation,
-  CreateMemberMutationVariables
-> {
-  override document = CreateMemberDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const UpdateMemberDocument = gql`
-  mutation updateMember($id: String!, $memberPatch: MemberPatchInput!) {
-    updateMember(input: { id: $id, patch: $memberPatch }) {
-      message
-      data {
-        id
-      }
-      errors {
-        ... on InvalidFieldError {
-          fieldName
-        }
-        ... on Error {
-          message
-        }
-      }
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class UpdateMemberGQL extends Apollo.Mutation<
-  UpdateMemberMutation,
-  UpdateMemberMutationVariables
-> {
-  override document = UpdateMemberDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const GetMembersDocument = gql`
-  query getMembers(
-    $skip: Int!
-    $take: Int!
-    $filter: MemberFilterInput
-    $sortBy: [MemberSortInput!]
+export const SearchAuthorsDocument = gql`
+    query searchAuthors($filterText: String!) {
+  authors(
+    skip: 0
+    take: 5
+    where: {or: [{firstName: {contains: $filterText}}, {lastName: {contains: $filterText}}]}
+    order: {firstName: ASC}
   ) {
-    members(skip: $skip, take: $take, where: $filter, order: $sortBy) {
-      items {
-        id
-        firstName
-        lastName
-        contactNumber
-        email
-        status
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-      }
-      totalCount
+    items {
+      id
+      fullName
     }
   }
-`;
+}
+    `;
 
-@Injectable({
-  providedIn: 'root',
-})
-export class GetMembersGQL extends Apollo.Query<
-  GetMembersQuery,
-  GetMembersQueryVariables
-> {
-  override document = GetMembersDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SearchAuthorsGQL extends Apollo.Query<SearchAuthorsQuery, SearchAuthorsQueryVariables> {
+    override document = SearchAuthorsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetAuthorDocument = gql`
+    query getAuthor($id: String!) {
+  author(id: $id) {
+    id
+    firstName
+    lastName
+    fullName
+    dateOfBirth
+    dateOfDeath
+    nationality
+    biography
   }
 }
-export const GetMemberDocument = gql`
-  query getMember($id: String!) {
-    member(id: $id) {
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetAuthorGQL extends Apollo.Query<GetAuthorQuery, GetAuthorQueryVariables> {
+    override document = GetAuthorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const CreateMemberDocument = gql`
+    mutation createMember($addMemberInput: CreateMemberInput!) {
+  createMember(input: $addMemberInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateMemberGQL extends Apollo.Mutation<CreateMemberMutation, CreateMemberMutationVariables> {
+    override document = CreateMemberDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const UpdateMemberDocument = gql`
+    mutation updateMember($id: String!, $memberPatch: MemberPatchInput!) {
+  updateMember(input: {id: $id, patch: $memberPatch}) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdateMemberGQL extends Apollo.Mutation<UpdateMemberMutation, UpdateMemberMutationVariables> {
+    override document = UpdateMemberDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetMembersDocument = gql`
+    query getMembers($skip: Int!, $take: Int!, $filter: MemberFilterInput, $sortBy: [MemberSortInput!]) {
+  members(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
       id
       firstName
       lastName
-      fullName
-      dateOfBirth
+      contactNumber
+      email
+      status
     }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetMemberGQL extends Apollo.Query<
-  GetMemberQuery,
-  GetMemberQueryVariables
-> {
-  override document = GetMemberDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
   }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetMembersGQL extends Apollo.Query<GetMembersQuery, GetMembersQueryVariables> {
+    override document = GetMembersDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetMemberDocument = gql`
+    query getMember($id: String!) {
+  member(id: $id) {
+    id
+    fullName
+    status
+    dateOfBirth
+    contactNumber
+    email
+    address
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetMemberGQL extends Apollo.Query<GetMemberQuery, GetMemberQueryVariables> {
+    override document = GetMemberDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const AddPublicationDocument = gql`
-  mutation addPublication($addPublicationInput: AddPublicationInput!) {
-    addPublication(input: $addPublicationInput) {
-      message
-      data {
-        id
+    mutation addPublication($addPublicationInput: AddPublicationInput!) {
+  addPublication(input: $addPublicationInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
       }
-      errors {
-        ... on InvalidFieldError {
-          fieldName
-        }
-        ... on Error {
-          message
-        }
+      ... on Error {
+        message
       }
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class AddPublicationGQL extends Apollo.Mutation<
-  AddPublicationMutation,
-  AddPublicationMutationVariables
-> {
-  override document = AddPublicationDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddPublicationGQL extends Apollo.Mutation<AddPublicationMutation, AddPublicationMutationVariables> {
+    override document = AddPublicationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const UpdatePublicationDocument = gql`
-  mutation updatePublication(
-    $id: String!
-    $publicationPatch: PublicationPatchInput!
-  ) {
-    updatePublication(input: { id: $id, patch: $publicationPatch }) {
-      message
-      data {
+    mutation updatePublication($id: String!, $publicationPatch: PublicationPatchInput!) {
+  updatePublication(input: {id: $id, patch: $publicationPatch}) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on NotFoundWithTheIdError {
         id
+        objectName
       }
-      errors {
-        ... on NotFoundWithTheIdError {
-          id
-          objectName
-        }
-        ... on InvalidFieldError {
-          fieldName
-        }
-        ... on Error {
-          message
-        }
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
       }
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class UpdatePublicationGQL extends Apollo.Mutation<
-  UpdatePublicationMutation,
-  UpdatePublicationMutationVariables
-> {
-  override document = UpdatePublicationDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdatePublicationGQL extends Apollo.Mutation<UpdatePublicationMutation, UpdatePublicationMutationVariables> {
+    override document = UpdatePublicationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetPublicationsDocument = gql`
-  query getPublications(
-    $skip: Int!
-    $take: Int!
-    $filter: PublicationFilterInput
-    $sortBy: [PublicationSortInput!]
-  ) {
-    publications(skip: $skip, take: $take, where: $filter, order: $sortBy) {
-      items {
-        id
-        title
-        authors {
-          firstName
-          lastName
-        }
-        callNumber
-        publicationType
-        publisher
-        language
-        copiesAvailable
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-      }
-      totalCount
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetPublicationsGQL extends Apollo.Query<
-  GetPublicationsQuery,
-  GetPublicationsQueryVariables
-> {
-  override document = GetPublicationsDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const GetPublicationDocument = gql`
-  query getPublication($id: String!) {
-    publication(id: $id) {
+    query getPublications($skip: Int!, $take: Int!, $filter: PublicationFilterInput, $sortBy: [PublicationSortInput!]) {
+  publications(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
       id
       title
-      publicationType
-      isbn
-      edition
-      callNumber
       authors {
-        id
         firstName
         lastName
-        fullName
       }
-      language
+      callNumber
+      publicationType
       publisher
-      publishedDate
-      buyingPrice
+      language
       copiesAvailable
-      description
     }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetPublicationGQL extends Apollo.Query<
-  GetPublicationQuery,
-  GetPublicationQueryVariables
-> {
-  override document = GetPublicationDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
   }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPublicationsGQL extends Apollo.Query<GetPublicationsQuery, GetPublicationsQueryVariables> {
+    override document = GetPublicationsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetPublicationDocument = gql`
+    query getPublication($id: String!) {
+  publication(id: $id) {
+    id
+    title
+    publicationType
+    isbn
+    edition
+    callNumber
+    authors {
+      id
+      firstName
+      lastName
+      fullName
+    }
+    language
+    publisher
+    publishedDate
+    buyingPrice
+    copiesAvailable
+    description
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPublicationGQL extends Apollo.Query<GetPublicationQuery, GetPublicationQueryVariables> {
+    override document = GetPublicationDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const AddPublisherDocument = gql`
-  mutation addPublisher($addPublisherInput: AddPublisherInput!) {
-    addPublisher(input: $addPublisherInput) {
-      message
-      data {
-        id
+    mutation addPublisher($addPublisherInput: AddPublisherInput!) {
+  addPublisher(input: $addPublisherInput) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on InvalidFieldError {
+        fieldName
       }
-      errors {
-        ... on InvalidFieldError {
-          fieldName
-        }
-        ... on Error {
-          message
-        }
+      ... on Error {
+        message
       }
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class AddPublisherGQL extends Apollo.Mutation<
-  AddPublisherMutation,
-  AddPublisherMutationVariables
-> {
-  override document = AddPublisherDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddPublisherGQL extends Apollo.Mutation<AddPublisherMutation, AddPublisherMutationVariables> {
+    override document = AddPublisherDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const UpdatePublisherDocument = gql`
-  mutation updatePublisher(
-    $id: String!
-    $publisherPatch: PublisherPatchInput!
-  ) {
-    updatePublisher(input: { id: $id, patch: $publisherPatch }) {
-      message
-      data {
+    mutation updatePublisher($id: String!, $publisherPatch: PublisherPatchInput!) {
+  updatePublisher(input: {id: $id, patch: $publisherPatch}) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on NotFoundWithTheIdError {
         id
+        objectName
       }
-      errors {
-        ... on NotFoundWithTheIdError {
-          id
-          objectName
-        }
-        ... on InvalidFieldError {
-          fieldName
-        }
-        ... on Error {
-          message
-        }
+      ... on InvalidFieldError {
+        fieldName
+      }
+      ... on Error {
+        message
       }
     }
   }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class UpdatePublisherGQL extends Apollo.Mutation<
-  UpdatePublisherMutation,
-  UpdatePublisherMutationVariables
-> {
-  override document = UpdatePublisherDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class UpdatePublisherGQL extends Apollo.Mutation<UpdatePublisherMutation, UpdatePublisherMutationVariables> {
+    override document = UpdatePublisherDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetPublishersDocument = gql`
-  query getPublishers(
-    $skip: Int!
-    $take: Int!
-    $filter: PublisherFilterInput
-    $sortBy: [PublisherSortInput!]
-  ) {
-    publishers(skip: $skip, take: $take, where: $filter, order: $sortBy) {
-      items {
-        id
-        name
-        description
-        contactInformation
-      }
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-      }
-      totalCount
-    }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetPublishersGQL extends Apollo.Query<
-  GetPublishersQuery,
-  GetPublishersQueryVariables
-> {
-  override document = GetPublishersDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
-  }
-}
-export const GetPublisherDocument = gql`
-  query getPublisher($id: String!) {
-    publisher(id: $id) {
+    query getPublishers($skip: Int!, $take: Int!, $filter: PublisherFilterInput, $sortBy: [PublisherSortInput!]) {
+  publishers(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
       id
       name
       description
       contactInformation
     }
-  }
-`;
-
-@Injectable({
-  providedIn: 'root',
-})
-export class GetPublisherGQL extends Apollo.Query<
-  GetPublisherQuery,
-  GetPublisherQueryVariables
-> {
-  override document = GetPublisherDocument;
-
-  constructor(apollo: Apollo.Apollo) {
-    super(apollo);
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
   }
 }
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPublishersGQL extends Apollo.Query<GetPublishersQuery, GetPublishersQueryVariables> {
+    override document = GetPublishersDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetPublisherDocument = gql`
+    query getPublisher($id: String!) {
+  publisher(id: $id) {
+    id
+    name
+    description
+    contactInformation
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetPublisherGQL extends Apollo.Query<GetPublisherQuery, GetPublisherQueryVariables> {
+    override document = GetPublisherDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }

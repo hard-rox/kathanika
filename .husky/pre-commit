@@ -2,4 +2,5 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 echo "Pre commit hook"
-nx affected -t lint build test --parallel
+
+npm run pre-commit

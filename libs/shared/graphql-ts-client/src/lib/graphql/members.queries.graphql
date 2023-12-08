@@ -24,9 +24,11 @@ query getMembers(
 query getMember($id: String!) {
   member(id: $id) {
     id
-    firstName
-    lastName
     fullName
+    status
     dateOfBirth
+    contactNumber
+    email
+    address
   }
 }

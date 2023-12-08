@@ -9,6 +9,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './members.routes';
 import {
   BadgeComponent,
+  ButtonDirective,
   PaginationComponent,
   PanelComponent,
 } from '@kathanika/kn-ui';
@@ -27,6 +28,7 @@ import {
     PaginationComponent,
     BadgeComponent,
     PanelComponent,
+    ButtonDirective
   ],
 })
 export class MembersModule {}

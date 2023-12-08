@@ -8,7 +8,8 @@
     "lint": "nx run-many -t lint --parallel",
     "build": "nx run-many -t build --parallel",
     "test": "nx run-many -t test --parallel",
-    "codegen": "nx run graphql-consumer:codegen"
+    "codegen": "nx run graphql-ts-client:codegen",
+    "pre-commit": "nx affected -t lint build test --parallel"
   },
   "private": true,
   "devDependencies": {
