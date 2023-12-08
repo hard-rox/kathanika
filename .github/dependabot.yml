@@ -50,4 +50,10 @@ updates:
         update-types:
           - "minor"
           - "patch"
+      storybook-deps:
+        patterns:
+          - "@storybook/*"
+        update-types:
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 12
