@@ -17,10 +17,10 @@
       </div>
       <div>
         <p class="text-sm text-theme-davys-gray">
-          Member since: <span class="text-black font-bold">{{data.member?.dateOfBirth | date:'yyyy'}}</span>
+          Member since: <span class="text-black font-bold">{{data.member?.membershipStartDateTime| date:'MMM dd, yyyy'}}</span>
         </p>
         <p class="text-sm text-theme-davys-gray">
-          Last activity: <span class="text-black font-bold">{{data.member?.dateOfBirth | date:'yyyy'}}</span>
+          Last activity: <span class="text-black font-bold">{{data.member?.dateOfBirth | date:'MMM dd, yyyy'}}</span>
         </p>
       </div>
     </div>
@@ -38,13 +38,6 @@
       <div>
         <p class="font-semibold text-theme-davys-gray">Date of Birth</p>
         <p>{{data.member?.dateOfBirth | date:'MMM dd, yyyy'}}</p>
-      </div>
-    </div>
-    <div class="flex items-start space-x-2 px-3 py-2">
-      <span class="material-symbols-sharp">transgender</span>
-      <div>
-        <p class="font-semibold text-theme-davys-gray">Gender</p>
-        <p>{{data.member?.dateOfBirth}}</p>
       </div>
     </div>
     <div class="flex items-start space-x-2 px-3 py-2">

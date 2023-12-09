@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/services/web/bin/Debug/net8.0/Kathanika.Web.dll",
+            "program": "${workspaceFolder}/dist/services/web/net8.0/Kathanika.Web.dll",
             "args": [],
             "cwd": "${workspaceFolder}/services/web",
             "stopAtEntry": false,

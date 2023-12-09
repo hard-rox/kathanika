@@ -290,6 +290,7 @@ export type Member = {
   fullName: Scalars['String']['output'];
   id: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
+  membershipStartDateTime: Scalars['DateTime']['output'];
   status: MembershipStatus;
 };
 
@@ -854,14 +855,14 @@ export type GetMembersQueryVariables = Exact<{
 }>;
 
 
-export type GetMembersQuery = { __typename?: 'Queries', members?: { __typename?: 'MembersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Member', id: string, firstName: string, lastName: string, contactNumber: string, email: string, status: MembershipStatus }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type GetMembersQuery = { __typename?: 'Queries', members?: { __typename?: 'MembersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Member', id: string, firstName: string, lastName: string, membershipStartDateTime: any, contactNumber: string, email: string, status: MembershipStatus }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type GetMemberQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, status: MembershipStatus, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
+export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, status: MembershipStatus, membershipStartDateTime: any, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
 
 export type AddPublicationMutationVariables = Exact<{
   addPublicationInput: AddPublicationInput;
@@ -1166,6 +1167,7 @@ export const GetMembersDocument = gql`
       id
       firstName
       lastName
+      membershipStartDateTime
       contactNumber
       email
       status
@@ -1195,6 +1197,7 @@ export const GetMemberDocument = gql`
     id
     fullName
     status
+    membershipStartDateTime
     dateOfBirth
     contactNumber
     email
