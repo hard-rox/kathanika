@@ -833,7 +833,7 @@ export type GetAuthorQueryVariables = Exact<{
 export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string } | null };
 
 export type CreateMemberMutationVariables = Exact<{
-  addMemberInput: CreateMemberInput;
+  createMemberInput: CreateMemberInput;
 }>;
 
 
@@ -1103,8 +1103,8 @@ export const GetAuthorDocument = gql`
     }
   }
 export const CreateMemberDocument = gql`
-    mutation createMember($addMemberInput: CreateMemberInput!) {
-  createMember(input: $addMemberInput) {
+    mutation createMember($createMemberInput: CreateMemberInput!) {
+  createMember(input: $createMemberInput) {
     message
     data {
       id
