@@ -4,7 +4,7 @@ import { MemberFormComponent } from '../../components/member-form/member-form.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { DateInputComponent, PanelComponent, TextInputComponent, TextareaInputComponent, ToggleComponent } from "@kathanika/kn-ui";
 import { CreateMemberGQL } from '@kathanika/graphql-ts-client';
-import { mockMutationGql } from 'libs/ils-features/src/lib/test-utils/gql-test-utils';
+import { mockMutationGql } from "../../../../test-utils/gql-test-utils";
 
 describe('MemberCreateComponent', () => {
   let component: MemberCreateComponent;
