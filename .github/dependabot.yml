@@ -9,14 +9,14 @@ updates:
         patterns:
           - "HotChocolate.*"
         update-types:
-        - "minor"
-        - "patch"
+          - "minor"
+          - "patch"
       fluentValidation-deps:
         patterns:
           - "FluentValidation*"
         update-types:
-        - "minor"
-        - "patch"
+          - "minor"
+          - "patch"
 
   - package-ecosystem: "npm"
     directory: "/"
@@ -29,14 +29,14 @@ updates:
           - "@angular-devkit/build-angular"
           - "@schematics/angular"
         update-types:
-        - "minor"
-        - "patch"
+          - "minor"
+          - "patch"
       eslint-deps:
         patterns:
           - "@angular-eslint/*"
         update-types:
-        - "minor"
-        - "patch"
+          - "minor"
+          - "patch"
       react-deps:
         patterns:
           - "react*"
@@ -47,7 +47,15 @@ updates:
       nx-deps:
         patterns:
           - "@nx/*"
+          - "nx"
         update-types:
+          - "minor"
+          - "patch"
+      storybook-deps:
+        patterns:
+          - "@storybook/*"
+        update-types:
+          - "major"
           - "minor"
           - "patch"
     open-pull-requests-limit: 12
