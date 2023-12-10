@@ -26,6 +26,8 @@ query getMember($id: String!) {
   member(id: $id) {
     id
     fullName
+    firstName
+    lastName
     status
     membershipStartDateTime
     dateOfBirth

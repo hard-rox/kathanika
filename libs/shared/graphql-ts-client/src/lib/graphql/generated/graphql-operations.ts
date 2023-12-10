@@ -862,7 +862,7 @@ export type GetMemberQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, status: MembershipStatus, membershipStartDateTime: any, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
+export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, firstName: string, lastName: string, status: MembershipStatus, membershipStartDateTime: any, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
 
 export type AddPublicationMutationVariables = Exact<{
   addPublicationInput: AddPublicationInput;
@@ -1196,6 +1196,8 @@ export const GetMemberDocument = gql`
   member(id: $id) {
     id
     fullName
+    firstName
+    lastName
     status
     membershipStartDateTime
     dateOfBirth

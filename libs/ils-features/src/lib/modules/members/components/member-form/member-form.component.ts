@@ -19,6 +19,9 @@ export class MemberFormComponent extends BaseFormComponent<MemberFormOutput>
         firstName: input.firstName,
         lastName: input.lastName,
         dateOfBirth: input.dateOfBirth,
+        contactNumber: input.contactNumber,
+        email: input.email,
+        address: input.address
       });
     }
   }
