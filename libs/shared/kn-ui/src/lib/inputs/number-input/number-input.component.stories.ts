@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { DateInputComponent } from './date-input.component';
+import { NumberInputComponent } from './number-input.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<DateInputComponent> = {
-  component: DateInputComponent,
-  title: 'kn-date-input',
+const meta: Meta<NumberInputComponent> = {
+  component: NumberInputComponent,
+  title: 'inputs/kn-number-input',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<DateInputComponent>;
+type Story = StoryObj<NumberInputComponent>;
 
 export const Primary: Story = {
   args: {},
@@ -20,6 +20,6 @@ export const Heading: Story = {
   args: {},
   play: async ({ canvasElement }) => {
     const canvas = within(canvasElement);
-    expect(canvas.getByText(/date-input works!/gi)).toBeTruthy();
+    expect(canvas.getByText(/number-input works!/gi)).toBeTruthy();
   },
 };

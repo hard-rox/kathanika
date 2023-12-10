@@ -1,1 +1,15 @@
-<p>member-form works!</p>
+<!-- <pre>{{formGroup.value | json}}</pre> -->
+
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+  <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
+    <kn-text-input label="First Name" formControlName="firstName" />
+    <kn-text-input label="Last Name" formControlName="lastName" />
+    <kn-date-input label="Date of Birth" formControlName="dateOfBirth" />
+    <kn-text-input label="Contact Number" formControlName="contactNumber" />
+    <kn-text-input label="Email" formControlName="email" />
+    <kn-textarea-input label="Address" formControlName="address" />
+  </div>
+  <div class="flex flex-row-reverse mt-2">
+    <input type="submit" value="Save" />
+  </div>
+</form>

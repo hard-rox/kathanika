@@ -1,5 +1,5 @@
-mutation createMember($addMemberInput: CreateMemberInput!) {
-  createMember(input: $addMemberInput) {
+mutation createMember($createMemberInput: CreateMemberInput!) {
+  createMember(input: $createMemberInput) {
     message
     data {
       id

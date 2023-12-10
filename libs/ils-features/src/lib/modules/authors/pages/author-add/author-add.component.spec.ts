@@ -38,7 +38,7 @@ describe('AuthorAddComponent', () => {
         TextInputComponent,
         DateInputComponent,
         TextareaInputComponent,
-        ToggleComponent,
+        ToggleComponent
       ],
       declarations: [AuthorAddComponent, AuthorFormComponent],
       providers: [

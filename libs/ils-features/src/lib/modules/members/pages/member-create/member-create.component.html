@@ -10,10 +10,6 @@
   </div>
 }
 
-<kn-panel panelTitle="Member Update" [isLoading]="isPanelLoading">
-  <kn-member-form
-    #memberUpdateForm
-    [member]="memberFormInput"
-    (formSubmit)="onValidFormSubmit($event)"
-  />
+<kn-panel panelTitle="Create Member" [isLoading]="isPanelLoading">
+  <kn-member-form #memberCreateForm (formSubmit)="onValidFormSubmit($event)" />
 </kn-panel>

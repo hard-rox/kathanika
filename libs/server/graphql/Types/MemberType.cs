@@ -15,5 +15,6 @@ public sealed class MemberType : ObjectType<Member>
         descriptor.Field(x => x.ContactNumber);
         descriptor.Field(x => x.Email);
         descriptor.Field(x => x.Status);
+        descriptor.Field(x => x.MembershipStartDateTime);
     }
 }

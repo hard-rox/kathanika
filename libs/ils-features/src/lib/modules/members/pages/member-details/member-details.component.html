@@ -1,73 +1,75 @@
 <!-- <pre>{{queryRef.valueChanges| async | json}}</pre> -->
+@if (queryRef.valueChanges | async; as queryResult) {
+@if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
 <kn-panel>
   <div class="flex justify-between items-center">
     <div class="flex items-center gap-10">
-      <img
-        class="max-h-24 min-h-24 w-auto rounded-full"
-        src="https://picsum.photos/400"
-        alt="DP"
-      />
+      <img class="max-h-24 min-h-24 w-auto rounded-full" src="https://picsum.photos/400" alt="DP" />
       <div>
-        <p class="font-bold">John Doe <kn-badge [content]="'Active'" /></p>
-        <p class="text-sm text-theme-davys-gray">Member ID #123456</p>
+        <p class="font-bold">{{data.member?.fullName}} <kn-badge [content]="data.member?.status ?? ''" [type]="
+            data.member?.status === membershipStatus.Active
+              ? 'success'
+              : data.member?.status === membershipStatus.Cancelled
+                ? 'error'
+                : 'warning'
+          " /></p>
+        <p class="text-sm text-theme-davys-gray">Member ID #{{data.member?.id}}</p>
       </div>
       <div>
         <p class="text-sm text-theme-davys-gray">
-          Member since: <span class="text-black font-bold">2023</span>
+          Member since: <span class="text-black font-bold">{{data.member?.membershipStartDateTime| date:'MMM dd, yyyy'}}</span>
         </p>
         <p class="text-sm text-theme-davys-gray">
-          Last activity: <span class="text-black font-bold">2023</span>
+          Last activity: <span class="text-black font-bold">{{data.member?.dateOfBirth | date:'MMM dd, yyyy'}}</span>
         </p>
       </div>
     </div>
     <div class="flex space-x-2">
-      <button class="kn-button">Change Status</button>
-      <button class="kn-button">Update Member</button>
+      <button knButton>Change Status</button>
+      <button knButton routerLink="../update/{{ data.member?.id }}">Update Member</button>
     </div>
   </div>
 </kn-panel>
 
 <div class="mt-2 grid grid-cols-6 gap-2">
-  <!-- <kn-panel>
-
-  </kn-panel> -->
-  <div class="bg-white col-span-2 flex flex-col divide-y">
-    <p class="font-bold px-3 py-2">Personal Information</p>
+  <kn-panel panelTitle="Personal Information" class="col-span-2">
     <div class="flex items-start space-x-2 px-3 py-2">
       <span class="material-symbols-sharp">cake</span>
       <div>
         <p class="font-semibold text-theme-davys-gray">Date of Birth</p>
-        <p>Mar 1, 1991</p>
-      </div>
-    </div>
-    <div class="flex items-start space-x-2 px-3 py-2">
-      <span class="material-symbols-sharp">transgender</span>
-      <div>
-        <p class="font-semibold text-theme-davys-gray">Gender</p>
-        <p>Male</p>
+        <p>{{data.member?.dateOfBirth | date:'MMM dd, yyyy'}}</p>
       </div>
     </div>
     <div class="flex items-start space-x-2 px-3 py-2">
       <span class="material-symbols-sharp">phone</span>
       <div>
         <p class="font-semibold text-theme-davys-gray">Contact Number</p>
-        <p>Male</p>
+        <p>{{data.member?.contactNumber}}</p>
       </div>
     </div>
     <div class="flex items-start space-x-2 px-3 py-2">
       <span class="material-symbols-sharp">email</span>
       <div>
         <p class="font-semibold text-theme-davys-gray">Email address</p>
-        <p>Male</p>
+        <p>{{data.member?.email}}</p>
       </div>
     </div>
     <div class="flex items-start space-x-2 px-3 py-2">
       <span class="material-symbols-sharp">home</span>
       <div>
         <p class="font-semibold text-theme-davys-gray">Contact Details</p>
-        <p>Male</p>
+        <p>{{data.member?.address}}</p>
       </div>
     </div>
-  </div>
-  <div class="bg-white col-span-4">left Side</div>
+  </kn-panel>
+  <kn-panel panelTitle="Member Insight" class="col-span-4">
+    Hello
+  </kn-panel>
 </div>
+} @else {
+<!-- <pre>Error: {{queryResult.error | json}}</pre>
+    <pre>Errors: {{queryResult.errors | json}}</pre> -->
+}
+} @else {
+<pre>Loading...</pre>
+}

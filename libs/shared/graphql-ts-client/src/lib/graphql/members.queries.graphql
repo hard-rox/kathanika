@@ -9,6 +9,7 @@ query getMembers(
       id
       firstName
       lastName
+      membershipStartDateTime
       contactNumber
       email
       status
@@ -24,9 +25,14 @@ query getMembers(
 query getMember($id: String!) {
   member(id: $id) {
     id
+    fullName
     firstName
     lastName
-    fullName
+    status
+    membershipStartDateTime
     dateOfBirth
+    contactNumber
+    email
+    address
   }
 }
