@@ -18,8 +18,8 @@
     "**/.config": true,
     "**/.vscode": true,
     "**/.github": true,
-    "**/.nx":true,
-    "**/tmp":true
+    "**/.nx": true,
+    "**/tmp": true
   },
   "dotnetAcquisitionExtension.installTimeoutValue": 180,
   "cSpell.words": [
@@ -65,8 +65,6 @@
   ],
   "cSpell.language": "en,en-US,en-GB,lorem",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "conventionalCommits.scopes": [
-    "ils",
-    "kn-ui"
-  ]
+  "conventionalCommits.scopes": ["ils", "kn-ui"],
+  "eslint.validate": ["json"]
 }
