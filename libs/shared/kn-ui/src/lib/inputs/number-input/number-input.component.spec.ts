@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { NumberInputComponent } from './number-input.component';
+import { KnNumberInput } from './number-input.component';
 
-describe('NumberInputComponent', () => {
-  let component: NumberInputComponent;
-  let fixture: ComponentFixture<NumberInputComponent>;
+describe('KnNumberInput', () => {
+  let component: KnNumberInput;
+  let fixture: ComponentFixture<KnNumberInput>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [NumberInputComponent],
+      imports: [KnNumberInput],
     });
-    fixture = TestBed.createComponent(NumberInputComponent);
+    fixture = TestBed.createComponent(KnNumberInput);
     component = fixture.componentInstance;
     // fixture.detectChanges();
   });

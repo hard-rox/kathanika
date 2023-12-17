@@ -1,6 +1,6 @@
-describe('ButtonDirective', () => {
+describe('KnButton', () => {
   it('should create an instance', () => {
-    // const directive = new ButtonDirective();
+    // const directive = new KnButton();
     // expect(directive).toBeTruthy();
   });
 });

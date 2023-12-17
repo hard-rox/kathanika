@@ -15,7 +15,7 @@ import {
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CommonModule],
 })
-export class PaginationComponent {
+export class KnPagination {
   private _totalCount: number = 0;
   private _pageSize: number = 1;
   private _pageSizes: number[] = [5, 10, 50, 100];

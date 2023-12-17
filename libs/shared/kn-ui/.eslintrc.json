@@ -24,6 +24,18 @@
             "prefix": "kn",
             "style": "kebab-case"
           }
+        ],
+        "@angular-eslint/directive-class-suffix": [
+          "error",
+          {
+            "suffixes": [""]
+          }
+        ],
+        "@angular-eslint/component-class-suffix": [
+          "error",
+          {
+            "suffixes": [""]
+          }
         ]
       }
     },

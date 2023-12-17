@@ -4,7 +4,7 @@ import { MemberUpdateComponent } from './member-update.component';
 import { UpdateMemberGQL } from '@kathanika/graphql-ts-client';
 import { mockMutationGql } from "../../../../test-utils/gql-test-utils";
 import { ReactiveFormsModule } from '@angular/forms';
-import { DateInputComponent, PanelComponent, TextInputComponent, TextareaInputComponent, ToggleComponent } from '@kathanika/kn-ui';
+import { KnDateInput, KnPanel, KnTextInput, KnTextareaInput, KnToggle } from '@kathanika/kn-ui';
 
 describe('MemberUpdateComponent', () => {
   let component: MemberUpdateComponent;
@@ -14,11 +14,11 @@ describe('MemberUpdateComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        PanelComponent,
-        TextInputComponent,
-        DateInputComponent,
-        TextareaInputComponent,
-        ToggleComponent,
+        KnPanel,
+        KnTextInput,
+        KnDateInput,
+        KnTextareaInput,
+        KnToggle,
       ],
       declarations: [MemberUpdateComponent],
       providers: [

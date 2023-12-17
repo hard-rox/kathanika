@@ -9,7 +9,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./badge.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class BadgeComponent {
+export class KnBadge {
   @Input({ required: true })
   content!: string;
 

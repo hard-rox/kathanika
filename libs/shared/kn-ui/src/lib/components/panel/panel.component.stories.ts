@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { PanelComponent } from './panel.component';
+import { KnPanel } from './panel.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<PanelComponent> = {
-  component: PanelComponent,
+const meta: Meta<KnPanel> = {
+  component: KnPanel,
   title: 'components/kn-panel',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<PanelComponent>;
+type Story = StoryObj<KnPanel>;
 
 export const Default: Story = {
   args: {

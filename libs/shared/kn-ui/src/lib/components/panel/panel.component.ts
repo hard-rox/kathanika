@@ -8,7 +8,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./panel.component.scss'],
   imports: [CommonModule],
 })
-export class PanelComponent {
+export class KnPanel {
   @Input()
   panelTitle: string | null = null;
 

@@ -1,20 +1,20 @@
 import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
-import { AlertComponent } from './alert.component';
+import { KnAlert } from './alert.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<AlertComponent> = {
-  component: AlertComponent,
+const meta: Meta<KnAlert> = {
+  component: KnAlert,
   title: 'components/kn-alert',
   tags: ['autodocs'],
-  render: (args: AlertComponent) => ({
+  render: (args: KnAlert) => ({
     props: { ...args },
     template: `<kn-alert ${argsToTemplate(args)}>Hello</kn-alert>`
   })
 };
 export default meta;
-type Story = StoryObj<AlertComponent>;
+type Story = StoryObj<KnAlert>;
 
 export const Default: Story = {
   args: {

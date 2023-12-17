@@ -3,10 +3,10 @@ import { ReactiveFormsModule } from '@angular/forms';
 
 import { AuthorFormComponent } from './author-form.component';
 import {
-  TextInputComponent,
-  DateInputComponent,
-  TextareaInputComponent,
-  ToggleComponent,
+  KnTextInput,
+  KnDateInput,
+  KnTextareaInput,
+  KnToggle,
 } from '@kathanika/kn-ui';
 
 describe('AuthorFormComponent', () => {
@@ -17,10 +17,10 @@ describe('AuthorFormComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        TextInputComponent,
-        DateInputComponent,
-        TextareaInputComponent,
-        ToggleComponent,
+        KnTextInput,
+        KnDateInput,
+        KnTextareaInput,
+        KnToggle,
       ],
       declarations: [AuthorFormComponent],
     });

@@ -13,8 +13,8 @@ import { AbstractInputComponent } from '../../abstractions/base-input-component'
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: DateInputComponent,
+      useExisting: KnDateInput,
     },
   ],
 })
-export class DateInputComponent extends AbstractInputComponent<Date> {}
+export class KnDateInput extends AbstractInputComponent<Date> {}

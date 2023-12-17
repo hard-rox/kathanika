@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SelectInputComponent } from './select-input.component';
+import { KnSelectInput } from './select-input.component';
 
-describe('SelectInputComponent', () => {
-  let component: SelectInputComponent;
-  let fixture: ComponentFixture<SelectInputComponent>;
+describe('KnSelectInput', () => {
+  let component: KnSelectInput;
+  let fixture: ComponentFixture<KnSelectInput>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [SelectInputComponent],
+      imports: [KnSelectInput],
     });
-    fixture = TestBed.createComponent(SelectInputComponent);
+    fixture = TestBed.createComponent(KnSelectInput);
     component = fixture.componentInstance;
     //fixture.detectChanges();
   });

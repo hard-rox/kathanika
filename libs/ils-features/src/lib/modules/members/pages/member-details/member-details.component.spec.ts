@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberDetailsComponent } from './member-details.component';
 import { ActivatedRoute } from '@angular/router';
 import { GetMemberGQL } from '@kathanika/graphql-ts-client';
-import { BadgeComponent, PanelComponent } from '@kathanika/kn-ui';
+import { KnBadge, KnPanel } from '@kathanika/kn-ui';
 import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('MemberDetailsComponent', () => {
@@ -13,7 +13,7 @@ describe('MemberDetailsComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [MemberDetailsComponent],
-      imports: [BadgeComponent, PanelComponent],
+      imports: [KnBadge, KnPanel],
       providers: [
         {
           provide: GetMemberGQL,

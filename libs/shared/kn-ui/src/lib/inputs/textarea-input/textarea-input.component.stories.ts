@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { TextareaInputComponent } from './textarea-input.component';
+import { KnTextareaInput } from './textarea-input.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<TextareaInputComponent> = {
-  component: TextareaInputComponent,
+const meta: Meta<KnTextareaInput> = {
+  component: KnTextareaInput,
   title: 'inputs/kn-textarea-input',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<TextareaInputComponent>;
+type Story = StoryObj<KnTextareaInput>;
 
 export const Default: Story = {
   args: {

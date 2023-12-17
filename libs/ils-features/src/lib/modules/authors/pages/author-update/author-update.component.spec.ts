@@ -14,11 +14,11 @@ import { of } from 'rxjs';
 import { MutationResult } from 'apollo-angular/types';
 import { ApolloQueryResult } from '@apollo/client/core/types';
 import {
-  PanelComponent,
-  TextInputComponent,
-  DateInputComponent,
-  TextareaInputComponent,
-  ToggleComponent,
+  KnPanel,
+  KnTextInput,
+  KnDateInput,
+  KnTextareaInput,
+  KnToggle,
 } from '@kathanika/kn-ui';
 import {
   mockQueryGql,
@@ -34,11 +34,11 @@ describe('AuthorUpdateComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        PanelComponent,
-        TextInputComponent,
-        DateInputComponent,
-        TextareaInputComponent,
-        ToggleComponent,
+        KnPanel,
+        KnTextInput,
+        KnDateInput,
+        KnTextareaInput,
+        KnToggle,
       ],
       declarations: [AuthorFormComponent, AuthorUpdateComponent],
       providers: [

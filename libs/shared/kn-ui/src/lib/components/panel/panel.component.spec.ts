@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PanelComponent } from './panel.component';
+import { KnPanel } from './panel.component';
 
-describe('PanelComponent', () => {
-  let component: PanelComponent;
-  let fixture: ComponentFixture<PanelComponent>;
+describe('KnPanel', () => {
+  let component: KnPanel;
+  let fixture: ComponentFixture<KnPanel>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [PanelComponent],
+      imports: [KnPanel],
     });
-    fixture = TestBed.createComponent(PanelComponent);
+    fixture = TestBed.createComponent(KnPanel);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

@@ -9,15 +9,15 @@ import {
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterTestingModule } from '@angular/router/testing';
 import {
-  PanelComponent,
-  AlertComponent,
-  TextInputComponent,
-  SelectInputComponent,
-  DateInputComponent,
-  TextareaInputComponent,
-  NumberInputComponent,
+  KnPanel,
+  KnAlert,
+  KnTextInput,
+  KnSelectInput,
+  KnDateInput,
+  KnTextareaInput,
+  KnNumberInput,
   SearchbarModule,
-  ChipComponent,
+  KnChip,
 } from '@kathanika/kn-ui';
 import {
   mockQueryGql,
@@ -35,15 +35,15 @@ describe('PublicationUpdateComponent', () => {
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
-        PanelComponent,
-        AlertComponent,
-        TextInputComponent,
-        SelectInputComponent,
-        DateInputComponent,
-        TextareaInputComponent,
-        NumberInputComponent,
+        KnPanel,
+        KnAlert,
+        KnTextInput,
+        KnSelectInput,
+        KnDateInput,
+        KnTextareaInput,
+        KnNumberInput,
         SearchbarModule,
-        ChipComponent,
+        KnChip,
       ],
       providers: [
         {

@@ -4,7 +4,7 @@ import { PublisherListComponent } from './publisher-list.component';
 import { GetPublishersGQL } from '@kathanika/graphql-ts-client';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
-import { PaginationComponent } from '@kathanika/kn-ui';
+import { KnPagination } from '@kathanika/kn-ui';
 import { of } from 'rxjs';
 import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
@@ -15,7 +15,7 @@ describe('PublisherListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [PublisherListComponent],
-      imports: [PaginationComponent, RouterTestingModule],
+      imports: [KnPagination, RouterTestingModule],
       providers: [
         {
           provide: GetPublishersGQL,

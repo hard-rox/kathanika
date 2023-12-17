@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { ToggleComponent } from './toggle.component';
+import { KnToggle } from './toggle.component';
 
-describe('ToggleComponent', () => {
-  let component: ToggleComponent;
-  let fixture: ComponentFixture<ToggleComponent>;
+describe('KnToggle', () => {
+  let component: KnToggle;
+  let fixture: ComponentFixture<KnToggle>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [ToggleComponent],
+      imports: [KnToggle],
     });
-    fixture = TestBed.createComponent(ToggleComponent);
+    fixture = TestBed.createComponent(KnToggle);
     component = fixture.componentInstance;
     // fixture.detectChanges();
   });

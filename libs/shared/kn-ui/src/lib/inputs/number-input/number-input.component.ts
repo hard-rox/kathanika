@@ -13,8 +13,8 @@ import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: NumberInputComponent,
+      useExisting: KnNumberInput,
     },
   ],
 })
-export class NumberInputComponent extends AbstractInputComponent<number> {}
+export class KnNumberInput extends AbstractInputComponent<number> {}

@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { DateInputComponent } from './date-input.component';
+import { KnDateInput } from './date-input.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<DateInputComponent> = {
-  component: DateInputComponent,
+const meta: Meta<KnDateInput> = {
+  component: KnDateInput,
   title: 'inputs/kn-date-input',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<DateInputComponent>;
+type Story = StoryObj<KnDateInput>;
 
 export const Primary: Story = {
   args: {},
