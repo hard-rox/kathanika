@@ -46,7 +46,7 @@ internal static class MongoDbConfigurations
             };
             mongoClientSettings.RetryWrites = true;
             MongoClient mongoClient = new(mongoClientSettings);
-            IMongoDatabase db = mongoClient.GetDatabase("kathanika_book_store");
+            IMongoDatabase db = mongoClient.GetDatabase("kathanika_ils");
             return db;
         });
     }
