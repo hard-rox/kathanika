@@ -65,6 +65,10 @@
   ],
   "cSpell.language": "en,en-US,en-GB,lorem",
   "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "conventionalCommits.scopes": ["ils", "kn-ui"],
+  "conventionalCommits.scopes": [
+    "ils",
+    "kn-ui",
+    "web-service"
+  ],
   "eslint.validate": ["json"]
 }
