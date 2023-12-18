@@ -22,16 +22,8 @@ describe('KnPagination', () => {
     component.totalCount = 10;
     fixture.detectChanges();
 
-    expect(component.totalCount).toEqual(10);
+    expect(component['_totalCount']).toEqual(10);
     expect(component.lastPage).toEqual(10);
-  });
-
-  it('should handle totalCount undefined', () => {
-    component.totalCount = undefined;
-    fixture.detectChanges();
-
-    expect(component.totalCount).toEqual(0);
-    expect(component.lastPage).toEqual(1);
   });
 
   it('should set last page on setting pageSizes', () => {
@@ -50,9 +42,9 @@ describe('KnPagination', () => {
       (x) => +x.value,
     );
 
-    expect(component.pageSizes).toEqual([5, 10, 50, 100]);
-    expect(pageSizeOptionNodes.length).toEqual(4);
-    expect(pageSizeOptionValues).toEqual([5, 10, 50, 100]);
+    expect(component.pageSizes).toEqual([5, 10, 20, 50, 100]);
+    expect(pageSizeOptionNodes.length).toEqual(5);
+    expect(pageSizeOptionValues).toEqual([5, 10, 20, 50, 100]);
   });
 
   it('should set last page on setting pageSize', () => {
@@ -82,7 +74,7 @@ describe('KnPagination', () => {
 
   it('should emit pageChanged on page change', () => {
     const pageChangedOutputSpy = jest.spyOn(component['pageChanged'], 'emit');
-    component.onPageChanged(1);
+    component['onPageChanged'](1);
     fixture.detectChanges();
 
     expect(pageChangedOutputSpy).toHaveBeenCalledWith(1);
@@ -90,7 +82,7 @@ describe('KnPagination', () => {
 
   it('should not emit pageChanged on page change when pageNumber is greater than lastPage', () => {
     const pageChangedOutputSpy = jest.spyOn(component['pageChanged'], 'emit');
-    component.onPageChanged(3);
+    component['onPageChanged'](3);
     fixture.detectChanges();
 
     expect(pageChangedOutputSpy).not.toHaveBeenCalled();

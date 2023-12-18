@@ -15,7 +15,7 @@ export class KnAlert {
   @Output()
   private closed = new EventEmitter<void>();
 
-  close() {
+  protected close() {
     this.closed.emit();
   }
 }

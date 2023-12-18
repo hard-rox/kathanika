@@ -21,7 +21,7 @@ describe('KnAlert', () => {
 
   it('should emit onClosed output', () => {
     const onClosedSpy = jest.spyOn(component['closed'], 'emit');
-    component.close();
+    component['close']();
     expect(onClosedSpy).toHaveBeenCalledTimes(1);
   });
 });

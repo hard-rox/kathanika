@@ -29,7 +29,7 @@ export class PublicationUpdateComponent implements OnInit {
 
   isPanelLoading: boolean = true;
   publicationId: string | undefined;
-  publicationFormInput: PublicationFormInput | null | undefined;
+  publicationFormInput!: PublicationFormInput;
   errors: string[] = [];
 
   ngOnInit(): void {

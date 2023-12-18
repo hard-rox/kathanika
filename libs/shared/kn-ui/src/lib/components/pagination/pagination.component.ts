@@ -18,19 +18,16 @@ import {
 export class KnPagination {
   private _totalCount: number = 0;
   private _pageSize: number = 1;
-  private _pageSizes: number[] = [5, 10, 50, 100];
+  private _pageSizes: number[] = [5, 10, 20, 50, 100];
 
-  @Input('totalCount')
-  get totalCount(): number {
-    return this._totalCount;
-  }
-  set totalCount(totalCount: number | undefined) {
-    this._totalCount = totalCount ?? 0;
-    this.lastPage = totalCount ? Math.ceil(totalCount / this._pageSize) : 1;
+  @Input({ required: true })
+  set totalCount(totalCount: number) {
+    this._totalCount = totalCount;
+    this.lastPage = totalCount > 0 ? Math.ceil(totalCount / this._pageSize) : 1;
   }
 
-  @Input({required: true})
-  get pageSizes(): number[] {
+  @Input()
+  get pageSizes() {
     return this._pageSizes;
   }
   set pageSizes(pageSizes: number[]) {
@@ -39,8 +36,8 @@ export class KnPagination {
     this.lastPage = Math.ceil(this._totalCount / this._pageSize);
   }
 
-  @Input('pageSize')
-  get pageSize(): number {
+  @Input({ required: true })
+  get pageSize() {
     return this._pageSize;
   }
   set pageSize(pageSize: number) {
@@ -54,19 +51,19 @@ export class KnPagination {
   @Output()
   private pageSizeChanged: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() {}
+  constructor() { }
 
   currentPage: number = 1;
   lastPage: number = 1;
 
-  onPageChanged(pageNumber: number) {
+  protected onPageChanged(pageNumber: number) {
     if (pageNumber >= 1 && pageNumber <= this.lastPage) {
       this.pageChanged.emit(pageNumber);
       this.currentPage = pageNumber;
     }
   }
 
-  onPageSizeChanged(element: EventTarget | null) {
+  protected onPageSizeChanged(element: EventTarget | null) {
     const selectedPageSize = +(element as HTMLInputElement).value ?? 0;
     if (selectedPageSize > 0 && this.pageSizes.includes(selectedPageSize)) {
       this._pageSize = selectedPageSize;
