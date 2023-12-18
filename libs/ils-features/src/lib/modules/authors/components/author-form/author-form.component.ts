@@ -16,7 +16,7 @@ export class AuthorFormComponent
   implements OnInit
 {
   @Input()
-  set author(input: AuthorFormInput | null | undefined) {
+  set author(input: AuthorFormInput) {
     if (input) {
       this.formGroup.patchValue({
         firstName: input.firstName,

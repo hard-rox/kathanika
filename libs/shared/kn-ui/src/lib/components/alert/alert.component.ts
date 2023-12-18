@@ -8,14 +8,14 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrls: ['./alert.component.scss'],
   imports: [CommonModule],
 })
-export class AlertComponent {
+export class KnAlert {
   @Input()
   closeable: boolean = false;
 
   @Output()
   private closed = new EventEmitter<void>();
 
-  close() {
+  protected close() {
     this.closed.emit();
   }
 }

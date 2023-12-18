@@ -74,8 +74,7 @@ export abstract class BasePaginatedListComponent<
   }
 
   searchText: string | null = null;
-  pageSizes: number[] = [10, 20, 50, 100];
-  pageSize: number = 0;
+  pageSize!: number;
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   protected onSearchTextChanged($event: any) {

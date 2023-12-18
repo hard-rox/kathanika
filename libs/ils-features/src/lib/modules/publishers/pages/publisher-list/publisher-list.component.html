@@ -78,8 +78,7 @@
 
   <div class="w-full inline-flex justify-center">
     <kn-pagination
-      [totalCount]="queryResult.data.publishers?.totalCount"
-      [pageSizes]="pageSizes"
+      [totalCount]="queryResult.data.publishers?.totalCount ?? 0"
       [pageSize]="pageSize"
       (pageChanged)="changePage($event)"
       (pageSizeChanged)="changePageSize($event)"

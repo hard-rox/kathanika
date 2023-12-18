@@ -26,7 +26,7 @@ export class MemberUpdateComponent  implements OnInit {
 
   isPanelLoading: boolean = true;
   memberId: string | undefined;
-  memberFormInput: MemberFormInput | null | undefined;
+  memberFormInput!: MemberFormInput;
   errors: string[] = [];
 
   ngOnInit(): void {

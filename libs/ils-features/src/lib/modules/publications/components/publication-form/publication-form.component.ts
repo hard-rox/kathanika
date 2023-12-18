@@ -29,7 +29,7 @@ import { KnValidators } from '../../../../validators/kn-validators';
 })
 export class PublicationFormComponent extends BaseFormComponent<PublicationFormOutput> {
   @Input()
-  set publication(input: PublicationFormInput | null | undefined) {
+  set publication(input: PublicationFormInput) {
     if (input) {
       this.selectedAuthors = input.authors;
       this.formGroup.patchValue({

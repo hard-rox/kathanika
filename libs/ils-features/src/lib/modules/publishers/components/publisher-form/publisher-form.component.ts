@@ -20,7 +20,7 @@ import {
 })
 export class PublisherFormComponent extends BaseFormComponent<PublisherFormOutput> {
   @Input()
-  set publisher(input: PublisherFormInput | null | undefined) {
+  set publisher(input: PublisherFormInput) {
     if (input) {
       this.formGroup.patchValue(input);
     }

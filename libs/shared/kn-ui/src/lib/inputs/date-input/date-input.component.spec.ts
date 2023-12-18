@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { DateInputComponent } from './date-input.component';
+import { KnDateInput } from './date-input.component';
 
-describe('DateInputComponent', () => {
-  let component: DateInputComponent;
-  let fixture: ComponentFixture<DateInputComponent>;
+describe('KnDateInput', () => {
+  let component: KnDateInput;
+  let fixture: ComponentFixture<KnDateInput>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      imports: [DateInputComponent],
+      imports: [KnDateInput],
     });
-    fixture = TestBed.createComponent(DateInputComponent);
+    fixture = TestBed.createComponent(KnDateInput);
     component = fixture.componentInstance;
     // fixture.detectChanges();
   });

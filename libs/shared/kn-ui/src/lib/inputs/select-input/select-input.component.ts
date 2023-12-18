@@ -13,8 +13,8 @@ import { AbstractInputComponent } from '../../abstractions/base-input-component'
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: SelectInputComponent,
+      useExisting: KnSelectInput,
     },
   ],
 })
-export class SelectInputComponent extends AbstractInputComponent<string> {}
+export class KnSelectInput extends AbstractInputComponent<string> {}

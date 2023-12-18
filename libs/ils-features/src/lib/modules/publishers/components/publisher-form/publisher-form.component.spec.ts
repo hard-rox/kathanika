@@ -2,10 +2,10 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublisherFormComponent } from './publisher-form.component';
 import {
-  TextInputComponent,
-  TextareaInputComponent,
+  KnTextInput,
+  KnTextareaInput,
   SearchbarModule,
-  ChipComponent,
+  KnChip,
 } from '@kathanika/kn-ui';
 
 describe('PublisherFormComponent', () => {
@@ -16,10 +16,10 @@ describe('PublisherFormComponent', () => {
     TestBed.configureTestingModule({
       declarations: [PublisherFormComponent],
       imports: [
-        TextInputComponent,
-        TextareaInputComponent,
+        KnTextInput,
+        KnTextareaInput,
         SearchbarModule,
-        ChipComponent,
+        KnChip,
       ],
     });
     fixture = TestBed.createComponent(PublisherFormComponent);

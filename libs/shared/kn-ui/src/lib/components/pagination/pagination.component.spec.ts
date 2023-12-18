@@ -1,16 +1,16 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PaginationComponent } from './pagination.component';
+import { KnPagination } from './pagination.component';
 
-describe('PaginationComponent', () => {
-  let component: PaginationComponent;
-  let fixture: ComponentFixture<PaginationComponent>;
+describe('KnPagination', () => {
+  let component: KnPagination;
+  let fixture: ComponentFixture<KnPagination>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PaginationComponent],
+      imports: [KnPagination],
     }).compileComponents();
-    fixture = TestBed.createComponent(PaginationComponent);
+    fixture = TestBed.createComponent(KnPagination);
     component = fixture.componentInstance;
   });
 
@@ -22,16 +22,8 @@ describe('PaginationComponent', () => {
     component.totalCount = 10;
     fixture.detectChanges();
 
-    expect(component.totalCount).toEqual(10);
+    expect(component['_totalCount']).toEqual(10);
     expect(component.lastPage).toEqual(10);
-  });
-
-  it('should handle totalCount undefined', () => {
-    component.totalCount = undefined;
-    fixture.detectChanges();
-
-    expect(component.totalCount).toEqual(0);
-    expect(component.lastPage).toEqual(1);
   });
 
   it('should set last page on setting pageSizes', () => {
@@ -50,9 +42,9 @@ describe('PaginationComponent', () => {
       (x) => +x.value,
     );
 
-    expect(component.pageSizes).toEqual([5, 10, 50, 100]);
-    expect(pageSizeOptionNodes.length).toEqual(4);
-    expect(pageSizeOptionValues).toEqual([5, 10, 50, 100]);
+    expect(component.pageSizes).toEqual([5, 10, 20, 50, 100]);
+    expect(pageSizeOptionNodes.length).toEqual(5);
+    expect(pageSizeOptionValues).toEqual([5, 10, 20, 50, 100]);
   });
 
   it('should set last page on setting pageSize', () => {
@@ -82,7 +74,7 @@ describe('PaginationComponent', () => {
 
   it('should emit pageChanged on page change', () => {
     const pageChangedOutputSpy = jest.spyOn(component['pageChanged'], 'emit');
-    component.onPageChanged(1);
+    component['onPageChanged'](1);
     fixture.detectChanges();
 
     expect(pageChangedOutputSpy).toHaveBeenCalledWith(1);
@@ -90,7 +82,7 @@ describe('PaginationComponent', () => {
 
   it('should not emit pageChanged on page change when pageNumber is greater than lastPage', () => {
     const pageChangedOutputSpy = jest.spyOn(component['pageChanged'], 'emit');
-    component.onPageChanged(3);
+    component['onPageChanged'](3);
     fixture.detectChanges();
 
     expect(pageChangedOutputSpy).not.toHaveBeenCalled();

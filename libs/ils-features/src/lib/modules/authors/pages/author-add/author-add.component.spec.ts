@@ -5,11 +5,11 @@ import { AuthorFormComponent } from '../../components/author-form/author-form.co
 import { ReactiveFormsModule } from '@angular/forms';
 import { AddAuthorGQL, AddAuthorMutation } from '@kathanika/graphql-ts-client';
 import {
-  PanelComponent,
-  TextInputComponent,
-  DateInputComponent,
-  TextareaInputComponent,
-  ToggleComponent,
+  KnPanel,
+  KnTextInput,
+  KnDateInput,
+  KnTextareaInput,
+  KnToggle,
 } from '@kathanika/kn-ui';
 import { MutationResult } from 'apollo-angular';
 import { of } from 'rxjs';
@@ -34,11 +34,11 @@ describe('AuthorAddComponent', () => {
     TestBed.configureTestingModule({
       imports: [
         ReactiveFormsModule,
-        PanelComponent,
-        TextInputComponent,
-        DateInputComponent,
-        TextareaInputComponent,
-        ToggleComponent
+        KnPanel,
+        KnTextInput,
+        KnDateInput,
+        KnTextareaInput,
+        KnToggle
       ],
       declarations: [AuthorAddComponent, AuthorFormComponent],
       providers: [

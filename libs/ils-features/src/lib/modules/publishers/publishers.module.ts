@@ -9,11 +9,11 @@ import { PublisherUpdateComponent } from './pages/publisher-update/publisher-upd
 import { RouterModule } from '@angular/router';
 import { routes } from './publishers.routes';
 import {
-  AlertComponent,
-  PaginationComponent,
-  PanelComponent,
-  TextInputComponent,
-  TextareaInputComponent,
+  KnAlert,
+  KnPagination,
+  KnPanel,
+  KnTextInput,
+  KnTextareaInput,
 } from '@kathanika/kn-ui';
 
 @NgModule({
@@ -27,11 +27,11 @@ import {
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    PaginationComponent,
-    TextInputComponent,
-    TextareaInputComponent,
-    PanelComponent,
-    AlertComponent,
+    KnPagination,
+    KnTextInput,
+    KnTextareaInput,
+    KnPanel,
+    KnAlert,
   ],
 })
 export class PublishersModule {}

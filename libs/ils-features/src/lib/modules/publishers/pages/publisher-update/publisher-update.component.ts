@@ -28,7 +28,7 @@ export class PublisherUpdateComponent implements OnInit {
 
   isPanelLoading: boolean = true;
   publisherId: string | undefined;
-  publisherFormInput: PublisherFormInput | null | undefined;
+  publisherFormInput!: PublisherFormInput;
   errors: string[] = [];
 
   ngOnInit(): void {

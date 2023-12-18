@@ -15,7 +15,7 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./chip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ChipComponent {
+export class KnChip {
   @Input() key: string | undefined;
   @Output() actionPerformed: EventEmitter<string> = new EventEmitter<string>();
 }

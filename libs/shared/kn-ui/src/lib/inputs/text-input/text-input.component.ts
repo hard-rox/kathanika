@@ -13,8 +13,8 @@ import { AbstractInputComponent } from '../../abstractions/base-input-component'
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: TextInputComponent,
+      useExisting: KnTextInput,
     },
   ],
 })
-export class TextInputComponent extends AbstractInputComponent<string> {}
+export class KnTextInput extends AbstractInputComponent<string> {}

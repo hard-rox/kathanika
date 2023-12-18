@@ -8,10 +8,10 @@ import {
   SearchAuthorsGQL,
 } from '@kathanika/graphql-ts-client';
 import {
-  PanelComponent,
-  AlertComponent,
+  KnPanel,
+  KnAlert,
   SearchbarModule,
-  ChipComponent,
+  KnChip,
 } from '@kathanika/kn-ui';
 import {
   mockMutationGql,
@@ -27,10 +27,10 @@ describe('PublicationAddComponent', () => {
       declarations: [PublicationAddComponent, PublicationFormComponent],
       imports: [
         ReactiveFormsModule,
-        PanelComponent,
-        AlertComponent,
+        KnPanel,
+        KnAlert,
         SearchbarModule,
-        ChipComponent,
+        KnChip,
       ],
       providers: [
         {

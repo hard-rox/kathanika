@@ -13,7 +13,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 export class MemberFormComponent extends BaseFormComponent<MemberFormOutput>
 {
   @Input()
-  set member(input: MemberFormInput | null | undefined) {
+  set member(input: MemberFormInput) {
     if (input) {
       this.formGroup.patchValue({
         firstName: input.firstName,

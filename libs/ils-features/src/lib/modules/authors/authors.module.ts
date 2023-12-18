@@ -10,13 +10,13 @@ import { AuthorUpdateComponent } from './pages/author-update/author-update.compo
 import { RouterModule } from '@angular/router';
 import { routes } from './authors.routes';
 import {
-  AlertComponent,
-  DateInputComponent,
-  PaginationComponent,
-  PanelComponent,
-  TextInputComponent,
-  TextareaInputComponent,
-  ToggleComponent,
+  KnAlert,
+  KnDateInput,
+  KnPagination,
+  KnPanel,
+  KnTextInput,
+  KnTextareaInput,
+  KnToggle,
 } from '@kathanika/kn-ui';
 
 @NgModule({
@@ -31,13 +31,13 @@ import {
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    PaginationComponent,
-    AlertComponent,
-    PanelComponent,
-    TextInputComponent,
-    DateInputComponent,
-    TextareaInputComponent,
-    ToggleComponent,
+    KnPagination,
+    KnAlert,
+    KnPanel,
+    KnTextInput,
+    KnDateInput,
+    KnTextareaInput,
+    KnToggle,
   ],
 })
 export class AuthorsModule {}

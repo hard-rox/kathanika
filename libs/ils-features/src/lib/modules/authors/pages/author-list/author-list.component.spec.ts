@@ -5,7 +5,7 @@ import { DeleteAuthorGQL, GetAuthorsGQL } from '@kathanika/graphql-ts-client';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
-import { PaginationComponent } from '@kathanika/kn-ui';
+import { KnPagination } from '@kathanika/kn-ui';
 import {
   mockQueryGql,
   mockMutationGql,
@@ -18,7 +18,7 @@ describe('AuthorListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AuthorListComponent],
-      imports: [PaginationComponent, RouterTestingModule],
+      imports: [KnPagination, RouterTestingModule],
       providers: [
         {
           provide: GetAuthorsGQL,

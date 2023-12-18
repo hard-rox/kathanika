@@ -9,9 +9,9 @@ import {
   UpdatePublisherGQL,
 } from '@kathanika/graphql-ts-client';
 import {
-  PanelComponent,
-  AlertComponent,
-  TextInputComponent,
+  KnPanel,
+  KnAlert,
+  KnTextInput,
 } from '@kathanika/kn-ui';
 import {
   mockQueryGql,
@@ -28,9 +28,9 @@ describe('PublisherUpdateComponent', () => {
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
-        PanelComponent,
-        AlertComponent,
-        TextInputComponent,
+        KnPanel,
+        KnAlert,
+        KnTextInput,
       ],
       providers: [
         {

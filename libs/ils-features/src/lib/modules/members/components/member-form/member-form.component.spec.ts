@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MemberFormComponent } from './member-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DateInputComponent, TextInputComponent, TextareaInputComponent } from '@kathanika/kn-ui';
+import { KnDateInput, KnTextInput, KnTextareaInput } from '@kathanika/kn-ui';
 
 describe('MemberFormComponent', () => {
   let component: MemberFormComponent;
@@ -13,9 +13,9 @@ describe('MemberFormComponent', () => {
       declarations: [MemberFormComponent],
       imports: [
         ReactiveFormsModule,
-        TextInputComponent,
-        DateInputComponent,
-        TextareaInputComponent
+        KnTextInput,
+        KnDateInput,
+        KnTextareaInput
       ]
     });
     fixture = TestBed.createComponent(MemberFormComponent);

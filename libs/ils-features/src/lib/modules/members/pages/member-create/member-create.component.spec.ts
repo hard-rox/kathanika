@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberCreateComponent } from "./member-create.component";
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { DateInputComponent, PanelComponent, TextInputComponent, TextareaInputComponent, ToggleComponent } from "@kathanika/kn-ui";
+import { KnDateInput, KnPanel, KnTextInput, KnTextareaInput, KnToggle } from "@kathanika/kn-ui";
 import { CreateMemberGQL } from '@kathanika/graphql-ts-client';
 import { mockMutationGql } from "../../../../test-utils/gql-test-utils";
 
@@ -15,11 +15,11 @@ describe('MemberCreateComponent', () => {
       declarations: [MemberCreateComponent, MemberFormComponent],
       imports: [
         ReactiveFormsModule,
-        PanelComponent,
-        TextInputComponent,
-        DateInputComponent,
-        TextareaInputComponent,
-        ToggleComponent,
+        KnPanel,
+        KnTextInput,
+        KnDateInput,
+        KnTextareaInput,
+        KnToggle,
       ],
       providers: [
         {

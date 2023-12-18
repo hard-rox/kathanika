@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { PaginationComponent } from './pagination.component';
+import { KnPagination } from './pagination.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<PaginationComponent> = {
-  component: PaginationComponent,
+const meta: Meta<KnPagination> = {
+  component: KnPagination,
   title: 'components/kn-pagination',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<PaginationComponent>;
+type Story = StoryObj<KnPagination>;
 
 export const Primary: Story = {
   args: {

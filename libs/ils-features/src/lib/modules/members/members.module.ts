@@ -8,14 +8,14 @@ import { MemberFormComponent } from './components/member-form/member-form.compon
 import { RouterModule } from '@angular/router';
 import { routes } from './members.routes';
 import {
-  AlertComponent,
-  BadgeComponent,
-  ButtonDirective,
-  DateInputComponent,
-  PaginationComponent,
-  PanelComponent,
-  TextInputComponent,
-  TextareaInputComponent,
+  KnAlert,
+  KnBadge,
+  KnButton,
+  KnDateInput,
+  KnPagination,
+  KnPanel,
+  KnTextInput,
+  KnTextareaInput,
 } from '@kathanika/kn-ui';
 import { ReactiveFormsModule } from '@angular/forms';
 
@@ -31,14 +31,14 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     RouterModule.forChild(routes),
     ReactiveFormsModule,
-    PaginationComponent,
-    BadgeComponent,
-    PanelComponent,
-    ButtonDirective,
-    AlertComponent,
-    TextInputComponent,
-    DateInputComponent,
-    TextareaInputComponent
+    KnPagination,
+    KnBadge,
+    KnPanel,
+    KnButton,
+    KnAlert,
+    KnTextInput,
+    KnDateInput,
+    KnTextareaInput
   ],
 })
 export class MembersModule { }

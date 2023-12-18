@@ -25,7 +25,7 @@ export class AuthorUpdateComponent implements OnInit {
 
   isPanelLoading: boolean = true;
   authorId: string | undefined;
-  authorFormInput: AuthorFormInput | null | undefined;
+  authorFormInput!: AuthorFormInput;
   errors: string[] = [];
 
   ngOnInit(): void {

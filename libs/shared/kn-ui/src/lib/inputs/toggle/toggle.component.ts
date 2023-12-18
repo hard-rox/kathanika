@@ -13,8 +13,8 @@ import { AbstractInputComponent } from '../../abstractions/base-input-component'
     {
       provide: NG_VALUE_ACCESSOR,
       multi: true,
-      useExisting: ToggleComponent,
+      useExisting: KnToggle,
     },
   ],
 })
-export class ToggleComponent extends AbstractInputComponent<boolean> {}
+export class KnToggle extends AbstractInputComponent<boolean> {}

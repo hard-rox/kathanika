@@ -5,7 +5,7 @@ import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
 import { GetMembersGQL } from '@kathanika/graphql-ts-client';
-import { PaginationComponent, BadgeComponent } from '@kathanika/kn-ui';
+import { KnPagination, KnBadge } from '@kathanika/kn-ui';
 import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('MemberListComponent', () => {
@@ -15,7 +15,7 @@ describe('MemberListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [MemberListComponent],
-      imports: [PaginationComponent, RouterTestingModule, BadgeComponent],
+      imports: [KnPagination, RouterTestingModule, KnBadge],
       providers: [
         {
           provide: GetMembersGQL,

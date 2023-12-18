@@ -1,11 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/angular';
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
-import { ButtonDirective } from "./button.directive";
+import { KnButton } from "./button.directive";
 
 
-const meta: Meta<ButtonDirective> = {
-  component: ButtonDirective,
+const meta: Meta<KnButton> = {
+  component: KnButton,
   title: 'directives/knButton',
   tags: ['autodocs'],
   render: (args) => ({
@@ -14,7 +14,7 @@ const meta: Meta<ButtonDirective> = {
   }),
 };
 export default meta;
-type Story = StoryObj<ButtonDirective>;
+type Story = StoryObj<KnButton>;
 
 export const Default: Story = {
   play: async ({ canvasElement }) => {

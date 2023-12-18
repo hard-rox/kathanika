@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { ChipComponent } from './chip.component';
+import { KnChip } from './chip.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<ChipComponent> = {
-  component: ChipComponent,
+const meta: Meta<KnChip> = {
+  component: KnChip,
   title: 'components/kn-chip',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<ChipComponent>;
+type Story = StoryObj<KnChip>;
 
 export const Default: Story = {
   args: {
