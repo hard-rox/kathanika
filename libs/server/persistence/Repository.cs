@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using System.Reflection;
 using Kathanika.Application.Services;
 using Kathanika.Domain.Exceptions;
 using Kathanika.Domain.Primitives;
@@ -25,7 +26,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _cacheService = cacheService;
     }
 
-    private bool IsValidMongoObjectId(string id)
+    private static bool IsValidMongoObjectId(string id)
     {
         if (ObjectId.TryParse(id, out _))
         {
@@ -34,7 +35,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return false;
     }
 
-    private List<OutboxMessage> GetOutboxMessagesFromAggregate(T aggregate)
+    private static List<OutboxMessage> GetOutboxMessagesFromAggregate(T aggregate)
     {
         List<IDomainEvent> domainEvents = aggregate.GetDomainEvents();
         List<OutboxMessage> outboxMessages = domainEvents.Select(domainEvent => new OutboxMessage
@@ -49,6 +50,28 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         }).ToList();
         aggregate.ClearDomainEvents();
         return outboxMessages;
+    }
+
+    private static void SetCreationAuditProperties(T aggregate)
+    {
+        Type aggregateType = typeof(AggregateRoot);
+        PropertyInfo? createdAtProperty = aggregateType.GetProperty(nameof(aggregate.CreatedAt));
+        createdAtProperty?.SetValue(aggregate, DateTimeOffset.Now);
+        PropertyInfo? createdByUserIdProperty = aggregateType.GetProperty(nameof(aggregate.CreatedByUserId));
+        createdByUserIdProperty?.SetValue(aggregate, "not implemented");
+        PropertyInfo? createdByUserNameProperty = aggregateType.GetProperty(nameof(aggregate.CreatedByUserName));
+        createdByUserNameProperty?.SetValue(aggregate, "not implemented");
+    }
+
+    private static void SetModificationAuditProperties(T aggregate)
+    {
+        Type aggregateType = typeof(AggregateRoot);
+        PropertyInfo? lastModifiedAtProperty = aggregateType.GetProperty(nameof(aggregate.LastModifiedAt));
+        lastModifiedAtProperty?.SetValue(aggregate, DateTimeOffset.Now);
+        PropertyInfo? lastModifiedByUserIdProperty = aggregateType.GetProperty(nameof(aggregate.LastModifiedByUserId));
+        lastModifiedByUserIdProperty?.SetValue(aggregate, "not implemented");
+        PropertyInfo? lastModifiedByUserNameProperty = aggregateType.GetProperty(nameof(aggregate.LastModifiedByUserName));
+        lastModifiedByUserNameProperty?.SetValue(aggregate, "not implemented");
     }
 
     public IQueryable<T> AsQueryable()
@@ -164,6 +187,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task<T> AddAsync(T aggregate, CancellationToken cancellationToken = default)
     {
+        SetCreationAuditProperties(aggregate);
         _logger.LogInformation("Adding new document {@Document} of type {@DocumentType} into collection {@CollectionName}", aggregate, typeof(T).Name, _collectionName);
         await _collection.InsertOneAsync(aggregate, cancellationToken: cancellationToken);
         _logger.LogInformation("Added new document with _id {@_id} of type {@DocumentType} into collection {@CollectionName}", aggregate.ToBsonDocument()["_id"].ToJson(), typeof(T).Name, _collectionName);
@@ -179,6 +203,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task UpdateAsync(T aggregate, CancellationToken cancellationToken = default)
     {
+        SetModificationAuditProperties(aggregate);
         _logger.LogInformation("Updating document of type {@DocumentType} with id {@DocumentId} from {CollectionName} with value {@NewValue}",
             typeof(T).Name,
             aggregate.Id,
