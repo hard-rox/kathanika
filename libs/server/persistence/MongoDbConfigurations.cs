@@ -11,13 +11,14 @@ internal static class MongoDbConfigurations
 {
     internal static void AddMongoDb(this IServiceCollection services, string? connectionString)
     {
-        ConventionPack conventionPack = new()
-        {
+        ConventionPack conventionPack =
+        [
             new CamelCaseElementNameConvention(),
             new StringIdStoredAsObjectIdConvention(),
             new IgnoreExtraElementsConvention(true),
             new ValueObjectIdConvention(),
-        };
+            new EnumRepresentationConvention(BsonType.String)
+        ];
         ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
 
         services.AddSingleton<IMongoDatabase>(f =>
