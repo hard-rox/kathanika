@@ -27,7 +27,7 @@ public class AddPublicationCommandHandlerTests
                     "USA",
                     "A good writer"
                 ),
-                Author.Create(
+            Author.Create(
                     "Jane",
                     "Doe",
                     DateOnly.MinValue,
