@@ -2,7 +2,7 @@ using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.Application.Features.Publishers.Commands;
 
-internal sealed class UpdatePublisherCommandHandle(IPublisherRepository publisherRepository) : IRequestHandler<UpdatePublisherCommand, Publisher>
+internal sealed class UpdatePublisherCommandHandler(IPublisherRepository publisherRepository) : IRequestHandler<UpdatePublisherCommand, Publisher>
 {
     public async Task<Publisher> Handle(UpdatePublisherCommand request, CancellationToken cancellationToken)
     {

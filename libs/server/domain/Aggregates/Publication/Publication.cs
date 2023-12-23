@@ -4,7 +4,7 @@ namespace Kathanika.Domain.Aggregates;
 
 public sealed class Publication : AggregateRoot
 {
-    private List<PublicationAuthor> _authors = new();
+    private List<PublicationAuthor> _authors = [];
 
     public string Title { get; private set; }
     public string? Isbn { get; private set; }
@@ -26,7 +26,7 @@ public sealed class Publication : AggregateRoot
         }
         init
         {
-            _authors = value?.ToList() ?? new();
+            _authors = value?.ToList() ?? [];
         }
     }
 
@@ -83,7 +83,7 @@ public sealed class Publication : AggregateRoot
             description,
             language)
         {
-            _authors = new()
+            _authors = []
         };
 
         if (authors is not null)

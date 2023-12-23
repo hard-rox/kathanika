@@ -41,7 +41,7 @@ public sealed class Author : AggregateRoot
         string biography
     )
     {
-        List<DomainException> errors = new List<DomainException>();
+        List<DomainException> errors = [];
         if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
         {
             errors.Add(new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date"));

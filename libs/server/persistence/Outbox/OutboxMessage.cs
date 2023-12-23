@@ -1,12 +1,13 @@
+using Kathanika.Domain.Primitives;
+
 namespace Kathanika.Persistence.Outbox;
 
-public class OutboxMessage
+public class OutboxMessage(IDomainEvent domainEvent)
 {
     public string Id { get; init; } = string.Empty;
-    public string Type { get; init; } = string.Empty;
-    public string Content { get; init; } = string.Empty;
-    public DateTimeOffset OccurredAt { get; set; }
+    public IDomainEvent DomainEvent { get; init; } = domainEvent;
+    public DateTimeOffset OccurredAt { get; private init; } = DateTimeOffset.Now;
     public DateTimeOffset? ProcessedAt { get; set; }
     public int ProcessAttempt { get; init; } = 0;
-    public string? LastOccurredError { get; init; }
+    public string? LastOccurredError { get; set; }
 }

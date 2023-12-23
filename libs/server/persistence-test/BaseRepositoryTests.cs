@@ -13,15 +13,11 @@ public sealed class BaseRepositoryTests
     {
         public string? Name { get; set; }
     };
-    private class DummyRepo : Repository<DummyAggregate>
+    private class DummyRepo(IMongoDatabase database,
+        string collectionName,
+        ILogger<BaseRepositoryTests.DummyRepo> logger,
+        ICacheService cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService)
     {
-        public DummyRepo(IMongoDatabase database,
-            string collectionName,
-            ILogger<DummyRepo> logger,
-            ICacheService cacheService)
-        : base(database, collectionName, logger, cacheService)
-        {
-        }
     }
 
     private readonly ILogger<DummyRepo> nullLogger = new NullLogger<DummyRepo>();

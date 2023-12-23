@@ -1,3 +1,4 @@
+using Kathanika.Domain.DomainEvents;
 using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates;
@@ -41,5 +42,7 @@ public sealed class Publisher : AggregateRoot
         Name = !string.IsNullOrEmpty(publisherName) ? publisherName : Name;
         Description = !string.IsNullOrEmpty(description) ? description : Description;
         ContactInformation = !string.IsNullOrEmpty(contactInformation) ? contactInformation : ContactInformation;
+
+        AddDomainEvent(new PublisherUpdatedDomainEvent(Id));
     }
 }

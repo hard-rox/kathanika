@@ -18,7 +18,7 @@ public class AddPublicationCommandHandlerTests
     public async Task Handler_Should_Return_Saved_Publication_On_Valid_Input()
     {
         // Arrange
-        List<Author> authors = new(){
+        List<Author> authors = [
                 Author.Create(
                     "John",
                     "Doe",
@@ -27,7 +27,7 @@ public class AddPublicationCommandHandlerTests
                     "USA",
                     "A good writer"
                 ),
-                Author.Create(
+            Author.Create(
                     "Jane",
                     "Doe",
                     DateOnly.MinValue,
@@ -35,7 +35,7 @@ public class AddPublicationCommandHandlerTests
                     "USA",
                     "Another good writer"
                 )
-            };
+            ];
         Publication publication = Publication.Create(
             "Title",
             "ISBN",

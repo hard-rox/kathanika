@@ -4,7 +4,7 @@ namespace Kathanika.Domain.Aggregates;
 
 public sealed class Member : AggregateRoot
 {
-    private readonly List<IssuedPublication> _currentlyIssuedPublications = new();
+    private readonly List<IssuedPublication> _currentlyIssuedPublications = [];
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
@@ -72,7 +72,7 @@ public sealed class Member : AggregateRoot
 
     public void CancelMembership()
     {
-        if (_currentlyIssuedPublications.Any())
+        if (_currentlyIssuedPublications.Count != 0)
         {
             throw new MemberHasIssuedPublicationsException(_currentlyIssuedPublications.ToArray());
         }
@@ -82,7 +82,7 @@ public sealed class Member : AggregateRoot
 
     public void SuspendMembership()
     {
-        if (_currentlyIssuedPublications.Any())
+        if (_currentlyIssuedPublications.Count != 0)
         {
             throw new MemberHasIssuedPublicationsException(_currentlyIssuedPublications.ToArray());
         }

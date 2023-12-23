@@ -22,7 +22,7 @@ internal sealed class OutboxMessageService(IMongoDatabase mongoDatabase) : IOutb
             .Limit(20) //TODO: Limit value will get from appSettings.json.
             .ToListAsync(cancellationToken);
 
-        return result ?? new();
+        return result ?? [];
     }
 
     public async Task SetOutboxMessageErrors(string id, Exception exception)
