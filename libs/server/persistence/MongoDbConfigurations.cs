@@ -1,8 +1,14 @@
+using System.Reflection;
+using Kathanika.Domain.DomainEvents;
+using Kathanika.Domain.Primitives;
 using Kathanika.Persistence.MongoDbConventions;
+using Kathanika.Persistence.Outbox;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
+using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver.Core.Events;
 
 namespace Kathanika.Persistence;
@@ -20,6 +26,29 @@ internal static class MongoDbConfigurations
             new EnumRepresentationConvention(BsonType.String)
         ];
         ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
+
+        IEnumerable<Type> domainEventTypes = typeof(IDomainEvent)
+                                       .Assembly
+                                       .GetTypes()
+                                       .Where(t => t.IsClass && !t.IsAbstract && typeof(IDomainEvent).IsAssignableFrom(t));
+
+        foreach (Type eventType in domainEventTypes)
+        {
+            if (BsonClassMap.IsClassMapRegistered(eventType)) continue;
+            BsonClassMap cm = new(eventType);
+            cm.AutoMap();
+            cm.SetIgnoreExtraElements(true);
+            cm.SetDiscriminatorIsRequired(true);
+            cm.SetDiscriminator(eventType.Name);
+            BsonClassMap.RegisterClassMap(cm);
+        }
+
+        BsonClassMap.RegisterClassMap<OutboxMessage>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapMember(m => m.DomainEvent)
+                .SetSerializer(new ImpliedImplementationInterfaceSerializer<IDomainEvent, IDomainEvent>());
+        });
 
         services.AddSingleton<IMongoDatabase>(f =>
         {

@@ -5,7 +5,6 @@ using Kathanika.Domain.Exceptions;
 using Kathanika.Domain.Primitives;
 using Kathanika.Persistence.Outbox;
 using MongoDB.Bson;
-using Newtonsoft.Json;
 
 namespace Kathanika.Persistence;
 
@@ -38,16 +37,9 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     private static List<OutboxMessage> GetOutboxMessagesFromAggregate(T aggregate)
     {
         List<IDomainEvent> domainEvents = aggregate.GetDomainEvents();
-        List<OutboxMessage> outboxMessages = domainEvents.Select(domainEvent => new OutboxMessage
-        {
-            OccurredAt = DateTimeOffset.Now,
-            Type = domainEvent.GetType().Name,
-            Content = JsonConvert.SerializeObject(domainEvent,
-                new JsonSerializerSettings()
-                {
-                    TypeNameHandling = TypeNameHandling.All
-                }),
-        }).ToList();
+        List<OutboxMessage> outboxMessages = domainEvents
+            .Select(domainEvent => new OutboxMessage(domainEvent))
+            .ToList();
         aggregate.ClearDomainEvents();
         return outboxMessages;
     }

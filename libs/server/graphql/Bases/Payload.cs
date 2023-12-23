@@ -1,20 +1,11 @@
 namespace Kathanika.GraphQL.Bases;
 
-public abstract class Payload
+public abstract class Payload(string message)
 {
-    public string Message { get; init; }
-
-    protected Payload(string message)
-    {
-        Message = message;
-    }
+    public string Message { get; init; } = message;
 }
 
-public abstract class Payload<T> : Payload
+public abstract class Payload<T>(string message, T data) : Payload(message)
 {
-    public T Data { get; init; }
-    protected Payload(string message, T data) : base(message)
-    {
-        Data = data;
-    }
+    public T Data { get; init; } = data;
 }
