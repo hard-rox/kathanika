@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from '@storybook/angular';
+import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
 import { KnChip } from './chip.component';
 
 import { within } from '@storybook/testing-library';
@@ -7,7 +7,11 @@ import { expect } from '@storybook/jest';
 const meta: Meta<KnChip> = {
   component: KnChip,
   title: 'components/kn-chip',
-  tags: ['autodocs']
+  tags: ['autodocs'],
+  render: (args: KnChip) => ({
+    props: { ...args },
+    template: `<kn-chip ${argsToTemplate(args)}>Chip</kn-chip>`
+  })
 };
 export default meta;
 type Story = StoryObj<KnChip>;

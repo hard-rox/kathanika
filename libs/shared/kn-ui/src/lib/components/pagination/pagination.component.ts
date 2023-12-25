@@ -6,6 +6,7 @@ import {
   Input,
   Output,
 } from '@angular/core';
+import { KnButton } from '../../directives/button/button.directive';
 
 @Component({
   standalone: true,
@@ -13,7 +14,10 @@ import {
   templateUrl: './pagination.component.html',
   styles: [],
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [CommonModule],
+  imports: [
+    CommonModule,
+    KnButton
+  ],
 })
 export class KnPagination {
   private _totalCount: number = 0;
