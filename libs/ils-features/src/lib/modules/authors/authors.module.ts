@@ -11,6 +11,7 @@ import { RouterModule } from '@angular/router';
 import { routes } from './authors.routes';
 import {
   KnAlert,
+  KnButton,
   KnDateInput,
   KnPagination,
   KnPanel,
@@ -38,6 +39,7 @@ import {
     KnDateInput,
     KnTextareaInput,
     KnToggle,
+    KnButton
   ],
 })
 export class AuthorsModule {}

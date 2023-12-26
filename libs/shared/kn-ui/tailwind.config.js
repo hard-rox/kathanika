@@ -5,7 +5,7 @@ const { join } = require('path');
 module.exports = {
   presets: [tailwindConfig],
   content: [
-    join(__dirname, 'src/**/!(*.stories|*.spec).{ts,html}')
+    join(__dirname, 'src/**/!(*.spec).{ts,html}')
   ],
   theme: {},
   plugins: [],

@@ -17,11 +17,9 @@
               <span class="ml-3">{{ menu.text }}</span>
             </a>
           } @else {
-            <button
+            <button kn-button
               type="button"
-              (click)="selectedIndex = idx"
-              class="flex items-center w-full p-2 text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700"
-            >
+              (click)="selectedIndex = idx">
               <span class="material-symbols-sharp">
                 {{ menu.icon }}
               </span>

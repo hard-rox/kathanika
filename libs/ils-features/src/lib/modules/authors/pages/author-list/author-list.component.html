@@ -1,9 +1,8 @@
 <div class="space-y-2">
   <div class="flex justify-between">
     <h2 class="text-xl font-bold">Authors</h2>
-    <a
+    <a kn-button
       [routerLink]="['add']"
-      class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black text-white px-4 py-2"
       >Add new</a
     >
   </div>
@@ -39,9 +38,7 @@
           <td>{{ item.nationality }}</td>
           <td>
             <div class="group relative">
-              <button
-                class="px-3 py-2 hover:bg-theme-silver active:bg-theme-silver rounded-full"
-              >
+              <button kn-button variant="transparent" [rounded]="true">
                 <span class="material-symbols-sharp"> more_vert </span>
               </button>
               <div
@@ -64,10 +61,9 @@
                     <span class="my-auto">Update</span>
                   </a>
                   <!-- TODO: Pass full name -->
-                  <button
+                  <button kn-button variant="transparent"
                     (click)="deleteAuthor(item.id, item.firstName)"
-                    class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver"
-                  >
+                    class="flex space-x-2 w-full">
                     <span class="material-symbols-sharp my-auto"> delete </span>
                     <span class="my-auto">Delete</span>
                   </button>

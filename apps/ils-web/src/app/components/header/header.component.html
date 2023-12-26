@@ -6,13 +6,10 @@
     <div class="flex items-center space-x-2">
       <div class="relative inline-block text-left">
         <div>
-          <button
+          <button kn-button [rounded]="true"
             id="notification-btn"
-            [ngClass]="{ 'bg-theme-rich-black': isNotificationVisible }"
             (click)="isNotificationVisible = !isNotificationVisible"
-            (focusout)="isNotificationVisible = false"
-            class="rounded-full hover:bg-theme-rich-black active:bg-theme-rich-black w-10 h-10"
-          >
+            (focusout)="isNotificationVisible = false">
             <span class="material-symbols-sharp"> notifications </span>
           </button>
         </div>
@@ -69,7 +66,7 @@
                 tabindex="-1"
                 id="menu-item-3"
               >
-                Sign out
+                Sign out Now
               </button>
             </div>
           </div>
@@ -82,13 +79,11 @@
       />
       <div class="relative inline-block text-left">
         <div>
-          <button
+          <button kn-button
             id="user-action-btn"
             type="button"
             (click)="isUserActionsVisible = !isUserActionsVisible"
             (focusout)="isUserActionsVisible = false"
-            [ngClass]="{ 'bg-theme-rich-black': isUserActionsVisible }"
-            class="inline-flex items-center w-full justify-center gap-x-1.5 px-3 py-2 text-sm font-semibold hover:bg-theme-rich-black active:bg-theme-rich-black"
             aria-expanded="true"
             aria-haspopup="true"
           >
