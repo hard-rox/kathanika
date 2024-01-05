@@ -18,10 +18,10 @@ internal static class MongoDbConfigurations
         ConventionPack conventionPack =
                 [
                     new CamelCaseElementNameConvention(),
-            new StringIdStoredAsObjectIdConvention(),
-            new IgnoreExtraElementsConvention(true),
-            new ValueObjectIdConvention(),
-            new EnumRepresentationConvention(BsonType.String)
+                    new StringIdStoredAsObjectIdConvention(),
+                    new IgnoreExtraElementsConvention(true),
+                    new ValueObjectIdConvention(),
+                    new EnumRepresentationConvention(BsonType.String)
                 ];
         ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
     }
