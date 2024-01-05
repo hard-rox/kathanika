@@ -65,7 +65,6 @@ export class PublicationUpdateComponent implements OnInit {
                 language: result.data.publication.language,
                 publisher: result.data.publication.publisher,
                 publishedDate: result.data.publication.publishedDate,
-                buyingPrice: result.data.publication.buyingPrice,
                 copiesAvailable: result.data.publication.copiesAvailable,
                 description: result.data.publication.description,
                 authors: result.data.publication.authors,

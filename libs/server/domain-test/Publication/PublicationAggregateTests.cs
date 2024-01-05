@@ -17,7 +17,6 @@ public class PublicationAggregateTests
             "Hello",
             DateOnly.MinValue,
             "",
-            (decimal)102.0,
             1,
             "Nt0202",
             string.Empty,
@@ -58,7 +57,6 @@ public class PublicationAggregateTests
             "Hello",
             DateOnly.MinValue,
             "",
-            (decimal)102.0,
             1,
             "ANC0123",
             string.Empty,
@@ -74,7 +72,6 @@ public class PublicationAggregateTests
             "Updated publisher",
             DateOnly.MinValue,
             null,
-            (decimal)10.2,
             3,
             "Updated CallNumber"
         );

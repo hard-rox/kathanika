@@ -15,7 +15,7 @@ public sealed class BaseRepositoryTests
     };
     private class DummyRepo(IMongoDatabase database,
         string collectionName,
-        ILogger<BaseRepositoryTests.DummyRepo> logger,
+        ILogger<DummyRepo> logger,
         ICacheService cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService)
     {
     }

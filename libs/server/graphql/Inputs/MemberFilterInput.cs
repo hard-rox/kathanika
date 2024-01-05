@@ -3,12 +3,11 @@ using Kathanika.GraphQL.GraphqlHelpers;
 
 namespace Kathanika.GraphQL.Inputs;
 
-public sealed class AuthorFilterInput : FilterInputType<Author>
+public sealed class MemberFilterInput : FilterInputType<Member>
 {
-    protected override void Configure(IFilterInputTypeDescriptor<Author> descriptor)
+    protected override void Configure(IFilterInputTypeDescriptor<Member> descriptor)
     {
         descriptor.IgnoreAuditFieldsFromFilterInputType();
-        descriptor.Ignore(x => x.Biography);
         descriptor.Ignore(x => x.FullName);
     }
 }

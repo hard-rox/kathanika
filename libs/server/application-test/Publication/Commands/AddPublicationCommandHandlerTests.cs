@@ -43,7 +43,6 @@ public class AddPublicationCommandHandlerTests
             "John Doe",
             DateOnly.Parse("2023-01-01"),
             "",
-            (decimal)100.50,
             2,
             "ABCD123",
             string.Empty,
@@ -62,7 +61,6 @@ public class AddPublicationCommandHandlerTests
             publication.Publisher,
             publication.PublishedDate,
             publication.Edition,
-            publication.BuyingPrice,
             publication.CopiesAvailable,
             publication.CallNumber,
             publication.Description,
@@ -78,7 +76,6 @@ public class AddPublicationCommandHandlerTests
             publication.Publisher,
             publication.PublishedDate,
             publication.Edition,
-            publication.BuyingPrice,
             publication.CopiesAvailable,
             publication.CallNumber
         );

@@ -14,7 +14,6 @@ public sealed class Publication : AggregateRoot
     public string Edition { get; private set; }
     public string Description { get; private set; }
     public string Language { get; private set; }
-    public decimal BuyingPrice { get; private set; }
     public int CopiesAvailable { get; private set; }
     public string CallNumber { get; private set; }
 
@@ -37,7 +36,6 @@ public sealed class Publication : AggregateRoot
         string publisher,
         DateOnly publishedDate,
         string edition,
-        decimal buyingPrice,
         int copiesAvailable,
         string callNumber,
         string description,
@@ -49,7 +47,6 @@ public sealed class Publication : AggregateRoot
         Publisher = publisher;
         PublishedDate = publishedDate;
         Edition = edition;
-        BuyingPrice = buyingPrice;
         CopiesAvailable = copiesAvailable;
         CallNumber = callNumber;
         Description = description;
@@ -63,7 +60,6 @@ public sealed class Publication : AggregateRoot
         string publisher,
         DateOnly publishedDate,
         string edition,
-        decimal buyingPrice,
         int copiesAvailable,
         string callNumber,
         string description,
@@ -77,7 +73,6 @@ public sealed class Publication : AggregateRoot
             publisher,
             publishedDate,
             edition,
-            buyingPrice,
             copiesAvailable,
             callNumber,
             description,
@@ -106,7 +101,6 @@ public sealed class Publication : AggregateRoot
         string? publisher,
         DateOnly? publishedDate,
         string? edition,
-        decimal? buyingPrice,
         int? copiesAvailable,
         string? callNumber)
     {
@@ -116,7 +110,6 @@ public sealed class Publication : AggregateRoot
         Publisher = !string.IsNullOrEmpty(publisher) ? publisher : Publisher;
         PublishedDate = publishedDate is not null ? (DateOnly)publishedDate : PublishedDate;
         Edition = edition is not null ? edition : Edition;
-        BuyingPrice = buyingPrice is not null ? (decimal)buyingPrice : BuyingPrice;
         CopiesAvailable = copiesAvailable is not null ? (int)copiesAvailable : CopiesAvailable;
         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : CallNumber;
     }

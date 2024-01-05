@@ -1,11 +1,8 @@
 namespace Kathanika.Application.Features.Authors.Commands;
 
-public sealed record UpdateAuthorCommand : IRequest<Author>
-{
-    public string Id { get; init; }
-    public AuthorPatch Patch { get; init; }
+public sealed record UpdateAuthorCommand(string Id, AuthorPatch Patch) : IRequest<Author>;
 
-    public sealed record AuthorPatch(
+public sealed record AuthorPatch(
         string? FirstName = null,
         string? LastName = null,
         DateOnly? DateOfBirth = null,
@@ -14,11 +11,3 @@ public sealed record UpdateAuthorCommand : IRequest<Author>
         bool MarkedAsDeceased = false,
         DateOnly? DateOfDeath = null
     );
-
-    public UpdateAuthorCommand(string id, AuthorPatch patch)
-    {
-        Id = id;
-        Patch = patch;
-    }
-
-}
