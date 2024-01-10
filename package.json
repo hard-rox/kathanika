@@ -38,7 +38,7 @@
     "@nx/storybook": "17.2.8",
     "@nx/web": "17.2.8",
     "@nx/workspace": "17.2.8",
-    "@schematics/angular": "~17.0.9",
+    "@schematics/angular": "~17.0.10",
     "@storybook/addon-essentials": "^7.6.7",
     "@storybook/addon-interactions": "^7.6.7",
     "@storybook/angular": "^7.6.7",
