@@ -5,6 +5,7 @@ namespace Kathanika.Domain.Aggregates;
 public sealed class Publication : AggregateRoot
 {
     private List<PublicationAuthor> _authors = [];
+    private List<PurchaseRecord> _purchaseRecords = [];
 
     public string Title { get; private set; }
     public string? Isbn { get; private set; }
@@ -23,9 +24,21 @@ public sealed class Publication : AggregateRoot
         {
             return _authors;
         }
-        init
+        private init
         {
             _authors = value?.ToList() ?? [];
+        }
+    }
+
+    public IReadOnlyCollection<PurchaseRecord> PurchaseRecords
+    {
+        get
+        {
+            return _purchaseRecords;
+        }
+        private init
+        {
+            _purchaseRecords = value?.ToList() ?? [];
         }
     }
 
@@ -94,6 +107,40 @@ public sealed class Publication : AggregateRoot
         return publication;
     }
 
+    public static Publication Create(
+        string title,
+        string? isbn,
+        PublicationType publicationType,
+        string publisher,
+        DateOnly publishedDate,
+        string edition,
+        string callNumber,
+        string description,
+        string language,
+        decimal unitPrice,
+        int quantity,
+        string vendor,
+    IEnumerable<Author>? authors = null
+    )
+    {
+        Publication publication = Create(
+            title,
+            isbn,
+            publicationType,
+            publisher,
+            publishedDate,
+            edition,
+            quantity,
+            callNumber,
+            description,
+            language,
+            authors
+        );
+
+        publication.RecordPurchase(unitPrice, quantity, vendor);
+        return publication;
+    }
+
     public void Update(
         string? title,
         string? isbn,
@@ -134,5 +181,15 @@ public sealed class Publication : AggregateRoot
         _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
                     author.LastName));
+    }
+
+    public void RecordPurchase(
+        decimal unitPrice,
+        int quantity,
+        string vendor)
+    {
+        _purchaseRecords ??= [];
+        _purchaseRecords.Add(new PurchaseRecord(quantity, unitPrice, vendor));
+        CopiesAvailable += quantity;
     }
 }
