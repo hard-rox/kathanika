@@ -1,5 +1,4 @@
 using Kathanika.Domain.Primitives;
-using Kathanika.Persistence.MongoDbConventions;
 using Kathanika.Persistence.Outbox;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
@@ -19,7 +18,6 @@ internal static class MongoDbConfigurations
                 [
                     new CamelCaseElementNameConvention(),
                     new IgnoreExtraElementsConvention(true),
-                    new ValueObjectIdConvention(),
                     new EnumRepresentationConvention(BsonType.String)
                 ];
         ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
@@ -53,6 +51,8 @@ internal static class MongoDbConfigurations
 
     internal static void AddMongoDb(this IServiceCollection services, string? connectionString)
     {
+        BsonSerializer.RegisterSerializer(typeof(DateTimeOffset), new DateTimeOffsetSerializer(BsonType.Document));
+
         RegisterConventionPacks();
 
         RegisterDomainEventClassMap();
