@@ -8,5 +8,6 @@ public sealed class PublicationSortInput : SortInputType<Publication>
     protected override void Configure(ISortInputTypeDescriptor<Publication> descriptor)
     {
         descriptor.IgnoreAuditFieldsFromSortInputType();
+        descriptor.Ignore(x => x.PurchaseRecords);
     }
 }

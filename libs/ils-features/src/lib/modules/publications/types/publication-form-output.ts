@@ -12,5 +12,5 @@ export type PublicationFormOutput = {
   authorIds: string[] | null;
   buyingPrice: number;
   callNumber: string;
-  copiesPurchased: number;
+  copiesAvailable: number;
 };

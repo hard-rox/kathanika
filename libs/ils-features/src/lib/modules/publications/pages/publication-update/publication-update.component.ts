@@ -84,7 +84,7 @@ export class PublicationUpdateComponent implements OnInit {
     this.isPanelLoading = true;
     const publicationPatch: PublicationPatchInput = {
       ...publicationOutput,
-      copiesAvailable: publicationOutput.copiesPurchased,
+      copiesAvailable: publicationOutput.copiesAvailable,
       isbn: publicationOutput.isbn ?? '', ///TODO: Fixing to typed...
     };
 

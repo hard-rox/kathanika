@@ -19,6 +19,8 @@ export type Scalars = {
   Date: { input: any; output: any; }
   /** The `DateTime` scalar represents an ISO-8601 compliant date time type. */
   DateTime: { input: any; output: any; }
+  /** The built-in `Decimal` scalar type. */
+  Decimal: { input: any; output: any; }
 };
 
 export type AddAuthorError = InvalidFieldError;
@@ -45,7 +47,7 @@ export type AddPublicationError = InvalidFieldError;
 export type AddPublicationInput = {
   authorIds: Array<Scalars['String']['input']>;
   callNumber: Scalars['String']['input'];
-  copiesPurchased: Scalars['Int']['input'];
+  copiesAvailable: Scalars['Int']['input'];
   edition: Scalars['String']['input'];
   isbn: Scalars['String']['input'];
   publicationType: PublicationType;
@@ -345,6 +347,7 @@ export type Mutations = {
   createMember: CreateMemberPayload;
   deleteAuthor: DeleteAuthorPayload;
   deletePublisher: DeletePublisherPayload;
+  purchasePublication: PurchasePublicationPayload;
   renewMembership: RenewMembershipPayload;
   suspendMembership: SuspendMembershipPayload;
   updateAuthor: UpdateAuthorPayload;
@@ -386,6 +389,11 @@ export type MutationsDeleteAuthorArgs = {
 
 export type MutationsDeletePublisherArgs = {
   input: DeletePublisherInput;
+};
+
+
+export type MutationsPurchasePublicationArgs = {
+  input: PurchasePublicationInput;
 };
 
 
@@ -589,6 +597,32 @@ export type PublishersCollectionSegment = {
   /** Information to aid in pagination. */
   pageInfo: CollectionSegmentInfo;
   totalCount: Scalars['Int']['output'];
+};
+
+export type PurchasePublicationError = InvalidFieldError | NotFoundWithTheIdError;
+
+export type PurchasePublicationInput = {
+  authorIds: Array<Scalars['String']['input']>;
+  callNumber?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  edition?: InputMaybe<Scalars['String']['input']>;
+  isbn?: InputMaybe<Scalars['String']['input']>;
+  language?: InputMaybe<Scalars['String']['input']>;
+  publicationId?: InputMaybe<Scalars['String']['input']>;
+  publicationType?: InputMaybe<PublicationType>;
+  publishedDate?: InputMaybe<Scalars['Date']['input']>;
+  publisher?: InputMaybe<Scalars['String']['input']>;
+  quantity: Scalars['Int']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  unitPrice: Scalars['Decimal']['input'];
+  vendor: Scalars['String']['input'];
+};
+
+export type PurchasePublicationPayload = {
+  __typename?: 'PurchasePublicationPayload';
+  data?: Maybe<Publication>;
+  errors?: Maybe<Array<PurchasePublicationError>>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type Queries = {
