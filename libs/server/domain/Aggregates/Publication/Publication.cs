@@ -30,7 +30,7 @@ public sealed class Publication : AggregateRoot
         }
     }
 
-    public IReadOnlyCollection<PurchaseRecord> PurchaseRecords
+    public IReadOnlyList<PurchaseRecord> PurchaseRecords
     {
         get
         {
