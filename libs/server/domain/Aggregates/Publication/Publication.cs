@@ -34,7 +34,7 @@ public sealed class Publication : AggregateRoot
     {
         get
         {
-            return _purchaseRecords;
+            return _purchaseRecords ?? [];
         }
         private init
         {

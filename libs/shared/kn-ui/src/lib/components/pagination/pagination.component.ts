@@ -7,6 +7,7 @@ import {
   Output,
 } from '@angular/core';
 import { KnButton } from '../../directives/button/button.directive';
+import { AbstractBlockComponent } from '../../abstractions/abstract-block-component';
 
 @Component({
   standalone: true,
@@ -19,7 +20,7 @@ import { KnButton } from '../../directives/button/button.directive';
     KnButton
   ],
 })
-export class KnPagination {
+export class KnPagination extends AbstractBlockComponent {
   private _totalCount: number = 0;
   private _pageSize: number = 1;
   private _pageSizes: number[] = [5, 10, 20, 50, 100];
@@ -54,8 +55,6 @@ export class KnPagination {
 
   @Output()
   private pageSizeChanged: EventEmitter<number> = new EventEmitter<number>();
-
-  constructor() { }
 
   currentPage: number = 1;
   lastPage: number = 1;

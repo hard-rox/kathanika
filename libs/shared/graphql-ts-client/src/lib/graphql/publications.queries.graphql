@@ -45,5 +45,13 @@ query getPublication($id: String!) {
     publishedDate
     copiesAvailable
     description
+    purchaseRecords{
+      id
+      purchasedDate
+      vendor
+      quantity
+      unitPrice
+      totalPrice
+    }
   }
 }

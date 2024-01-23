@@ -1,7 +1,7 @@
 <!-- <pre>{{queryRef.valueChanges | async | json}}</pre> -->
 @if (queryRef.valueChanges | async; as queryResult) {
   @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
-    <div class="w-full shadow-sm bg-white">
+    <kn-panel>
       <div class="flex gap-4">
         <img
           class="m-6 max-h-100 w-auto shadow-2xl"
@@ -63,6 +63,9 @@
           </div>
         </div>
       </div>
-    </div>
+    </kn-panel>
+    <kn-panel panelTitle="Purchase History" class="mt-2">
+      <pre>{{data.publication?.purchaseRecords | json}}</pre>
+    </kn-panel>
   }
 }

@@ -451,6 +451,7 @@ export type Publication = {
   publicationType: PublicationType;
   publishedDate: Scalars['Date']['output'];
   publisher: Scalars['String']['output'];
+  purchaseRecords: Array<PurchaseRecord>;
   title: Scalars['String']['output'];
 };
 
@@ -623,6 +624,16 @@ export type PurchasePublicationPayload = {
   data?: Maybe<Publication>;
   errors?: Maybe<Array<PurchasePublicationError>>;
   message?: Maybe<Scalars['String']['output']>;
+};
+
+export type PurchaseRecord = {
+  __typename?: 'PurchaseRecord';
+  id: Scalars['String']['output'];
+  purchasedDate: Scalars['Date']['output'];
+  quantity: Scalars['Int']['output'];
+  totalPrice: Scalars['Decimal']['output'];
+  unitPrice: Scalars['Decimal']['output'];
+  vendor: Scalars['String']['output'];
 };
 
 export type Queries = {
@@ -902,7 +913,7 @@ export type GetPublicationQueryVariables = Exact<{
 }>;
 
 
-export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }> } | null };
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }> } | null };
 
 export type AddPublisherMutationVariables = Exact<{
   addPublisherInput: AddPublisherInput;
@@ -1343,6 +1354,14 @@ export const GetPublicationDocument = gql`
     publishedDate
     copiesAvailable
     description
+    purchaseRecords {
+      id
+      purchasedDate
+      vendor
+      quantity
+      unitPrice
+      totalPrice
+    }
   }
 }
     `;
