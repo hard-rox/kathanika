@@ -45,7 +45,7 @@ query getPublication($id: String!) {
     publishedDate
     copiesAvailable
     description
-    purchaseRecords{
+    purchaseRecords(order: { purchasedDate: DESC }) {
       id
       purchasedDate
       vendor

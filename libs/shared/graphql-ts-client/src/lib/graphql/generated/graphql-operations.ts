@@ -455,6 +455,11 @@ export type Publication = {
   title: Scalars['String']['output'];
 };
 
+
+export type PublicationPurchaseRecordsArgs = {
+  order?: InputMaybe<Array<PurchaseRecordSortInput>>;
+};
+
 export type PublicationAuthor = {
   __typename?: 'PublicationAuthor';
   firstName: Scalars['String']['output'];
@@ -634,6 +639,15 @@ export type PurchaseRecord = {
   totalPrice: Scalars['Decimal']['output'];
   unitPrice: Scalars['Decimal']['output'];
   vendor: Scalars['String']['output'];
+};
+
+export type PurchaseRecordSortInput = {
+  id?: InputMaybe<SortEnumType>;
+  purchasedDate?: InputMaybe<SortEnumType>;
+  quantity?: InputMaybe<SortEnumType>;
+  totalPrice?: InputMaybe<SortEnumType>;
+  unitPrice?: InputMaybe<SortEnumType>;
+  vendor?: InputMaybe<SortEnumType>;
 };
 
 export type Queries = {
@@ -1354,7 +1368,7 @@ export const GetPublicationDocument = gql`
     publishedDate
     copiesAvailable
     description
-    purchaseRecords {
+    purchaseRecords(order: {purchasedDate: DESC}) {
       id
       purchasedDate
       vendor
