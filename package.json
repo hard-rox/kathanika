@@ -34,7 +34,7 @@
     "@nx/eslint": "18.0.1",
     "@nx/eslint-plugin": "18.0.1",
     "@nx/jest": "17.3.1",
-    "@nx/js": "17.3.1",
+    "@nx/js": "18.0.1",
     "@nx/storybook": "18.0.1",
     "@nx/web": "18.0.1",
     "@nx/workspace": "18.0.1",
