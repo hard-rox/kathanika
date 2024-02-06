@@ -63,20 +63,27 @@
       <tr>
         <th scope="col">Purchase date</th>
         <th scope="col">Vendor</th>
-        <th scope="col">Quantity</th>
-        <th scope="col">Unit Price</th>
-        <th scope="col">Total Price</th>
+        <th scope="col" class="text-right">Quantity</th>
+        <th scope="col" class="text-right">Unit Price</th>
+        <th scope="col" class="text-right">Total Price</th>
+        <th scope="col">Actions</th>
       </tr>
     </thead>
     <tbody>
       @for (purchaseRecord of data.publication?.purchaseRecords; track $index) {
-        <tr>
-          <td>{{ purchaseRecord.purchasedDate}}</td>
-          <td>{{ purchaseRecord.vendor}}</td>
-          <td class="text-right">{{ purchaseRecord.quantity}}</td>
-          <td class="text-right">{{ purchaseRecord.unitPrice}}</td>
-          <td class="text-right">{{ purchaseRecord.totalPrice}}</td>
-        </tr>
+      <tr>
+        <td>{{ purchaseRecord.purchasedDate}}</td>
+        <td>{{ purchaseRecord.vendor}}</td>
+        <td class="text-right">{{ purchaseRecord.quantity}}</td>
+        <td class="text-right">{{ purchaseRecord.unitPrice}}</td>
+        <td class="text-right">{{ purchaseRecord.totalPrice}}</td>
+        <td>
+          <a routerLink="update/{{ purchaseRecord?.id }}"
+            class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+            <span class="material-symbols-sharp my-auto"> edit </span>
+          </a>
+        </td>
+      </tr>
       }
     </tbody>
   </table>
