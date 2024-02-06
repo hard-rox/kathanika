@@ -7,7 +7,7 @@ describe('PurchaseRecordFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [PurchaseRecordFormComponent],
+      declarations: [PurchaseRecordFormComponent],
     }).compileComponents();
 
     fixture = TestBed.createComponent(PurchaseRecordFormComponent);
