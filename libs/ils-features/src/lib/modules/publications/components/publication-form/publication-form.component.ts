@@ -84,7 +84,7 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
         validators: [Validators.required],
       }),
       description: new FormControl<string | null>(null, { nonNullable: false }),
-      authorIds: new FormControl<string[]>([], { nonNullable: true }),
+      authorIds: new FormControl<string[] | null>([], { nonNullable: true }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       buyingPrice: new FormControl<number | any>(null, {
         nonNullable: true,
