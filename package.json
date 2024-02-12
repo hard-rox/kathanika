@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
+    "nx": "nx",
     "prepare": "nx g @nx-dotnet/core:restore && husky install",
     "start": "nx run-many -t serve -p ils-web web --parallel",
     "lint": "nx run-many -t lint --parallel",
