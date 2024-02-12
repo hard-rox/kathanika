@@ -18,7 +18,7 @@ export class AuthorAddComponent {
     private router: Router,
   ) {}
 
-  isPanelLoading: boolean = false;
+  isPanelLoading = false;
   errors: string[] = [];
 
   onValidFormSubmit(formValue: AuthorFormOutput) {

@@ -27,7 +27,7 @@ export class PublicationUpdateComponent implements OnInit {
     private router: Router,
   ) {}
 
-  isPanelLoading: boolean = true;
+  isPanelLoading = true;
   publicationId: string | undefined;
   publicationFormInput!: PublicationFormInput;
   errors: string[] = [];

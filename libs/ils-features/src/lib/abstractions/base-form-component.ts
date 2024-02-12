@@ -28,7 +28,6 @@ export abstract class BaseFormComponent<TOutput> {
   }
 }
 
-export interface FormGroupModel<TOutput>
-  extends FormGroup<{
+export type FormGroupModel<TOutput> = FormGroup<{
     [K in keyof TOutput]: FormControl<TOutput[K]>;
-  }> {}
+  }>

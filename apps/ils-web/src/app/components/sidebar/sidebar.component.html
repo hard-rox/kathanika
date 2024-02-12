@@ -5,7 +5,7 @@
     <ul class="space-y-2 font-medium">
       @for (menu of menus; track menu; let idx = $index) {
         <li>
-          @if (!menu.children || menu.children.length == 0) {
+          @if (!menu.children || menu.children.length === 0) {
             <a
               [routerLink]="menu.link"
               [routerLinkActive]="menu.link ?? ''"

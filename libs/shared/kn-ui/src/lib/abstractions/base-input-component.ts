@@ -8,18 +8,19 @@ export abstract class AbstractInputComponent<TValueType>
   implements ControlValueAccessor, OnInit
 {
   @Input()
-  label: string = '';
+  label = '';
 
   @Input()
-  placeholder: string = '';
+  placeholder = '';
 
   protected value: TValueType | null = null;
-  protected isDisabled: boolean = false;
+  protected isDisabled = false;
 
   protected control: NgControl | null = null;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
   private onChange = (value: TValueType) => {};
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   private onTouched = () => {};
 
   constructor(@Inject(Injector) private injector: Injector) {}

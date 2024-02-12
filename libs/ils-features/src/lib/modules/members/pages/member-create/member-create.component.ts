@@ -18,7 +18,7 @@ export class MemberCreateComponent {
     private router: Router,
   ) {}
 
-  isPanelLoading: boolean = false;
+  isPanelLoading = false;
   errors: string[] = [];
 
   onValidFormSubmit(formValue: MemberFormOutput) {

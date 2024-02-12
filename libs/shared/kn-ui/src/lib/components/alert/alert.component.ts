@@ -10,7 +10,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class KnAlert {
   @Input()
-  closeable: boolean = false;
+  closeable = false;
 
   @Output()
   private closed = new EventEmitter<void>();

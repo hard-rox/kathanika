@@ -74,6 +74,7 @@ describe('AuthorUpdateComponent', () => {
   xit('should fetch with valid route param id in ngOnInit', () => {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const gqlSpy = spyOn<any>(component['gql'], 'fetch').and.returnValue({
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
       subscribe: () => {},
     });
     component.ngOnInit();
