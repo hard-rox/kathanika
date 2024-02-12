@@ -24,8 +24,6 @@ describe('AppComponent', () => {
     nativeElement = fixture.nativeElement as HTMLElement;
   });
 
-  beforeEach(() => {});
-
   it('should create the app', () => {
     const app = fixture.componentInstance;
     expect(app).toBeTruthy();

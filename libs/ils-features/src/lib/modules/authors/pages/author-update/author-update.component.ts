@@ -23,7 +23,7 @@ export class AuthorUpdateComponent implements OnInit {
     private router: Router,
   ) {}
 
-  isPanelLoading: boolean = true;
+  isPanelLoading = true;
   authorId: string | undefined;
   authorFormInput!: AuthorFormInput;
   errors: string[] = [];

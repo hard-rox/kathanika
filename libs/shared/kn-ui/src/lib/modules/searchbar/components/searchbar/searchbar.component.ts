@@ -16,7 +16,7 @@ import { Subject, debounceTime, map } from 'rxjs';
 })
 export class SearchbarComponent<T> implements OnInit {
   @Input() label: string | null = null;
-  @Input() placeholder: string = 'Search...';
+  @Input() placeholder = 'Search...';
 
   @Output() searchTextChanged: EventEmitter<string> =
     new EventEmitter<string>();
@@ -35,7 +35,7 @@ export class SearchbarComponent<T> implements OnInit {
       .subscribe();
   }
 
-  protected searchInputValue: string = '';
+  protected searchInputValue = '';
 
   protected onInputChange() {
     this._searchInputSubject.next(this.searchInputValue);

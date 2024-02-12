@@ -20,8 +20,8 @@ import { KnButton } from '../../directives/button/button.directive';
   ],
 })
 export class KnPagination {
-  private _totalCount: number = 0;
-  private _pageSize: number = 1;
+  private _totalCount = 0;
+  private _pageSize = 1;
   private _pageSizes: number[] = [5, 10, 20, 50, 100];
 
   @Input({ required: true })
@@ -55,10 +55,8 @@ export class KnPagination {
   @Output()
   private pageSizeChanged: EventEmitter<number> = new EventEmitter<number>();
 
-  constructor() { }
-
-  currentPage: number = 1;
-  lastPage: number = 1;
+  currentPage = 1;
+  lastPage = 1;
 
   protected onPageChanged(pageNumber: number) {
     if (pageNumber >= 1 && pageNumber <= this.lastPage) {

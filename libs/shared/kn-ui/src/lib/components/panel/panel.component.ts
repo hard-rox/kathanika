@@ -13,5 +13,5 @@ export class KnPanel {
   panelTitle: string | null = null;
 
   @Input()
-  isLoading: boolean = false;
+  isLoading = false;
 }
