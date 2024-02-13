@@ -14,5 +14,5 @@ export class KnPanel extends AbstractBlockComponent {
   panelTitle: string | null = null;
 
   @Input()
-  isLoading: boolean = false;
+  isLoading = false;
 }

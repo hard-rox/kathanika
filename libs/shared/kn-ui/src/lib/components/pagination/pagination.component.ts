@@ -20,9 +20,9 @@ import { AbstractBlockComponent } from '../../abstractions/abstract-block-compon
     KnButton
   ],
 })
-export class KnPagination extends AbstractBlockComponent {
-  private _totalCount: number = 0;
-  private _pageSize: number = 1;
+export class KnPagination {
+  private _totalCount = 0;
+  private _pageSize = 1;
   private _pageSizes: number[] = [5, 10, 20, 50, 100];
 
   @Input({ required: true })
@@ -56,8 +56,8 @@ export class KnPagination extends AbstractBlockComponent {
   @Output()
   private pageSizeChanged: EventEmitter<number> = new EventEmitter<number>();
 
-  currentPage: number = 1;
-  lastPage: number = 1;
+  currentPage = 1;
+  lastPage = 1;
 
   protected onPageChanged(pageNumber: number) {
     if (pageNumber >= 1 && pageNumber <= this.lastPage) {

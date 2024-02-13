@@ -20,7 +20,7 @@ export class PublicationAddComponent {
     private router: Router,
   ) {}
 
-  isPanelLoading: boolean = false;
+  isPanelLoading = false;
   errors: string[] = [];
 
   onValidFormSubmit(formValue: PublicationFormOutput) {

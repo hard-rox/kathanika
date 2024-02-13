@@ -15,6 +15,7 @@ updates:
         patterns:
           - "FluentValidation*"
         update-types:
+          - "major"
           - "minor"
           - "patch"
 
@@ -35,6 +36,7 @@ updates:
         patterns:
           - "@angular-eslint/*"
         update-types:
+          - "major"
           - "minor"
           - "patch"
       react-deps:

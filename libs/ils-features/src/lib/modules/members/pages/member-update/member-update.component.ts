@@ -24,7 +24,7 @@ export class MemberUpdateComponent  implements OnInit {
     private router: Router,
   ) {}
 
-  isPanelLoading: boolean = true;
+  isPanelLoading = true;
   memberId: string | undefined;
   memberFormInput!: MemberFormInput;
   errors: string[] = [];

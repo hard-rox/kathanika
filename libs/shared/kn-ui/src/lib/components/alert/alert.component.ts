@@ -11,7 +11,7 @@ import { AbstractBlockComponent } from '../../abstractions/abstract-block-compon
 })
 export class KnAlert extends AbstractBlockComponent {
   @Input()
-  closeable: boolean = false;
+  closeable = false;
 
   @Output()
   private closed = new EventEmitter<void>();

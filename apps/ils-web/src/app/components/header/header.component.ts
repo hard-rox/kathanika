@@ -10,6 +10,6 @@ import { KnButton } from '@kathanika/kn-ui';
   styleUrls: ['./header.component.scss'],
 })
 export class HeaderComponent {
-  isUserActionsVisible: boolean = false;
-  isNotificationVisible: boolean = false;
+  isUserActionsVisible = false;
+  isNotificationVisible = false;
 }
