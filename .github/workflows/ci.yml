@@ -16,7 +16,7 @@ jobs:
       with:
         fetch-depth: 0
         
-    - name: Setup Node.js 20.x
+    - name: Setup Node.js latest
       uses: actions/setup-node@v3
       with:
         node-version: latest
