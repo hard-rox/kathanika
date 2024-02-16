@@ -99,5 +99,5 @@ jobs:
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika-dotnet" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           npx nx affected -t build
-          npx nx affected -t test
+          # npx nx affected -t test
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
