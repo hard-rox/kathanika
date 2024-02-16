@@ -45,7 +45,7 @@ jobs:
 
   dotnet-sonar-analysis:
     name: Static code analysis for .NET
-    runs-on: widows-latest
+    runs-on: windows-latest
     steps:
       - name: Set up JDK 17
         uses: actions/setup-java@v4
