@@ -50,6 +50,15 @@ jobs:
         with:
           java-version: 17
           distribution: 'zulu' # Alternative distribution options are available.
+
+      - name: Setup Node.js latest
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: 'npm'
+
+      - name: Installing Packages
+        run: npm ci
       
       - uses: actions/checkout@v4
         with:
