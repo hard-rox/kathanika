@@ -384,7 +384,7 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
   nodejs-sonar-analysis:
-    name: Static code analysis For NodeJS
+    name: Static code analysis For NodeJS Projects
     needs: [lint-build-test]
     runs-on: ubuntu-latest
     steps:
@@ -401,8 +401,26 @@ jobs:
       - name: Installing Packages
         run: npm ci
 
-      - name: SonarCloud Scan
+      - name: kn-ui Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: libs/shared/kn-ui/
+
+      - name: ils-features Sonar Analysis
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: libs/ils-features/
+
+      - name: ils-web Sonar Analysis
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          projectBaseDir: apps/ils-web/
