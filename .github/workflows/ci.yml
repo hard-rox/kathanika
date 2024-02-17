@@ -7,8 +7,6 @@ run-name: Pre-PR CI
 on:
   pull_request:
     branches: [ "main" ]
-  push:
-    branches: [ "main" ]
 
 jobs:
   lint-build-test:
@@ -29,23 +27,23 @@ jobs:
     - name: Installing Packages
       run: npm ci
 
-    # - uses: nrwl/nx-set-shas@v4
-    # # This line is needed for nx affected to work when CI is running on a PR
-    # - name: Branch Tracking for NX affected
-    #   run: git branch --track main origin/main
+    - uses: nrwl/nx-set-shas@v4
+    # This line is needed for nx affected to work when CI is running on a PR
+    - name: Branch Tracking for NX affected
+      run: git branch --track main origin/main
 
-    # - name: Lint
-    #   run: npx nx affected -t lint
+    - name: Lint
+      run: npx nx affected -t lint
 
-    # - name: Build
-    #   run: npx nx affected -t build
+    - name: Build
+      run: npx nx affected -t build
 
-    # - name: Test
-    #   run: npx nx affected -t test
+    - name: Test
+      run: npx nx affected -t test
 
   dotnet-sonar-analysis:
     name: Static code analysis For .NET Projects
-    needs: [lint-build-test]
+    needs: [nodejs-sonar-analysis]
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
