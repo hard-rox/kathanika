@@ -43,7 +43,7 @@ jobs:
 
   dotnet-domain-sonar-scan:
     name: .NET Domain project Sonar Scan
-    needs: [lint-build-test]
+    needs: [nodejs-sonar-analysis]
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
@@ -100,7 +100,7 @@ jobs:
 
   dotnet-application-sonar-scan:
     name: .NET Application project Sonar Scan
-    needs: [lint-build-test]
+    needs: [nodejs-sonar-analysis]
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
@@ -157,7 +157,7 @@ jobs:
 
   dotnet-graphql-sonar-scan:
     name: .NET Graphql project Sonar Scan
-    needs: [lint-build-test]
+    needs: [nodejs-sonar-analysis]
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
@@ -214,7 +214,7 @@ jobs:
   
   dotnet-persistence-sonar-scan:
     name: .NET Persistence project Sonar Scan
-    needs: [lint-build-test]
+    needs: [nodejs-sonar-analysis]
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
@@ -271,7 +271,7 @@ jobs:
   
   dotnet-workers-sonar-scan:
     name: .NET Workers project Sonar Scan
-    needs: [lint-build-test]
+    needs: [nodejs-sonar-analysis]
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
@@ -328,7 +328,7 @@ jobs:
 
   dotnet-web-service-sonar-scan:
     name: .NET Web Service project Sonar Scan
-    needs: [lint-build-test]
+    needs: [nodejs-sonar-analysis]
     runs-on: windows-latest
     steps:
       - name: Set up JDK 17
@@ -385,6 +385,7 @@ jobs:
   
   nodejs-sonar-analysis:
     name: Static code analysis For NodeJS
+    needs: [lint-build-test]
     runs-on: ubuntu-latest
     steps:
       - name: Setup Node.js latest
