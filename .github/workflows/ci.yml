@@ -19,7 +19,7 @@ jobs:
         fetch-depth: 0
 
     - name: Setup Node.js latest
-      uses: actions/setup-node@v3
+      uses: actions/setup-node@v4
       with:
         node-version: latest
         cache: 'npm'
@@ -27,7 +27,7 @@ jobs:
     - name: Installing Packages
       run: npm ci
 
-    - uses: nrwl/nx-set-shas@v3
+    - uses: nrwl/nx-set-shas@v4
     # This line is needed for nx affected to work when CI is running on a PR
     - name: Branch Tracking for NX affected
       run: git branch --track main origin/main
@@ -62,7 +62,7 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
@@ -80,8 +80,8 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_domain" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build domain/Kathanika.Domain.csproj 
-          dotnet test domain-test/Kathanika.Domain.Test.csproj
+          dotnet build libs/server/domain/Kathanika.Domain.csproj 
+          dotnet test libs/server/domain-test/Kathanika.Domain.Test.csproj
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
   dotnet-application-sonar-scan:
@@ -105,7 +105,7 @@ jobs:
           restore-keys: ${{ runner.os }}-sonar
       - name: Cache SonarCloud scanner
         id: cache-sonar-scanner
-        uses: actions/cache@v3
+        uses: actions/cache@v4
         with:
           path: .\.sonar\scanner
           key: ${{ runner.os }}-sonar-scanner
@@ -123,8 +123,8 @@ jobs:
         shell: powershell
         run: |
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_domain" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build domain/Kathanika.Application.csproj 
-          dotnet test domain-test/Kathanika.Application.Test.csproj
+          dotnet build libs/server/domain/Kathanika.Application.csproj 
+          dotnet test libs/server/domain-test/Kathanika.Application.Test.csproj
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
           
   # nodejs-sonar-analysis:
