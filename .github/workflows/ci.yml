@@ -385,7 +385,7 @@ jobs:
 
   nodejs-sonar-analysis:
     name: Static code analysis For NodeJS
-    # needs: [lint-build-test]
+    needs: [lint-build-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
