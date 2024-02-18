@@ -62,10 +62,10 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: nx run-many -t build --projects kn-ui ils-features ils-web
+        run: npx nx run-many -t build --projects kn-ui ils-features ils-web
 
       - name: Test
-        run: nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
+        run: npx nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
 
       - name: kn-ui Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
