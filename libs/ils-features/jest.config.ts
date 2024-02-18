@@ -4,6 +4,7 @@ export default {
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory: '../../coverage/libs/ils-features',
+  coverageReporters: ['clover', 'json', 'lcov', ['text', {skipFull: true}]],
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
