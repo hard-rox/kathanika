@@ -83,7 +83,7 @@ jobs:
         with:
           projectBaseDir: libs/ils-features/
           args: >
-            -Dsonar.javascript.lcov.reportPaths=./**/libs/ils-features/lcov.info
+            -Dsonar.javascript.lcov.reportPaths=**/libs/ils-features/lcov.info
             -Dsonar.verbose=true
 
       # - name: ils-web Sonar Analysis
