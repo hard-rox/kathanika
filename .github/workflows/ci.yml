@@ -67,13 +67,13 @@ jobs:
       - name: Test
         run: npx nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
 
-      - name: kn-ui Sonar Analysis
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          projectBaseDir: libs/shared/kn-ui/
+      # - name: kn-ui Sonar Analysis
+      #   uses: SonarSource/sonarcloud-github-action@master
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   with:
+      #     projectBaseDir: libs/shared/kn-ui/
 
       - name: ils-features Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
@@ -82,14 +82,17 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         with:
           projectBaseDir: libs/ils-features/
+          args: >
+            -Dsonar.javascript.lcov.reportPaths=/coverage/libs/ils-features/lcov.info
+            -Dsonar.verbose=true
 
-      - name: ils-web Sonar Analysis
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          projectBaseDir: apps/ils-web/
+      # - name: ils-web Sonar Analysis
+      #   uses: SonarSource/sonarcloud-github-action@master
+      #   env:
+      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      #   with:
+      #     projectBaseDir: apps/ils-web/
 
   # dotnet-sonar-analysis:
   #   name: Static code analysis For .NET Projects
