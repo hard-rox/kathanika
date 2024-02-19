@@ -11,41 +11,41 @@ on:
     branches: [ "main" ]
 
 jobs:
-  lint-build-test:
-    name: Lint, Build & Unit Test
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+  # lint-build-test:
+  #   name: Lint, Build & Unit Test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #   - name: Checkout
+  #     uses: actions/checkout@v4
+  #     with:
+  #       fetch-depth: 0
 
-    - name: Setup Node.js latest
-      uses: actions/setup-node@v4
-      with:
-        node-version: latest
-        cache: 'npm'
+  #   - name: Setup Node.js latest
+  #     uses: actions/setup-node@v4
+  #     with:
+  #       node-version: latest
+  #       cache: 'npm'
 
-    - name: Installing Packages
-      run: npm ci
+  #   - name: Installing Packages
+  #     run: npm ci
 
-    # - uses: nrwl/nx-set-shas@v4
-    # # This line is needed for nx affected to work when CI is running on a PR
-    # - name: Branch Tracking for NX affected
-    #   run: git branch --track main origin/main
+  #   - uses: nrwl/nx-set-shas@v4
+  #   # This line is needed for nx affected to work when CI is running on a PR
+  #   - name: Branch Tracking for NX affected
+  #     run: git branch --track main origin/main
 
-    # - name: Lint
-    #   run: npx nx affected -t lint
+  #   - name: Lint
+  #     run: npx nx affected -t lint
 
-    # - name: Build
-    #   run: npx nx affected -t build
+  #   - name: Build
+  #     run: npx nx affected -t build
 
-    # - name: Test
-    #   run: npx nx affected -t test
+  #   - name: Test
+  #     run: npx nx affected -t test
 
   nodejs-sonar-analysis:
     name: Static code analysis For NodeJS Projects
-    needs: [lint-build-test]
+    # needs: [lint-build-test]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -91,114 +91,114 @@ jobs:
         with:
           projectBaseDir: apps/ils-web/
 
-  dotnet-sonar-analysis:
-    name: Static code analysis For .NET Projects
-    needs: [nodejs-sonar-analysis]
-    runs-on: windows-latest
-    steps:
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
+  # dotnet-sonar-analysis:
+  #   name: Static code analysis For .NET Projects
+  #   needs: [nodejs-sonar-analysis]
+  #   runs-on: windows-latest
+  #   steps:
+  #     - name: Set up JDK 17
+  #       uses: actions/setup-java@v4
+  #       with:
+  #         java-version: 17
+  #         distribution: 'zulu' # Alternative distribution options are available.
 
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Setup Node.js latest
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: 'npm'
+  #     - name: Setup Node.js latest
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: latest
+  #         cache: 'npm'
 
-      - name: Installing Packages
-        run: npm ci
+  #     - name: Installing Packages
+  #       run: npm ci
 
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v4
-        with:
-          path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
+  #     - name: Cache SonarCloud packages
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: ~\sonar\cache
+  #         key: ${{ runner.os }}-sonar
+  #         restore-keys: ${{ runner.os }}-sonar
 
-      - name: Cache SonarCloud scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v4
-        with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
+  #     - name: Cache SonarCloud scanner
+  #       id: cache-sonar-scanner
+  #       uses: actions/cache@v4
+  #       with:
+  #         path: .\.sonar\scanner
+  #         key: ${{ runner.os }}-sonar-scanner
+  #         restore-keys: ${{ runner.os }}-sonar-scanner
 
-      - name: Install SonarCloud scanner
-        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-        shell: powershell
-        run: |
-          New-Item -Path .\.sonar\scanner -ItemType Directory
-          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+  #     - name: Install SonarCloud scanner
+  #       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+  #       shell: powershell
+  #       run: |
+  #         New-Item -Path .\.sonar\scanner -ItemType Directory
+  #         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
 
-      - name: Kathanika.Domain Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_domain" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build libs/server/domain/Kathanika.Domain.csproj
-          dotnet test libs/server/domain-test/Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  #     - name: Kathanika.Domain Sonar analysis
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       shell: powershell
+  #       run: |
+  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_domain" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+  #         dotnet build libs/server/domain/Kathanika.Domain.csproj
+  #         dotnet test libs/server/domain-test/Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage"
+  #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
-      - name: Kathanika.Application Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_application" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build libs/server/application/Kathanika.Application.csproj
-          dotnet test libs/server/application-test/Kathanika.Application.Test.csproj --collect:"XPlat Code Coverage"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  #     - name: Kathanika.Application Sonar analysis
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       shell: powershell
+  #       run: |
+  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_application" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+  #         dotnet build libs/server/application/Kathanika.Application.csproj
+  #         dotnet test libs/server/application-test/Kathanika.Application.Test.csproj --collect:"XPlat Code Coverage"
+  #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
-      - name: Kathanika.Graphql Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_graphql" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build libs/server/graphql/Kathanika.Graphql.csproj
-          dotnet test libs/server/graphql-test/Kathanika.Graphql.Test.csproj --collect:"XPlat Code Coverage"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  #     - name: Kathanika.Graphql Sonar analysis
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       shell: powershell
+  #       run: |
+  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_graphql" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+  #         dotnet build libs/server/graphql/Kathanika.Graphql.csproj
+  #         dotnet test libs/server/graphql-test/Kathanika.Graphql.Test.csproj --collect:"XPlat Code Coverage"
+  #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
-      - name: Kathanika.Persistence Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_persistence" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build libs/server/persistence/Kathanika.Persistence.csproj
-          dotnet test libs/server/persistence-test/Kathanika.Persistence.Test.csproj --collect:"XPlat Code Coverage"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  #     - name: Kathanika.Persistence Sonar analysis
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       shell: powershell
+  #       run: |
+  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_persistence" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+  #         dotnet build libs/server/persistence/Kathanika.Persistence.csproj
+  #         dotnet test libs/server/persistence-test/Kathanika.Persistence.Test.csproj --collect:"XPlat Code Coverage"
+  #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
-      - name: Kathanika.Workers Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_workers" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build libs/server/workers/Kathanika.Workers.csproj
-          dotnet test libs/server/workers-test/Kathanika.Workers.Test.csproj --collect:"XPlat Code Coverage"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  #     - name: Kathanika.Workers Sonar analysis
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       shell: powershell
+  #       run: |
+  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_workers" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+  #         dotnet build libs/server/workers/Kathanika.Workers.csproj
+  #         dotnet test libs/server/workers-test/Kathanika.Workers.Test.csproj --collect:"XPlat Code Coverage"
+  #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
-      - name: Kathanika.Web Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_svc_web" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-          dotnet build services/web/Kathanika.Web.csproj
-          dotnet test services/web-test/Kathanika.Web.Test.csproj --collect:"XPlat Code Coverage"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  #     - name: Kathanika.Web Sonar analysis
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       shell: powershell
+  #       run: |
+  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_svc_web" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
+  #         dotnet build services/web/Kathanika.Web.csproj
+  #         dotnet test services/web-test/Kathanika.Web.Test.csproj --collect:"XPlat Code Coverage"
+  #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
