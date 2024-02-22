@@ -103,65 +103,67 @@ jobs:
             -Dsonar.sources=apps/ils-web/src
             -Dsonar.javascript.lcov.reportPaths=coverage/apps/ils-web/lcov.info
 
-  # dotnet-sonar-analysis:
-  #   name: Static code analysis For .NET Projects
-  #   needs: [lint-build-test]
-  #   runs-on: windows-latest
-  #   steps:
-  #     - name: Set up JDK 17
-  #       uses: actions/setup-java@v4
-  #       with:
-  #         java-version: 17
-  #         distribution: 'zulu' # Alternative distribution options are available.
+  dotnet-sonar-analysis:
+    name: Static code analysis For .NET Projects
+    needs: [lint-build-test]
+    runs-on: windows-latest
+    steps:
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: 17
+          distribution: 'zulu' # Alternative distribution options are available.
 
-  #     - uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-  #     - name: Setup Node.js latest
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: latest
-  #         cache: 'npm'
+      - name: Setup Node.js latest
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: 'npm'
 
-  #     - name: Installing Packages
-  #       run: npm ci
+      - name: Installing Packages
+        run: npm ci
 
-  #     - name: Cache SonarCloud packages
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: ~\sonar\cache
-  #         key: ${{ runner.os }}-sonar
-  #         restore-keys: ${{ runner.os }}-sonar
+      - name: Cache SonarCloud packages
+        uses: actions/cache@v4
+        with:
+          path: ~\sonar\cache
+          key: ${{ runner.os }}-sonar
+          restore-keys: ${{ runner.os }}-sonar
 
-  #     - name: Cache SonarCloud scanner
-  #       id: cache-sonar-scanner
-  #       uses: actions/cache@v4
-  #       with:
-  #         path: .\.sonar\scanner
-  #         key: ${{ runner.os }}-sonar-scanner
-  #         restore-keys: ${{ runner.os }}-sonar-scanner
+      - name: Cache SonarCloud scanner
+        id: cache-sonar-scanner
+        uses: actions/cache@v4
+        with:
+          path: .\.sonar\scanner
+          key: ${{ runner.os }}-sonar-scanner
+          restore-keys: ${{ runner.os }}-sonar-scanner
 
-  #     - name: Install SonarCloud scanner
-  #       if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-  #       shell: powershell
-  #       run: |
-  #         New-Item -Path .\.sonar\scanner -ItemType Directory
-  #         dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: Install SonarCloud scanner
+        if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
+        shell: powershell
+        run: |
+          New-Item -Path .\.sonar\scanner -ItemType Directory
+          dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
 
-  #     - name: Kathanika.Domain Sonar analysis
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-  #       shell: powershell
-  #       run: |
-  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_domain" /o:"hard-rox"
-  #           /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-  #           /d:sonar.host.url="https://sonarcloud.io"
-  #           /d:sonar.cs.vscoveragexml.reportsPaths=**\coverage.cobertura.xml
-  #         dotnet build libs\server\domain\Kathanika.Domain.csproj
-  #         dotnet test libs\server\domain-test\Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage"
-  #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+      - name: Kathanika.Domain Sonar analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        shell: powershell
+        run: |
+          .\.sonar\scanner\dotnet-sonarscanner begin \
+            /o:"kathanika" \
+            /k:"libs-server-domain" \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.cs.vscoveragexml.reportsPaths=libs\server\domain-test\TestResults\**\coverage.cobertura.xml \
+          dotnet build libs\server\domain\Kathanika.Domain.csproj \
+          dotnet test libs\server\domain-test\Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage" \
+          .\.sonar\scanner\dotnet-sonarscanner end
 
   #     - name: Kathanika.Application Sonar analysis
   #       env:
