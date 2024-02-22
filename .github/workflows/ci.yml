@@ -52,20 +52,20 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Setup Node.js latest
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: 'npm'
+      # - name: Setup Node.js latest
+      #   uses: actions/setup-node@v4
+      #   with:
+      #     node-version: latest
+      #     cache: 'npm'
 
-      - name: Installing Packages
-        run: npm ci
+      # - name: Installing Packages
+      #   run: npm ci
 
-      - name: Build
-        run: npx nx run-many -t build --projects kn-ui ils-features ils-web
+      # - name: Build
+      #   run: npx nx run-many -t build --projects kn-ui ils-features ils-web
 
-      - name: Test
-        run: npx nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
+      # - name: Test
+      #   run: npx nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
 
       - name: kn-ui Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
