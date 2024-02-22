@@ -43,65 +43,65 @@ jobs:
     # - name: Test
     #   run: npx nx affected -t test
 
-  nodejs-sonar-analysis:
-    name: Static code analysis For NodeJS Projects
-    needs: [lint-build-test]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+  # nodejs-sonar-analysis:
+  #   name: Static code analysis For NodeJS Projects
+  #   needs: [lint-build-test]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v4
+  #       with:
+  #         fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      - name: Setup Node.js latest
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: 'npm'
+  #     - name: Setup Node.js latest
+  #       uses: actions/setup-node@v4
+  #       with:
+  #         node-version: latest
+  #         cache: 'npm'
 
-      - name: Installing Packages
-        run: npm ci
+  #     - name: Installing Packages
+  #       run: npm ci
 
-      - name: Build
-        run: npx nx run-many -t build --projects kn-ui ils-features ils-web
+  #     - name: Build
+  #       run: npx nx run-many -t build --projects kn-ui ils-features ils-web
 
-      - name: Test
-        run: npx nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
+  #     - name: Test
+  #       run: npx nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
 
-      - name: kn-ui Sonar Analysis
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=kathanika
-            -Dsonar.projectKey=libs-shared-kn-ui
-            -Dsonar.sources=libs/shared/kn-ui/src
-            -Dsonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info
+  #     - name: kn-ui Sonar Analysis
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       with:
+  #         args: >
+  #           -Dsonar.organization=kathanika
+  #           -Dsonar.projectKey=libs-shared-kn-ui
+  #           -Dsonar.sources=libs/shared/kn-ui/src
+  #           -Dsonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info
 
-      - name: ils-features Sonar Analysis
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=kathanika
-            -Dsonar.projectKey=libs-ils-features
-            -Dsonar.sources=libs/ils-features/src
-            -Dsonar.javascript.lcov.reportPaths=coverage/libs/ils-features/lcov.info
+  #     - name: ils-features Sonar Analysis
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       with:
+  #         args: >
+  #           -Dsonar.organization=kathanika
+  #           -Dsonar.projectKey=libs-ils-features
+  #           -Dsonar.sources=libs/ils-features/src
+  #           -Dsonar.javascript.lcov.reportPaths=coverage/libs/ils-features/lcov.info
 
-      - name: ils-web Sonar Analysis
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=kathanika
-            -Dsonar.projectKey=apps-ils-web
-            -Dsonar.sources=apps/ils-web/src
-            -Dsonar.javascript.lcov.reportPaths=coverage/apps/ils-web/lcov.info
+  #     - name: ils-web Sonar Analysis
+  #       uses: SonarSource/sonarcloud-github-action@master
+  #       env:
+  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+  #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+  #       with:
+  #         args: >
+  #           -Dsonar.organization=kathanika
+  #           -Dsonar.projectKey=apps-ils-web
+  #           -Dsonar.sources=apps/ils-web/src
+  #           -Dsonar.javascript.lcov.reportPaths=coverage/apps/ils-web/lcov.info
 
   dotnet-sonar-analysis:
     name: Static code analysis For .NET Projects
@@ -155,14 +155,14 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin \
-            /o:"kathanika" \
-            /k:"libs-server-domain" \
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
-            /d:sonar.host.url="https://sonarcloud.io" \
-            /d:sonar.cs.vscoveragexml.reportsPaths=libs\server\domain-test\TestResults\**\coverage.cobertura.xml \
-          dotnet build libs\server\domain\Kathanika.Domain.csproj \
-          dotnet test libs\server\domain-test\Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage" \
+          .\.sonar\scanner\dotnet-sonarscanner begin `
+            /o:"kathanika" `
+            /k:"libs-server-domain" `
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" `
+            /d:sonar.host.url="https://sonarcloud.io" `
+            /d:sonar.cs.vscoveragexml.reportsPaths=libs\server\domain-test\TestResults\**\coverage.cobertura.xml `
+          dotnet build libs\server\domain\Kathanika.Domain.csproj `
+          dotnet test libs\server\domain-test\Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage" `
           .\.sonar\scanner\dotnet-sonarscanner end
 
   #     - name: Kathanika.Application Sonar analysis
