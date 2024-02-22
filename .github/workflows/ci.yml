@@ -52,20 +52,20 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
 
-      # - name: Setup Node.js latest
-      #   uses: actions/setup-node@v4
-      #   with:
-      #     node-version: latest
-      #     cache: 'npm'
+      - name: Setup Node.js latest
+        uses: actions/setup-node@v4
+        with:
+          node-version: latest
+          cache: 'npm'
 
-      # - name: Installing Packages
-      #   run: npm ci
+      - name: Installing Packages
+        run: npm ci
 
-      # - name: Build
-      #   run: npx nx run-many -t build --projects kn-ui ils-features ils-web
+      - name: Build
+        run: npx nx run-many -t build --projects kn-ui ils-features ils-web
 
-      # - name: Test
-      #   run: npx nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
+      - name: Test
+        run: npx nx run-many -t test --projects kn-ui ils-features ils-web --code-coverage
 
       - name: kn-ui Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
@@ -105,7 +105,7 @@ jobs:
 
   # dotnet-sonar-analysis:
   #   name: Static code analysis For .NET Projects
-  #   needs: [nodejs-sonar-analysis]
+  #   needs: [lint-build-test]
   #   runs-on: windows-latest
   #   steps:
   #     - name: Set up JDK 17
@@ -155,9 +155,12 @@ jobs:
   #         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
   #       shell: powershell
   #       run: |
-  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_domain" /o:"hard-rox" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
-  #         dotnet build libs/server/domain/Kathanika.Domain.csproj
-  #         dotnet test libs/server/domain-test/Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage"
+  #         .\.sonar\scanner\dotnet-sonarscanner begin /k:"hard-rox_kathanika_libs_server_domain" /o:"hard-rox"
+  #           /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+  #           /d:sonar.host.url="https://sonarcloud.io"
+  #           /d:sonar.cs.vscoveragexml.reportsPaths=**\coverage.cobertura.xml
+  #         dotnet build libs\server\domain\Kathanika.Domain.csproj
+  #         dotnet test libs\server\domain-test\Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage"
   #         .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
   #     - name: Kathanika.Application Sonar analysis
