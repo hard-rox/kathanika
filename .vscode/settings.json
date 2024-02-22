@@ -19,7 +19,8 @@
     "**/.vscode": true,
     "**/.github": true,
     "**/.nx": true,
-    "**/tmp": true
+    "**/tmp": true,
+    "**/.scannerwork": true
   },
   "dotnetAcquisitionExtension.installTimeoutValue": 180,
   "cSpell.words": [
