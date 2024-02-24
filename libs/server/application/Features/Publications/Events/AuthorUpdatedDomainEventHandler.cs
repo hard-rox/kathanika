@@ -7,6 +7,7 @@ internal sealed class AuthorUpdatedDomainEventHandler(ILogger<AuthorUpdatedDomai
     public async Task Handle(AuthorUpdatedDomainEvent notification, CancellationToken cancellationToken)
     {
         //TODO: Logging and optimize performance in loop.
+        logger.LogInformation("Handling author update to maintain consistency in Publication aggregate");
         Author? author = await authorRepository.GetByIdAsync(notification.AuthorId, cancellationToken);
 
         if (author is null) return;
