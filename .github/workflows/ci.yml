@@ -35,13 +35,13 @@ jobs:
       run: git branch --track main origin/main
 
     - name: Lint
-      run: npx nx affected -t lint
+      run: npx nx affected -t lint --prod --verbose
 
     - name: Build
-      run: npx nx affected -t build
+      run: npx nx affected -t build --prod --verbose
 
     - name: Test
-      run: npx nx affected -t test
+      run: npx nx affected -t test --prod --verbose
 
   nodejs-sonar-analysis:
     name: NodeJS Projects static code analysis
