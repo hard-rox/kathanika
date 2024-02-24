@@ -35,16 +35,16 @@ jobs:
       run: git branch --track main origin/main
 
     - name: Lint
-      run: npx nx affected -t lint
+      run: npx nx affected -t lint --prod --verbose
 
     - name: Build
-      run: npx nx affected -t build
+      run: npx nx affected -t build --prod --verbose
 
     - name: Test
-      run: npx nx affected -t test
+      run: npx nx affected -t test --prod --verbose
 
   nodejs-sonar-analysis:
-    name: Static code analysis For NodeJS Projects
+    name: NodeJS Projects static code analysis
     needs: [lint-build-test]
     runs-on: ubuntu-latest
     steps:
@@ -104,7 +104,7 @@ jobs:
             -Dsonar.javascript.lcov.reportPaths=coverage/apps/ils-web/lcov.info
 
   dotnet-sonar-analysis:
-    name: Static code analysis For .NET Projects
+    name: .NET Solution static code analysis
     needs: [lint-build-test]
     runs-on: windows-latest
     steps:
@@ -149,68 +149,13 @@ jobs:
           New-Item -Path .\.sonar\scanner -ItemType Directory
           dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
 
-      - name: Kathanika.Domain Sonar analysis
+      - name: Kathanika.sln Sonar analysis
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"libs-server-domain" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=libs\server\domain-test\TestResults\**\coverage.opencover.xml
-          dotnet build libs\server\domain\Kathanika.Domain.csproj
-          dotnet test libs\server\domain-test\Kathanika.Domain.Test.csproj --collect:"XPlat Code Coverage;Format=opencover"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-
-      - name: Kathanika.Application Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"libs-server-application" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=libs\server\application-test\TestResults\**\coverage.opencover.xml
-          dotnet build libs\server\application\Kathanika.Application.csproj
-          dotnet test libs\server\application-test\Kathanika.Application.Test.csproj --collect:"XPlat Code Coverage;Format=opencover"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-
-      - name: Kathanika.Graphql Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"libs-server-graphql" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=libs\server\graphql-test\TestResults\**\coverage.opencover.xml
-          dotnet build libs\server\graphql\Kathanika.Graphql.csproj
-          dotnet test libs\server\graphql-test\Kathanika.Graphql.Test.csproj --collect:"XPlat Code Coverage;Format=opencover"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-
-      - name: Kathanika.Persistence Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"libs-server-persistence" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=libs\server\persistence-test\TestResults\**\coverage.opencover.xml
-          dotnet build libs\server\persistence\Kathanika.Persistence.csproj
-          dotnet test libs\server\persistence-test\Kathanika.Persistence.Test.csproj --collect:"XPlat Code Coverage;Format=opencover"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-
-      - name: Kathanika.Workers Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"libs-server-workers" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=libs\server\workers-test\TestResults\**\coverage.opencover.xml
-          dotnet build libs\server\workers\Kathanika.Workers.csproj
-          dotnet test libs\server\workers-test\Kathanika.Workers.Test.csproj --collect:"XPlat Code Coverage;Format=opencover"
-          .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-
-      - name: Kathanika.Web Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        shell: powershell
-        run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"svc-web" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=services\web-test\TestResults\**\coverage.opencover.xml
-          dotnet build services\web\Kathanika.Web.csproj
-          dotnet test services\web-test\Kathanika.Web.Test.csproj --collect:"XPlat Code Coverage;Format=opencover"
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml
+          dotnet build
+          dotnet test --collect:"XPlat Code Coverage;Format=opencover"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

@@ -24,7 +24,7 @@ public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IVali
             .Select(error => new InvalidFieldException(error.PropertyName, error.ErrorMessage))
             .Distinct()
             .ToArray();
-        if (invalidFieldExceptions.Any())
+        if (invalidFieldExceptions.Length != 0)
         {
             throw new AggregateException(invalidFieldExceptions);
         }
