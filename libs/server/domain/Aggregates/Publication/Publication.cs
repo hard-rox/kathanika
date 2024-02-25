@@ -175,7 +175,7 @@ public sealed class Publication : AggregateRoot
 
     public void UpdateAuthorInfo(Author author)
     {
-        PublicationAuthor? publicationAuthor = _authors.FirstOrDefault(x => x.Id == author.Id);
+        PublicationAuthor? publicationAuthor = _authors.Find(x => x.Id == author.Id);
         if (publicationAuthor is null) return;
         _authors.Remove(publicationAuthor);
         _authors.Add(new PublicationAuthor(author.Id,

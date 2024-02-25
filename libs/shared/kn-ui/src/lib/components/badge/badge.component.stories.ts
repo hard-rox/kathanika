@@ -45,7 +45,7 @@ export const Warning: Story = {
   },
 };
 
-export const Error: Story = {
+export const ErrorBadge: Story = {
   args: {
     content: 'Error',
     type: 'error',
