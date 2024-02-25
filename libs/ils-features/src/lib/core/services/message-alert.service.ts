@@ -24,9 +24,7 @@ export class MessageAlertService {
   ) {
     this.themedSwal.fire({
       icon: type,
-      title: title
-        ? title
-        : type === 'success'
+      title: title ?? (type === 'success'
           ? 'Success'
           : type === 'warning'
             ? 'Warning'
@@ -34,7 +32,7 @@ export class MessageAlertService {
               ? 'Information'
               : type === 'question'
                 ? 'Question'
-                : 'Error',
+                : 'Error'),
       text: message,
     });
   }
