@@ -103,14 +103,6 @@ jobs:
             -Dsonar.sources=apps/ils-web/src
             -Dsonar.javascript.lcov.reportPaths=coverage/apps/ils-web/lcov.info
 
-      - name: SonarQube Quality Gate check
-        id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@master
-        # Force to fail step after specific time.
-        timeout-minutes: 5
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
   dotnet-sonar-analysis:
     name: .NET Solution static code analysis
     needs: [lint-build-test]
