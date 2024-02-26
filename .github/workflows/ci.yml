@@ -78,6 +78,7 @@ jobs:
             -Dsonar.projectKey=libs-shared-kn-ui
             -Dsonar.sources=libs/shared/kn-ui/src
             -Dsonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info
+            -Dsonar.qualitygate.wait=true
 
       - name: ils-features Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
@@ -90,6 +91,7 @@ jobs:
             -Dsonar.projectKey=libs-ils-features
             -Dsonar.sources=libs/ils-features/src
             -Dsonar.javascript.lcov.reportPaths=coverage/libs/ils-features/lcov.info
+            -Dsonar.qualitygate.wait=true
 
       - name: ils-web Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
@@ -102,6 +104,7 @@ jobs:
             -Dsonar.projectKey=apps-ils-web
             -Dsonar.sources=apps/ils-web/src
             -Dsonar.javascript.lcov.reportPaths=coverage/apps/ils-web/lcov.info
+            -Dsonar.qualitygate.wait=true
 
   dotnet-sonar-analysis:
     name: .NET Solution static code analysis
@@ -155,7 +158,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml
+          .\.sonar\scanner\dotnet-sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml /d:sonar.qualitygate.wait=true
           dotnet build
           dotnet test --collect:"XPlat Code Coverage;Format=opencover"
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
