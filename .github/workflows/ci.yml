@@ -79,7 +79,7 @@ jobs:
             -Dsonar.sources=libs/shared/kn-ui/src
             -Dsonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info
             -Dsonar.qualitygate.wait=true
-            # -Dsonar.pullrequest.github.summary_comment=true
+# -Dsonar.pullrequest.github.summary_comment=true
 
       - name: ils-features Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
@@ -93,7 +93,7 @@ jobs:
             -Dsonar.sources=libs/ils-features/src
             -Dsonar.javascript.lcov.reportPaths=coverage/libs/ils-features/lcov.info
             -Dsonar.qualitygate.wait=true
-            # -Dsonar.pullrequest.github.summary_comment=true
+# -Dsonar.pullrequest.github.summary_comment=true
 
       - name: ils-web Sonar Analysis
         uses: SonarSource/sonarcloud-github-action@master
@@ -107,7 +107,7 @@ jobs:
             -Dsonar.sources=apps/ils-web/src
             -Dsonar.javascript.lcov.reportPaths=coverage/apps/ils-web/lcov.info
             -Dsonar.qualitygate.wait=true
-            # -Dsonar.pullrequest.github.summary_comment=true
+# -Dsonar.pullrequest.github.summary_comment=true
 
   dotnet-sonar-analysis:
     name: .NET Solution static code analysis
