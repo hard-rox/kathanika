@@ -161,13 +161,7 @@ jobs:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         shell: powershell
         run: |
-          .\.sonar\scanner\dotnet-sonarscanner |
-          /k:"ts-projects" |
-          /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" |
-          /d:sonar.host.url="https://sonarcloud.io" |
-          /d:sonar.sources=libs/shared/kn-ui/src,libs/shared/ils-features/src,libs/shared/ils-web/src |
-          /d:sonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info,coverage/libs/shared/ils-features/lcov.info,coverage/libs/shared/ils-web/lcov.info |
-          /d:sonar.qualitygate.wait=true
+          .\.sonar\scanner\dotnet-sonarscanner /k:"ts-projects" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.sources=libs/shared/kn-ui/src,libs/shared/ils-features/src,libs/shared/ils-web/src /d:sonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info,coverage/libs/shared/ils-features/lcov.info,coverage/libs/shared/ils-web/lcov.info /d:sonar.qualitygate.wait=true
 
       - name: .NET Sonar analysis
         env:
