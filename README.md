@@ -1,9 +1,14 @@
 # Kathanika
 
-dotnet solution: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kathanika-server-sln&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=kathanika-server-sln)
+dotnet: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=kathanika-server-sln&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=kathanika-server-sln)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=kathanika-server-sln&metric=coverage)](https://sonarcloud.io/summary/new_code?id=kathanika-server-sln)
 [![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=kathanika-server-sln&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=kathanika-server-sln)
 [![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=kathanika-server-sln&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=kathanika-server-sln)
+
+js/ts: [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ts-projects&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ts-projects)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ts-projects&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ts-projects)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ts-projects&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=ts-projects)
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ts-projects&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ts-projects)
 
 <a alt="Nx logo" href="https://nx.dev" target="_blank" rel="noreferrer"><img src="https://raw.githubusercontent.com/nrwl/nx/master/images/nx-logo.png" width="45"></a>
 
