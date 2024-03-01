@@ -82,6 +82,8 @@ jobs:
             -Dsonar.projectKey=ts-projects
             -Dsonar.sources="libs/shared/kn-ui/src","libs/ils-features/src","apps/ils-web/src"
             -Dsonar.javascript.lcov.reportPaths="coverage/libs/shared/kn-ui/lcov.info","coverage/libs/ils-features/lcov.info","coverage/apps/ils-web/lcov.info"
+            -Dsonar.tests="libs/shared/kn-ui/src","libs/ils-features/src","apps/ils-web/src"
+            -Dsonar.test.inclusions=**/*.spec.ts
             -Dsonar.qualitygate.wait=true
 #            -Dsonar.verbose=true
 
