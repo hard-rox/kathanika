@@ -133,53 +133,36 @@ jobs:
       - name: Installing Packages
         run: npm ci
 
-      - name: Cache SonarCloud packages
-        uses: actions/cache@v4
-        with:
-          path: ~\sonar\cache
-          key: ${{ runner.os }}-sonar
-          restore-keys: ${{ runner.os }}-sonar
-
-      - name: Cache SonarCloud scanner
-        id: cache-sonar-scanner
-        uses: actions/cache@v4
-        with:
-          path: .\.sonar\scanner
-          key: ${{ runner.os }}-sonar-scanner
-          restore-keys: ${{ runner.os }}-sonar-scanner
-
-      - name: Shell test
+      - name: Install SonarCloud scanner
         run: |
-          pwd
+          dotnet tool install --global dotnet-sonarscanner
 
-      # - name: Install SonarCloud scanner
-      #   if: steps.cache-sonar-scanner.outputs.cache-hit != 'true'
-      #   shell: powershell
-      #   run: |
-      #     New-Item -Path .\.sonar\scanner -ItemType Directory
-      #     dotnet tool update dotnet-sonarscanner --tool-path .\.sonar\scanner
+      - name: TS Sonar Analysis
+        uses: SonarSource/sonarcloud-github-action@master
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        with:
+          args: >
+            -Dsonar.organization=kathanika
+            -Dsonar.projectKey=ts-projects
+            -Dsonar.host.url="https://sonarcloud.io"
+            -Dsonar.sources=libs/shared/kn-ui/src,libs/shared/ils-features/src,libs/shared/ils-web/src
+            -Dsonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info,coverage/libs/shared/ils-features/lcov.info,coverage/libs/shared/ils-web/lcov.info
+            -Dsonar.qualitygate.wait=true
 
-      # - name: TS Sonar Analysis
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #   shell: powershell
-      #   run: |
-      #     .\.sonar\scanner\dotnet-sonarscanner /k:"ts-projects" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.sources=libs/shared/kn-ui/src,libs/shared/ils-features/src,libs/shared/ils-web/src /d:sonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info,coverage/libs/shared/ils-features/lcov.info,coverage/libs/shared/ils-web/lcov.info /d:sonar.qualitygate.wait=true
-
-      # - name: .NET Sonar analysis
-      #   env:
-      #     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-      #     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      #   shell: powershell
-      #   run: |
-      #     .\.sonar\scanner\dotnet-sonarscanner begin |
-      #     /k:"kathanika-server-sln" |
-      #     /o:"kathanika" |
-      #     /d:sonar.token="${{ secrets.SONAR_TOKEN }}" |
-      #     /d:sonar.host.url="https://sonarcloud.io" |
-      #     /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml |
-      #     /d:sonar.qualitygate.wait=true |
-      #     dotnet build
-      #     dotnet test --collect:"XPlat Code Coverage;Format=opencover"
-      #     .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+      - name: .NET Sonar analysis
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: |
+          dotnet sonarscanner begin |
+          /k:"kathanika-server-sln" |
+          /o:"kathanika" |
+          /d:sonar.token="${{ secrets.SONAR_TOKEN }}" |
+          /d:sonar.host.url="https://sonarcloud.io" |
+          /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml |
+          /d:sonar.qualitygate.wait=true |
+          dotnet build
+          dotnet test --collect:"XPlat Code Coverage;Format=opencover"
+          dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
