@@ -150,6 +150,7 @@ jobs:
             -Dsonar.sources=libs/shared/kn-ui/src,libs/shared/ils-features/src,libs/shared/ils-web/src
             -Dsonar.javascript.lcov.reportPaths=coverage/libs/shared/kn-ui/lcov.info,coverage/libs/shared/ils-features/lcov.info,coverage/libs/shared/ils-web/lcov.info
             -Dsonar.qualitygate.wait=true
+            -Dsonar.verbose=true
 
       - name: .NET Sonar analysis
         env:
@@ -163,6 +164,7 @@ jobs:
           /d:sonar.host.url="https://sonarcloud.io" |
           /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml |
           /d:sonar.qualitygate.wait=true |
+          /d:sonar.verbose=true
           dotnet build
           dotnet test --collect:"XPlat Code Coverage;Format=opencover"
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
