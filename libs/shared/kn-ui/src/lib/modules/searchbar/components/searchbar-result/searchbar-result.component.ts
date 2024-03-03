@@ -4,7 +4,6 @@ import { SearchbarComponent } from '../searchbar/searchbar.component';
 @Component({
   selector: 'kn-searchbar-result',
   templateUrl: './searchbar-result.component.html',
-  styleUrls: ['./searchbar-result.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchbarResultComponent<T> {

@@ -12,7 +12,6 @@ import { CommonModule } from '@angular/common';
   standalone: true,
   imports: [CommonModule],
   templateUrl: './chip.component.html',
-  styleUrls: ['./chip.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KnChip {

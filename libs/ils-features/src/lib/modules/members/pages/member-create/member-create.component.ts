@@ -6,8 +6,7 @@ import { MemberFormOutput } from '../../types/member-form-output';
 import { Router } from '@angular/router';
 
 @Component({
-  templateUrl: './member-create.component.html',
-  styleUrls: ['./member-create.component.scss'],
+  templateUrl: './member-create.component.html'
 })
 export class MemberCreateComponent {
   @ViewChild('memberCreateForm') memberCreateForm: MemberFormComponent | undefined;

@@ -9,8 +9,7 @@ import {
 } from '@kathanika/graphql-ts-client';
 
 @Component({
-  templateUrl: './member-list.component.html',
-  styleUrls: ['./member-list.component.scss'],
+  templateUrl: './member-list.component.html'
 })
 export class MemberListComponent
   extends BasePaginatedListComponent<GetMembersQuery, GetMembersQueryVariables>

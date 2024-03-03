@@ -66,7 +66,8 @@ export class KnPagination {
   }
 
   protected onPageSizeChanged(element: EventTarget | null) {
-    const selectedPageSize = +(element as HTMLInputElement).value ?? 0;
+    const elementValue = +(element as HTMLInputElement).value;
+    const selectedPageSize = elementValue ?? 0;
     if (selectedPageSize > 0 && this.pageSizes.includes(selectedPageSize)) {
       this._pageSize = selectedPageSize;
       this.currentPage = 1;

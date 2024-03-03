@@ -7,8 +7,7 @@ import { MessageAlertService } from '../../../../core/services/message-alert.ser
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 
 @Component({
-  templateUrl: './author-update.component.html',
-  styleUrls: ['./author-update.component.scss'],
+  templateUrl: './author-update.component.html'
 })
 export class AuthorUpdateComponent implements OnInit {
   @ViewChild('authorUpdateForm') authorUpdateForm:

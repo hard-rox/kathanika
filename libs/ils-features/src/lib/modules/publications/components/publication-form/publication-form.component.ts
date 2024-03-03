@@ -24,7 +24,6 @@ import { KnValidators } from '../../../../validators/kn-validators';
 @Component({
   selector: 'kn-publication-form',
   templateUrl: './publication-form.component.html',
-  styleUrls: ['./publication-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PublicationFormComponent extends BaseFormComponent<PublicationFormOutput> {
@@ -103,6 +102,9 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
           KnValidators.integerOnly,
         ],
       }),
+      // quantity: new FormControl<number | null>(null),
+      // unitPrice: new FormControl<number | null>(null),
+      // vendor: new FormControl<string>('')
     });
     return group;
   }

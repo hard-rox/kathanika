@@ -11,7 +11,6 @@ import { Subject, debounceTime, map } from 'rxjs';
 @Component({
   selector: 'kn-searchbar',
   templateUrl: './searchbar.component.html',
-  styleUrls: ['./searchbar.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class SearchbarComponent<T> implements OnInit {

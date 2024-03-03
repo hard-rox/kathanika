@@ -7,8 +7,7 @@ import { KnButton } from '@kathanika/kn-ui';
   selector: 'kathanika-sidebar',
   standalone: true,
   imports: [CommonModule, RouterLink, RouterLinkActive, KnButton],
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss'],
+  templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
   selectedIndex: number | null = null;

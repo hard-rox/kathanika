@@ -11,8 +11,7 @@ import { PublicationFormInput } from '../../types/publication-form-input';
 import { PublicationFormOutput } from '../../types/publication-form-output';
 
 @Component({
-  templateUrl: './publication-update.component.html',
-  styleUrls: ['./publication-update.component.scss'],
+  templateUrl: './publication-update.component.html'
 })
 export class PublicationUpdateComponent implements OnInit {
   @ViewChild('publicationUpdateForm') publicationUpdateForm:
