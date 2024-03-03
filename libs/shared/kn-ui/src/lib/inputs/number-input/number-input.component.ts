@@ -8,7 +8,6 @@ import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './number-input.component.html',
-  styleUrls: ['./number-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

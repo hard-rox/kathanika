@@ -8,8 +8,7 @@ import {
 import { BaseQueryComponent } from '../../../../abstractions/base-query-component';
 
 @Component({
-  templateUrl: './author-details.component.html',
-  styleUrls: ['./author-details.component.scss'],
+  templateUrl: './author-details.component.html'
 })
 export class AuthorDetailsComponent
   extends BaseQueryComponent<GetAuthorQuery, GetAuthorQueryVariables>

@@ -8,7 +8,6 @@ import { AbstractInputComponent } from '../../abstractions/abstract-input-compon
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './textarea-input.component.html',
-  styleUrls: ['./textarea-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

@@ -10,8 +10,7 @@ import {
 import { BasePaginatedListComponent } from '../../../../abstractions/base-paginated-list-component';
 
 @Component({
-  templateUrl: './publisher-list.component.html',
-  styleUrls: ['./publisher-list.component.scss'],
+  templateUrl: './publisher-list.component.html'
 })
 export class PublisherListComponent
   extends BasePaginatedListComponent<

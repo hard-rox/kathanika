@@ -8,8 +8,7 @@ import { MessageAlertService } from '../../../../core/services/message-alert.ser
 import { Router } from '@angular/router';
 
 @Component({
-  templateUrl: './publisher-add.component.html',
-  styleUrls: ['./publisher-add.component.scss'],
+  templateUrl: './publisher-add.component.html'
 })
 export class PublisherAddComponent {
   @ViewChild('publisherAddForm') publisherAddForm:
@@ -29,7 +28,6 @@ export class PublisherAddComponent {
     this.isPanelLoading = true;
     this.gql.mutate({ addPublisherInput: formValue }).subscribe({
       next: (result) => {
-        // console.debug(result);
         if (result.errors || result.data?.addPublisher.errors) {
           this.errors = [];
           result.data?.addPublisher.errors?.forEach((x) =>

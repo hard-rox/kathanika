@@ -12,7 +12,7 @@ on:
 
 jobs:
   lint-build-test:
-    name: Lint, Build & Unit Test
+    name: Lint, Build, Unit Test & Sonar Scan
     runs-on: ubuntu-latest
     steps:
     - name: Checkout
@@ -41,56 +41,40 @@ jobs:
       run: npx nx affected -t build --prod --verbose
 
     - name: Test
-      run: npx nx affected -t test --prod --verbose
+      run: npx nx affected -t test --code-coverage --prod --verbose
 
-  sonar-analysis:
-    name: Sonar Scanning
-    needs: [lint-build-test]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Set up JDK 17
-        uses: actions/setup-java@v4
-        with:
-          java-version: 17
-          distribution: 'zulu' # Alternative distribution options are available.
+    - name: Set up JDK 17
+      uses: actions/setup-java@v4
+      with:
+        java-version: 17
+        distribution: 'zulu' # Alternative distribution options are available.
 
-      - uses: actions/checkout@v4
-        with:
-          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+    - name: Install dotnet Sonar scanner
+      run: |
+        dotnet tool install --global dotnet-sonarscanner
 
-      - name: Setup Node.js latest
-        uses: actions/setup-node@v4
-        with:
-          node-version: latest
-          cache: 'npm'
-
-      - name: Installing Packages
-        run: npm ci
-
-      - name: Install SonarCloud scanner
-        run: |
-          dotnet tool install --global dotnet-sonarscanner
-
-      - name: TS Sonar Analysis
-        uses: SonarSource/sonarcloud-github-action@master
-        env:
+    - name: TS Sonar Analysis
+      uses: SonarSource/sonarcloud-github-action@master
+      env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        with:
-          args: >
-            -Dsonar.organization=kathanika
-            -Dsonar.projectKey=ts-projects
-            -Dsonar.sources="libs/shared/kn-ui/src","libs/ils-features/src","apps/ils-web/src"
-            -Dsonar.javascript.lcov.reportPaths="coverage/libs/shared/kn-ui/lcov.info","coverage/libs/ils-features/lcov.info","coverage/apps/ils-web/lcov.info"
-            -Dsonar.qualitygate.wait=true
-#            -Dsonar.verbose=true
+      with:
+        args: >
+          -Dsonar.organization=kathanika
+          -Dsonar.projectKey=ts-projects
+          -Dsonar.sources="libs/shared/kn-ui/src","libs/ils-features/src","apps/ils-web/src"
+          -Dsonar.javascript.lcov.reportPaths="coverage/libs/shared/kn-ui/lcov.info","coverage/libs/ils-features/lcov.info","coverage/apps/ils-web/lcov.info"
+          -Dsonar.tests="libs/shared/kn-ui/src","libs/ils-features/src","apps/ils-web/src"
+          -Dsonar.test.inclusions=**/*.spec.ts
+          -Dsonar.qualitygate.wait=true
+#         -Dsonar.verbose=true
 
-      - name: .NET Sonar analysis
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: |
-          dotnet sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml /d:sonar.qualitygate.wait=true 
-          dotnet build
-          dotnet test --collect:"XPlat Code Coverage;Format=opencover"
-          dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+    - name: .NET Sonar analysis
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      run: |
+        dotnet sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml /d:sonar.qualitygate.wait=true 
+        dotnet build
+        dotnet test --collect:"XPlat Code Coverage;Format=opencover"
+        dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

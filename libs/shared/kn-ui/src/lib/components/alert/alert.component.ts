@@ -6,7 +6,6 @@ import { AbstractBlockComponent } from '../../abstractions/abstract-block-compon
   standalone: true,
   selector: 'kn-alert',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss'],
   imports: [CommonModule],
 })
 export class KnAlert extends AbstractBlockComponent {

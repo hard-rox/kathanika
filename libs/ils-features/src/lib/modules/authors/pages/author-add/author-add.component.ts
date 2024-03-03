@@ -6,8 +6,7 @@ import { AuthorFormComponent } from '../../components/author-form/author-form.co
 import { AuthorFormOutput } from '../../types/author-form-output';
 
 @Component({
-  templateUrl: './author-add.component.html',
-  styleUrls: ['./author-add.component.scss'],
+  templateUrl: './author-add.component.html'
 })
 export class AuthorAddComponent {
   @ViewChild('authorAddForm') authorAddForm: AuthorFormComponent | undefined;

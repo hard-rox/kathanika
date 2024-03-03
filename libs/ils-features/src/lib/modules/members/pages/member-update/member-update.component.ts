@@ -8,8 +8,7 @@ import { MessageAlertService } from "../../../../core/services/message-alert.ser
 
 
 @Component({
-  templateUrl: './member-update.component.html',
-  styleUrls: ['./member-update.component.scss'],
+  templateUrl: './member-update.component.html'
 })
 export class MemberUpdateComponent  implements OnInit {
   @ViewChild('memberUpdateForm') memberUpdateForm:

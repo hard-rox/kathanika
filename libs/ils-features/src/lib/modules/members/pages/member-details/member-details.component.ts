@@ -9,8 +9,7 @@ import {
 import { BaseQueryComponent } from '../../../../abstractions/base-query-component';
 
 @Component({
-  templateUrl: './member-details.component.html',
-  styleUrls: ['./member-details.component.scss'],
+  templateUrl: './member-details.component.html'
 })
 export class MemberDetailsComponent
   extends BaseQueryComponent<GetMemberQuery, GetMemberQueryVariables>

@@ -11,8 +11,7 @@ import { MessageAlertService } from '../../../../core/services/message-alert.ser
 import { BasePaginatedListComponent } from '../../../../abstractions/base-paginated-list-component';
 
 @Component({
-  templateUrl: './author-list.component.html',
-  styleUrls: ['./author-list.component.scss'],
+  templateUrl: './author-list.component.html'
 })
 export class AuthorListComponent
   extends BasePaginatedListComponent<GetAuthorsQuery, GetAuthorsQueryVariables>
