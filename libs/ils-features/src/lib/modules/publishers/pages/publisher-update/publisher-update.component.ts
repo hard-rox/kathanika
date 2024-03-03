@@ -10,8 +10,7 @@ import { PublisherFormInput } from '../../types/publisher-form-input';
 import { PublisherFormOutput } from '../../types/publisher-form-output';
 
 @Component({
-  templateUrl: './publisher-update.component.html',
-  styleUrls: ['./publisher-update.component.scss'],
+  templateUrl: './publisher-update.component.html'
 })
 export class PublisherUpdateComponent implements OnInit {
   @ViewChild('publisherUpdateForm') publisherUpdateForm:

@@ -8,7 +8,6 @@ import { AbstractInputComponent } from '../../abstractions/base-input-component'
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './toggle.component.html',
-  styleUrls: ['./toggle.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

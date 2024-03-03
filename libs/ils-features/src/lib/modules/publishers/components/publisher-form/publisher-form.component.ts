@@ -15,7 +15,6 @@ import {
 @Component({
   selector: 'kn-publisher-form',
   templateUrl: './publisher-form.component.html',
-  styleUrls: ['./publisher-form.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class PublisherFormComponent extends BaseFormComponent<PublisherFormOutput> {

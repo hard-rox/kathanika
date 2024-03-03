@@ -8,7 +8,6 @@ import { AbstractInputComponent } from '../../abstractions/base-input-component'
   standalone: true,
   imports: [CommonModule, FormsModule],
   templateUrl: './date-input.component.html',
-  styleUrls: ['./date-input.component.scss'],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

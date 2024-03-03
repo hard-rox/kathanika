@@ -8,8 +8,7 @@ import {
 } from '../../../../abstractions/base-form-component';
 @Component({
   selector: 'kn-author-form',
-  templateUrl: './author-form.component.html',
-  styleUrls: ['./author-form.component.scss'],
+  templateUrl: './author-form.component.html'
 })
 export class AuthorFormComponent
   extends BaseFormComponent<AuthorFormOutput>

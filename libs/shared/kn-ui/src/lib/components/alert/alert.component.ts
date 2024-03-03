@@ -5,7 +5,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   standalone: true,
   selector: 'kn-alert',
   templateUrl: './alert.component.html',
-  styleUrls: ['./alert.component.scss'],
   imports: [CommonModule],
 })
 export class KnAlert {

@@ -6,8 +6,7 @@ import { KnButton } from '@kathanika/kn-ui';
   selector: 'kathanika-header',
   standalone: true,
   imports: [CommonModule, KnButton],
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.scss'],
+  templateUrl: './header.component.html'
 })
 export class HeaderComponent {
   isUserActionsVisible = false;

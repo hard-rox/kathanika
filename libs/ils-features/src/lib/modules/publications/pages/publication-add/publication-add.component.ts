@@ -6,8 +6,7 @@ import { AddPublicationGQL } from '@kathanika/graphql-ts-client';
 import { PublicationFormOutput } from '../../types/publication-form-output';
 
 @Component({
-  templateUrl: './publication-add.component.html',
-  styleUrls: ['./publication-add.component.scss'],
+  templateUrl: './publication-add.component.html'
 })
 export class PublicationAddComponent {
   @ViewChild('publicationAddForm') publicationAddForm:
