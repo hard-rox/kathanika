@@ -35,13 +35,13 @@ jobs:
       run: git branch --track main origin/main
 
     - name: Lint
-      run: npx nx affected -t lint --prod --verbose
+      run: npx nx affected -t lint --prod --skipCache --verbose
 
     - name: Build
-      run: npx nx affected -t build --prod --verbose
+      run: npx nx affected -t build --prod --skipCache --verbose
 
     - name: Test
-      run: npx nx affected -t test --prod --verbose
+      run: npx nx affected -t test --prod --skipCache --verbose
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
