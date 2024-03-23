@@ -20,6 +20,6 @@ internal sealed class MemoryCacheService(IMemoryCache memoryCache) : ICacheServi
 
     public void Set<T>(string key, T value, TimeSpan? expirationTime = null)
     {
-        memoryCache.Set<T>(key, value, expirationTime ?? defaultExpirationTime);
+        memoryCache.Set(key, value, expirationTime ?? defaultExpirationTime);
     }
 }

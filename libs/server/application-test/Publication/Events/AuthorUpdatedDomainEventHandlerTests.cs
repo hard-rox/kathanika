@@ -49,7 +49,6 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
                 factoryMethod.Company.CompanyName(),
                 factoryMethod.Date.PastDateOnly(),
                 "",
-                factoryMethod.Random.Number(1000),
                 factoryMethod.Random.Number(1, 5),
                 factoryMethod.Random.AlphaNumeric(5),
                 factoryMethod.Lorem.Sentences(5),

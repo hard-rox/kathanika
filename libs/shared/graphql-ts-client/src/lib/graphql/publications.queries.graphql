@@ -43,8 +43,15 @@ query getPublication($id: String!) {
     language
     publisher
     publishedDate
-    buyingPrice
     copiesAvailable
     description
+    purchaseRecords(order: { purchasedDate: DESC }) {
+      id
+      purchasedDate
+      vendor
+      quantity
+      unitPrice
+      totalPrice
+    }
   }
 }

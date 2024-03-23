@@ -32,7 +32,7 @@ internal sealed class UpdateAuthorCommandValidator : AbstractValidator<UpdateAut
     }
 }
 
-internal class AuthorPatchValidator : AbstractValidator<UpdateAuthorCommand.AuthorPatch>
+internal class AuthorPatchValidator : AbstractValidator<AuthorPatch>
 {
     public AuthorPatchValidator()
     {

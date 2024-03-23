@@ -40,6 +40,10 @@ export class SidebarComponent {
           text: 'Add',
           link: 'publications/add',
         },
+        {
+          text: 'Record Purchase',
+          link: 'publications/purchase'
+        }
       ],
     },
     {

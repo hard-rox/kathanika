@@ -25,9 +25,9 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _cacheService = cacheService;
     }
 
-    private static bool IsValidMongoObjectId(string id)
+    private static bool IsValidId(string id)
     {
-        if (ObjectId.TryParse(id, out _))
+        if (Guid.TryParse(id, out _))
         {
             return true;
         }
@@ -73,7 +73,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task<bool> ExistsAsync(string id, CancellationToken cancellationToken = default)
     {
-        if (!IsValidMongoObjectId(id)) return false;
+        if (!IsValidId(id)) return false;
         FilterDefinition<T> filterDefinition = Builders<T>.Filter.Where(x => x.Id == id);
         CountOptions countOptions = new()
         {
@@ -96,7 +96,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
-        if (!IsValidMongoObjectId(id)) return null;
+        if (!IsValidId(id)) return null;
         _logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
 
         string cacheKey = $"{typeof(T).Name.ToLower()}:{id}";
@@ -224,7 +224,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
-        if (!IsValidMongoObjectId(id)) throw new NotFoundWithTheIdException(typeof(T), id);
+        if (!IsValidId(id)) throw new NotFoundWithTheIdException(typeof(T), id);
         _logger.LogInformation("Deleting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
         FilterDefinition<T> filter = Builders<T>.Filter.Eq(x => x.Id, id);
         await _collection.DeleteOneAsync(filter, cancellationToken: cancellationToken);

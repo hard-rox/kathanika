@@ -14,7 +14,6 @@ public class GetPublicationByIdQueryHandlerTests
             "",
             DateOnly.MinValue,
             "",
-            (decimal)102.0,
             1,
             "",
             string.Empty,

@@ -64,7 +64,6 @@ export class PublicationUpdateComponent implements OnInit {
                 language: result.data.publication.language,
                 publisher: result.data.publication.publisher,
                 publishedDate: result.data.publication.publishedDate,
-                buyingPrice: result.data.publication.buyingPrice,
                 copiesAvailable: result.data.publication.copiesAvailable,
                 description: result.data.publication.description,
                 authors: result.data.publication.authors,
@@ -84,7 +83,7 @@ export class PublicationUpdateComponent implements OnInit {
     this.isPanelLoading = true;
     const publicationPatch: PublicationPatchInput = {
       ...publicationOutput,
-      copiesAvailable: publicationOutput.copiesPurchased,
+      copiesAvailable: publicationOutput.copiesAvailable,
       isbn: publicationOutput.isbn ?? '', ///TODO: Fixing to typed...
     };
 

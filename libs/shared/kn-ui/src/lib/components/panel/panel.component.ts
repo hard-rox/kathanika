@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input } from '@angular/core';
+import { AbstractBlockComponent } from '../../abstractions/abstract-block-component';
 
 @Component({
   standalone: true,
@@ -8,7 +9,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./panel.component.scss'],
   imports: [CommonModule],
 })
-export class KnPanel {
+export class KnPanel extends AbstractBlockComponent {
   @Input()
   panelTitle: string | null = null;
 

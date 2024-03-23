@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { AbstractBlockComponent } from '../../abstractions/abstract-block-component';
 
 @Component({
   standalone: true,
@@ -7,7 +8,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   templateUrl: './alert.component.html',
   imports: [CommonModule],
 })
-export class KnAlert {
+export class KnAlert extends AbstractBlockComponent {
   @Input()
   closeable = false;
 

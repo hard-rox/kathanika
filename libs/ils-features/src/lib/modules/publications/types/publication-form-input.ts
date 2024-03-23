@@ -11,7 +11,6 @@ export type PublicationFormInput = {
   language: string;
   description: string;
   authors: PublicationAuthor[];
-  buyingPrice: number;
   callNumber: string;
   copiesAvailable: number;
 };

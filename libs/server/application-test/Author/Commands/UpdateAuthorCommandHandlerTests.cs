@@ -9,10 +9,10 @@ public class UpdateAuthorCommandHandlerTests
     {
         string authorId = Guid.NewGuid().ToString();
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
-        UpdateAuthorCommand command = new(authorId, new UpdateAuthorCommand.AuthorPatch());
+        UpdateAuthorCommand command = new(authorId, new AuthorPatch());
         UpdateAuthorCommandHandler handler = new(authorRepository);
 
-        var exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
+        NotFoundWithTheIdException exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
 
         Assert.IsAssignableFrom<NotFoundWithTheIdException>(exception);
         Assert.Equal(authorId, exception.Id);
@@ -31,7 +31,7 @@ public class UpdateAuthorCommandHandlerTests
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
         await authorRepository.UpdateAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>());
-        UpdateAuthorCommand command = new(authorId, new UpdateAuthorCommand.AuthorPatch(
+        UpdateAuthorCommand command = new(authorId, new AuthorPatch(
             "Updated First Name",
             "Updated Last Name"
         ));

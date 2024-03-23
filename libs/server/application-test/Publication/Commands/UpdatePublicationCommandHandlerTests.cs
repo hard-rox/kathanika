@@ -11,8 +11,8 @@ public class UpdatePublicationCommandHandlerTests
         string publicationId = Guid.NewGuid().ToString();
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
-        UpdatePublicationCommand command = new(publicationId, new UpdatePublicationCommand.PublicationPatch(
-            "", "", PublicationType.Book, "", null, null, null, null, "" ///TODO: Fix up update in domain...
+        UpdatePublicationCommand command = new(publicationId, new PublicationPatch(
+            "", "", PublicationType.Book, "", null, null, null, "" // TODO: Fix up update in domain...
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository);
 
@@ -33,7 +33,6 @@ public class UpdatePublicationCommandHandlerTests
             "",
             DateOnly.MinValue,
             "",
-            (decimal)10.2,
             2,
             "ABCD",
             string.Empty,
@@ -46,8 +45,8 @@ public class UpdatePublicationCommandHandlerTests
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(new List<Author>());
-        UpdatePublicationCommand command = new(publicationId, new UpdatePublicationCommand.PublicationPatch(
-            "Updated Title", "", PublicationType.Book, "", null, null, null, null, "" //TODO: Fix up update in domain with non nullable...
+        UpdatePublicationCommand command = new(publicationId, new PublicationPatch(
+            "Updated Title", "", PublicationType.Book, "", null, null, null, "" //TODO: Fix up update in domain with non nullable...
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository);
 

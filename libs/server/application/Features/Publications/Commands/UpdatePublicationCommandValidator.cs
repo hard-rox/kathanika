@@ -31,7 +31,7 @@ internal sealed class UpdatePublicationCommandValidator : AbstractValidator<Upda
     }
 }
 
-internal sealed class PublicationPatchValidator : AbstractValidator<UpdatePublicationCommand.PublicationPatch>
+internal sealed class PublicationPatchValidator : AbstractValidator<PublicationPatch>
 {
     public PublicationPatchValidator()
     {

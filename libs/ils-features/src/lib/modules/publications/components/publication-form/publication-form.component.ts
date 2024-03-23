@@ -34,7 +34,7 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
       this.formGroup.patchValue({
         ...input,
         authorIds: input.authors.map((x) => x.id),
-        copiesPurchased: input.copiesAvailable,
+        copiesAvailable: input.copiesAvailable,
       });
     }
   }
@@ -94,7 +94,7 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
         validators: [Validators.required],
       }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      copiesPurchased: new FormControl<number | any>(null, {
+      copiesAvailable: new FormControl<number | any>(null, {
         nonNullable: true,
         validators: [
           Validators.required,

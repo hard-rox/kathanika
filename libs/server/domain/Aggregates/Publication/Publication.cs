@@ -5,6 +5,7 @@ namespace Kathanika.Domain.Aggregates;
 public sealed class Publication : AggregateRoot
 {
     private List<PublicationAuthor> _authors = [];
+    private List<PurchaseRecord> _purchaseRecords = [];
 
     public string Title { get; private set; }
     public string? Isbn { get; private set; }
@@ -14,7 +15,6 @@ public sealed class Publication : AggregateRoot
     public string Edition { get; private set; }
     public string Description { get; private set; }
     public string Language { get; private set; }
-    public decimal BuyingPrice { get; private set; }
     public int CopiesAvailable { get; private set; }
     public string CallNumber { get; private set; }
 
@@ -24,9 +24,21 @@ public sealed class Publication : AggregateRoot
         {
             return _authors;
         }
-        init
+        private init
         {
             _authors = value?.ToList() ?? [];
+        }
+    }
+
+    public IReadOnlyList<PurchaseRecord> PurchaseRecords
+    {
+        get
+        {
+            return _purchaseRecords ?? [];
+        }
+        private init
+        {
+            _purchaseRecords = value?.ToList() ?? [];
         }
     }
 
@@ -37,7 +49,6 @@ public sealed class Publication : AggregateRoot
         string publisher,
         DateOnly publishedDate,
         string edition,
-        decimal buyingPrice,
         int copiesAvailable,
         string callNumber,
         string description,
@@ -49,7 +60,6 @@ public sealed class Publication : AggregateRoot
         Publisher = publisher;
         PublishedDate = publishedDate;
         Edition = edition;
-        BuyingPrice = buyingPrice;
         CopiesAvailable = copiesAvailable;
         CallNumber = callNumber;
         Description = description;
@@ -63,7 +73,6 @@ public sealed class Publication : AggregateRoot
         string publisher,
         DateOnly publishedDate,
         string edition,
-        decimal buyingPrice,
         int copiesAvailable,
         string callNumber,
         string description,
@@ -77,7 +86,6 @@ public sealed class Publication : AggregateRoot
             publisher,
             publishedDate,
             edition,
-            buyingPrice,
             copiesAvailable,
             callNumber,
             description,
@@ -99,6 +107,40 @@ public sealed class Publication : AggregateRoot
         return publication;
     }
 
+    public static Publication Create(
+        string title,
+        string? isbn,
+        PublicationType publicationType,
+        string publisher,
+        DateOnly publishedDate,
+        string edition,
+        string callNumber,
+        string description,
+        string language,
+        decimal unitPrice,
+        int quantity,
+        string vendor,
+    IEnumerable<Author>? authors = null
+    )
+    {
+        Publication publication = Create(
+            title,
+            isbn,
+            publicationType,
+            publisher,
+            publishedDate,
+            edition,
+            quantity,
+            callNumber,
+            description,
+            language,
+            authors
+        );
+
+        publication.RecordPurchase(unitPrice, quantity, vendor);
+        return publication;
+    }
+
     public void Update(
         string? title,
         string? isbn,
@@ -106,7 +148,6 @@ public sealed class Publication : AggregateRoot
         string? publisher,
         DateOnly? publishedDate,
         string? edition,
-        decimal? buyingPrice,
         int? copiesAvailable,
         string? callNumber)
     {
@@ -116,7 +157,6 @@ public sealed class Publication : AggregateRoot
         Publisher = !string.IsNullOrEmpty(publisher) ? publisher : Publisher;
         PublishedDate = publishedDate is not null ? (DateOnly)publishedDate : PublishedDate;
         Edition = edition is not null ? edition : Edition;
-        BuyingPrice = buyingPrice is not null ? (decimal)buyingPrice : BuyingPrice;
         CopiesAvailable = copiesAvailable is not null ? (int)copiesAvailable : CopiesAvailable;
         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : CallNumber;
     }
@@ -141,5 +181,15 @@ public sealed class Publication : AggregateRoot
         _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
                     author.LastName));
+    }
+
+    public void RecordPurchase(
+        decimal unitPrice,
+        int quantity,
+        string vendor)
+    {
+        _purchaseRecords ??= [];
+        _purchaseRecords.Add(new PurchaseRecord(quantity, unitPrice, vendor));
+        CopiesAvailable += quantity;
     }
 }
