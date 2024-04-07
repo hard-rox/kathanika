@@ -22,6 +22,7 @@ import {
   KnTextareaInput
 } from '@kathanika/kn-ui';
 import { PurchaseRecordFormComponent } from './components/purchase-record-form/purchase-record-form.component';
+import { RecordPurchaseComponent } from './pages/record-purchase/record-purchase.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { PurchaseRecordFormComponent } from './components/purchase-record-form/p
     PublicationUpdateComponent,
     PublicationDetailsComponent,
     PublicationFormComponent,
-    PurchaseRecordFormComponent
+    PurchaseRecordFormComponent,
+    RecordPurchaseComponent
   ],
   imports: [
     CommonModule,
