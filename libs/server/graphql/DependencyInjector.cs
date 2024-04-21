@@ -7,7 +7,10 @@ public static class DependencyInjector
 {
     public static IServiceCollection AddGraphQLInfrastructure(this IServiceCollection services)
     {
-        services.BuildGraphQLSchema();
+        services
+            .BuildGraphQLSchema()
+            .AddInstrumentation()
+            .AddApolloTracing();
 
         return services;
     }

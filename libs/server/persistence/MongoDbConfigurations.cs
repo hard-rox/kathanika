@@ -10,6 +10,7 @@ using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver.Core.Events;
+using MongoDB.Driver.Core.Extensions.DiagnosticSources;
 
 namespace Kathanika.Persistence;
 
@@ -58,6 +59,7 @@ internal static class MongoDbConfigurations
             MongoClientSettings mongoClientSettings = MongoClientSettings.FromConnectionString(connectionString);
             mongoClientSettings.ClusterConfigurator = cc =>
             {
+                cc.Subscribe(new DiagnosticsActivityEventSubscriber());
                 cc.Subscribe<CommandStartedEvent>(e =>
                 {
                     logger.LogInformation("MongoDB command {@CommandName} started, {@DBRequestId}, {@OperationId}, {@DatabaseName}, {@CommandText}",
