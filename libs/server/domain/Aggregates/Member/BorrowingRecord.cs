@@ -2,7 +2,7 @@ using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates;
 
-public sealed class BorrowingRecord : ValueObject
+public sealed record BorrowingRecord : ValueObject
 {
     public override IEnumerable<object> GetAtomicValues()
     {

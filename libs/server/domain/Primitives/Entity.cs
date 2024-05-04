@@ -2,7 +2,7 @@ namespace Kathanika.Domain.Primitives;
 
 public abstract class Entity : IEquatable<Entity>
 {
-    public string Id { get; private init; } = string.Empty;
+    public string Id { get; private init; } = Guid.NewGuid().ToString();
 
     public static bool operator ==(Entity? firstObject, Entity? secondObject)
     {

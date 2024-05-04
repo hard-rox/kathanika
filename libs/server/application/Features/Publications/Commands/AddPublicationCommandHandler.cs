@@ -14,8 +14,7 @@ internal sealed class AddPublicationCommandHandler(IPublicationRepository public
             request.Publisher,
             request.PublishedDate,
             request.Edition,
-            request.BuyingPrice,
-            request.CopiesPurchased,
+            request.CopiesAvailable,
             request.CallNumber,
             string.Empty, //TODO: Should be in request...
             string.Empty,

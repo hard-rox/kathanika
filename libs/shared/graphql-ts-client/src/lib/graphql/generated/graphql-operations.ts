@@ -46,9 +46,8 @@ export type AddPublicationError = InvalidFieldError;
 
 export type AddPublicationInput = {
   authorIds: Array<Scalars['String']['input']>;
-  buyingPrice: Scalars['Decimal']['input'];
   callNumber: Scalars['String']['input'];
-  copiesPurchased: Scalars['Int']['input'];
+  copiesAvailable: Scalars['Int']['input'];
   edition: Scalars['String']['input'];
   isbn: Scalars['String']['input'];
   publicationType: PublicationType;
@@ -113,11 +112,9 @@ export type AuthorPatchInput = {
 };
 
 export type AuthorSortInput = {
-  biography?: InputMaybe<SortEnumType>;
   dateOfBirth?: InputMaybe<SortEnumType>;
   dateOfDeath?: InputMaybe<SortEnumType>;
   firstName?: InputMaybe<SortEnumType>;
-  fullName?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
   lastName?: InputMaybe<SortEnumType>;
   nationality?: InputMaybe<SortEnumType>;
@@ -200,21 +197,6 @@ export type DateTimeOperationFilterInput = {
   nin?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   nlt?: InputMaybe<Scalars['DateTime']['input']>;
   nlte?: InputMaybe<Scalars['DateTime']['input']>;
-};
-
-export type DecimalOperationFilterInput = {
-  eq?: InputMaybe<Scalars['Decimal']['input']>;
-  gt?: InputMaybe<Scalars['Decimal']['input']>;
-  gte?: InputMaybe<Scalars['Decimal']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Decimal']['input']>>>;
-  lt?: InputMaybe<Scalars['Decimal']['input']>;
-  lte?: InputMaybe<Scalars['Decimal']['input']>;
-  neq?: InputMaybe<Scalars['Decimal']['input']>;
-  ngt?: InputMaybe<Scalars['Decimal']['input']>;
-  ngte?: InputMaybe<Scalars['Decimal']['input']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Decimal']['input']>>>;
-  nlt?: InputMaybe<Scalars['Decimal']['input']>;
-  nlte?: InputMaybe<Scalars['Decimal']['input']>;
 };
 
 export type DeleteAuthorError = DeletionFailedError | NotFoundWithTheIdError;
@@ -301,7 +283,6 @@ export type MemberFilterInput = {
   dateOfBirth?: InputMaybe<DateOperationFilterInput>;
   email?: InputMaybe<StringOperationFilterInput>;
   firstName?: InputMaybe<StringOperationFilterInput>;
-  fullName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
   lastMembershipSuspensionDateTime?: InputMaybe<DateTimeOperationFilterInput>;
   lastName?: InputMaybe<StringOperationFilterInput>;
@@ -326,7 +307,6 @@ export type MemberSortInput = {
   dateOfBirth?: InputMaybe<SortEnumType>;
   email?: InputMaybe<SortEnumType>;
   firstName?: InputMaybe<SortEnumType>;
-  fullName?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
   lastMembershipSuspensionDateTime?: InputMaybe<SortEnumType>;
   lastName?: InputMaybe<SortEnumType>;
@@ -367,6 +347,7 @@ export type Mutations = {
   createMember: CreateMemberPayload;
   deleteAuthor: DeleteAuthorPayload;
   deletePublisher: DeletePublisherPayload;
+  purchasePublication: PurchasePublicationPayload;
   renewMembership: RenewMembershipPayload;
   suspendMembership: SuspendMembershipPayload;
   updateAuthor: UpdateAuthorPayload;
@@ -408,6 +389,11 @@ export type MutationsDeleteAuthorArgs = {
 
 export type MutationsDeletePublisherArgs = {
   input: DeletePublisherInput;
+};
+
+
+export type MutationsPurchasePublicationArgs = {
+  input: PurchasePublicationInput;
 };
 
 
@@ -455,7 +441,6 @@ export type Notification = {
 export type Publication = {
   __typename?: 'Publication';
   authors: Array<PublicationAuthor>;
-  buyingPrice: Scalars['Decimal']['output'];
   callNumber: Scalars['String']['output'];
   copiesAvailable: Scalars['Int']['output'];
   description: Scalars['String']['output'];
@@ -466,7 +451,13 @@ export type Publication = {
   publicationType: PublicationType;
   publishedDate: Scalars['Date']['output'];
   publisher: Scalars['String']['output'];
+  purchaseRecords: Array<PurchaseRecord>;
   title: Scalars['String']['output'];
+};
+
+
+export type PublicationPurchaseRecordsArgs = {
+  order?: InputMaybe<Array<PurchaseRecordSortInput>>;
 };
 
 export type PublicationAuthor = {
@@ -489,7 +480,6 @@ export type PublicationAuthorFilterInput = {
 export type PublicationFilterInput = {
   and?: InputMaybe<Array<PublicationFilterInput>>;
   authors?: InputMaybe<ListFilterInputTypeOfPublicationAuthorFilterInput>;
-  buyingPrice?: InputMaybe<DecimalOperationFilterInput>;
   callNumber?: InputMaybe<StringOperationFilterInput>;
   copiesAvailable?: InputMaybe<IntOperationFilterInput>;
   description?: InputMaybe<StringOperationFilterInput>;
@@ -506,7 +496,6 @@ export type PublicationFilterInput = {
 
 export type PublicationPatchInput = {
   authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
-  buyingPrice?: InputMaybe<Scalars['Decimal']['input']>;
   callNumber: Scalars['String']['input'];
   copiesAvailable?: InputMaybe<Scalars['Int']['input']>;
   edition?: InputMaybe<Scalars['String']['input']>;
@@ -518,7 +507,6 @@ export type PublicationPatchInput = {
 };
 
 export type PublicationSortInput = {
-  buyingPrice?: InputMaybe<SortEnumType>;
   callNumber?: InputMaybe<SortEnumType>;
   copiesAvailable?: InputMaybe<SortEnumType>;
   description?: InputMaybe<SortEnumType>;
@@ -615,6 +603,51 @@ export type PublishersCollectionSegment = {
   /** Information to aid in pagination. */
   pageInfo: CollectionSegmentInfo;
   totalCount: Scalars['Int']['output'];
+};
+
+export type PurchasePublicationError = InvalidFieldError | NotFoundWithTheIdError;
+
+export type PurchasePublicationInput = {
+  authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
+  callNumber?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  edition?: InputMaybe<Scalars['String']['input']>;
+  isbn?: InputMaybe<Scalars['String']['input']>;
+  language?: InputMaybe<Scalars['String']['input']>;
+  publicationId?: InputMaybe<Scalars['String']['input']>;
+  publicationType?: InputMaybe<PublicationType>;
+  publishedDate?: InputMaybe<Scalars['Date']['input']>;
+  publisher?: InputMaybe<Scalars['String']['input']>;
+  quantity: Scalars['Int']['input'];
+  title?: InputMaybe<Scalars['String']['input']>;
+  unitPrice: Scalars['Decimal']['input'];
+  vendor: Scalars['String']['input'];
+};
+
+export type PurchasePublicationPayload = {
+  __typename?: 'PurchasePublicationPayload';
+  data?: Maybe<Publication>;
+  errors?: Maybe<Array<PurchasePublicationError>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type PurchaseRecord = {
+  __typename?: 'PurchaseRecord';
+  id: Scalars['String']['output'];
+  purchasedDate: Scalars['Date']['output'];
+  quantity: Scalars['Int']['output'];
+  totalPrice: Scalars['Decimal']['output'];
+  unitPrice: Scalars['Decimal']['output'];
+  vendor: Scalars['String']['output'];
+};
+
+export type PurchaseRecordSortInput = {
+  id?: InputMaybe<SortEnumType>;
+  purchasedDate?: InputMaybe<SortEnumType>;
+  quantity?: InputMaybe<SortEnumType>;
+  totalPrice?: InputMaybe<SortEnumType>;
+  unitPrice?: InputMaybe<SortEnumType>;
+  vendor?: InputMaybe<SortEnumType>;
 };
 
 export type Queries = {
@@ -894,7 +927,7 @@ export type GetPublicationQueryVariables = Exact<{
 }>;
 
 
-export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, buyingPrice: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }> } | null };
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }> } | null };
 
 export type AddPublisherMutationVariables = Exact<{
   addPublisherInput: AddPublisherInput;
@@ -1333,9 +1366,16 @@ export const GetPublicationDocument = gql`
     language
     publisher
     publishedDate
-    buyingPrice
     copiesAvailable
     description
+    purchaseRecords(order: {purchasedDate: DESC}) {
+      id
+      purchasedDate
+      vendor
+      quantity
+      unitPrice
+      totalPrice
+    }
   }
 }
     `;

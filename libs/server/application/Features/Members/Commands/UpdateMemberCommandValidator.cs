@@ -14,7 +14,7 @@ internal sealed class UpdateMemberCommandValidator : AbstractValidator<UpdateMem
     }
 }
 
-internal sealed class MemberPatchValidator : AbstractValidator<UpdateMemberCommand.MemberPatch>
+internal sealed class MemberPatchValidator : AbstractValidator<MemberPatch>
 {
     public MemberPatchValidator(IMemberRepository memberRepository)
     {

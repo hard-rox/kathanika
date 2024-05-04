@@ -1,14 +1,12 @@
 import { EventEmitter } from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
-export abstract class BaseFormComponent<TOutput> {
-  protected readonly formGroup: FormGroup<{
-    [K in keyof TOutput]: FormControl<TOutput[K]>;
-  }>;
+export abstract class BaseFormComponent<TOutput extends Record<string, unknown>> {
+  protected readonly formGroup: FormGroup<ControlsOf<TOutput>>;
   protected submitEventEmitter: EventEmitter<TOutput> =
     new EventEmitter<TOutput>();
 
-  protected abstract createFormGroup(): FormGroupModel<TOutput>;
+  protected abstract createFormGroup(): FormGroup<ControlsOf<TOutput>>;
 
   constructor() {
     this.formGroup = this.createFormGroup();
@@ -28,6 +26,9 @@ export abstract class BaseFormComponent<TOutput> {
   }
 }
 
-export type FormGroupModel<TOutput> = FormGroup<{
-    [K in keyof TOutput]: FormControl<TOutput[K]>;
-  }>
+export type ControlsOf<T extends Record<string, unknown>> = {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  [K in keyof T]: T[K] extends Record<any, unknown>
+  ? FormGroup<ControlsOf<T[K]>>
+  : FormControl<T[K]>;
+};

@@ -15,7 +15,7 @@ public sealed class BaseRepositoryTests
     };
     private class DummyRepo(IMongoDatabase database,
         string collectionName,
-        ILogger<BaseRepositoryTests.DummyRepo> logger,
+        ILogger<DummyRepo> logger,
         ICacheService cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService)
     {
     }
@@ -37,7 +37,7 @@ public sealed class BaseRepositoryTests
         DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
-        await repo.GetByIdAsync("6487aceb533e0377b58d501c");
+        await repo.GetByIdAsync(Guid.NewGuid().ToString());
 
         // Assert
         await collection.Received(1).FindAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),
@@ -113,7 +113,7 @@ public sealed class BaseRepositoryTests
         DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
-        await repo.DeleteAsync("6487aceb533e0377b58d501c");
+        await repo.DeleteAsync(Guid.NewGuid().ToString());
 
         // Assert
         await collection.Received(1).DeleteOneAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),

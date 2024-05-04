@@ -1,13 +1,11 @@
-using System.Reflection;
-using Kathanika.Domain.DomainEvents;
 using Kathanika.Domain.Primitives;
-using Kathanika.Persistence.MongoDbConventions;
 using Kathanika.Persistence.Outbox;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver.Core.Events;
 using MongoDB.Driver.Core.Extensions.DiagnosticSources;
@@ -16,18 +14,19 @@ namespace Kathanika.Persistence;
 
 internal static class MongoDbConfigurations
 {
-    internal static void AddMongoDb(this IServiceCollection services, string? connectionString)
+    private static void RegisterConventionPacks()
     {
         ConventionPack conventionPack =
-        [
-            new CamelCaseElementNameConvention(),
-            new StringIdStoredAsObjectIdConvention(),
-            new IgnoreExtraElementsConvention(true),
-            new ValueObjectIdConvention(),
-            new EnumRepresentationConvention(BsonType.String)
-        ];
+                [
+                    new CamelCaseElementNameConvention(),
+                    new IgnoreExtraElementsConvention(true),
+                    new EnumRepresentationConvention(BsonType.String)
+                ];
         ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
+    }
 
+    private static void RegisterDomainEventClassMap()
+    {
         IEnumerable<Type> domainEventTypes = typeof(IDomainEvent)
                                        .Assembly
                                        .GetTypes()
@@ -47,11 +46,23 @@ internal static class MongoDbConfigurations
         BsonClassMap.RegisterClassMap<OutboxMessage>(cm =>
         {
             cm.AutoMap();
+            cm.MapIdProperty(c => c.Id)
+                .SetIdGenerator(StringObjectIdGenerator.Instance)
+                .SetSerializer(new StringSerializer(BsonType.ObjectId));
             cm.MapMember(m => m.DomainEvent)
                 .SetSerializer(new ImpliedImplementationInterfaceSerializer<IDomainEvent, IDomainEvent>());
         });
+    }
 
-        services.AddSingleton<IMongoDatabase>(f =>
+    internal static void AddMongoDb(this IServiceCollection services, string? connectionString)
+    {
+        BsonSerializer.RegisterSerializer(typeof(DateTimeOffset), new DateTimeOffsetSerializer(BsonType.Document));
+
+        RegisterConventionPacks();
+
+        RegisterDomainEventClassMap();
+
+        services.AddSingleton(f =>
         {
             ServiceProvider sp = services.BuildServiceProvider();
             ILogger<MongoClientSettings> logger = sp.GetRequiredService<ILogger<MongoClientSettings>>();

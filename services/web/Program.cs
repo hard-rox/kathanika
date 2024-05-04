@@ -35,7 +35,7 @@ try
                 .AddHotChocolateInstrumentation();
 
             tracing
-                .AddConsoleExporter()
+                // .AddConsoleExporter()
                 .AddOtlpExporter();
         })
         .WithMetrics(metrics =>
@@ -45,7 +45,7 @@ try
                 .AddHttpClientInstrumentation();
 
             metrics
-                .AddConsoleExporter()
+                // .AddConsoleExporter()
                 .AddOtlpExporter();
         });
 

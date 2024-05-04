@@ -19,8 +19,9 @@ import {
   SearchbarModule,
   KnSelectInput,
   KnTextInput,
-  KnTextareaInput,
+  KnTextareaInput
 } from '@kathanika/kn-ui';
+import { RecordPurchaseComponent } from './pages/record-purchase/record-purchase.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import {
     PublicationUpdateComponent,
     PublicationDetailsComponent,
     PublicationFormComponent,
+    RecordPurchaseComponent
   ],
   imports: [
     CommonModule,
@@ -43,7 +45,7 @@ import {
     KnSelectInput,
     KnNumberInput,
     KnChip,
-    SearchbarModule,
+    SearchbarModule
   ],
 })
-export class PublicationsModule {}
+export class PublicationsModule { }

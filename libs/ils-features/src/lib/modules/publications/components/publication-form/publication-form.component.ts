@@ -15,7 +15,7 @@ import {
 } from '@kathanika/graphql-ts-client';
 import {
   BaseFormComponent,
-  FormGroupModel,
+  ControlsOf,
 } from '../../../../abstractions/base-form-component';
 import { QueryRef } from 'apollo-angular';
 import { PublicationAuthor } from '../../types/publication-author';
@@ -34,7 +34,7 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
       this.formGroup.patchValue({
         ...input,
         authorIds: input.authors.map((x) => x.id),
-        copiesPurchased: input.copiesAvailable,
+        copiesAvailable: input.copiesAvailable,
       });
     }
   }
@@ -54,8 +54,8 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
     this.authorSearchQueryRef = authorsGql.watch({ filterText: '' });
   }
 
-  protected createFormGroup(): FormGroupModel<PublicationFormOutput> {
-    const group: FormGroupModel<PublicationFormOutput> = new FormGroup({
+  protected override createFormGroup(): FormGroup<ControlsOf<PublicationFormOutput>> {
+    return new FormGroup({
       title: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
@@ -94,7 +94,7 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
         validators: [Validators.required],
       }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      copiesPurchased: new FormControl<number | any>(null, {
+      copiesAvailable: new FormControl<number | any>(null, {
         nonNullable: true,
         validators: [
           Validators.required,
@@ -106,7 +106,6 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
       // unitPrice: new FormControl<number | null>(null),
       // vendor: new FormControl<string>('')
     });
-    return group;
   }
 
   protected filter(filterText: string) {

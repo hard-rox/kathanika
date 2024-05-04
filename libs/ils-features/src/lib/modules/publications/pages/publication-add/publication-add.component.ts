@@ -23,7 +23,7 @@ export class PublicationAddComponent {
   errors: string[] = [];
 
   onValidFormSubmit(formValue: PublicationFormOutput) {
-    console.debug(formValue);
+    // console.debug(formValue);
     this.isPanelLoading = true;
     this.gql
       .mutate({

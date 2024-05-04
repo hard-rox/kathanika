@@ -15,9 +15,10 @@ public sealed class PublicationType : ObjectType<Publication>
         descriptor.Field(x => x.Edition);
         descriptor.Field(x => x.Description);
         descriptor.Field(x => x.Language);
-        descriptor.Field(x => x.BuyingPrice);
         descriptor.Field(x => x.CopiesAvailable);
         descriptor.Field(x => x.CallNumber);
         descriptor.Field(x => x.Authors);
+        descriptor.Field(x => x.PurchaseRecords)
+            .UseSorting();
     }
 }
