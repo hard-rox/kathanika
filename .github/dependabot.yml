@@ -60,4 +60,11 @@ updates:
           - "major"
           - "minor"
           - "patch"
+      ts-eslint-deps:
+        patterns:
+          - "@typescript-eslint/*"
+        update-types:
+          - "major"
+          - "minor"
+          - "patch"
     open-pull-requests-limit: 12
