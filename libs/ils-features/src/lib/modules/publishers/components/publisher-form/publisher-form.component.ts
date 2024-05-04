@@ -6,11 +6,11 @@ import {
 } from '@angular/core';
 import { PublisherFormInput } from '../../types/publisher-form-input';
 import { PublisherFormOutput } from '../../types/publisher-form-output';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   BaseFormComponent,
-  FormGroupModel,
+  ControlsOf
 } from '../../../../abstractions/base-form-component';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'kn-publisher-form',
@@ -28,8 +28,8 @@ export class PublisherFormComponent extends BaseFormComponent<PublisherFormOutpu
   @Output()
   formSubmit = this.submitEventEmitter;
 
-  protected createFormGroup(): FormGroupModel<PublisherFormOutput> {
-    const group = new FormGroup({
+  protected override createFormGroup(): FormGroup<ControlsOf<PublisherFormOutput>> {
+    return new FormGroup({
       name: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
@@ -39,6 +39,5 @@ export class PublisherFormComponent extends BaseFormComponent<PublisherFormOutpu
         nonNullable: false,
       }),
     });
-    return group;
   }
 }

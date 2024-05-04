@@ -5,6 +5,7 @@ using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
+using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver.Core.Events;
 using MongoDB.Driver.Core.Extensions.DiagnosticSources;
@@ -45,6 +46,9 @@ internal static class MongoDbConfigurations
         BsonClassMap.RegisterClassMap<OutboxMessage>(cm =>
         {
             cm.AutoMap();
+            cm.MapIdProperty(c => c.Id)
+                .SetIdGenerator(StringObjectIdGenerator.Instance)
+                .SetSerializer(new StringSerializer(BsonType.ObjectId));
             cm.MapMember(m => m.DomainEvent)
                 .SetSerializer(new ImpliedImplementationInterfaceSerializer<IDomainEvent, IDomainEvent>());
         });

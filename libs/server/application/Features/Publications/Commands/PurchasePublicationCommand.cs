@@ -5,7 +5,7 @@ public sealed record PurchasePublicationCommand(
     string? Title,
     string? Isbn,
     PublicationType? PublicationType,
-    IEnumerable<string> AuthorIds,
+    IEnumerable<string>? AuthorIds,
     string? Publisher,
     DateOnly? PublishedDate,
     string? Edition,

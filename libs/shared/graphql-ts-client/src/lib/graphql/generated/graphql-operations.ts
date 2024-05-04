@@ -608,7 +608,7 @@ export type PublishersCollectionSegment = {
 export type PurchasePublicationError = InvalidFieldError | NotFoundWithTheIdError;
 
 export type PurchasePublicationInput = {
-  authorIds: Array<Scalars['String']['input']>;
+  authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
   callNumber?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   edition?: InputMaybe<Scalars['String']['input']>;

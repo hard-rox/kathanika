@@ -4,7 +4,7 @@ import { AuthorFormInput } from '../../types/author-form-input';
 import { AuthorFormOutput } from '../../types/author-form-output';
 import {
   BaseFormComponent,
-  FormGroupModel,
+  ControlsOf
 } from '../../../../abstractions/base-form-component';
 @Component({
   selector: 'kn-author-form',
@@ -33,8 +33,8 @@ export class AuthorFormComponent
   @Output()
   formSubmit = this.submitEventEmitter;
 
-  protected createFormGroup(): FormGroupModel<AuthorFormOutput> {
-    const group: FormGroupModel<AuthorFormOutput> = new FormGroup({
+  protected override createFormGroup(): FormGroup<ControlsOf<AuthorFormOutput>> {
+    return new FormGroup({
       firstName: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
@@ -58,7 +58,6 @@ export class AuthorFormComponent
         validators: [Validators.required],
       }),
     });
-    return group;
   }
 
   ngOnInit(): void {

@@ -1,5 +1,5 @@
 import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
-import { BaseFormComponent, FormGroupModel } from "../../../../abstractions/base-form-component";
+import { BaseFormComponent, ControlsOf } from "../../../../abstractions/base-form-component";
 import { MemberFormOutput } from '../../types/member-form-output';
 import { MemberFormInput } from '../../types/member-form-input';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -28,8 +28,8 @@ export class MemberFormComponent extends BaseFormComponent<MemberFormOutput>
   @Output()
   formSubmit = this.submitEventEmitter;
 
-  protected createFormGroup(): FormGroupModel<MemberFormOutput> {
-    const group: FormGroupModel<MemberFormOutput> = new FormGroup({
+  protected override createFormGroup(): FormGroup<ControlsOf<MemberFormOutput>> {
+    return new FormGroup({
       firstName: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
@@ -55,6 +55,5 @@ export class MemberFormComponent extends BaseFormComponent<MemberFormOutput>
         validators: [Validators.required],
       })
     });
-    return group;
   }
 }
