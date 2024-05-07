@@ -36,7 +36,7 @@
     "@nx/jest": "18.3.4",
     "@nx/js": "18.3.4",
     "@nx/storybook": "18.3.4",
-    "@nx/web": "18.3.4",
+    "@nx/web": "19.0.0",
     "@nx/workspace": "18.3.4",
     "@schematics/angular": "~17.3.0",
     "@storybook/addon-essentials": "^8.0.10",
