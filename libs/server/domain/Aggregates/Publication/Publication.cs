@@ -109,10 +109,10 @@ public sealed class Publication : AggregateRoot
             description,
             language,
             authors);
-        if(acquisitionMethod == AcquisitionMethod.Purchase)
+        if (acquisitionMethod == AcquisitionMethod.Purchase)
             publication.RecordPurchase(unitPrice!.Value, quantity, vendor!);
 
-        else if(acquisitionMethod == AcquisitionMethod.Purchase)
+        else if (acquisitionMethod == AcquisitionMethod.Purchase)
             publication.RecordDonation(quantity, patron!);
 
         return publication;

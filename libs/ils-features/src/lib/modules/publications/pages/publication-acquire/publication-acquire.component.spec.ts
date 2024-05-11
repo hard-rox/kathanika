@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PublicationAddComponent } from './publication-acquire.component';
 import { ReactiveFormsModule } from '@angular/forms';
+
+import { PublicationAcquireComponent } from "./publication-acquire.component";
 import {
   AcquirePublicationGQL,
   SearchAuthorsGQL,
@@ -19,12 +19,12 @@ import {
 import { AcquirePublicationFormComponent } from '../../components/acquire-publication-form/acquire-publication-form.component';
 
 describe('PublicationAddComponent', () => {
-  let component: PublicationAddComponent;
-  let fixture: ComponentFixture<PublicationAddComponent>;
+  let component: PublicationAcquireComponent;
+  let fixture: ComponentFixture<PublicationAcquireComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublicationAddComponent, AcquirePublicationFormComponent],
+      declarations: [PublicationAcquireComponent, AcquirePublicationFormComponent],
       imports: [
         ReactiveFormsModule,
         KnPanel,
@@ -43,7 +43,7 @@ describe('PublicationAddComponent', () => {
         },
       ],
     });
-    fixture = TestBed.createComponent(PublicationAddComponent);
+    fixture = TestBed.createComponent(PublicationAcquireComponent);
     component = fixture.componentInstance;
     //fixture.detectChanges();
   });
