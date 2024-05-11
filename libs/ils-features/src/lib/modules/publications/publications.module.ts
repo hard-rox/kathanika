@@ -2,10 +2,9 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { PublicationListComponent } from './pages/publication-list/publication-list.component';
-import { PublicationAddComponent } from './pages/publication-add/publication-add.component';
+import { PublicationAcquireComponent } from './pages/publication-acquire/publication-acquire.component';
 import { PublicationUpdateComponent } from './pages/publication-update/publication-update.component';
 import { PublicationDetailsComponent } from './pages/publication-details/publication-details.component';
-import { PublicationFormComponent } from './components/publication-form/publication-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { routes } from './publications.routes';
@@ -19,18 +18,21 @@ import {
   SearchbarModule,
   KnSelectInput,
   KnTextInput,
-  KnTextareaInput
+  KnTextareaInput,
 } from '@kathanika/kn-ui';
 import { RecordPurchaseComponent } from './pages/record-purchase/record-purchase.component';
+import { AcquirePublicationFormComponent } from './components/acquire-publication-form/acquire-publication-form.component';
+import { PublicationPatchFormComponent } from './components/publication-patch-form/publication-patch-form.component';
 
 @NgModule({
   declarations: [
     PublicationListComponent,
-    PublicationAddComponent,
+    PublicationAcquireComponent,
     PublicationUpdateComponent,
     PublicationDetailsComponent,
-    PublicationFormComponent,
-    RecordPurchaseComponent
+    AcquirePublicationFormComponent,
+    RecordPurchaseComponent,
+    PublicationPatchFormComponent,
   ],
   imports: [
     CommonModule,
@@ -45,7 +47,7 @@ import { RecordPurchaseComponent } from './pages/record-purchase/record-purchase
     KnSelectInput,
     KnNumberInput,
     KnChip,
-    SearchbarModule
+    SearchbarModule,
   ],
 })
-export class PublicationsModule { }
+export class PublicationsModule {}

@@ -10,9 +10,9 @@
   </div>
 }
 
-<kn-panel panelTitle="Add Author" [isLoading]="isPanelLoading">
-  <kn-publication-form
-    #authorAddForm
+<kn-panel panelTitle="Acquire Publication" [isLoading]="isPanelLoading">
+  <kn-acquire-publication-form
+    #acquirePublicationForm
     (formSubmit)="onValidFormSubmit($event)"
   />
 </kn-panel>

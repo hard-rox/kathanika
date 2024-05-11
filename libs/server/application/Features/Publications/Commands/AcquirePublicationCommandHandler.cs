@@ -1,9 +1,9 @@
 namespace Kathanika.Application.Features.Publications.Commands;
 
-internal sealed class AddPublicationCommandHandler(IPublicationRepository publicationRepository, IAuthorRepository authorRepository)
-        : IRequestHandler<AddPublicationCommand, Publication>
+internal sealed class AcquirePublicationCommandHandler(IPublicationRepository publicationRepository, IAuthorRepository authorRepository)
+        : IRequestHandler<AcquirePublicationCommand, Publication>
 {
-    public async Task<Publication> Handle(AddPublicationCommand request, CancellationToken cancellationToken)
+    public async Task<Publication> Handle(AcquirePublicationCommand request, CancellationToken cancellationToken)
     {
         IReadOnlyList<Author> authors = await authorRepository.ListAllAsync(x => request.AuthorIds.Contains(x.Id), cancellationToken);
 
@@ -14,10 +14,14 @@ internal sealed class AddPublicationCommandHandler(IPublicationRepository public
             request.Publisher,
             request.PublishedDate,
             request.Edition,
-            request.CopiesAvailable,
             request.CallNumber,
-            string.Empty, //TODO: Should be in request...
-            string.Empty,
+            request.Description,
+            request.Language,
+            request.AcquisitionMethod,
+            request.Quantity,
+            request.UnitPrice,
+            request.Vendor,
+            request.Patron,
             authors);
 
         Publication addedPublication = await publicationRepository.AddAsync(publication, cancellationToken);

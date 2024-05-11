@@ -1,18 +1,17 @@
+import { AcquirePublicationFormComponent } from "./acquire-publication-form.component";
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { PublicationFormComponent } from './publication-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SearchAuthorsGQL } from '@kathanika/graphql-ts-client';
 import { SearchbarModule, KnChip } from '@kathanika/kn-ui';
 import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
-describe('PublicationFormComponent', () => {
-  let component: PublicationFormComponent;
-  let fixture: ComponentFixture<PublicationFormComponent>;
+describe('AcquirePublicationFormComponent', () => {
+  let component: AcquirePublicationFormComponent;
+  let fixture: ComponentFixture<AcquirePublicationFormComponent>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublicationFormComponent],
+      declarations: [AcquirePublicationFormComponent],
       imports: [ReactiveFormsModule, SearchbarModule, KnChip],
       providers: [
         {
@@ -21,7 +20,7 @@ describe('PublicationFormComponent', () => {
         },
       ],
     });
-    fixture = TestBed.createComponent(PublicationFormComponent);
+    fixture = TestBed.createComponent(AcquirePublicationFormComponent);
     component = fixture.componentInstance;
     //fixture.detectChanges();
   });

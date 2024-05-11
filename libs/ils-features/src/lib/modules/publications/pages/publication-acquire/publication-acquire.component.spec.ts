@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { PublicationAddComponent } from './publication-add.component';
-import { PublicationFormComponent } from '../../components/publication-form/publication-form.component';
+import { PublicationAddComponent } from './publication-acquire.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import {
-  AddPublicationGQL,
+  AcquirePublicationGQL,
   SearchAuthorsGQL,
 } from '@kathanika/graphql-ts-client';
 import {
@@ -17,6 +16,7 @@ import {
   mockMutationGql,
   mockQueryGql,
 } from '../../../../test-utils/gql-test-utils';
+import { AcquirePublicationFormComponent } from '../../components/acquire-publication-form/acquire-publication-form.component';
 
 describe('PublicationAddComponent', () => {
   let component: PublicationAddComponent;
@@ -24,7 +24,7 @@ describe('PublicationAddComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublicationAddComponent, PublicationFormComponent],
+      declarations: [PublicationAddComponent, AcquirePublicationFormComponent],
       imports: [
         ReactiveFormsModule,
         KnPanel,
@@ -34,7 +34,7 @@ describe('PublicationAddComponent', () => {
       ],
       providers: [
         {
-          provide: AddPublicationGQL,
+          provide: AcquirePublicationGQL,
           useValue: mockMutationGql,
         },
         {

@@ -1,40 +1,23 @@
-import {
-  ChangeDetectionStrategy,
-  Component,
-  Input,
-  Output,
-} from '@angular/core';
-import { PublicationFormInput } from '../../types/publication-form-input';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { PublicationFormOutput } from '../../types/publication-form-output';
-import {
-  PublicationType,
-  SearchAuthorsGQL,
-  SearchAuthorsQuery,
-  SearchAuthorsQueryVariables,
-} from '@kathanika/graphql-ts-client';
-import {
-  BaseFormComponent,
-  ControlsOf,
-} from '../../../../abstractions/base-form-component';
+import { Component, Input, OnInit, Output } from '@angular/core';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { AcquirePublicationInput, AcquisitionMethod, Publication, PublicationAuthor, PublicationType, SearchAuthorsGQL, SearchAuthorsQuery, SearchAuthorsQueryVariables } from '@kathanika/graphql-ts-client';
 import { QueryRef } from 'apollo-angular';
-import { PublicationAuthor } from '../../types/publication-author';
-import { KnValidators } from '../../../../validators/kn-validators';
+import { BaseFormComponent, ControlsOf } from '../../../../abstractions/base-form-component';
 
 @Component({
-  selector: 'kn-publication-form',
-  templateUrl: './publication-form.component.html',
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'kn-acquire-publication-form',
+  templateUrl: './acquire-publication-form.component.html'
 })
-export class PublicationFormComponent extends BaseFormComponent<PublicationFormOutput> {
+export class AcquirePublicationFormComponent
+  extends BaseFormComponent<AcquirePublicationInput>
+  implements OnInit {
   @Input()
-  set publication(input: PublicationFormInput) {
+  set publication(input: Publication) {
     if (input) {
       this.selectedAuthors = input.authors;
       this.formGroup.patchValue({
         ...input,
-        authorIds: input.authors.map((x) => x.id),
-        copiesAvailable: input.copiesAvailable,
+        authorIds: input.authors.map((x) => x.id)
       });
     }
   }
@@ -43,6 +26,8 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
   formSubmit = this.submitEventEmitter;
 
   protected publicationTypes: string[] = Object.values(PublicationType);
+  protected acquisitionMethod = AcquisitionMethod;
+  protected acquisitionMethods: string[] = Object.values(AcquisitionMethod);
   protected authorSearchQueryRef: QueryRef<
     SearchAuthorsQuery,
     SearchAuthorsQueryVariables
@@ -54,8 +39,30 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
     this.authorSearchQueryRef = authorsGql.watch({ filterText: '' });
   }
 
-  protected override createFormGroup(): FormGroup<ControlsOf<PublicationFormOutput>> {
-    return new FormGroup({
+  private someMethod(method: AcquisitionMethod) {
+    if (method === AcquisitionMethod.Purchase) {
+      this.formGroup.removeControl('patron');
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      this.formGroup.addControl('unitPrice', new FormControl<number | any>(null, { nonNullable: true, validators: [Validators.required] }));
+      this.formGroup.addControl('vendor', new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }));
+      return;
+    }
+    this.formGroup.removeControl('unitPrice');
+    this.formGroup.removeControl('vendor');
+    this.formGroup.addControl('patron', new FormControl<string>('', { nonNullable: true, validators: [Validators.required] }));
+  }
+
+  ngOnInit(): void {
+    this.formGroup.controls.acquisitionMethod
+      .valueChanges.subscribe({
+        next: (changedValue) => {
+          this.someMethod(changedValue);
+        }
+      })
+  }
+
+  protected override createFormGroup(): FormGroup<ControlsOf<AcquirePublicationInput>> {
+    return new FormGroup<ControlsOf<AcquirePublicationInput>>({
       title: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
@@ -73,7 +80,7 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
         nonNullable: true,
         validators: [Validators.required],
       }),
-      isbn: new FormControl<string | null>(null, { nonNullable: false }),
+      isbn: new FormControl<string | null>(null),
       edition: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
@@ -83,28 +90,18 @@ export class PublicationFormComponent extends BaseFormComponent<PublicationFormO
         validators: [Validators.required],
       }),
       description: new FormControl<string | null>(null, { nonNullable: false }),
-      authorIds: new FormControl<string[] | null>([], { nonNullable: true }),
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      buyingPrice: new FormControl<number | any>(null, {
-        nonNullable: true,
-        validators: [Validators.required, Validators.min(0)],
-      }),
+      authorIds: new FormControl<string[]>([], { nonNullable: true }),
       callNumber: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
       }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      copiesAvailable: new FormControl<number | any>(null, {
+      quantity: new FormControl<number | any>(0, { nonNullable: true, validators: [Validators.required] }),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      acquisitionMethod: new FormControl<AcquisitionMethod | any>(null, {
         nonNullable: true,
-        validators: [
-          Validators.required,
-          Validators.min(1),
-          KnValidators.integerOnly,
-        ],
-      }),
-      // quantity: new FormControl<number | null>(null),
-      // unitPrice: new FormControl<number | null>(null),
-      // vendor: new FormControl<string>('')
+        validators: [Validators.required],
+      })
     });
   }
 

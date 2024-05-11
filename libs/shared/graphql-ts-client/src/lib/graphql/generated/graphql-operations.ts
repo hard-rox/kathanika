@@ -23,6 +23,38 @@ export type Scalars = {
   Decimal: { input: any; output: any; }
 };
 
+export type AcquirePublicationError = InvalidFieldError;
+
+export type AcquirePublicationInput = {
+  acquisitionMethod: AcquisitionMethod;
+  authorIds: Array<Scalars['String']['input']>;
+  callNumber: Scalars['String']['input'];
+  description?: InputMaybe<Scalars['String']['input']>;
+  edition: Scalars['String']['input'];
+  isbn?: InputMaybe<Scalars['String']['input']>;
+  language: Scalars['String']['input'];
+  patron?: InputMaybe<Scalars['String']['input']>;
+  publicationType: PublicationType;
+  publishedDate: Scalars['Date']['input'];
+  publisher: Scalars['String']['input'];
+  quantity: Scalars['Int']['input'];
+  title: Scalars['String']['input'];
+  unitPrice?: InputMaybe<Scalars['Decimal']['input']>;
+  vendor?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type AcquirePublicationPayload = {
+  __typename?: 'AcquirePublicationPayload';
+  data?: Maybe<Publication>;
+  errors?: Maybe<Array<AcquirePublicationError>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export enum AcquisitionMethod {
+  Donation = 'DONATION',
+  Purchase = 'PURCHASE'
+}
+
 export type AddAuthorError = InvalidFieldError;
 
 export type AddAuthorInput = {
@@ -39,27 +71,6 @@ export type AddAuthorPayload = {
   __typename?: 'AddAuthorPayload';
   data?: Maybe<Author>;
   errors?: Maybe<Array<AddAuthorError>>;
-  message?: Maybe<Scalars['String']['output']>;
-};
-
-export type AddPublicationError = InvalidFieldError;
-
-export type AddPublicationInput = {
-  authorIds: Array<Scalars['String']['input']>;
-  callNumber: Scalars['String']['input'];
-  copiesAvailable: Scalars['Int']['input'];
-  edition: Scalars['String']['input'];
-  isbn: Scalars['String']['input'];
-  publicationType: PublicationType;
-  publishedDate: Scalars['Date']['input'];
-  publisher: Scalars['String']['input'];
-  title: Scalars['String']['input'];
-};
-
-export type AddPublicationPayload = {
-  __typename?: 'AddPublicationPayload';
-  data?: Maybe<Publication>;
-  errors?: Maybe<Array<AddPublicationError>>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -230,6 +241,15 @@ export type DeletionFailedError = Error & {
   reason: Scalars['String']['output'];
 };
 
+export type DonationRecordFilterInput = {
+  and?: InputMaybe<Array<DonationRecordFilterInput>>;
+  donationDate?: InputMaybe<DateOperationFilterInput>;
+  id?: InputMaybe<StringOperationFilterInput>;
+  or?: InputMaybe<Array<DonationRecordFilterInput>>;
+  patron?: InputMaybe<StringOperationFilterInput>;
+  quantity?: InputMaybe<IntOperationFilterInput>;
+};
+
 export type Error = {
   message: Scalars['String']['output'];
 };
@@ -253,6 +273,13 @@ export type InvalidFieldError = Error & {
   __typename?: 'InvalidFieldError';
   fieldName: Scalars['String']['output'];
   message: Scalars['String']['output'];
+};
+
+export type ListFilterInputTypeOfDonationRecordFilterInput = {
+  all?: InputMaybe<DonationRecordFilterInput>;
+  any?: InputMaybe<Scalars['Boolean']['input']>;
+  none?: InputMaybe<DonationRecordFilterInput>;
+  some?: InputMaybe<DonationRecordFilterInput>;
 };
 
 export type ListFilterInputTypeOfPublicationAuthorFilterInput = {
@@ -340,14 +367,13 @@ export type MembershipStatusOperationFilterInput = {
 
 export type Mutations = {
   __typename?: 'Mutations';
+  acquirePublication: AcquirePublicationPayload;
   addAuthor: AddAuthorPayload;
-  addPublication: AddPublicationPayload;
   addPublisher: AddPublisherPayload;
   cancelMembership: CancelMembershipPayload;
   createMember: CreateMemberPayload;
   deleteAuthor: DeleteAuthorPayload;
   deletePublisher: DeletePublisherPayload;
-  purchasePublication: PurchasePublicationPayload;
   renewMembership: RenewMembershipPayload;
   suspendMembership: SuspendMembershipPayload;
   updateAuthor: UpdateAuthorPayload;
@@ -357,13 +383,13 @@ export type Mutations = {
 };
 
 
-export type MutationsAddAuthorArgs = {
-  input: AddAuthorInput;
+export type MutationsAcquirePublicationArgs = {
+  input: AcquirePublicationInput;
 };
 
 
-export type MutationsAddPublicationArgs = {
-  input: AddPublicationInput;
+export type MutationsAddAuthorArgs = {
+  input: AddAuthorInput;
 };
 
 
@@ -389,11 +415,6 @@ export type MutationsDeleteAuthorArgs = {
 
 export type MutationsDeletePublisherArgs = {
   input: DeletePublisherInput;
-};
-
-
-export type MutationsPurchasePublicationArgs = {
-  input: PurchasePublicationInput;
 };
 
 
@@ -443,7 +464,7 @@ export type Publication = {
   authors: Array<PublicationAuthor>;
   callNumber: Scalars['String']['output'];
   copiesAvailable: Scalars['Int']['output'];
-  description: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   edition: Scalars['String']['output'];
   id: Scalars['String']['output'];
   isbn?: Maybe<Scalars['String']['output']>;
@@ -483,6 +504,7 @@ export type PublicationFilterInput = {
   callNumber?: InputMaybe<StringOperationFilterInput>;
   copiesAvailable?: InputMaybe<IntOperationFilterInput>;
   description?: InputMaybe<StringOperationFilterInput>;
+  donationRecords?: InputMaybe<ListFilterInputTypeOfDonationRecordFilterInput>;
   edition?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
   isbn?: InputMaybe<StringOperationFilterInput>;
@@ -497,7 +519,7 @@ export type PublicationFilterInput = {
 export type PublicationPatchInput = {
   authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
   callNumber: Scalars['String']['input'];
-  copiesAvailable?: InputMaybe<Scalars['Int']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
   edition?: InputMaybe<Scalars['String']['input']>;
   isbn: Scalars['String']['input'];
   publicationType: PublicationType;
@@ -603,32 +625,6 @@ export type PublishersCollectionSegment = {
   /** Information to aid in pagination. */
   pageInfo: CollectionSegmentInfo;
   totalCount: Scalars['Int']['output'];
-};
-
-export type PurchasePublicationError = InvalidFieldError | NotFoundWithTheIdError;
-
-export type PurchasePublicationInput = {
-  authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
-  callNumber?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
-  edition?: InputMaybe<Scalars['String']['input']>;
-  isbn?: InputMaybe<Scalars['String']['input']>;
-  language?: InputMaybe<Scalars['String']['input']>;
-  publicationId?: InputMaybe<Scalars['String']['input']>;
-  publicationType?: InputMaybe<PublicationType>;
-  publishedDate?: InputMaybe<Scalars['Date']['input']>;
-  publisher?: InputMaybe<Scalars['String']['input']>;
-  quantity: Scalars['Int']['input'];
-  title?: InputMaybe<Scalars['String']['input']>;
-  unitPrice: Scalars['Decimal']['input'];
-  vendor: Scalars['String']['input'];
-};
-
-export type PurchasePublicationPayload = {
-  __typename?: 'PurchasePublicationPayload';
-  data?: Maybe<Publication>;
-  errors?: Maybe<Array<PurchasePublicationError>>;
-  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type PurchaseRecord = {
@@ -897,12 +893,12 @@ export type GetMemberQueryVariables = Exact<{
 
 export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, firstName: string, lastName: string, status: MembershipStatus, membershipStartDateTime: any, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
 
-export type AddPublicationMutationVariables = Exact<{
-  addPublicationInput: AddPublicationInput;
+export type AcquirePublicationMutationVariables = Exact<{
+  acquirePublicationInput: AcquirePublicationInput;
 }>;
 
 
-export type AddPublicationMutation = { __typename?: 'Mutations', addPublication: { __typename?: 'AddPublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+export type AcquirePublicationMutation = { __typename?: 'Mutations', acquirePublication: { __typename?: 'AcquirePublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
 
 export type UpdatePublicationMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -927,7 +923,7 @@ export type GetPublicationQueryVariables = Exact<{
 }>;
 
 
-export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, copiesAvailable: number, description: string, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }> } | null };
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }> } | null };
 
 export type AddPublisherMutationVariables = Exact<{
   addPublisherInput: AddPublisherInput;
@@ -1251,9 +1247,9 @@ export const GetMemberDocument = gql`
       super(apollo);
     }
   }
-export const AddPublicationDocument = gql`
-    mutation addPublication($addPublicationInput: AddPublicationInput!) {
-  addPublication(input: $addPublicationInput) {
+export const AcquirePublicationDocument = gql`
+    mutation acquirePublication($acquirePublicationInput: AcquirePublicationInput!) {
+  acquirePublication(input: $acquirePublicationInput) {
     message
     data {
       id
@@ -1273,8 +1269,8 @@ export const AddPublicationDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class AddPublicationGQL extends Apollo.Mutation<AddPublicationMutation, AddPublicationMutationVariables> {
-    override document = AddPublicationDocument;
+  export class AcquirePublicationGQL extends Apollo.Mutation<AcquirePublicationMutation, AcquirePublicationMutationVariables> {
+    override document = AcquirePublicationDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

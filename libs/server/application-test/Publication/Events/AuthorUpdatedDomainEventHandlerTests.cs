@@ -49,10 +49,13 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
                 factoryMethod.Company.CompanyName(),
                 factoryMethod.Date.PastDateOnly(),
                 "",
-                factoryMethod.Random.Number(1, 5),
                 factoryMethod.Random.AlphaNumeric(5),
                 factoryMethod.Lorem.Sentences(5),
                 factoryMethod.Locale,
+                AcquisitionMethod.Purchase,
+                factoryMethod.Random.Number(100),
+                factoryMethod.Random.Decimal(1000),
+                null,
                 null
             )).GenerateBetween(2, 10);
 

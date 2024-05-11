@@ -1,21 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { PublicationFormComponent } from '../../components/publication-form/publication-form.component';
 import {
   GetPublicationGQL,
+  Publication,
   PublicationPatchInput,
   UpdatePublicationGQL,
 } from '@kathanika/graphql-ts-client';
 import { MessageAlertService } from '../../../../core/services/message-alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PublicationFormInput } from '../../types/publication-form-input';
-import { PublicationFormOutput } from '../../types/publication-form-output';
+import { PublicationPatchFormComponent } from '../../components/publication-patch-form/publication-patch-form.component';
 
 @Component({
   templateUrl: './publication-update.component.html'
 })
 export class PublicationUpdateComponent implements OnInit {
   @ViewChild('publicationUpdateForm') publicationUpdateForm:
-    | PublicationFormComponent
+    | PublicationPatchFormComponent
     | undefined;
 
   constructor(
@@ -28,7 +27,7 @@ export class PublicationUpdateComponent implements OnInit {
 
   isPanelLoading = true;
   publicationId: string | undefined;
-  publicationFormInput!: PublicationFormInput;
+  publication!: Publication;
   errors: string[] = [];
 
   ngOnInit(): void {
@@ -55,19 +54,7 @@ export class PublicationUpdateComponent implements OnInit {
               );
               this.router.navigate(['/publications']);
             } else {
-              this.publicationFormInput = {
-                title: result.data.publication.title,
-                publicationType: result.data.publication.publicationType,
-                isbn: result.data.publication.isbn,
-                edition: result.data.publication.edition,
-                callNumber: result.data.publication.callNumber,
-                language: result.data.publication.language,
-                publisher: result.data.publication.publisher,
-                publishedDate: result.data.publication.publishedDate,
-                copiesAvailable: result.data.publication.copiesAvailable,
-                description: result.data.publication.description,
-                authors: result.data.publication.authors,
-              };
+              this.publication = result.data.publication;
               this.isPanelLoading = false;
             }
           },
@@ -79,18 +66,13 @@ export class PublicationUpdateComponent implements OnInit {
     }
   }
 
-  onValidFormSubmit(publicationOutput: PublicationFormOutput) {
+  onValidFormSubmit(publicationOutput: PublicationPatchInput) {
     this.isPanelLoading = true;
-    const publicationPatch: PublicationPatchInput = {
-      ...publicationOutput,
-      copiesAvailable: publicationOutput.copiesAvailable,
-      isbn: publicationOutput.isbn ?? '', ///TODO: Fixing to typed...
-    };
 
     this.mutation
       .mutate({
         id: this.publicationId as string,
-        publicationPatch: publicationPatch,
+        publicationPatch: publicationOutput,
       })
       .subscribe({
         next: (result) => {

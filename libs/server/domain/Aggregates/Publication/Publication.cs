@@ -1,3 +1,4 @@
+using Kathanika.Domain.Exceptions;
 using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates;
@@ -6,6 +7,7 @@ public sealed class Publication : AggregateRoot
 {
     private List<PublicationAuthor> _authors = [];
     private List<PurchaseRecord> _purchaseRecords = [];
+    private List<DonationRecord> _donationRecords = [];
 
     public string Title { get; private set; }
     public string? Isbn { get; private set; }
@@ -13,33 +15,27 @@ public sealed class Publication : AggregateRoot
     public string Publisher { get; private set; }
     public DateOnly PublishedDate { get; private set; }
     public string Edition { get; private set; }
-    public string Description { get; private set; }
+    public string? Description { get; private set; }
     public string Language { get; private set; }
     public int CopiesAvailable { get; private set; }
     public string CallNumber { get; private set; }
 
     public IReadOnlyList<PublicationAuthor> Authors
     {
-        get
-        {
-            return _authors;
-        }
-        private init
-        {
-            _authors = value?.ToList() ?? [];
-        }
+        get { return _authors; }
+        private init { _authors = value?.ToList() ?? []; }
     }
 
     public IReadOnlyList<PurchaseRecord> PurchaseRecords
     {
-        get
-        {
-            return _purchaseRecords ?? [];
-        }
-        private init
-        {
-            _purchaseRecords = value?.ToList() ?? [];
-        }
+        get { return _purchaseRecords ?? []; }
+        private init { _purchaseRecords = value?.ToList() ?? []; }
+    }
+
+    public IReadOnlyList<DonationRecord> DonationRecords
+    {
+        get { return _donationRecords ?? []; }
+        private init { _donationRecords = value?.ToList() ?? []; }
     }
 
     private Publication(
@@ -49,10 +45,10 @@ public sealed class Publication : AggregateRoot
         string publisher,
         DateOnly publishedDate,
         string edition,
-        int copiesAvailable,
         string callNumber,
-        string description,
-        string language)
+        string? description,
+        string language,
+        IEnumerable<Author>? authors = null)
     {
         Title = title;
         Isbn = isbn;
@@ -60,10 +56,19 @@ public sealed class Publication : AggregateRoot
         Publisher = publisher;
         PublishedDate = publishedDate;
         Edition = edition;
-        CopiesAvailable = copiesAvailable;
         CallNumber = callNumber;
         Description = description;
         Language = language;
+
+        if (authors is not null)
+        {
+            foreach (Author author in authors)
+            {
+                _authors.Add(new PublicationAuthor(author.Id,
+                    author.FirstName,
+                    author.LastName));
+            }
+        }
     }
 
     public static Publication Create(
@@ -73,12 +78,26 @@ public sealed class Publication : AggregateRoot
         string publisher,
         DateOnly publishedDate,
         string edition,
-        int copiesAvailable,
         string callNumber,
-        string description,
+        string? description,
         string language,
+        AcquisitionMethod acquisitionMethod,
+        int quantity,
+        decimal? unitPrice,
+        string? vendor,
+        string? patron,
         IEnumerable<Author>? authors = null)
     {
+        List<DomainException> errors = [];
+        if (acquisitionMethod == AcquisitionMethod.Purchase && (unitPrice is null || vendor is null))
+        {
+            errors.Add(new InvalidFieldException(nameof(unitPrice), "Value can't be null"));
+        }
+        if (acquisitionMethod == AcquisitionMethod.Donation && patron is null)
+        {
+            errors.Add(new InvalidFieldException(nameof(patron), "Value can't be null"));
+        }
+
         Publication publication = new(
             title,
             isbn,
@@ -86,58 +105,16 @@ public sealed class Publication : AggregateRoot
             publisher,
             publishedDate,
             edition,
-            copiesAvailable,
-            callNumber,
-            description,
-            language)
-        {
-            _authors = []
-        };
-
-        if (authors is not null)
-        {
-            foreach (Author author in authors)
-            {
-                publication._authors.Add(new PublicationAuthor(author.Id,
-                    author.FirstName,
-                    author.LastName));
-            }
-        }
-
-        return publication;
-    }
-
-    public static Publication Create(
-        string title,
-        string? isbn,
-        PublicationType publicationType,
-        string publisher,
-        DateOnly publishedDate,
-        string edition,
-        string callNumber,
-        string description,
-        string language,
-        decimal unitPrice,
-        int quantity,
-        string vendor,
-    IEnumerable<Author>? authors = null
-    )
-    {
-        Publication publication = Create(
-            title,
-            isbn,
-            publicationType,
-            publisher,
-            publishedDate,
-            edition,
-            quantity,
             callNumber,
             description,
             language,
-            authors
-        );
+            authors);
+        if(acquisitionMethod == AcquisitionMethod.Purchase)
+            publication.RecordPurchase(unitPrice!.Value, quantity, vendor!);
 
-        publication.RecordPurchase(unitPrice, quantity, vendor);
+        else if(acquisitionMethod == AcquisitionMethod.Purchase)
+            publication.RecordDonation(quantity, patron!);
+
         return publication;
     }
 
@@ -148,8 +125,8 @@ public sealed class Publication : AggregateRoot
         string? publisher,
         DateOnly? publishedDate,
         string? edition,
-        int? copiesAvailable,
-        string? callNumber)
+        string? callNumber,
+        string? description)
     {
         Title = !string.IsNullOrEmpty(title) ? title : Title;
         Isbn = !string.IsNullOrEmpty(isbn) ? isbn : Isbn;
@@ -157,8 +134,8 @@ public sealed class Publication : AggregateRoot
         Publisher = !string.IsNullOrEmpty(publisher) ? publisher : Publisher;
         PublishedDate = publishedDate is not null ? (DateOnly)publishedDate : PublishedDate;
         Edition = edition is not null ? edition : Edition;
-        CopiesAvailable = copiesAvailable is not null ? (int)copiesAvailable : CopiesAvailable;
         CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : CallNumber;
+        Description = !string.IsNullOrEmpty(description?.Trim()) ? description.Trim() : Description;
     }
 
     public void UpdateAuthors(Author[] authors)
@@ -190,6 +167,15 @@ public sealed class Publication : AggregateRoot
     {
         _purchaseRecords ??= [];
         _purchaseRecords.Add(new PurchaseRecord(quantity, unitPrice, vendor));
+        CopiesAvailable += quantity;
+    }
+
+    public void RecordDonation(
+        int quantity,
+        string patron)
+    {
+        _donationRecords ??= [];
+        _donationRecords.Add(new DonationRecord(quantity, patron));
         CopiesAvailable += quantity;
     }
 }

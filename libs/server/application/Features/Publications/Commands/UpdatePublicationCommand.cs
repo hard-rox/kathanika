@@ -9,7 +9,7 @@ public sealed record PublicationPatch(
         string Publisher,
         DateOnly? PublishedDate,
         string? Edition,
-        int? CopiesAvailable,
         string CallNumber,
+        string? Description,
         IEnumerable<string>? AuthorIds = null
     );

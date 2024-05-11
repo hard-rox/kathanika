@@ -23,7 +23,7 @@ import {
   mockQueryGql,
   mockMutationGql,
 } from '../../../../test-utils/gql-test-utils';
-import { PublicationFormComponent } from '../../components/publication-form/publication-form.component';
+import { PublicationPatchFormComponent } from '../../components/publication-patch-form/publication-patch-form.component';
 
 describe('PublicationUpdateComponent', () => {
   let component: PublicationUpdateComponent;
@@ -31,7 +31,7 @@ describe('PublicationUpdateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublicationUpdateComponent, PublicationFormComponent],
+      declarations: [PublicationUpdateComponent, PublicationPatchFormComponent],
       imports: [
         RouterTestingModule,
         ReactiveFormsModule,
