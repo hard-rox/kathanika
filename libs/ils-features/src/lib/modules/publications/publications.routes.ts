@@ -3,7 +3,6 @@ import { PublicationAcquireComponent } from './pages/publication-acquire/publica
 import { PublicationDetailsComponent } from './pages/publication-details/publication-details.component';
 import { PublicationListComponent } from './pages/publication-list/publication-list.component';
 import { PublicationUpdateComponent } from './pages/publication-update/publication-update.component';
-import { RecordPurchaseComponent } from './pages/record-purchase/record-purchase.component';
 
 export const routes: Routes = [
   {
@@ -17,10 +16,6 @@ export const routes: Routes = [
   {
     path: 'update/:id',
     component: PublicationUpdateComponent,
-  },
-  {
-    path: 'purchase',
-    component: RecordPurchaseComponent
   },
   {
     path: ':id',

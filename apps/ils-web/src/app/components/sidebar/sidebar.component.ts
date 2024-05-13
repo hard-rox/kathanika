@@ -39,10 +39,6 @@ export class SidebarComponent {
         {
           text: 'Acquire',
           link: 'publications/acquire',
-        },
-        {
-          text: 'Record Purchase',
-          link: 'publications/purchase'
         }
       ],
     },

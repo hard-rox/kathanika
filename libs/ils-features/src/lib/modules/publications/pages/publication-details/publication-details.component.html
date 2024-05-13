@@ -88,5 +88,30 @@
     </tbody>
   </table>
 </kn-panel>
+<kn-panel panelTitle="Donation Records" class="mt-2">
+  <table class="border">
+    <thead>
+      <tr>
+        <th scope="col">Donation date</th>
+        <th scope="col">Patron</th>
+        <th scope="col">Actions</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (donationRecord of data.publication?.donationRecords; track $index) {
+      <tr>
+        <td>{{ donationRecord.donationDate}}</td>
+        <td>{{ donationRecord.patron}}</td>
+        <td>
+          <a routerLink="update/{{ donationRecord?.id }}"
+            class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+            <span class="material-symbols-sharp my-auto"> edit </span>
+          </a>
+        </td>
+      </tr>
+      }
+    </tbody>
+  </table>
+</kn-panel>
 }
 }

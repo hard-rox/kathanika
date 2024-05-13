@@ -9,7 +9,7 @@ import {
 import {
   KnPanel,
   KnAlert,
-  SearchbarModule,
+  KnSearchbarModule,
   KnChip,
 } from '@kathanika/kn-ui';
 import {
@@ -17,6 +17,7 @@ import {
   mockQueryGql,
 } from '../../../../test-utils/gql-test-utils';
 import { AcquirePublicationFormComponent } from '../../components/acquire-publication-form/acquire-publication-form.component';
+import { PublicationAuthorsInputComponent } from '../../components/publication-authors-input/publication-authors-input.component';
 
 describe('PublicationAddComponent', () => {
   let component: PublicationAcquireComponent;
@@ -24,12 +25,16 @@ describe('PublicationAddComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublicationAcquireComponent, AcquirePublicationFormComponent],
+      declarations: [
+        PublicationAcquireComponent,
+        AcquirePublicationFormComponent,
+        PublicationAuthorsInputComponent
+      ],
       imports: [
         ReactiveFormsModule,
         KnPanel,
         KnAlert,
-        SearchbarModule,
+        KnSearchbarModule,
         KnChip,
       ],
       providers: [

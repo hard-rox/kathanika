@@ -13,3 +13,4 @@ export * from './lib/modules/searchbar/searchbar.module';
 export * from './lib/modules/searchbar/components/searchbar/searchbar.component';
 export * from './lib/modules/searchbar/components/searchbar-result/searchbar-result.component';
 export * from './lib/directives/button/button.directive';
+export * from './lib/abstractions/abstract-input-component';

@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AcquirePublicationInput, AcquisitionMethod, Publication, PublicationAuthor, PublicationType, SearchAuthorsGQL, SearchAuthorsQuery, SearchAuthorsQueryVariables } from '@kathanika/graphql-ts-client';
-import { QueryRef } from 'apollo-angular';
+import { AcquirePublicationInput, AcquisitionMethod, PublicationType } from '@kathanika/graphql-ts-client';
 import { BaseFormComponent, ControlsOf } from '../../../../abstractions/base-form-component';
 
 @Component({
@@ -11,16 +10,6 @@ import { BaseFormComponent, ControlsOf } from '../../../../abstractions/base-for
 export class AcquirePublicationFormComponent
   extends BaseFormComponent<AcquirePublicationInput>
   implements OnInit {
-  @Input()
-  set publication(input: Publication) {
-    if (input) {
-      this.selectedAuthors = input.authors;
-      this.formGroup.patchValue({
-        ...input,
-        authorIds: input.authors.map((x) => x.id)
-      });
-    }
-  }
 
   @Output()
   formSubmit = this.submitEventEmitter;
@@ -28,18 +17,8 @@ export class AcquirePublicationFormComponent
   protected publicationTypes: string[] = Object.values(PublicationType);
   protected acquisitionMethod = AcquisitionMethod;
   protected acquisitionMethods: string[] = Object.values(AcquisitionMethod);
-  protected authorSearchQueryRef: QueryRef<
-    SearchAuthorsQuery,
-    SearchAuthorsQueryVariables
-  >;
-  protected selectedAuthors: PublicationAuthor[] = [];
 
-  constructor(authorsGql: SearchAuthorsGQL) {
-    super();
-    this.authorSearchQueryRef = authorsGql.watch({ filterText: '' });
-  }
-
-  private someMethod(method: AcquisitionMethod) {
+  private onAcquisitionMethodChange(method: AcquisitionMethod) {
     if (method === AcquisitionMethod.Purchase) {
       this.formGroup.removeControl('patron');
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -56,7 +35,7 @@ export class AcquirePublicationFormComponent
     this.formGroup.controls.acquisitionMethod
       .valueChanges.subscribe({
         next: (changedValue) => {
-          this.someMethod(changedValue);
+          this.onAcquisitionMethodChange(changedValue);
         }
       })
   }
@@ -96,40 +75,12 @@ export class AcquirePublicationFormComponent
         validators: [Validators.required],
       }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      quantity: new FormControl<number | any>(0, { nonNullable: true, validators: [Validators.required] }),
+      quantity: new FormControl<number | any>(null, { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       acquisitionMethod: new FormControl<AcquisitionMethod | any>(null, {
         nonNullable: true,
         validators: [Validators.required],
       })
     });
-  }
-
-  protected filter(filterText: string) {
-    const queryVariable: SearchAuthorsQueryVariables = {
-      filterText: filterText,
-    };
-    this.authorSearchQueryRef.refetch(queryVariable);
-  }
-
-  protected addAuthor(author: PublicationAuthor) {
-    const index = this.selectedAuthors.findIndex((x) => x.id == author.id);
-    if (index >= 0) return;
-    this.selectedAuthors.push(author);
-    this.formGroup.controls.authorIds.value?.push(author.id);
-  }
-
-  protected removeAuthor(authorId: string) {
-    const selectedAuthorIndex = this.selectedAuthors.findIndex(
-      (x) => x.id == authorId,
-    );
-    const formValueIndex = this.formGroup.controls.authorIds.value?.findIndex(
-      (x) => x == authorId,
-    );
-    if (selectedAuthorIndex < 0 || (formValueIndex && formValueIndex < 0))
-      return;
-
-    this.selectedAuthors.splice(selectedAuthorIndex, 1);
-    this.formGroup.controls.authorIds.value?.splice(formValueIndex ?? -1, 1);
   }
 }

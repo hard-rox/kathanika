@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { BaseFormComponent, ControlsOf } from '../../../../abstractions/base-form-component';
 import { Publication, PublicationPatchInput, PublicationType } from '@kathanika/graphql-ts-client';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
@@ -9,7 +9,23 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class PublicationPatchFormComponent extends BaseFormComponent<PublicationPatchInput> {
 
-  @Input({ required: true }) publication!: Publication;
+  @Input({ required: true })
+  set publication(input: Publication) {
+    if (input) {
+      this.publicationToUpdate = input;
+      this.formGroup.patchValue({
+        ...input,
+        authorIds: input.authors.map((x) => x.id)
+      });
+    }
+  }
+
+  @Output()
+  formSubmit = this.submitEventEmitter;
+
+  protected publicationToUpdate!: Publication;
+  protected publicationTypes: string[] = Object.values(PublicationType);
+
   protected override createFormGroup(): FormGroup<ControlsOf<PublicationPatchInput>> {
     return new FormGroup<ControlsOf<PublicationPatchInput>>({
       title: new FormControl<string>('', {
@@ -40,6 +56,10 @@ export class PublicationPatchFormComponent extends BaseFormComponent<Publication
       description: new FormControl<string | null>(null, { nonNullable: false }),
       authorIds: new FormControl<string[]>([], { nonNullable: true }),
       callNumber: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required],
+      }),
+      language: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
       })

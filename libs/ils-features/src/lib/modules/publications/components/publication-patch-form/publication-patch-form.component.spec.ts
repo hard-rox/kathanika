@@ -1,5 +1,10 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PublicationPatchFormComponent } from './publication-patch-form.component';
+import { KnDateInput, KnSelectInput, KnTextInput, KnTextareaInput, KnSearchbarModule } from '@kathanika/kn-ui';
+import { PublicationAuthorsInputComponent } from '../publication-authors-input/publication-authors-input.component';
+import { NgControl, ReactiveFormsModule } from '@angular/forms';
+import { SearchAuthorsGQL } from '@kathanika/graphql-ts-client';
+import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('PublicationPatchFormComponent', () => {
   let component: PublicationPatchFormComponent;
@@ -7,7 +12,25 @@ describe('PublicationPatchFormComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [PublicationPatchFormComponent],
+      declarations: [
+        PublicationPatchFormComponent,
+        PublicationAuthorsInputComponent
+      ],
+      imports: [
+        KnSelectInput,
+        KnTextInput,
+        KnDateInput,
+        KnTextareaInput,
+        KnSearchbarModule,
+        ReactiveFormsModule
+      ],
+      providers: [
+        NgControl,
+        {
+          provide: SearchAuthorsGQL,
+          useValue: mockQueryGql
+        }
+      ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(PublicationPatchFormComponent);

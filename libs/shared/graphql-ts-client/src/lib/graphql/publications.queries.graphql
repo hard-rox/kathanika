@@ -53,5 +53,11 @@ query getPublication($id: String!) {
       unitPrice
       totalPrice
     }
+    donationRecords(order: { donationDate: DESC }) {
+      id
+      donationDate
+      patron
+      quantity
+    }
   }
 }

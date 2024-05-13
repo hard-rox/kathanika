@@ -4,12 +4,13 @@ public sealed record UpdatePublicationCommand(string Id, PublicationPatch Patch)
 
 public sealed record PublicationPatch(
         string Title,
-        string Isbn,
+        string? Isbn,
         PublicationType PublicationType,
         string Publisher,
         DateOnly? PublishedDate,
         string? Edition,
         string CallNumber,
         string? Description,
+        string? Language,
         IEnumerable<string>? AuthorIds = null
     );

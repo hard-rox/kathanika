@@ -81,6 +81,7 @@ public class PublicationAggregateTests
             DateOnly.MinValue,
             null,
             "Updated CallNumber",
+            "",
             ""
         );
 

@@ -12,7 +12,7 @@ public class UpdatePublicationCommandHandlerTests
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
         UpdatePublicationCommand command = new(publicationId, new PublicationPatch(
-            "", "", PublicationType.Book, "", null, null, null, "" // TODO: Fix up update in domain...
+            "", "", PublicationType.Book, "", null, null, "", "", "", null
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository);
 
@@ -50,7 +50,7 @@ public class UpdatePublicationCommandHandlerTests
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
             .Returns([]);
         UpdatePublicationCommand command = new(publicationId, new PublicationPatch(
-            "Updated Title", "", PublicationType.Book, "", null, null, null, "" //TODO: Fix up update in domain with non nullable...
+            "Updated Title", "", PublicationType.Book, "", null, null, "", "", "" //TODO: Fix up update in domain with non nullable...
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository);
 

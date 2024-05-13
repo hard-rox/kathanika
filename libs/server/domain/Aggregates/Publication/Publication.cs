@@ -112,7 +112,7 @@ public sealed class Publication : AggregateRoot
         if (acquisitionMethod == AcquisitionMethod.Purchase)
             publication.RecordPurchase(unitPrice!.Value, quantity, vendor!);
 
-        else if (acquisitionMethod == AcquisitionMethod.Purchase)
+        else if (acquisitionMethod == AcquisitionMethod.Donation)
             publication.RecordDonation(quantity, patron!);
 
         return publication;
@@ -126,16 +126,18 @@ public sealed class Publication : AggregateRoot
         DateOnly? publishedDate,
         string? edition,
         string? callNumber,
-        string? description)
+        string? description,
+        string? language)
     {
-        Title = !string.IsNullOrEmpty(title) ? title : Title;
-        Isbn = !string.IsNullOrEmpty(isbn) ? isbn : Isbn;
-        PublicationType = publicationType is not null ? (PublicationType)publicationType : PublicationType;
-        Publisher = !string.IsNullOrEmpty(publisher) ? publisher : Publisher;
-        PublishedDate = publishedDate is not null ? (DateOnly)publishedDate : PublishedDate;
-        Edition = edition is not null ? edition : Edition;
-        CallNumber = !string.IsNullOrEmpty(callNumber) ? callNumber : CallNumber;
+        Title = !string.IsNullOrEmpty(title?.Trim()) ? title.Trim() : Title;
+        Isbn = !string.IsNullOrEmpty(isbn?.Trim()) ? isbn.Trim() : Isbn;
+        PublicationType = publicationType is not null ? publicationType.Value : PublicationType;
+        Publisher = !string.IsNullOrEmpty(publisher?.Trim()) ? publisher.Trim() : Publisher;
+        PublishedDate = publishedDate is not null ? publishedDate.Value : PublishedDate;
+        Edition = !string.IsNullOrEmpty(edition?.Trim()) ? edition.Trim() : Edition;
+        CallNumber = !string.IsNullOrEmpty(callNumber?.Trim()) ? callNumber.Trim() : CallNumber;
         Description = !string.IsNullOrEmpty(description?.Trim()) ? description.Trim() : Description;
+        Language = !string.IsNullOrEmpty(language?.Trim()) ? language.Trim() : Language;
     }
 
     public void UpdateAuthors(Author[] authors)

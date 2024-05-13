@@ -241,6 +241,14 @@ export type DeletionFailedError = Error & {
   reason: Scalars['String']['output'];
 };
 
+export type DonationRecord = {
+  __typename?: 'DonationRecord';
+  donationDate: Scalars['Date']['output'];
+  id: Scalars['String']['output'];
+  patron: Scalars['String']['output'];
+  quantity: Scalars['Int']['output'];
+};
+
 export type DonationRecordFilterInput = {
   and?: InputMaybe<Array<DonationRecordFilterInput>>;
   donationDate?: InputMaybe<DateOperationFilterInput>;
@@ -248,6 +256,13 @@ export type DonationRecordFilterInput = {
   or?: InputMaybe<Array<DonationRecordFilterInput>>;
   patron?: InputMaybe<StringOperationFilterInput>;
   quantity?: InputMaybe<IntOperationFilterInput>;
+};
+
+export type DonationRecordSortInput = {
+  donationDate?: InputMaybe<SortEnumType>;
+  id?: InputMaybe<SortEnumType>;
+  patron?: InputMaybe<SortEnumType>;
+  quantity?: InputMaybe<SortEnumType>;
 };
 
 export type Error = {
@@ -465,6 +480,7 @@ export type Publication = {
   callNumber: Scalars['String']['output'];
   copiesAvailable: Scalars['Int']['output'];
   description?: Maybe<Scalars['String']['output']>;
+  donationRecords: Array<DonationRecord>;
   edition: Scalars['String']['output'];
   id: Scalars['String']['output'];
   isbn?: Maybe<Scalars['String']['output']>;
@@ -474,6 +490,11 @@ export type Publication = {
   publisher: Scalars['String']['output'];
   purchaseRecords: Array<PurchaseRecord>;
   title: Scalars['String']['output'];
+};
+
+
+export type PublicationDonationRecordsArgs = {
+  order?: InputMaybe<Array<DonationRecordSortInput>>;
 };
 
 
@@ -521,7 +542,8 @@ export type PublicationPatchInput = {
   callNumber: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
   edition?: InputMaybe<Scalars['String']['input']>;
-  isbn: Scalars['String']['input'];
+  isbn?: InputMaybe<Scalars['String']['input']>;
+  language?: InputMaybe<Scalars['String']['input']>;
   publicationType: PublicationType;
   publishedDate?: InputMaybe<Scalars['Date']['input']>;
   publisher: Scalars['String']['input'];
@@ -923,7 +945,7 @@ export type GetPublicationQueryVariables = Exact<{
 }>;
 
 
-export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }> } | null };
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }>, donationRecords: Array<{ __typename?: 'DonationRecord', id: string, donationDate: any, patron: string, quantity: number }> } | null };
 
 export type AddPublisherMutationVariables = Exact<{
   addPublisherInput: AddPublisherInput;
@@ -1371,6 +1393,12 @@ export const GetPublicationDocument = gql`
       quantity
       unitPrice
       totalPrice
+    }
+    donationRecords(order: {donationDate: DESC}) {
+      id
+      donationDate
+      patron
+      quantity
     }
   }
 }

@@ -14,5 +14,6 @@
   <kn-publication-patch-form
     #publicationUpdateForm
     [publication]="publication"
+    (formSubmit)="onValidFormSubmit($event)"
   />
 </kn-panel>

@@ -7,7 +7,6 @@ import {
   UpdatePublicationGQL,
 } from '@kathanika/graphql-ts-client';
 import { ReactiveFormsModule } from '@angular/forms';
-import { RouterTestingModule } from '@angular/router/testing';
 import {
   KnPanel,
   KnAlert,
@@ -16,7 +15,7 @@ import {
   KnDateInput,
   KnTextareaInput,
   KnNumberInput,
-  SearchbarModule,
+  KnSearchbarModule,
   KnChip,
 } from '@kathanika/kn-ui';
 import {
@@ -24,6 +23,8 @@ import {
   mockMutationGql,
 } from '../../../../test-utils/gql-test-utils';
 import { PublicationPatchFormComponent } from '../../components/publication-patch-form/publication-patch-form.component';
+import { RouterModule } from '@angular/router';
+import { PublicationAuthorsInputComponent } from '../../components/publication-authors-input/publication-authors-input.component';
 
 describe('PublicationUpdateComponent', () => {
   let component: PublicationUpdateComponent;
@@ -31,9 +32,9 @@ describe('PublicationUpdateComponent', () => {
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [PublicationUpdateComponent, PublicationPatchFormComponent],
+      declarations: [PublicationUpdateComponent, PublicationPatchFormComponent, PublicationAuthorsInputComponent],
       imports: [
-        RouterTestingModule,
+        RouterModule.forRoot([]),
         ReactiveFormsModule,
         KnPanel,
         KnAlert,
@@ -42,7 +43,7 @@ describe('PublicationUpdateComponent', () => {
         KnDateInput,
         KnTextareaInput,
         KnNumberInput,
-        SearchbarModule,
+        KnSearchbarModule,
         KnChip,
       ],
       providers: [
