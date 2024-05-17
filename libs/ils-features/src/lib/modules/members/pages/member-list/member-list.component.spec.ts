@@ -4,9 +4,8 @@ import { MemberListComponent } from './member-list.component';
 import { ActivatedRoute } from '@angular/router';
 import { of } from 'rxjs';
 import { RouterTestingModule } from '@angular/router/testing';
-import { GetMembersGQL } from '@kathanika/graphql-ts-client';
+import { GetMembersGQL, mockQueryGql } from '@kathanika/graphql-ts-client';
 import { KnPagination, KnBadge } from '@kathanika/kn-ui';
-import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('MemberListComponent', () => {
   let component: MemberListComponent;

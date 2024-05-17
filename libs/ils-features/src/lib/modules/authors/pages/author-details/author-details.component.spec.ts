@@ -1,10 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthorDetailsComponent } from './author-details.component';
-import { GetAuthorGQL } from '@kathanika/graphql-ts-client';
-import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
-import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
+import { GetAuthorGQL, mockQueryGql } from '@kathanika/graphql-ts-client';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 
 describe('AuthorDetailsComponent', () => {
   let component: AuthorDetailsComponent;
@@ -15,7 +13,9 @@ describe('AuthorDetailsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule],
+      imports: [
+        RouterModule.forRoot([])
+      ],
       declarations: [AuthorDetailsComponent],
       providers: [
         {

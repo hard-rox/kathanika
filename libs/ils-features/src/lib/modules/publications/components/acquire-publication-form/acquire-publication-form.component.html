@@ -1,0 +1,39 @@
+<!-- <pre>{{formGroup.valid| json}}</pre> -->
+<!-- <pre>{{formGroup.value | json}}</pre> -->
+
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+  <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
+    <kn-select-input label="Acquisition Method" formControlName="acquisitionMethod">
+      <option selected [value]="null">Select Method</option>
+      @for (acquisitionMethod of acquisitionMethods; track acquisitionMethod) {
+      <option [value]="acquisitionMethod">{{ acquisitionMethod }}</option>
+      }
+    </kn-select-input>
+    <kn-select-input label="Publication Type" formControlName="publicationType">
+      <option selected [value]="null">Select Type</option>
+      @for (publicationType of publicationTypes; track publicationType) {
+      <option [value]="publicationType">{{ publicationType }}</option>
+      }
+    </kn-select-input>
+    <kn-text-input label="Title" formControlName="title" />
+    <kn-date-input label="Published Date" formControlName="publishedDate" />
+    <kn-text-input label="Publisher" formControlName="publisher" />
+    <kn-text-input label="ISBN" formControlName="isbn" />
+    <kn-text-input label="Edition" formControlName="edition" />
+    <kn-text-input label="Language" formControlName="language" />
+    <kn-text-input label="Call Number" formControlName="callNumber" />
+    <kn-number-input label="Quantity" formControlName="quantity" />
+    @if (formGroup.controls.acquisitionMethod.value === acquisitionMethod.Donation) {
+    <kn-text-input label="Patron" formControlName="patron" />
+    }
+    @if(formGroup.controls.acquisitionMethod.value === acquisitionMethod.Purchase) {
+    <kn-number-input label="Unit Price" formControlName="unitPrice" />
+    <kn-text-input label="Vendor" formControlName="vendor" />
+    }
+    <kn-textarea-input label="Description" formControlName="description" />
+    <kn-publication-authors-input formControlName="authorIds"/>
+  </div>
+  <div class="flex flex-row-reverse mt-2">
+    <input type="submit" value="Save" />
+  </div>
+</form>

@@ -41,8 +41,5 @@ internal sealed class PublicationPatchValidator : AbstractValidator<PublicationP
         RuleFor(x => x.PublicationType)
             .NotNull()
             .IsInEnum();
-        RuleFor(x => x.CopiesAvailable)
-            .NotNull()
-            .GreaterThan(0);
     }
 }

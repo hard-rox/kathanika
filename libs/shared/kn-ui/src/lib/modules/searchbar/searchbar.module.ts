@@ -9,4 +9,4 @@ import { SearchbarResultComponent } from './components/searchbar-result/searchba
   imports: [CommonModule, FormsModule],
   exports: [SearchbarComponent, SearchbarResultComponent],
 })
-export class SearchbarModule {}
+export class KnSearchbarModule {}

@@ -37,12 +37,8 @@ export class SidebarComponent {
           link: 'publications',
         },
         {
-          text: 'Add',
-          link: 'publications/add',
-        },
-        {
-          text: 'Record Purchase',
-          link: 'publications/purchase'
+          text: 'Acquire',
+          link: 'publications/acquire',
         }
       ],
     },

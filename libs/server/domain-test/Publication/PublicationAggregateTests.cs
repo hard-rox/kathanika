@@ -17,11 +17,15 @@ public class PublicationAggregateTests
             "Hello",
             DateOnly.MinValue,
             "",
-            1,
+            string.Empty,
             "Nt0202",
+            "",
+            AcquisitionMethod.Donation,
+            10,
+            20,
             string.Empty,
             string.Empty,
-            new List<Author>(){
+            [
                 Author.Create(
                     "John",
                     "Doe",
@@ -38,12 +42,12 @@ public class PublicationAggregateTests
                     "",
                     ""
                 )
-            }
+            ]
         );
 
         // Assert
         Assert.Equal("Title", publication.Title);
-        Assert.Equal(2, publication.Authors.Count());
+        Assert.Equal(2, publication.Authors.Count);
     }
 
     [Fact]
@@ -57,11 +61,15 @@ public class PublicationAggregateTests
             "Hello",
             DateOnly.MinValue,
             "",
-            1,
-            "ANC0123",
+            string.Empty,
+            "Nt0202",
+            "",
+            AcquisitionMethod.Donation,
+            10,
+            20,
             string.Empty,
             string.Empty,
-            new List<Author>()
+            []
         );
 
         // Act
@@ -72,8 +80,9 @@ public class PublicationAggregateTests
             "Updated publisher",
             DateOnly.MinValue,
             null,
-            3,
-            "Updated CallNumber"
+            "Updated CallNumber",
+            "",
+            ""
         );
 
         // Assert

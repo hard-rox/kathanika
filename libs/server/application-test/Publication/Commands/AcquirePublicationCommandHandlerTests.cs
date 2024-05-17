@@ -3,12 +3,12 @@ using Kathanika.Application.Features.Publications.Commands;
 
 namespace Kathanika.Application.Test.Commands;
 
-public class AddPublicationCommandHandlerTests
+public class AcquirePublicationCommandHandlerTests
 {
     private readonly IPublicationRepository publicationRepository;
     private readonly IAuthorRepository authorRepository;
 
-    public AddPublicationCommandHandlerTests()
+    public AcquirePublicationCommandHandlerTests()
     {
         publicationRepository = Substitute.For<IPublicationRepository>();
         authorRepository = Substitute.For<IAuthorRepository>();
@@ -43,41 +43,39 @@ public class AddPublicationCommandHandlerTests
             "John Doe",
             DateOnly.Parse("2023-01-01"),
             "",
-            2,
             "ABCD123",
+            string.Empty,
+            string.Empty,
+            AcquisitionMethod.Purchase,
+            11,
+            12,
             string.Empty,
             string.Empty,
             authors
         );
 
-        AddPublicationCommandHandler handler = new(publicationRepository, authorRepository);
+        AcquirePublicationCommandHandler handler = new(publicationRepository, authorRepository);
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
             .Returns(authors);
         publicationRepository.AddAsync(Arg.Any<Publication>(), Arg.Any<CancellationToken>())
-            .Returns(Publication.Create(
-            publication.Title,
-            publication.Isbn,
-            publication.PublicationType,
-            publication.Publisher,
-            publication.PublishedDate,
-            publication.Edition,
-            publication.CopiesAvailable,
-            publication.CallNumber,
-            publication.Description,
-            publication.Language,
-            authors
-        ));
+            .Returns(publication);
 
-        AddPublicationCommand command = new(
-            publication.Title,
-            publication.Isbn ?? "",
-            publication.PublicationType,
-            new List<string>(),
-            publication.Publisher,
-            publication.PublishedDate,
-            publication.Edition,
-            publication.CopiesAvailable,
-            publication.CallNumber
+        AcquirePublicationCommand command = new(
+            "Title",
+            "ISBN",
+            PublicationType.Book,
+            [],
+            "John Doe",
+            DateOnly.Parse("2023-01-01"),
+            "",
+            "ABCD123",
+            string.Empty,
+            string.Empty,
+            AcquisitionMethod.Purchase,
+            11,
+            12,
+            string.Empty,
+            null
         );
 
         // Act

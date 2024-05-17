@@ -20,13 +20,14 @@ internal sealed class UpdatePublicationCommandHandler(IPublicationRepository pub
             request.Patch.Publisher,
             request.Patch.PublishedDate,
             request.Patch.Edition,
-            request.Patch.CopiesAvailable,
-            request.Patch.CallNumber
+            request.Patch.CallNumber,
+            request.Patch.Description,
+            request.Patch.Language
         );
 
         if (authors is not null)
         {
-            publication.UpdateAuthors(authors.ToArray());
+            publication.UpdateAuthors([.. authors]);
         }
 
         await publicationRepository.UpdateAsync(publication, cancellationToken);

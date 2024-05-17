@@ -20,5 +20,7 @@ public sealed class PublicationType : ObjectType<Publication>
         descriptor.Field(x => x.Authors);
         descriptor.Field(x => x.PurchaseRecords)
             .UseSorting();
+        descriptor.Field(x => x.DonationRecords)
+            .UseSorting();
     }
 }

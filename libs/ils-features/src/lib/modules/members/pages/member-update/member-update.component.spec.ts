@@ -1,10 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { MemberUpdateComponent } from './member-update.component';
-import { UpdateMemberGQL } from '@kathanika/graphql-ts-client';
-import { mockMutationGql } from "../../../../test-utils/gql-test-utils";
+import { GetMemberGQL, UpdateMemberGQL, mockMutationGql, mockQueryGql } from '@kathanika/graphql-ts-client';
 import { ReactiveFormsModule } from '@angular/forms';
 import { KnDateInput, KnPanel, KnTextInput, KnTextareaInput, KnToggle } from '@kathanika/kn-ui';
+import { ActivatedRoute } from '@angular/router';
+import { MemberFormComponent } from '../../components/member-form/member-form.component';
 
 describe('MemberUpdateComponent', () => {
   let component: MemberUpdateComponent;
@@ -20,12 +21,29 @@ describe('MemberUpdateComponent', () => {
         KnTextareaInput,
         KnToggle,
       ],
-      declarations: [MemberUpdateComponent],
+      declarations: [
+        MemberUpdateComponent,
+        MemberFormComponent
+      ],
       providers: [
         {
           provide: UpdateMemberGQL,
           useValue: mockMutationGql,
         },
+        {
+          provide: GetMemberGQL,
+          useValue: mockQueryGql,
+        },
+        {
+          provide: ActivatedRoute,
+          useValue: {
+            snapshot: {
+              params: {
+                id: '123',
+              },
+            },
+          },
+        }
       ],
     });
     fixture = TestBed.createComponent(MemberUpdateComponent);
@@ -33,7 +51,7 @@ describe('MemberUpdateComponent', () => {
     fixture.detectChanges();
   });
 
-  xit('should create', () => {
+  it('should create', () => {
     expect(component).toBeTruthy();
   });
 });

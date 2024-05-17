@@ -8,7 +8,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { Component } from '@angular/core';
 import { of } from 'rxjs';
 import { Query } from 'apollo-angular';
-import { mockQueryGql } from '../test-utils/gql-test-utils';
+import { mockQueryGql } from '@kathanika/graphql-ts-client';
 
 @Component({})
 class BasePaginatedListTestingComponent extends BasePaginatedListComponent<
