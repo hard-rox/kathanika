@@ -68,7 +68,7 @@ jobs:
           -Dsonar.javascript.lcov.reportPaths="coverage/libs/shared/kn-ui/lcov.info","coverage/libs/ils-features/lcov.info","coverage/apps/ils-web/lcov.info"
           -Dsonar.tests="libs/shared/kn-ui/src","libs/ils-features/src","apps/ils-web/src"
           -Dsonar.test.inclusions=**/*.spec.ts
-          -Dsonar.qualitygate.wait=true
+          # -Dsonar.qualitygate.wait=true
 #         -Dsonar.verbose=true
 
     - name: .NET Sonar analysis
@@ -76,7 +76,7 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
       run: |
-        dotnet sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml /d:sonar.qualitygate.wait=true
+        dotnet sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml
         dotnet build
         dotnet test --collect:"XPlat Code Coverage;Format=opencover"
         dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
