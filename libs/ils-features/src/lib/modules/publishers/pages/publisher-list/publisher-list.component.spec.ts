@@ -1,12 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublisherListComponent } from './publisher-list.component';
-import { GetPublishersGQL } from '@kathanika/graphql-ts-client';
+import { GetPublishersGQL, mockQueryGql } from '@kathanika/graphql-ts-client';
 import { RouterTestingModule } from '@angular/router/testing';
 import { ActivatedRoute } from '@angular/router';
 import { KnPagination } from '@kathanika/kn-ui';
 import { of } from 'rxjs';
-import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
 
 describe('PublisherListComponent', () => {
   let component: PublisherListComponent;

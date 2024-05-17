@@ -5,7 +5,7 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { AddPublisherGQL } from '@kathanika/graphql-ts-client';
 import { PublisherFormComponent } from '../../components/publisher-form/publisher-form.component';
 import { KnPanel, KnAlert } from '@kathanika/kn-ui';
-import { mockMutationGql } from '../../../../test-utils/gql-test-utils';
+import { mockMutationGql } from '@kathanika/graphql-ts-client';
 
 describe('PublisherAddComponent', () => {
   let component: PublisherAddComponent;

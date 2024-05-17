@@ -1,15 +1,11 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthorListComponent } from './author-list.component';
-import { DeleteAuthorGQL, GetAuthorsGQL } from '@kathanika/graphql-ts-client';
+import { DeleteAuthorGQL, GetAuthorsGQL, mockMutationGql, mockQueryGql } from '@kathanika/graphql-ts-client';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { KnPagination } from '@kathanika/kn-ui';
-import {
-  mockQueryGql,
-  mockMutationGql,
-} from '../../../../test-utils/gql-test-utils';
 
 describe('AuthorListComponent', () => {
   let component: AuthorListComponent;

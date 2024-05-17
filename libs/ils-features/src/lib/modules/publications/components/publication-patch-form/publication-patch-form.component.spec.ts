@@ -4,7 +4,7 @@ import { KnDateInput, KnSelectInput, KnTextInput, KnTextareaInput, KnSearchbarMo
 import { PublicationAuthorsInputComponent } from '../publication-authors-input/publication-authors-input.component';
 import { NgControl, ReactiveFormsModule } from '@angular/forms';
 import { SearchAuthorsGQL } from '@kathanika/graphql-ts-client';
-import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
+import { mockQueryGql } from '@kathanika/graphql-ts-client';
 
 describe('PublicationPatchFormComponent', () => {
   let component: PublicationPatchFormComponent;

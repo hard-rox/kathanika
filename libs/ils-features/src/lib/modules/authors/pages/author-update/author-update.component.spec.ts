@@ -7,6 +7,8 @@ import {
   GetAuthorQuery,
   UpdateAuthorGQL,
   UpdateAuthorMutation,
+  mockMutationGql,
+  mockQueryGql,
 } from '@kathanika/graphql-ts-client';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
@@ -20,10 +22,6 @@ import {
   KnTextareaInput,
   KnToggle,
 } from '@kathanika/kn-ui';
-import {
-  mockQueryGql,
-  mockMutationGql,
-} from '../../../../test-utils/gql-test-utils';
 
 describe('AuthorUpdateComponent', () => {
   const routeParam = '12345';

@@ -22,7 +22,10 @@ export class PublicationAuthorsInputComponent extends AbstractInputComponent<str
   >;
   @Input()
   set currentAuthors(input: PublicationAuthor[] | null) {
-    if (input) this.selectedAuthors = input;
+    if (input) {
+      this.selectedAuthors = input;
+      this.value = input.map(x => x.id);
+    }
   }
 
   protected selectedAuthors: PublicationAuthor[] = [];

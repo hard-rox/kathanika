@@ -22,7 +22,6 @@ export class PublicationAcquireComponent {
   errors: string[] = [];
 
   onValidFormSubmit(formValue: AcquirePublicationInput) {
-    // console.debug(formValue);
     this.isPanelLoading = true;
     this.gql
       .mutate({
@@ -30,7 +29,6 @@ export class PublicationAcquireComponent {
       })
       .subscribe({
         next: (result) => {
-          console.debug(result);
           if (result.errors || result.data?.acquirePublication.errors) {
             this.errors = [];
             result.data?.acquirePublication.errors?.forEach((x) =>
@@ -49,6 +47,10 @@ export class PublicationAcquireComponent {
           }
           this.isPanelLoading = false;
         },
+        error: (err) => {
+          // console.debug(JSON.stringify(err));
+          this.alertService.showPopup('error', err.message);
+        }
       });
   }
 

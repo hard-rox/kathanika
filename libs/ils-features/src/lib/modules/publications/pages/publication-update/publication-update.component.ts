@@ -13,9 +13,8 @@ import { PublicationPatchFormComponent } from '../../components/publication-patc
   templateUrl: './publication-update.component.html'
 })
 export class PublicationUpdateComponent implements OnInit {
-  @ViewChild('publicationUpdateForm') publicationUpdateForm:
-    | PublicationPatchFormComponent
-    | undefined;
+  @ViewChild('publicationUpdateForm') publicationUpdateForm!:
+    | PublicationPatchFormComponent;
 
   constructor(
     private gql: GetPublicationGQL,
@@ -76,7 +75,7 @@ export class PublicationUpdateComponent implements OnInit {
       })
       .subscribe({
         next: (result) => {
-          // console.debug(JSON.stringify(result));
+          console.debug(JSON.stringify(result));
           if (result.errors || result.data?.updatePublication.errors) {
             this.errors = [];
             result.data?.updatePublication.errors?.forEach((x) => {
@@ -105,6 +104,10 @@ export class PublicationUpdateComponent implements OnInit {
           }
           this.isPanelLoading = false;
         },
+        error: (err) => {
+          this.alertService.showPopup('error', err.message);
+          this.isPanelLoading = false;
+        }
       });
   }
 

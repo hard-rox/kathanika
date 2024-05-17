@@ -4,7 +4,12 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { PublicationAcquireComponent } from "./publication-acquire.component";
 import {
   AcquirePublicationGQL,
+  AcquirePublicationInput,
+  AcquisitionMethod,
+  PublicationType,
   SearchAuthorsGQL,
+  mockMutationGql,
+  mockQueryGql,
 } from '@kathanika/graphql-ts-client';
 import {
   KnPanel,
@@ -12,16 +17,29 @@ import {
   KnSearchbarModule,
   KnChip,
 } from '@kathanika/kn-ui';
-import {
-  mockMutationGql,
-  mockQueryGql,
-} from '../../../../test-utils/gql-test-utils';
 import { AcquirePublicationFormComponent } from '../../components/acquire-publication-form/acquire-publication-form.component';
 import { PublicationAuthorsInputComponent } from '../../components/publication-authors-input/publication-authors-input.component';
+import { of } from 'rxjs';
 
 describe('PublicationAddComponent', () => {
   let component: PublicationAcquireComponent;
   let fixture: ComponentFixture<PublicationAcquireComponent>;
+  const formValue: AcquirePublicationInput = {
+    acquisitionMethod: AcquisitionMethod.Purchase,
+    authorIds: ['author1', 'author2'],
+    callNumber: '123',
+    description: 'Description',
+    edition: 'First',
+    isbn: '1234567890',
+    language: 'English',
+    publicationType: PublicationType.Book,
+    publishedDate: '2023-05-24',
+    publisher: 'Publisher',
+    quantity: 1,
+    title: 'Title',
+    unitPrice: 10.99,
+    vendor: 'Vendor'
+  };
 
   beforeEach(() => {
     TestBed.configureTestingModule({
@@ -55,5 +73,55 @@ describe('PublicationAddComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should handle form submission with valid data', () => {
+    const result = {
+      data: {
+        acquirePublication: {
+          data: { id: '123' },
+          message: 'Publication added.',
+          errors: null
+        }
+      }
+    };
+
+    jest.spyOn(component['gql'], 'mutate').mockReturnValue(of(result));
+
+    jest.spyOn(component['alertService'], 'showToast');
+    jest.spyOn(component['router'], 'navigate');
+
+    component.onValidFormSubmit(formValue);
+
+    expect(component['gql'].mutate).toHaveBeenCalledWith({ acquirePublicationInput: formValue });
+    expect(component['alertService'].showToast).toHaveBeenCalledWith('success', 'Publication added.');
+    expect(component['router'].navigate).toHaveBeenCalledWith(['/publications/123']);
+    expect(component.isPanelLoading).toBe(false);
+    expect(component.errors).toEqual([]);
+  });
+
+  it('should handle form submission with errors', () => {
+    const result = {
+      data: {
+        acquirePublication: {
+          data: null,
+          message: null,
+          errors: [{ fieldName: 'field1', message: 'Error message 1' }]
+        }
+      }
+    };
+
+    jest.spyOn(component['gql'], 'mutate').mockReturnValue(of(result));
+
+    jest.spyOn(component['alertService'], 'showToast');
+    jest.spyOn(component['router'], 'navigate');
+
+    component.onValidFormSubmit(formValue);
+
+    expect(component['gql'].mutate).toHaveBeenCalledWith({ acquirePublicationInput: formValue });
+    expect(component['alertService'].showToast).not.toHaveBeenCalled();
+    expect(component['router'].navigate).not.toHaveBeenCalled();
+    expect(component.isPanelLoading).toBe(false);
+    expect(component.errors).toEqual(['field1 - Error message 1']);
   });
 });

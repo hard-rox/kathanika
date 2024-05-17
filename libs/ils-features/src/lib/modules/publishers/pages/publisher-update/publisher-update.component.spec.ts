@@ -7,16 +7,14 @@ import { PublisherFormComponent } from '../../components/publisher-form/publishe
 import {
   GetPublisherGQL,
   UpdatePublisherGQL,
+  mockMutationGql,
+  mockQueryGql,
 } from '@kathanika/graphql-ts-client';
 import {
   KnPanel,
   KnAlert,
   KnTextInput,
 } from '@kathanika/kn-ui';
-import {
-  mockQueryGql,
-  mockMutationGql,
-} from '../../../../test-utils/gql-test-utils';
 
 describe('PublisherUpdateComponent', () => {
   let component: PublisherUpdateComponent;

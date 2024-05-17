@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { GetPublicationsGQL } from '@kathanika/graphql-ts-client';
 import { RouterTestingModule } from '@angular/router/testing';
 import { KnPagination } from '@kathanika/kn-ui';
-import { mockQueryGql } from '../../../../test-utils/gql-test-utils';
+import { mockQueryGql } from '@kathanika/graphql-ts-client';
 
 describe('PublicationListComponent', () => {
   let component: PublicationListComponent;
