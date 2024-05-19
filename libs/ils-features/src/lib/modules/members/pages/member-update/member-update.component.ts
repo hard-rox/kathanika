@@ -1,19 +1,16 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GetMemberGQL, UpdateMemberGQL } from '@kathanika/graphql-ts-client';
-import { MemberFormInput } from '../../types/member-form-input';
-import { MemberFormOutput } from '../../types/member-form-output';
-import { MessageAlertService } from "../../../../core/services/message-alert.service";
+import { CreateMemberInput, GetMemberGQL, Member, MemberPatchInput, UpdateMemberGQL } from '@kathanika/graphql-ts-client';
+import { MessageAlertService } from "../../../../core/services/message-alert/message-alert.service";
+import { finalize } from 'rxjs';
 
 
 @Component({
   templateUrl: './member-update.component.html'
 })
-export class MemberUpdateComponent  implements OnInit {
-  @ViewChild('memberUpdateForm') memberUpdateForm:
-    | MemberFormComponent
-    | undefined;
+export class MemberUpdateComponent implements OnInit {
+  @ViewChild('memberUpdateForm') memberUpdateForm!: MemberFormComponent;
 
   constructor(
     private gql: GetMemberGQL,
@@ -21,11 +18,11 @@ export class MemberUpdateComponent  implements OnInit {
     private alertService: MessageAlertService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) { }
 
   isPanelLoading = true;
   memberId: string | undefined;
-  memberFormInput!: MemberFormInput;
+  memberToUpdate: Member | null = null;
   errors: string[] = [];
 
   ngOnInit(): void {
@@ -35,14 +32,16 @@ export class MemberUpdateComponent  implements OnInit {
         .fetch({
           id: this.memberId,
         })
+        .pipe(finalize(() => {
+          this.isPanelLoading = false;
+        }))
         .subscribe({
           next: (result) => {
-            // console.debug(result);
             if (result.error || result.errors) {
               this.alertService.showPopup(
                 'error',
                 result.error?.message ??
-                  (result.errors?.join('<br/>') as string),
+                (result.errors?.join('<br/>') as string),
               );
             } else if (result.data.member == null) {
               this.alertService.showPopup(
@@ -52,19 +51,17 @@ export class MemberUpdateComponent  implements OnInit {
               );
               this.router.navigate(['/members']);
             } else {
-              this.memberFormInput = { ...result.data.member };
-              this.isPanelLoading = false;
+              this.memberToUpdate = { ...result.data.member };
             }
           },
           error: (err) => {
-            // console.debug(JSON.stringify(err));
-            this.alertService.showPopup('error', err.message);
+            this.alertService.showHttpErrorPopup(err);
           },
         });
     }
   }
 
-  onValidFormSubmit(memberOutput: MemberFormOutput) {
+  onValidFormSubmit(memberOutput: CreateMemberInput | MemberPatchInput) {
     this.isPanelLoading = true;
 
     this.mutation
@@ -72,6 +69,9 @@ export class MemberUpdateComponent  implements OnInit {
         id: this.memberId as string,
         memberPatch: memberOutput,
       })
+      .pipe(finalize(() => {
+        this.isPanelLoading = false;
+      }))
       .subscribe({
         next: (result) => {
           // console.debug(JSON.stringify(result));
@@ -88,7 +88,6 @@ export class MemberUpdateComponent  implements OnInit {
               }
             });
             result.errors?.forEach((x) => this.errors.push(x.message));
-            this.isPanelLoading = false;
           } else {
             this.alertService.showToast(
               'success',
@@ -99,11 +98,9 @@ export class MemberUpdateComponent  implements OnInit {
               `/members/${result.data?.updateMember.data?.id}`,
             ]);
           }
-          this.isPanelLoading = false;
         },
-        error: () => {
-          this.errors.push('Something wrong happened.');
-          this.isPanelLoading = false;
+        error: (err) => {
+          this.alertService.showHttpErrorPopup(err)
         },
       });
   }

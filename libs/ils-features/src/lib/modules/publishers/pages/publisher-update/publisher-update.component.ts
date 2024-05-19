@@ -4,7 +4,7 @@ import {
   GetPublisherGQL,
   UpdatePublisherGQL,
 } from '@kathanika/graphql-ts-client';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublisherFormInput } from '../../types/publisher-form-input';
 import { PublisherFormOutput } from '../../types/publisher-form-output';

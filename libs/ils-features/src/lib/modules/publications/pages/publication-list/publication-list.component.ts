@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import {
   GetPublicationsGQL,
   GetPublicationsQuery,

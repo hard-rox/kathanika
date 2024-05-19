@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { AddAuthorGQL } from '@kathanika/graphql-ts-client';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 import { AuthorFormOutput } from '../../types/author-form-output';
 

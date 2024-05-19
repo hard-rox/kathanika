@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { Router } from '@angular/router';
 import { AcquirePublicationFormComponent } from '../../components/acquire-publication-form/acquire-publication-form.component';
 import { AcquirePublicationGQL, AcquirePublicationInput } from '@kathanika/graphql-ts-client';

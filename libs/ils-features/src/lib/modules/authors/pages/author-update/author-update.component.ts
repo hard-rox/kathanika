@@ -3,7 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { GetAuthorGQL, UpdateAuthorGQL } from '@kathanika/graphql-ts-client';
 import { AuthorFormInput } from '../../types/author-form-input';
 import { AuthorFormOutput } from '../../types/author-form-output';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 
 @Component({

@@ -3,20 +3,27 @@ export const mockQueryGql = {
   watch: () => {
     return {
       valueChanges: {
-        subscribe: () => {},
+        subscribe: () => { },
       },
-      refetch: () => {},
+      refetch: () => { },
     };
   },
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   fetch: (variables?: never) => {
-    return { subscribe: () => {} };
+    return {
+      subscribe: () => { },
+      pipe: () => {
+        return {
+          subscribe: () => { }
+        }
+      }
+    };
   },
 };
 
 export const mockMutationGql = {
   mutate: () => {
     // eslint-disable-next-line no-empty-pattern
-    return { subscribe: ({}) => {} };
+    return { subscribe: ({ }) => { } };
   },
 };

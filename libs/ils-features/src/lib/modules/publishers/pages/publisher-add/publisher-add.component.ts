@@ -4,7 +4,7 @@ import {
   AddPublisherGQL,
   AddPublisherInput,
 } from '@kathanika/graphql-ts-client';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { Router } from '@angular/router';
 
 @Component({

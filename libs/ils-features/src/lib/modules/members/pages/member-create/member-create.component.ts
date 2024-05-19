@@ -1,9 +1,9 @@
 import { Component, ViewChild } from '@angular/core';
-import { CreateMemberGQL } from '@kathanika/graphql-ts-client';
+import { CreateMemberGQL, CreateMemberInput, MemberPatchInput } from '@kathanika/graphql-ts-client';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
-import { MessageAlertService } from "../../../../core/services/message-alert.service";
-import { MemberFormOutput } from '../../types/member-form-output';
+import { MessageAlertService } from "../../../../core/services/message-alert/message-alert.service";
 import { Router } from '@angular/router';
+import { finalize } from 'rxjs';
 
 @Component({
   templateUrl: './member-create.component.html'
@@ -20,9 +20,13 @@ export class MemberCreateComponent {
   isPanelLoading = false;
   errors: string[] = [];
 
-  onValidFormSubmit(formValue: MemberFormOutput) {
+  onValidFormSubmit(formValue: CreateMemberInput | MemberPatchInput) {
     this.isPanelLoading = true;
-    this.gql.mutate({ createMemberInput: formValue }).subscribe({
+    this.gql.mutate({ createMemberInput: formValue as CreateMemberInput })
+      .pipe(finalize(() => {
+        this.isPanelLoading = false;
+      }))
+      .subscribe({
       next: (result) => {
         // console.debug(result);
         if (result.errors || result.data?.createMember.errors) {
@@ -39,8 +43,10 @@ export class MemberCreateComponent {
           this.memberCreateForm?.resetForm();
           this.router.navigate([`/members/${result.data?.createMember.data?.id}`]);
         }
-        this.isPanelLoading = false;
       },
+        error: (err) => {
+          this.alertService.showHttpErrorPopup(err);
+      }
     });
   }
 
