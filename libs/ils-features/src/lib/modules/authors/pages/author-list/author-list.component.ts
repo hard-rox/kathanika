@@ -7,7 +7,7 @@ import {
   GetAuthorsQueryVariables,
   SortEnumType,
 } from '@kathanika/graphql-ts-client';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { BasePaginatedListComponent } from '../../../../abstractions/base-paginated-list-component';
 
 @Component({

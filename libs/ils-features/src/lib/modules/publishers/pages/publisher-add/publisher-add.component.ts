@@ -4,7 +4,7 @@ import {
   AddPublisherGQL,
   AddPublisherInput,
 } from '@kathanika/graphql-ts-client';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { Router } from '@angular/router';
 
 @Component({
@@ -40,7 +40,7 @@ export class PublisherAddComponent {
             result.data?.addPublisher.message ?? 'Publisher added.',
           );
           this.publisherAddForm?.resetForm();
-          this.router.navigate([`/publishers`]);
+          this.router.navigate([`/publishers/${result.data?.addPublisher.data?.id}`]);
         }
         this.isPanelLoading = false;
       },

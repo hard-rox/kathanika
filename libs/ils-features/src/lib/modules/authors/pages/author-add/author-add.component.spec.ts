@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AuthorAddComponent } from './author-add.component';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AddAuthorGQL, AddAuthorMutation, mockMutationGql } from '@kathanika/graphql-ts-client';
+import { AddAuthorGQL, AddAuthorInput, AddAuthorMutation, mockMutationGql } from '@kathanika/graphql-ts-client';
 import {
   KnPanel,
   KnTextInput,
@@ -13,13 +13,12 @@ import {
 } from '@kathanika/kn-ui';
 import { MutationResult } from 'apollo-angular';
 import { of } from 'rxjs';
-import { AuthorFormOutput } from '../../types/author-form-output';
 
 describe('AuthorAddComponent', () => {
   let component: AuthorAddComponent;
   let fixture: ComponentFixture<AuthorAddComponent>;
 
-  const formOutput: AuthorFormOutput = {
+  const formOutput: AddAuthorInput = {
     firstName: 'Hello',
     lastName: 'world',
     dateOfBirth: new Date('2023-01-01'),

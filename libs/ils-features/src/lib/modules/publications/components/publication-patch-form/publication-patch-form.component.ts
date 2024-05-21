@@ -23,7 +23,7 @@ export class PublicationPatchFormComponent extends BaseFormComponent<Publication
   @Output()
   formSubmit = this.submitEventEmitter;
 
-  protected publicationToUpdate!: Publication;
+  protected publicationToUpdate: Publication | null = null;
   protected publicationTypes: string[] = Object.values(PublicationType);
 
   protected override createFormGroup(): FormGroup<ControlsOf<PublicationPatchInput>> {

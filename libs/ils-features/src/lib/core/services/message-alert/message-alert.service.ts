@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ApolloError } from '@apollo/client/errors';
 import { Observable, from, map } from 'rxjs';
 import Swal from 'sweetalert2';
 
@@ -25,14 +26,14 @@ export class MessageAlertService {
     this.themedSwal.fire({
       icon: type,
       title: title ?? (type === 'success'
-          ? 'Success'
-          : type === 'warning'
-            ? 'Warning'
-            : type === 'info'
-              ? 'Information'
-              : type === 'question'
-                ? 'Question'
-                : 'Error'),
+        ? 'Success'
+        : type === 'warning'
+          ? 'Warning'
+          : type === 'info'
+            ? 'Information'
+            : type === 'question'
+              ? 'Question'
+              : 'Error'),
       text: message,
     });
   }
@@ -89,5 +90,14 @@ export class MessageAlertService {
       icon: type,
       title: message,
     });
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  showHttpErrorPopup(error: ApolloError | any) {
+    console.debug(typeof error, typeof ApolloError, JSON.stringify(error))
+    if (error instanceof ApolloError) {
+      this.showPopup('error',
+      error?.networkError?.message ?? 'There is an unfortunate GraphQL Error');
+    }
   }
 }

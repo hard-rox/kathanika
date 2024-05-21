@@ -2,6 +2,7 @@ using Kathanika.Application;
 using Kathanika.GraphQL;
 using Kathanika.Persistence;
 using Kathanika.Workers;
+using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
@@ -48,6 +49,8 @@ try
                 // .AddConsoleExporter()
                 .AddOtlpExporter();
         });
+
+    builder.Logging.AddOpenTelemetry(logging => logging.AddOtlpExporter());
 
     if (builder.Environment.IsDevelopment())
     {

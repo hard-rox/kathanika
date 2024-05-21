@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { PublisherListComponent } from './publisher-list.component';
-import { GetPublishersGQL, mockQueryGql } from '@kathanika/graphql-ts-client';
-import { RouterTestingModule } from '@angular/router/testing';
-import { ActivatedRoute } from '@angular/router';
+import { GetPublishersGQL, PublisherFilterInput, mockQueryGql } from '@kathanika/graphql-ts-client';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { KnPagination } from '@kathanika/kn-ui';
 import { of } from 'rxjs';
 
@@ -14,7 +13,10 @@ describe('PublisherListComponent', () => {
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [PublisherListComponent],
-      imports: [KnPagination, RouterTestingModule],
+      imports: [
+        RouterModule.forRoot([]),
+        KnPagination
+      ],
       providers: [
         {
           provide: GetPublishersGQL,
@@ -38,5 +40,31 @@ describe('PublisherListComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
+  });
+
+  it('should set queryVariables.filter correctly when searchText is empty', () => {
+    component['setSearchTextQueryFilter']('');
+    expect(component.queryVariables.filter).toBeNull();
+  });
+
+  it('should set queryVariables.filter correctly when searchText is not empty', () => {
+    const searchText = 'John';
+    const filter: PublisherFilterInput = {
+      or: [
+        {
+          name: {
+            contains: 'John',
+          },
+        },
+        {
+          description: {
+            contains: 'John'
+          },
+        },
+      ],
+    }
+    component['setSearchTextQueryFilter'](searchText);
+
+    expect(component.queryVariables.filter).toEqual(filter);
   });
 });

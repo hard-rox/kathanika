@@ -39,4 +39,44 @@ describe('MemberListComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
+
+  it('should set queryVariables.filter correctly when searchText is empty', () => {
+    component['setSearchTextQueryFilter']('');
+    expect(component.queryVariables.filter).toBeNull();
+  });
+
+  it('should set queryVariables.filter correctly when searchText is not empty', () => {
+    const searchText = 'John Doe';
+    component['setSearchTextQueryFilter'](searchText);
+
+    expect(component.queryVariables.filter).toEqual({
+      or: [
+        {
+          firstName: {
+            contains: 'John',
+          },
+        },
+        {
+          lastName: {
+            contains: undefined
+          },
+        },
+        {
+          address: {
+            contains: 'John Doe',
+          },
+        },
+        {
+          contactNumber: {
+            contains: 'John Doe',
+          },
+        },
+        {
+          email: {
+            contains: 'John Doe',
+          },
+        },
+      ],
+    });
+  });
 });

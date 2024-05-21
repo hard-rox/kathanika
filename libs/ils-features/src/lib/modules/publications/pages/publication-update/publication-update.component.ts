@@ -5,7 +5,7 @@ import {
   PublicationPatchInput,
   UpdatePublicationGQL,
 } from '@kathanika/graphql-ts-client';
-import { MessageAlertService } from '../../../../core/services/message-alert.service';
+import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { PublicationPatchFormComponent } from '../../components/publication-patch-form/publication-patch-form.component';
 

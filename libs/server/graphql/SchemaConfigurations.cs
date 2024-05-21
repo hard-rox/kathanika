@@ -44,10 +44,10 @@ internal static class SchemaConfigurations
                     .RemoveException()
                     .RemoveExtensions()
                     .RemoveLocations();
-            if (exception is TimeoutException && exception.Source == "MongoDB.Driver.Core")
+            if (exception is not null && exception.Source == "MongoDB.Driver.Core")
             {
                 return errorResult
-                    .WithMessage("Looks like MongoDB is offline. Make sure database is online to enjoy.");
+                    .WithMessage("Looks like MongoDB is offline or connection string is invalid. Make sure database is online to enjoy.");
             }
             if (error.Exception is not null && error.Exception is not DomainException)
             {

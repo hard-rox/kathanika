@@ -1,9 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { AuthorListComponent } from './author-list.component';
-import { DeleteAuthorGQL, GetAuthorsGQL, mockMutationGql, mockQueryGql } from '@kathanika/graphql-ts-client';
-import { ActivatedRoute } from '@angular/router';
-import { RouterTestingModule } from '@angular/router/testing';
+import { AuthorFilterInput, DeleteAuthorGQL, GetAuthorsGQL, mockMutationGql, mockQueryGql } from '@kathanika/graphql-ts-client';
+import { ActivatedRoute, RouterModule } from '@angular/router';
 import { of } from 'rxjs';
 import { KnPagination } from '@kathanika/kn-ui';
 
@@ -14,7 +13,7 @@ describe('AuthorListComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AuthorListComponent],
-      imports: [KnPagination, RouterTestingModule],
+      imports: [KnPagination, RouterModule.forRoot([])],
       providers: [
         {
           provide: GetAuthorsGQL,
@@ -43,9 +42,34 @@ describe('AuthorListComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should call base "init()" on ngOnInit', () => {
-  //   const spy = spyOn(component, 'init');
-  //   component.ngOnInit();
-  //   expect(spy).toHaveBeenCalledTimes(1);
-  // });
+  it('should set queryVariables.filter correctly when searchText is empty', () => {
+    component['setSearchTextQueryFilter']('');
+    expect(component.queryVariables.filter).toBeNull();
+  });
+
+  it('should set queryVariables.filter correctly when searchText is not empty', () => {
+    const searchText = 'John';
+    const filter: AuthorFilterInput = {
+      or: [
+        {
+          firstName: {
+            contains: 'John',
+          },
+        },
+        {
+          lastName: {
+            contains: 'John'
+          },
+        },
+        {
+          nationality: {
+            contains: 'John'
+          },
+        },
+      ],
+    }
+    component['setSearchTextQueryFilter'](searchText);
+
+    expect(component.queryVariables.filter).toEqual(filter);
+  });
 });

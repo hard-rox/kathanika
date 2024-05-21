@@ -13,7 +13,7 @@
 <kn-panel panelTitle="Publication Update" [isLoading]="isPanelLoading">
   <kn-publisher-form
     #publisherUpdateForm
-    [publisher]="publisherFormInput"
+    [publisher]="publisherToUpdate"
     (formSubmit)="onValidFormSubmit($event)"
   />
 </kn-panel>

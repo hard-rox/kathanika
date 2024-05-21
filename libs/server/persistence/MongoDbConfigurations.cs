@@ -88,6 +88,7 @@ internal static class MongoDbConfigurations
                 });
             };
             mongoClientSettings.RetryWrites = true;
+            mongoClientSettings.ApplicationName = "Kathanika ILS";
             MongoClient mongoClient = new(mongoClientSettings);
             IMongoDatabase db = mongoClient.GetDatabase("kathanika_ils");
             return db;

@@ -1,35 +1,27 @@
 import { ChangeDetectionStrategy, Component, Input, Output } from '@angular/core';
 import { BaseFormComponent, ControlsOf } from "../../../../abstractions/base-form-component";
-import { MemberFormOutput } from '../../types/member-form-output';
-import { MemberFormInput } from '../../types/member-form-input';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CreateMemberInput, Member, MemberPatchInput } from '@kathanika/graphql-ts-client';
 
 @Component({
   selector: 'kn-member-form',
   templateUrl: './member-form.component.html',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class MemberFormComponent extends BaseFormComponent<MemberFormOutput>
+export class MemberFormComponent extends BaseFormComponent<CreateMemberInput | MemberPatchInput>
 {
   @Input()
-  set member(input: MemberFormInput) {
+  set member(input: Member | null) {
     if (input) {
-      this.formGroup.patchValue({
-        firstName: input.firstName,
-        lastName: input.lastName,
-        dateOfBirth: input.dateOfBirth,
-        contactNumber: input.contactNumber,
-        email: input.email,
-        address: input.address
-      });
+      this.formGroup.patchValue(input);
     }
   }
 
   @Output()
   formSubmit = this.submitEventEmitter;
 
-  protected override createFormGroup(): FormGroup<ControlsOf<MemberFormOutput>> {
-    return new FormGroup({
+  protected override createFormGroup(): FormGroup<ControlsOf<CreateMemberInput | MemberPatchInput>> {
+    return new FormGroup<ControlsOf<CreateMemberInput | MemberPatchInput>>({
       firstName: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],

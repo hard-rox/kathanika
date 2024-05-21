@@ -13,7 +13,7 @@
 <kn-panel panelTitle="Member Update" [isLoading]="isPanelLoading">
   <kn-member-form
     #memberUpdateForm
-    [member]="memberFormInput"
+    [member]="memberToUpdate"
     (formSubmit)="onValidFormSubmit($event)"
   />
 </kn-panel>
