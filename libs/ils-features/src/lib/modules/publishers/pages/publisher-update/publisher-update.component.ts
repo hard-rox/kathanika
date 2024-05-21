@@ -2,20 +2,19 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { PublisherFormComponent } from '../../components/publisher-form/publisher-form.component';
 import {
   GetPublisherGQL,
+  Publisher,
+  PublisherPatchInput,
   UpdatePublisherGQL,
 } from '@kathanika/graphql-ts-client';
 import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { ActivatedRoute, Router } from '@angular/router';
-import { PublisherFormInput } from '../../types/publisher-form-input';
-import { PublisherFormOutput } from '../../types/publisher-form-output';
+import { finalize } from 'rxjs';
 
 @Component({
   templateUrl: './publisher-update.component.html'
 })
 export class PublisherUpdateComponent implements OnInit {
-  @ViewChild('publisherUpdateForm') publisherUpdateForm:
-    | PublisherFormComponent
-    | undefined;
+  @ViewChild('publisherUpdateForm') publisherUpdateForm!: PublisherFormComponent;
 
   constructor(
     private gql: GetPublisherGQL,
@@ -23,61 +22,62 @@ export class PublisherUpdateComponent implements OnInit {
     private alertService: MessageAlertService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-  ) {}
+  ) { }
 
   isPanelLoading = true;
-  publisherId: string | undefined;
-  publisherFormInput!: PublisherFormInput;
+  publisherId!: string;
+  publisherToUpdate!: Publisher;
   errors: string[] = [];
 
   ngOnInit(): void {
     this.publisherId = this.activatedRoute.snapshot.params['id'];
-    if (this.publisherId && this.publisherId.length > 0) {
-      this.gql
-        .fetch({
-          id: this.publisherId,
-        })
-        .subscribe({
-          next: (result) => {
-            // console.debug(result);
-            if (result.error || result.errors) {
-              this.alertService.showPopup(
-                'error',
-                result.error?.message ??
-                  (result.errors?.join('<br/>') as string),
-              );
-            } else if (result.data.publisher == null) {
-              this.alertService.showPopup(
-                'error',
-                'Returning to list page.',
-                'Publisher not found',
-              );
-              this.router.navigate(['/publishers']);
-            } else {
-              this.publisherFormInput = {
-                name: result.data.publisher.name,
-                description: result.data.publisher.description,
-                contactInformation: result.data.publisher.contactInformation,
-              };
-              this.isPanelLoading = false;
-            }
-          },
-          error: (err) => {
-            // console.debug(JSON.stringify(err));
-            this.alertService.showPopup('error', err.message);
-          },
-        });
+    if (!this.publisherId || this.publisherId.length == 0) {
+      this.router.navigate(['/publishers']);
+      return;
     }
+    this.gql
+      .fetch({
+        id: this.publisherId,
+      })
+      .pipe(finalize(() => {
+        this.isPanelLoading = false;
+      }))
+      .subscribe({
+        next: (result) => {
+          if (result.error || result.errors) {
+            this.alertService.showPopup(
+              'error',
+              result.error?.message ??
+              (result.errors?.join('<br/>') as string),
+            );
+          } else if (result.data.publisher == null) {
+            this.alertService.showPopup(
+              'error',
+              'Returning to list page.',
+              'Publisher not found',
+            );
+            this.router.navigate(['/publishers']);
+          } else {
+            this.publisherToUpdate = result.data.publisher;
+          }
+        },
+        error: (err) => {
+          this.alertService.showHttpErrorPopup(err);
+        },
+      });
   }
 
-  onValidFormSubmit(publisherOutput: PublisherFormOutput) {
+  onValidFormSubmit(publisherPatch: PublisherPatchInput) {
     this.isPanelLoading = true;
 
     this.mutation
       .mutate({
         id: this.publisherId as string,
-        publisherPatch: publisherOutput,
+        publisherPatch: publisherPatch,
       })
+      .pipe(finalize(() => {
+        this.isPanelLoading = false;
+      }))
       .subscribe({
         next: (result) => {
           // console.debug(JSON.stringify(result));
@@ -103,10 +103,12 @@ export class PublisherUpdateComponent implements OnInit {
               result.data?.updatePublisher.message ?? 'Publisher updated.',
             );
             this.publisherUpdateForm?.resetForm();
-            this.router.navigate([`/publishers`]);
+            this.router.navigate([`/publishers/${result.data?.updatePublisher.data?.id}`]);
           }
-          this.isPanelLoading = false;
         },
+        error: (err) => {
+          this.alertService.showHttpErrorPopup(err)
+        }
       });
   }
 

@@ -1,10 +1,9 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { GetAuthorGQL, UpdateAuthorGQL } from '@kathanika/graphql-ts-client';
-import { AuthorFormInput } from '../../types/author-form-input';
-import { AuthorFormOutput } from '../../types/author-form-output';
+import { AddAuthorInput, Author, AuthorPatchInput, GetAuthorGQL, UpdateAuthorGQL } from '@kathanika/graphql-ts-client';
 import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
+import { finalize } from 'rxjs';
 
 @Component({
   templateUrl: './author-update.component.html'
@@ -24,7 +23,7 @@ export class AuthorUpdateComponent implements OnInit {
 
   isPanelLoading = true;
   authorId: string | undefined;
-  authorFormInput!: AuthorFormInput;
+  authorToUpdate!: Author;
   errors: string[] = [];
 
   ngOnInit(): void {
@@ -34,6 +33,9 @@ export class AuthorUpdateComponent implements OnInit {
         .fetch({
           id: this.authorId,
         })
+        .pipe(finalize(() => {
+          this.isPanelLoading = false;
+        }))
         .subscribe({
           next: (result) => {
             // console.debug(result);
@@ -51,19 +53,17 @@ export class AuthorUpdateComponent implements OnInit {
               );
               this.router.navigate(['/authors']);
             } else {
-              this.authorFormInput = { ...result.data.author };
-              this.isPanelLoading = false;
+              this.authorToUpdate = result.data.author;
             }
           },
           error: (err) => {
-            // console.debug(JSON.stringify(err));
-            this.alertService.showPopup('error', err.message);
+            this.alertService.showHttpErrorPopup(err);
           },
         });
     }
   }
 
-  onValidFormSubmit(authorOutput: AuthorFormOutput) {
+  onValidFormSubmit(authorOutput: AddAuthorInput | AuthorPatchInput) {
     this.isPanelLoading = true;
 
     this.mutation

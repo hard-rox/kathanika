@@ -13,7 +13,7 @@
 <kn-panel panelTitle="Author Update" [isLoading]="isPanelLoading">
   <kn-author-form
     #authorUpdateForm
-    [author]="authorFormInput"
+    [author]="authorToUpdate"
     (formSubmit)="onValidFormSubmit($event)"
   />
 </kn-panel>

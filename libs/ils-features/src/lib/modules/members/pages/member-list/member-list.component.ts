@@ -31,7 +31,7 @@ export class MemberListComponent
         },
         {
           lastName: {
-            contains: searchText.split(' ')[-1],
+            contains: searchText.split(' ')[-1], // TODO: Why -1?
           },
         },
         {

@@ -1,21 +1,19 @@
 import { Component, Input, OnInit, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthorFormInput } from '../../types/author-form-input';
-import { AuthorFormOutput } from '../../types/author-form-output';
 import {
   BaseFormComponent,
   ControlsOf
 } from '../../../../abstractions/base-form-component';
+import { AddAuthorInput, Author, AuthorPatchInput } from '@kathanika/graphql-ts-client';
 @Component({
   selector: 'kn-author-form',
   templateUrl: './author-form.component.html'
 })
 export class AuthorFormComponent
-  extends BaseFormComponent<AuthorFormOutput>
-  implements OnInit
-{
+  extends BaseFormComponent<AddAuthorInput | AuthorPatchInput>
+  implements OnInit {
   @Input()
-  set author(input: AuthorFormInput) {
+  set author(input: Author) {
     if (input) {
       this.formGroup.patchValue({
         firstName: input.firstName,
@@ -33,8 +31,8 @@ export class AuthorFormComponent
   @Output()
   formSubmit = this.submitEventEmitter;
 
-  protected override createFormGroup(): FormGroup<ControlsOf<AuthorFormOutput>> {
-    return new FormGroup({
+  protected override createFormGroup(): FormGroup<ControlsOf<AddAuthorInput | AuthorPatchInput>> {
+    return new FormGroup<ControlsOf<AddAuthorInput | AuthorPatchInput>>({
       firstName: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
@@ -48,7 +46,6 @@ export class AuthorFormComponent
         validators: [Validators.required],
       }),
       markedAsDeceased: new FormControl<boolean>(false, { nonNullable: true }),
-      dateOfDeath: new FormControl<Date | null>(null, { nonNullable: false }),
       nationality: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
@@ -64,13 +61,9 @@ export class AuthorFormComponent
     this.formGroup.valueChanges.subscribe({
       next: (value) => {
         if (value.markedAsDeceased) {
-          this.formGroup.controls.dateOfDeath.addValidators([
-            Validators.required,
-          ]);
+          this.formGroup.addControl('dateOfDeath', new FormControl<Date | null>(null, { nonNullable: false, validators: [Validators.required] }));
         } else {
-          this.formGroup.controls.dateOfDeath.removeValidators([
-            Validators.required,
-          ]);
+          this.formGroup.removeControl('dateOfDeath');
         }
       },
     });

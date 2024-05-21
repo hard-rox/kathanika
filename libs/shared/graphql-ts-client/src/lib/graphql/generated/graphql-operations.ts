@@ -676,7 +676,7 @@ export type Queries = {
   members?: Maybe<MembersCollectionSegment>;
   publication?: Maybe<Publication>;
   publications?: Maybe<PublicationsCollectionSegment>;
-  publisher: Publisher;
+  publisher?: Maybe<Publisher>;
   publishers?: Maybe<PublishersCollectionSegment>;
 };
 
@@ -977,7 +977,7 @@ export type GetPublisherQueryVariables = Exact<{
 }>;
 
 
-export type GetPublisherQuery = { __typename?: 'Queries', publisher: { __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null } };
+export type GetPublisherQuery = { __typename?: 'Queries', publisher?: { __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null } | null };
 
 export const AddAuthorDocument = gql`
     mutation addAuthor($addAuthorInput: AddAuthorInput!) {

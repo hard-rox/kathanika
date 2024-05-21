@@ -40,7 +40,7 @@ export class PublisherAddComponent {
             result.data?.addPublisher.message ?? 'Publisher added.',
           );
           this.publisherAddForm?.resetForm();
-          this.router.navigate([`/publishers`]);
+          this.router.navigate([`/publishers/${result.data?.addPublisher.data?.id}`]);
         }
         this.isPanelLoading = false;
       },

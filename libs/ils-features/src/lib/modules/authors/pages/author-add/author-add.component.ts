@@ -1,9 +1,8 @@
 import { Component, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { AddAuthorGQL } from '@kathanika/graphql-ts-client';
+import { AddAuthorGQL, AddAuthorInput, AuthorPatchInput } from '@kathanika/graphql-ts-client';
 import { MessageAlertService } from '../../../../core/services/message-alert/message-alert.service';
 import { AuthorFormComponent } from '../../components/author-form/author-form.component';
-import { AuthorFormOutput } from '../../types/author-form-output';
 
 @Component({
   templateUrl: './author-add.component.html'
@@ -20,9 +19,9 @@ export class AuthorAddComponent {
   isPanelLoading = false;
   errors: string[] = [];
 
-  onValidFormSubmit(formValue: AuthorFormOutput) {
+  onValidFormSubmit(formValue: AddAuthorInput | AuthorPatchInput) {
     this.isPanelLoading = true;
-    this.gql.mutate({ addAuthorInput: formValue }).subscribe({
+    this.gql.mutate({ addAuthorInput: formValue as AddAuthorInput }).subscribe({
       next: (result) => {
         // console.debug(result);
         if (result.errors || result.data?.addAuthor.errors) {
