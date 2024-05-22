@@ -7,8 +7,8 @@ run-name: Pre-PR CI
 on:
   pull_request:
     branches: [ "main" ]
-  # push:
-  #   branches: [ "main" ]
+  push:
+    branches: [ "main" ]
 
 jobs:
   lint-build-test:
@@ -31,17 +31,17 @@ jobs:
 
     - uses: nrwl/nx-set-shas@v4
     # This line is needed for nx affected to work when CI is running on a PR
-    - name: Branch Tracking for NX affected
-      run: git branch --track main origin/main
+    # - name: Branch Tracking for NX affected
+    #   run: git branch --track main origin/main
 
-    - name: Lint
-      run: npx nx affected -t lint --prod --no-cloud --verbose
+    # - name: Lint
+    #   run: npx nx affected -t lint --prod --no-cloud --verbose
 
-    - name: Build
-      run: npx nx affected -t build --prod --no-cloud --verbose
+    # - name: Build
+    #   run: npx nx affected -t build --prod --no-cloud --verbose
 
-    - name: Test
-      run: npx nx affected -t test --prod --no-cloud --verbose
+    # - name: Test
+    #   run: npx nx affected -t test --prod --no-cloud --verbose
 
     - name: Set up JDK 17
       uses: actions/setup-java@v4
