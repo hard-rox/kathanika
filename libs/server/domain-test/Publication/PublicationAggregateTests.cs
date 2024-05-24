@@ -8,20 +8,20 @@ public class PublicationAggregateTests
     public void Create_Should_Return_Publication_On_Valid_Input()
     {
         // Arrange
-
+        Publisher publisher = Publisher.Create("Publisher");
         // Act
         Publication publication = Publication.Create(
             "Title",
             "12345",
             PublicationType.Book,
-            "Hello",
             DateOnly.MinValue,
-            "",
             string.Empty,
             "Nt0202",
             "",
+            string.Empty,
             AcquisitionMethod.Donation,
             10,
+            publisher,
             20,
             string.Empty,
             string.Empty,
@@ -58,7 +58,6 @@ public class PublicationAggregateTests
             "Title",
             "12345",
             PublicationType.Book,
-            "Hello",
             DateOnly.MinValue,
             "",
             string.Empty,
@@ -66,6 +65,7 @@ public class PublicationAggregateTests
             "",
             AcquisitionMethod.Donation,
             10,
+            null,
             20,
             string.Empty,
             string.Empty,
@@ -77,7 +77,7 @@ public class PublicationAggregateTests
             "Updated Title",
             "Updated Isbn",
             PublicationType.Journal,
-            "Updated publisher",
+            null,
             DateOnly.MinValue,
             null,
             "Updated CallNumber",

@@ -5,7 +5,7 @@ public sealed record AcquirePublicationCommand(
     string? Isbn,
     PublicationType PublicationType,
     IEnumerable<string> AuthorIds,
-    string Publisher,
+    string PublisherId,
     DateOnly PublishedDate,
     string Edition,
     string CallNumber,

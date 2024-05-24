@@ -6,7 +6,7 @@ public sealed record PublicationPatch(
         string Title,
         string? Isbn,
         PublicationType PublicationType,
-        string Publisher,
+        string PublisherId,
         DateOnly? PublishedDate,
         string? Edition,
         string CallNumber,

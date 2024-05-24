@@ -4,7 +4,9 @@ namespace Kathanika.Application.Features.Publications.Commands;
 
 internal sealed class AddPublicationCommandValidator : AbstractValidator<AcquirePublicationCommand>
 {
-    public AddPublicationCommandValidator(IPublicationRepository publicationRepository)
+    public AddPublicationCommandValidator(
+        IPublicationRepository publicationRepository,
+        IPublisherRepository publisherRepository)
     {
         RuleFor(x => x.Title)
             .NotNull()
@@ -30,6 +32,14 @@ internal sealed class AddPublicationCommandValidator : AbstractValidator<Acquire
             .When(x => x.AcquisitionMethod == AcquisitionMethod.Donation)
             .WithName("Patron")
             .WithMessage("{PropertyName} is mandatory when take donation.");
+
+        RuleFor(x => new { x.PublisherId })
+            .MustAsync(async (prop, cancellationToken) =>
+            {
+                bool hasPublisher = await publisherRepository.ExistsAsync(prop.PublisherId, cancellationToken);
+                return hasPublisher;
+            })
+            .When(x => x.PublisherId is not null);
 
         RuleFor(x => new { x.Title, x.Isbn, x.PublicationType, x.Edition })
             .MustAsync(async (props, cancellationToken) =>

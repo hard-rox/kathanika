@@ -12,6 +12,6 @@ public sealed record PublicationAuthor(
 
     public override IEnumerable<object> GetAtomicValues()
     {
-        yield return new object[] { Id, FirstName, LastName };
+        yield return new string[] { Id, FirstName, LastName };
     }
 }
