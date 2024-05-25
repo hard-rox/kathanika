@@ -70,7 +70,8 @@
   "conventionalCommits.scopes": [
     "ils",
     "kn-ui",
-    "web-service"
+    "web-service",
+    "node/ts"
   ],
   "eslint.validate": ["json"]
 }
