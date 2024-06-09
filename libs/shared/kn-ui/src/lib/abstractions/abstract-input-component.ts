@@ -4,7 +4,7 @@ import { ControlValueAccessor, NgControl, Validators } from '@angular/forms';
 @Component({
   template: '',
 })
-export abstract class AbstractInputComponent<TValueType>
+export abstract class AbstractInput<TValueType>
   implements ControlValueAccessor, OnInit
 {
   @Input()

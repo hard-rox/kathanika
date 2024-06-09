@@ -27,3 +27,17 @@ query getPublisher($id: String!) {
     contactInformation
   }
 }
+
+query searchPublishers($filterText: String!) {
+  publishers(
+    skip: 0
+    take: 5
+    where: { name: { contains: $filterText } }
+    order: { name: ASC }
+  ) {
+    items {
+      id
+      name
+    }
+  }
+}

@@ -25,21 +25,5 @@ internal sealed class UpdatePublicationCommandValidator : AbstractValidator<Upda
             })
             .WithName("Title, ISBN, PublicationType, Edition")
             .WithMessage("Duplicate publication information {PropertyName}. Consider updating existing publication's 'Copies Available' field.");
-
-        RuleFor(x => x.Patch)
-            .SetValidator(new PublicationPatchValidator());
-    }
-}
-
-internal sealed class PublicationPatchValidator : AbstractValidator<PublicationPatch>
-{
-    public PublicationPatchValidator()
-    {
-        RuleFor(x => x.Title)
-            .NotNull()
-            .NotEmpty();
-        RuleFor(x => x.PublicationType)
-            .NotNull()
-            .IsInEnum();
     }
 }

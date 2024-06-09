@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { AbstractInputComponent } from '../../abstractions/abstract-input-component';
+import { AbstractInput } from '../../abstractions/abstract-input-component';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
 
 @Component({
@@ -16,4 +16,4 @@ import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
     },
   ],
 })
-export class KnNumberInput extends AbstractInputComponent<number> {}
+export class KnNumberInput extends AbstractInput<number> {}

@@ -1,7 +1,7 @@
 import { Component, Inject, Injector, Input } from '@angular/core';
 import { NG_VALUE_ACCESSOR } from '@angular/forms';
 import { PublicationAuthor, SearchAuthorsGQL, SearchAuthorsQuery, SearchAuthorsQueryVariables } from '@kathanika/graphql-ts-client';
-import { AbstractInputComponent } from '@kathanika/kn-ui';
+import { AbstractInput } from '@kathanika/kn-ui';
 import { QueryRef } from 'apollo-angular';
 
 @Component({
@@ -15,7 +15,7 @@ import { QueryRef } from 'apollo-angular';
     },
   ],
 })
-export class PublicationAuthorsInputComponent extends AbstractInputComponent<string[]> {
+export class PublicationAuthorsInputComponent extends AbstractInput<string[]> {
   protected authorSearchQueryRef: QueryRef<
     SearchAuthorsQuery,
     SearchAuthorsQueryVariables
@@ -23,12 +23,13 @@ export class PublicationAuthorsInputComponent extends AbstractInputComponent<str
   @Input()
   set currentAuthors(input: PublicationAuthor[] | null) {
     if (input) {
-      this.selectedAuthors = input;
+      this.selectedAuthors = input.map(x => { return { id: x.id, name: x.fullName } });
       this.value = input.map(x => x.id);
     }
   }
 
-  protected selectedAuthors: PublicationAuthor[] = [];
+  protected selectedAuthors: { id: string, name: string }[] = [];
+  protected getAuthorFullName = (author: { id: string, fullName: string }) => author.fullName;
 
   constructor(@Inject(Injector) injector: Injector, authorGql: SearchAuthorsGQL) {
     super(injector);
@@ -43,11 +44,11 @@ export class PublicationAuthorsInputComponent extends AbstractInputComponent<str
     this.authorSearchQueryRef.refetch(queryVariable);
   }
 
-  protected addAuthor(author: PublicationAuthor) {
-    const index = this.selectedAuthors.findIndex((x) => x.id == author.id);
+  protected addAuthor(id: string, name: string) {
+    const index = this.selectedAuthors.findIndex((x) => x.id == id);
     if (index >= 0) return;
-    this.selectedAuthors = [...this.selectedAuthors, author];
-    this.value?.push(author.id);
+    this.selectedAuthors = [...this.selectedAuthors, { id: id, name: name }];
+    this.value?.push(id);
   }
 
   protected removeAuthor(authorId: string) {

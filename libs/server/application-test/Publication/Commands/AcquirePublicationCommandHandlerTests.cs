@@ -62,6 +62,8 @@ public class AcquirePublicationCommandHandlerTests
             .Returns(authors);
         publicationRepository.AddAsync(Arg.Any<Publication>(), Arg.Any<CancellationToken>())
             .Returns(publication);
+        publisherRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(publisher);
 
         AcquirePublicationCommand command = new(
             "Title",
@@ -89,5 +91,6 @@ public class AcquirePublicationCommandHandlerTests
         Assert.Equal(publication.Title, savedPublication.Title);
         await publicationRepository.Received(1).AddAsync(Arg.Is<Publication>(x => x.Title == publication.Title), Arg.Any<CancellationToken>());
         await authorRepository.Received(1).ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>());
+        await publisherRepository.Received(1).GetByIdAsync(Arg.Is<string>(x => x == command.PublisherId), Arg.Any<CancellationToken>());
     }
 }

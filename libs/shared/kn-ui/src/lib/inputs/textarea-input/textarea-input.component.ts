@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, NG_VALUE_ACCESSOR } from '@angular/forms';
-import { AbstractInputComponent } from '../../abstractions/abstract-input-component';
+import { AbstractInput } from '../../abstractions/abstract-input-component';
 
 @Component({
   selector: 'kn-textarea-input',
@@ -16,4 +16,4 @@ import { AbstractInputComponent } from '../../abstractions/abstract-input-compon
     },
   ],
 })
-export class KnTextareaInput extends AbstractInputComponent<string> {}
+export class KnTextareaInput extends AbstractInput<string> {}
