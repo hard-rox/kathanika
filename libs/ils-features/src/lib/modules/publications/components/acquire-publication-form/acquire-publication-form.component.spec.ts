@@ -1,8 +1,7 @@
 import { AcquirePublicationFormComponent } from "./acquire-publication-form.component";
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
-import { AcquisitionMethod, SearchAuthorsGQL, mockQueryGql } from '@kathanika/graphql-ts-client';
-import { KnSearchbarModule, KnChip } from '@kathanika/kn-ui';
+import { AcquisitionMethod } from '@kathanika/graphql-ts-client';
 
 describe('AcquirePublicationFormComponent', () => {
   let component: AcquirePublicationFormComponent;
@@ -11,13 +10,7 @@ describe('AcquirePublicationFormComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [AcquirePublicationFormComponent],
-      imports: [ReactiveFormsModule, KnSearchbarModule, KnChip],
-      providers: [
-        {
-          provide: SearchAuthorsGQL,
-          useValue: mockQueryGql,
-        },
-      ],
+      imports: [ReactiveFormsModule],
     }).compileComponents();
   });
 

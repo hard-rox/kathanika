@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { SearchbarComponent } from './searchbar.component';
+import { KnSearchbar } from './searchbar.component';
 
 describe('SearchbarComponent', () => {
-  let component: SearchbarComponent<unknown>;
-  let fixture: ComponentFixture<SearchbarComponent<unknown>>;
+  let component: KnSearchbar<unknown>;
+  let fixture: ComponentFixture<KnSearchbar<unknown>>;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
-      declarations: [SearchbarComponent],
+      imports: [KnSearchbar],
     });
-    fixture = TestBed.createComponent(SearchbarComponent);
+    fixture = TestBed.createComponent(KnSearchbar);
     component = fixture.componentInstance;
-    // fixture.detectChanges();
+    fixture.detectChanges();
   });
 
   it('should create', () => {

@@ -36,7 +36,7 @@ export type AcquirePublicationInput = {
   patron?: InputMaybe<Scalars['String']['input']>;
   publicationType: PublicationType;
   publishedDate: Scalars['Date']['input'];
-  publisher: Scalars['String']['input'];
+  publisherId: Scalars['String']['input'];
   quantity: Scalars['Int']['input'];
   title: Scalars['String']['input'];
   unitPrice?: InputMaybe<Scalars['Decimal']['input']>;
@@ -487,7 +487,7 @@ export type Publication = {
   language: Scalars['String']['output'];
   publicationType: PublicationType;
   publishedDate: Scalars['Date']['output'];
-  publisher: Scalars['String']['output'];
+  publisher?: Maybe<PublicationPublisher>;
   purchaseRecords: Array<PurchaseRecord>;
   title: Scalars['String']['output'];
 };
@@ -533,21 +533,39 @@ export type PublicationFilterInput = {
   or?: InputMaybe<Array<PublicationFilterInput>>;
   publicationType?: InputMaybe<PublicationTypeOperationFilterInput>;
   publishedDate?: InputMaybe<DateOperationFilterInput>;
-  publisher?: InputMaybe<StringOperationFilterInput>;
+  publisher?: InputMaybe<PublicationPublisherFilterInput>;
   title?: InputMaybe<StringOperationFilterInput>;
 };
 
 export type PublicationPatchInput = {
   authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
-  callNumber: Scalars['String']['input'];
+  callNumber?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   edition?: InputMaybe<Scalars['String']['input']>;
   isbn?: InputMaybe<Scalars['String']['input']>;
   language?: InputMaybe<Scalars['String']['input']>;
-  publicationType: PublicationType;
+  publicationType?: InputMaybe<PublicationType>;
   publishedDate?: InputMaybe<Scalars['Date']['input']>;
-  publisher: Scalars['String']['input'];
-  title: Scalars['String']['input'];
+  publisherId?: InputMaybe<Scalars['String']['input']>;
+  title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PublicationPublisher = {
+  __typename?: 'PublicationPublisher';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
+export type PublicationPublisherFilterInput = {
+  and?: InputMaybe<Array<PublicationPublisherFilterInput>>;
+  id?: InputMaybe<StringOperationFilterInput>;
+  name?: InputMaybe<StringOperationFilterInput>;
+  or?: InputMaybe<Array<PublicationPublisherFilterInput>>;
+};
+
+export type PublicationPublisherSortInput = {
+  id?: InputMaybe<SortEnumType>;
+  name?: InputMaybe<SortEnumType>;
 };
 
 export type PublicationSortInput = {
@@ -560,7 +578,7 @@ export type PublicationSortInput = {
   language?: InputMaybe<SortEnumType>;
   publicationType?: InputMaybe<SortEnumType>;
   publishedDate?: InputMaybe<SortEnumType>;
-  publisher?: InputMaybe<SortEnumType>;
+  publisher?: InputMaybe<PublicationPublisherSortInput>;
   title?: InputMaybe<SortEnumType>;
 };
 
@@ -938,14 +956,14 @@ export type GetPublicationsQueryVariables = Exact<{
 }>;
 
 
-export type GetPublicationsQuery = { __typename?: 'Queries', publications?: { __typename?: 'PublicationsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publication', id: string, title: string, callNumber: string, publicationType: PublicationType, publisher: string, language: string, copiesAvailable: number, authors: Array<{ __typename?: 'PublicationAuthor', firstName: string, lastName: string }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type GetPublicationsQuery = { __typename?: 'Queries', publications?: { __typename?: 'PublicationsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publication', id: string, title: string, callNumber: string, publicationType: PublicationType, language: string, copiesAvailable: number, authors: Array<{ __typename?: 'PublicationAuthor', firstName: string, lastName: string }>, publisher?: { __typename?: 'PublicationPublisher', id: string, name: string } | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type GetPublicationQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publisher: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }>, donationRecords: Array<{ __typename?: 'DonationRecord', id: string, donationDate: any, patron: string, quantity: number }> } | null };
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, publisher?: { __typename?: 'PublicationPublisher', id: string, name: string } | null, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }>, donationRecords: Array<{ __typename?: 'DonationRecord', id: string, donationDate: any, patron: string, quantity: number }> } | null };
 
 export type AddPublisherMutationVariables = Exact<{
   addPublisherInput: AddPublisherInput;
@@ -978,6 +996,13 @@ export type GetPublisherQueryVariables = Exact<{
 
 
 export type GetPublisherQuery = { __typename?: 'Queries', publisher?: { __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null } | null };
+
+export type SearchPublishersQueryVariables = Exact<{
+  filterText: Scalars['String']['input'];
+}>;
+
+
+export type SearchPublishersQuery = { __typename?: 'Queries', publishers?: { __typename?: 'PublishersCollectionSegment', items?: Array<{ __typename?: 'Publisher', id: string, name: string }> | null } | null };
 
 export const AddAuthorDocument = gql`
     mutation addAuthor($addAuthorInput: AddAuthorInput!) {
@@ -1343,7 +1368,10 @@ export const GetPublicationsDocument = gql`
       }
       callNumber
       publicationType
-      publisher
+      publisher {
+        id
+        name
+      }
       language
       copiesAvailable
     }
@@ -1382,7 +1410,10 @@ export const GetPublicationDocument = gql`
       fullName
     }
     language
-    publisher
+    publisher {
+      id
+      name
+    }
     publishedDate
     copiesAvailable
     description
@@ -1520,6 +1551,32 @@ export const GetPublisherDocument = gql`
   })
   export class GetPublisherGQL extends Apollo.Query<GetPublisherQuery, GetPublisherQueryVariables> {
     override document = GetPublisherDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SearchPublishersDocument = gql`
+    query searchPublishers($filterText: String!) {
+  publishers(
+    skip: 0
+    take: 5
+    where: {name: {contains: $filterText}}
+    order: {name: ASC}
+  ) {
+    items {
+      id
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SearchPublishersGQL extends Apollo.Query<SearchPublishersQuery, SearchPublishersQueryVariables> {
+    override document = SearchPublishersDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

@@ -1,16 +1,16 @@
 import type { Meta, StoryObj } from '@storybook/angular';
-import { SearchbarComponent } from './searchbar.component';
+import { KnSearchbar } from './searchbar.component';
 
 import { within } from '@storybook/testing-library';
 import { expect } from '@storybook/jest';
 
-const meta: Meta<SearchbarComponent<string>> = {
-  component: SearchbarComponent,
+const meta: Meta<KnSearchbar<string>> = {
+  component: KnSearchbar,
   title: 'components/kn-searchbar',
   tags: ['autodocs']
 };
 export default meta;
-type Story = StoryObj<SearchbarComponent<string>>;
+type Story = StoryObj<KnSearchbar<string>>;
 
 export const Default: Story = {
   args: {

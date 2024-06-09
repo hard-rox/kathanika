@@ -14,8 +14,8 @@ import {
 import {
   KnPanel,
   KnAlert,
-  KnSearchbarModule,
   KnChip,
+  KnSearchbar,
 } from '@kathanika/kn-ui';
 import { AcquirePublicationFormComponent } from '../../components/acquire-publication-form/acquire-publication-form.component';
 import { PublicationAuthorsInputComponent } from '../../components/publication-authors-input/publication-authors-input.component';
@@ -34,7 +34,7 @@ describe('PublicationAddComponent', () => {
     language: 'English',
     publicationType: PublicationType.Book,
     publishedDate: '2023-05-24',
-    publisher: 'Publisher',
+    publisherId: '112233',
     quantity: 1,
     title: 'Title',
     unitPrice: 10.99,
@@ -52,8 +52,8 @@ describe('PublicationAddComponent', () => {
         ReactiveFormsModule,
         KnPanel,
         KnAlert,
-        KnSearchbarModule,
         KnChip,
+        KnSearchbar
       ],
       providers: [
         {

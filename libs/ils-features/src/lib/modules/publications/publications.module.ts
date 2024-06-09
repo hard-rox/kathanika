@@ -15,14 +15,15 @@ import {
   KnNumberInput,
   KnPagination,
   KnPanel,
-  KnSearchbarModule,
   KnSelectInput,
   KnTextInput,
   KnTextareaInput,
+  KnSearchbar,
 } from '@kathanika/kn-ui';
 import { AcquirePublicationFormComponent } from './components/acquire-publication-form/acquire-publication-form.component';
 import { PublicationPatchFormComponent } from './components/publication-patch-form/publication-patch-form.component';
 import { PublicationAuthorsInputComponent } from './components/publication-authors-input/publication-authors-input.component';
+import { PublicationPublisherInputComponent } from './components/publication-publisher-input/publication-publisher-input.component';
 
 @NgModule({
   declarations: [
@@ -33,6 +34,7 @@ import { PublicationAuthorsInputComponent } from './components/publication-autho
     AcquirePublicationFormComponent,
     PublicationPatchFormComponent,
     PublicationAuthorsInputComponent,
+    PublicationPublisherInputComponent,
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,7 @@ import { PublicationAuthorsInputComponent } from './components/publication-autho
     KnSelectInput,
     KnNumberInput,
     KnChip,
-    KnSearchbarModule,
+    KnSearchbar,
   ],
 })
 export class PublicationsModule {}

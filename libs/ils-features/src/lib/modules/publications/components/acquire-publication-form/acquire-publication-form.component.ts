@@ -55,7 +55,7 @@ export class AcquirePublicationFormComponent
         nonNullable: true,
         validators: [Validators.required],
       }),
-      publisher: new FormControl<string>('', {
+      publisherId: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
       }),

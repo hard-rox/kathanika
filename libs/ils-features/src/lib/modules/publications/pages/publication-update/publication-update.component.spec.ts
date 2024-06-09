@@ -7,6 +7,7 @@ import {
   PublicationPatchInput,
   PublicationType,
   SearchAuthorsGQL,
+  SearchPublishersGQL,
   UpdatePublicationGQL,
   UpdatePublicationMutation,
   mockMutationGql,
@@ -21,8 +22,8 @@ import {
   KnDateInput,
   KnTextareaInput,
   KnNumberInput,
-  KnSearchbarModule,
   KnChip,
+  KnSearchbar,
 } from '@kathanika/kn-ui';
 import { PublicationPatchFormComponent } from '../../components/publication-patch-form/publication-patch-form.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -30,6 +31,7 @@ import { PublicationAuthorsInputComponent } from '../../components/publication-a
 import { ApolloQueryResult } from '@apollo/client';
 import { of, throwError } from 'rxjs';
 import { MutationResult } from 'apollo-angular';
+import { PublicationPublisherInputComponent } from '../../components/publication-publisher-input/publication-publisher-input.component';
 
 describe('PublicationUpdateComponent', () => {
   let component: PublicationUpdateComponent;
@@ -40,7 +42,8 @@ describe('PublicationUpdateComponent', () => {
       declarations: [
         PublicationUpdateComponent,
         PublicationPatchFormComponent,
-        PublicationAuthorsInputComponent
+        PublicationAuthorsInputComponent,
+        PublicationPublisherInputComponent
       ],
       imports: [
         RouterModule.forRoot([]),
@@ -52,8 +55,8 @@ describe('PublicationUpdateComponent', () => {
         KnDateInput,
         KnTextareaInput,
         KnNumberInput,
-        KnSearchbarModule,
         KnChip,
+        KnSearchbar
       ],
       providers: [
         {
@@ -67,6 +70,10 @@ describe('PublicationUpdateComponent', () => {
         {
           provide: SearchAuthorsGQL,
           useValue: mockQueryGql,
+        },
+        {
+          provide: SearchPublishersGQL,
+          useValue: mockQueryGql
         },
         {
           provide: ActivatedRoute,
@@ -103,7 +110,10 @@ describe('PublicationUpdateComponent', () => {
           edition: '1st Edition',
           callNumber: 'ABC123',
           language: 'English',
-          publisher: 'Publisher',
+          publisher: {
+            id: '11222',
+            name: 'Hello world'
+          },
           publishedDate: new Date(),
           copiesAvailable: 10,
           description: 'Description of the publication',

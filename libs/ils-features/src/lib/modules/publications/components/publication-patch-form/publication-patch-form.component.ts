@@ -9,12 +9,13 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 })
 export class PublicationPatchFormComponent extends BaseFormComponent<PublicationPatchInput> {
 
-  @Input({ required: true })
+  @Input()
   set publication(input: Publication) {
     if (input) {
       this.publicationToUpdate = input;
       this.formGroup.patchValue({
         ...input,
+        publisherId: input.publisher?.id,
         authorIds: input.authors.map((x) => x.id)
       });
     }
@@ -41,7 +42,7 @@ export class PublicationPatchFormComponent extends BaseFormComponent<Publication
         nonNullable: true,
         validators: [Validators.required],
       }),
-      publisher: new FormControl<string>('', {
+      publisherId: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],
       }),

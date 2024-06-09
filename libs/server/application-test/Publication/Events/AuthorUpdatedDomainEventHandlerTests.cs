@@ -46,7 +46,6 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
                 factoryMethod.Lorem.Sentence(),
                 factoryMethod.Random.AlphaNumeric(8),
                 factoryMethod.Random.Enum<PublicationType>(),
-                factoryMethod.Company.CompanyName(),
                 factoryMethod.Date.PastDateOnly(),
                 "",
                 factoryMethod.Random.AlphaNumeric(5),
@@ -54,6 +53,7 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
                 factoryMethod.Locale,
                 AcquisitionMethod.Purchase,
                 factoryMethod.Random.Number(100),
+                null,
                 factoryMethod.Random.Decimal(1000),
                 null,
                 null

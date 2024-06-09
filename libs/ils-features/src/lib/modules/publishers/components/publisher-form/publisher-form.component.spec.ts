@@ -4,7 +4,6 @@ import { PublisherFormComponent } from './publisher-form.component';
 import {
   KnTextInput,
   KnTextareaInput,
-  KnSearchbarModule,
   KnChip,
 } from '@kathanika/kn-ui';
 
@@ -18,7 +17,6 @@ describe('PublisherFormComponent', () => {
       imports: [
         KnTextInput,
         KnTextareaInput,
-        KnSearchbarModule,
         KnChip,
       ],
     });

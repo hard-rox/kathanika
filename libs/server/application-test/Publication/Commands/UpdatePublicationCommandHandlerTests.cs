@@ -11,10 +11,11 @@ public class UpdatePublicationCommandHandlerTests
         string publicationId = Guid.NewGuid().ToString();
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
+        IPublisherRepository publisherRepository = Substitute.For<IPublisherRepository>();
         UpdatePublicationCommand command = new(publicationId, new PublicationPatch(
             "", "", PublicationType.Book, "", null, null, "", "", "", null
         ));
-        UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository);
+        UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository, publisherRepository);
 
         NotFoundWithTheIdException exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
 
@@ -26,11 +27,11 @@ public class UpdatePublicationCommandHandlerTests
     public async Task Handler_Should_Call_UpdateAsync_With_Updated_Publication()
     {
         string publicationId = Guid.NewGuid().ToString();
+        Publisher publisher = Publisher.Create(string.Empty);
         Publication publication = Publication.Create(
             "Title",
             null,
             PublicationType.Book,
-            "",
             DateOnly.MinValue,
             "",
             "ABCD",
@@ -38,6 +39,7 @@ public class UpdatePublicationCommandHandlerTests
             string.Empty,
             AcquisitionMethod.Purchase,
             10,
+            publisher,
             11,
             string.Empty,
             null,
@@ -47,12 +49,13 @@ public class UpdatePublicationCommandHandlerTests
         publicationRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(publication);
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
+        IPublisherRepository publisherRepository = Substitute.For<IPublisherRepository>();
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
             .Returns([]);
         UpdatePublicationCommand command = new(publicationId, new PublicationPatch(
             "Updated Title", "", PublicationType.Book, "", null, null, "", "", "" //TODO: Fix up update in domain with non nullable...
         ));
-        UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository);
+        UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository, publisherRepository);
 
         Publication updatedPublication = await handler.Handle(command, default);
 

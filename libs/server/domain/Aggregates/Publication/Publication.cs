@@ -12,7 +12,7 @@ public sealed class Publication : AggregateRoot
     public string Title { get; private set; }
     public string? Isbn { get; private set; }
     public PublicationType PublicationType { get; private set; }
-    public string Publisher { get; private set; }
+    public PublicationPublisher? Publisher { get; private set; }
     public DateOnly PublishedDate { get; private set; }
     public string Edition { get; private set; }
     public string? Description { get; private set; }
@@ -42,23 +42,27 @@ public sealed class Publication : AggregateRoot
         string title,
         string? isbn,
         PublicationType publicationType,
-        string publisher,
         DateOnly publishedDate,
         string edition,
         string callNumber,
         string? description,
         string language,
+        Publisher? publisher,
         IEnumerable<Author>? authors = null)
     {
         Title = title;
         Isbn = isbn;
         PublicationType = publicationType;
-        Publisher = publisher;
         PublishedDate = publishedDate;
         Edition = edition;
         CallNumber = callNumber;
         Description = description;
         Language = language;
+
+        if (publisher is not null)
+        {
+            Publisher = new PublicationPublisher(publisher.Id, publisher.Name);
+        }
 
         if (authors is not null)
         {
@@ -75,7 +79,6 @@ public sealed class Publication : AggregateRoot
         string title,
         string? isbn,
         PublicationType publicationType,
-        string publisher,
         DateOnly publishedDate,
         string edition,
         string callNumber,
@@ -83,6 +86,7 @@ public sealed class Publication : AggregateRoot
         string language,
         AcquisitionMethod acquisitionMethod,
         int quantity,
+        Publisher? publisher,
         decimal? unitPrice,
         string? vendor,
         string? patron,
@@ -102,12 +106,12 @@ public sealed class Publication : AggregateRoot
             title,
             isbn,
             publicationType,
-            publisher,
             publishedDate,
             edition,
             callNumber,
             description,
             language,
+            publisher,
             authors);
         if (acquisitionMethod == AcquisitionMethod.Purchase)
             publication.RecordPurchase(unitPrice!.Value, quantity, vendor!);
@@ -122,7 +126,7 @@ public sealed class Publication : AggregateRoot
         string? title,
         string? isbn,
         PublicationType? publicationType,
-        string? publisher,
+        Publisher? publisher,
         DateOnly? publishedDate,
         string? edition,
         string? callNumber,
@@ -132,12 +136,13 @@ public sealed class Publication : AggregateRoot
         Title = !string.IsNullOrEmpty(title?.Trim()) ? title.Trim() : Title;
         Isbn = !string.IsNullOrEmpty(isbn?.Trim()) ? isbn.Trim() : Isbn;
         PublicationType = publicationType is not null ? publicationType.Value : PublicationType;
-        Publisher = !string.IsNullOrEmpty(publisher?.Trim()) ? publisher.Trim() : Publisher;
         PublishedDate = publishedDate is not null ? publishedDate.Value : PublishedDate;
         Edition = !string.IsNullOrEmpty(edition?.Trim()) ? edition.Trim() : Edition;
         CallNumber = !string.IsNullOrEmpty(callNumber?.Trim()) ? callNumber.Trim() : CallNumber;
         Description = !string.IsNullOrEmpty(description?.Trim()) ? description.Trim() : Description;
         Language = !string.IsNullOrEmpty(language?.Trim()) ? language.Trim() : Language;
+
+        Publisher = publisher is not null ? new PublicationPublisher(publisher.Id, publisher.Name) : null;
     }
 
     public void UpdateAuthors(Author[] authors)

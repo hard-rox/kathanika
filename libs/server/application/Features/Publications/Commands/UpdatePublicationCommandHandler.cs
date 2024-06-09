@@ -2,7 +2,11 @@ using Kathanika.Domain.Exceptions;
 
 namespace Kathanika.Application.Features.Publications.Commands;
 
-internal sealed class UpdatePublicationCommandHandler(IPublicationRepository publicationRepository, IAuthorRepository authorRepository) : IRequestHandler<UpdatePublicationCommand, Publication>
+internal sealed class UpdatePublicationCommandHandler(
+    IPublicationRepository publicationRepository,
+    IAuthorRepository authorRepository,
+    IPublisherRepository publisherRepository
+) : IRequestHandler<UpdatePublicationCommand, Publication>
 {
     public async Task<Publication> Handle(UpdatePublicationCommand request, CancellationToken cancellationToken)
     {
@@ -12,12 +16,13 @@ internal sealed class UpdatePublicationCommandHandler(IPublicationRepository pub
         IReadOnlyList<Author>? authors = request.Patch.AuthorIds is not null ?
             await authorRepository.ListAllAsync(x => request.Patch.AuthorIds.Contains(x.Id), cancellationToken)
             : null;
+        Publisher? publisher = await publisherRepository.GetByIdAsync(request.Patch.PublisherId, cancellationToken);
 
         publication.Update(
             request.Patch.Title,
             request.Patch.Isbn,
             request.Patch.PublicationType,
-            request.Patch.Publisher,
+            publisher,
             request.Patch.PublishedDate,
             request.Patch.Edition,
             request.Patch.CallNumber,

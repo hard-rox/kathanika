@@ -1,7 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { PublicationAuthorsInputComponent } from './publication-authors-input.component';
 import { SearchAuthorsGQL, SearchAuthorsQuery, SearchAuthorsQueryVariables, mockQueryGql } from '@kathanika/graphql-ts-client';
-import { KnChip, KnSearchbarModule } from '@kathanika/kn-ui';
+import { KnChip, KnSearchbar } from '@kathanika/kn-ui';
 import { NgControl } from '@angular/forms';
 import { By } from '@angular/platform-browser';
 import { ApolloQueryResult, NetworkStatus } from '@apollo/client';
@@ -14,8 +14,8 @@ describe('PublicationAuthorsInputComponent', () => {
     await TestBed.configureTestingModule({
       declarations: [PublicationAuthorsInputComponent],
       imports: [
-        KnSearchbarModule,
-        KnChip
+        KnChip,
+        KnSearchbar
       ],
       providers: [
       NgControl,

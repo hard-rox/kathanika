@@ -14,7 +14,10 @@ query getPublications(
       }
       callNumber
       publicationType
-      publisher
+      publisher {
+        id
+        name
+      }
       language
       copiesAvailable
     }
@@ -41,7 +44,10 @@ query getPublication($id: String!) {
       fullName
     }
     language
-    publisher
+    publisher {
+        id
+        name
+    }
     publishedDate
     copiesAvailable
     description

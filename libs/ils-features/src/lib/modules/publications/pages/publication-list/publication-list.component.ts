@@ -39,7 +39,9 @@ export class PublicationListComponent
         },
         {
           publisher: {
-            contains: searchText,
+            name: {
+              contains: searchText
+            }
           },
         },
         {

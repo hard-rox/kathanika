@@ -1,3 +1,5 @@
+using Kathanika.Graphql.Types;
+
 namespace Kathanika.GraphQL.Types;
 
 public sealed class PublicationType : ObjectType<Publication>
@@ -10,7 +12,8 @@ public sealed class PublicationType : ObjectType<Publication>
         descriptor.Field(x => x.Title);
         descriptor.Field(x => x.Isbn);
         descriptor.Field(x => x.PublicationType);
-        descriptor.Field(x => x.Publisher);
+        descriptor.Field(x => x.Publisher)
+            .Type<PublicationPublisherType>();
         descriptor.Field(x => x.PublishedDate);
         descriptor.Field(x => x.Edition);
         descriptor.Field(x => x.Description);
