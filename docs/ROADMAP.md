@@ -1,7 +1,7 @@
 Feature Roadmap
 ===============
 
-Version 1.0.0
+Version 0.x.x
 -----------
 
 ### Cataloging and Classification
@@ -28,6 +28,9 @@ Version 1.0.0
 -   [x]  Publisher Update
 -   [ ]  Publisher Delete
 
+### Membership Management
+-   [x]  Create and manage patron records
+
 ### Dashboard Module
 -   [ ]  Dashboard
 
@@ -37,21 +40,22 @@ Version 1.0.0
 ### Security and Authentication
 -   [ ]  Implement appropriate security measures to protect patron data
 
-Version 2.0.0
+### Circulation Management
+-   [ ]  Borrow, renew, and return books
+-   [ ]  Track fines and fees associated with late returns
+-   [ ]  Track borrowing history
+
+Version 1.x.x
 -----------
 ### Notification System
 -   [ ]  Showing notifications in header
 -   [ ]  Managing notifications in API
 
 ### Circulation Management
--   [ ]  Borrow, renew, and return books
 -   [ ]  Track fines and fees associated with late returns
-
-### Membership Management
--   [ ]  Create and manage patron records
 -   [ ]  Track borrowing history and fines/fees
 
-Version 3.0.0
+Version 2.x.x
 -----------
 ### Reporting and Analytics
 -   [ ]  Generate reports on library usage data
@@ -60,7 +64,7 @@ Version 3.0.0
 -   [ ]  Order and receive new materials
 -   [ ]  Track invoices and payments
 
-Version 4.0.0
+Version 3.x.x
 -----------
 ### Online Public Access Catalog (OPAC)
 -   [ ]  Allow patrons to search for items in the library's collection
