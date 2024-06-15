@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
   <ItemGroup>
-    <ProjectReference Include="..\..\libs\server\application\Kathanika.Application.csproj" />
-    <ProjectReference Include="..\..\libs\server\domain\Kathanika.Domain.csproj" />
-    <ProjectReference Include="..\..\libs\server\graphql\Kathanika.Graphql.csproj" />
-    <ProjectReference Include="..\..\libs\server\persistence\Kathanika.Persistence.csproj" />
-    <ProjectReference Include="..\..\libs\server\workers\Kathanika.Workers.csproj" />
+    <ProjectReference Include="../../libs/server/core/application\Kathanika.Core.Application.csproj" />
+    <ProjectReference Include="../../libs/server/core/domain\Kathanika.Core.Domain.csproj" />
+    <ProjectReference Include="../../libs/server/infrastructure/graphql\Kathanika.Infrastructure.Graphql.csproj" />
+    <ProjectReference Include="../../libs/server/infrastructure/persistence\Kathanika.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="../../libs/server/infrastructure/workers\Kathanika.Infrastructure.Workers.csproj" />
   </ItemGroup>
 
   <PropertyGroup>
@@ -31,7 +31,7 @@
     <PackageReference Include="Serilog.Enrichers.Process" Version="3.0.0" />
     <PackageReference Include="Serilog.Enrichers.Thread" Version="4.0.0" />
     <PackageReference Include="Serilog.Exceptions" Version="8.4.0" />
-    <PackageReference Include="Serilog.Sinks.Seq" Version="8.0.0" />
+    <PackageReference Include="Serilog.Sinks.Seq" Version="7.0.1" />
   </ItemGroup>
 
 </Project>
