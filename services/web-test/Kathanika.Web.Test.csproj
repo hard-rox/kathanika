@@ -25,11 +25,11 @@
 
   <ItemGroup>
     <ProjectReference Include="..\web\Kathanika.Web.csproj" />
-    <ProjectReference Include="..\..\libs\server\domain\Kathanika.Domain.csproj" />
-    <ProjectReference Include="..\..\libs\server\application\Kathanika.Application.csproj" />
-    <ProjectReference Include="..\..\libs\server\graphql\Kathanika.Graphql.csproj" />
-    <ProjectReference Include="..\..\libs\server\persistence\Kathanika.Persistence.csproj" />
-    <ProjectReference Include="..\..\libs\server\workers\Kathanika.Workers.csproj" />
+    <ProjectReference Include="../../libs/server/core/domain\Kathanika.Core.Domain.csproj" />
+    <ProjectReference Include="../../libs/server/core/application\Kathanika.Core.Application.csproj" />
+    <ProjectReference Include="../../libs/server/infrastructure/graphql\Kathanika.Infrastructure.Graphql.csproj" />
+    <ProjectReference Include="../../libs/server/infrastructure/persistence\Kathanika.Infrastructure.Persistence.csproj" />
+    <ProjectReference Include="../../libs/server/infrastructure/workers\Kathanika.Infrastructure.Workers.csproj" />
   </ItemGroup>
 
 </Project>

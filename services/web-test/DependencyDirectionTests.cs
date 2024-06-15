@@ -1,8 +1,8 @@
-using Kathanika.Application.Features.Authors.Commands;
-using Kathanika.Domain.Primitives;
-using Kathanika.GraphQL;
-using Kathanika.Persistence;
-using Kathanika.Workers.Jobs;
+using Kathanika.Core.Application.Features.Authors.Commands;
+using Kathanika.Core.Domain.Primitives;
+using Kathanika.Infrastructure.Graphql;
+using Kathanika.Infrastructure.Persistence;
+using Kathanika.Infrastructure.Workers.Jobs;
 
 namespace Kathanika.WebTest;
 

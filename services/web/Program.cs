@@ -1,7 +1,7 @@
-using Kathanika.Application;
-using Kathanika.GraphQL;
-using Kathanika.Persistence;
-using Kathanika.Workers;
+using Kathanika.Core.Application;
+using Kathanika.Infrastructure.Graphql;
+using Kathanika.Infrastructure.Persistence;
+using Kathanika.Infrastructure.Workers;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
