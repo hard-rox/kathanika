@@ -1,7 +1,9 @@
+using Kathanika.Core.Domain.Aggregates.AuthorAggregate;
+using Kathanika.Core.Domain.Aggregates.PublisherAggregate;
 using Kathanika.Core.Domain.Exceptions;
 using Kathanika.Core.Domain.Primitives;
 
-namespace Kathanika.Core.Domain.Aggregates;
+namespace Kathanika.Core.Domain.Aggregates.PublicationAggregate;
 
 public sealed class Publication : AggregateRoot
 {

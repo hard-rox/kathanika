@@ -1,4 +1,4 @@
-namespace Kathanika.Core.Domain.Aggregates;
+namespace Kathanika.Core.Domain.Aggregates.PublicationAggregate;
 
 public enum AcquisitionMethod
 {

@@ -2,7 +2,7 @@ using Kathanika.Core.Domain.DomainEvents;
 using Kathanika.Core.Domain.Exceptions;
 using Kathanika.Core.Domain.Primitives;
 
-namespace Kathanika.Core.Domain.Aggregates;
+namespace Kathanika.Core.Domain.Aggregates.AuthorAggregate;
 
 public sealed class Author : AggregateRoot
 {
@@ -21,7 +21,8 @@ public sealed class Author : AggregateRoot
         DateOnly dateOfBirth,
         DateOnly? dateOfDeath,
         string nationality,
-        string biography
+        string biography,
+        string? dpFileId
     )
     {
         FirstName = firstName;
@@ -30,6 +31,9 @@ public sealed class Author : AggregateRoot
         DateOfDeath = dateOfDeath;
         Nationality = nationality;
         Biography = biography;
+
+        if (!string.IsNullOrWhiteSpace(dpFileId))
+            AddDomainEvent(new FileUsedEvent(dpFileId));
     }
 
     public static Author Create(
@@ -38,7 +42,8 @@ public sealed class Author : AggregateRoot
         DateOnly dateOfBirth,
         DateOnly? dateOfDeath,
         string nationality,
-        string biography
+        string biography,
+        string? dpFileId = null
     )
     {
         List<DomainException> errors = [];
@@ -66,7 +71,8 @@ public sealed class Author : AggregateRoot
             dateOfBirth,
             dateOfDeath,
             nationality,
-            biography);
+            biography,
+            dpFileId);
     }
 
     public void Update(

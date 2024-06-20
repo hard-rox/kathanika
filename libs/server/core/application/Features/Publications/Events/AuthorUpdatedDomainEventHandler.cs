@@ -1,5 +1,3 @@
-using Kathanika.Core.Domain.DomainEvents;
-
 namespace Kathanika.Core.Application.Features.Publications.Events;
 
 internal sealed class AuthorUpdatedDomainEventHandler(ILogger<AuthorUpdatedDomainEventHandler> logger, IAuthorRepository authorRepository, IPublicationRepository publicationRepository) : INotificationHandler<AuthorUpdatedDomainEvent>

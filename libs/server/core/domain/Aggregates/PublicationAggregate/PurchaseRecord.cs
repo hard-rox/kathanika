@@ -1,6 +1,6 @@
 using Kathanika.Core.Domain.Primitives;
 
-namespace Kathanika.Core.Domain.Aggregates;
+namespace Kathanika.Core.Domain.Aggregates.PublicationAggregate;
 
 public sealed class PurchaseRecord : Entity
 {

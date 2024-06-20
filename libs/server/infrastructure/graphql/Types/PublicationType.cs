@@ -1,5 +1,3 @@
-using Kathanika.Infrastructure.Graphql.Types;
-
 namespace Kathanika.Infrastructure.Graphql.Types;
 
 public sealed class PublicationType : ObjectType<Publication>

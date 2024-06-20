@@ -1,6 +1,5 @@
 using Kathanika.Core.Application.Services;
 using Kathanika.Core.Domain.Primitives;
-using Kathanika.Infrastructure.Persistence;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using MongoDB.Driver;
