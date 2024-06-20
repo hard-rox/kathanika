@@ -41,6 +41,7 @@ testem.log
 Thumbs.db
 
 .nx/cache
+.nx/workspace-data
 .angular
 
 # User-specific files
@@ -513,3 +514,13 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+services/web/uploads/cfcf60037aa94004a81e668667b81071
+services/web/uploads/cfcf60037aa94004a81e668667b81071.chunkcomplete
+services/web/uploads/cfcf60037aa94004a81e668667b81071.chunkstart
+services/web/uploads/cfcf60037aa94004a81e668667b81071.metadata
+services/web/uploads/cfcf60037aa94004a81e668667b81071.uploadlength
+services/web/uploads/f68a09eb5ab7485a9e8f40a04c4a21fb
+services/web/uploads/f68a09eb5ab7485a9e8f40a04c4a21fb.chunkcomplete
+services/web/uploads/f68a09eb5ab7485a9e8f40a04c4a21fb.chunkstart
+services/web/uploads/f68a09eb5ab7485a9e8f40a04c4a21fb.metadata
+services/web/uploads/f68a09eb5ab7485a9e8f40a04c4a21fb.uploadlength

@@ -1,5 +1,4 @@
 using Kathanika.Core.Application.Services;
-using Kathanika.Core.Domain.Aggregates.PublicationAggregate;
 
 namespace Kathanika.Infrastructure.Persistence.Repositories;
 

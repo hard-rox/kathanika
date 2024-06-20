@@ -72,7 +72,8 @@
     "ils",
     "kn-ui",
     "web-service",
-    "node/ts"
+    "node/ts",
+    "server"
   ],
   "eslint.validate": ["json"]
 }

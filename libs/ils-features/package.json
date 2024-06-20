@@ -11,7 +11,8 @@
     "@angular/common": "~18.0.0",
     "sweetalert2": "^11.10.1",
     "@kathanika/kn-ui": "*",
-    "@kathanika/graphql-ts-client": "*"
+    "@kathanika/graphql-ts-client": "*",
+    "tus-js-client": "^4.1.0"
   },
   "sideEffects": false
 }

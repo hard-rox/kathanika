@@ -1,7 +1,3 @@
-using Kathanika.Core.Domain.Aggregates.AuthorAggregate;
-using Kathanika.Core.Domain.Aggregates.PublicationAggregate;
-using Kathanika.Core.Domain.Aggregates.PublisherAggregate;
-
 namespace Kathanika.Core.Domain.Test.PublicationAggregate;
 
 public class PublicationAggregateTests

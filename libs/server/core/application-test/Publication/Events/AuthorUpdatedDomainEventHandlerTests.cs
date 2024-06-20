@@ -1,6 +1,5 @@
 using Bogus;
 using Kathanika.Core.Application.Features.Publications.Events;
-using Kathanika.Core.Domain.DomainEvents;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute.ReturnsExtensions;

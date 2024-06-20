@@ -1,5 +1,3 @@
-using Kathanika.Core.Domain.Aggregates.PublisherAggregate;
-
 namespace Kathanika.Core.Domain.Test.PublisherAggregate;
 
 public class PublisherAggregateTests

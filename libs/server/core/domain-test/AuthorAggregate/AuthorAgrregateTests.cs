@@ -1,4 +1,3 @@
-using Kathanika.Core.Domain.Aggregates.AuthorAggregate;
 using Kathanika.Core.Domain.Exceptions;
 
 namespace Kathanika.Core.Domain.Test.AuthorAggregate;
