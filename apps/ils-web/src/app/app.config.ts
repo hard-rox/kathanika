@@ -11,6 +11,7 @@ import { provideServiceWorker } from '@angular/service-worker';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { GraphQLModule } from '@kathanika/graphql-ts-client';
 import { environment } from '../environments/environment.development';
+import { FileServerModule } from '@kathanika/kn-ui';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -21,6 +22,9 @@ export const appConfig: ApplicationConfig = {
       registrationStrategy: 'registerWhenStable:30000',
     }),
     provideHttpClient(withFetch()),
-    importProvidersFrom(GraphQLModule.forRoot(environment.graphqlServer)),
+    importProvidersFrom(
+      GraphQLModule.forRoot(environment.graphqlServer),
+      FileServerModule.forRoot(environment.fileServer)
+    ),
   ],
 };
