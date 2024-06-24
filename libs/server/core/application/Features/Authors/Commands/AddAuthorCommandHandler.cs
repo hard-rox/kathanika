@@ -10,7 +10,8 @@ internal sealed class AddAuthorCommandHandler(IAuthorRepository authorRepository
             request.DateOfBirth,
             request.DateOfDeath,
             request.Nationality,
-            request.Biography
+            request.Biography,
+            request.DpFileId
         );
 
         Author savedAuthor = await authorRepository.AddAsync(newAuthor, cancellationToken);

@@ -1,6 +1,7 @@
 using Kathanika.Core.Application.Services;
 using Kathanika.Infrastructure.Persistence.BsonClassMaps;
 using Kathanika.Infrastructure.Persistence.Caching;
+using Kathanika.Infrastructure.Persistence.FileStorage;
 using Kathanika.Infrastructure.Persistence.Outbox;
 using Kathanika.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +21,7 @@ public static class DependencyInjector
         services.AddScoped<ICacheService, MemoryCacheService>();
 
         services.AddScoped<IOutboxMessageService, OutboxMessageService>();
+        services.AddSingleton<IFileStore, DiskStorage>();
 
         services.AddScoped<IAuthorRepository, AuthorRepository>();
         services.AddScoped<IPublicationRepository, PublicationRepository>();

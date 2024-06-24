@@ -20,7 +20,8 @@
     "**/.github": true,
     "**/.nx": true,
     "**/tmp": true,
-    "**/.scannerwork": true
+    "**/.scannerwork": true,
+    "services/web/uploads": true
   },
   "dotnetAcquisitionExtension.installTimeoutValue": 180,
   "cSpell.words": [

@@ -12,6 +12,7 @@ public sealed class Author : AggregateRoot
     public DateOnly? DateOfDeath { get; private set; }
     public string Nationality { get; private set; }
     public string Biography { get; private set; }
+    public string? DpFileId { get; private set; } = null;
 
     public string FullName => $"{FirstName} {LastName}";
 
@@ -22,7 +23,7 @@ public sealed class Author : AggregateRoot
         DateOnly? dateOfDeath,
         string nationality,
         string biography,
-        string? dpFileId
+        string? dpFileId = null
     )
     {
         FirstName = firstName;
@@ -31,9 +32,7 @@ public sealed class Author : AggregateRoot
         DateOfDeath = dateOfDeath;
         Nationality = nationality;
         Biography = biography;
-
-        if (!string.IsNullOrWhiteSpace(dpFileId))
-            AddDomainEvent(new FileUsedEvent(dpFileId));
+        DpFileId = dpFileId;
     }
 
     public static Author Create(
@@ -65,7 +64,7 @@ public sealed class Author : AggregateRoot
             throw new AggregateException(errors);
         }
 
-        return new Author(
+        Author author = new(
             firstName,
             lastName,
             dateOfBirth,
@@ -73,6 +72,11 @@ public sealed class Author : AggregateRoot
             nationality,
             biography,
             dpFileId);
+
+        if (!string.IsNullOrWhiteSpace(dpFileId))
+            author.AddDomainEvent(new FileUsedDomainEvent(dpFileId));
+
+        return author;
     }
 
     public void Update(

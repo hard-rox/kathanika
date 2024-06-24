@@ -61,6 +61,7 @@ export type AddAuthorInput = {
   biography: Scalars['String']['input'];
   dateOfBirth: Scalars['Date']['input'];
   dateOfDeath?: InputMaybe<Scalars['Date']['input']>;
+  dpFileId?: InputMaybe<Scalars['String']['input']>;
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
   markedAsDeceased?: Scalars['Boolean']['input'];

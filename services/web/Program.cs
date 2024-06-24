@@ -2,28 +2,89 @@ using Kathanika.Core.Application;
 using Kathanika.Infrastructure.Graphql;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers;
+using Kathanika.Web.FileOpsConfigurations;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+using tusdotnet;
+using tusdotnet.Helpers;
+using tusdotnet.Models;
 
+const string _fileServingEndpoint = "/fs";
 try
 {
     WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-    builder.Host.UseSerilog((context, services, configuration) =>
+    ConfigureSerilog(builder.Host);
+
+    builder.Services.AddApplication()
+        .AddGraphQLInfrastructure()
+        .AddPersistenceInfrastructure(builder.Configuration)
+        .AddWorkers(builder.Configuration)
+        .AddTus();
+
+    AddOpenTelemetry(builder);
+
+    if (builder.Environment.IsDevelopment())
+    {
+        builder.Services.AddCors();
+    }
+
+    WebApplication app = builder.Build();
+
+    app.UseSerilogRequestLogging();
+
+    app.UseGraphQLInfrastructure();
+
+    if (builder.Environment.IsDevelopment())
+    {
+        app.UseCors(options =>
+        {
+            options.AllowAnyHeader();
+            options.AllowAnyMethod();
+            options.SetIsOriginAllowed(origin => true);
+            options.AllowCredentials();
+            options.WithExposedHeaders(CorsHelper.GetExposedHeaders());
+        });
+    }
+    else
+    {
+        app.UseStaticFiles();
+        app.MapFallbackToFile("index.html");
+    }
+
+    app.MapGet("test", (DefaultTusConfiguration config) =>
+    {
+        return config.Expiration;
+    });
+
+    app.MapTus(_fileServingEndpoint, TusConfiguration.TusConfigurationFactory);
+
+    app.Run();
+}
+catch (Exception ex)
+{
+    Log.Fatal(ex, "Application terminated unexpectedly");
+}
+finally
+{
+    Log.CloseAndFlush();
+}
+
+void ConfigureSerilog(ConfigureHostBuilder host)
+{
+    host.UseSerilog((context, services, configuration) =>
     {
         configuration
             .ReadFrom.Configuration(context.Configuration)
             .ReadFrom.Services(services);
     });
+}
 
-    builder.Services.AddApplication()
-        .AddGraphQLInfrastructure()
-        .AddPersistenceInfrastructure(builder.Configuration)
-        .AddWorkers(builder.Configuration);
-
+void AddOpenTelemetry(WebApplicationBuilder builder)
+{
     builder.Services.AddOpenTelemetry()
         .ConfigureResource(resource => resource.AddService("Kathanika-Web-Service"))
         .WithTracing(tracing =>
@@ -51,43 +112,6 @@ try
         });
 
     builder.Logging.AddOpenTelemetry(logging => logging.AddOtlpExporter());
-
-    if (builder.Environment.IsDevelopment())
-    {
-        builder.Services.AddCors();
-    }
-
-    WebApplication app = builder.Build();
-
-    app.UseSerilogRequestLogging();
-
-    app.UseGraphQLInfrastructure();
-
-    if (builder.Environment.IsDevelopment())
-    {
-        app.UseCors(options =>
-        {
-            options.AllowAnyHeader();
-            options.AllowAnyMethod();
-            options.SetIsOriginAllowed(origin => true);
-            options.AllowCredentials();
-        });
-    }
-    else
-    {
-        app.UseStaticFiles();
-        app.MapFallbackToFile("index.html");
-    }
-
-    app.Run();
-}
-catch (Exception ex)
-{
-    Log.Fatal(ex, "Application terminated unexpectedly");
-}
-finally
-{
-    Log.CloseAndFlush();
 }
 
 public static partial class Program { }

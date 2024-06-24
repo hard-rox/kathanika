@@ -5,7 +5,9 @@ using Quartz;
 namespace Kathanika.Infrastructure.Workers.Jobs;
 
 [DisallowConcurrentExecution]
-internal sealed class ProcessOutboxMessagesJob(IPublisher publisher, IOutboxMessageService outboxMessageService) : IJob
+internal sealed class ProcessOutboxMessagesJob(
+    IPublisher publisher,
+    IOutboxMessageService outboxMessageService) : IJob
 {
     public async Task Execute(IJobExecutionContext context)
     {

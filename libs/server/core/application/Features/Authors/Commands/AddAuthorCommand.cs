@@ -7,5 +7,6 @@ public sealed record AddAuthorCommand(
     string Nationality,
     string Biography,
     DateOnly? DateOfDeath,
+    string? DpFileId = null,
     bool MarkedAsDeceased = false
 ) : IRequest<Author>;

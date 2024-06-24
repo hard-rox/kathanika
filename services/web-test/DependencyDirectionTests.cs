@@ -4,7 +4,7 @@ using Kathanika.Infrastructure.Graphql;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers.Jobs;
 
-namespace Kathanika.WebTest;
+namespace Kathanika.Web.Test;
 
 public sealed class DependencyDirectionTests
 {

@@ -5,7 +5,8 @@ namespace Kathanika.Infrastructure.Persistence.Outbox;
 //TODO: Should be in good way...
 internal sealed class OutboxMessageService(IMongoDatabase mongoDatabase) : IOutboxMessageService
 {
-    private readonly IMongoCollection<OutboxMessage> _outboxMessageCollection = mongoDatabase.GetCollection<OutboxMessage>(Constants.OutboxMessageCollectionName);
+    private readonly IMongoCollection<OutboxMessage> _outboxMessageCollection
+        = mongoDatabase.GetCollection<OutboxMessage>(Constants.OutboxMessageCollectionName);
 
     public async Task<IReadOnlyList<OutboxMessage>> GetUnprocessedOutboxMessagesFromDb(int limit = 20, CancellationToken cancellationToken = default)
     {
