@@ -25,9 +25,10 @@
         <h4 class="text-sm text-theme-davys-gray font-thin">Drag & Drop or <label [htmlFor]="control?.name"
             class="text-theme-gunmetal font-bold cursor-pointer">Choose file</label> to upload</h4>
         <input type="file" [multiple]="multiple" [id]="control?.name"
-          [placeholder]="placeholder.length > 0 ? placeholder : label" [ngModel]="value" [disabled]="isDisabled"
-          (ngModelChange)="onFileSelect($event)" (blur)="onBlur()" class="hidden" />
+          [placeholder]="placeholder.length > 0 ? placeholder : label" [disabled]="isDisabled"
+          (change)="onFileSelect($event)" (blur)="onBlur()" class="hidden" />
       </div>
+      @for (upload of fileUploads; track $index) {
       <div class="flex flex-col bg-theme-silver bg-opacity-30 py-2 px-4">
         <div class="flex">
           <p class="text-xs text-theme-rich-black flex-1">
@@ -39,9 +40,10 @@
                 d="M363 200H143c-8.284 0-15 6.716-15 15s6.716 15 15 15h220c8.284 0 15-6.716 15-15s-6.716-15-15-15zm0 80H143c-8.284 0-15 6.716-15 15s6.716 15 15 15h220c8.284 0 15-6.716 15-15s-6.716-15-15-15zm-147.28 80H143c-8.284 0-15 6.716-15 15s6.716 15 15 15h72.72c8.284 0 15-6.716 15-15s-6.716-15-15-15z"
                 data-original="#000000" />
             </svg>
-            document-1.file <span class="ml-2">2.5 mb</span>
+            {{upload.file.name}} <span class="ml-2">{{upload.file.size/1000/1000 | number:'1.2-2'}} mb</span>
           </p>
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-3 cursor-pointer shrink-0 fill-theme-silver hover:fill-theme-fire-red"
+          <svg xmlns="http://www.w3.org/2000/svg"
+            class="w-3 cursor-pointer shrink-0 fill-theme-silver hover:fill-theme-fire-red"
             viewBox="0 0 320.591 320.591">
             <path
               d="M30.391 318.583a30.37 30.37 0 0 1-21.56-7.288c-11.774-11.844-11.774-30.973 0-42.817L266.643 10.665c12.246-11.459 31.462-10.822 42.921 1.424 10.362 11.074 10.966 28.095 1.414 39.875L51.647 311.295a30.366 30.366 0 0 1-21.256 7.288z"
@@ -52,12 +54,14 @@
           </svg>
         </div>
         <div class="bg-theme-silver rounded-sm w-full h-2 my-2">
-          <div class="w-[35%] h-full rounded-sm bg-theme-gunmetal flex items-center relative">
+          <div [ngStyle]="{'width': upload.uploadPercentage + '%'}" class="h-full rounded-sm bg-theme-gunmetal flex items-center relative">
             <span class="absolute text-xs right-0 bg-white w-2 h-2 rounded-sm"></span>
           </div>
         </div>
-        <p class="text-xs text-theme-davys-gray flex-1">35% done</p>
+        <!-- <progress [value]="upload.uploadPercentage" class="bg-theme-silver rounded-sm h-2 my-2">{{upload.uploadPercentage}}$</progress> -->
+        <p class="text-xs text-theme-davys-gray flex-1">{{upload.uploadPercentage}}% done</p>
       </div>
+      }
     </div>
     <ul class="list-disc ml-4">
       @if (

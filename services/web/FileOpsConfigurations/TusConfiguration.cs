@@ -1,6 +1,5 @@
 using Kathanika.Core.Application.Services;
 using Kathanika.Infrastructure.Persistence.FileStorage;
-using tusdotnet;
 using tusdotnet.Interfaces;
 using tusdotnet.Models;
 using tusdotnet.Models.Configuration;

@@ -5,7 +5,6 @@ import {
   ControlsOf
 } from '../../../../abstractions/base-form-component';
 import { AddAuthorInput, Author, AuthorPatchInput } from '@kathanika/graphql-ts-client';
-import * as tus from 'tus-js-client';
 @Component({
   selector: 'kn-author-form',
   templateUrl: './author-form.component.html'
@@ -57,50 +56,5 @@ export class AuthorFormComponent
       }),
       dpFileId: new FormControl<string | null>(null)
     });
-  }
-
-  percentage = 0;
-  uploadUrl = '';
-  fileUpload(eventTarget: any) {
-    console.debug(eventTarget.files);
-    const file: File = eventTarget.files[0];
-
-    const upload = new tus.Upload(file, {
-      endpoint: 'http://localhost:5289/fs/',
-      retryDelays: [0, 3000, 5000, 10000, 20000],
-      metadata: {
-        filename: file.name,
-        filetype: file.type,
-      },
-      onError: function (error) {
-        console.log('Failed because: ' + error)
-      },
-      onProgress: (bytesUploaded, bytesTotal) => {
-        this.percentage = +((bytesUploaded / bytesTotal) * 100).toFixed(2)
-        console.log(bytesUploaded, bytesTotal, this.percentage + '%')
-      },
-      onSuccess: () => {
-        console.log('Download %s from %s', (upload.file as File).name, upload.url);
-        this.uploadUrl = upload.url ?? '';
-        const fileId = upload.url?.replace('http://localhost:5289/fs/', '');
-        console.debug(fileId);
-        this.formGroup.patchValue({
-          dpFileId: fileId
-        });
-
-        console.debug(this.formGroup.value);
-      },
-    })
-
-    // Check if there are any previous uploads to continue.
-    upload.findPreviousUploads().then(function (previousUploads) {
-      // Found previous uploads so we select the first one.
-      if (previousUploads.length) {
-        upload.resumeFromPreviousUpload(previousUploads[0])
-      }
-
-      // Start the upload
-      upload.start();
-    })
   }
 }

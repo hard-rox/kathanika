@@ -2,12 +2,11 @@ using Kathanika.Core.Application.Services;
 
 namespace Kathanika.Infrastructure.Persistence.FileStorage;
 
-internal sealed class DiskStorage(
-    ILogger<DiskStorage> logger,
+internal sealed class DiskFileStore(
+    ILogger<DiskFileStore> logger,
     IMongoDatabase mongoDatabase,
-    IUploadedStore uploadedFileStore,
-    ICacheService cacheService)
-: FileMetadataService(mongoDatabase, cacheService, logger), IFileStore
+    IUploadedStore uploadedFileStore)
+: FileMetadataService(mongoDatabase, logger), IFileStore
 {
 
     public async Task MoveToStoreAsync(string fileId, CancellationToken cancellationToken = default)
@@ -38,7 +37,7 @@ internal sealed class DiskStorage(
     public new async Task<bool> ExistAsync(string fileId, CancellationToken cancellationToken = default)
     {
         bool hasInDiskStore = true;
-        bool metadataExist = await ExistAsync(fileId, cancellationToken);
+        bool metadataExist = await base.ExistAsync(fileId, cancellationToken);
 
         return metadataExist && hasInDiskStore;
     }
