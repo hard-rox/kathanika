@@ -39,9 +39,9 @@ public sealed class Publisher : AggregateRoot
         string? contactInformation = null
     )
     {
-        Name = !string.IsNullOrEmpty(publisherName) ? publisherName : Name;
-        Description = !string.IsNullOrEmpty(description) ? description : Description;
-        ContactInformation = !string.IsNullOrEmpty(contactInformation) ? contactInformation : ContactInformation;
+        Name = !string.IsNullOrWhiteSpace(publisherName) ? publisherName : Name;
+        Description = !string.IsNullOrWhiteSpace(description) ? description : Description;
+        ContactInformation = !string.IsNullOrWhiteSpace(contactInformation) ? contactInformation : ContactInformation;
 
         AddDomainEvent(new PublisherUpdatedDomainEvent(Id));
     }

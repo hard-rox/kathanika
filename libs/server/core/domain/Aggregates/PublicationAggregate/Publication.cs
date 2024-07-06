@@ -1,5 +1,6 @@
 using Kathanika.Core.Domain.Aggregates.AuthorAggregate;
 using Kathanika.Core.Domain.Aggregates.PublisherAggregate;
+using Kathanika.Core.Domain.DomainEvents;
 using Kathanika.Core.Domain.Exceptions;
 using Kathanika.Core.Domain.Primitives;
 
@@ -21,6 +22,7 @@ public sealed class Publication : AggregateRoot
     public string Language { get; private set; }
     public int CopiesAvailable { get; private set; }
     public string CallNumber { get; private set; }
+    public string CoverImageFileId { get; private set; }
 
     public IReadOnlyList<PublicationAuthor> Authors
     {
@@ -47,6 +49,7 @@ public sealed class Publication : AggregateRoot
         DateOnly publishedDate,
         string edition,
         string callNumber,
+        string coverImageFileId,
         string? description,
         string language,
         Publisher? publisher,
@@ -60,6 +63,7 @@ public sealed class Publication : AggregateRoot
         CallNumber = callNumber;
         Description = description;
         Language = language;
+        CoverImageFileId = coverImageFileId;
 
         if (publisher is not null)
         {
@@ -72,7 +76,8 @@ public sealed class Publication : AggregateRoot
             {
                 _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
-                    author.LastName));
+                    author.LastName,
+                    author.DpFileId));
             }
         }
     }
@@ -84,6 +89,7 @@ public sealed class Publication : AggregateRoot
         DateOnly publishedDate,
         string edition,
         string callNumber,
+        string coverImageFileId,
         string? description,
         string language,
         AcquisitionMethod acquisitionMethod,
@@ -111,6 +117,7 @@ public sealed class Publication : AggregateRoot
             publishedDate,
             edition,
             callNumber,
+            coverImageFileId,
             description,
             language,
             publisher,
@@ -120,6 +127,8 @@ public sealed class Publication : AggregateRoot
 
         else if (acquisitionMethod == AcquisitionMethod.Donation)
             publication.RecordDonation(quantity, patron!);
+
+        publication.AddDomainEvent(new FileUsedDomainEvent(coverImageFileId));
 
         return publication;
     }
@@ -132,19 +141,26 @@ public sealed class Publication : AggregateRoot
         DateOnly? publishedDate,
         string? edition,
         string? callNumber,
+        string? coverImageFileId,
         string? description,
         string? language)
     {
-        Title = !string.IsNullOrEmpty(title?.Trim()) ? title.Trim() : Title;
-        Isbn = !string.IsNullOrEmpty(isbn?.Trim()) ? isbn.Trim() : Isbn;
+        Title = !string.IsNullOrWhiteSpace(title?.Trim()) ? title.Trim() : Title;
+        Isbn = !string.IsNullOrWhiteSpace(isbn?.Trim()) ? isbn.Trim() : Isbn;
         PublicationType = publicationType is not null ? publicationType.Value : PublicationType;
         PublishedDate = publishedDate is not null ? publishedDate.Value : PublishedDate;
-        Edition = !string.IsNullOrEmpty(edition?.Trim()) ? edition.Trim() : Edition;
-        CallNumber = !string.IsNullOrEmpty(callNumber?.Trim()) ? callNumber.Trim() : CallNumber;
-        Description = !string.IsNullOrEmpty(description?.Trim()) ? description.Trim() : Description;
-        Language = !string.IsNullOrEmpty(language?.Trim()) ? language.Trim() : Language;
+        Edition = !string.IsNullOrWhiteSpace(edition?.Trim()) ? edition.Trim() : Edition;
+        CallNumber = !string.IsNullOrWhiteSpace(callNumber?.Trim()) ? callNumber.Trim() : CallNumber;
+        Description = !string.IsNullOrWhiteSpace(description?.Trim()) ? description.Trim() : Description;
+        Language = !string.IsNullOrWhiteSpace(language?.Trim()) ? language.Trim() : Language;
 
         Publisher = publisher is not null ? new PublicationPublisher(publisher.Id, publisher.Name) : null;
+
+        if (!string.IsNullOrWhiteSpace(coverImageFileId?.Trim()))
+        {
+            AddDomainEvent(new FileReplacedDomainEvent(CoverImageFileId, coverImageFileId));
+            CoverImageFileId = coverImageFileId;
+        }
     }
 
     public void UpdateAuthors(Author[] authors)
@@ -155,7 +171,8 @@ public sealed class Publication : AggregateRoot
         {
             _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
-                    author.LastName));
+                    author.LastName,
+                    author.DpFileId));
         }
     }
 
@@ -166,7 +183,8 @@ public sealed class Publication : AggregateRoot
         _authors.Remove(publicationAuthor);
         _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
-                    author.LastName));
+                    author.LastName,
+                    author.DpFileId));
     }
 
     public void RecordPurchase(

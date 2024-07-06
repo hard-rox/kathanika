@@ -9,6 +9,7 @@ public sealed record AcquirePublicationCommand(
     DateOnly PublishedDate,
     string Edition,
     string CallNumber,
+    string CoverImageFileId,
     string? Description,
     string Language,
     AcquisitionMethod AcquisitionMethod,

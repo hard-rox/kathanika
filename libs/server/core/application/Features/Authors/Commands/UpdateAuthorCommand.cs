@@ -9,5 +9,6 @@ public sealed record AuthorPatch(
         string? Nationality = null,
         string? Biography = null,
         bool MarkedAsDeceased = false,
-        DateOnly? DateOfDeath = null
+        DateOnly? DateOfDeath = null,
+        string? DpFileId = null
     );

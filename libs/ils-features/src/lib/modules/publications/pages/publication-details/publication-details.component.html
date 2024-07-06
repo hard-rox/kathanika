@@ -3,13 +3,13 @@
 @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
 <kn-panel>
   <div class="flex gap-4">
-    <img class="m-6 max-h-100 w-auto shadow-2xl" src="https://picsum.photos/300/500" alt="Cover" />
+    <img class="m-6 max-h-100 w-auto shadow-2xl" [src]="data.publication?.coverImage" alt="Cover" />
     <div class="px-4 py-4 space-y-4">
       <h4 class="text-xl font-bold">{{ data.publication?.title }}</h4>
       <div class="w-full flex items-center gap-4">
         <div class="flex -space-x-2 overflow-hidden">
           @for (author of data.publication?.authors; track author) {
-          <img class="inline-block max-h-14 rounded-full w-auto ring-2 ring-white" src="https://picsum.photos/400"
+          <img class="inline-block max-h-14 rounded-full w-auto ring-2 ring-white" [src]="author.dp"
             alt="DP" />
           }
         </div>

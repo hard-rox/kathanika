@@ -2,9 +2,9 @@ using MongoDB.Bson;
 
 namespace Kathanika.Infrastructure.Persistence.FileStorage;
 
-internal abstract class FileMetadataService(
+internal class FileMetadataService(
     IMongoDatabase mongoDatabase,
-    ILogger logger)
+    ILogger<FileMetadataService> logger) : IFileMetadataService
 {
     private readonly IMongoCollection<StoredFileMetadata> _fileEntryCollection
         = mongoDatabase.GetCollection<StoredFileMetadata>(Constants.StoredFileMetadataCollectionName);
@@ -22,7 +22,7 @@ internal abstract class FileMetadataService(
         return storedFileEntry.Id;
     }
 
-    protected async Task<bool> ExistAsync(string fileId, CancellationToken cancellationToken = default)
+    public async Task<bool> ExistAsync(string fileId, CancellationToken cancellationToken = default)
     {
         if (!IsValidFileId(fileId)) return false;
 
@@ -35,7 +35,7 @@ internal abstract class FileMetadataService(
         return count > 0;
     }
 
-    protected async Task<StoredFileMetadata?> GetAsync(string fileId, CancellationToken cancellationToken = default)
+    public async Task<StoredFileMetadata?> GetAsync(string fileId, CancellationToken cancellationToken = default)
     {
         if (!IsValidFileId(fileId)) return null;
         logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(StoredFileMetadata).Name, fileId, Constants.StoredFileMetadataCollectionName);
@@ -62,7 +62,7 @@ internal abstract class FileMetadataService(
         return metadata;
     }
 
-    protected async Task RecordFileMove(string fileId, CancellationToken cancellationToken = default)
+    public async Task RecordFileMove(string fileId, CancellationToken cancellationToken = default)
     {
         FilterDefinition<StoredFileMetadata> filterDefinition = Builders<StoredFileMetadata>.Filter
             .Eq(x => x.Id, fileId);

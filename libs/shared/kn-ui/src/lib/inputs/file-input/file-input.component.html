@@ -8,12 +8,17 @@
   <div>
     <div [ngClass]="
     (control?.dirty || control?.touched) && !control?.valid
-      ? 'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+      ? 'border-theme-fire-red'
       : isDisabled
         ? 'border-theme-davys-gray border-opacity-50 bg-gray-200'
         : 'border-theme-gunmetal'" class="border space-y-1">
       <div class="p-2 flex flex-col items-center justify-center text-center cursor-pointer">
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 mb-4 fill-gray-600 inline-block" viewBox="0 0 32 32">
+        <svg xmlns="http://www.w3.org/2000/svg" [ngClass]="
+        (control?.dirty || control?.touched) && !control?.valid
+          ? 'fill-theme-fire-red'
+          : isDisabled
+            ? 'border-theme-davys-gray bg-gray-200'
+            : 'border-theme-gunmetal'" class="w-10 mb-4 fill-gray-600 inline-block" viewBox="0 0 32 32">
           <path
             d="M23.75 11.044a7.99 7.99 0 0 0-15.5-.009A8 8 0 0 0 9 27h3a1 1 0 0 0 0-2H9a6 6 0 0 1-.035-12 1.038 1.038 0 0 0 1.1-.854 5.991 5.991 0 0 1 11.862 0A1.08 1.08 0 0 0 23 13a6 6 0 0 1 0 12h-3a1 1 0 0 0 0 2h3a8 8 0 0 0 .75-15.956z"
             data-original="#000000" />
@@ -22,13 +27,20 @@
             data-original="#000000" />
         </svg>
 
-        <h4 class="text-sm text-theme-davys-gray font-thin">Drag & Drop or <label [htmlFor]="control?.name"
-            class="text-theme-gunmetal font-bold cursor-pointer">Choose file</label> to upload</h4>
-        <input type="file" [multiple]="multiple" [id]="control?.name"
-          [placeholder]="placeholder.length > 0 ? placeholder : label" [disabled]="isDisabled"
+        <h4 [ngClass]="
+        (control?.dirty || control?.touched) && !control?.valid
+          ? 'border-theme-fire-red text-theme-fire-red'
+          : isDisabled
+            ? 'border-theme-davys-gray bg-gray-200'
+            : 'border-theme-gunmetal'" class="text-sm text-theme-davys-gray font-thin">
+          Drag & Drop or
+          <label [for]="control?.name" class="text-theme-gunmetal font-bold cursor-pointer">Choose file</label>
+          to upload
+        </h4>
+        <input type="file" [multiple]="multiple" [id]="control?.name" [disabled]="isDisabled" [accept]="accept"
           (change)="onFileSelect($event)" (blur)="onBlur()" class="hidden" />
       </div>
-      @for (upload of fileUploads; track $index) {
+      @if(file){
       <div class="flex flex-col bg-theme-silver bg-opacity-30 py-2 px-4">
         <div class="flex">
           <p class="text-xs text-theme-rich-black flex-1">
@@ -40,7 +52,7 @@
                 d="M363 200H143c-8.284 0-15 6.716-15 15s6.716 15 15 15h220c8.284 0 15-6.716 15-15s-6.716-15-15-15zm0 80H143c-8.284 0-15 6.716-15 15s6.716 15 15 15h220c8.284 0 15-6.716 15-15s-6.716-15-15-15zm-147.28 80H143c-8.284 0-15 6.716-15 15s6.716 15 15 15h72.72c8.284 0 15-6.716 15-15s-6.716-15-15-15z"
                 data-original="#000000" />
             </svg>
-            {{upload.file.name}} <span class="ml-2">{{upload.file.size/1000/1000 | number:'1.2-2'}} mb</span>
+            {{file.name}} <span class="ml-2">{{file.size/1000/1000 | number:'1.2-2'}} mb</span>
           </p>
           <svg xmlns="http://www.w3.org/2000/svg"
             class="w-3 cursor-pointer shrink-0 fill-theme-silver hover:fill-theme-fire-red"
@@ -54,12 +66,12 @@
           </svg>
         </div>
         <div class="bg-theme-silver rounded-sm w-full h-2 my-2">
-          <div [ngStyle]="{'width': upload.uploadPercentage + '%'}" class="h-full rounded-sm bg-theme-gunmetal flex items-center relative">
+          <div [ngStyle]="{'width': uploadPercentage + '%'}"
+            class="h-full rounded-sm bg-theme-gunmetal flex items-center relative">
             <span class="absolute text-xs right-0 bg-white w-2 h-2 rounded-sm"></span>
           </div>
         </div>
-        <!-- <progress [value]="upload.uploadPercentage" class="bg-theme-silver rounded-sm h-2 my-2">{{upload.uploadPercentage}}$</progress> -->
-        <p class="text-xs text-theme-davys-gray flex-1">{{upload.uploadPercentage}}% done</p>
+        <p class="text-xs text-theme-davys-gray flex-1">{{uploadPercentage}}% done</p>
       </div>
       }
     </div>

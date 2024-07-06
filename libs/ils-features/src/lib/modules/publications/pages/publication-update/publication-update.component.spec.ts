@@ -24,6 +24,8 @@ import {
   KnNumberInput,
   KnChip,
   KnSearchbar,
+  KnFileInput,
+  FileServerModule,
 } from '@kathanika/kn-ui';
 import { PublicationPatchFormComponent } from '../../components/publication-patch-form/publication-patch-form.component';
 import { ActivatedRoute, RouterModule } from '@angular/router';
@@ -56,7 +58,9 @@ describe('PublicationUpdateComponent', () => {
         KnTextareaInput,
         KnNumberInput,
         KnChip,
-        KnSearchbar
+        KnSearchbar,
+        FileServerModule.forRoot(''),
+        KnFileInput
       ],
       providers: [
         {

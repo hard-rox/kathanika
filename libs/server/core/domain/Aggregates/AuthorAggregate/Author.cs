@@ -84,13 +84,14 @@ public sealed class Author : AggregateRoot
         string? lastName = null,
         DateOnly? dateOfBirth = null,
         string? nationality = null,
-        string? biography = null
+        string? biography = null,
+        string? dpFileId = null
     )
     {
-        FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
-        LastName = !string.IsNullOrEmpty(lastName) ? lastName : LastName;
-        Nationality = !string.IsNullOrEmpty(nationality) ? nationality : Nationality;
-        Biography = !string.IsNullOrEmpty(biography) ? biography : Biography;
+        FirstName = !string.IsNullOrWhiteSpace(firstName) ? firstName : FirstName;
+        LastName = !string.IsNullOrWhiteSpace(lastName) ? lastName : LastName;
+        Nationality = !string.IsNullOrWhiteSpace(nationality) ? nationality : Nationality;
+        Biography = !string.IsNullOrWhiteSpace(biography) ? biography : Biography;
         if (dateOfBirth is not null)
         {
             if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
@@ -100,6 +101,14 @@ public sealed class Author : AggregateRoot
         }
 
         AddDomainEvent(new AuthorUpdatedDomainEvent(Id));
+
+        if (!string.IsNullOrWhiteSpace(dpFileId?.Trim()))
+        {
+            if (!string.IsNullOrWhiteSpace(DpFileId))
+                AddDomainEvent(new FileReplacedDomainEvent(DpFileId, dpFileId));
+            else AddDomainEvent(new FileUsedDomainEvent(dpFileId));
+            DpFileId = dpFileId.Trim();
+        }
     }
 
     public void MarkAsDeceased(DateOnly dateOfDeath)

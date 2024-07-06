@@ -21,6 +21,7 @@ export type Scalars = {
   DateTime: { input: any; output: any; }
   /** The built-in `Decimal` scalar type. */
   Decimal: { input: any; output: any; }
+  URL: { input: any; output: any; }
 };
 
 export type AcquirePublicationError = InvalidFieldError;
@@ -29,6 +30,7 @@ export type AcquirePublicationInput = {
   acquisitionMethod: AcquisitionMethod;
   authorIds: Array<Scalars['String']['input']>;
   callNumber: Scalars['String']['input'];
+  coverImageFileId: Scalars['String']['input'];
   description?: InputMaybe<Scalars['String']['input']>;
   edition: Scalars['String']['input'];
   isbn?: InputMaybe<Scalars['String']['input']>;
@@ -95,6 +97,7 @@ export type Author = {
   biography: Scalars['String']['output'];
   dateOfBirth: Scalars['Date']['output'];
   dateOfDeath?: Maybe<Scalars['Date']['output']>;
+  dp?: Maybe<Scalars['URL']['output']>;
   firstName: Scalars['String']['output'];
   fullName: Scalars['String']['output'];
   id: Scalars['String']['output'];
@@ -106,6 +109,7 @@ export type AuthorFilterInput = {
   and?: InputMaybe<Array<AuthorFilterInput>>;
   dateOfBirth?: InputMaybe<DateOperationFilterInput>;
   dateOfDeath?: InputMaybe<DateOperationFilterInput>;
+  dpFileId?: InputMaybe<StringOperationFilterInput>;
   firstName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
   lastName?: InputMaybe<StringOperationFilterInput>;
@@ -117,6 +121,7 @@ export type AuthorPatchInput = {
   biography?: InputMaybe<Scalars['String']['input']>;
   dateOfBirth?: InputMaybe<Scalars['Date']['input']>;
   dateOfDeath?: InputMaybe<Scalars['Date']['input']>;
+  dpFileId?: InputMaybe<Scalars['String']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
   markedAsDeceased?: Scalars['Boolean']['input'];
@@ -126,6 +131,7 @@ export type AuthorPatchInput = {
 export type AuthorSortInput = {
   dateOfBirth?: InputMaybe<SortEnumType>;
   dateOfDeath?: InputMaybe<SortEnumType>;
+  dpFileId?: InputMaybe<SortEnumType>;
   firstName?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
   lastName?: InputMaybe<SortEnumType>;
@@ -172,6 +178,7 @@ export type CreateMemberInput = {
   email: Scalars['String']['input'];
   firstName: Scalars['String']['input'];
   lastName: Scalars['String']['input'];
+  photoFileId: Scalars['String']['input'];
 };
 
 export type CreateMemberPayload = {
@@ -316,6 +323,7 @@ export type Member = {
   id: Scalars['String']['output'];
   lastName: Scalars['String']['output'];
   membershipStartDateTime: Scalars['DateTime']['output'];
+  photo?: Maybe<Scalars['URL']['output']>;
   status: MembershipStatus;
 };
 
@@ -332,6 +340,7 @@ export type MemberFilterInput = {
   membershipCancellationDateTime?: InputMaybe<DateTimeOperationFilterInput>;
   membershipStartDateTime?: InputMaybe<DateTimeOperationFilterInput>;
   or?: InputMaybe<Array<MemberFilterInput>>;
+  photoFileId?: InputMaybe<StringOperationFilterInput>;
   status?: InputMaybe<MembershipStatusOperationFilterInput>;
 };
 
@@ -342,6 +351,7 @@ export type MemberPatchInput = {
   email?: InputMaybe<Scalars['String']['input']>;
   firstName?: InputMaybe<Scalars['String']['input']>;
   lastName?: InputMaybe<Scalars['String']['input']>;
+  photoFileId?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type MemberSortInput = {
@@ -355,6 +365,7 @@ export type MemberSortInput = {
   lastName?: InputMaybe<SortEnumType>;
   membershipCancellationDateTime?: InputMaybe<SortEnumType>;
   membershipStartDateTime?: InputMaybe<SortEnumType>;
+  photoFileId?: InputMaybe<SortEnumType>;
   status?: InputMaybe<SortEnumType>;
 };
 
@@ -480,6 +491,7 @@ export type Publication = {
   authors: Array<PublicationAuthor>;
   callNumber: Scalars['String']['output'];
   copiesAvailable: Scalars['Int']['output'];
+  coverImage?: Maybe<Scalars['URL']['output']>;
   description?: Maybe<Scalars['String']['output']>;
   donationRecords: Array<DonationRecord>;
   edition: Scalars['String']['output'];
@@ -505,6 +517,7 @@ export type PublicationPurchaseRecordsArgs = {
 
 export type PublicationAuthor = {
   __typename?: 'PublicationAuthor';
+  dp?: Maybe<Scalars['URL']['output']>;
   firstName: Scalars['String']['output'];
   fullName: Scalars['String']['output'];
   id: Scalars['String']['output'];
@@ -513,6 +526,7 @@ export type PublicationAuthor = {
 
 export type PublicationAuthorFilterInput = {
   and?: InputMaybe<Array<PublicationAuthorFilterInput>>;
+  dpFileId?: InputMaybe<StringOperationFilterInput>;
   firstName?: InputMaybe<StringOperationFilterInput>;
   fullName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
@@ -525,6 +539,7 @@ export type PublicationFilterInput = {
   authors?: InputMaybe<ListFilterInputTypeOfPublicationAuthorFilterInput>;
   callNumber?: InputMaybe<StringOperationFilterInput>;
   copiesAvailable?: InputMaybe<IntOperationFilterInput>;
+  coverImageFileId?: InputMaybe<StringOperationFilterInput>;
   description?: InputMaybe<StringOperationFilterInput>;
   donationRecords?: InputMaybe<ListFilterInputTypeOfDonationRecordFilterInput>;
   edition?: InputMaybe<StringOperationFilterInput>;
@@ -541,6 +556,7 @@ export type PublicationFilterInput = {
 export type PublicationPatchInput = {
   authorIds?: InputMaybe<Array<Scalars['String']['input']>>;
   callNumber?: InputMaybe<Scalars['String']['input']>;
+  coverImageFileId?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   edition?: InputMaybe<Scalars['String']['input']>;
   isbn?: InputMaybe<Scalars['String']['input']>;
@@ -572,6 +588,7 @@ export type PublicationPublisherSortInput = {
 export type PublicationSortInput = {
   callNumber?: InputMaybe<SortEnumType>;
   copiesAvailable?: InputMaybe<SortEnumType>;
+  coverImageFileId?: InputMaybe<SortEnumType>;
   description?: InputMaybe<SortEnumType>;
   edition?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
@@ -886,7 +903,7 @@ export type GetAuthorsQueryVariables = Exact<{
 }>;
 
 
-export type GetAuthorsQuery = { __typename?: 'Queries', authors?: { __typename?: 'AuthorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Author', id: string, firstName: string, lastName: string, nationality: string }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type GetAuthorsQuery = { __typename?: 'Queries', authors?: { __typename?: 'AuthorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Author', id: string, firstName: string, lastName: string, nationality: string, dp?: any | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type SearchAuthorsQueryVariables = Exact<{
   filterText: Scalars['String']['input'];
@@ -900,7 +917,7 @@ export type GetAuthorQueryVariables = Exact<{
 }>;
 
 
-export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string } | null };
+export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string, dp?: any | null } | null };
 
 export type CreateMemberMutationVariables = Exact<{
   createMemberInput: CreateMemberInput;
@@ -932,7 +949,7 @@ export type GetMemberQueryVariables = Exact<{
 }>;
 
 
-export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, firstName: string, lastName: string, status: MembershipStatus, membershipStartDateTime: any, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
+export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, firstName: string, lastName: string, photo?: any | null, status: MembershipStatus, membershipStartDateTime: any, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
 
 export type AcquirePublicationMutationVariables = Exact<{
   acquirePublicationInput: AcquirePublicationInput;
@@ -964,7 +981,7 @@ export type GetPublicationQueryVariables = Exact<{
 }>;
 
 
-export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, language: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string }>, publisher?: { __typename?: 'PublicationPublisher', id: string, name: string } | null, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }>, donationRecords: Array<{ __typename?: 'DonationRecord', id: string, donationDate: any, patron: string, quantity: number }> } | null };
+export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, coverImage?: any | null, language: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string, dp?: any | null }>, publisher?: { __typename?: 'PublicationPublisher', id: string, name: string } | null, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }>, donationRecords: Array<{ __typename?: 'DonationRecord', id: string, donationDate: any, patron: string, quantity: number }> } | null };
 
 export type AddPublisherMutationVariables = Exact<{
   addPublisherInput: AddPublisherInput;
@@ -1108,6 +1125,7 @@ export const GetAuthorsDocument = gql`
       firstName
       lastName
       nationality
+      dp
     }
     pageInfo {
       hasNextPage
@@ -1165,6 +1183,7 @@ export const GetAuthorDocument = gql`
     dateOfDeath
     nationality
     biography
+    dp
   }
 }
     `;
@@ -1275,6 +1294,7 @@ export const GetMemberDocument = gql`
     fullName
     firstName
     lastName
+    photo
     status
     membershipStartDateTime
     dateOfBirth
@@ -1404,11 +1424,13 @@ export const GetPublicationDocument = gql`
     isbn
     edition
     callNumber
+    coverImage
     authors {
       id
       firstName
       lastName
       fullName
+      dp
     }
     language
     publisher {

@@ -26,6 +26,7 @@ internal sealed class UpdatePublicationCommandHandler(
             request.Patch.PublishedDate,
             request.Patch.Edition,
             request.Patch.CallNumber,
+            request.Patch.CoverImageFileId,
             request.Patch.Description,
             request.Patch.Language
         );

@@ -4,26 +4,47 @@ namespace Kathanika.Infrastructure.Persistence.FileStorage;
 
 internal sealed class DiskFileStore(
     ILogger<DiskFileStore> logger,
-    IMongoDatabase mongoDatabase,
+    IFileMetadataService fileMetadataService,
     IUploadedStore uploadedFileStore)
-: FileMetadataService(mongoDatabase, logger), IFileStore
+: IFileStore
 {
+    public async Task<(Stream stream, string contentType)> GetAsync(string fileId, CancellationToken cancellationToken = default)
+    {
+        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken);
+        if (metadata is null) return (null, null);
+
+        if (metadata.IsMoved)
+        {
+            string filePath = "Files"; //TODO: Move to appsettings or constants...
+            if (metadata.SubDirectory is not null) filePath = Path.Combine(filePath, metadata.SubDirectory);
+
+            filePath = Path.Combine(filePath, $"{fileId}{Path.GetExtension(metadata.FileName)}");
+            Stream stream = new FileStream(filePath, FileMode.Open, FileAccess.Read);
+            return (stream, metadata.ContentType);
+        }
+
+        return (await uploadedFileStore.GetFileContentAsync(fileId, cancellationToken), metadata.ContentType);
+    }
 
     public async Task MoveToStoreAsync(string fileId, CancellationToken cancellationToken = default)
     {
         using Stream dataStream = await uploadedFileStore.GetFileContentAsync(fileId, cancellationToken);
-        StoredFileMetadata? metadata = await GetAsync(fileId, cancellationToken);
+        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken);
         if (dataStream is null || dataStream.Length == 0 || metadata is null)
             throw new Exception("File not found");
 
-        string fileName = $"{fileId}.{Path.GetExtension(metadata.FileName)}";
+        string fileName = $"{fileId}{Path.GetExtension(metadata.FileName)}";
         string filePath = "Files"; //TODO: Move to appsettings or constants...
+
+        if (!Directory.Exists(filePath))
+            Directory.CreateDirectory(filePath);
+
         if (metadata.SubDirectory is not null)
         {
+            filePath = Path.Combine(filePath, metadata.SubDirectory);
+
             if (!Directory.Exists(filePath))
                 Directory.CreateDirectory(filePath);
-
-            filePath = Path.Combine(filePath, metadata.SubDirectory);
         }
         filePath = Path.Combine(filePath, fileName);
 
@@ -31,14 +52,11 @@ internal sealed class DiskFileStore(
         await dataStream.CopyToAsync(fileStream, cancellationToken);
         await uploadedFileStore.DeleteFileAsync(fileId, cancellationToken);
 
-        await RecordFileMove(fileId, cancellationToken);
+        await fileMetadataService.RecordFileMove(fileId, cancellationToken);
     }
 
-    public new async Task<bool> ExistAsync(string fileId, CancellationToken cancellationToken = default)
+    public async Task RemoveFromStoreAsync(string fileId, CancellationToken cancellationToken = default)
     {
-        bool hasInDiskStore = true;
-        bool metadataExist = await base.ExistAsync(fileId, cancellationToken);
-
-        return metadataExist && hasInDiskStore;
+        await uploadedFileStore.DeleteFileAsync(fileId, cancellationToken);
     }
 }

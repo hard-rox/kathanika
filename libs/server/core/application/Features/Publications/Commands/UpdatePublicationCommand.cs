@@ -10,6 +10,7 @@ public sealed record PublicationPatch(
         DateOnly? PublishedDate,
         string? Edition,
         string? CallNumber,
+        string? CoverImageFileId,
         string? Description,
         string? Language,
         IEnumerable<string>? AuthorIds = null

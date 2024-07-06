@@ -10,6 +10,8 @@ import {
   KnDateInput,
   KnTextareaInput,
   KnToggle,
+  FileServerModule,
+  KnFileInput,
 } from '@kathanika/kn-ui';
 import { MutationResult } from 'apollo-angular';
 import { of } from 'rxjs';
@@ -36,7 +38,9 @@ describe('AuthorAddComponent', () => {
         KnTextInput,
         KnDateInput,
         KnTextareaInput,
-        KnToggle
+        KnToggle,
+        FileServerModule.forRoot(''),
+        KnFileInput
       ],
       declarations: [AuthorAddComponent, AuthorFormComponent],
       providers: [

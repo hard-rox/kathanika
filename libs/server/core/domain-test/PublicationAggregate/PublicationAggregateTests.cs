@@ -16,6 +16,7 @@ public class PublicationAggregateTests
             string.Empty,
             "Nt0202",
             "",
+            "",
             string.Empty,
             AcquisitionMethod.Donation,
             10,
@@ -61,6 +62,7 @@ public class PublicationAggregateTests
             string.Empty,
             "Nt0202",
             "",
+            "",
             AcquisitionMethod.Donation,
             10,
             null,
@@ -79,6 +81,7 @@ public class PublicationAggregateTests
             DateOnly.MinValue,
             null,
             "Updated CallNumber",
+            "",
             "",
             ""
         );

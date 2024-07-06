@@ -14,7 +14,8 @@ internal sealed class UpdateAuthorCommandHandler(IAuthorRepository authorReposit
             request.Patch.LastName,
             request.Patch.DateOfBirth,
             request.Patch.Nationality,
-            request.Patch.Biography
+            request.Patch.Biography,
+            request.Patch.DpFileId
         );
 
         if (request.Patch.MarkedAsDeceased)

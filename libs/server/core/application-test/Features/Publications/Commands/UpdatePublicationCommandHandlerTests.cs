@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Kathanika.Core.Application.Features.Publications.Commands;
 
-namespace Kathanika.Core.Application.Test.Commands;
+namespace Kathanika.Core.Application.Test.Features.Publications.Commands;
 
 public class UpdatePublicationCommandHandlerTests
 {
@@ -37,6 +37,7 @@ public class UpdatePublicationCommandHandlerTests
             "ABCD",
             string.Empty,
             string.Empty,
+            string.Empty,
             AcquisitionMethod.Purchase,
             10,
             publisher,
@@ -53,7 +54,7 @@ public class UpdatePublicationCommandHandlerTests
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
             .Returns([]);
         UpdatePublicationCommand command = new(publicationId, new PublicationPatch(
-            "Updated Title", "", PublicationType.Book, "", null, null, "", "", "" //TODO: Fix up update in domain with non nullable...
+            "Updated Title", "", PublicationType.Book, "", null, null, null, "", "", "" //TODO: Fix up update in domain with non nullable...
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository, publisherRepository);
 

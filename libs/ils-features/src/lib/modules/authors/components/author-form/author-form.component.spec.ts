@@ -7,6 +7,8 @@ import {
   KnDateInput,
   KnTextareaInput,
   KnToggle,
+  KnFileInput,
+  FileServerModule,
 } from '@kathanika/kn-ui';
 
 describe('AuthorFormComponent', () => {
@@ -21,6 +23,8 @@ describe('AuthorFormComponent', () => {
         KnDateInput,
         KnTextareaInput,
         KnToggle,
+        FileServerModule.forRoot(''),
+        KnFileInput
       ],
       declarations: [AuthorFormComponent],
     });

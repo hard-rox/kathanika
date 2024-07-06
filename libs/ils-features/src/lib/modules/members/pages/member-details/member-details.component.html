@@ -4,7 +4,7 @@
 <kn-panel>
   <div class="flex justify-between items-center">
     <div class="flex items-center gap-10">
-      <img class="max-h-24 min-h-24 w-auto rounded-full" src="https://picsum.photos/400" alt="DP" />
+      <img class="max-h-24 min-h-24 w-auto rounded-full" [src]="data.member?.photo" alt="DP" />
       <div>
         <p class="font-bold">{{data.member?.fullName}} <kn-badge [content]="data.member?.status ?? ''" [type]="
             data.member?.status === membershipStatus.Active

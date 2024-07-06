@@ -1,3 +1,5 @@
+using Kathanika.Infrastructure.Graphql.GraphqlHelpers;
+
 namespace Kathanika.Infrastructure.Graphql.Types;
 
 public sealed class AuthorType : ObjectType<Author>
@@ -14,5 +16,9 @@ public sealed class AuthorType : ObjectType<Author>
         descriptor.Field(x => x.DateOfDeath);
         descriptor.Field(x => x.Nationality);
         descriptor.Field(x => x.Biography);
+        descriptor.Field(x => x.DpFileId)
+            .Name("dp")
+            .Type<UrlType>()
+            .Resolve(context => FileEndpointResolver.ResolveAsFileUrl(context, context.Parent<Author>().DpFileId));
     }
 }

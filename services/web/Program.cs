@@ -1,7 +1,9 @@
 using Kathanika.Core.Application;
+using Kathanika.Core.Application.Services;
 using Kathanika.Infrastructure.Graphql;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers;
+using Kathanika.Web;
 using Kathanika.Web.FileOpsConfigurations;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
@@ -10,7 +12,6 @@ using OpenTelemetry.Trace;
 using Serilog;
 using tusdotnet;
 using tusdotnet.Helpers;
-using tusdotnet.Models;
 
 const string _fileServingEndpoint = "/fs";
 try
@@ -19,11 +20,17 @@ try
 
     ConfigureSerilog(builder.Host);
 
-    builder.Services.AddApplication()
+    builder.Services.Configure<ApplicationOptions>(
+        builder.Configuration.GetSection(nameof(ApplicationOptions))
+    );
+
+    builder.Services
+        .AddHttpContextAccessor()
+        .AddApplication()
         .AddGraphQLInfrastructure()
         .AddPersistenceInfrastructure(builder.Configuration)
         .AddWorkers(builder.Configuration)
-        .AddTus();
+        .AddTus(builder.Configuration);
 
     AddOpenTelemetry(builder);
 
@@ -55,9 +62,10 @@ try
         app.MapFallbackToFile("index.html");
     }
 
-    app.MapGet("test", (DefaultTusConfiguration config) =>
+    app.MapGet("fs/{fileId}", async (string fileId, IFileStore fileStore) =>
     {
-        return config.Expiration;
+        (Stream stream, string contentType) = await fileStore.GetAsync(fileId);
+        return Results.File(stream, contentType);
     });
 
     app.MapTus(_fileServingEndpoint, TusConfiguration.TusConfigurationFactory);

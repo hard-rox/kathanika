@@ -37,11 +37,13 @@ query getPublication($id: String!) {
     isbn
     edition
     callNumber
+    coverImage
     authors {
       id
       firstName
       lastName
       fullName
+      dp
     }
     language
     publisher {

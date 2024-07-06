@@ -30,6 +30,10 @@ export class MemberFormComponent extends BaseFormComponent<CreateMemberInput | M
         nonNullable: true,
         validators: [Validators.required],
       }),
+      photoFileId: new FormControl<string>('', {
+        nonNullable: true,
+        validators: [Validators.required]
+      }),
       dateOfBirth: new FormControl<Date | null>(null, {
         nonNullable: true,
         validators: [Validators.required],

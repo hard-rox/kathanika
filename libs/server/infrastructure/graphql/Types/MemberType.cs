@@ -1,3 +1,5 @@
+using Kathanika.Infrastructure.Graphql.GraphqlHelpers;
+
 namespace Kathanika.Infrastructure.Graphql.Types;
 
 public sealed class MemberType : ObjectType<Member>
@@ -9,6 +11,10 @@ public sealed class MemberType : ObjectType<Member>
         descriptor.Field(x => x.Id);
         descriptor.Field(x => x.FirstName);
         descriptor.Field(x => x.LastName);
+        descriptor.Field(x => x.PhotoFileId)
+            .Name("photo")
+            .Type<UrlType>()
+            .Resolve(context => FileEndpointResolver.ResolveAsFileUrl(context, context.Parent<Member>().PhotoFileId));
         descriptor.Field(x => x.FullName);
         descriptor.Field(x => x.DateOfBirth);
         descriptor.Field(x => x.Address);

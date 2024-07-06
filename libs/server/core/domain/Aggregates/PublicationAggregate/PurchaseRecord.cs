@@ -36,6 +36,6 @@ public sealed class PurchaseRecord : Entity
             : quantity is null && unitPrice is not null ? Quantity * (decimal)unitPrice
             : TotalPrice;
         UnitPrice = unitPrice is not null ? (decimal)unitPrice : UnitPrice;
-        Vendor = string.IsNullOrEmpty(vendor) ? Vendor : vendor;
+        Vendor = string.IsNullOrWhiteSpace(vendor) ? Vendor : vendor;
     }
 }

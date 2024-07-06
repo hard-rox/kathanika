@@ -21,6 +21,7 @@ public static class DependencyInjector
         services.AddScoped<ICacheService, MemoryCacheService>();
 
         services.AddScoped<IOutboxMessageService, OutboxMessageService>();
+        services.AddSingleton<IFileMetadataService, FileMetadataService>();
         services.AddSingleton<IFileStore, DiskFileStore>();
 
         services.AddScoped<IAuthorRepository, AuthorRepository>();

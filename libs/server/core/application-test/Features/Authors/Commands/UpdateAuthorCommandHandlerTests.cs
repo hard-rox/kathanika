@@ -1,6 +1,6 @@
 using Kathanika.Core.Application.Features.Authors.Commands;
 
-namespace Kathanika.Core.Application.Test.Commands;
+namespace Kathanika.Core.Application.Test.Features.Authors.Commands;
 
 public class UpdateAuthorCommandHandlerTests
 {

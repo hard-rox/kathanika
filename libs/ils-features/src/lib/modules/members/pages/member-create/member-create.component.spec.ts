@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberCreateComponent } from "./member-create.component";
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { ReactiveFormsModule } from '@angular/forms';
-import { KnDateInput, KnPanel, KnTextInput, KnTextareaInput, KnToggle } from "@kathanika/kn-ui";
+import { FileServerModule, KnDateInput, KnFileInput, KnPanel, KnTextInput, KnTextareaInput, KnToggle } from "@kathanika/kn-ui";
 import { CreateMemberGQL, CreateMemberInput, CreateMemberMutation, mockMutationGql } from '@kathanika/graphql-ts-client';
 import { of } from 'rxjs';
 import { MutationResult } from 'apollo-angular';
@@ -16,7 +16,8 @@ describe('MemberCreateComponent', () => {
     contactNumber: '01222',
     email: 'a@a.a',
     address: 'abc 123',
-    dateOfBirth: new Date()
+    dateOfBirth: new Date(),
+    photoFileId: ''
   }
 
   beforeEach(() => {
@@ -29,6 +30,8 @@ describe('MemberCreateComponent', () => {
         KnDateInput,
         KnTextareaInput,
         KnToggle,
+        FileServerModule.forRoot(''),
+        KnFileInput
       ],
       providers: [
         {

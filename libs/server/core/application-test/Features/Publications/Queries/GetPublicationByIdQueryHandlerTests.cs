@@ -1,7 +1,7 @@
 using Bogus;
 using Kathanika.Core.Application.Features.Publications.Queries;
 
-namespace Kathanika.Core.Application.Test.Queries;
+namespace Kathanika.Core.Application.Test.Features.Publications.Queries;
 
 public class GetPublicationByIdQueryHandlerTests
 {
@@ -14,6 +14,7 @@ public class GetPublicationByIdQueryHandlerTests
                 factoryMethod.Random.AlphaNumeric(8),
                 factoryMethod.Random.Enum<PublicationType>(),
                 factoryMethod.Date.PastDateOnly(),
+                "",
                 "",
                 factoryMethod.Random.AlphaNumeric(5),
                 factoryMethod.Lorem.Sentences(5),

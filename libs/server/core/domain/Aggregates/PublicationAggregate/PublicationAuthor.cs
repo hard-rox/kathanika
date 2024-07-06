@@ -5,7 +5,8 @@ namespace Kathanika.Core.Domain.Aggregates.PublicationAggregate;
 public sealed record PublicationAuthor(
     string Id,
     string FirstName,
-    string LastName
+    string LastName,
+    string? DpFileId
 ) : ValueObject
 {
     public string FullName => $"{FirstName} {LastName}";

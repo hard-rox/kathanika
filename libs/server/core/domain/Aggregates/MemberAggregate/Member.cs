@@ -1,3 +1,4 @@
+using Kathanika.Core.Domain.DomainEvents;
 using Kathanika.Core.Domain.Primitives;
 
 namespace Kathanika.Core.Domain.Aggregates.MemberAggregate;
@@ -8,6 +9,7 @@ public sealed class Member : AggregateRoot
 
     public string FirstName { get; private set; }
     public string LastName { get; private set; }
+    public string PhotoFileId { get; private set; }
     public DateOnly DateOfBirth { get; private set; }
     public string Address { get; private set; }
     public string ContactNumber { get; private set; }
@@ -22,6 +24,7 @@ public sealed class Member : AggregateRoot
     private Member(
         string firstName,
         string lastName,
+        string photoFileId,
         DateOnly dateOfBirth,
         string address,
         string contactNumber,
@@ -29,6 +32,7 @@ public sealed class Member : AggregateRoot
     {
         FirstName = firstName;
         LastName = lastName;
+        PhotoFileId = photoFileId;
         DateOfBirth = dateOfBirth;
         Address = address;
         ContactNumber = contactNumber;
@@ -38,36 +42,49 @@ public sealed class Member : AggregateRoot
     public static Member Create(
         string firstName,
         string lastName,
+        string photoFileId,
         DateOnly dateOfBirth,
         string address,
         string contactNumber,
         string email
     )
     {
-        return new Member(
+        Member newMember = new Member(
             firstName,
             lastName,
+            photoFileId,
             dateOfBirth,
             address,
             contactNumber,
             email
         );
+
+        newMember.AddDomainEvent(new FileUsedDomainEvent(photoFileId));
+
+        return newMember;
     }
 
     public void Update(
     string? firstName,
     string? lastName,
+    string? photoFileId,
     DateOnly? dateOfBirth,
     string? address,
     string? contactNumber,
     string? email)
     {
-        FirstName = !string.IsNullOrEmpty(firstName) ? firstName : FirstName;
-        LastName = !string.IsNullOrEmpty(lastName) ? lastName : LastName;
+        FirstName = !string.IsNullOrWhiteSpace(firstName) ? firstName : FirstName;
+        LastName = !string.IsNullOrWhiteSpace(lastName) ? lastName : LastName;
         DateOfBirth = dateOfBirth is not null ? (DateOnly)dateOfBirth : DateOfBirth;
-        Address = !string.IsNullOrEmpty(address) ? address : Address;
-        ContactNumber = !string.IsNullOrEmpty(contactNumber) ? contactNumber : ContactNumber;
-        Email = !string.IsNullOrEmpty(email) ? email : Email;
+        Address = !string.IsNullOrWhiteSpace(address) ? address : Address;
+        ContactNumber = !string.IsNullOrWhiteSpace(contactNumber) ? contactNumber : ContactNumber;
+        Email = !string.IsNullOrWhiteSpace(email) ? email : Email;
+
+        if (!string.IsNullOrWhiteSpace(photoFileId))
+        {
+            AddDomainEvent(new FileReplacedDomainEvent(PhotoFileId, photoFileId));
+            PhotoFileId = photoFileId;
+        }
     }
 
     public void CancelMembership()

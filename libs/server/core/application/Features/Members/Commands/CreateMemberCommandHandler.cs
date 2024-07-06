@@ -7,6 +7,7 @@ internal sealed class CreateMemberCommandHandler(IMemberRepository memberReposit
         Member newMember = Member.Create(
             request.FirstName,
             request.LastName,
+            request.PhotoFileId,
             request.DateOfBirth,
             request.Address,
             request.ContactNumber,

@@ -19,6 +19,7 @@ import {
   KnTextInput,
   KnTextareaInput,
   KnSearchbar,
+  KnFileInput,
 } from '@kathanika/kn-ui';
 import { AcquirePublicationFormComponent } from './components/acquire-publication-form/acquire-publication-form.component';
 import { PublicationPatchFormComponent } from './components/publication-patch-form/publication-patch-form.component';
@@ -50,6 +51,7 @@ import { PublicationPublisherInputComponent } from './components/publication-pub
     KnNumberInput,
     KnChip,
     KnSearchbar,
+    KnFileInput
   ],
 })
 export class PublicationsModule {}

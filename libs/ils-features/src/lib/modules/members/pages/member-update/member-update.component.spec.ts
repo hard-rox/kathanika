@@ -3,7 +3,7 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MemberUpdateComponent } from './member-update.component';
 import { GetMemberGQL, GetMemberQuery, MemberPatchInput, MembershipStatus, UpdateMemberGQL, UpdateMemberMutation, mockMutationGql, mockQueryGql } from '@kathanika/graphql-ts-client';
 import { ReactiveFormsModule } from '@angular/forms';
-import { KnDateInput, KnPanel, KnTextInput, KnTextareaInput, KnToggle } from '@kathanika/kn-ui';
+import { FileServerModule, KnDateInput, KnFileInput, KnPanel, KnTextInput, KnTextareaInput, KnToggle } from '@kathanika/kn-ui';
 import { ActivatedRoute } from '@angular/router';
 import { MemberFormComponent } from '../../components/member-form/member-form.component';
 import { of, throwError } from 'rxjs';
@@ -23,6 +23,8 @@ describe('MemberUpdateComponent', () => {
         KnDateInput,
         KnTextareaInput,
         KnToggle,
+        FileServerModule.forRoot(''),
+        KnFileInput
       ],
       declarations: [
         MemberUpdateComponent,

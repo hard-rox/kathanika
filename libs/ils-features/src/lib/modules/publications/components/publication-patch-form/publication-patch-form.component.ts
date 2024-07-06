@@ -60,6 +60,7 @@ export class PublicationPatchFormComponent extends BaseFormComponent<Publication
         nonNullable: true,
         validators: [Validators.required],
       }),
+      coverImageFileId: new FormControl<string | null>(null),
       language: new FormControl<string>('', {
         nonNullable: true,
         validators: [Validators.required],

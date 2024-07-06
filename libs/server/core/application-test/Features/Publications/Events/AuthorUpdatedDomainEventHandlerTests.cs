@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using NSubstitute.ReturnsExtensions;
 
-namespace Kathanika.Core.Application.Test.Events;
+namespace Kathanika.Core.Application.Test.Features.Publications.Events;
 
 public sealed class AuthorUpdatedDomainEventHandlerTests
 {
@@ -46,6 +46,7 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
                 factoryMethod.Random.AlphaNumeric(8),
                 factoryMethod.Random.Enum<PublicationType>(),
                 factoryMethod.Date.PastDateOnly(),
+                "",
                 "",
                 factoryMethod.Random.AlphaNumeric(5),
                 factoryMethod.Lorem.Sentences(5),

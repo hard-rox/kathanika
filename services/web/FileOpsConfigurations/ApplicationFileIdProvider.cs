@@ -1,12 +1,12 @@
 using System.Text;
-using Kathanika.Core.Application.Services;
+using Kathanika.Infrastructure.Persistence.FileStorage;
 using tusdotnet.Interfaces;
 using tusdotnet.Models;
 
 namespace Kathanika.Web.FileOpsConfigurations;
 
 internal sealed class ApplicationFileIdProvider(
-    IFileStore fileStorageService
+    IFileMetadataService fileMetadataService
 ) : ITusFileIdProvider
 {
     public async Task<string> CreateId(string metadata)
@@ -20,13 +20,13 @@ internal sealed class ApplicationFileIdProvider(
             fileNameMetadata.GetString(Encoding.UTF8)
             : string.Empty;
 
-        string fileId = await fileStorageService.CreateAsync(fileName, contentType);
+        string fileId = await fileMetadataService.CreateAsync(fileName, contentType);
         return fileId;
     }
 
     public async Task<bool> ValidateId(string fileId)
     {
-        bool valid = await fileStorageService.ExistAsync(fileId);
+        bool valid = await fileMetadataService.ExistAsync(fileId);
         return valid;
     }
 }

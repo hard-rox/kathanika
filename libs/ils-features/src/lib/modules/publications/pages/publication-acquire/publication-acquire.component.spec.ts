@@ -38,7 +38,8 @@ describe('PublicationAddComponent', () => {
     quantity: 1,
     title: 'Title',
     unitPrice: 10.99,
-    vendor: 'Vendor'
+    vendor: 'Vendor',
+    coverImageFileId: ''
   };
 
   beforeEach(() => {

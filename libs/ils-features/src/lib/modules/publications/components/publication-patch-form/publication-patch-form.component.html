@@ -18,6 +18,7 @@
     <kn-text-input label="Call Number" formControlName="callNumber" />
     <kn-textarea-input label="Description" formControlName="description" />
     <kn-publication-authors-input formControlName="authorIds" [currentAuthors]="publicationToUpdate?.authors ?? []" />
+    <kn-file-input label="Cover" formControlName="coverImageFileId" accept="image/png, image/jpeg, image/jpg"/>
   </div>
   <div class="flex flex-row-reverse mt-2">
     <input type="submit" value="Save" />

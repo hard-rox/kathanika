@@ -1,4 +1,4 @@
-<pre>{{formGroup.value | json}}</pre>
+<!-- <pre>{{formGroup.value | json}}</pre> -->
 
 <form [formGroup]="formGroup" (ngSubmit)="submitForm()">
   <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
@@ -16,7 +16,7 @@
         <kn-date-input label="Date of death" formControlName="dateOfDeath" />
       }
     </div>
-    <kn-file-input label="Photo" formControlName="dpFileId"/>
+    <kn-file-input label="Photo" formControlName="dpFileId" accept="image/png, image/jpeg, image/jpg"/>
   </div>
   <div class="flex flex-row-reverse mt-2">
     <input type="submit" value="Save" />
