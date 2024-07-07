@@ -52,7 +52,7 @@ internal sealed class DiskFileStore(
         await dataStream.CopyToAsync(fileStream, cancellationToken);
         await uploadedFileStore.DeleteFileAsync(fileId, cancellationToken);
 
-        await fileMetadataService.RecordFileMove(fileId, cancellationToken);
+        await fileMetadataService.RecordFileMoveAsync(fileId, cancellationToken);
     }
 
     public async Task RemoveFromStoreAsync(string fileId, CancellationToken cancellationToken = default)

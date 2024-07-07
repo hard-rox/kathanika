@@ -62,7 +62,7 @@ internal class FileMetadataService(
         return metadata;
     }
 
-    public async Task RecordFileMove(string fileId, CancellationToken cancellationToken = default)
+    public async Task RecordFileMoveAsync(string fileId, CancellationToken cancellationToken = default)
     {
         FilterDefinition<StoredFileMetadata> filterDefinition = Builders<StoredFileMetadata>.Filter
             .Eq(x => x.Id, fileId);
@@ -75,8 +75,10 @@ internal class FileMetadataService(
         UpdateResult result = await _fileEntryCollection.UpdateOneAsync(filterDefinition, updateDefinition, cancellationToken: cancellationToken);
         if (!result.IsAcknowledged)
         {
-            //TODO: Log...
+            logger.LogInformation("File Move recorded {@RecordFileMoveFileId}", fileId);
+            return;
         }
+        logger.LogInformation("File Move record failed. {@FileMoveRecordFailedFileId}", fileId);
     }
 
     public async Task RecordUploadCompletedAsync(string fileId, long fileSizeInBytes, CancellationToken cancellationToken = default)
@@ -90,7 +92,37 @@ internal class FileMetadataService(
         UpdateResult result = await _fileEntryCollection.UpdateOneAsync(filterDefinition, updateDefinition, cancellationToken: cancellationToken);
         if (!result.IsAcknowledged)
         {
-            //TODO: Log...
+            logger.LogInformation("Upload Complete recorded {@RecordUploadCompleteFileId}", fileId);
+            return;
         }
+        logger.LogInformation("Upload Complete record failed. {@UploadCompleteRecordFailedFileId}", fileId);
+    }
+
+    public async Task DeleteAsync(string[] fileIds, CancellationToken cancellationToken = default)
+    {
+        FilterDefinition<StoredFileMetadata> filterDefinition = Builders<StoredFileMetadata>.Filter
+            .In(x => x.Id, fileIds);
+        DeleteResult deleteResult = await _fileEntryCollection.DeleteManyAsync(filterDefinition, cancellationToken);
+        if (deleteResult.IsAcknowledged)
+        {
+            logger.LogInformation("Deleted {@DeletedMetadataCount} files metadata {@DeletedMetadataIds}", deleteResult.DeletedCount, fileIds);
+            return;
+        }
+        logger.LogInformation("Deletion failed files metadata {@DeletionFailedMetadataIds}", fileIds);
+    }
+
+    public async Task<IReadOnlyList<string>> GetUnusedFileIdsAsync(CancellationToken cancellationToken = default)
+    {
+        DateTimeOffset timeBefore = DateTimeOffset.Now - TimeSpan.FromMinutes(10); //TODO: From appsettings...
+        FilterDefinition<StoredFileMetadata> filterDefinition = Builders<StoredFileMetadata>.Filter
+            .And(
+                Builders<StoredFileMetadata>.Filter.Eq(x => x.IsUsed, false),
+                Builders<StoredFileMetadata>.Filter.Lte(x => x.UploadCompletedAt, timeBefore)
+            );
+        IReadOnlyList<string> unusedFileIds = await _fileEntryCollection
+            .Find(filterDefinition)
+            .Project(x => x.Id)
+            .ToListAsync(cancellationToken);
+        return unusedFileIds;
     }
 }
