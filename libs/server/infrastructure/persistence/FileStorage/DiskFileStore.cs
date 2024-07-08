@@ -6,7 +6,9 @@ internal sealed class DiskFileStore(
     ILogger<DiskFileStore> logger,
     IFileMetadataService fileMetadataService,
     IUploadedStore uploadedFileStore)
-: IFileStore
+: FileValidator(
+    fileMetadataService
+), IFileStore
 {
     public async Task<(Stream stream, string contentType)> GetAsync(string fileId, CancellationToken cancellationToken = default)
     {

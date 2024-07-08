@@ -1,10 +1,14 @@
 using System.Linq.Expressions;
+using Kathanika.Core.Application.Services;
 
 namespace Kathanika.Core.Application.Features.Authors.Commands;
 
 internal sealed class AddAuthorCommandValidator : AbstractValidator<AddAuthorCommand>
 {
-    public AddAuthorCommandValidator(IAuthorRepository authorRepository)
+    public AddAuthorCommandValidator(
+        IAuthorRepository authorRepository,
+        IFileStore fileStore
+    )
     {
         RuleFor(x => x.DateOfDeath)
             .NotNull()
@@ -25,5 +29,10 @@ internal sealed class AddAuthorCommandValidator : AbstractValidator<AddAuthorCom
             })
             .WithName("FirstName, LastName, DateOfBirth, Nationality")
             .WithMessage("Duplicate author information {PropertyName}");
+        RuleFor(x => x.DpFileId)
+            .MustAsync(async (props, cancellationToken) =>
+                await fileStore.ValidateAsync(props ?? string.Empty, 1, 2000000, ["image/*"], [".jpeg", ".jpg", ".png"], cancellationToken))
+            .WithMessage("Invalid file, Check file type, content type and size")
+            .When(x => x.DpFileId is not null);
     }
 }

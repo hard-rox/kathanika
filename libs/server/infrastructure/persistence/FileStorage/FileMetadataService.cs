@@ -1,10 +1,13 @@
+using Kathanika.Core.Application.Services;
 using MongoDB.Bson;
 
 namespace Kathanika.Infrastructure.Persistence.FileStorage;
 
 internal class FileMetadataService(
-    IMongoDatabase mongoDatabase,
-    ILogger<FileMetadataService> logger) : IFileMetadataService
+    ILogger<FileMetadataService> logger,
+    ICacheService cacheService,
+    IMongoDatabase mongoDatabase
+) : IFileMetadataService
 {
     private readonly IMongoCollection<StoredFileMetadata> _fileEntryCollection
         = mongoDatabase.GetCollection<StoredFileMetadata>(Constants.StoredFileMetadataCollectionName);
@@ -42,13 +45,13 @@ internal class FileMetadataService(
 
         string cacheKey = $"{typeof(StoredFileMetadata).Name.ToLower()}:{fileId}";
         logger.LogInformation("Trying to get document from cache with cache key: {@CacheKey}", cacheKey);
-        // StoredFileMetadata? cachedDocument = cacheService.Get<StoredFileMetadata>(cacheKey);
-        // if (cachedDocument is not null)
-        // {
-        //     logger.LogInformation("Got document {@Document} of type {@DocumentType} from cache with cache key: {@CacheKey} ",
-        //         cachedDocument, typeof(StoredFileMetadata).Name, cacheKey);
-        //     return cachedDocument;
-        // }
+        StoredFileMetadata? cachedDocument = cacheService.Get<StoredFileMetadata>(cacheKey);
+        if (cachedDocument is not null)
+        {
+            logger.LogInformation("Got document {@Document} of type {@DocumentType} from cache with cache key: {@CacheKey} ",
+                cachedDocument, typeof(StoredFileMetadata).Name, cacheKey);
+            return cachedDocument;
+        }
         logger.LogInformation("Document not found in cache with cache key: {@CacheKey}", cacheKey);
 
         FilterDefinition<StoredFileMetadata> filter = Builders<StoredFileMetadata>.Filter.Eq(x => x.Id, fileId);
@@ -57,7 +60,7 @@ internal class FileMetadataService(
         logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", metadata, typeof(StoredFileMetadata).Name, Constants.StoredFileMetadataCollectionName);
 
         logger.LogInformation("Setting document {@Document} into cache with cache key: {@CacheKey}", metadata, cacheKey);
-        // cacheService.Set(cacheKey, metadata);
+        cacheService.Set(cacheKey, metadata);
 
         return metadata;
     }

@@ -9,7 +9,9 @@ internal sealed class AzureBlobStore(
     BlobServiceClient blobServiceClient,
     IUploadedStore uploadedStore,
     IFileMetadataService fileMetadataService
-) : IFileStore
+) : FileValidator(
+    fileMetadataService
+), IFileStore
 {
     private readonly string _containerName = "kathanika"; //TODO: from appsettings...
     public async Task<(Stream stream, string contentType)> GetAsync(string fileId, CancellationToken cancellationToken = default)
