@@ -57,6 +57,27 @@ internal sealed class DiskFileStore(
 
     public async Task RemoveFromStoreAsync(string fileId, CancellationToken cancellationToken = default)
     {
-        await uploadedFileStore.DeleteFileAsync(fileId, cancellationToken);
+        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken);
+        if (metadata is null) return;
+
+        if (!metadata.IsMoved)
+            await uploadedFileStore.DeleteFileAsync(fileId, cancellationToken);
+        else
+        {
+            string fileName = $"{fileId}{Path.GetExtension(metadata.FileName)}";
+            string filePath = "Files"; //TODO: Move to appsettings or constants...
+
+            if (metadata.SubDirectory is not null)
+            {
+                filePath = Path.Combine(filePath, metadata.SubDirectory);
+            }
+            filePath = Path.Combine(filePath, fileName);
+            if (File.Exists(filePath))
+            {
+                File.Delete(filePath);
+            }
+        }
+
+        await fileMetadataService.DeleteAsync([fileId], cancellationToken);
     }
 }
