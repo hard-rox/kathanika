@@ -14,7 +14,7 @@
   "private": true,
   "devDependencies": {
     "@angular-devkit/build-angular": "~18.0.7",
-    "@angular-devkit/core": "~18.0.0",
+    "@angular-devkit/core": "~18.1.0",
     "@angular-devkit/schematics": "~18.0.0",
     "@angular-eslint/eslint-plugin": "~18.1.0",
     "@angular-eslint/eslint-plugin-template": "~18.1.0",
