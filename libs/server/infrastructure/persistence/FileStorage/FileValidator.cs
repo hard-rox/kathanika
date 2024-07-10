@@ -34,13 +34,13 @@ internal abstract class FileValidator(
         return true;
     }
 
-    private bool HasValidExtension(string extension, string[] permittedExtensions)
+    private static bool HasValidExtension(string extension, string[] permittedExtensions)
     {
         if (permittedExtensions.Contains(extension)) return true;
         return false;
     }
 
-    private bool HasValidContentType(string contentType, string[] permittedContentTypes)
+    private static bool HasValidContentType(string contentType, string[] permittedContentTypes)
     {
         if (permittedContentTypes.Contains(contentType)) return true;
 

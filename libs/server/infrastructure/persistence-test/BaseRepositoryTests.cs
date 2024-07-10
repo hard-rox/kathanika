@@ -4,7 +4,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using MongoDB.Driver;
 
-namespace Kathanika.UnitTests.PersistenceUnitTests;
+namespace Kathanika.Infrastructure.Persistence.Test;
 
 public sealed class BaseRepositoryTests
 {

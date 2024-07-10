@@ -12,14 +12,7 @@ internal sealed class StoredFileMetadata(
     public bool IsUsed { get; private set; } = false;
     public bool IsMoved { get; private set; } = false;
     public long SizeInBytes { get; private set; } = sizeInBytes;
-    public FileStorage? Storage { get; private set; } = null;
     public string? SubDirectory { get; private set; } = null;
     public DateTimeOffset? UploadCompletedAt { get; private set; } = null;
     public DateTimeOffset? LastMovedAt { get; private set; } = null;
-}
-
-internal enum FileStorage
-{
-    Disk = 1,
-    Azure = 2
 }

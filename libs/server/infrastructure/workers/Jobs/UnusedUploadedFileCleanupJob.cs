@@ -2,6 +2,8 @@ using Kathanika.Infrastructure.Persistence.FileStorage;
 using Microsoft.Extensions.Logging;
 using Quartz;
 
+namespace Kathanika.Infrastructure.Workers.Jobs;
+
 [DisallowConcurrentExecution]
 internal sealed class UnusedUploadedFileCleanupJob(
     ILogger<UnusedUploadedFileCleanupJob> logger,
@@ -28,7 +30,7 @@ internal sealed class UnusedUploadedFileCleanupJob(
             foreach (string expiredFileId in storeExpiredFileIds)
             {
                 logger.LogInformation("Deleting expired file: {@FileIdToDelete}.", expiredFileId);
-                await uploadedStore.DeleteFileAsync(expiredFileId);
+                await uploadedStore.DeleteFileAsync(expiredFileId, cancellationToken);
                 logger.LogInformation("Deleted expired file: {@FileIdToDelete}.", expiredFileId);
             }
             logger.LogInformation("Deleted successfully {@ExpiredFileCount} expired files in store.", storeExpiredFileIds.Count);
@@ -49,7 +51,7 @@ internal sealed class UnusedUploadedFileCleanupJob(
             foreach (string unusedFileId in unusedFileIds)
             {
                 logger.LogInformation("Deleting unused file {@UnusedFileToDeleteId}", unusedFileId);
-                await uploadedStore.DeleteFileAsync(unusedFileId);
+                await uploadedStore.DeleteFileAsync(unusedFileId, cancellationToken);
                 logger.LogInformation("Deleted unused file {@UnusedFileToDeleteId}", unusedFileId);
             }
             logger.LogInformation("Deleting unused files metadata {UnusedFilesMetadataToDelete}", unusedFileIds);

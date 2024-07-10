@@ -6,13 +6,13 @@ internal sealed class DiskFileStore(
     ILogger<DiskFileStore> logger,
     IFileMetadataService fileMetadataService,
     IUploadedStore uploadedFileStore)
-: FileValidator(
-    fileMetadataService
-), IFileStore
+: FileValidator(fileMetadataService), IFileStore
 {
+    private readonly IFileMetadataService _fileMetadataService = fileMetadataService;
+
     public async Task<(Stream stream, string contentType)> GetAsync(string fileId, CancellationToken cancellationToken = default)
     {
-        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken);
+        StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken);
         if (metadata is null) return (null, null);
 
         if (metadata.IsMoved)
@@ -31,7 +31,7 @@ internal sealed class DiskFileStore(
     public async Task MoveToStoreAsync(string fileId, CancellationToken cancellationToken = default)
     {
         using Stream dataStream = await uploadedFileStore.GetFileContentAsync(fileId, cancellationToken);
-        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken);
+        StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken);
         if (dataStream is null || dataStream.Length == 0 || metadata is null)
             throw new Exception("File not found");
 
@@ -54,12 +54,12 @@ internal sealed class DiskFileStore(
         await dataStream.CopyToAsync(fileStream, cancellationToken);
         await uploadedFileStore.DeleteFileAsync(fileId, cancellationToken);
 
-        await fileMetadataService.RecordFileMoveAsync(fileId, cancellationToken);
+        await _fileMetadataService.RecordFileMoveAsync(fileId, cancellationToken);
     }
 
     public async Task RemoveFromStoreAsync(string fileId, CancellationToken cancellationToken = default)
     {
-        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken);
+        StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken);
         if (metadata is null) return;
 
         if (!metadata.IsMoved)
@@ -80,6 +80,6 @@ internal sealed class DiskFileStore(
             }
         }
 
-        await fileMetadataService.DeleteAsync([fileId], cancellationToken);
+        await _fileMetadataService.DeleteAsync([fileId], cancellationToken);
     }
 }

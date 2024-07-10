@@ -22,7 +22,8 @@
     "**/tmp": true,
     "**/.scannerwork": true,
     "services/web/uploads": true,
-    "services/web/Files": true
+    "services/web/Files": true,
+    "libs/server/**/TestResults": true
   },
   "dotnetAcquisitionExtension.installTimeoutValue": 180,
   "cSpell.words": [

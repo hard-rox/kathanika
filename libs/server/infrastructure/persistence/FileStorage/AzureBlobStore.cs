@@ -9,15 +9,15 @@ internal sealed class AzureBlobStore(
     BlobServiceClient blobServiceClient,
     IUploadedStore uploadedStore,
     IFileMetadataService fileMetadataService
-) : FileValidator(
-    fileMetadataService
-), IFileStore
+    ) : FileValidator(fileMetadataService), IFileStore
 {
     private readonly string _containerName = "kathanika"; //TODO: from appsettings...
+    private readonly IFileMetadataService _fileMetadataService = fileMetadataService;
+
     public async Task<(Stream stream, string contentType)> GetAsync(string fileId, CancellationToken cancellationToken = default)
     {
         logger.LogInformation("Getting file {@FileId} from azure blob storage.", fileId);
-        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken)
+        StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken)
             ?? throw new ArgumentException("Invalid file ID", nameof(fileId));
 
         if (metadata.IsMoved)
@@ -37,7 +37,7 @@ internal sealed class AzureBlobStore(
     {
         logger.LogInformation("Moving file {@FileId} to azure blob storage", fileId);
         using Stream dataStream = await uploadedStore.GetFileContentAsync(fileId, cancellationToken);
-        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken);
+        StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken);
         if (dataStream is null || dataStream.Length == 0 || metadata is null)
             throw new Exception("File not found");
 
@@ -50,12 +50,12 @@ internal sealed class AzureBlobStore(
 
         await uploadedStore.DeleteFileAsync(fileId, cancellationToken);
 
-        await fileMetadataService.RecordFileMoveAsync(fileId, cancellationToken);
+        await _fileMetadataService.RecordFileMoveAsync(fileId, cancellationToken);
     }
 
     public async Task RemoveFromStoreAsync(string fileId, CancellationToken cancellationToken = default)
     {
-        StoredFileMetadata? metadata = await fileMetadataService.GetAsync(fileId, cancellationToken);
+        StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken);
         if (metadata is null) return;
 
         if (!metadata.IsMoved)
@@ -68,6 +68,6 @@ internal sealed class AzureBlobStore(
 
             await blobClient.DeleteAsync(cancellationToken: cancellationToken);
         }
-        await fileMetadataService.DeleteAsync([fileId], cancellationToken);
+        await _fileMetadataService.DeleteAsync([fileId], cancellationToken);
     }
 }

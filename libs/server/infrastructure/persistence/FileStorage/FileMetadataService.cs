@@ -12,7 +12,7 @@ internal class FileMetadataService(
     private readonly IMongoCollection<StoredFileMetadata> _fileEntryCollection
         = mongoDatabase.GetCollection<StoredFileMetadata>(Constants.StoredFileMetadataCollectionName);
 
-    private bool IsValidFileId(string fileId)
+    private static bool IsValidFileId(string fileId)
     {
         return ObjectId.TryParse(fileId, out _);
     }
