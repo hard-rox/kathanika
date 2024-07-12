@@ -1,4 +1,5 @@
 using Kathanika.Infrastructure.Persistence.FileStorage;
+using NSubstitute.ReturnsExtensions;
 
 namespace Kathanika.Infrastructure.Persistence.Test.FileStorage;
 
@@ -23,6 +24,22 @@ public sealed class FileValidatorTests
         );
 
         Assert.True(validationResult);
+    }
+
+    [Fact]
+    public async Task ValidateAsync_ShouldReturnFalse_WhenNoMetadataFound()
+    {
+        FileValidator validator = new ConcreteFileValidator(fileMetadataService);
+        fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .ReturnsNull();
+
+        bool validationResult = await validator.ValidateAsync(
+            Guid.NewGuid().ToString(),
+            500,
+            2000
+        );
+
+        Assert.False(validationResult);
     }
 
     [Fact]
@@ -93,5 +110,22 @@ public sealed class FileValidatorTests
         );
 
         Assert.False(validationResult);
+    }
+
+    [Fact]
+    public async Task ValidateAsync_ShouldSkipContentTypeAndExtensionCheck_WhenPermittedContentTypesAndExtensionsNotProvided()
+    {
+        FileValidator validator = new ConcreteFileValidator(fileMetadataService);
+        StoredFileMetadata metadata = new("file", "text/plain", 100);
+        fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(metadata);
+
+        bool validationResult = await validator.ValidateAsync(
+            Guid.NewGuid().ToString(),
+            100,
+            2000
+        );
+
+        Assert.True(validationResult);
     }
 }
