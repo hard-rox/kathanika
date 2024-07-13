@@ -12,6 +12,7 @@ import {
   KnBadge,
   KnButton,
   KnDateInput,
+  KnFileInput,
   KnPagination,
   KnPanel,
   KnTextInput,
@@ -38,7 +39,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     KnAlert,
     KnTextInput,
     KnDateInput,
-    KnTextareaInput
+    KnTextareaInput,
+    KnFileInput
   ],
 })
 export class MembersModule { }

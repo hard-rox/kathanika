@@ -12,3 +12,5 @@ export * from './lib/inputs/toggle/toggle.component';
 export * from './lib/components/searchbar/searchbar.component';
 export * from './lib/directives/button/button.directive';
 export * from './lib/abstractions/abstract-input-component';
+export * from './lib/inputs/file-input/file-input.component';
+export * from './lib/modules/file-server/file-server.module';

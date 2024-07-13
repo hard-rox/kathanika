@@ -28,6 +28,7 @@ query getMember($id: String!) {
     fullName
     firstName
     lastName
+    photo
     status
     membershipStartDateTime
     dateOfBirth

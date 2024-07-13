@@ -13,6 +13,7 @@ import {
   KnAlert,
   KnButton,
   KnDateInput,
+  KnFileInput,
   KnPagination,
   KnPanel,
   KnTextInput,
@@ -39,7 +40,8 @@ import {
     KnDateInput,
     KnTextareaInput,
     KnToggle,
-    KnButton
+    KnButton,
+    KnFileInput
   ],
 })
 export class AuthorsModule {}

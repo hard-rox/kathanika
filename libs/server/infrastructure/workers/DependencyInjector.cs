@@ -11,12 +11,17 @@ public static class DependencyInjector
     {
         services.AddQuartz(configure =>
         {
-            JobKey jobKey = new(nameof(ProcessOutboxMessagesJob));
+            JobKey processOutboxMessageJobKey = new(nameof(ProcessOutboxMessagesJob));
+            configure.AddJob<ProcessOutboxMessagesJob>(processOutboxMessageJobKey)
+                .AddTrigger(trigger => trigger.ForJob(processOutboxMessageJobKey)
+                    .WithSimpleSchedule(schedule => schedule.WithIntervalInSeconds(10)
+                        .RepeatForever()));
 
-            // configure.AddJob<ProcessOutboxMessagesJob>(jobKey)
-            //     .AddTrigger(trigger => trigger.ForJob(jobKey)
-            //         .WithSimpleSchedule(schedule => schedule.WithIntervalInSeconds(10)
-            //             .RepeatForever()));
+            JobKey unusedUploadedFileCleanupJobKey = new(nameof(UnusedUploadedFileCleanupJob));
+            configure.AddJob<UnusedUploadedFileCleanupJob>(unusedUploadedFileCleanupJobKey)
+                .AddTrigger(trigger => trigger.ForJob(unusedUploadedFileCleanupJobKey)
+                    .WithSimpleSchedule(schedule => schedule.WithIntervalInMinutes(10)
+                        .RepeatForever()));
         });
 
         services.AddQuartzHostedService();

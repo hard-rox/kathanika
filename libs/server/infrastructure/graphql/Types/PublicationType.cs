@@ -1,4 +1,4 @@
-using Kathanika.Infrastructure.Graphql.Types;
+using Kathanika.Infrastructure.Graphql.GraphqlHelpers;
 
 namespace Kathanika.Infrastructure.Graphql.Types;
 
@@ -25,5 +25,9 @@ public sealed class PublicationType : ObjectType<Publication>
             .UseSorting();
         descriptor.Field(x => x.DonationRecords)
             .UseSorting();
+        descriptor.Field(x => x.CoverImageFileId)
+            .Name("coverImage")
+            .Type<UrlType>()
+            .Resolve(context => FileEndpointResolver.ResolveAsFileUrl(context, context.Parent<Publication>().CoverImageFileId));
     }
 }

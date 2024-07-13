@@ -10,6 +10,7 @@ query getAuthors(
       firstName
       lastName
       nationality
+      dp
     }
     pageInfo {
       hasNextPage
@@ -48,5 +49,6 @@ query getAuthor($id: String!) {
     dateOfDeath
     nationality
     biography
+    dp
   }
 }

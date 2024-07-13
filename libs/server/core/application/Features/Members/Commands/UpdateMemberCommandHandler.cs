@@ -12,6 +12,7 @@ internal sealed class UpdateMemberCommandHandler(IMemberRepository memberReposit
         member.Update(
             request.Patch.FirstName,
             request.Patch.LastName,
+            request.Patch.PhotoFileId,
             request.Patch.DateOfBirth,
             request.Patch.Address,
             request.Patch.ContactNumber,

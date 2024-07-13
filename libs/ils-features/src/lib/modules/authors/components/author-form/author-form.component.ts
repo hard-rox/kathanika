@@ -1,4 +1,4 @@
-import { Component, Input, OnInit, Output } from '@angular/core';
+import { Component, Input, Output } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   BaseFormComponent,
@@ -10,8 +10,7 @@ import { AddAuthorInput, Author, AuthorPatchInput } from '@kathanika/graphql-ts-
   templateUrl: './author-form.component.html'
 })
 export class AuthorFormComponent
-  extends BaseFormComponent<AddAuthorInput | AuthorPatchInput>
-  implements OnInit {
+  extends BaseFormComponent<AddAuthorInput | AuthorPatchInput> {
   @Input()
   set author(input: Author) {
     if (input) {
@@ -45,6 +44,7 @@ export class AuthorFormComponent
         nonNullable: true,
         validators: [Validators.required],
       }),
+      dateOfDeath: new FormControl<Date | null>(null),
       markedAsDeceased: new FormControl<boolean>(false, { nonNullable: true }),
       nationality: new FormControl<string>('', {
         nonNullable: true,
@@ -54,18 +54,7 @@ export class AuthorFormComponent
         nonNullable: true,
         validators: [Validators.required],
       }),
-    });
-  }
-
-  ngOnInit(): void {
-    this.formGroup.valueChanges.subscribe({
-      next: (value) => {
-        if (value.markedAsDeceased) {
-          this.formGroup.addControl('dateOfDeath', new FormControl<Date | null>(null, { nonNullable: false, validators: [Validators.required] }));
-        } else {
-          this.formGroup.removeControl('dateOfDeath');
-        }
-      },
+      dpFileId: new FormControl<string | null>(null)
     });
   }
 }

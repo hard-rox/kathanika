@@ -18,6 +18,7 @@ internal sealed class AcquirePublicationCommandHandler(
             request.PublishedDate,
             request.Edition,
             request.CallNumber,
+            request.CoverImageFileId,
             request.Description,
             request.Language,
             request.AcquisitionMethod,

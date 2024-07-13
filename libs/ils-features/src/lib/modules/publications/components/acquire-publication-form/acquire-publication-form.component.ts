@@ -75,6 +75,8 @@ export class AcquirePublicationFormComponent
         validators: [Validators.required],
       }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      coverImageFileId: new FormControl<string | any>(null, {nonNullable: true, validators: [Validators.required]}),
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
       quantity: new FormControl<number | any>(null, { nonNullable: true, validators: [Validators.required, Validators.min(1)] }),
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       acquisitionMethod: new FormControl<AcquisitionMethod | any>(null, {

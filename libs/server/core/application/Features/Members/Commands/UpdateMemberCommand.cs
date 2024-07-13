@@ -4,6 +4,7 @@ public sealed record UpdateMemberCommand(string Id, MemberPatch Patch) : IReques
 
 public sealed record MemberPatch(string? FirstName = null,
                                  string? LastName = null,
+                                 string? PhotoFileId = null,
                                  DateOnly? DateOfBirth = null,
                                  string? Address = null,
                                  string? ContactNumber = null,

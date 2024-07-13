@@ -16,7 +16,7 @@ internal sealed class UpdatePublicationCommandHandler(
         IReadOnlyList<Author>? authors = request.Patch.AuthorIds is not null ?
             await authorRepository.ListAllAsync(x => request.Patch.AuthorIds.Contains(x.Id), cancellationToken)
             : null;
-        Publisher? publisher = await publisherRepository.GetByIdAsync(request.Patch.PublisherId, cancellationToken);
+        Publisher? publisher = request.Patch.PublisherId is null ? null : await publisherRepository.GetByIdAsync(request.Patch.PublisherId, cancellationToken);
 
         publication.Update(
             request.Patch.Title,
@@ -26,6 +26,7 @@ internal sealed class UpdatePublicationCommandHandler(
             request.Patch.PublishedDate,
             request.Patch.Edition,
             request.Patch.CallNumber,
+            request.Patch.CoverImageFileId,
             request.Patch.Description,
             request.Patch.Language
         );

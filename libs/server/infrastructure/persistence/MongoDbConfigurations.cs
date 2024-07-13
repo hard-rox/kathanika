@@ -1,4 +1,5 @@
 using Kathanika.Core.Domain.Primitives;
+using Kathanika.Infrastructure.Persistence.FileStorage;
 using Kathanika.Infrastructure.Persistence.Outbox;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
@@ -51,6 +52,15 @@ internal static class MongoDbConfigurations
                 .SetSerializer(new StringSerializer(BsonType.ObjectId));
             cm.MapMember(m => m.DomainEvent)
                 .SetSerializer(new ImpliedImplementationInterfaceSerializer<IDomainEvent, IDomainEvent>());
+        });
+
+        // TODO: Move to new method...
+        BsonClassMap.RegisterClassMap<StoredFileMetadata>(cm =>
+        {
+            cm.AutoMap();
+            cm.MapIdProperty(c => c.Id)
+                .SetIdGenerator(StringObjectIdGenerator.Instance)
+                .SetSerializer(new StringSerializer(BsonType.ObjectId));
         });
     }
 

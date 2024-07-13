@@ -1,6 +1,8 @@
+using Azure.Storage.Blobs;
 using Kathanika.Core.Application.Services;
 using Kathanika.Infrastructure.Persistence.BsonClassMaps;
 using Kathanika.Infrastructure.Persistence.Caching;
+using Kathanika.Infrastructure.Persistence.FileStorage;
 using Kathanika.Infrastructure.Persistence.Outbox;
 using Kathanika.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +22,11 @@ public static class DependencyInjector
         services.AddScoped<ICacheService, MemoryCacheService>();
 
         services.AddScoped<IOutboxMessageService, OutboxMessageService>();
+        services.AddSingleton<IFileMetadataService, FileMetadataService>();
+
+        // services.AddSingleton<IFileStore, DiskFileStore>();
+        services.AddSingleton<IFileStore, AzureBlobStore>();
+        services.AddSingleton(_ => new BlobServiceClient(configuration.GetConnectionString("azureBlobStorageConnection")));
 
         services.AddScoped<IAuthorRepository, AuthorRepository>();
         services.AddScoped<IPublicationRepository, PublicationRepository>();
