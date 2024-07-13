@@ -2,7 +2,6 @@ using Kathanika.Core.Application.Services;
 using Kathanika.Infrastructure.Persistence.FileStorage;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;
-using MongoDB.Bson.Serialization;
 using MongoDB.Driver;
 
 namespace Kathanika.Infrastructure.Persistence.Test.FileStorage;

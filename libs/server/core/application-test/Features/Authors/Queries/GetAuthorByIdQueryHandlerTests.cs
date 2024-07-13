@@ -1,6 +1,6 @@
 using Kathanika.Core.Application.Features.Authors.Queries;
 
-namespace Kathanika.Core.Application.Test.Queries;
+namespace Kathanika.Core.Application.Test.Features.Authors.Queries;
 
 public class GetAuthorByIdQueryHandlerTests
 {

@@ -5,7 +5,7 @@ namespace Kathanika.Core.Domain.Test.AuthorAggregate;
 public sealed class AuthorAggregateTests
 {
     [Fact]
-    public void Create_Should_Throw_InvalidFieldException_On_FutureDateOfBirth()
+    public void Create_ShouldThrowInvalidFieldException_WhenFutureDateOfBirth()
     {
         // Arrange
 
@@ -29,7 +29,7 @@ public sealed class AuthorAggregateTests
     }
 
     [Fact]
-    public void Handler_Should_Throw_InvalidFieldException_On_FutureDateOfDeath()
+    public void Create_ShouldThrowInvalidFieldException_WhenFutureDateOfDeath()
     {
         // Arrange
 
@@ -53,7 +53,7 @@ public sealed class AuthorAggregateTests
     }
 
     [Fact]
-    public void UpdateAuthor_Should_Return_UpdatedAuthor_On_ValidInput()
+    public void UpdateAuthor_ShouldReturnUpdatedAuthor_WhenValidInput()
     {
         // Arrange
         Author author = Author.Create(
@@ -75,7 +75,7 @@ public sealed class AuthorAggregateTests
     }
 
     [Fact]
-    public void UpdateAuthor_Should_Throw_InvalidFieldException_On_FutureDateOfBirth()
+    public void UpdateAuthor_ShouldThrowInvalidFieldException_WhenFutureDateOfBirth()
     {
         // Arrange
         Author author = Author.Create(
@@ -96,7 +96,7 @@ public sealed class AuthorAggregateTests
     }
 
     [Fact]
-    public void MarkAsDeceased_Should_Set_DateOfDeath_On_ValidDateOfDeath()
+    public void MarkAsDeceased_ShouldSetDateOfDeath_WhenValidDateOfDeath()
     {
         // Arrange
         DateOnly dateOfDeath = DateOnly.Parse("2000-01-01");
@@ -117,7 +117,7 @@ public sealed class AuthorAggregateTests
     }
 
     [Fact]
-    public void MarkAsDeceased_Should_Throws_InvalidFieldException_On_FutureDateOfDeath()
+    public void MarkAsDeceased_ShouldThrowsInvalidFieldException_WhenFutureDateOfDeath()
     {
         // Arrange
         Author author = Author.Create(
@@ -139,7 +139,7 @@ public sealed class AuthorAggregateTests
     }
 
     [Fact]
-    public void MarkAsDeceased_Should_Throws_InvalidFieldException_On_InvalidDateOfDeath()
+    public void MarkAsDeceased_ShouldThrowInvalidFieldException_WhenInvalidDateOfDeath()
     {
         // Arrange
         DateOnly dateOfDeath = DateOnly.Parse("1990-01-01");
@@ -162,7 +162,7 @@ public sealed class AuthorAggregateTests
     }
 
     [Fact]
-    public void UnmarkAsDeceased_Should_Sets_DateOfDeath_Null()
+    public void UnmarkAsDeceased_ShouldSetDateOfDeathNull_WhenCalled()
     {
         // Arrange
         Author author = Author.Create(
