@@ -7,7 +7,7 @@ public sealed partial class Queries
     [UseOffsetPaging]
     [UseFiltering]
     [UseSorting]
-    public static async Task<IEnumerable<Author>> GetAuthorsAsync(
+    public async Task<IEnumerable<Author>> GetAuthorsAsync(
         [FromServices] IMediator mediator,
         CancellationToken cancellationToken
     )
@@ -16,7 +16,7 @@ public sealed partial class Queries
         return authors;
     }
 
-    public static async Task<Author?> GetAuthorAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
+    public async Task<Author?> GetAuthorAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
     {
         Author? author = await mediator.Send(new GetAuthorByIdQuery(id), cancellationToken);
         return author;

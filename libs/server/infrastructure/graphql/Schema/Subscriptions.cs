@@ -9,7 +9,7 @@ public class Subscriptions
 {
     [Subscribe]
     [Topic("NewNotification")]
-    public static Notification OnNewNotification([EventMessage] Notification notification)
+    public Notification OnNewNotification([EventMessage] Notification notification)
     {
         return notification;
     }

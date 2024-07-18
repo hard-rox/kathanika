@@ -9,7 +9,7 @@ namespace Kathanika.Infrastructure.Persistence.Test.FileStorage;
 public sealed class FileMetadataServiceTests
 {
     private readonly ILogger<FileMetadataService> logger = Substitute.For<ILogger<FileMetadataService>>();
-    private readonly ICacheService cacheService = Substitute.For<ICacheService>();
+    // private readonly ICacheService cacheService = Substitute.For<ICacheService>();
     private readonly IMongoDatabase mongoDatabase = Substitute.For<IMongoDatabase>();
     private readonly IMongoCollection<StoredFileMetadata> collection = Substitute.For<IMongoCollection<StoredFileMetadata>>();
     private readonly FileMetadataService fileMetadataService;
@@ -17,7 +17,7 @@ public sealed class FileMetadataServiceTests
     public FileMetadataServiceTests()
     {
         mongoDatabase.GetCollection<StoredFileMetadata>(Arg.Any<string>()).Returns(collection);
-        fileMetadataService = new(logger, cacheService, mongoDatabase);
+        fileMetadataService = new(logger, mongoDatabase);
     }
 
     [Fact]
@@ -59,19 +59,19 @@ public sealed class FileMetadataServiceTests
         Assert.True(exist);
     }
 
-    [Fact]
-    public async Task GetAsync_ShouldReturnFromCache_WhenFoundInCache()
-    {
-        string fileId = ObjectId.GenerateNewId().ToString();
-        StoredFileMetadata metadata = new(fileId, string.Empty, 0);
-        cacheService.Get<StoredFileMetadata>(Arg.Any<string>()).Returns(metadata);
+    // [Fact]
+    // public async Task GetAsync_ShouldReturnFromCache_WhenFoundInCache()
+    // {
+    //     string fileId = ObjectId.GenerateNewId().ToString();
+    //     StoredFileMetadata metadata = new(fileId, string.Empty, 0);
+    //     cacheService.Get<StoredFileMetadata>(Arg.Any<string>()).Returns(metadata);
 
-        StoredFileMetadata? result = await fileMetadataService.GetAsync(fileId);
+    //     StoredFileMetadata? result = await fileMetadataService.GetAsync(fileId);
 
-        Assert.NotNull(result);
-        Assert.Equal(metadata.Id, result?.Id);
-        cacheService.Received(1).Get<StoredFileMetadata>(Arg.Any<string>());
-    }
+    //     Assert.NotNull(result);
+    //     Assert.Equal(metadata.Id, result?.Id);
+    //     cacheService.Received(1).Get<StoredFileMetadata>(Arg.Any<string>());
+    // }
 
     [Fact]
     public async Task RecordFileMoveAsync_ShouldUpdateMetadata_WhenCalled()
