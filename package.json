@@ -98,6 +98,6 @@
     "sweetalert2": "^11.12.2",
     "tslib": "^2.6.3",
     "tus-js-client": "^4.1.0",
-    "zone.js": "~0.14.7"
+    "zone.js": "~0.14.8"
   }
 }
