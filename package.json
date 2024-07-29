@@ -28,7 +28,7 @@
     "@graphql-codegen/typescript": "^4.0.9",
     "@graphql-codegen/typescript-apollo-angular": "^4.0.0",
     "@graphql-codegen/typescript-operations": "^4.2.3",
-    "@nx-dotnet/core": "^2.2.0",
+    "@nx-dotnet/core": "^2.4.0",
     "@nx/angular": "19.5.3",
     "@nx/cypress": "19.5.3",
     "@nx/eslint": "19.5.3",
