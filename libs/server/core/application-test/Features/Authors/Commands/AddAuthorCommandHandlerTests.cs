@@ -12,7 +12,7 @@ public sealed class AddAuthorCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handler_Should_Return_Author_On_SavingNewAuthor()
+    public async Task Handler_ShouldReturnAuthor_OnSavingNewAuthor()
     {
         // Arrange
         Author dummyAuthor = Author.Create(
@@ -21,7 +21,7 @@ public sealed class AddAuthorCommandHandlerTests
             DateOnly.Parse("2013-10-10"),
             null,
             "BD",
-            "");
+            "").Value;
         AddAuthorCommand command = new(
             dummyAuthor.FirstName,
             dummyAuthor.LastName,
@@ -39,13 +39,14 @@ public sealed class AddAuthorCommandHandlerTests
                 dummyAuthor.DateOfBirth,
                 dummyAuthor.DateOfDeath,
                 dummyAuthor.Nationality,
-                dummyAuthor.Biography));
+                dummyAuthor.Biography).Value);
 
         // Act
-        Author savedAuthor = await handler.Handle(command, default);
+        Result<Author> result = await handler.Handle(command, default);
 
         // Assert
-        Assert.NotNull(savedAuthor);
-        Assert.Equal(dummyAuthor.FirstName, savedAuthor.FirstName);
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.Equal(dummyAuthor.FirstName, result.Value.FirstName);
     }
 }

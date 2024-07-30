@@ -1,14 +1,15 @@
-using Microsoft.AspNetCore.Mvc;
+using HotChocolate.Resolvers;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
-public sealed partial class Queries
+[ExtendObjectType(OperationTypeNames.Query)]
+public sealed class AuthorQueries
 {
     [UseOffsetPaging]
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<Author>> GetAuthorsAsync(
-        [FromServices] IMediator mediator,
+        [Service] IMediator mediator,
         CancellationToken cancellationToken
     )
     {
@@ -16,9 +17,14 @@ public sealed partial class Queries
         return authors;
     }
 
-    public async Task<Author?> GetAuthorAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
+    public async Task<Author?> GetAuthorAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        Author? author = await mediator.Send(new GetAuthorByIdQuery(id), cancellationToken);
-        return author;
+        Core.Domain.Primitives.Result<Author> result = await mediator.Send(new GetAuthorByIdQuery(id), cancellationToken);
+        return result.Match(context);
     }
 }

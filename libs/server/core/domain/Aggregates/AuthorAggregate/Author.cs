@@ -1,5 +1,4 @@
 using Kathanika.Core.Domain.DomainEvents;
-using Kathanika.Core.Domain.Exceptions;
 using Kathanika.Core.Domain.Primitives;
 
 namespace Kathanika.Core.Domain.Aggregates.AuthorAggregate;
@@ -35,7 +34,7 @@ public sealed class Author : AggregateRoot
         DpFileId = dpFileId;
     }
 
-    public static Author Create(
+    public static Result<Author> Create(
         string firstName,
         string lastName,
         DateOnly dateOfBirth,
@@ -45,23 +44,23 @@ public sealed class Author : AggregateRoot
         string? dpFileId = null
     )
     {
-        List<DomainException> errors = [];
+        List<KnError> errors = [];
         if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
         {
-            errors.Add(new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date"));
+            errors.Add(AuthorAggregateErrors.FutureDateOfBirth);
         }
         if (dateOfDeath > DateOnly.FromDateTime(DateTime.UtcNow))
         {
-            errors.Add(new InvalidFieldException(nameof(DateOfDeath), $"Cann't be future date"));
+            errors.Add(AuthorAggregateErrors.FutureDateOfDeath);
         }
         if (dateOfDeath is not null && dateOfDeath <= dateOfBirth)
         {
-            errors.Add(new InvalidFieldException(nameof(DateOfDeath), $"{nameof(DateOfDeath)} must be after {nameof(DateOfBirth)}"));
+            errors.Add(AuthorAggregateErrors.DateOfBirthFollowingDateOfDeath);
         }
 
         if (errors.Count > 0)
         {
-            throw new AggregateException(errors);
+            return Result.Failure<Author>(errors);
         }
 
         Author author = new(
@@ -76,10 +75,10 @@ public sealed class Author : AggregateRoot
         if (!string.IsNullOrWhiteSpace(dpFileId))
             author.AddDomainEvent(new FileUsedDomainEvent(dpFileId));
 
-        return author;
+        return Result.Success(author);
     }
 
-    public void Update(
+    public Result Update(
         string? firstName = null,
         string? lastName = null,
         DateOnly? dateOfBirth = null,
@@ -95,7 +94,7 @@ public sealed class Author : AggregateRoot
         if (dateOfBirth is not null)
         {
             if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
-                throw new InvalidFieldException(nameof(DateOfBirth), $"Cann't be future date");
+                return AuthorAggregateErrors.FutureDateOfBirth;
 
             DateOfBirth = (DateOnly)dateOfBirth;
         }
@@ -109,21 +108,26 @@ public sealed class Author : AggregateRoot
             else AddDomainEvent(new FileUsedDomainEvent(dpFileId));
             DpFileId = dpFileId.Trim();
         }
+
+        return Result.Success();
     }
 
-    public void MarkAsDeceased(DateOnly dateOfDeath)
+    public Result MarkAsDeceased(DateOnly dateOfDeath)
     {
         if (dateOfDeath > DateOnly.FromDateTime(DateTime.UtcNow))
-            throw new InvalidFieldException(nameof(DateOfDeath), $"Cann't be future date");
+            return AuthorAggregateErrors.FutureDateOfDeath;
 
         if (dateOfDeath <= DateOfBirth)
-            throw new InvalidFieldException(nameof(DateOfDeath), $"{nameof(DateOfDeath)} must be after {nameof(DateOfBirth)}");
+            return AuthorAggregateErrors.DateOfBirthFollowingDateOfDeath;
 
         DateOfDeath = dateOfDeath;
+
+        return Result.Success();
     }
 
-    public void UnmarkAsDeceased()
+    public Result UnmarkAsDeceased()
     {
         DateOfDeath = null;
+        return Result.Success();
     }
 }

@@ -1,43 +1,83 @@
-using Kathanika.Core.Domain.Exceptions;
+using HotChocolate.Resolvers;
 using Kathanika.Infrastructure.Graphql.Payloads;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
-public sealed partial class Mutations
+[ExtendObjectType(OperationTypeNames.Mutation)]
+public sealed class MemberMutations
 {
-    [Error<InvalidFieldException>]
-    public async Task<CreateMemberPayload> CreateMemberAsync([FromServices] IMediator mediator, CreateMemberCommand input)
+    public async Task<CreateMemberPayload> CreateMemberAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        CancellationToken cancellationToken,
+        CreateMemberCommand input
+    )
     {
-        Member member = await mediator.Send(input);
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(input, cancellationToken);
+        return result.Match<Member, CreateMemberPayload>(
+            context,
+            member => new(member),
+            () => new(null)
+        );
     }
 
-    [Error<InvalidFieldException>]
-    public async Task<UpdateMemberPayload> UpdateMemberAsync([FromServices] IMediator mediator, UpdateMemberCommand input)
+    public async Task<UpdateMemberPayload> UpdateMemberAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        UpdateMemberCommand input,
+        CancellationToken cancellationToken
+    )
     {
-        Member member = await mediator.Send(input);
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(input, cancellationToken);
+        return result.Match<Member, UpdateMemberPayload>(
+            context,
+            member => new(member),
+            () => new(null)
+        );
     }
 
-    [Error<InvalidFieldException>]
-    public async Task<RenewMembershipPayload> RenewMembershipAsync([FromServices] IMediator mediator, string id)
+    public async Task<RenewMembershipPayload> RenewMembershipAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        Member member = await mediator.Send(new RenewMembershipCommand(id));
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(new RenewMembershipCommand(id), cancellationToken);
+        return result.Match<Member, RenewMembershipPayload>(
+            context,
+            member => new(member),
+            () => new(null)
+        );
     }
 
-    [Error<InvalidFieldException>]
-    public async Task<CancelMembershipPayload> CancelMembershipAsync([FromServices] IMediator mediator, string id)
+    public async Task<CancelMembershipPayload> CancelMembershipAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        Member member = await mediator.Send(new CancelMembershipCommand(id));
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(new CancelMembershipCommand(id), cancellationToken);
+        return result.Match<Member, CancelMembershipPayload>(
+            context,
+            member => new(member),
+            () => new(null)
+        );
     }
 
-    [Error<InvalidFieldException>]
-    public async Task<SuspendMembershipPayload> SuspendMembershipAsync([FromServices] IMediator mediator, string id)
+    public async Task<SuspendMembershipPayload> SuspendMembershipAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        Member member = await mediator.Send(new SuspendMembershipCommand(id));
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(new SuspendMembershipCommand(id), cancellationToken);
+        return result.Match<Member, SuspendMembershipPayload>(
+            context,
+            member => new(member),
+            () => new(null)
+        );
     }
 }

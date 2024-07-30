@@ -1,31 +1,53 @@
-using Kathanika.Core.Domain.Exceptions;
+using HotChocolate.Resolvers;
 using Kathanika.Infrastructure.Graphql.Payloads;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
-public sealed partial class Mutations
+[ExtendObjectType(OperationTypeNames.Mutation)]
+public sealed class PublisherMutations
 {
-    [Error<InvalidFieldException>]
-    public async Task<AddPublisherPayload> AddPublisherAsync([FromServices] IMediator mediator, AddPublisherCommand input)
+    public async Task<AddPublisherPayload> AddPublisherAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        AddPublisherCommand input,
+        CancellationToken cancellationToken
+    )
     {
-        Publisher publisher = await mediator.Send(input);
-        return new(publisher);
+        Core.Domain.Primitives.Result<Publisher> result = await mediator.Send(input, cancellationToken);
+        return result.Match<Publisher, AddPublisherPayload>(
+            context,
+            publisher => new(publisher),
+            () => new(null)
+        );
     }
 
-    [Error<InvalidFieldException>]
-    [Error<NotFoundWithTheIdException>]
-    public async Task<UpdatePublisherPayload> UpdatePublisherAsync([FromServices] IMediator mediator, UpdatePublisherCommand input)
+    public async Task<UpdatePublisherPayload> UpdatePublisherAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        UpdatePublisherCommand input,
+        CancellationToken cancellationToken
+    )
     {
-        Publisher publisher = await mediator.Send(input);
-        return new(publisher);
+        Core.Domain.Primitives.Result<Publisher> result = await mediator.Send(input, cancellationToken);
+        return result.Match<Publisher, UpdatePublisherPayload>(
+            context,
+            publisher => new(publisher),
+            () => new(null)
+        );
     }
 
-    [Error<NotFoundWithTheIdException>]
-    [Error<DeletionFailedException>]
-    public async Task<DeletePublisherPayload> DeletePublisherAsync([FromServices] IMediator mediator, string id)
+    public async Task<DeletePublisherPayload> DeletePublisherAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        await mediator.Send(new DeletePublisherCommand(id));
-        return new(id);
+        Result result = await mediator.Send(new DeletePublisherCommand(id), cancellationToken);
+        return result.Match<DeletePublisherPayload>(
+            context,
+            () => new(true, id),
+            () => new(false, id)
+        );
     }
 }

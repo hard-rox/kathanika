@@ -1,18 +1,18 @@
-
-using Kathanika.Core.Domain.Exceptions;
-
 namespace Kathanika.Core.Application.Features.Members.Commands;
 
-internal sealed class CancelMembershipCommandHandler(IMemberRepository memberRepository) : IRequestHandler<CancelMembershipCommand, Member>
+internal sealed class CancelMembershipCommandHandler(IMemberRepository memberRepository) : IRequestHandler<CancelMembershipCommand, Result<Member>>
 {
-    public async Task<Member> Handle(CancelMembershipCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Member>> Handle(CancelMembershipCommand request, CancellationToken cancellationToken)
     {
-        Member member = await memberRepository.GetByIdAsync(request.Id, cancellationToken)
-            ?? throw new NotFoundWithTheIdException(typeof(Member), request.Id);
+        Member? member = await memberRepository.GetByIdAsync(request.Id, cancellationToken);
+        if (member is null)
+            return Result.Failure<Member>(MemberAggregateErrors.NotFound(request.Id));
 
-        member.CancelMembership();
+        Result cancelMembershipResult = member.CancelMembership();
+        if (cancelMembershipResult.IsFailure)
+            return Result.Failure<Member>(cancelMembershipResult.Errors);
 
         await memberRepository.UpdateAsync(member, cancellationToken);
-        return member;
+        return Result.Success(member);
     }
 }

@@ -64,7 +64,7 @@ public sealed class Member : AggregateRoot
         return newMember;
     }
 
-    public void Update(
+    public Result Update(
     string? firstName,
     string? lastName,
     string? photoFileId,
@@ -85,30 +85,43 @@ public sealed class Member : AggregateRoot
             AddDomainEvent(new FileReplacedDomainEvent(PhotoFileId, photoFileId));
             PhotoFileId = photoFileId;
         }
+
+        return Result.Success();
     }
 
-    public void CancelMembership()
+    public Result CancelMembership()
     {
         if (_currentlyIssuedPublications.Count != 0)
         {
-            throw new MemberHasIssuedPublicationsException(_currentlyIssuedPublications.ToArray());
+            return MemberAggregateErrors.HasIssuedPublication(_currentlyIssuedPublications.Count);
         }
         Status = MembershipStatus.Cancelled;
         MembershipCancellationDateTime = DateTimeOffset.Now;
+
+        return Result.Success();
     }
 
-    public void SuspendMembership()
+    public Result SuspendMembership()
     {
         if (_currentlyIssuedPublications.Count != 0)
         {
-            throw new MemberHasIssuedPublicationsException(_currentlyIssuedPublications.ToArray());
+            return MemberAggregateErrors.HasIssuedPublication(_currentlyIssuedPublications.Count);
         }
         Status = MembershipStatus.Suspended;
         LastMembershipSuspensionDateTime = DateTimeOffset.Now;
+
+        return Result.Success();
     }
 
-    public void RenewMembership()
+    public Result RenewMembership()
     {
+        if (Status == MembershipStatus.Cancelled)
+            return MemberAggregateErrors.CancelledMembership;
+
+        if (Status == MembershipStatus.Active)
+            return MemberAggregateErrors.ActiveMembership;
+
         Status = MembershipStatus.Active;
+        return Result.Success();
     }
 }

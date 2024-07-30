@@ -1,8 +1,8 @@
 namespace Kathanika.Core.Application.Features.Members.Commands;
 
-internal sealed class CreateMemberCommandHandler(IMemberRepository memberRepository) : IRequestHandler<CreateMemberCommand, Member>
+internal sealed class CreateMemberCommandHandler(IMemberRepository memberRepository) : IRequestHandler<CreateMemberCommand, Result<Member>>
 {
-    public async Task<Member> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Member>> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
     {
         Member newMember = Member.Create(
             request.FirstName,
@@ -15,6 +15,6 @@ internal sealed class CreateMemberCommandHandler(IMemberRepository memberReposit
         );
 
         Member savedMember = await memberRepository.AddAsync(newMember, cancellationToken);
-        return savedMember;
+        return Result.Success(savedMember);
     }
 }

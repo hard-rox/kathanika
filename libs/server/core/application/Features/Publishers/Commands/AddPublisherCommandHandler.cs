@@ -1,17 +1,20 @@
 namespace Kathanika.Core.Application.Features.Publishers.Commands;
 
 internal sealed class AddPublisherCommandHandler(IPublisherRepository publisherRepository)
-        : IRequestHandler<AddPublisherCommand, Publisher>
+        : IRequestHandler<AddPublisherCommand, Result<Publisher>>
 {
-    public async Task<Publisher> Handle(AddPublisherCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Publisher>> Handle(AddPublisherCommand request, CancellationToken cancellationToken)
     {
-        Publisher publisher = Publisher.Create(
+        Result<Publisher> publisherCreateResult = Publisher.Create(
             request.Name,
             request.Description,
             request.ContactInformation
-            );
+        );
 
-        Publisher addPublisher = await publisherRepository.AddAsync(publisher, cancellationToken);
-        return addPublisher;
+        if (publisherCreateResult.IsFailure)
+            return publisherCreateResult;
+
+        Publisher addPublisher = await publisherRepository.AddAsync(publisherCreateResult.Value, cancellationToken);
+        return Result.Success(addPublisher);
     }
 }

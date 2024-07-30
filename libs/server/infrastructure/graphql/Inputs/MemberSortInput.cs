@@ -1,5 +1,4 @@
 using HotChocolate.Data.Sorting;
-using Kathanika.Infrastructure.Graphql.GraphqlHelpers;
 
 namespace Kathanika.Infrastructure.Graphql.Inputs;
 

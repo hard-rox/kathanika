@@ -1,4 +1,4 @@
-using Kathanika.Core.Domain.Exceptions;
+using System.Reflection;
 
 namespace Kathanika.Core.Application.Behaviours;
 
@@ -17,18 +17,38 @@ public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IVali
             return await next();
         }
 
-        InvalidFieldException[] invalidFieldExceptions = validators
+        KnError[] validationErrors = validators
             .Select(async validator => await validator.ValidateAsync(request))
             .SelectMany(result => result.Result.Errors)
             .Where(error => error is not null)
-            .Select(error => new InvalidFieldException(error.PropertyName, error.ErrorMessage))
+            .Select(error => KnError.ValidationError(error.PropertyName, error.ErrorMessage))
             .Distinct()
             .ToArray();
-        if (invalidFieldExceptions.Length != 0)
+
+        if (validationErrors.Length == 0)
         {
-            throw new AggregateException(invalidFieldExceptions);
+            return await next();
         }
 
-        return await next();
+        Type responseType = typeof(TResponse);
+        if (responseType == typeof(Result))
+        {
+            return (TResponse)(object)Result.Failure(validationErrors);
+        }
+
+        if (!responseType.IsGenericType || responseType.GetGenericTypeDefinition() != typeof(Result<>))
+        {
+            throw new Exception("Invalid response type"); //TODO: More specific...
+        }
+
+        Type genericArgument = responseType.GetGenericArguments()[0];
+        MethodInfo? failureMethod = typeof(Result<>)
+            .MakeGenericType(genericArgument)
+            .GetMethod("Failure", [typeof(IEnumerable<KnError>)])
+            ?? throw new Exception("Result method not found.");
+
+        object? resultInstance = failureMethod.Invoke(null, [validationErrors])
+            ?? throw new Exception("Could not create result");
+        return (TResponse)resultInstance;
     }
 }

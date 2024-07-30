@@ -9,4 +9,4 @@ public sealed record AddAuthorCommand(
     DateOnly? DateOfDeath,
     string? DpFileId = null,
     bool MarkedAsDeceased = false
-) : IRequest<Author>;
+) : IRequest<Result<Author>>;

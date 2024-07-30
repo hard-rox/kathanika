@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 using Kathanika.Core.Application.Features.Publications.Commands;
 
-namespace Kathanika.Core.Application.Test.Commands;
+namespace Kathanika.Core.Application.Test.Features.Publications.Commands;
 
 public class AcquirePublicationCommandHandlerTests
 {
@@ -17,10 +17,10 @@ public class AcquirePublicationCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handler_Should_Return_Saved_Publication_On_Valid_Input()
+    public async Task Handler_ShouldReturnSavedPublication_OnValidInput()
     {
         // Arrange
-        Publisher publisher = Publisher.Create("John wick");
+        Publisher publisher = Publisher.Create("John wick").Value;
         List<Author> authors = [
                 Author.Create(
                     "John",
@@ -29,7 +29,7 @@ public class AcquirePublicationCommandHandlerTests
                     null,
                     "USA",
                     "A good writer"
-                ),
+                ).Value,
             Author.Create(
                     "Jane",
                     "Doe",
@@ -37,7 +37,7 @@ public class AcquirePublicationCommandHandlerTests
                     null,
                     "USA",
                     "Another good writer"
-                )
+                ).Value
             ];
         Publication publication = Publication.Create(
             "Title",
@@ -56,7 +56,7 @@ public class AcquirePublicationCommandHandlerTests
             string.Empty,
             string.Empty,
             authors
-        );
+        ).Value;
 
         AcquirePublicationCommandHandler handler = new(publicationRepository, authorRepository, publisherRepository);
         authorRepository.ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>())
@@ -86,11 +86,12 @@ public class AcquirePublicationCommandHandlerTests
         );
 
         // Act
-        Publication savedPublication = await handler.Handle(command, default);
+        Result<Publication> result = await handler.Handle(command, default);
 
         // Assert
-        Assert.NotNull(savedPublication);
-        Assert.Equal(publication.Title, savedPublication.Title);
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.Equal(publication.Title, result.Value.Title);
         await publicationRepository.Received(1).AddAsync(Arg.Is<Publication>(x => x.Title == publication.Title), Arg.Any<CancellationToken>());
         await authorRepository.Received(1).ListAllAsync(Arg.Any<Expression<Func<Author, bool>>>(), Arg.Any<CancellationToken>());
         await publisherRepository.Received(1).GetByIdAsync(Arg.Is<string>(x => x == command.PublisherId), Arg.Any<CancellationToken>());

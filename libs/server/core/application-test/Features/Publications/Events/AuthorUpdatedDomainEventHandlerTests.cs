@@ -11,7 +11,7 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
     private readonly ILogger<AuthorUpdatedDomainEventHandler> _nullLogger = new NullLogger<AuthorUpdatedDomainEventHandler>();
 
     [Fact]
-    public async Task Handler_Should_Return_When_No_Author_Found()
+    public async Task Handler_ShouldReturn_WhenNoAuthorFound()
     {
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
@@ -25,7 +25,7 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
     }
 
     [Fact]
-    public async Task Handler_Should_Update_All_Publication_When_Author_Found()
+    public async Task Handler_ShouldUpdateAllPublication_WhenAuthorFound()
     {
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
@@ -38,7 +38,7 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
                 null,
                 factoryMethod.Address.Country(),
                 factoryMethod.Lorem.Paragraph(5)
-            ));
+            ).Value);
 
         List<Publication> publications = new Faker<Publication>()
             .CustomInstantiator(factoryMethod => Publication.Create(
@@ -52,12 +52,12 @@ public sealed class AuthorUpdatedDomainEventHandlerTests
                 factoryMethod.Lorem.Sentences(5),
                 factoryMethod.Locale,
                 AcquisitionMethod.Purchase,
-                factoryMethod.Random.Number(100),
+                factoryMethod.Random.Number(1, 100),
                 null,
-                factoryMethod.Random.Decimal(1000),
-                null,
+                factoryMethod.Random.Decimal(1, 1000),
+                factoryMethod.Random.Word(),
                 null
-            )).GenerateBetween(2, 10);
+            ).Value).GenerateBetween(2, 10);
 
         AuthorUpdatedDomainEventHandler handler = new(_nullLogger, authorRepository, publicationRepository);
         AuthorUpdatedDomainEvent authorUpdatedDomainEvent = new(dummyId);

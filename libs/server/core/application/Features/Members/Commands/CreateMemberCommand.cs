@@ -8,4 +8,4 @@ public sealed record CreateMemberCommand(
     string Address,
     string ContactNumber,
     string Email
-) : IRequest<Member>;
+) : IRequest<Result<Member>>;

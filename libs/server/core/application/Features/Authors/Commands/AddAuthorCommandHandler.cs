@@ -1,10 +1,10 @@
 namespace Kathanika.Core.Application.Features.Authors.Commands;
 
-internal sealed class AddAuthorCommandHandler(IAuthorRepository authorRepository) : IRequestHandler<AddAuthorCommand, Author>
+internal sealed class AddAuthorCommandHandler(IAuthorRepository authorRepository) : IRequestHandler<AddAuthorCommand, Result<Author>>
 {
-    public async Task<Author> Handle(AddAuthorCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Author>> Handle(AddAuthorCommand request, CancellationToken cancellationToken)
     {
-        Author newAuthor = Author.Create(
+        Result<Author> newAuthorResult = Author.Create(
             request.FirstName,
             request.LastName,
             request.DateOfBirth,
@@ -14,7 +14,10 @@ internal sealed class AddAuthorCommandHandler(IAuthorRepository authorRepository
             request.DpFileId
         );
 
-        Author savedAuthor = await authorRepository.AddAsync(newAuthor, cancellationToken);
-        return savedAuthor;
+        if (newAuthorResult.IsFailure)
+            return newAuthorResult;
+
+        Author savedAuthor = await authorRepository.AddAsync(newAuthorResult.Value, cancellationToken);
+        return Result.Success(savedAuthor);
     }
 }

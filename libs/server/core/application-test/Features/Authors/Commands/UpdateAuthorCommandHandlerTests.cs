@@ -7,20 +7,21 @@ public class UpdateAuthorCommandHandlerTests
     private readonly IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
 
     [Fact]
-    public async Task Handler_ShouldThrowException_WhenInvalid_AuthorId()
+    public async Task Handler_ShouldReturnError_WhenInvalidAuthorId()
     {
         string authorId = Guid.NewGuid().ToString();
         UpdateAuthorCommand command = new(authorId, new AuthorPatch());
         UpdateAuthorCommandHandler handler = new(authorRepository);
 
-        NotFoundWithTheIdException exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
+        Result<Author> result = await handler.Handle(command, default);
 
-        Assert.IsAssignableFrom<NotFoundWithTheIdException>(exception);
-        Assert.Equal(authorId, exception.Id);
+        Assert.True(result.IsFailure);
+        Assert.Single(result.Errors);
+        Assert.Equal(AuthorAggregateErrors.NotFoundError(authorId).Code, result.Errors[0].Code);
     }
 
     [Fact]
-    public async Task Handler_ShouldCallUpdateAsync_WithUpdatedAuthorDateOfDeath()
+    public async Task Handler_ShouldCallUpdateAsync_WithUpdatedAuthor()
     {
         string authorId = Guid.NewGuid().ToString();
         Author author = Author.Create("John",
@@ -28,7 +29,7 @@ public class UpdateAuthorCommandHandlerTests
             DateOnly.MinValue,
             null,
             "",
-            "");
+            "").Value;
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
         await authorRepository.UpdateAsync(Arg.Any<Author>(), Arg.Any<CancellationToken>());
         UpdateAuthorCommand command = new(authorId, new AuthorPatch(
@@ -37,11 +38,12 @@ public class UpdateAuthorCommandHandlerTests
         ));
         UpdateAuthorCommandHandler handler = new(authorRepository);
 
-        Author updatedAuthor = await handler.Handle(command, default);
+        Result<Author> updatedAuthorResult = await handler.Handle(command, default);
 
-        Assert.NotNull(updatedAuthor);
-        Assert.Equal("Updated First Name", updatedAuthor.FirstName);
-        Assert.Equal("Updated Last Name", updatedAuthor.LastName);
+        Assert.True(updatedAuthorResult.IsSuccess);
+        Assert.NotNull(updatedAuthorResult.Value);
+        Assert.Equal("Updated First Name", updatedAuthorResult.Value.FirstName);
+        Assert.Equal("Updated Last Name", updatedAuthorResult.Value.LastName);
         await authorRepository.Received(1).GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>());
         await authorRepository.Received(1).UpdateAsync(Arg.Is(author), Arg.Any<CancellationToken>());
     }
@@ -55,7 +57,7 @@ public class UpdateAuthorCommandHandlerTests
             DateOnly.MinValue,
             null,
             "",
-            "");
+            "").Value;
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
         DateOnly dateOfDeath = DateOnly.FromDateTime(DateTime.UtcNow);
         UpdateAuthorCommand command = new(authorId, new AuthorPatch(
@@ -66,9 +68,9 @@ public class UpdateAuthorCommandHandlerTests
         ));
         UpdateAuthorCommandHandler handler = new(authorRepository);
 
-        Author updatedAuthor = await handler.Handle(command, default);
+        Result<Author> updatedAuthorResult = await handler.Handle(command, default);
 
-        Assert.NotNull(updatedAuthor);
-        Assert.Equal(dateOfDeath, updatedAuthor.DateOfDeath);
+        Assert.NotNull(updatedAuthorResult.Value);
+        Assert.Equal(dateOfDeath, updatedAuthorResult.Value.DateOfDeath);
     }
 }

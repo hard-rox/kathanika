@@ -1,18 +1,14 @@
-using Kathanika.Core.Domain.Exceptions;
-
 namespace Kathanika.Core.Domain.Test.AuthorAggregate;
 
 public sealed class AuthorAggregateTests
 {
     [Fact]
-    public void Create_ShouldThrowInvalidFieldException_WhenFutureDateOfBirth()
+    public void Create_ShouldReturnError_WhenFutureDateOfBirth()
     {
         // Arrange
 
         // Act
-        AggregateException ex = Assert.Throws<AggregateException>(() =>
-        {
-            Author.Create(
+        Result<Author> result = Author.Create(
             "Hello",
             "World",
             DateOnly.Parse("2090-10-10"),
@@ -20,23 +16,20 @@ public sealed class AuthorAggregateTests
             "BD",
             ""
             );
-        });
 
         // Assert
-        Assert.IsType<AggregateException>(ex);
-        Assert.IsType<InvalidFieldException>(ex.InnerExceptions[0]);
-        Assert.Equal("dateOfBirth", ((InvalidFieldException)ex.InnerExceptions[0]).FieldName, true);
+        Assert.True(result.IsFailure);
+        Assert.NotEmpty(result.Errors);
+        Assert.Equal(AuthorAggregateErrors.FutureDateOfBirth, result.Errors[0]);
     }
 
     [Fact]
-    public void Create_ShouldThrowInvalidFieldException_WhenFutureDateOfDeath()
+    public void Create_ShouldReturnError_WhenFutureDateOfDeath()
     {
         // Arrange
 
         // Act
-        AggregateException ex = Assert.Throws<AggregateException>(() =>
-        {
-            Author.Create(
+        Result<Author> result = Author.Create(
             "Hello",
             "World",
             DateOnly.Parse("2013-10-10"),
@@ -44,12 +37,11 @@ public sealed class AuthorAggregateTests
             "BD",
             ""
             );
-        });
 
         // Assert
-        Assert.IsType<AggregateException>(ex);
-        Assert.IsType<InvalidFieldException>(ex.InnerExceptions[0]);
-        Assert.Equal("dateOfDeath", ((InvalidFieldException)ex.InnerExceptions[0]).FieldName, true);
+        Assert.True(result.IsFailure);
+        Assert.NotEmpty(result.Errors);
+        Assert.Equal(AuthorAggregateErrors.FutureDateOfDeath, result.Errors[0]);
     }
 
     [Fact]
@@ -63,19 +55,20 @@ public sealed class AuthorAggregateTests
             null,
             "BD",
             ""
-            );
+            ).Value;
 
         string updatedFirstName = "Updated Hello";
 
         // Act
-        author.Update(updatedFirstName);
+        Result result = author.Update(updatedFirstName);
 
         // Assert
+        Assert.True(result.IsSuccess);
         Assert.Equal(updatedFirstName, author.FirstName);
     }
 
     [Fact]
-    public void UpdateAuthor_ShouldThrowInvalidFieldException_WhenFutureDateOfBirth()
+    public void UpdateAuthor_ShouldReturnError_WhenFutureDateOfBirth()
     {
         // Arrange
         Author author = Author.Create(
@@ -85,14 +78,15 @@ public sealed class AuthorAggregateTests
             null,
             "BD",
             ""
-            );
+            ).Value;
 
         // Act
-        InvalidFieldException ex = Assert.Throws<InvalidFieldException>(() => author.Update(dateOfBirth: DateOnly.Parse("2090-01-01")));
+        Result result = author.Update(dateOfBirth: DateOnly.Parse("2090-01-01"));
 
         // Assert
-        Assert.IsType<InvalidFieldException>(ex);
-        Assert.Equal(nameof(author.DateOfBirth), ex.FieldName);
+        Assert.True(result.IsFailure);
+        Assert.NotEmpty(result.Errors);
+        Assert.Equal(AuthorAggregateErrors.FutureDateOfBirth, result.Errors[0]);
     }
 
     [Fact]
@@ -107,17 +101,18 @@ public sealed class AuthorAggregateTests
             null,
             "BD",
             ""
-            );
+            ).Value;
 
         // Act
-        author.MarkAsDeceased(dateOfDeath);
+        Result result = author.MarkAsDeceased(dateOfDeath);
 
         // Assert
+        Assert.True(result.IsSuccess);
         Assert.Equal(author.DateOfDeath, dateOfDeath);
     }
 
     [Fact]
-    public void MarkAsDeceased_ShouldThrowsInvalidFieldException_WhenFutureDateOfDeath()
+    public void MarkAsDeceased_ShouldReturnError_WhenFutureDateOfDeath()
     {
         // Arrange
         Author author = Author.Create(
@@ -127,19 +122,19 @@ public sealed class AuthorAggregateTests
             null,
             "BD",
             ""
-            );
+            ).Value;
 
         // Act
-        InvalidFieldException ex = Assert.Throws<InvalidFieldException>(
-            () => author.MarkAsDeceased(DateOnly.Parse("2090-01-01")));
+        Result result = author.MarkAsDeceased(DateOnly.Parse("2090-01-01"));
 
         // Assert
-        Assert.IsType<InvalidFieldException>(ex);
-        Assert.Equal(nameof(author.DateOfDeath), ex.FieldName);
+        Assert.True(result.IsFailure);
+        Assert.NotEmpty(result.Errors);
+        Assert.Equal(AuthorAggregateErrors.FutureDateOfDeath, result.Errors[0]);
     }
 
     [Fact]
-    public void MarkAsDeceased_ShouldThrowInvalidFieldException_WhenInvalidDateOfDeath()
+    public void MarkAsDeceased_ShouldReturnError_WhenInvalidDateOfDeath()
     {
         // Arrange
         DateOnly dateOfDeath = DateOnly.Parse("1990-01-01");
@@ -150,15 +145,15 @@ public sealed class AuthorAggregateTests
             null,
             "BD",
             ""
-            );
+            ).Value;
 
         // Act
-        InvalidFieldException ex = Assert.Throws<InvalidFieldException>(
-            () => author.MarkAsDeceased(dateOfDeath));
+        Result result = author.MarkAsDeceased(dateOfDeath);
 
         // Assert
-        Assert.IsType<InvalidFieldException>(ex);
-        Assert.Equal(nameof(author.DateOfDeath), ex.FieldName);
+        Assert.True(result.IsFailure);
+        Assert.NotEmpty(result.Errors);
+        Assert.Equal(AuthorAggregateErrors.DateOfBirthFollowingDateOfDeath, result.Errors[0]);
     }
 
     [Fact]
@@ -172,12 +167,13 @@ public sealed class AuthorAggregateTests
             DateOnly.Parse("2023-01-01"),
             "BD",
             ""
-            );
+            ).Value;
 
         // Act
-        author.UnmarkAsDeceased();
+        Result result = author.UnmarkAsDeceased();
 
         // Assert
+        Assert.True(result.IsSuccess);
         Assert.Null(author.DateOfDeath);
     }
 }

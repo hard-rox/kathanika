@@ -1,6 +1,5 @@
 using HotChocolate.Data.Filters;
 using HotChocolate.Data.Sorting;
-using Kathanika.Core.Domain.Primitives;
 
 namespace Kathanika.Infrastructure.Graphql.GraphqlHelpers;
 

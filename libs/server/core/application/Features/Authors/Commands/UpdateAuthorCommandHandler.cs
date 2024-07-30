@@ -1,13 +1,13 @@
-using Kathanika.Core.Domain.Exceptions;
-
 namespace Kathanika.Core.Application.Features.Authors.Commands;
 
-internal sealed class UpdateAuthorCommandHandler(IAuthorRepository authorRepository) : IRequestHandler<UpdateAuthorCommand, Author>
+internal sealed class UpdateAuthorCommandHandler(IAuthorRepository authorRepository) : IRequestHandler<UpdateAuthorCommand, Result<Author>>
 {
-    public async Task<Author> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Author>> Handle(UpdateAuthorCommand request, CancellationToken cancellationToken)
     {
-        Author existingAuthor = await authorRepository.GetByIdAsync(request.Id, cancellationToken) ??
-            throw new NotFoundWithTheIdException(typeof(Author), request.Id);
+        Author? existingAuthor = await authorRepository.GetByIdAsync(request.Id, cancellationToken);
+
+        if (existingAuthor is null)
+            return Result.Failure<Author>(AuthorAggregateErrors.NotFoundError(request.Id));
 
         existingAuthor.Update(
             request.Patch.FirstName,
@@ -28,6 +28,6 @@ internal sealed class UpdateAuthorCommandHandler(IAuthorRepository authorReposit
         }
 
         await authorRepository.UpdateAsync(existingAuthor, cancellationToken);
-        return existingAuthor;
+        return Result.Success(existingAuthor);
     }
 }

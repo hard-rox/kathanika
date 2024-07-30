@@ -1,4 +1,3 @@
-using Kathanika.Core.Application.Services;
 using Kathanika.Infrastructure.Persistence.FileStorage;
 using Microsoft.Extensions.Logging;
 using MongoDB.Bson;

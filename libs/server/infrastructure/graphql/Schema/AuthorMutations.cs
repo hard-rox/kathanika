@@ -1,39 +1,53 @@
-using Kathanika.Core.Domain.Exceptions;
+using HotChocolate.Resolvers;
 using Kathanika.Infrastructure.Graphql.Payloads;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
-public sealed partial class Mutations
+[ExtendObjectType(OperationTypeNames.Mutation)]
+public sealed class AuthorMutations
 {
-    [Error<InvalidFieldException>]
-    public async Task<AddAuthorPayload> AddAuthorAsync([FromServices] IMediator mediator, AddAuthorCommand input)
+    public async Task<AddAuthorPayload> AddAuthorAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        AddAuthorCommand input,
+        CancellationToken cancellationToken
+    )
     {
-        Author author = await mediator.Send(input);
-        return new(author);
+        Core.Domain.Primitives.Result<Author> result = await mediator.Send(input, cancellationToken);
+        return result.Match<Author, AddAuthorPayload>(
+            context,
+            author => new(author),
+            () => new(null)
+        );
     }
 
-    [Error<InvalidFieldException>]
-    [Error<NotFoundWithTheIdException>]
-    public async Task<UpdateAuthorPayload> UpdateAuthorAsync([FromServices] IMediator mediator, UpdateAuthorCommand input)
+    public async Task<UpdateAuthorPayload> UpdateAuthorAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        CancellationToken cancellationToken,
+        UpdateAuthorCommand input
+    )
     {
-        Author author = await mediator.Send(input);
-        return new(author);
+        Core.Domain.Primitives.Result<Author> result = await mediator.Send(input, cancellationToken);
+        return result.Match<Author, UpdateAuthorPayload>(
+            context,
+            author => new(author),
+            () => new(null)
+        );
     }
 
-    [Error<NotFoundWithTheIdException>]
-    [Error<DeletionFailedException>]
-    public async Task<DeleteAuthorPayload> DeleteAuthorAsync([FromServices] IMediator mediator, string id)
+    public async Task<DeleteAuthorPayload> DeleteAuthorAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        CancellationToken cancellationToken,
+        string id
+    )
     {
-        await mediator.Send(new DeleteAuthorCommand(id));
-        return new(id);
+        Result result = await mediator.Send(new DeleteAuthorCommand(id), cancellationToken);
+        return result.Match<DeleteAuthorPayload>(
+            context,
+            () => new(id, true),
+            () => new(id, false)
+        );
     }
-
-    // [GraphQLDeprecated("Just a dummy for throwing new notification...")]
-    // public async Task<Notification> FireNewNotification([FromServices]ITopicEventSender eventSender, string content)
-    // {
-    //     Notification notification = new() { Message = content };
-    //     await eventSender.SendAsync("NewNotification", notification);
-    //     return notification;
-    // }
 }

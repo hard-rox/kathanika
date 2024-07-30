@@ -6,7 +6,7 @@ namespace Kathanika.Core.Application.Test.Features.Publications.Queries;
 public class GetPublicationByIdQueryHandlerTests
 {
     [Fact]
-    public async Task Handler_Should_Return_Publication_With_Specific_Id()
+    public async Task Handler_Should_ReturnPublicationWithSpecificId()
     {
         Publication publication = new Faker<Publication>()
             .CustomInstantiator(factoryMethod => Publication.Create(
@@ -23,19 +23,20 @@ public class GetPublicationByIdQueryHandlerTests
                 factoryMethod.Random.Number(100),
                 null,
                 factoryMethod.Random.Decimal(1000),
-                null,
+                factoryMethod.Random.Word(),
                 null
-            ));
+            ).Value);
         string id = Guid.NewGuid().ToString();
         GetPublicationByIdQuery query = new(id);
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
         publicationRepository.GetByIdAsync(Arg.Any<string>(), default).Returns(publication);
         GetPublicationByIdQueryHandler handler = new(publicationRepository);
 
-        Publication? returnedPublication = await handler.Handle(query, default);
+        Result<Publication> result = await handler.Handle(query, default);
 
         await publicationRepository.Received(1).GetByIdAsync(Arg.Is<string>(x => x == id), Arg.Any<CancellationToken>());
-        Assert.NotNull(returnedPublication);
-        Assert.Equal(publication.Title, returnedPublication.Title);
+        Assert.True(result.IsSuccess);
+        Assert.NotNull(result.Value);
+        Assert.Equal(publication.Title, result.Value.Title);
     }
 }

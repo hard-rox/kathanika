@@ -1,5 +1,3 @@
-using Kathanika.Core.Domain.Primitives;
-
 namespace Kathanika.Infrastructure.Graphql.Bases;
 
 public abstract class AbstractValueObjectType<T> : ObjectType<T> where T : ValueObject

@@ -2,6 +2,10 @@ using Kathanika.Infrastructure.Graphql.Bases;
 
 namespace Kathanika.Infrastructure.Graphql.Payloads;
 
-public sealed class UpdateMemberPayload(Member member) : Payload<Member>($"Author {member.FullName} updated successfully.", member)
-{
-}
+public sealed record UpdateMemberPayload(Member? Member)
+    : Payload<Member>(
+        Member is not null ?
+        $"Member {Member.FullName} updated successfully." :
+        $"Member update failed",
+        Member
+    );
