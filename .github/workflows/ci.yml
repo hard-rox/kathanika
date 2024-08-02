@@ -12,9 +12,6 @@ on:
 
 jobs:
   lint-build-test:
-    name: Test actor
-    run: echo "Triggered by: ${{ github.actor }}"
-
     name: Lint, Build, Unit Test & Sonar Scan
     runs-on: ubuntu-latest
     steps:
@@ -22,6 +19,8 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0
+    - name: actor check
+      run: echo "Triggered by: ${{ github.actor }}"
 
     - name: Setup Node.js 22
       uses: actions/setup-node@v4
