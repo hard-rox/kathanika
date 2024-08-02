@@ -5,8 +5,7 @@
     "apollo-angular": "^7.0.0",
     "rxjs": "~7.8.0",
     "@kathanika/kn-ui": "*",
-    "@kathanika/graphql-ts-client": "*",
-    "@apollo/client": "^3.10.8"
+    "@kathanika/graphql-ts-client": "*"
   },
   "sideEffects": false
 }
