@@ -35,7 +35,7 @@ jobs:
       run: git branch --track main origin/main
 
     - name: Actor
-      run: echo "Triggered by:{{ github.actor }}"
+      run: echo "Triggered by:${{ github.actor }}"
 
     - name: Lint
       run: npx nx affected -t lint --prod --no-cloud --verbose
