@@ -5,9 +5,10 @@ namespace Kathanika.Infrastructure.Graphql.Payloads;
 public sealed record CancelMembershipPayload
     : Payload
 {
-    public CancelMembershipPayload(Member? member) : base(
-    member is not null ?
-    $"Member {member.FullName}'s membership status cancelled successfully." :
+    public CancelMembershipPayload(Core.Domain.Primitives.Result<Member> result) : base(
+        result,
+    result.IsSuccess ?
+    $"Member {result.Value?.FullName}'s membership status cancelled successfully." :
     $"Membership status cancellation failed."
 )
     {

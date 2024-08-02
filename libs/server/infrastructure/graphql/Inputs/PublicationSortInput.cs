@@ -8,5 +8,6 @@ public sealed class PublicationSortInput : SortInputType<Publication>
     {
         descriptor.IgnoreAuditFieldsFromSortInputType();
         descriptor.Ignore(x => x.PurchaseRecords);
+        descriptor.Ignore(x => x.CoverImageFileId);
     }
 }

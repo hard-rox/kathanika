@@ -2,9 +2,12 @@ using Kathanika.Infrastructure.Graphql.Bases;
 
 namespace Kathanika.Infrastructure.Graphql.Payloads;
 
-public sealed record AddPublisherPayload(Publisher? Data)
-    : Payload<Publisher>(
-        Data is not null ?
-        $"New publisher {Data.Name} added successfully." :
-        $"New publisher failed.",
-        Data);
+public sealed record AddPublisherPayload
+    : Payload<Publisher>
+{
+    public AddPublisherPayload(Core.Domain.Primitives.Result<Publisher> result)
+    : base(result, result.IsSuccess ?
+$"New publisher {result.Value?.Name} added successfully." :
+$"New publisher add failed.")
+    { }
+}

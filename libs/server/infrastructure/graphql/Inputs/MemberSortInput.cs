@@ -8,5 +8,6 @@ public sealed class MemberSortInput : SortInputType<Member>
     {
         descriptor.IgnoreAuditFieldsFromSortInputType();
         descriptor.Ignore(x => x.FullName);
+        descriptor.Ignore(x => x.PhotoFileId);
     }
 }

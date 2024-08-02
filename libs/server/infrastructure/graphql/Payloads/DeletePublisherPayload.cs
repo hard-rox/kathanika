@@ -4,9 +4,10 @@ namespace Kathanika.Infrastructure.Graphql.Payloads;
 
 public sealed record DeletePublisherPayload : Payload
 {
-    public DeletePublisherPayload(bool isSuccess, string id)
+    public DeletePublisherPayload(string id, Result result)
         : base(
-            isSuccess ?
+            result,
+            result.IsSuccess ?
             $"Publisher with Id: {id} deleted." :
             $"Publisher deletion failed."
         )

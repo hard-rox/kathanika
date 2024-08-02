@@ -5,9 +5,10 @@ namespace Kathanika.Infrastructure.Graphql.Payloads;
 public sealed record SuspendMembershipPayload
     : Payload
 {
-    public SuspendMembershipPayload(Member? Member) : base(
-        Member is not null ?
-        $"Member {Member.FullName}'s membership status suspended successfully." :
+    public SuspendMembershipPayload(Core.Domain.Primitives.Result<Member> result) : base(
+        result,
+        result.IsSuccess ?
+        $"Member {result.Value?.FullName}'s membership status suspended successfully." :
         $"Membership suspension failed."
     )
     {

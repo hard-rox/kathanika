@@ -9,5 +9,6 @@ public sealed class AuthorSortInput : SortInputType<Author>
         descriptor.IgnoreAuditFieldsFromSortInputType();
         descriptor.Ignore(x => x.Biography);
         descriptor.Ignore(x => x.FullName);
+        descriptor.Ignore(x => x.DpFileId);
     }
 }

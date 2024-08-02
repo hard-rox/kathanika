@@ -16,39 +16,6 @@ internal static class SchemaExtensions
         }
     }
 
-    internal static TOut Match<TOut>(
-        this Result result,
-        IResolverContext context,
-        Func<TOut> onSuccess,
-        Func<TOut> onFailure
-    )
-    {
-        if (result.IsFailure)
-        {
-            context.SetError(result.Errors);
-            return onFailure();
-        }
-
-        return onSuccess();
-    }
-
-    internal static TOut Match<TIn, TOut>(
-        this Core.Domain.Primitives.Result<TIn> result,
-        IResolverContext context,
-        Func<TIn, TOut> onSuccess,
-        Func<TOut> onFailure
-    )
-    where TIn : class
-    {
-        if (result.IsFailure)
-        {
-            context.SetError(result.Errors);
-            return onFailure();
-        }
-
-        return onSuccess(result.Value);
-    }
-
     internal static TOut? Match<TOut>(
         this Core.Domain.Primitives.Result<TOut> result,
         IResolverContext context
@@ -57,7 +24,7 @@ internal static class SchemaExtensions
     {
         if (result.IsFailure)
         {
-            context.SetError(result.Errors);
+            context.SetError(result.Errors ?? []);
             return null;
         }
 

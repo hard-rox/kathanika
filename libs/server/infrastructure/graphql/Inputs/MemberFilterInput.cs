@@ -8,5 +8,6 @@ public sealed class MemberFilterInput : FilterInputType<Member>
     {
         descriptor.IgnoreAuditFieldsFromFilterInputType();
         descriptor.Ignore(x => x.FullName);
+        descriptor.Ignore(x => x.PhotoFileId);
     }
 }

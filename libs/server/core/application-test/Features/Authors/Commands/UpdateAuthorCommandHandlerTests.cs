@@ -16,6 +16,7 @@ public class UpdateAuthorCommandHandlerTests
         Result<Author> result = await handler.Handle(command, default);
 
         Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
         Assert.Single(result.Errors);
         Assert.Equal(AuthorAggregateErrors.NotFoundError(authorId).Code, result.Errors[0].Code);
     }

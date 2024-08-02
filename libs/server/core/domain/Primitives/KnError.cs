@@ -1,6 +1,6 @@
 namespace Kathanika.Core.Domain.Primitives;
 
-public sealed record KnError
+public record KnError
 {
     public string Code { get; private init; }
     public string? Description { get; private init; }
@@ -18,8 +18,24 @@ public sealed record KnError
 
     public static implicit operator Result(KnError error) => Result.Failure(error);
 
-    public static KnError ValidationError(string propertyName, string? message = null)
+    public static KnError ValidationError(string fieldName, string? message = null)
     {
-        return new KnError("Kathanika.InvalidField", $"{propertyName} is invalid", message);
+        return new ValidationError(fieldName, message);
+    }
+}
+
+public sealed record ValidationError : KnError
+{
+    public string FieldName { get; private init; }
+    internal ValidationError(
+        string fieldName,
+        string? message = null
+    ) : base(
+        "Kathanika.ValidationError",
+        $"{fieldName} is invalid",
+        message
+    )
+    {
+        FieldName = fieldName;
     }
 }

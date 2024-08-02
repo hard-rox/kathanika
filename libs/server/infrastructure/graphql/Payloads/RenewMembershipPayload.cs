@@ -5,12 +5,12 @@ namespace Kathanika.Infrastructure.Graphql.Payloads;
 public sealed record RenewMembershipPayload
     : Payload
 {
-    public RenewMembershipPayload(Member? Member) : base(
-    Member is not null ?
-    $"Member {Member.FullName}'s membership status renewed successfully." :
+    public RenewMembershipPayload(Core.Domain.Primitives.Result<Member> result) : base(
+        result,
+    result.IsSuccess ?
+    $"Member {result.Value?.FullName}'s membership status renewed successfully." :
     $"Membership status renewal failed."
 )
     {
-
     }
 }

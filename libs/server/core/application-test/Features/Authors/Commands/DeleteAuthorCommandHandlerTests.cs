@@ -42,6 +42,7 @@ public class DeleteAuthorCommandHandlerTests
         Result result = await handler.Handle(command, default);
 
         Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
         Assert.Single(result.Errors);
         Assert.Equal(result.Errors[0].Code, AuthorAggregateErrors.NotFoundError(id).Code);
     }
@@ -70,6 +71,7 @@ public class DeleteAuthorCommandHandlerTests
         Result result = await handler.Handle(command, default);
 
         Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
         Assert.Single(result.Errors);
         Assert.Equal(result.Errors[0].Code, AuthorAggregateErrors.HasPublication.Code);
     }

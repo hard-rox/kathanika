@@ -5,11 +5,11 @@ namespace Kathanika.Infrastructure.Graphql.Payloads;
 public sealed record UpdateAuthorPayload
     : Payload<Author>
 {
-    public UpdateAuthorPayload(Author? Data) : base(
-    Data is not null ?
-    $"Author {Data.FullName} updated successfully." :
-    $"Author update failed.",
-    Data
+    public UpdateAuthorPayload(Core.Domain.Primitives.Result<Author> result) : base(
+        result,
+    result.IsSuccess ?
+    $"Author {result.Value?.FullName} updated successfully." :
+    $"Author update failed."
 )
     { }
 }

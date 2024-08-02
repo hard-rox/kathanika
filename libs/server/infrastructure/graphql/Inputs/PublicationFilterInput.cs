@@ -8,5 +8,6 @@ public sealed class PublicationFilterInput : FilterInputType<Publication>
     {
         descriptor.IgnoreAuditFieldsFromFilterInputType();
         descriptor.Ignore(x => x.PurchaseRecords);
+        descriptor.Ignore(x => x.CoverImageFileId);
     }
 }

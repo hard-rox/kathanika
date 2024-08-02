@@ -19,6 +19,7 @@ public sealed class AuthorAggregateTests
 
         // Assert
         Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
         Assert.NotEmpty(result.Errors);
         Assert.Equal(AuthorAggregateErrors.FutureDateOfBirth, result.Errors[0]);
     }
@@ -40,6 +41,7 @@ public sealed class AuthorAggregateTests
 
         // Assert
         Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
         Assert.NotEmpty(result.Errors);
         Assert.Equal(AuthorAggregateErrors.FutureDateOfDeath, result.Errors[0]);
     }
@@ -85,6 +87,7 @@ public sealed class AuthorAggregateTests
 
         // Assert
         Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
         Assert.NotEmpty(result.Errors);
         Assert.Equal(AuthorAggregateErrors.FutureDateOfBirth, result.Errors[0]);
     }
@@ -129,6 +132,7 @@ public sealed class AuthorAggregateTests
 
         // Assert
         Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
         Assert.NotEmpty(result.Errors);
         Assert.Equal(AuthorAggregateErrors.FutureDateOfDeath, result.Errors[0]);
     }
@@ -152,6 +156,7 @@ public sealed class AuthorAggregateTests
 
         // Assert
         Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
         Assert.NotEmpty(result.Errors);
         Assert.Equal(AuthorAggregateErrors.DateOfBirthFollowingDateOfDeath, result.Errors[0]);
     }

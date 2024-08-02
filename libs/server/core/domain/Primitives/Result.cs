@@ -23,12 +23,12 @@ public class Result
         }
 
         IsSuccess = isSuccess;
-        Errors = errors ?? [];
+        Errors = errors;
     }
 
     public bool IsSuccess { get; protected init; }
     public bool IsFailure => !IsSuccess;
-    public KnError[] Errors { get; protected init; }
+    public KnError[]? Errors { get; protected init; }
 
     public static Result Success() => new(true, error: null);
     public static Result<TValue> Success<TValue>(TValue value)
@@ -75,7 +75,7 @@ public class Result<TValue> : Result where TValue : class
         _value = value;
     }
 
-    public TValue Value => IsSuccess && _value is not null ? _value : throw new Exception("Failure result cann't have value");
+    public TValue Value => IsSuccess && _value is not null ? _value : throw new InvalidDataException("Cannot access Value from failure result");
 
     public static Result<TValue> Success(TValue value) => new(true, value: value, error: null);
     public static new Result<TValue> Failure(IEnumerable<KnError> errors) => new(false, errors: errors.ToArray());
