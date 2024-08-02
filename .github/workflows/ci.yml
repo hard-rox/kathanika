@@ -13,7 +13,7 @@ on:
 jobs:
   lint-build-test:
     name: Test
-    run: echo github.actor
+    run: echo "Triggered by: ${{ github.actor }}"
 
     name: Lint, Build, Unit Test & Sonar Scan
     runs-on: ubuntu-latest
