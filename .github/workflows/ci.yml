@@ -11,6 +11,9 @@ on:
   #   branches: [ "main" ]
 
 jobs:
+  temp:
+    name: Test
+    run: echo github.actor
   lint-build-test:
     name: Lint, Build, Unit Test & Sonar Scan
     runs-on: ubuntu-latest
