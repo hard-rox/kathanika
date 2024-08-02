@@ -44,18 +44,22 @@ jobs:
       run: npx nx affected -t test --prod --no-cloud --verbose
 
     - name: Set up JDK 17
+      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
       uses: actions/setup-java@v4
       with:
         java-version: 17
         distribution: 'zulu' # Alternative distribution options are available.
 
     - name: Install dotnet Sonar scanner
+      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
       run: dotnet tool install --global dotnet-sonarscanner
 
     - name: Collecting test coverage for TS projects
+      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
       run: npx nx run-many -t test -p kn-ui ils-features ils-web --code-coverage --coverage
 
     - name: TS Sonar Analysis
+      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
       uses: SonarSource/sonarcloud-github-action@master
       env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
@@ -73,6 +77,7 @@ jobs:
 #         -Dsonar.verbose=true
 
     - name: .NET Sonar analysis
+      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}

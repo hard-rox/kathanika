@@ -3,10 +3,7 @@
   "version": "0.0.1",
   "peerDependencies": {
     "rxjs": "~7.8.0",
-    "tus-js-client": "^4.1.0",
-    "@angular/core": "~18.1.2",
-    "@angular/forms": "~18.1.2",
-    "@angular/common": "~18.1.2"
+    "tus-js-client": "^4.1.0"
   },
   "sideEffects": false
 }
