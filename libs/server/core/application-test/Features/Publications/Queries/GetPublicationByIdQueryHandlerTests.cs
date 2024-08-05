@@ -1,4 +1,3 @@
-using Bogus;
 using Kathanika.Core.Application.Features.Publications.Queries;
 
 namespace Kathanika.Core.Application.Test.Features.Publications.Queries;

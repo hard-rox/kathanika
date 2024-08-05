@@ -23,4 +23,9 @@ public static class MemberAggregateErrors
         "Member.CancelledMembership",
         message: "Membership is active"
     );
+
+    public static readonly KnError FutureDateOfBirth = new(
+        "Member.FutureDateOfBirth",
+        message: "Date of birth cannot be future date"
+    );
 }

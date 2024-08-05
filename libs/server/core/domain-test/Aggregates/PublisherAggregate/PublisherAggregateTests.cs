@@ -1,4 +1,4 @@
-namespace Kathanika.Core.Domain.Test.PublisherAggregate;
+namespace Kathanika.Core.Domain.Test.Aggregates.PublisherAggregate;
 
 public class PublisherAggregateTests
 {
@@ -8,7 +8,7 @@ public class PublisherAggregateTests
         //Arrange
 
         //Act
-        Primitives.Result<Publisher> result = Publisher.Create(
+        Result<Publisher> result = Publisher.Create(
             "Sheba",
             "Description",
             "12345678"

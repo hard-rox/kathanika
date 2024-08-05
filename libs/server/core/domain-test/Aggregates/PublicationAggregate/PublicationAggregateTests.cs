@@ -1,4 +1,4 @@
-namespace Kathanika.Core.Domain.Test.PublicationAggregate;
+namespace Kathanika.Core.Domain.Test.Aggregates.PublicationAggregate;
 
 public class PublicationAggregateTests
 {

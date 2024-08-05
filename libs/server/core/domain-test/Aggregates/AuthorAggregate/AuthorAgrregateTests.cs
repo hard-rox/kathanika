@@ -1,4 +1,4 @@
-namespace Kathanika.Core.Domain.Test.AuthorAggregate;
+namespace Kathanika.Core.Domain.Test.Aggregates.AuthorAggregate;
 
 public sealed class AuthorAggregateTests
 {

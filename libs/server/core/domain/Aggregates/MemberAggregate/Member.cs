@@ -39,7 +39,7 @@ public sealed class Member : AggregateRoot
         Email = email;
     }
 
-    public static Member Create(
+    public static Result<Member> Create(
         string firstName,
         string lastName,
         string photoFileId,
@@ -49,7 +49,16 @@ public sealed class Member : AggregateRoot
         string email
     )
     {
-        Member newMember = new Member(
+        List<KnError> errors = [];
+        if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
+        {
+            errors.Add(MemberAggregateErrors.FutureDateOfBirth);
+        }
+
+        if (errors.Count != 0)
+            return Result.Failure<Member>(errors);
+
+        Member newMember = new(
             firstName,
             lastName,
             photoFileId,
@@ -61,7 +70,7 @@ public sealed class Member : AggregateRoot
 
         newMember.AddDomainEvent(new FileUsedDomainEvent(photoFileId));
 
-        return newMember;
+        return Result.Success(newMember);
     }
 
     public Result Update(

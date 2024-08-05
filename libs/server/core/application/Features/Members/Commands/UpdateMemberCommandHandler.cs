@@ -18,7 +18,7 @@ internal sealed class UpdateMemberCommandHandler(IMemberRepository memberReposit
             request.Patch.Email
         );
         if (updateMemberResult.IsFailure)
-            return Result.Failure<Member>(updateMemberResult.Errors);
+            return Result.Failure<Member>(updateMemberResult.Errors!);
 
         await memberRepository.UpdateAsync(member, cancellationToken);
         return Result.Success(member);
