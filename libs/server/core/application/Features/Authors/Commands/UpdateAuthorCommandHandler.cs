@@ -7,7 +7,7 @@ internal sealed class UpdateAuthorCommandHandler(IAuthorRepository authorReposit
         Author? existingAuthor = await authorRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingAuthor is null)
-            return Result.Failure<Author>(AuthorAggregateErrors.NotFoundError(request.Id));
+            return Result.Failure<Author>(AuthorAggregateErrors.NotFound(request.Id));
 
         existingAuthor.Update(
             request.Patch.FirstName,

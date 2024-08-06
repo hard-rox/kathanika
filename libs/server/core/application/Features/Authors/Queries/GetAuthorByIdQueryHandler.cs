@@ -6,7 +6,7 @@ internal class GetAuthorByIdQueryHandler(IAuthorRepository authorRepository) : I
     {
         Author? author = await authorRepository.GetByIdAsync(request.Id, cancellationToken);
         if (author is null)
-            return Result.Failure<Author>(AuthorAggregateErrors.NotFoundError(request.Id));
+            return Result.Failure<Author>(AuthorAggregateErrors.NotFound(request.Id));
 
         return Result.Success(author);
     }

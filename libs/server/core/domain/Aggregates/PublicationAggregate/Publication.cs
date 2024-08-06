@@ -26,19 +26,16 @@ public sealed class Publication : AggregateRoot
     public IReadOnlyList<PublicationAuthor> Authors
     {
         get { return _authors; }
-        private init { _authors = value?.ToList() ?? []; }
     }
 
     public IReadOnlyList<PurchaseRecord> PurchaseRecords
     {
         get { return _purchaseRecords ?? []; }
-        private init { _purchaseRecords = value?.ToList() ?? []; }
     }
 
     public IReadOnlyList<DonationRecord> DonationRecords
     {
         get { return _donationRecords ?? []; }
-        private init { _donationRecords = value?.ToList() ?? []; }
     }
 
     private Publication(

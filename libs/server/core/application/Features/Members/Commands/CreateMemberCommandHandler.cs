@@ -15,7 +15,7 @@ internal sealed class CreateMemberCommandHandler(IMemberRepository memberReposit
         );
 
         if (result.IsFailure)
-            return Result.Failure<Member>(result.Errors!);
+            return Result.Failure<Member>(result.Errors);
 
         Member savedMember = await memberRepository.AddAsync(result.Value, cancellationToken);
         return Result.Success(savedMember);

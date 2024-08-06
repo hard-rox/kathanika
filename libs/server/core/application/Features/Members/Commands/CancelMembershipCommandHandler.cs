@@ -10,7 +10,7 @@ internal sealed class CancelMembershipCommandHandler(IMemberRepository memberRep
 
         Result cancelMembershipResult = member.CancelMembership();
         if (cancelMembershipResult.IsFailure)
-            return Result.Failure<Member>(cancelMembershipResult.Errors!);
+            return Result.Failure<Member>(cancelMembershipResult.Errors);
 
         await memberRepository.UpdateAsync(member, cancellationToken);
         return Result.Success(member);

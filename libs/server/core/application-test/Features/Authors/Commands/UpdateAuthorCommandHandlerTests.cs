@@ -18,7 +18,7 @@ public class UpdateAuthorCommandHandlerTests
         Assert.True(result.IsFailure);
         Assert.NotNull(result.Errors);
         Assert.Single(result.Errors);
-        Assert.Equal(AuthorAggregateErrors.NotFoundError(authorId).Code, result.Errors[0].Code);
+        Assert.Equal(AuthorAggregateErrors.NotFound(authorId).Code, result.Errors[0].Code);
     }
 
     [Fact]

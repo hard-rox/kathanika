@@ -7,7 +7,7 @@ public sealed class DeleteAuthorCommandHandler(IAuthorRepository authorRepositor
         Author? author = await authorRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (author is null)
-            return AuthorAggregateErrors.NotFoundError(request.Id);
+            return AuthorAggregateErrors.NotFound(request.Id);
 
         bool hasPublication = (await publicationRepository.CountAsync(x => x.Authors.Any(y => y.Id == request.Id), cancellationToken)) > 0;
         if (hasPublication) return AuthorAggregateErrors.HasPublication;

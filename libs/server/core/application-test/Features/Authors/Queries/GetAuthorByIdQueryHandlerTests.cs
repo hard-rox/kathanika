@@ -29,4 +29,23 @@ public class GetAuthorByIdQueryHandlerTests
         Assert.NotNull(result.Value);
         Assert.Equal(author.FirstName, result.Value.FirstName);
     }
+
+    [Fact]
+    public async Task Handle_ShouldReturnFailureResult_WhenAuthorNotFound()
+    {
+        // Arrange
+        GetAuthorByIdQuery query = new(Guid.NewGuid().ToString());
+        IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
+        authorRepository.GetByIdAsync(query.Id, Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult<Author?>(null));
+        GetAuthorByIdQueryHandler handler = new(authorRepository);
+
+        // Act
+        Result<Author> result = await handler.Handle(query, CancellationToken.None);
+
+        // Assert
+        Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
+        Assert.Contains(AuthorAggregateErrors.NotFound(query.Id), result.Errors);
+    }
 }

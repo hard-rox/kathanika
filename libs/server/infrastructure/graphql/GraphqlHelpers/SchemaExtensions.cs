@@ -24,7 +24,7 @@ internal static class SchemaExtensions
     {
         if (result.IsFailure)
         {
-            context.SetError(result.Errors ?? []);
+            context.SetError(result.Errors);
             return null;
         }
 

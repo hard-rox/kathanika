@@ -18,4 +18,24 @@ public class PublisherAggregateTests
         Assert.True(result.IsSuccess);
         Assert.Equal("Sheba", result.Value.Name);
     }
+
+    [Fact]
+    public void Update_ShouldReturnUpdatedUpdated_WhenValidInput()
+    {
+        // Arrange
+        Publisher publisher = Publisher.Create(
+            "Sheba",
+            "Description",
+            "12345678"
+            ).Value;
+
+        string updatedName = "Updated Name";
+
+        // Act
+        Result result = publisher.Update(updatedName);
+
+        // Assert
+        Assert.True(result.IsSuccess);
+        Assert.Equal(updatedName, publisher.Name);
+    }
 }

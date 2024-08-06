@@ -44,7 +44,7 @@ public class DeleteAuthorCommandHandlerTests
         Assert.True(result.IsFailure);
         Assert.NotNull(result.Errors);
         Assert.Single(result.Errors);
-        Assert.Equal(result.Errors[0].Code, AuthorAggregateErrors.NotFoundError(id).Code);
+        Assert.Equal(result.Errors[0].Code, AuthorAggregateErrors.NotFound(id).Code);
     }
 
     [Fact]

@@ -38,4 +38,23 @@ public class GetPublicationByIdQueryHandlerTests
         Assert.NotNull(result.Value);
         Assert.Equal(publication.Title, result.Value.Title);
     }
+
+    [Fact]
+    public async Task Handle_ShouldReturnFailureResult_WhenPublicationNotFound()
+    {
+        // Arrange
+        GetPublicationByIdQuery query = new(Guid.NewGuid().ToString());
+        IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
+        publicationRepository.GetByIdAsync(query.Id, Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult<Publication?>(null));
+        GetPublicationByIdQueryHandler handler = new(publicationRepository);
+
+        // Act
+        Result<Publication> result = await handler.Handle(query, CancellationToken.None);
+
+        // Assert
+        Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
+        Assert.Contains(PublicationAggregateErrors.NotFound(query.Id), result.Errors);
+    }
 }

@@ -23,12 +23,12 @@ public class Result
         }
 
         IsSuccess = isSuccess;
-        Errors = errors;
+        Errors = errors!;
     }
 
     public bool IsSuccess { get; protected init; }
     public bool IsFailure => !IsSuccess;
-    public KnError[]? Errors { get; protected init; }
+    public KnError[] Errors { get; protected init; }
 
     public static Result Success() => new(true, error: null);
     public static Result<TValue> Success<TValue>(TValue value)

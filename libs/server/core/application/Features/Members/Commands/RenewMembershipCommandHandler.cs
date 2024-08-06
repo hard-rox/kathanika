@@ -9,7 +9,7 @@ internal sealed class RenewMembershipCommandHandler(IMemberRepository memberRepo
 
         Result renewMembershipResult = member.RenewMembership();
         if (renewMembershipResult.IsFailure)
-            return Result.Failure<Member>(renewMembershipResult.Errors!);
+            return Result.Failure<Member>(renewMembershipResult.Errors);
 
         await memberRepository.UpdateAsync(member, cancellationToken);
         return Result.Success(member);

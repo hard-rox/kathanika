@@ -19,7 +19,7 @@ public static class AuthorAggregateErrors
         message: "DateOfDeath must be after DateOfBirth"
     );
 
-    public static KnError NotFoundError(string id) => new(
+    public static KnError NotFound(string id) => new(
         "Author.NotFound",
         message: $"No Author found with this Id: \"{id}\""
     );
