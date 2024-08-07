@@ -6,7 +6,7 @@ namespace Kathanika.Core.Application.Test.Features.Publications.Commands;
 public class UpdatePublicationCommandHandlerTests
 {
     [Fact]
-    public async Task Handler_Should_Throw_Exception_On_Invalid_PublicationId()
+    public async Task Handler_ShouldReturnError_OnInvalidPublicationId()
     {
         string publicationId = Guid.NewGuid().ToString();
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
@@ -17,17 +17,19 @@ public class UpdatePublicationCommandHandlerTests
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository, publisherRepository);
 
-        NotFoundWithTheIdException exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => await handler.Handle(command, default));
+        Result<Publication> result = await handler.Handle(command, default);
 
-        Assert.IsAssignableFrom<NotFoundWithTheIdException>(exception);
-        Assert.Equal(publicationId, exception.Id);
+        Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
+        Assert.Single(result.Errors);
+        Assert.Equal(PublicationAggregateErrors.NotFound(publicationId).Code, result.Errors[0].Code);
     }
 
     [Fact]
-    public async Task Handler_Should_Call_UpdateAsync_With_Updated_Publication()
+    public async Task Handler_ShouldCallUpdateAsync_WithUpdatedPublication()
     {
         string publicationId = Guid.NewGuid().ToString();
-        Publisher publisher = Publisher.Create(string.Empty);
+        Publisher publisher = Publisher.Create(string.Empty).Value;
         Publication publication = Publication.Create(
             "Title",
             null,
@@ -45,7 +47,7 @@ public class UpdatePublicationCommandHandlerTests
             string.Empty,
             null,
             []
-            );
+        ).Value;
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();
         publicationRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(publication);
@@ -58,10 +60,11 @@ public class UpdatePublicationCommandHandlerTests
         ));
         UpdatePublicationCommandHandler handler = new(publicationRepository, authorRepository, publisherRepository);
 
-        Publication updatedPublication = await handler.Handle(command, default);
+        Result<Publication> updatedPublicationResult = await handler.Handle(command, default);
 
-        Assert.NotNull(updatedPublication);
-        Assert.Equal("Updated Title", updatedPublication.Title);
+        Assert.True(updatedPublicationResult.IsSuccess);
+        Assert.NotNull(updatedPublicationResult.Value);
+        Assert.Equal("Updated Title", updatedPublicationResult.Value.Title);
         await publicationRepository.Received(1).GetByIdAsync(Arg.Is<string>(x => x == publicationId), Arg.Any<CancellationToken>());
         await publicationRepository.Received(1).UpdateAsync(Arg.Is<Publication>(x => x == publication), Arg.Any<CancellationToken>());
     }

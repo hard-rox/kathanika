@@ -16,4 +16,4 @@ public sealed record AcquirePublicationCommand(
     int Quantity,
     decimal? UnitPrice,
     string? Vendor,
-    string? Patron) : IRequest<Publication>;
+    string? Patron) : IRequest<Result<Publication>>;

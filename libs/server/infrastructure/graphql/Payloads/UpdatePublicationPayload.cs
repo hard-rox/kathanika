@@ -2,6 +2,15 @@ using Kathanika.Infrastructure.Graphql.Bases;
 
 namespace Kathanika.Infrastructure.Graphql.Payloads;
 
-public sealed class UpdatePublicationPayload(Publication data) : Payload<Publication>($"Publication {data.Title} updated successfully.", data)
+public sealed record UpdatePublicationPayload
+: Payload<Publication>
 {
+    public UpdatePublicationPayload(Core.Domain.Primitives.Result<Publication> result)
+    : base(
+        result,
+        result.IsSuccess ?
+    $"Publication {result.Value?.Title} updated successfully." :
+    $"Publication update failed."
+)
+    { }
 }

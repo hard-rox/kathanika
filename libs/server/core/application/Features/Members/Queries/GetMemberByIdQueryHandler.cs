@@ -1,11 +1,15 @@
 
 namespace Kathanika.Core.Application.Features.Members.Queries;
 
-internal sealed class GetMemberByIdQueryHandler(IMemberRepository memberRepository) : IRequestHandler<GetMemberByIdQuery, Member?>
+internal sealed class GetMemberByIdQueryHandler(IMemberRepository memberRepository) : IRequestHandler<GetMemberByIdQuery, Result<Member>>
 {
-    public async Task<Member?> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
+    public async Task<Result<Member>> Handle(GetMemberByIdQuery request, CancellationToken cancellationToken)
     {
         Member? member = await memberRepository.GetByIdAsync(request.Id, cancellationToken);
-        return member;
+
+        if (member is null)
+            return Result.Failure<Member>(MemberAggregateErrors.NotFound(request.Id));
+
+        return Result.Success(member);
     }
 }

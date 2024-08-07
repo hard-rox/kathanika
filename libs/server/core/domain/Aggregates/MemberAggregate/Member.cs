@@ -39,7 +39,7 @@ public sealed class Member : AggregateRoot
         Email = email;
     }
 
-    public static Member Create(
+    public static Result<Member> Create(
         string firstName,
         string lastName,
         string photoFileId,
@@ -49,7 +49,16 @@ public sealed class Member : AggregateRoot
         string email
     )
     {
-        Member newMember = new Member(
+        List<KnError> errors = [];
+        if (dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
+        {
+            errors.Add(MemberAggregateErrors.FutureDateOfBirth);
+        }
+
+        if (errors.Count != 0)
+            return Result.Failure<Member>(errors);
+
+        Member newMember = new(
             firstName,
             lastName,
             photoFileId,
@@ -61,10 +70,10 @@ public sealed class Member : AggregateRoot
 
         newMember.AddDomainEvent(new FileUsedDomainEvent(photoFileId));
 
-        return newMember;
+        return Result.Success(newMember);
     }
 
-    public void Update(
+    public Result Update(
     string? firstName,
     string? lastName,
     string? photoFileId,
@@ -85,30 +94,43 @@ public sealed class Member : AggregateRoot
             AddDomainEvent(new FileReplacedDomainEvent(PhotoFileId, photoFileId));
             PhotoFileId = photoFileId;
         }
+
+        return Result.Success();
     }
 
-    public void CancelMembership()
+    public Result CancelMembership()
     {
         if (_currentlyIssuedPublications.Count != 0)
         {
-            throw new MemberHasIssuedPublicationsException(_currentlyIssuedPublications.ToArray());
+            return MemberAggregateErrors.HasIssuedPublication(_currentlyIssuedPublications.Count);
         }
         Status = MembershipStatus.Cancelled;
         MembershipCancellationDateTime = DateTimeOffset.Now;
+
+        return Result.Success();
     }
 
-    public void SuspendMembership()
+    public Result SuspendMembership()
     {
         if (_currentlyIssuedPublications.Count != 0)
         {
-            throw new MemberHasIssuedPublicationsException(_currentlyIssuedPublications.ToArray());
+            return MemberAggregateErrors.HasIssuedPublication(_currentlyIssuedPublications.Count);
         }
         Status = MembershipStatus.Suspended;
         LastMembershipSuspensionDateTime = DateTimeOffset.Now;
+
+        return Result.Success();
     }
 
-    public void RenewMembership()
+    public Result RenewMembership()
     {
+        if (Status == MembershipStatus.Cancelled)
+            return MemberAggregateErrors.CancelledMembership;
+
+        if (Status == MembershipStatus.Active)
+            return MemberAggregateErrors.ActiveMembership;
+
         Status = MembershipStatus.Active;
+        return Result.Success();
     }
 }

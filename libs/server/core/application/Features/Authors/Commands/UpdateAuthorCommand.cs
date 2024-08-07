@@ -1,6 +1,6 @@
 namespace Kathanika.Core.Application.Features.Authors.Commands;
 
-public sealed record UpdateAuthorCommand(string Id, AuthorPatch Patch) : IRequest<Author>;
+public sealed record UpdateAuthorCommand(string Id, AuthorPatch Patch) : IRequest<Result<Author>>;
 
 public sealed record AuthorPatch(
         string? FirstName = null,

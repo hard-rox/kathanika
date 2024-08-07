@@ -6,7 +6,7 @@ namespace Kathanika.Core.Application.Test.Features.Authors.Commands;
 public class DeleteAuthorCommandHandlerTests
 {
     [Fact]
-    public async Task Handler_Should_Call_DeleteAsync()
+    public async Task Handler_Should_CallDeleteAsync()
     {
         string id = Guid.NewGuid().ToString();
         Author author = Author.Create(
@@ -16,7 +16,7 @@ public class DeleteAuthorCommandHandlerTests
             null,
             "USA",
             ""
-        );
+        ).Value;
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(author);
@@ -31,7 +31,7 @@ public class DeleteAuthorCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handler_Should_Throw_Exception_On_Invalid_Author_Id()
+    public async Task Handler_ShouldReturnResultWithErrors_OnInvalidAuthorId()
     {
         string id = Guid.NewGuid().ToString();
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
@@ -39,13 +39,16 @@ public class DeleteAuthorCommandHandlerTests
         DeleteAuthorCommand command = new(id);
         DeleteAuthorCommandHandler handler = new(authorRepository, publicationRepository);
 
-        NotFoundWithTheIdException exception = await Assert.ThrowsAsync<NotFoundWithTheIdException>(async () => { await handler.Handle(command, default); });
+        Result result = await handler.Handle(command, default);
 
-        Assert.IsAssignableFrom<NotFoundWithTheIdException>(exception);
+        Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
+        Assert.Single(result.Errors);
+        Assert.Equal(result.Errors[0].Code, AuthorAggregateErrors.NotFound(id).Code);
     }
 
     [Fact]
-    public async Task Handler_Should_Throw_Exception_When_Author_Has_Publication()
+    public async Task Handler_ShouldReturnError_WhenAuthorHasPublications()
     {
         string id = Guid.NewGuid().ToString();
         Author author = Author.Create(
@@ -55,7 +58,7 @@ public class DeleteAuthorCommandHandlerTests
             null,
             "USA",
             ""
-        );
+        ).Value;
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(author);
@@ -65,13 +68,16 @@ public class DeleteAuthorCommandHandlerTests
         DeleteAuthorCommand command = new(id);
         DeleteAuthorCommandHandler handler = new(authorRepository, publicationRepository);
 
-        DeletionFailedException exception = await Assert.ThrowsAsync<DeletionFailedException>(async () => { await handler.Handle(command, default); });
+        Result result = await handler.Handle(command, default);
 
-        Assert.IsAssignableFrom<DeletionFailedException>(exception);
+        Assert.True(result.IsFailure);
+        Assert.NotNull(result.Errors);
+        Assert.Single(result.Errors);
+        Assert.Equal(result.Errors[0].Code, AuthorAggregateErrors.HasPublication.Code);
     }
 
     [Fact]
-    public async Task Handler_Should_Check_AuthorExistence_And_Publication()
+    public async Task Handler_ShouldCheck_AuthorExistence_And_Publication()
     {
         string id = Guid.NewGuid().ToString();
         Author author = Author.Create(
@@ -81,7 +87,7 @@ public class DeleteAuthorCommandHandlerTests
             null,
             "USA",
             ""
-        );
+        ).Value;
         IAuthorRepository authorRepository = Substitute.For<IAuthorRepository>();
         authorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(author);
         IPublicationRepository publicationRepository = Substitute.For<IPublicationRepository>();

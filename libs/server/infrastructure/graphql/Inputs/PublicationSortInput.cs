@@ -1,5 +1,4 @@
 using HotChocolate.Data.Sorting;
-using Kathanika.Infrastructure.Graphql.GraphqlHelpers;
 
 namespace Kathanika.Infrastructure.Graphql.Inputs;
 
@@ -9,5 +8,6 @@ public sealed class PublicationSortInput : SortInputType<Publication>
     {
         descriptor.IgnoreAuditFieldsFromSortInputType();
         descriptor.Ignore(x => x.PurchaseRecords);
+        descriptor.Ignore(x => x.CoverImageFileId);
     }
 }

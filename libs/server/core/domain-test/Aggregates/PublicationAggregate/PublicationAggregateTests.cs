@@ -1,14 +1,14 @@
-namespace Kathanika.Core.Domain.Test.PublicationAggregate;
+namespace Kathanika.Core.Domain.Test.Aggregates.PublicationAggregate;
 
 public class PublicationAggregateTests
 {
     [Fact]
-    public void Create_Should_Return_Publication_On_Valid_Input()
+    public void Create_Should_Return_ResultOfPublication_On_Valid_Input()
     {
         // Arrange
-        Publisher publisher = Publisher.Create("Publisher");
+        Publisher publisher = Publisher.Create("Publisher").Value;
         // Act
-        Publication publication = Publication.Create(
+        Result<Publication> result = Publication.Create(
             "Title",
             "12345",
             PublicationType.Book,
@@ -32,7 +32,7 @@ public class PublicationAggregateTests
                     null,
                     "",
                     ""
-                ),
+                ).Value,
                 Author.Create(
                     "John",
                     "Doe",
@@ -40,13 +40,14 @@ public class PublicationAggregateTests
                     null,
                     "",
                     ""
-                )
+                ).Value
             ]
         );
 
         // Assert
-        Assert.Equal("Title", publication.Title);
-        Assert.Equal(2, publication.Authors.Count);
+        Assert.True(result.IsSuccess);
+        Assert.Equal("Title", result.Value.Title);
+        Assert.Equal(2, result.Value.Authors.Count);
     }
 
     [Fact]
@@ -70,10 +71,10 @@ public class PublicationAggregateTests
             string.Empty,
             string.Empty,
             []
-        );
+        ).Value;
 
         // Act
-        publication.Update(
+        Result result = publication.Update(
             "Updated Title",
             "Updated Isbn",
             PublicationType.Journal,
@@ -87,6 +88,7 @@ public class PublicationAggregateTests
         );
 
         // Assert
+        Assert.True(result.IsSuccess);
         Assert.Equal("Updated Title", publication.Title);
     }
 }

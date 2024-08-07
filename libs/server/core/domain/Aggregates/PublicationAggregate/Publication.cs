@@ -1,7 +1,6 @@
 using Kathanika.Core.Domain.Aggregates.AuthorAggregate;
 using Kathanika.Core.Domain.Aggregates.PublisherAggregate;
 using Kathanika.Core.Domain.DomainEvents;
-using Kathanika.Core.Domain.Exceptions;
 using Kathanika.Core.Domain.Primitives;
 
 namespace Kathanika.Core.Domain.Aggregates.PublicationAggregate;
@@ -27,19 +26,16 @@ public sealed class Publication : AggregateRoot
     public IReadOnlyList<PublicationAuthor> Authors
     {
         get { return _authors; }
-        private init { _authors = value?.ToList() ?? []; }
     }
 
     public IReadOnlyList<PurchaseRecord> PurchaseRecords
     {
         get { return _purchaseRecords ?? []; }
-        private init { _purchaseRecords = value?.ToList() ?? []; }
     }
 
     public IReadOnlyList<DonationRecord> DonationRecords
     {
         get { return _donationRecords ?? []; }
-        private init { _donationRecords = value?.ToList() ?? []; }
     }
 
     private Publication(
@@ -82,7 +78,7 @@ public sealed class Publication : AggregateRoot
         }
     }
 
-    public static Publication Create(
+    public static Result<Publication> Create(
         string title,
         string? isbn,
         PublicationType publicationType,
@@ -100,15 +96,22 @@ public sealed class Publication : AggregateRoot
         string? patron,
         IEnumerable<Author>? authors = null)
     {
-        List<DomainException> errors = [];
-        if (acquisitionMethod == AcquisitionMethod.Purchase && (unitPrice is null || vendor is null))
+        List<KnError> errors = [];
+        if (acquisitionMethod == AcquisitionMethod.Purchase && unitPrice is null)
         {
-            errors.Add(new InvalidFieldException(nameof(unitPrice), "Value can't be null"));
+            errors.Add(PublicationAggregateErrors.UnitPriceNull);
+        }
+        if (acquisitionMethod == AcquisitionMethod.Purchase && vendor is null)
+        {
+            errors.Add(PublicationAggregateErrors.UnitPriceNull);
         }
         if (acquisitionMethod == AcquisitionMethod.Donation && patron is null)
         {
-            errors.Add(new InvalidFieldException(nameof(patron), "Value can't be null"));
+            errors.Add(PublicationAggregateErrors.PatronNull);
         }
+
+        if (errors.Count > 0)
+            return Result.Failure<Publication>(errors);
 
         Publication publication = new(
             title,
@@ -130,10 +133,10 @@ public sealed class Publication : AggregateRoot
 
         publication.AddDomainEvent(new FileUsedDomainEvent(coverImageFileId));
 
-        return publication;
+        return Result.Success(publication);
     }
 
-    public void Update(
+    public Result Update(
         string? title,
         string? isbn,
         PublicationType? publicationType,
@@ -161,9 +164,11 @@ public sealed class Publication : AggregateRoot
             AddDomainEvent(new FileReplacedDomainEvent(CoverImageFileId, coverImageFileId));
             CoverImageFileId = coverImageFileId;
         }
+
+        return Result.Success();
     }
 
-    public void UpdateAuthors(Author[] authors)
+    public Result UpdateAuthors(Author[] authors)
     {
         _authors.Clear();
 
@@ -174,20 +179,23 @@ public sealed class Publication : AggregateRoot
                     author.LastName,
                     author.DpFileId));
         }
+
+        return Result.Success();
     }
 
-    public void UpdateAuthorInfo(Author author)
+    public Result UpdateAuthorInfo(Author author)
     {
         PublicationAuthor? publicationAuthor = _authors.Find(x => x.Id == author.Id);
-        if (publicationAuthor is null) return;
+        if (publicationAuthor is null) return PublicationAggregateErrors.AuthorNotFound(author.Id);
         _authors.Remove(publicationAuthor);
         _authors.Add(new PublicationAuthor(author.Id,
                     author.FirstName,
                     author.LastName,
                     author.DpFileId));
+        return Result.Success();
     }
 
-    public void RecordPurchase(
+    public Result RecordPurchase(
         decimal unitPrice,
         int quantity,
         string vendor)
@@ -195,14 +203,18 @@ public sealed class Publication : AggregateRoot
         _purchaseRecords ??= [];
         _purchaseRecords.Add(new PurchaseRecord(quantity, unitPrice, vendor));
         CopiesAvailable += quantity;
+
+        return Result.Success();
     }
 
-    public void RecordDonation(
+    public Result RecordDonation(
         int quantity,
         string patron)
     {
         _donationRecords ??= [];
         _donationRecords.Add(new DonationRecord(quantity, patron));
         CopiesAvailable += quantity;
+
+        return Result.Success();
     }
 }

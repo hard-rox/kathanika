@@ -20,7 +20,7 @@ public sealed class Publisher : AggregateRoot
         ContactInformation = contactInformation;
     }
 
-    public static Publisher Create(
+    public static Result<Publisher> Create(
         string publisherName,
         string? description = null,
         string? contactInformation = null
@@ -31,9 +31,9 @@ public sealed class Publisher : AggregateRoot
             description,
             contactInformation
         );
-        return publisher;
+        return Result.Success(publisher);
     }
-    public void Update(
+    public Result Update(
         string? publisherName = null,
         string? description = null,
         string? contactInformation = null
@@ -44,5 +44,7 @@ public sealed class Publisher : AggregateRoot
         ContactInformation = !string.IsNullOrWhiteSpace(contactInformation) ? contactInformation : ContactInformation;
 
         AddDomainEvent(new PublisherUpdatedDomainEvent(Id));
+
+        return Result.Success();
     }
 }

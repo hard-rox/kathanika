@@ -1,43 +1,57 @@
-using Kathanika.Core.Domain.Exceptions;
 using Kathanika.Infrastructure.Graphql.Payloads;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
-public sealed partial class Mutations
+[ExtendObjectType(OperationTypeNames.Mutation)]
+public sealed class MemberMutations
 {
-    [Error<InvalidFieldException>]
-    public async Task<CreateMemberPayload> CreateMemberAsync([FromServices] IMediator mediator, CreateMemberCommand input)
+    public async Task<CreateMemberPayload> CreateMemberAsync(
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken,
+        CreateMemberCommand input
+    )
     {
-        Member member = await mediator.Send(input);
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(input, cancellationToken);
+        return new(result);
     }
 
-    [Error<InvalidFieldException>]
-    public async Task<UpdateMemberPayload> UpdateMemberAsync([FromServices] IMediator mediator, UpdateMemberCommand input)
+    public async Task<UpdateMemberPayload> UpdateMemberAsync(
+        [Service] IMediator mediator,
+        UpdateMemberCommand input,
+        CancellationToken cancellationToken
+    )
     {
-        Member member = await mediator.Send(input);
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(input, cancellationToken);
+        return new(result);
     }
 
-    [Error<InvalidFieldException>]
-    public async Task<RenewMembershipPayload> RenewMembershipAsync([FromServices] IMediator mediator, string id)
+    public async Task<RenewMembershipPayload> RenewMembershipAsync(
+        [Service] IMediator mediator,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        Member member = await mediator.Send(new RenewMembershipCommand(id));
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(new RenewMembershipCommand(id), cancellationToken);
+        return new(result);
     }
 
-    [Error<InvalidFieldException>]
-    public async Task<CancelMembershipPayload> CancelMembershipAsync([FromServices] IMediator mediator, string id)
+    public async Task<CancelMembershipPayload> CancelMembershipAsync(
+        [Service] IMediator mediator,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        Member member = await mediator.Send(new CancelMembershipCommand(id));
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(new CancelMembershipCommand(id), cancellationToken);
+        return new(result);
     }
 
-    [Error<InvalidFieldException>]
-    public async Task<SuspendMembershipPayload> SuspendMembershipAsync([FromServices] IMediator mediator, string id)
+    public async Task<SuspendMembershipPayload> SuspendMembershipAsync(
+        [Service] IMediator mediator,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        Member member = await mediator.Send(new SuspendMembershipCommand(id));
-        return new(member);
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(new SuspendMembershipCommand(id), cancellationToken);
+        return new(result);
     }
 }

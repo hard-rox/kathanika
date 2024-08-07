@@ -1,10 +1,10 @@
 namespace Kathanika.Core.Application.Features.Members.Commands;
 
-internal sealed class CreateMemberCommandHandler(IMemberRepository memberRepository) : IRequestHandler<CreateMemberCommand, Member>
+internal sealed class CreateMemberCommandHandler(IMemberRepository memberRepository) : IRequestHandler<CreateMemberCommand, Result<Member>>
 {
-    public async Task<Member> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Member>> Handle(CreateMemberCommand request, CancellationToken cancellationToken)
     {
-        Member newMember = Member.Create(
+        Result<Member> result = Member.Create(
             request.FirstName,
             request.LastName,
             request.PhotoFileId,
@@ -14,7 +14,10 @@ internal sealed class CreateMemberCommandHandler(IMemberRepository memberReposit
             request.Email
         );
 
-        Member savedMember = await memberRepository.AddAsync(newMember, cancellationToken);
-        return savedMember;
+        if (result.IsFailure)
+            return Result.Failure<Member>(result.Errors);
+
+        Member savedMember = await memberRepository.AddAsync(result.Value, cancellationToken);
+        return Result.Success(savedMember);
     }
 }

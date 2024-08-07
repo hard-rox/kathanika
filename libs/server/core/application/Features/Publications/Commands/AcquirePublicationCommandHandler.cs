@@ -4,14 +4,14 @@ internal sealed class AcquirePublicationCommandHandler(
     IPublicationRepository publicationRepository,
     IAuthorRepository authorRepository,
     IPublisherRepository publisherRepository)
-        : IRequestHandler<AcquirePublicationCommand, Publication>
+        : IRequestHandler<AcquirePublicationCommand, Result<Publication>>
 {
-    public async Task<Publication> Handle(AcquirePublicationCommand request, CancellationToken cancellationToken)
+    public async Task<Result<Publication>> Handle(AcquirePublicationCommand request, CancellationToken cancellationToken)
     {
         IReadOnlyList<Author> authors = await authorRepository.ListAllAsync(x => request.AuthorIds.Contains(x.Id), cancellationToken);
         Publisher? publisher = await publisherRepository.GetByIdAsync(request.PublisherId, cancellationToken);
 
-        Publication publication = Publication.Create(
+        Result<Publication> publicationCreateResult = Publication.Create(
             request.Title,
             request.Isbn,
             request.PublicationType,
@@ -29,7 +29,10 @@ internal sealed class AcquirePublicationCommandHandler(
             request.Patron,
             authors);
 
-        Publication addedPublication = await publicationRepository.AddAsync(publication, cancellationToken);
-        return addedPublication;
+        if (publicationCreateResult.IsFailure)
+            return publicationCreateResult;
+
+        Publication addedPublication = await publicationRepository.AddAsync(publicationCreateResult.Value, cancellationToken);
+        return Result.Success(addedPublication);
     }
 }

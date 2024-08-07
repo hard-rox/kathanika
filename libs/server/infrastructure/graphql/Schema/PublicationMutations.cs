@@ -1,23 +1,27 @@
-using Kathanika.Core.Domain.Exceptions;
 using Kathanika.Infrastructure.Graphql.Payloads;
-using Microsoft.AspNetCore.Mvc;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
-public sealed partial class Mutations
+[ExtendObjectType(OperationTypeNames.Mutation)]
+public sealed class PublicationMutations
 {
-    [Error<InvalidFieldException>]
-    public async Task<AcquirePublicationPayload> AcquirePublicationAsync([FromServices] IMediator mediator, AcquirePublicationCommand input)
+    public async Task<AcquirePublicationPayload> AcquirePublicationAsync(
+        [Service] IMediator mediator,
+        AcquirePublicationCommand input,
+        CancellationToken cancellationToken
+    )
     {
-        Publication publication = await mediator.Send(input);
-        return new AcquirePublicationPayload(publication);
+        Core.Domain.Primitives.Result<Publication> result = await mediator.Send(input, cancellationToken);
+        return new(result);
     }
 
-    [Error<InvalidFieldException>]
-    [Error<NotFoundWithTheIdException>]
-    public async Task<UpdatePublicationPayload> UpdatePublicationAsync([FromServices] IMediator mediator, UpdatePublicationCommand input)
+    public async Task<UpdatePublicationPayload> UpdatePublicationAsync(
+        [Service] IMediator mediator,
+        UpdatePublicationCommand input,
+        CancellationToken cancellationToken
+    )
     {
-        Publication publication = await mediator.Send(input);
-        return new(publication);
+        Core.Domain.Primitives.Result<Publication> result = await mediator.Send(input, cancellationToken);
+        return new(result);
     }
 }

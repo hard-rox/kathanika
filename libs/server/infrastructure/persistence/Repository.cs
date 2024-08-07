@@ -1,7 +1,6 @@
 using System.Linq.Expressions;
 using System.Reflection;
 using Kathanika.Core.Application.Services;
-using Kathanika.Core.Domain.Exceptions;
 using Kathanika.Core.Domain.Primitives;
 using Kathanika.Infrastructure.Persistence.Outbox;
 using MongoDB.Bson;
@@ -224,7 +223,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
-        if (!IsValidId(id)) throw new NotFoundWithTheIdException(typeof(T), id);
+        // if (!IsValidId(id)) throw new NotFoundWithTheIdException(typeof(T), id);
         _logger.LogInformation("Deleting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(T).Name, id, _collectionName);
         FilterDefinition<T> filter = Builders<T>.Filter.Eq(x => x.Id, id);
         await _collection.DeleteOneAsync(filter, cancellationToken: cancellationToken);

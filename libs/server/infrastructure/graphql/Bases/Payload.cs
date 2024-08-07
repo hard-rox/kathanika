@@ -1,11 +1,28 @@
+using Kathanika.Infrastructure.Graphql.Types;
+
 namespace Kathanika.Infrastructure.Graphql.Bases;
 
-public abstract class Payload(string message)
+public abstract record Payload
 {
-    public string Message { get; init; } = message;
+    public Payload(Result result, string? message = null)
+    {
+        Errors = result.Errors;
+        Message = message;
+    }
+
+    [GraphQLType<ListType<ErrorType>>]
+    public KnError[]? Errors { get; private init; }
+    public string? Message { get; private init; }
 }
 
-public abstract class Payload<T>(string message, T data) : Payload(message)
+public abstract record Payload<TData> : Payload
+    where TData : class
 {
-    public T Data { get; init; } = data;
+    public Payload(Core.Domain.Primitives.Result<TData> result, string? message = null)
+        : base(result, message)
+    {
+        Data = result.Value;
+    }
+
+    public TData? Data { get; private init; }
 }

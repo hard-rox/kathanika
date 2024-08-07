@@ -1,14 +1,16 @@
-using Microsoft.AspNetCore.Mvc;
+using HotChocolate.Resolvers;
+using Kathanika.Core.Application.Features.Members.Queries;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
-public sealed partial class Queries
+[ExtendObjectType(OperationTypeNames.Query)]
+public sealed class MemberQueries
 {
     [UseOffsetPaging]
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<Member>> GetMembersAsync(
-        [FromServices] IMediator mediator,
+        [Service] IMediator mediator,
         CancellationToken cancellationToken
     )
     {
@@ -16,9 +18,14 @@ public sealed partial class Queries
         return members;
     }
 
-    public async Task<Member?> GetMemberAsync([FromServices] IMediator mediator, string id, CancellationToken cancellationToken)
+    public async Task<Member?> GetMemberAsync(
+        [Service] IMediator mediator,
+        IResolverContext context,
+        string id,
+        CancellationToken cancellationToken
+    )
     {
-        Member? member = await mediator.Send(new GetMemberByIdQuery(id), cancellationToken);
-        return member;
+        Core.Domain.Primitives.Result<Member> result = await mediator.Send(new GetMemberByIdQuery(id), cancellationToken);
+        return result.Match(context);
     }
 }

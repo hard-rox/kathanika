@@ -1,4 +1,3 @@
-using Bogus;
 using Kathanika.Core.Application.Features.Members.Commands;
 using Kathanika.Core.Domain.Aggregates.MemberAggregate;
 
@@ -29,7 +28,7 @@ public class CreateMemberCommandHandlerTests
             command.Address,
             command.ContactNumber,
             command.Email
-        );
+        ).Value;
         memberRepository.AddAsync(Arg.Any<Member>(), Arg.Any<CancellationToken>())
             .Returns(member);
         CreateMemberCommandHandler handler = new(memberRepository);

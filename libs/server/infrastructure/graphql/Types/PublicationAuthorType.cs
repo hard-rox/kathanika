@@ -1,5 +1,4 @@
 using Kathanika.Infrastructure.Graphql.Bases;
-using Kathanika.Infrastructure.Graphql.GraphqlHelpers;
 
 namespace Kathanika.Infrastructure.Graphql.Types;
 

@@ -1,6 +1,6 @@
 namespace Kathanika.Core.Application.Features.Publications.Commands;
 
-public sealed record UpdatePublicationCommand(string Id, PublicationPatch Patch) : IRequest<Publication>;
+public sealed record UpdatePublicationCommand(string Id, PublicationPatch Patch) : IRequest<Result<Publication>>;
 
 public sealed record PublicationPatch(
         string? Title,
