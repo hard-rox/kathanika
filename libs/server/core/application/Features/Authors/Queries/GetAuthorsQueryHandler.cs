@@ -1,6 +1,6 @@
 namespace Kathanika.Core.Application.Features.Authors.Queries;
 
-internal class GetAuthorsQueryHandler(IAuthorRepository authorRepository) : IRequestHandler<GetAuthorsQuery, IQueryable<Author>>
+internal sealed class GetAuthorsQueryHandler(IAuthorRepository authorRepository) : IRequestHandler<GetAuthorsQuery, IQueryable<Author>>
 {
     public async Task<IQueryable<Author>> Handle(GetAuthorsQuery request, CancellationToken cancellationToken)
     {
