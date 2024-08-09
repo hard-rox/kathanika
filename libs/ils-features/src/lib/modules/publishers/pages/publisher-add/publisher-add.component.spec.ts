@@ -73,7 +73,7 @@ describe('PublisherAddComponent', () => {
         addPublisher: {
           data: null,
           message: null,
-          errors: [{ __typename: 'InvalidFieldError', fieldName: 'field1', message: 'Error message 1' }]
+          errors: [{ __typename: 'ValidationError', fieldName: 'field1', message: 'Error message 1' }]
         }
       }
     };

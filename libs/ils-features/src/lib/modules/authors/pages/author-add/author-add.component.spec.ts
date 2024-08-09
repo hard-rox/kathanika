@@ -91,7 +91,7 @@ describe('AuthorAddComponent', () => {
           errors: [
             {
               fieldName: 'DateOfBirth',
-              __typename: 'InvalidFieldError',
+              __typename: 'ValidationError',
               message: "Cann't be future date",
             },
           ],

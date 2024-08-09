@@ -5,11 +5,14 @@ mutation addAuthor($addAuthorInput: AddAuthorInput!) {
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
-      }
-      ... on Error {
         message
+        description
+      }
+      ... on KnError {
+        message
+        description
       }
     }
   }
@@ -22,14 +25,12 @@ mutation updateAuthor($id: String!, $authorPatch: AuthorPatchInput!) {
       id
     }
     errors {
-      ... on NotFoundWithTheIdError {
-        id
-        objectName
-      }
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -40,19 +41,14 @@ mutation deleteAuthor($id: String!) {
   deleteAuthor(input: { id: $id }) {
     message
     errors {
-      ... on NotFoundWithTheIdError {
-        id
-        objectName
-        message
-      }
-      ... on DeletionFailedError {
-        objectName
-        reason
-        message
-      }
-      ... on Error {
-        message
-      }
+        ...on KnError {
+            message
+        }
+        ...on ValidationError{
+            fieldName
+            message
+            description
+        }
     }
   }
 }

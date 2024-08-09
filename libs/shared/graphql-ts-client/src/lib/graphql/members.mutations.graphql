@@ -5,10 +5,12 @@ mutation createMember($createMemberInput: CreateMemberInput!) {
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -22,10 +24,12 @@ mutation updateMember($id: String!, $memberPatch: MemberPatchInput!) {
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }

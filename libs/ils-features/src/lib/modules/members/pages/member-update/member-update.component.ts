@@ -79,7 +79,7 @@ export class MemberUpdateComponent implements OnInit {
             this.errors = [];
             result.data?.updateMember.errors?.forEach((x) => {
               switch (x.__typename) {
-                case 'InvalidFieldError':
+                case 'ValidationError':
                   this.errors.push(`${x.fieldName} - ${x.message}`);
                   break;
                 default:

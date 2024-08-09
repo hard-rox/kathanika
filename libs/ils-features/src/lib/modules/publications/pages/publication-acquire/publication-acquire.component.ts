@@ -31,8 +31,16 @@ export class PublicationAcquireComponent {
         next: (result) => {
           if (result.errors || result.data?.acquirePublication.errors) {
             this.errors = [];
-            result.data?.acquirePublication.errors?.forEach((x) =>
-              this.errors.push(`${x.fieldName} - ${x.message}`),
+            result.data?.acquirePublication.errors?.forEach((x) =>{
+              switch (x.__typename) {
+                case 'ValidationError':
+                  this.errors.push(`${x.fieldName} - ${x.message}`);
+                  break;
+                default:
+                  this.errors.push(x.message);
+                  break;
+              }
+            }
             );
             result.errors?.forEach((x) => this.errors.push(x.message));
           } else {

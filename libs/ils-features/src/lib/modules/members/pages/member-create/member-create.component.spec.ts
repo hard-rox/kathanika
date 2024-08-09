@@ -80,7 +80,7 @@ describe('MemberCreateComponent', () => {
         createMember: {
           data: null,
           message: null,
-          errors: [{ fieldName: 'field1', message: 'Error message 1' }]
+          errors: [{ fieldName: 'field1', message: 'field1 - Error message 1' }]
         }
       }
     };
