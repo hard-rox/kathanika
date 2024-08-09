@@ -102,6 +102,7 @@ describe('PublisherUpdateComponent', () => {
         publisher: undefined
       },
       error: {
+        cause: null,
         graphQLErrors: [],
         protocolErrors: [],
         clientErrors: [],

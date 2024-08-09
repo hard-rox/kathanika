@@ -173,6 +173,7 @@ describe('PublicationUpdateComponent', () => {
         publication: null
       },
       error: {
+        cause: null,
         graphQLErrors: [],
         protocolErrors: [],
         clientErrors: [],
