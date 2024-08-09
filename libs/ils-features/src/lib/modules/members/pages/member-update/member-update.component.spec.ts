@@ -102,6 +102,7 @@ describe('MemberUpdateComponent', () => {
         member: null
       },
       error: {
+        cause: null,
         graphQLErrors: [],
         protocolErrors: [],
         clientErrors: [],
