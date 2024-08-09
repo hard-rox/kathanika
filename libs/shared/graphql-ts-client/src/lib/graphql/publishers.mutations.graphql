@@ -5,10 +5,12 @@ mutation addPublisher($addPublisherInput: AddPublisherInput!) {
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -22,14 +24,12 @@ mutation updatePublisher($id: String!, $publisherPatch: PublisherPatchInput!) {
       id
     }
     errors {
-      ... on NotFoundWithTheIdError {
-        id
-        objectName
-      }
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }

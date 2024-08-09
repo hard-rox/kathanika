@@ -84,12 +84,9 @@ export class PublisherUpdateComponent implements OnInit {
           if (result.errors || result.data?.updatePublisher.errors) {
             this.errors = [];
             result.data?.updatePublisher.errors?.forEach((x) => {
-              switch (x.__typename) {
-                case 'InvalidFieldError':
+              switch (x?.__typename) {
+                case 'ValidationError':
                   this.errors.push(`${x.fieldName} - ${x.message}`);
-                  break;
-                case 'NotFoundWithTheIdError':
-                  this.errors.push(`${x.objectName} - ${x.message}`);
                   break;
                 default:
                   this.errors.push(x.message);
@@ -103,7 +100,7 @@ export class PublisherUpdateComponent implements OnInit {
               result.data?.updatePublisher.message ?? 'Publisher updated.',
             );
             this.publisherUpdateForm?.resetForm();
-            this.router.navigate([`/publishers/${result.data?.updatePublisher.data?.id}`]);
+            this.router.navigate([`/publishers`]);
           }
         },
         error: (err) => {

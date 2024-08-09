@@ -255,8 +255,7 @@ describe('PublicationUpdateComponent', () => {
           data: null,
           message: null,
           errors: [
-            { __typename: 'InvalidFieldError', fieldName: 'fieldName1', message: 'Invalid field 1' },
-            { __typename: 'NotFoundWithTheIdError', id: '123', objectName: 'objectName1', message: 'Object not found 1' },
+            { __typename: 'ValidationError', fieldName: 'fieldName1', message: 'Invalid field 1' },
           ]
         }
       }
@@ -280,7 +279,7 @@ describe('PublicationUpdateComponent', () => {
     expect(component.publicationUpdateForm.resetForm).not.toHaveBeenCalled();
     expect(component['router'].navigate).not.toHaveBeenCalled();
     expect(component.isPanelLoading).toBe(false);
-    expect(component.errors.length).toEqual(2);
+    expect(component.errors.length).toEqual(1);
   });
 
   it('should handle form submission with network error', () => {

@@ -4,11 +4,11 @@ public record KnError
 {
     public string Code { get; private init; }
     public string? Description { get; private init; }
-    public string? Message { get; private init; }
+    public string Message { get; private init; }
     internal KnError(
         string code,
-        string? description = null,
-        string? message = null
+        string message,
+        string? description = null
     )
     {
         Code = code;
@@ -18,7 +18,7 @@ public record KnError
 
     public static implicit operator Result(KnError error) => Result.Failure(error);
 
-    public static KnError ValidationError(string fieldName, string? message = null)
+    public static KnError ValidationError(string fieldName, string message)
     {
         return new ValidationError(fieldName, message);
     }
@@ -29,11 +29,11 @@ public sealed record ValidationError : KnError
     public string FieldName { get; private init; }
     internal ValidationError(
         string fieldName,
-        string? message = null
+        string message
     ) : base(
         "Kathanika.ValidationError",
-        $"{fieldName} is invalid",
-        message
+        message,
+        $"{fieldName} is invalid"
     )
     {
         FieldName = fieldName;

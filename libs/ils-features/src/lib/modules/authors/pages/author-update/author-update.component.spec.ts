@@ -140,13 +140,7 @@ describe('AuthorUpdateComponent', () => {
             {
               fieldName: 'Test',
               message: 'Message',
-              __typename: 'InvalidFieldError',
-            },
-            {
-              objectName: 'Test',
-              id: '12345',
-              message: 'Message',
-              __typename: 'NotFoundWithTheIdError',
+              __typename: 'ValidationError',
             },
             {
               fieldName: 'Test',
@@ -170,7 +164,7 @@ describe('AuthorUpdateComponent', () => {
       nationality: '',
       biography: '',
     });
-    expect(component.errors.length).toEqual(3);
+    expect(component.errors.length).toEqual(2);
   });
 
   it('should clear errors array on close button click in alert component', () => {

@@ -31,8 +31,16 @@ export class MemberCreateComponent {
         // console.debug(result);
         if (result.errors || result.data?.createMember.errors) {
           this.errors = [];
-          result.data?.createMember.errors?.forEach((x) =>
-            this.errors.push(`${x.fieldName} - ${x.message}`),
+          result.data?.createMember.errors?.forEach((x) =>{
+            switch (x?.__typename) {
+              case 'ValidationError':
+                this.errors.push(`${x.fieldName} - ${x.message}`);
+                break;
+              default:
+                this.errors.push(x.message);
+                break;
+            }
+          }
           );
           result.errors?.forEach((x) => this.errors.push(x.message));
         } else {

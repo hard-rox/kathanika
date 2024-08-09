@@ -184,7 +184,7 @@ describe('MemberUpdateComponent', () => {
           data: null,
           message: null,
           errors: [
-            { __typename: 'InvalidFieldError', fieldName: 'fieldName1', message: 'Invalid field 1' }
+            { __typename: 'ValidationError', fieldName: 'fieldName1', message: 'Invalid field 1' }
           ]
         }
       }

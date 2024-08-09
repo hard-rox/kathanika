@@ -23,11 +23,11 @@ export class AuthorAddComponent {
     this.isPanelLoading = true;
     this.gql.mutate({ addAuthorInput: formValue as AddAuthorInput }).subscribe({
       next: (result) => {
-        // console.debug(result);
+        console.debug(result);
         if (result.errors || result.data?.addAuthor.errors) {
           this.errors = [];
           result.data?.addAuthor.errors?.forEach((x) =>
-            this.errors.push(`${x.fieldName} - ${x.message}`),
+            this.errors.push(`${x?.message}`),
           );
           result.errors?.forEach((x) => this.errors.push(x.message));
         } else {
@@ -40,6 +40,9 @@ export class AuthorAddComponent {
         }
         this.isPanelLoading = false;
       },
+      error: (error) => {
+        console.log(error);
+      }
     });
   }
 

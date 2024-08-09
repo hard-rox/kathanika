@@ -24,8 +24,6 @@ export type Scalars = {
   URL: { input: any; output: any; }
 };
 
-export type AcquirePublicationError = InvalidFieldError;
-
 export type AcquirePublicationInput = {
   acquisitionMethod: AcquisitionMethod;
   authorIds: Array<Scalars['String']['input']>;
@@ -48,7 +46,7 @@ export type AcquirePublicationInput = {
 export type AcquirePublicationPayload = {
   __typename?: 'AcquirePublicationPayload';
   data?: Maybe<Publication>;
-  errors?: Maybe<Array<AcquirePublicationError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -56,8 +54,6 @@ export enum AcquisitionMethod {
   Donation = 'DONATION',
   Purchase = 'PURCHASE'
 }
-
-export type AddAuthorError = InvalidFieldError;
 
 export type AddAuthorInput = {
   biography: Scalars['String']['input'];
@@ -73,11 +69,9 @@ export type AddAuthorInput = {
 export type AddAuthorPayload = {
   __typename?: 'AddAuthorPayload';
   data?: Maybe<Author>;
-  errors?: Maybe<Array<AddAuthorError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
-
-export type AddPublisherError = InvalidFieldError;
 
 export type AddPublisherInput = {
   contactInformation?: InputMaybe<Scalars['String']['input']>;
@@ -88,7 +82,7 @@ export type AddPublisherInput = {
 export type AddPublisherPayload = {
   __typename?: 'AddPublisherPayload';
   data?: Maybe<Publisher>;
-  errors?: Maybe<Array<AddPublisherError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -109,7 +103,6 @@ export type AuthorFilterInput = {
   and?: InputMaybe<Array<AuthorFilterInput>>;
   dateOfBirth?: InputMaybe<DateOperationFilterInput>;
   dateOfDeath?: InputMaybe<DateOperationFilterInput>;
-  dpFileId?: InputMaybe<StringOperationFilterInput>;
   firstName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
   lastName?: InputMaybe<StringOperationFilterInput>;
@@ -131,7 +124,6 @@ export type AuthorPatchInput = {
 export type AuthorSortInput = {
   dateOfBirth?: InputMaybe<SortEnumType>;
   dateOfDeath?: InputMaybe<SortEnumType>;
-  dpFileId?: InputMaybe<SortEnumType>;
   firstName?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
   lastName?: InputMaybe<SortEnumType>;
@@ -148,15 +140,13 @@ export type AuthorsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
-export type CancelMembershipError = InvalidFieldError;
-
 export type CancelMembershipInput = {
   id: Scalars['String']['input'];
 };
 
 export type CancelMembershipPayload = {
   __typename?: 'CancelMembershipPayload';
-  errors?: Maybe<Array<CancelMembershipError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -168,8 +158,6 @@ export type CollectionSegmentInfo = {
   /** Indicates whether more items exist prior the set defined by the clients arguments. */
   hasPreviousPage: Scalars['Boolean']['output'];
 };
-
-export type CreateMemberError = InvalidFieldError;
 
 export type CreateMemberInput = {
   address: Scalars['String']['input'];
@@ -184,7 +172,7 @@ export type CreateMemberInput = {
 export type CreateMemberPayload = {
   __typename?: 'CreateMemberPayload';
   data?: Maybe<Member>;
-  errors?: Maybe<Array<CreateMemberError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -218,19 +206,15 @@ export type DateTimeOperationFilterInput = {
   nlte?: InputMaybe<Scalars['DateTime']['input']>;
 };
 
-export type DeleteAuthorError = DeletionFailedError | NotFoundWithTheIdError;
-
 export type DeleteAuthorInput = {
   id: Scalars['String']['input'];
 };
 
 export type DeleteAuthorPayload = {
   __typename?: 'DeleteAuthorPayload';
-  errors?: Maybe<Array<DeleteAuthorError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
-
-export type DeletePublisherError = DeletionFailedError | NotFoundWithTheIdError;
 
 export type DeletePublisherInput = {
   id: Scalars['String']['input'];
@@ -238,15 +222,8 @@ export type DeletePublisherInput = {
 
 export type DeletePublisherPayload = {
   __typename?: 'DeletePublisherPayload';
-  errors?: Maybe<Array<DeletePublisherError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
-};
-
-export type DeletionFailedError = Error & {
-  __typename?: 'DeletionFailedError';
-  message: Scalars['String']['output'];
-  objectName: Scalars['String']['output'];
-  reason: Scalars['String']['output'];
 };
 
 export type DonationRecord = {
@@ -273,9 +250,7 @@ export type DonationRecordSortInput = {
   quantity?: InputMaybe<SortEnumType>;
 };
 
-export type Error = {
-  message: Scalars['String']['output'];
-};
+export type ErrorType = KnError | ValidationError;
 
 export type IntOperationFilterInput = {
   eq?: InputMaybe<Scalars['Int']['input']>;
@@ -292,9 +267,10 @@ export type IntOperationFilterInput = {
   nlte?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type InvalidFieldError = Error & {
-  __typename?: 'InvalidFieldError';
-  fieldName: Scalars['String']['output'];
+export type KnError = {
+  __typename?: 'KnError';
+  code: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
   message: Scalars['String']['output'];
 };
 
@@ -340,7 +316,6 @@ export type MemberFilterInput = {
   membershipCancellationDateTime?: InputMaybe<DateTimeOperationFilterInput>;
   membershipStartDateTime?: InputMaybe<DateTimeOperationFilterInput>;
   or?: InputMaybe<Array<MemberFilterInput>>;
-  photoFileId?: InputMaybe<StringOperationFilterInput>;
   status?: InputMaybe<MembershipStatusOperationFilterInput>;
 };
 
@@ -365,7 +340,6 @@ export type MemberSortInput = {
   lastName?: InputMaybe<SortEnumType>;
   membershipCancellationDateTime?: InputMaybe<SortEnumType>;
   membershipStartDateTime?: InputMaybe<SortEnumType>;
-  photoFileId?: InputMaybe<SortEnumType>;
   status?: InputMaybe<SortEnumType>;
 };
 
@@ -392,8 +366,8 @@ export type MembershipStatusOperationFilterInput = {
   nin?: InputMaybe<Array<MembershipStatus>>;
 };
 
-export type Mutations = {
-  __typename?: 'Mutations';
+export type Mutation = {
+  __typename?: 'Mutation';
   acquirePublication: AcquirePublicationPayload;
   addAuthor: AddAuthorPayload;
   addPublisher: AddPublisherPayload;
@@ -410,75 +384,68 @@ export type Mutations = {
 };
 
 
-export type MutationsAcquirePublicationArgs = {
+export type MutationAcquirePublicationArgs = {
   input: AcquirePublicationInput;
 };
 
 
-export type MutationsAddAuthorArgs = {
+export type MutationAddAuthorArgs = {
   input: AddAuthorInput;
 };
 
 
-export type MutationsAddPublisherArgs = {
+export type MutationAddPublisherArgs = {
   input: AddPublisherInput;
 };
 
 
-export type MutationsCancelMembershipArgs = {
+export type MutationCancelMembershipArgs = {
   input: CancelMembershipInput;
 };
 
 
-export type MutationsCreateMemberArgs = {
+export type MutationCreateMemberArgs = {
   input: CreateMemberInput;
 };
 
 
-export type MutationsDeleteAuthorArgs = {
+export type MutationDeleteAuthorArgs = {
   input: DeleteAuthorInput;
 };
 
 
-export type MutationsDeletePublisherArgs = {
+export type MutationDeletePublisherArgs = {
   input: DeletePublisherInput;
 };
 
 
-export type MutationsRenewMembershipArgs = {
+export type MutationRenewMembershipArgs = {
   input: RenewMembershipInput;
 };
 
 
-export type MutationsSuspendMembershipArgs = {
+export type MutationSuspendMembershipArgs = {
   input: SuspendMembershipInput;
 };
 
 
-export type MutationsUpdateAuthorArgs = {
+export type MutationUpdateAuthorArgs = {
   input: UpdateAuthorInput;
 };
 
 
-export type MutationsUpdateMemberArgs = {
+export type MutationUpdateMemberArgs = {
   input: UpdateMemberInput;
 };
 
 
-export type MutationsUpdatePublicationArgs = {
+export type MutationUpdatePublicationArgs = {
   input: UpdatePublicationInput;
 };
 
 
-export type MutationsUpdatePublisherArgs = {
+export type MutationUpdatePublisherArgs = {
   input: UpdatePublisherInput;
-};
-
-export type NotFoundWithTheIdError = Error & {
-  __typename?: 'NotFoundWithTheIdError';
-  id: Scalars['String']['output'];
-  message: Scalars['String']['output'];
-  objectName: Scalars['String']['output'];
 };
 
 export type Notification = {
@@ -539,7 +506,6 @@ export type PublicationFilterInput = {
   authors?: InputMaybe<ListFilterInputTypeOfPublicationAuthorFilterInput>;
   callNumber?: InputMaybe<StringOperationFilterInput>;
   copiesAvailable?: InputMaybe<IntOperationFilterInput>;
-  coverImageFileId?: InputMaybe<StringOperationFilterInput>;
   description?: InputMaybe<StringOperationFilterInput>;
   donationRecords?: InputMaybe<ListFilterInputTypeOfDonationRecordFilterInput>;
   edition?: InputMaybe<StringOperationFilterInput>;
@@ -588,7 +554,6 @@ export type PublicationPublisherSortInput = {
 export type PublicationSortInput = {
   callNumber?: InputMaybe<SortEnumType>;
   copiesAvailable?: InputMaybe<SortEnumType>;
-  coverImageFileId?: InputMaybe<SortEnumType>;
   description?: InputMaybe<SortEnumType>;
   edition?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
@@ -704,8 +669,8 @@ export type PurchaseRecordSortInput = {
   vendor?: InputMaybe<SortEnumType>;
 };
 
-export type Queries = {
-  __typename?: 'Queries';
+export type Query = {
+  __typename?: 'Query';
   author?: Maybe<Author>;
   authors?: Maybe<AuthorsCollectionSegment>;
   member?: Maybe<Member>;
@@ -717,12 +682,12 @@ export type Queries = {
 };
 
 
-export type QueriesAuthorArgs = {
+export type QueryAuthorArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type QueriesAuthorsArgs = {
+export type QueryAuthorsArgs = {
   order?: InputMaybe<Array<AuthorSortInput>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -730,12 +695,12 @@ export type QueriesAuthorsArgs = {
 };
 
 
-export type QueriesMemberArgs = {
+export type QueryMemberArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type QueriesMembersArgs = {
+export type QueryMembersArgs = {
   order?: InputMaybe<Array<MemberSortInput>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -743,12 +708,12 @@ export type QueriesMembersArgs = {
 };
 
 
-export type QueriesPublicationArgs = {
+export type QueryPublicationArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type QueriesPublicationsArgs = {
+export type QueryPublicationsArgs = {
   order?: InputMaybe<Array<PublicationSortInput>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
@@ -756,19 +721,17 @@ export type QueriesPublicationsArgs = {
 };
 
 
-export type QueriesPublisherArgs = {
+export type QueryPublisherArgs = {
   id: Scalars['String']['input'];
 };
 
 
-export type QueriesPublishersArgs = {
+export type QueryPublishersArgs = {
   order?: InputMaybe<Array<PublisherSortInput>>;
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PublisherFilterInput>;
 };
-
-export type RenewMembershipError = InvalidFieldError;
 
 export type RenewMembershipInput = {
   id: Scalars['String']['input'];
@@ -776,7 +739,7 @@ export type RenewMembershipInput = {
 
 export type RenewMembershipPayload = {
   __typename?: 'RenewMembershipPayload';
-  errors?: Maybe<Array<RenewMembershipError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
 
@@ -805,19 +768,15 @@ export type Subscriptions = {
   onNewNotification: Notification;
 };
 
-export type SuspendMembershipError = InvalidFieldError;
-
 export type SuspendMembershipInput = {
   id: Scalars['String']['input'];
 };
 
 export type SuspendMembershipPayload = {
   __typename?: 'SuspendMembershipPayload';
-  errors?: Maybe<Array<SuspendMembershipError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
-
-export type UpdateAuthorError = InvalidFieldError | NotFoundWithTheIdError;
 
 export type UpdateAuthorInput = {
   id: Scalars['String']['input'];
@@ -827,11 +786,9 @@ export type UpdateAuthorInput = {
 export type UpdateAuthorPayload = {
   __typename?: 'UpdateAuthorPayload';
   data?: Maybe<Author>;
-  errors?: Maybe<Array<UpdateAuthorError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
-
-export type UpdateMemberError = InvalidFieldError;
 
 export type UpdateMemberInput = {
   id: Scalars['String']['input'];
@@ -841,11 +798,9 @@ export type UpdateMemberInput = {
 export type UpdateMemberPayload = {
   __typename?: 'UpdateMemberPayload';
   data?: Maybe<Member>;
-  errors?: Maybe<Array<UpdateMemberError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
-
-export type UpdatePublicationError = InvalidFieldError | NotFoundWithTheIdError;
 
 export type UpdatePublicationInput = {
   id: Scalars['String']['input'];
@@ -855,11 +810,9 @@ export type UpdatePublicationInput = {
 export type UpdatePublicationPayload = {
   __typename?: 'UpdatePublicationPayload';
   data?: Maybe<Publication>;
-  errors?: Maybe<Array<UpdatePublicationError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
-
-export type UpdatePublisherError = InvalidFieldError | NotFoundWithTheIdError;
 
 export type UpdatePublisherInput = {
   id: Scalars['String']['input'];
@@ -869,8 +822,16 @@ export type UpdatePublisherInput = {
 export type UpdatePublisherPayload = {
   __typename?: 'UpdatePublisherPayload';
   data?: Maybe<Publisher>;
-  errors?: Maybe<Array<UpdatePublisherError>>;
+  errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
+};
+
+export type ValidationError = {
+  __typename?: 'ValidationError';
+  code: Scalars['String']['output'];
+  description?: Maybe<Scalars['String']['output']>;
+  fieldName: Scalars['String']['output'];
+  message: Scalars['String']['output'];
 };
 
 export type AddAuthorMutationVariables = Exact<{
@@ -878,7 +839,7 @@ export type AddAuthorMutationVariables = Exact<{
 }>;
 
 
-export type AddAuthorMutation = { __typename?: 'Mutations', addAuthor: { __typename?: 'AddAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+export type AddAuthorMutation = { __typename?: 'Mutation', addAuthor: { __typename?: 'AddAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'KnError', message: string, description?: string | null } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type UpdateAuthorMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -886,14 +847,14 @@ export type UpdateAuthorMutationVariables = Exact<{
 }>;
 
 
-export type UpdateAuthorMutation = { __typename?: 'Mutations', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+export type UpdateAuthorMutation = { __typename?: 'Mutation', updateAuthor: { __typename?: 'UpdateAuthorPayload', message?: string | null, data?: { __typename?: 'Author', id: string } | null, errors?: Array<{ __typename?: 'KnError', message: string } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type DeleteAuthorMutationVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type DeleteAuthorMutation = { __typename?: 'Mutations', deleteAuthor: { __typename?: 'DeleteAuthorPayload', message?: string | null, errors?: Array<{ __typename?: 'DeletionFailedError', objectName: string, reason: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+export type DeleteAuthorMutation = { __typename?: 'Mutation', deleteAuthor: { __typename?: 'DeleteAuthorPayload', message?: string | null, errors?: Array<{ __typename?: 'KnError', message: string } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type GetAuthorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -903,28 +864,28 @@ export type GetAuthorsQueryVariables = Exact<{
 }>;
 
 
-export type GetAuthorsQuery = { __typename?: 'Queries', authors?: { __typename?: 'AuthorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Author', id: string, firstName: string, lastName: string, nationality: string, dp?: any | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type GetAuthorsQuery = { __typename?: 'Query', authors?: { __typename?: 'AuthorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Author', id: string, firstName: string, lastName: string, nationality: string, dp?: any | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type SearchAuthorsQueryVariables = Exact<{
   filterText: Scalars['String']['input'];
 }>;
 
 
-export type SearchAuthorsQuery = { __typename?: 'Queries', authors?: { __typename?: 'AuthorsCollectionSegment', items?: Array<{ __typename?: 'Author', id: string, fullName: string }> | null } | null };
+export type SearchAuthorsQuery = { __typename?: 'Query', authors?: { __typename?: 'AuthorsCollectionSegment', items?: Array<{ __typename?: 'Author', id: string, fullName: string }> | null } | null };
 
 export type GetAuthorQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetAuthorQuery = { __typename?: 'Queries', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string, dp?: any | null } | null };
+export type GetAuthorQuery = { __typename?: 'Query', author?: { __typename?: 'Author', id: string, firstName: string, lastName: string, fullName: string, dateOfBirth: any, dateOfDeath?: any | null, nationality: string, biography: string, dp?: any | null } | null };
 
 export type CreateMemberMutationVariables = Exact<{
   createMemberInput: CreateMemberInput;
 }>;
 
 
-export type CreateMemberMutation = { __typename?: 'Mutations', createMember: { __typename?: 'CreateMemberPayload', message?: string | null, data?: { __typename?: 'Member', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+export type CreateMemberMutation = { __typename?: 'Mutation', createMember: { __typename?: 'CreateMemberPayload', message?: string | null, data?: { __typename?: 'Member', id: string } | null, errors?: Array<{ __typename?: 'KnError', message: string } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type UpdateMemberMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -932,7 +893,7 @@ export type UpdateMemberMutationVariables = Exact<{
 }>;
 
 
-export type UpdateMemberMutation = { __typename?: 'Mutations', updateMember: { __typename?: 'UpdateMemberPayload', message?: string | null, data?: { __typename?: 'Member', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+export type UpdateMemberMutation = { __typename?: 'Mutation', updateMember: { __typename?: 'UpdateMemberPayload', message?: string | null, data?: { __typename?: 'Member', id: string } | null, errors?: Array<{ __typename?: 'KnError', message: string } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type GetMembersQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -942,21 +903,21 @@ export type GetMembersQueryVariables = Exact<{
 }>;
 
 
-export type GetMembersQuery = { __typename?: 'Queries', members?: { __typename?: 'MembersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Member', id: string, firstName: string, lastName: string, membershipStartDateTime: any, contactNumber: string, email: string, status: MembershipStatus }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type GetMembersQuery = { __typename?: 'Query', members?: { __typename?: 'MembersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Member', id: string, firstName: string, lastName: string, membershipStartDateTime: any, contactNumber: string, email: string, status: MembershipStatus }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type GetMemberQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetMemberQuery = { __typename?: 'Queries', member?: { __typename?: 'Member', id: string, fullName: string, firstName: string, lastName: string, photo?: any | null, status: MembershipStatus, membershipStartDateTime: any, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
+export type GetMemberQuery = { __typename?: 'Query', member?: { __typename?: 'Member', id: string, fullName: string, firstName: string, lastName: string, photo?: any | null, status: MembershipStatus, membershipStartDateTime: any, dateOfBirth: any, contactNumber: string, email: string, address: string } | null };
 
 export type AcquirePublicationMutationVariables = Exact<{
   acquirePublicationInput: AcquirePublicationInput;
 }>;
 
 
-export type AcquirePublicationMutation = { __typename?: 'Mutations', acquirePublication: { __typename?: 'AcquirePublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+export type AcquirePublicationMutation = { __typename?: 'Mutation', acquirePublication: { __typename?: 'AcquirePublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'KnError', message: string } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type UpdatePublicationMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -964,7 +925,7 @@ export type UpdatePublicationMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePublicationMutation = { __typename?: 'Mutations', updatePublication: { __typename?: 'UpdatePublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+export type UpdatePublicationMutation = { __typename?: 'Mutation', updatePublication: { __typename?: 'UpdatePublicationPayload', message?: string | null, data?: { __typename?: 'Publication', id: string } | null, errors?: Array<{ __typename?: 'KnError', message: string } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type GetPublicationsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -974,21 +935,21 @@ export type GetPublicationsQueryVariables = Exact<{
 }>;
 
 
-export type GetPublicationsQuery = { __typename?: 'Queries', publications?: { __typename?: 'PublicationsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publication', id: string, title: string, callNumber: string, publicationType: PublicationType, language: string, copiesAvailable: number, authors: Array<{ __typename?: 'PublicationAuthor', firstName: string, lastName: string }>, publisher?: { __typename?: 'PublicationPublisher', id: string, name: string } | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type GetPublicationsQuery = { __typename?: 'Query', publications?: { __typename?: 'PublicationsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publication', id: string, title: string, callNumber: string, publicationType: PublicationType, language: string, copiesAvailable: number, authors: Array<{ __typename?: 'PublicationAuthor', firstName: string, lastName: string }>, publisher?: { __typename?: 'PublicationPublisher', id: string, name: string } | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type GetPublicationQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetPublicationQuery = { __typename?: 'Queries', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, coverImage?: any | null, language: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string, dp?: any | null }>, publisher?: { __typename?: 'PublicationPublisher', id: string, name: string } | null, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }>, donationRecords: Array<{ __typename?: 'DonationRecord', id: string, donationDate: any, patron: string, quantity: number }> } | null };
+export type GetPublicationQuery = { __typename?: 'Query', publication?: { __typename?: 'Publication', id: string, title: string, publicationType: PublicationType, isbn?: string | null, edition: string, callNumber: string, coverImage?: any | null, language: string, publishedDate: any, copiesAvailable: number, description?: string | null, authors: Array<{ __typename?: 'PublicationAuthor', id: string, firstName: string, lastName: string, fullName: string, dp?: any | null }>, publisher?: { __typename?: 'PublicationPublisher', id: string, name: string } | null, purchaseRecords: Array<{ __typename?: 'PurchaseRecord', id: string, purchasedDate: any, vendor: string, quantity: number, unitPrice: any, totalPrice: any }>, donationRecords: Array<{ __typename?: 'DonationRecord', id: string, donationDate: any, patron: string, quantity: number }> } | null };
 
 export type AddPublisherMutationVariables = Exact<{
   addPublisherInput: AddPublisherInput;
 }>;
 
 
-export type AddPublisherMutation = { __typename?: 'Mutations', addPublisher: { __typename?: 'AddPublisherPayload', message?: string | null, data?: { __typename?: 'Publisher', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string }> | null } };
+export type AddPublisherMutation = { __typename?: 'Mutation', addPublisher: { __typename?: 'AddPublisherPayload', message?: string | null, data?: { __typename?: 'Publisher', id: string } | null, errors?: Array<{ __typename?: 'KnError', message: string } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type UpdatePublisherMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -996,7 +957,7 @@ export type UpdatePublisherMutationVariables = Exact<{
 }>;
 
 
-export type UpdatePublisherMutation = { __typename?: 'Mutations', updatePublisher: { __typename?: 'UpdatePublisherPayload', message?: string | null, data?: { __typename?: 'Publisher', id: string } | null, errors?: Array<{ __typename?: 'InvalidFieldError', fieldName: string, message: string } | { __typename?: 'NotFoundWithTheIdError', id: string, objectName: string, message: string }> | null } };
+export type UpdatePublisherMutation = { __typename?: 'Mutation', updatePublisher: { __typename?: 'UpdatePublisherPayload', message?: string | null, data?: { __typename?: 'Publisher', id: string } | null, errors?: Array<{ __typename?: 'KnError', message: string } | { __typename?: 'ValidationError', fieldName: string, message: string, description?: string | null }> | null } };
 
 export type GetPublishersQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -1006,21 +967,21 @@ export type GetPublishersQueryVariables = Exact<{
 }>;
 
 
-export type GetPublishersQuery = { __typename?: 'Queries', publishers?: { __typename?: 'PublishersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type GetPublishersQuery = { __typename?: 'Query', publishers?: { __typename?: 'PublishersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type GetPublisherQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type GetPublisherQuery = { __typename?: 'Queries', publisher?: { __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null } | null };
+export type GetPublisherQuery = { __typename?: 'Query', publisher?: { __typename?: 'Publisher', id: string, name: string, description?: string | null, contactInformation?: string | null } | null };
 
 export type SearchPublishersQueryVariables = Exact<{
   filterText: Scalars['String']['input'];
 }>;
 
 
-export type SearchPublishersQuery = { __typename?: 'Queries', publishers?: { __typename?: 'PublishersCollectionSegment', items?: Array<{ __typename?: 'Publisher', id: string, name: string }> | null } | null };
+export type SearchPublishersQuery = { __typename?: 'Query', publishers?: { __typename?: 'PublishersCollectionSegment', items?: Array<{ __typename?: 'Publisher', id: string, name: string }> | null } | null };
 
 export const AddAuthorDocument = gql`
     mutation addAuthor($addAuthorInput: AddAuthorInput!) {
@@ -1030,11 +991,14 @@ export const AddAuthorDocument = gql`
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
-      }
-      ... on Error {
         message
+        description
+      }
+      ... on KnError {
+        message
+        description
       }
     }
   }
@@ -1059,14 +1023,12 @@ export const UpdateAuthorDocument = gql`
       id
     }
     errors {
-      ... on NotFoundWithTheIdError {
-        id
-        objectName
-      }
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -1089,18 +1051,13 @@ export const DeleteAuthorDocument = gql`
   deleteAuthor(input: {id: $id}) {
     message
     errors {
-      ... on NotFoundWithTheIdError {
-        id
-        objectName
+      ... on KnError {
         message
       }
-      ... on DeletionFailedError {
-        objectName
-        reason
+      ... on ValidationError {
+        fieldName
         message
-      }
-      ... on Error {
-        message
+        description
       }
     }
   }
@@ -1206,10 +1163,12 @@ export const CreateMemberDocument = gql`
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -1235,10 +1194,12 @@ export const UpdateMemberDocument = gql`
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -1323,10 +1284,12 @@ export const AcquirePublicationDocument = gql`
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -1352,14 +1315,12 @@ export const UpdatePublicationDocument = gql`
       id
     }
     errors {
-      ... on NotFoundWithTheIdError {
-        id
-        objectName
-      }
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -1476,10 +1437,12 @@ export const AddPublisherDocument = gql`
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -1505,14 +1468,12 @@ export const UpdatePublisherDocument = gql`
       id
     }
     errors {
-      ... on NotFoundWithTheIdError {
-        id
-        objectName
-      }
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }

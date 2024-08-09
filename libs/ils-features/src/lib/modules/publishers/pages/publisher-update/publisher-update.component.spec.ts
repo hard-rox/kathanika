@@ -174,7 +174,7 @@ describe('PublisherUpdateComponent', () => {
     });
     expect(component['alertService'].showToast).toHaveBeenCalledWith('success', 'Publisher updated.');
     expect(component.publisherUpdateForm.resetForm).toHaveBeenCalled();
-    expect(component['router'].navigate).toHaveBeenCalledWith(['/publishers/123']);
+    expect(component['router'].navigate).toHaveBeenCalledWith(['/publishers']);
   });
 
   it('should handle form submission with errors', () => {
@@ -184,8 +184,7 @@ describe('PublisherUpdateComponent', () => {
           data: null,
           message: null,
           errors: [
-            { __typename: 'InvalidFieldError', fieldName: 'fieldName1', message: 'Invalid field 1' },
-            { __typename: 'NotFoundWithTheIdError', id: '123', objectName: 'objectName1', message: 'Object not found 1' },
+            { __typename: 'ValidationError', fieldName: 'fieldName1', message: 'Invalid field 1' }
           ]
         }
       }
@@ -209,7 +208,7 @@ describe('PublisherUpdateComponent', () => {
     expect(component.publisherUpdateForm.resetForm).not.toHaveBeenCalled();
     expect(component['router'].navigate).not.toHaveBeenCalled();
     expect(component.isPanelLoading).toBe(false);
-    expect(component.errors.length).toEqual(2);
+    expect(component.errors.length).toEqual(1);
   });
 
   it('should handle form submission with network error', () => {

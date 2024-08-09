@@ -5,10 +5,12 @@ mutation acquirePublication($acquirePublicationInput: AcquirePublicationInput!) 
       id
     }
     errors {
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }
@@ -25,14 +27,12 @@ mutation updatePublication(
       id
     }
     errors {
-      ... on NotFoundWithTheIdError {
-        id
-        objectName
-      }
-      ... on InvalidFieldError {
+      ... on ValidationError {
         fieldName
+        message
+        description
       }
-      ... on Error {
+      ... on KnError {
         message
       }
     }

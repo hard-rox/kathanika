@@ -77,12 +77,9 @@ export class AuthorUpdateComponent implements OnInit {
           if (result.errors || result.data?.updateAuthor.errors) {
             this.errors = [];
             result.data?.updateAuthor.errors?.forEach((x) => {
-              switch (x.__typename) {
-                case 'InvalidFieldError':
+              switch (x?.__typename) {
+                case 'ValidationError':
                   this.errors.push(`${x.fieldName} - ${x.message}`);
-                  break;
-                case 'NotFoundWithTheIdError':
-                  this.errors.push(`${x.objectName} - ${x.message}`);
                   break;
                 default:
                   this.errors.push(x.message);

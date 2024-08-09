@@ -2,6 +2,7 @@ using HotChocolate.Resolvers;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
+[ExtendObjectType(OperationTypeNames.Query)]
 public sealed partial class Queries
 {
     [UseOffsetPaging]

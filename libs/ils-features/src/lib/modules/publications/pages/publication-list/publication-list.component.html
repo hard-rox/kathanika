@@ -2,9 +2,9 @@
   <div class="flex justify-between">
     <h2 class="text-xl font-bold">Publications</h2>
     <a
-      [routerLink]="['add']"
+      [routerLink]="['acquire']"
       class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black text-white px-4 py-2"
-      >Add new</a
+      >Acquire new</a
     >
   </div>
   <input
@@ -17,7 +17,6 @@
 </div>
 @if (queryRef.valueChanges | async; as queryResult) {
   <table>
-    <!-- <caption>Saved publications</caption> -->
     <thead>
       <tr>
         <th scope="col">Serial</th>
