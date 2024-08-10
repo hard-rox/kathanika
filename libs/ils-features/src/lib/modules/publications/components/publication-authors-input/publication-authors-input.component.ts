@@ -48,7 +48,7 @@ export class PublicationAuthorsInputComponent extends AbstractInput<string[]> {
     const index = this.selectedAuthors.findIndex((x) => x.id == id);
     if (index >= 0) return;
     this.selectedAuthors = [...this.selectedAuthors, { id: id, name: name }];
-    this.value?.push(id);
+    this.onModelChange(this.selectedAuthors.map(x => x.id));
   }
 
   protected removeAuthor(authorId: string) {
@@ -62,6 +62,6 @@ export class PublicationAuthorsInputComponent extends AbstractInput<string[]> {
       return;
 
     this.selectedAuthors = this.selectedAuthors.filter(x => x.id !== authorId);
-    this.value?.splice(formValueIndex ?? -1, 1);
+    this.onModelChange(this.selectedAuthors.map(x => x.id));
   }
 }
