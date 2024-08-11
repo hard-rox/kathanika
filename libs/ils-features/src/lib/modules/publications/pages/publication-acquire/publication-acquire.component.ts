@@ -58,6 +58,7 @@ export class PublicationAcquireComponent {
         error: (err) => {
           // console.debug(JSON.stringify(err));
           this.alertService.showPopup('error', err.message);
+          this.isPanelLoading = false;
         }
       });
   }

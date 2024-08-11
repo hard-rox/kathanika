@@ -1,6 +1,4 @@
-using Azure.Storage.Blobs;
 using Kathanika.Core.Application.Services;
-using Kathanika.Infrastructure.Persistence.BsonClassMaps;
 using Kathanika.Infrastructure.Persistence.Caching;
 using Kathanika.Infrastructure.Persistence.FileStorage;
 using Kathanika.Infrastructure.Persistence.Outbox;
@@ -11,9 +9,26 @@ namespace Kathanika.Infrastructure.Persistence;
 
 public static class DependencyInjector
 {
+    private static void RegisterClassMapFromAssembly()
+    {
+        System.Reflection.Assembly assembly = typeof(IBsonClassMap).Assembly;
+
+        List<Type> classMaps = assembly.GetTypes()
+            .Where(t => typeof(IBsonClassMap).IsAssignableFrom(t)
+                && !t.IsInterface
+                && !t.IsAbstract)
+            .ToList();
+
+        classMaps.ForEach(x =>
+        {
+            IBsonClassMap? classMapInstance = (IBsonClassMap?)Activator.CreateInstance(x);
+            classMapInstance?.Register();
+        });
+    }
+
     public static IServiceCollection AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
-        ClassMaps.MapClasses();
+        RegisterClassMapFromAssembly();
 
         string? connectionString = configuration.GetConnectionString("mongoDbConnection");
         services.AddMongoDb(connectionString);
@@ -24,9 +39,9 @@ public static class DependencyInjector
         services.AddScoped<IOutboxMessageService, OutboxMessageService>();
         services.AddSingleton<IFileMetadataService, FileMetadataService>();
 
-        // services.AddSingleton<IFileStore, DiskFileStore>();
-        services.AddSingleton<IFileStore, AzureBlobStore>();
-        services.AddSingleton(_ => new BlobServiceClient(configuration.GetConnectionString("azureBlobStorageConnection")));
+        services.AddSingleton<IFileStore, DiskFileStore>();
+        // services.AddSingleton<IFileStore, AzureBlobStore>();
+        // services.AddSingleton(_ => new BlobServiceClient(configuration.GetConnectionString("azureBlobStorageConnection")));
 
         services.AddScoped<IAuthorRepository, AuthorRepository>();
         services.AddScoped<IPublicationRepository, PublicationRepository>();

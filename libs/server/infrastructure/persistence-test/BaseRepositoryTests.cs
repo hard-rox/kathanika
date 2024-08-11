@@ -36,7 +36,7 @@ public sealed class BaseRepositoryTests
         DummyRepo repo = new(database, "", nullLogger, cache);
 
         // Act
-        await repo.GetByIdAsync(Guid.NewGuid().ToString());
+        await repo.GetByIdAsync("66b81d4e12412b28caa14984");
 
         // Assert
         await collection.Received(1).FindAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),

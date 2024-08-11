@@ -4,7 +4,7 @@ namespace Kathanika.Infrastructure.Persistence.Outbox;
 
 public class OutboxMessage(IDomainEvent domainEvent)
 {
-    public string Id { get; init; } = string.Empty;
+    public string Id { get; private init; } = string.Empty;
     public IDomainEvent DomainEvent { get; init; } = domainEvent;
     public DateTimeOffset OccurredAt { get; private init; } = DateTimeOffset.Now;
     public DateTimeOffset? ProcessedAt { get; set; }
