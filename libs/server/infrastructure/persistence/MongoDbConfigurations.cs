@@ -1,12 +1,8 @@
-using Kathanika.Core.Domain.Primitives;
-using Kathanika.Infrastructure.Persistence.FileStorage;
-using Kathanika.Infrastructure.Persistence.Outbox;
 using Microsoft.Extensions.DependencyInjection;
 using MongoDB.Bson;
 using MongoDB.Bson.IO;
 using MongoDB.Bson.Serialization;
 using MongoDB.Bson.Serialization.Conventions;
-using MongoDB.Bson.Serialization.IdGenerators;
 using MongoDB.Bson.Serialization.Serializers;
 using MongoDB.Driver.Core.Events;
 
@@ -19,48 +15,11 @@ internal static class MongoDbConfigurations
         ConventionPack conventionPack =
                 [
                     new CamelCaseElementNameConvention(),
+                    new StringIdStoredAsObjectIdConvention(),
                     new IgnoreExtraElementsConvention(true),
                     new EnumRepresentationConvention(BsonType.String)
                 ];
         ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
-    }
-
-    private static void RegisterDomainEventClassMap()
-    {
-        IEnumerable<Type> domainEventTypes = typeof(IDomainEvent)
-                                       .Assembly
-                                       .GetTypes()
-                                       .Where(t => t.IsClass && !t.IsAbstract && typeof(IDomainEvent).IsAssignableFrom(t));
-
-        foreach (Type eventType in domainEventTypes)
-        {
-            if (BsonClassMap.IsClassMapRegistered(eventType)) continue;
-            BsonClassMap cm = new(eventType);
-            cm.AutoMap();
-            cm.SetIgnoreExtraElements(true);
-            cm.SetDiscriminatorIsRequired(true);
-            cm.SetDiscriminator(eventType.Name);
-            BsonClassMap.RegisterClassMap(cm);
-        }
-
-        BsonClassMap.RegisterClassMap<OutboxMessage>(cm =>
-        {
-            cm.AutoMap();
-            cm.MapIdProperty(c => c.Id)
-                .SetIdGenerator(StringObjectIdGenerator.Instance)
-                .SetSerializer(new StringSerializer(BsonType.ObjectId));
-            cm.MapMember(m => m.DomainEvent)
-                .SetSerializer(new ImpliedImplementationInterfaceSerializer<IDomainEvent, IDomainEvent>());
-        });
-
-        // TODO: Move to new method...
-        BsonClassMap.RegisterClassMap<StoredFileMetadata>(cm =>
-        {
-            cm.AutoMap();
-            cm.MapIdProperty(c => c.Id)
-                .SetIdGenerator(StringObjectIdGenerator.Instance)
-                .SetSerializer(new StringSerializer(BsonType.ObjectId));
-        });
     }
 
     internal static void AddMongoDb(this IServiceCollection services, string? connectionString)
@@ -68,8 +27,6 @@ internal static class MongoDbConfigurations
         BsonSerializer.RegisterSerializer(typeof(DateTimeOffset), new DateTimeOffsetSerializer(BsonType.Document));
 
         RegisterConventionPacks();
-
-        RegisterDomainEventClassMap();
 
         services.AddSingleton(f =>
         {

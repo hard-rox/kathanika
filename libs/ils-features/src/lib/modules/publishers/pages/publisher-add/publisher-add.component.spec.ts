@@ -62,7 +62,7 @@ describe('PublisherAddComponent', () => {
 
     expect(component['gql'].mutate).toHaveBeenCalledWith({ addPublisherInput: formValue });
     expect(component['alertService'].showToast).toHaveBeenCalledWith('success', 'Publisher added.');
-    expect(component['router'].navigate).toHaveBeenCalledWith(['/publishers/123']);
+    expect(component['router'].navigate).toHaveBeenCalledWith(['/publishers']);
     expect(component.isPanelLoading).toBe(false);
     expect(component.errors).toEqual([]);
   });

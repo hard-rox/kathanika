@@ -26,7 +26,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     private static bool IsValidId(string id)
     {
-        if (Guid.TryParse(id, out _))
+        if (ObjectId.TryParse(id, out ObjectId _))
         {
             return true;
         }

@@ -46,11 +46,11 @@ export class PublicationPublisherInputComponent extends AbstractInput<string> {
 
   protected selectPublisher(publisher: Publisher) {
     this.selectedPublisher = publisher;
-    this.value = publisher.id;
+    this.onModelChange(this.selectedPublisher.id);
   }
 
   protected removePublisher() {
     this.selectedPublisher = null;
-    this.value = null;
+    this.onModelChange(null as any);
   }
 }
