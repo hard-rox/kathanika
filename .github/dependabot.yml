@@ -27,7 +27,7 @@ updates:
       angular-deps:
         patterns:
           - "@angular/*"
-          - "@angular-devkit/build-angular"
+          - "@angular-devkit/*"
           - "@schematics/angular"
         update-types:
           - "minor"
