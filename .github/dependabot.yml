@@ -29,6 +29,7 @@ updates:
           - "@angular/*"
           - "@angular-devkit/*"
           - "@schematics/angular"
+          - "ng-packagr"
         update-types:
           - "minor"
           - "patch"
