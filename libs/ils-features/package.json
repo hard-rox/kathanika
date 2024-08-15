@@ -6,11 +6,11 @@
     "rxjs": "~7.8.0",
     "@kathanika/kn-ui": "*",
     "@kathanika/graphql-ts-client": "*",
-    "@angular/core": "~18.1.2",
-    "@angular/forms": "~18.1.2",
-    "@angular/router": "~18.1.2",
+    "@angular/core": "~18.2.0",
+    "@angular/forms": "~18.2.0",
+    "@angular/router": "~18.2.0",
     "@apollo/client": "^3.10.8",
-    "@angular/common": "~18.1.2",
+    "@angular/common": "~18.2.0",
     "sweetalert2": "^11.12.2"
   },
   "sideEffects": false
