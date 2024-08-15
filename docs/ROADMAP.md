@@ -35,14 +35,13 @@ Version 0.x.x
 -   [ ]  Dashboard
 
 ### File upload feature
--   [ ]  File upload to local storage
+-   [x]  File upload to local storage
 
 ### Security and Authentication
 -   [ ]  Implement appropriate security measures to protect patron data
 
 ### Circulation Management
 -   [ ]  Borrow, renew, and return books
--   [ ]  Track fines and fees associated with late returns
 -   [ ]  Track borrowing history
 
 Version 1.x.x
