@@ -1,10 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { GetPublicationGQL } from '@kathanika/graphql-ts-client';
+import { GetPublicationGQL, mockQueryGql } from '@kathanika/graphql-ts-client';
 import { ActivatedRoute } from '@angular/router';
 import { RouterTestingModule } from '@angular/router/testing';
 import { PublicationDetailsComponent } from './publication-details.component';
-import { mockQueryGql } from '@kathanika/graphql-ts-client';
 
 describe('PublicationDetailsComponent', () => {
   let component: PublicationDetailsComponent;

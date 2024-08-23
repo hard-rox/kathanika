@@ -43,9 +43,7 @@ public static class DependencyInjector
         // services.AddSingleton<IFileStore, AzureBlobStore>();
         // services.AddSingleton(_ => new BlobServiceClient(configuration.GetConnectionString("azureBlobStorageConnection")));
 
-        services.AddScoped<IAuthorRepository, AuthorRepository>();
         services.AddScoped<IPublicationRepository, PublicationRepository>();
-        services.AddScoped<IPublisherRepository, PublisherRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
 
         return services;
