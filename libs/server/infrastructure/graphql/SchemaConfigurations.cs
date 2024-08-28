@@ -3,6 +3,7 @@ using System.Runtime.CompilerServices;
 using HotChocolate.Data.Filters;
 using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Execution.Configuration;
+using HotChocolate.Types.Descriptors;
 using HotChocolate.Types.Pagination;
 using Kathanika.Infrastructure.Graphql.Schema;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,6 +33,7 @@ internal static class SchemaConfigurations
         requestBuilder.AddQueryType(q => q.Name(OperationTypeNames.Query));
         requestBuilder.AddMutationType(m => m.Name(OperationTypeNames.Mutation));
         requestBuilder.AddSubscriptionType<Subscriptions>();
+        requestBuilder.AddConvention<INamingConventions, ApplicationNamingConvention>();
         requestBuilder.AddInMemorySubscriptions();
         requestBuilder.AddProjections();
         requestBuilder.AddFiltering();

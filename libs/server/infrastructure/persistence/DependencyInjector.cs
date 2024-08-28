@@ -1,4 +1,5 @@
 using Kathanika.Core.Application.Services;
+using Kathanika.Core.Domain.Aggregates.VendorAggregate;
 using Kathanika.Infrastructure.Persistence.Caching;
 using Kathanika.Infrastructure.Persistence.FileStorage;
 using Kathanika.Infrastructure.Persistence.Outbox;
@@ -45,6 +46,7 @@ public static class DependencyInjector
 
         services.AddScoped<IPublicationRepository, PublicationRepository>();
         services.AddScoped<IMemberRepository, MemberRepository>();
+        services.AddScoped<IVendorRepository, VendorRepository>();
 
         return services;
     }

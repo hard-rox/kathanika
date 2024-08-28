@@ -70,7 +70,7 @@ try
 
     app.MapTus(_fileServingEndpoint, TusConfiguration.TusConfigurationFactory);
 
-    app.Run();
+    await app.RunAsync();
 }
 catch (Exception ex)
 {
@@ -78,7 +78,7 @@ catch (Exception ex)
 }
 finally
 {
-    Log.CloseAndFlush();
+    await Log.CloseAndFlushAsync();
 }
 
 void ConfigureSerilog(ConfigureHostBuilder host)

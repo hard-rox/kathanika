@@ -20,26 +20,12 @@ public partial class Vendor : AggregateRoot
     private Vendor(
         string name,
         string address,
-        string contactNumber,
-        string? email = null,
-        string? website = null,
-        string? accountDetail = null,
-        string? contactPersonName = null,
-        string? contactPersonPhone = null,
-        string? contactPersonEmail = null,
-        VendorStatus status = VendorStatus.Inactive
+        string contactNumber
     )
     {
         Name = name;
         Address = address;
         ContactNumber = contactNumber;
-        Email = email;
-        Website = website;
-        AccountDetail = accountDetail;
-        ContactPersonName = contactPersonName;
-        ContactPersonPhone = contactPersonPhone;
-        ContactPersonEmail = contactPersonEmail;
-        Status = status;
     }
 
     [GeneratedRegex(@"^\+?\d{1,14}$")]
@@ -111,15 +97,17 @@ public partial class Vendor : AggregateRoot
         Vendor newVendor = new(
             name,
             address,
-            contactNumber,
-            email,
-            website,
-            accountDetail,
-            contactPersonName,
-            contactPersonPhone,
-            contactPersonEmail,
-            status
-        );
+            contactNumber
+        )
+        {
+            Email = email,
+            Website = website,
+            AccountDetail = accountDetail,
+            ContactPersonName = contactPersonName,
+            ContactPersonPhone = contactPersonPhone,
+            ContactPersonEmail = contactPersonEmail,
+            Status = status
+        };
 
         return Result.Success(newVendor);
     }

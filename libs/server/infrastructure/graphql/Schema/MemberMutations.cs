@@ -7,8 +7,8 @@ public sealed class MemberMutations
 {
     public async Task<CreateMemberPayload> CreateMemberAsync(
         [Service] IMediator mediator,
-        CancellationToken cancellationToken,
-        CreateMemberCommand input
+        CreateMemberCommand input,
+        CancellationToken cancellationToken
     )
     {
         Core.Domain.Primitives.Result<Member> result = await mediator.Send(input, cancellationToken);

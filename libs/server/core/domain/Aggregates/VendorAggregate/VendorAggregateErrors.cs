@@ -38,4 +38,9 @@ public static class VendorAggregateErrors
         "Vendor.InvalidContactPersonEmail",
         "Invalid contact person email address."
     );
+
+    public static KnError NotFound(string id) => new(
+        "Vendor.NotFound",
+        message: $"No Vendor found with this Id: \"{id}\""
+    );
 }
