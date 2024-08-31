@@ -16,4 +16,24 @@ public sealed class VendorMutations
         Core.Domain.Primitives.Result<Vendor> result = await mediator.Send(input, cancellationToken);
         return new(result);
     }
+
+    public async Task<UpdateVendorPayload> UpdateVendorAsync(
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken,
+        UpdateVendorCommand input
+    )
+    {
+        Core.Domain.Primitives.Result<Vendor> result = await mediator.Send(input, cancellationToken);
+        return new(result);
+    }
+
+    public async Task<DeleteVendorPayload> DeleteVendorAsync(
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken,
+        string id
+    )
+    {
+        Result result = await mediator.Send(new DeleteVendorCommand(id), cancellationToken);
+        return new(id, result);
+    }
 }
