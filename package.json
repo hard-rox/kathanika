@@ -88,7 +88,7 @@
     "@angular/router": "~18.2.3",
     "@angular/service-worker": "~18.2.3",
     "@angular/ssr": "~18.2.3",
-    "@apollo/client": "^3.11.6",
+    "@apollo/client": "^3.11.7",
     "apollo-angular": "^7.1.2",
     "express": "~4.19.2",
     "graphql": "^16.9.0",
