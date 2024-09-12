@@ -23,7 +23,7 @@
     "@angular/compiler-cli": "~18.2.4",
     "@angular/language-service": "~18.2.4",
     "@commitlint/cli": "^19.4.1",
-    "@commitlint/config-conventional": "^19.4.1",
+    "@commitlint/config-conventional": "^19.5.0",
     "@graphql-codegen/cli": "^5.0.2",
     "@graphql-codegen/typescript": "^4.0.9",
     "@graphql-codegen/typescript-apollo-angular": "^4.0.0",
