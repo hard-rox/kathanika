@@ -93,6 +93,7 @@ void ConfigureSerilog(ConfigureHostBuilder host)
 
 void AddOpenTelemetry(WebApplicationBuilder builder)
 {
+    string otlpExportEndpoint = builder.Configuration.GetValue<string>("OtlpExportEndpoint") ?? string.Empty;
     builder.Services.AddOpenTelemetry()
         .ConfigureResource(resource => resource.AddService("Kathanika-Web-Service"))
         .WithTracing(tracing =>
@@ -106,7 +107,11 @@ void AddOpenTelemetry(WebApplicationBuilder builder)
 
             tracing
                 // .AddConsoleExporter()
-                .AddOtlpExporter();
+                .AddOtlpExporter(options =>
+                {
+                    options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                    options.Endpoint = new Uri(otlpExportEndpoint);
+                });
         })
         .WithMetrics(metrics =>
         {
@@ -116,7 +121,11 @@ void AddOpenTelemetry(WebApplicationBuilder builder)
 
             metrics
                 // .AddConsoleExporter()
-                .AddOtlpExporter();
+                .AddOtlpExporter(options =>
+                {
+                    options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                    options.Endpoint = new Uri(otlpExportEndpoint);
+                });
         });
 
     builder.Logging.AddOpenTelemetry(logging => logging.AddOtlpExporter());
