@@ -1,7 +1,6 @@
-global using Kathanika.Core.Application.Features.Members.Commands;
 global using Kathanika.Core.Application.Features.Publications.Commands;
 global using Kathanika.Core.Application.Features.Publications.Queries;
-global using Kathanika.Core.Domain.Aggregates.MemberAggregate;
+global using Kathanika.Core.Domain.Aggregates.PatronAggregate;
 global using Kathanika.Core.Domain.Aggregates.PublicationAggregate;
 global using Kathanika.Core.Domain.Primitives;
 global using Kathanika.Infrastructure.Graphql.GraphqlHelpers;
