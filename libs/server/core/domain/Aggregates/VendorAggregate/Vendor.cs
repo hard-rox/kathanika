@@ -4,7 +4,7 @@ using Kathanika.Core.Domain.Primitives;
 
 namespace Kathanika.Core.Domain.Aggregates.VendorAggregate;
 
-public partial class Vendor : AggregateRoot
+public sealed class Vendor : AggregateRoot
 {
     public string Name { get; private set; }
     public string Address { get; private set; }
@@ -28,12 +28,9 @@ public partial class Vendor : AggregateRoot
         ContactNumber = contactNumber;
     }
 
-    [GeneratedRegex(@"^\+?\d{1,14}$")]
-    private static partial Regex PhoneNumberRegex();
-
     private static bool IsValidPhoneNumber(string phoneNumber)
     {
-        return PhoneNumberRegex().IsMatch(phoneNumber);
+        return Regex.IsMatch(phoneNumber, @"^\+?\d{1,14}$");
     }
 
     private static bool IsValidEmail(string email)

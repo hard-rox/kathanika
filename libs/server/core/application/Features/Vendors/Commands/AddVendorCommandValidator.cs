@@ -1,3 +1,4 @@
+using Kathanika.Core.Application.CommonValidators;
 using Kathanika.Core.Domain.Aggregates.VendorAggregate;
 
 namespace Kathanika.Core.Application.Features.Vendors.Commands;
@@ -7,7 +8,7 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
     public AddVendorCommandValidator(IVendorRepository vendorRepository)
     {
         RuleFor(v => v.Name)
-            .NotEmpty().WithMessage("Vendor Name must be unique and not empty.")
+            .NotEmpty()
             .MustAsync(
                 async (name, cancellationToken)
                 => await vendorRepository.ExistsAsync(x => x.Name == name, cancellationToken)
@@ -17,8 +18,9 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
             .NotEmpty().WithMessage("Address cannot be empty.");
 
         RuleFor(v => v.ContactNumber)
-            .NotEmpty().WithMessage("Invalid contact number.")
-            .Matches(@"^\+?\d{1,14}$").WithMessage("Invalid contact number.");
+            .NotEmpty()
+            .ContactNumber()
+            .WithMessage("Invalid contact number.");
 
         RuleFor(v => v.Email)
             .EmailAddress().WithMessage("Invalid email address.")
@@ -34,8 +36,9 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
             .NotEmpty().WithMessage("Contact Person Name cannot be empty.");
 
         RuleFor(v => v.ContactPersonPhone)
-            .NotEmpty().WithMessage("Invalid contact person phone number.")
-            .Matches(@"^\+?\d{1,14}$").WithMessage("Invalid contact person phone number.");
+            .NotEmpty()
+            .ContactNumber()
+            .WithMessage("Invalid contact person phone number.");
 
         RuleFor(v => v.ContactPersonEmail)
             .EmailAddress().WithMessage("Invalid contact person email address.")
