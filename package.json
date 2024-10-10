@@ -37,7 +37,7 @@
     "@nx/js": "19.8.4",
     "@nx/storybook": "19.8.4",
     "@nx/web": "19.8.4",
-    "@nx/workspace": "19.8.4",
+    "@nx/workspace": "20.0.0",
     "@schematics/angular": "~18.2.0",
     "@storybook/addon-essentials": "^8.3.5",
     "@storybook/addon-interactions": "^8.3.5",
