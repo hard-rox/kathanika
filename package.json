@@ -32,7 +32,7 @@
     "@nx/angular": "19.8.4",
     "@nx/cypress": "20.0.0",
     "@nx/eslint": "19.8.4",
-    "@nx/eslint-plugin": "19.8.4",
+    "@nx/eslint-plugin": "20.0.0",
     "@nx/jest": "19.8.4",
     "@nx/js": "19.8.4",
     "@nx/storybook": "19.8.4",
