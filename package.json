@@ -31,7 +31,7 @@
     "@nx-dotnet/core": "^2.4.5",
     "@nx/angular": "19.8.4",
     "@nx/cypress": "20.0.0",
-    "@nx/eslint": "19.8.4",
+    "@nx/eslint": "20.0.1",
     "@nx/eslint-plugin": "19.8.4",
     "@nx/jest": "19.8.4",
     "@nx/js": "19.8.4",
