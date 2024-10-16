@@ -95,7 +95,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "rxjs": "~7.8.0",
-    "sweetalert2": "^11.14.2",
+    "sweetalert2": "^11.14.3",
     "tslib": "^2.7.0",
     "tus-js-client": "^4.2.3",
     "zone.js": "~0.14.10"
