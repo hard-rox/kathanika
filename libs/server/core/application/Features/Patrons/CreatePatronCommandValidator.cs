@@ -1,5 +1,4 @@
 using Kathanika.Core.Application.CommonValidators;
-using Kathanika.Core.Application.Services;
 
 namespace Kathanika.Core.Application.Features.Patrons;
 
