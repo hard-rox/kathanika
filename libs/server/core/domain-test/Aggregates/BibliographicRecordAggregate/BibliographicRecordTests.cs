@@ -1,8 +1,8 @@
-using Kathanika.Core.Domain.Aggregates.BibliographicRecordAggregate;
+using Kathanika.Core.Domain.Aggregates.BibRecordAggregate;
 
-namespace Kathanika.Core.Domain.Test.Aggregates.BibliographicRecordAggregate;
+namespace Kathanika.Core.Domain.Test.Aggregates.BibRecordAggregate;
 
-public class BibliographicRecordTests
+public class BibRecordTests
 {
     [Fact]
     public void Create_ShouldReturnSuccess_WithValidInputs()
@@ -17,7 +17,7 @@ public class BibliographicRecordTests
         CatalogingSource catalogingSource = CatalogingSource.Create(null, null, faker.Company.CompanyName(), null, null).Value;
 
         // Act
-        Result<BibliographicRecord> result = BibliographicRecord.Create(
+        Result<BibRecord> result = BibRecord.Create(
             leader,
             controlNumber,
             controlNumberIdentifier,
@@ -43,7 +43,7 @@ public class BibliographicRecordTests
         CatalogingSource catalogingSource = CatalogingSource.Create(null, null, faker.Company.CompanyName(), null, null).Value;
 
         // Act
-        Result<BibliographicRecord> result = BibliographicRecord.Create(
+        Result<BibRecord> result = BibRecord.Create(
             emptyLeader,
             controlNumber,
             controlNumberIdentifier,
@@ -53,6 +53,6 @@ public class BibliographicRecordTests
 
         // Assert
         Assert.True(result.IsFailure);
-        Assert.Contains(result.Errors, e => e.Code == BibliographicRecordAggregateErrors.LeaderInvalid.Code);
+        Assert.Contains(result.Errors, e => e.Code == BibRecordAggregateErrors.LeaderInvalid.Code);
     }
 }

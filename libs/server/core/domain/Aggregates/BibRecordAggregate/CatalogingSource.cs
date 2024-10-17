@@ -1,6 +1,6 @@
 using Kathanika.Core.Domain.Primitives;
 
-namespace Kathanika.Core.Domain.Aggregates.BibliographicRecordAggregate;
+namespace Kathanika.Core.Domain.Aggregates.BibRecordAggregate;
 
 public record CatalogingSource(string? OriginalCatalogingAgency,
     string? LanguageOfCataloging,
@@ -16,7 +16,7 @@ public record CatalogingSource(string? OriginalCatalogingAgency,
     {
         if (string.IsNullOrWhiteSpace(transcribingAgency))
         {
-            return Result.Failure<CatalogingSource>(BibliographicRecordAggregateErrors.TranscribingAgencyInvalid);
+            return Result.Failure<CatalogingSource>(BibRecordAggregateErrors.TranscribingAgencyInvalid);
         }
 
         return Result.Success(new CatalogingSource(originalCatalogingAgency, languageOfCataloging, transcribingAgency, modifyingAgency, descriptionConventions));

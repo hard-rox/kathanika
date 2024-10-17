@@ -1,6 +1,6 @@
 using Kathanika.Core.Domain.Primitives;
 
-namespace Kathanika.Core.Domain.Aggregates.BibliographicRecordAggregate;
+namespace Kathanika.Core.Domain.Aggregates.BibRecordAggregate;
 
 /// <summary>
 /// Represents a bibliographic record with specific data elements.
@@ -8,7 +8,7 @@ namespace Kathanika.Core.Domain.Aggregates.BibliographicRecordAggregate;
 /// <remarks>
 /// This class enforces validation rules for each data element and provides a method to create a new bibliographic record instance.
 /// </remarks>
-public sealed class BibliographicRecord : AggregateRoot
+public sealed class BibRecord : AggregateRoot
 {
     /// <summary>
     /// 000 (Record Leader) - Must be exactly 24 characters.
@@ -40,7 +40,7 @@ public sealed class BibliographicRecord : AggregateRoot
     /// </summary>
     public CatalogingSource CatalogingSource { get; private set; }
 
-    private BibliographicRecord(string leader,
+    private BibRecord(string leader,
         string controlNumber,
         string controlNumberIdentifier,
         DateTime dateTimeOfLatestTransaction,
@@ -67,7 +67,7 @@ public sealed class BibliographicRecord : AggregateRoot
             errors.Add(errorType);
     }
 
-    public static Result<BibliographicRecord> Create(string leader,
+    public static Result<BibRecord> Create(string leader,
         string controlNumber,
         string controlNumberIdentifier,
         DateTime dateTimeOfLatestTransaction,
@@ -76,16 +76,16 @@ public sealed class BibliographicRecord : AggregateRoot
     {
         List<KnError> errors = [];
 
-        ValidateInput(leader, 24, BibliographicRecordAggregateErrors.LeaderInvalid, errors);
-        ValidateInput(controlNumber, 50, BibliographicRecordAggregateErrors.ControlNumberInvalid, errors);
-        ValidateInput(controlNumberIdentifier, 50, BibliographicRecordAggregateErrors.ControlNumberIdentifierInvalid, errors);
-        ValidateDateTime(dateTimeOfLatestTransaction, BibliographicRecordAggregateErrors.DateTimeOfLatestTransactionInvalid, errors);
-        ValidateInput(fixedLengthDataElements, 40, BibliographicRecordAggregateErrors.FixedLengthDataElementsInvalid, errors);
+        ValidateInput(leader, 24, BibRecordAggregateErrors.LeaderInvalid, errors);
+        ValidateInput(controlNumber, 50, BibRecordAggregateErrors.ControlNumberInvalid, errors);
+        ValidateInput(controlNumberIdentifier, 50, BibRecordAggregateErrors.ControlNumberIdentifierInvalid, errors);
+        ValidateDateTime(dateTimeOfLatestTransaction, BibRecordAggregateErrors.DateTimeOfLatestTransactionInvalid, errors);
+        ValidateInput(fixedLengthDataElements, 40, BibRecordAggregateErrors.FixedLengthDataElementsInvalid, errors);
 
         if (errors.Count > 0)
-            return Result.Failure<BibliographicRecord>(errors);
+            return Result.Failure<BibRecord>(errors);
 
-        BibliographicRecord record = new(leader,
+        BibRecord record = new(leader,
             controlNumber,
             controlNumberIdentifier,
             dateTimeOfLatestTransaction,

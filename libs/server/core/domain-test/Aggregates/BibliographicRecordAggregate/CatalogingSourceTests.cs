@@ -1,6 +1,6 @@
-using Kathanika.Core.Domain.Aggregates.BibliographicRecordAggregate;
+using Kathanika.Core.Domain.Aggregates.BibRecordAggregate;
 
-namespace Kathanika.Core.Domain.Test.Aggregates.BibliographicRecordAggregate;
+namespace Kathanika.Core.Domain.Test.Aggregates.BibRecordAggregate;
 
 public sealed class CatalogingSourceTests
 {
@@ -51,6 +51,6 @@ public sealed class CatalogingSourceTests
 
         // Assert
         Assert.True(result.IsFailure);
-        Assert.Contains(result.Errors, e => e.Code == BibliographicRecordAggregateErrors.TranscribingAgencyInvalid.Code);
+        Assert.Contains(result.Errors, e => e.Code == BibRecordAggregateErrors.TranscribingAgencyInvalid.Code);
     }
 }
