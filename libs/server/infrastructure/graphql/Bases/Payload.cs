@@ -4,7 +4,7 @@ namespace Kathanika.Infrastructure.Graphql.Bases;
 
 public abstract record Payload
 {
-    public Payload(Result result, string? message = null)
+    protected Payload(Result result, string? message = null)
     {
         Errors = result.Errors.Length != 0 ? result.Errors : null;
         Message = message;
@@ -18,7 +18,7 @@ public abstract record Payload
 public abstract record Payload<TData> : Payload
     where TData : class
 {
-    public Payload(Core.Domain.Primitives.Result<TData> result, string? message = null)
+    protected Payload(Core.Domain.Primitives.Result<TData> result, string? message = null)
         : base(result, message)
     {
         if (result.IsSuccess)

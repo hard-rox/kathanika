@@ -20,10 +20,9 @@ public class GetPublicationByIdQueryHandlerTests
                 factoryMethod.Locale,
                 AcquisitionMethod.Purchase,
                 factoryMethod.Random.Number(100),
-                null,
                 factoryMethod.Random.Decimal(1000),
                 factoryMethod.Random.Word(),
-                null
+                ""
             ).Value);
         string id = Guid.NewGuid().ToString();
         GetPublicationByIdQuery query = new(id);

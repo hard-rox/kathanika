@@ -1,4 +1,4 @@
-using Kathanika.Core.Application.Features.Authors.Commands;
+using Kathanika.Core.Application.Features.Publications.Commands;
 using Kathanika.Core.Domain.Primitives;
 using Kathanika.Infrastructure.Graphql;
 using Kathanika.Infrastructure.Persistence;
@@ -13,7 +13,7 @@ public sealed class DependencyDirectionTests
     [Fact]
     public void Domain_ShouldNot_HaveDependencyOnApplication()
     {
-        Assembly applicationAssembly = typeof(AddAuthorCommand).Assembly;
+        Assembly applicationAssembly = typeof(AcquirePublicationCommand).Assembly;
 
         TestResult result = Types.InAssembly(_domainAssembly)
             .ShouldNot()
@@ -57,7 +57,7 @@ public sealed class DependencyDirectionTests
     [Fact]
     public void Application_ShouldNot_HaveDependencyOnInfrastructure()
     {
-        Assembly applicationAssembly = typeof(AddAuthorCommand).Assembly;
+        Assembly applicationAssembly = typeof(AcquirePublicationCommand).Assembly;
         Assembly graphqlInfraAssembly = typeof(SchemaConfigurations).Assembly;
         Assembly persistenceInfraAssembly = typeof(MongoDbConfigurations).Assembly;
         Assembly workersInfraAssembly = typeof(ProcessOutboxMessagesJob).Assembly;

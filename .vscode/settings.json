@@ -79,5 +79,7 @@
     "node/ts",
     "server"
   ],
-  "eslint.validate": ["json"]
+  "eslint.validate": [
+    "json"
+  ]
 }

@@ -6,7 +6,7 @@ public class PublicationAggregateTests
     public void Create_Should_Return_ResultOfPublication_On_Valid_Input()
     {
         // Arrange
-        Publisher publisher = Publisher.Create("Publisher").Value;
+
         // Act
         Result<Publication> result = Publication.Create(
             "Title",
@@ -20,34 +20,14 @@ public class PublicationAggregateTests
             string.Empty,
             AcquisitionMethod.Donation,
             10,
-            publisher,
             20,
             string.Empty,
-            string.Empty,
-            [
-                Author.Create(
-                    "John",
-                    "Doe",
-                    DateOnly.MinValue,
-                    null,
-                    "",
-                    ""
-                ).Value,
-                Author.Create(
-                    "John",
-                    "Doe",
-                    DateOnly.MinValue,
-                    null,
-                    "",
-                    ""
-                ).Value
-            ]
+            string.Empty
         );
 
         // Assert
         Assert.True(result.IsSuccess);
         Assert.Equal("Title", result.Value.Title);
-        Assert.Equal(2, result.Value.Authors.Count);
     }
 
     [Fact]
@@ -66,11 +46,9 @@ public class PublicationAggregateTests
             "",
             AcquisitionMethod.Donation,
             10,
-            null,
             20,
             string.Empty,
-            string.Empty,
-            []
+            string.Empty
         ).Value;
 
         // Act
@@ -78,7 +56,6 @@ public class PublicationAggregateTests
             "Updated Title",
             "Updated Isbn",
             PublicationType.Journal,
-            null,
             DateOnly.MinValue,
             null,
             "Updated CallNumber",

@@ -1,5 +1,3 @@
-using Kathanika.Core.Domain.Aggregates.AuthorAggregate;
-using Kathanika.Core.Domain.Aggregates.PublisherAggregate;
 using Kathanika.Core.Domain.DomainEvents;
 using Kathanika.Core.Domain.Primitives;
 
@@ -7,14 +5,12 @@ namespace Kathanika.Core.Domain.Aggregates.PublicationAggregate;
 
 public sealed class Publication : AggregateRoot
 {
-    private List<PublicationAuthor> _authors = [];
     private List<PurchaseRecord> _purchaseRecords = [];
     private List<DonationRecord> _donationRecords = [];
 
     public string Title { get; private set; }
     public string? Isbn { get; private set; }
     public PublicationType PublicationType { get; private set; }
-    public PublicationPublisher? Publisher { get; private set; }
     public DateOnly PublishedDate { get; private set; }
     public string Edition { get; private set; }
     public string? Description { get; private set; }
@@ -22,12 +18,6 @@ public sealed class Publication : AggregateRoot
     public int CopiesAvailable { get; private set; }
     public string CallNumber { get; private set; }
     public string CoverImageFileId { get; private set; }
-
-    public IReadOnlyList<PublicationAuthor> Authors
-    {
-        get { return _authors; }
-        private init { _authors = value?.ToList() ?? []; }
-    }
 
     public IReadOnlyList<PurchaseRecord> PurchaseRecords
     {
@@ -50,9 +40,7 @@ public sealed class Publication : AggregateRoot
         string callNumber,
         string coverImageFileId,
         string? description,
-        string language,
-        Publisher? publisher,
-        IEnumerable<Author>? authors = null)
+        string language)
     {
         Title = title;
         Isbn = isbn;
@@ -63,22 +51,6 @@ public sealed class Publication : AggregateRoot
         Description = description;
         Language = language;
         CoverImageFileId = coverImageFileId;
-
-        if (publisher is not null)
-        {
-            Publisher = new PublicationPublisher(publisher.Id, publisher.Name);
-        }
-
-        if (authors is not null)
-        {
-            foreach (Author author in authors)
-            {
-                _authors.Add(new PublicationAuthor(author.Id,
-                    author.FirstName,
-                    author.LastName,
-                    author.DpFileId));
-            }
-        }
     }
 
     public static Result<Publication> Create(
@@ -93,11 +65,9 @@ public sealed class Publication : AggregateRoot
         string language,
         AcquisitionMethod acquisitionMethod,
         int quantity,
-        Publisher? publisher,
         decimal? unitPrice,
         string? vendor,
-        string? patron,
-        IEnumerable<Author>? authors = null)
+        string? patron)
     {
         List<KnError> errors = [];
         if (acquisitionMethod == AcquisitionMethod.Purchase && unitPrice is null)
@@ -125,9 +95,7 @@ public sealed class Publication : AggregateRoot
             callNumber,
             coverImageFileId,
             description,
-            language,
-            publisher,
-            authors);
+            language);
         if (acquisitionMethod == AcquisitionMethod.Purchase)
             publication.RecordPurchase(unitPrice!.Value, quantity, vendor!);
 
@@ -143,7 +111,6 @@ public sealed class Publication : AggregateRoot
         string? title,
         string? isbn,
         PublicationType? publicationType,
-        Publisher? publisher,
         DateOnly? publishedDate,
         string? edition,
         string? callNumber,
@@ -160,41 +127,12 @@ public sealed class Publication : AggregateRoot
         Description = !string.IsNullOrWhiteSpace(description?.Trim()) ? description.Trim() : Description;
         Language = !string.IsNullOrWhiteSpace(language?.Trim()) ? language.Trim() : Language;
 
-        Publisher = publisher is not null ? new PublicationPublisher(publisher.Id, publisher.Name) : null;
-
         if (!string.IsNullOrWhiteSpace(coverImageFileId?.Trim()))
         {
             AddDomainEvent(new FileReplacedDomainEvent(CoverImageFileId, coverImageFileId));
             CoverImageFileId = coverImageFileId;
         }
 
-        return Result.Success();
-    }
-
-    public Result UpdateAuthors(Author[] authors)
-    {
-        _authors.Clear();
-
-        foreach (Author author in authors)
-        {
-            _authors.Add(new PublicationAuthor(author.Id,
-                    author.FirstName,
-                    author.LastName,
-                    author.DpFileId));
-        }
-
-        return Result.Success();
-    }
-
-    public Result UpdateAuthorInfo(Author author)
-    {
-        PublicationAuthor? publicationAuthor = _authors.Find(x => x.Id == author.Id);
-        if (publicationAuthor is null) return PublicationAggregateErrors.AuthorNotFound(author.Id);
-        _authors.Remove(publicationAuthor);
-        _authors.Add(new PublicationAuthor(author.Id,
-                    author.FirstName,
-                    author.LastName,
-                    author.DpFileId));
         return Result.Success();
     }
 

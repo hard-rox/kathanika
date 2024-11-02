@@ -1,16 +1,11 @@
 namespace Kathanika.Core.Application.Features.Publications.Commands;
 
 internal sealed class AcquirePublicationCommandHandler(
-    IPublicationRepository publicationRepository,
-    IAuthorRepository authorRepository,
-    IPublisherRepository publisherRepository)
+    IPublicationRepository publicationRepository)
         : IRequestHandler<AcquirePublicationCommand, Result<Publication>>
 {
     public async Task<Result<Publication>> Handle(AcquirePublicationCommand request, CancellationToken cancellationToken)
     {
-        IReadOnlyList<Author> authors = await authorRepository.ListAllAsync(x => request.AuthorIds.Contains(x.Id), cancellationToken);
-        Publisher? publisher = await publisherRepository.GetByIdAsync(request.PublisherId, cancellationToken);
-
         Result<Publication> publicationCreateResult = Publication.Create(
             request.Title,
             request.Isbn,
@@ -23,11 +18,9 @@ internal sealed class AcquirePublicationCommandHandler(
             request.Language,
             request.AcquisitionMethod,
             request.Quantity,
-            publisher,
             request.UnitPrice,
             request.Vendor,
-            request.Patron,
-            authors);
+            request.Patron);
 
         if (publicationCreateResult.IsFailure)
             return publicationCreateResult;
