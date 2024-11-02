@@ -58,13 +58,17 @@ public sealed class BibRecord : AggregateRoot
     private static void ValidateInput(string input, int? maxLength, KnError errorType, List<KnError> errors)
     {
         if (string.IsNullOrWhiteSpace(input) || (maxLength.HasValue && input.Length > maxLength.Value))
+        {
             errors.Add(errorType);
+        }
     }
 
     private static void ValidateDateTime(DateTime dateTime, KnError errorType, List<KnError> errors)
     {
         if (dateTime == default)
+        {
             errors.Add(errorType);
+        }
     }
 
     public static Result<BibRecord> Create(string leader,
@@ -79,11 +83,14 @@ public sealed class BibRecord : AggregateRoot
         ValidateInput(leader, 24, BibRecordAggregateErrors.LeaderInvalid, errors);
         ValidateInput(controlNumber, 50, BibRecordAggregateErrors.ControlNumberInvalid, errors);
         ValidateInput(controlNumberIdentifier, 50, BibRecordAggregateErrors.ControlNumberIdentifierInvalid, errors);
-        ValidateDateTime(dateTimeOfLatestTransaction, BibRecordAggregateErrors.DateTimeOfLatestTransactionInvalid, errors);
+        ValidateDateTime(dateTimeOfLatestTransaction, BibRecordAggregateErrors.DateTimeOfLatestTransactionInvalid,
+            errors);
         ValidateInput(fixedLengthDataElements, 40, BibRecordAggregateErrors.FixedLengthDataElementsInvalid, errors);
 
         if (errors.Count > 0)
+        {
             return Result.Failure<BibRecord>(errors);
+        }
 
         BibRecord record = new(leader,
             controlNumber,

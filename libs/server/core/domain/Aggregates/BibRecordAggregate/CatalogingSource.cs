@@ -14,12 +14,9 @@ public record CatalogingSource(string? OriginalCatalogingAgency,
         string? modifyingAgency,
         string? descriptionConventions)
     {
-        if (string.IsNullOrWhiteSpace(transcribingAgency))
-        {
-            return Result.Failure<CatalogingSource>(BibRecordAggregateErrors.TranscribingAgencyInvalid);
-        }
-
-        return Result.Success(new CatalogingSource(originalCatalogingAgency, languageOfCataloging, transcribingAgency, modifyingAgency, descriptionConventions));
+        return string.IsNullOrWhiteSpace(transcribingAgency)
+            ? Result.Failure<CatalogingSource>(BibRecordAggregateErrors.TranscribingAgencyInvalid)
+            : Result.Success(new CatalogingSource(originalCatalogingAgency, languageOfCataloging, transcribingAgency, modifyingAgency, descriptionConventions));
     }
 
     public override IEnumerable<object> GetAtomicValues()

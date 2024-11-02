@@ -1,5 +1,6 @@
 using Azure.Storage.Blobs;
 using Kathanika.Core.Application.Services;
+using Kathanika.Core.Domain.Aggregates.BibRecordAggregate;
 using Kathanika.Core.Domain.Aggregates.VendorAggregate;
 using Kathanika.Infrastructure.Persistence.Caching;
 using Kathanika.Infrastructure.Persistence.FileStorage;
@@ -17,8 +18,7 @@ public static class DependencyInjector
 
         List<Type> classMaps = assembly.GetTypes()
             .Where(t => typeof(IBsonClassMap).IsAssignableFrom(t)
-                && !t.IsInterface
-                && !t.IsAbstract)
+                        && t is { IsInterface: false, IsAbstract: false })
             .ToList();
 
         classMaps.ForEach(x =>
@@ -48,6 +48,7 @@ public static class DependencyInjector
         services.AddScoped<IPublicationRepository, PublicationRepository>();
         services.AddScoped<IPatronRepository, PatronRepository>();
         services.AddScoped<IVendorRepository, VendorRepository>();
+        services.AddScoped<IBibRecordRepository, BibRecordRepository>();
 
         return services;
     }
