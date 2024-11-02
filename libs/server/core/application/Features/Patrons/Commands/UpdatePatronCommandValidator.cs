@@ -1,7 +1,7 @@
 using System.Linq.Expressions;
 
 namespace Kathanika.Core.Application.Features.Patrons.Commands;
-internal sealed class UpdatePatronCommandValidator:AbstractValidator<UpdatePatronCommand>
+internal sealed class UpdatePatronCommandValidator : AbstractValidator<UpdatePatronCommand>
 {
     public UpdatePatronCommandValidator(IPatronRepository patronRepository)
     {
@@ -10,8 +10,8 @@ internal sealed class UpdatePatronCommandValidator:AbstractValidator<UpdatePatro
             .NotEmpty()
             .MustAsync(patronRepository.ExistsAsync)
             .WithMessage("Invalid patron");
-        RuleFor(x => new {x.Id, x.Patch})
-            .MustAsync(async(props, cancellationToken) =>
+        RuleFor(x => new { x.Id, x.Patch })
+            .MustAsync(async (props, cancellationToken) =>
             {
                 Expression<Func<Patron, bool>> expression = p =>
                     p.Id != props.Id

@@ -28,7 +28,7 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
 
         RuleFor(v => v.Website)
             .Must((url) => Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
-               (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
+                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
             ).WithMessage("Invalid website URL.")
             .When(v => !string.IsNullOrEmpty(v.Website));
 

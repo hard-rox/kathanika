@@ -7,7 +7,7 @@ internal sealed class GetVendorsQueryHandler(IVendorRepository vendorRepository)
 {
     public async Task<IQueryable<Vendor>> Handle(GetVendorsQuery request, CancellationToken cancellationToken)
     {
-        IQueryable<Vendor> vendorsQuery = await Task.Run(() => vendorRepository.AsQueryable());
+        IQueryable<Vendor> vendorsQuery = await Task.Run(vendorRepository.AsQueryable);
         return vendorsQuery;
     }
 }

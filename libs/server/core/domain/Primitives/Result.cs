@@ -32,7 +32,7 @@ public class Result
 
     public static Result Success() => new(true, error: null);
     public static Result<TValue> Success<TValue>(TValue value)
-        where TValue : AggregateRoot
+        where TValue : class
         => Result<TValue>.Success(value);
     public static Result Failure(KnError error) => new(false, error: error);
     public static Result Failure(IEnumerable<KnError> errors) => new(false, errors: errors.ToArray());
