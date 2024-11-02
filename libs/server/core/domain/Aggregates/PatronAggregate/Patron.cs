@@ -13,7 +13,6 @@ public sealed class Patron : AggregateRoot
     public string? Address { get; private set; }
     public string? ContactNumber { get; private set; }
     public string? Email { get; private set; }
-
     public string CardNumber { get; private set; }
     public DateOnly RegistrationDate { get; private set; } = DateOnly.FromDateTime(DateTime.UtcNow);
 
