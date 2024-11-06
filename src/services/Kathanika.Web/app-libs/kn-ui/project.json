@@ -1,0 +1,87 @@
+{
+  "name": "kn-ui",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "src/services/Kathanika.Web/app-libs/kn-ui/src",
+  "prefix": "kn",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:package",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "src/services/Kathanika.Web/app-libs/kn-ui/ng-package.json",
+        "tailwindConfig": "src/services/Kathanika.Web/app-libs/kn-ui/tailwind.config.js"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "src/services/Kathanika.Web/app-libs/kn-ui/tsconfig.lib.prod.json"
+        },
+        "development": {
+          "tsConfig": "src/services/Kathanika.Web/app-libs/kn-ui/tsconfig.lib.json"
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "src/services/Kathanika.Web/app-libs/kn-ui/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "storybook": {
+      "executor": "@storybook/angular:start-storybook",
+      "options": {
+        "port": 4400,
+        "configDir": "src/services/Kathanika.Web/app-libs/kn-ui/.storybook",
+        "browserTarget": "kn-ui:build-storybook",
+        "compodoc": false
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "build-storybook": {
+      "executor": "@storybook/angular:build-storybook",
+      "outputs": ["{options.outputDir}"],
+      "options": {
+        "outputDir": "dist/storybook/kn-ui",
+        "configDir": "src/services/Kathanika.Web/app-libs/kn-ui/.storybook",
+        "browserTarget": "kn-ui:build-storybook",
+        "compodoc": false,
+        "styles": ["src/services/Kathanika.Web/app-libs/tw-theming/src/styles.scss"]
+      },
+      "configurations": {
+        "ci": {
+          "quiet": true
+        }
+      }
+    },
+    "test-storybook": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "test-storybook -c src/services/Kathanika.Web/app-libs/kn-ui/.storybook --url=http://localhost:4400"
+      }
+    },
+    "static-storybook": {
+      "executor": "@nx/web:file-server",
+      "dependsOn": ["build-storybook"],
+      "options": {
+        "buildTarget": "kn-ui:build-storybook",
+        "staticFilePath": "dist/storybook/kn-ui",
+        "spa": true
+      },
+      "configurations": {
+        "ci": {
+          "buildTarget": "kn-ui:build-storybook:ci"
+        }
+      }
+    }
+  }
+}

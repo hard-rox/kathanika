@@ -1,0 +1,26 @@
+{
+  "name": "graphql-ts-client",
+  "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "src/services/Kathanika.Web/app-libs/graphql-ts-client/src",
+  "prefix": "lib",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "src/services/Kathanika.Web/app-libs/graphql-ts-client/jest.config.ts"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    },
+    "codegen": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "graphql-codegen --config src/services/Kathanika.Web/app-libs/graphql-ts-client/codegen.ts"
+      }
+    }
+  }
+}

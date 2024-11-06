@@ -1,0 +1,247 @@
+{
+  "format": 1,
+  "restore": {
+    "/Users/roxy/Codes/kathanika-unnx/kathanika/src/infrastructure/Kathanika.Infrastructure.Persistence/Kathanika.Infrastructure.Persistence.csproj": {}
+  },
+  "projects": {
+    "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Application/Kathanika.Application.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Application/Kathanika.Application.csproj",
+        "projectName": "Kathanika.Application",
+        "projectPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Application/Kathanika.Application.csproj",
+        "packagesPath": "/Users/roxy/.nuget/packages/",
+        "outputPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Application/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/roxy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Domain/Kathanika.Domain.csproj": {
+                "projectPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Domain/Kathanika.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "FluentValidation": {
+              "target": "Package",
+              "version": "[11.10.0, )"
+            },
+            "FluentValidation.DependencyInjectionExtensions": {
+              "target": "Package",
+              "version": "[11.10.0, )"
+            },
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.4.1, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Domain/Kathanika.Domain.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Domain/Kathanika.Domain.csproj",
+        "projectName": "Kathanika.Domain",
+        "projectPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Domain/Kathanika.Domain.csproj",
+        "packagesPath": "/Users/roxy/.nuget/packages/",
+        "outputPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Domain/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/roxy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "MediatR": {
+              "target": "Package",
+              "version": "[12.4.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "/Users/roxy/Codes/kathanika-unnx/kathanika/src/infrastructure/Kathanika.Infrastructure.Persistence/Kathanika.Infrastructure.Persistence.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/infrastructure/Kathanika.Infrastructure.Persistence/Kathanika.Infrastructure.Persistence.csproj",
+        "projectName": "Kathanika.Infrastructure.Persistence",
+        "projectPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/infrastructure/Kathanika.Infrastructure.Persistence/Kathanika.Infrastructure.Persistence.csproj",
+        "packagesPath": "/Users/roxy/.nuget/packages/",
+        "outputPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/infrastructure/Kathanika.Infrastructure.Persistence/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/Users/roxy/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "net8.0"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net8.0": {
+            "targetAlias": "net8.0",
+            "projectReferences": {
+              "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Application/Kathanika.Application.csproj": {
+                "projectPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Application/Kathanika.Application.csproj"
+              },
+              "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Domain/Kathanika.Domain.csproj": {
+                "projectPath": "/Users/roxy/Codes/kathanika-unnx/kathanika/src/core/Kathanika.Domain/Kathanika.Domain.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
+        }
+      },
+      "frameworks": {
+        "net8.0": {
+          "targetAlias": "net8.0",
+          "dependencies": {
+            "Azure.Storage.Blobs": {
+              "target": "Package",
+              "version": "[12.22.2, )"
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.Configuration": {
+              "target": "Package",
+              "version": "[8.0.0, )"
+            },
+            "Microsoft.Extensions.DependencyInjection": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[8.0.1, )"
+            },
+            "MongoDB.Driver": {
+              "target": "Package",
+              "version": "[2.29.0, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.303/PortableRuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}
