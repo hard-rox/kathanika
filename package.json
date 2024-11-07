@@ -30,7 +30,7 @@
     "@graphql-codegen/typescript-operations": "^4.2.3",
     "@nx-dotnet/core": "^2.4.5",
     "@nx/angular": "19.8.4",
-    "@nx/cypress": "20.0.0",
+    "@nx/cypress": "20.0.10",
     "@nx/eslint": "19.8.4",
     "@nx/eslint-plugin": "19.8.4",
     "@nx/jest": "19.8.4",
