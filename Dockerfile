@@ -8,8 +8,8 @@ FROM mcr.microsoft.com/dotnet/sdk:8.0 AS api-build
 WORKDIR /kathanika-project
 # RUN ls
 COPY ["Kathanika.sln", "."]
-COPY ["src/Application/Kathanika.Core.Application.csproj", "src/Application/"]
-COPY ["src/Domain/Kathanika.Core.Domain.csproj", "src/Domain/"]
+COPY ["src/Application/Kathanika.Application.csproj", "src/Application/"]
+COPY ["src/Domain/Kathanika.Domain.csproj", "src/Domain/"]
 COPY ["src/Infrastructure.GraphQL/Kathanika.Infrastructure.Graphql.csproj", "src/Infrastructure.GraphQL/"]
 COPY ["src/Infrastructure.Persistence/Kathanika.Infrastructure.Persistence.csproj", "src/Infrastructure.Persistence/"]
 COPY ["src/Infrastructure.Services/Kathanika.Infrastructure.Services.csproj", "src/Infrastructure.Services/"]

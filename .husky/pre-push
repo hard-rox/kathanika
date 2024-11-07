@@ -1,0 +1,4 @@
+dotnet build
+dotnet test
+nx reset
+nx affected -t lint build test --parallel
