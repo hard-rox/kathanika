@@ -41,7 +41,7 @@
     "@storybook/test-runner": "^0.13.0",
     "@storybook/testing-library": "^0.2.2",
     "@swc-node/register": "~1.9.1",
-    "@swc/core": "~1.5.7",
+    "@swc/core": "~1.9.1",
     "@swc/helpers": "~0.5.11",
     "@types/express": "4.17.14",
     "@types/jest": "^29.5.12",
