@@ -2,7 +2,7 @@
   "name": "ils-web",
   "$schema": "../../../../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "app",
+  "prefix": "kn-ils-web",
   "sourceRoot": "src/services/Kathanika.Web/apps/ils-web/src",
   "tags": [],
   "targets": {

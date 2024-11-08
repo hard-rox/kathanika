@@ -104,7 +104,7 @@
       "unitTestRunner": "jest"
     },
     "@nx/angular:component": {
-      "style": "css"
+      "style": "scss"
     },
     "@nx/angular:application": {
       "e2eTestRunner": "cypress",

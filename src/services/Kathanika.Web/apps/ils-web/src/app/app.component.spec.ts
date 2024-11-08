@@ -1,17 +1,45 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { AppComponent } from './app.component';
-import { RouterModule } from '@angular/router';
+import { HeaderComponent } from './components/header/header.component';
+import { SidebarComponent } from './components/sidebar/sidebar.component';
+import { FooterComponent } from './components/footer/footer.component';
 
 describe('AppComponent', () => {
+  let fixture: ComponentFixture<AppComponent>;
+  let nativeElement: HTMLElement;
+
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, RouterModule.forRoot([])],
+      imports: [
+        AppComponent,
+        HeaderComponent,
+        FooterComponent,
+        SidebarComponent,
+      ],
     }).compileComponents();
+
+    fixture = TestBed.createComponent(AppComponent);
+    nativeElement = fixture.nativeElement as HTMLElement;
   });
 
-  it(`should have as title 'ils-web'`, () => {
-    const fixture = TestBed.createComponent(AppComponent);
+  it('should create the app', () => {
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('ils-web');
+    expect(app).toBeTruthy();
+  });
+
+  it('should render header', () => {
+    expect(nativeElement.querySelector('kn-ils-web-header')).toBeTruthy();
+  });
+
+  it('should render sidebar', () => {
+    expect(nativeElement.querySelector('kn-ils-web-sidebar')).toBeTruthy();
+  });
+
+  it('should render footer', () => {
+    expect(nativeElement.querySelector('kn-ils-web-footer')).toBeTruthy();
+  });
+
+  it('should have router outlet', () => {
+    expect(nativeElement.querySelector('router-outlet')).toBeTruthy();
   });
 });

@@ -66,6 +66,7 @@
     <ItemGroup>
       <Folder Include="app-libs\graphql-ts-client\src\lib\graphql\" />
       <Folder Include="app-libs\tw-theming\src\lib\" />
+      <Folder Include="apps\ils-web\src\app\components\" />
     </ItemGroup>
 
     <ItemGroup>
