@@ -20,7 +20,8 @@
     ],
     "sharedGlobals": []
   },
-  "nxCloudId": "672968d55e4ddd547dc9e5a7",
+  "nxCloudId": "6567e952e45f0710429621bc",
+  "nxCloudAccessToken": "YTU5YjUwNWEtODA0OC00ZDE2LWFkYzEtZWNmMWZkNzM4OWM1fHJlYWQtd3JpdGU=",
   "plugins": [
     {
       "plugin": "@nx/js/typescript",
@@ -37,6 +38,7 @@
     },
     {
       "plugin": "@nx/eslint/plugin",
+      "include": ["src/services/Kathanika.Web/apps/**/*", "src/services/Kathanika.Web/app-libs/**/*"],
       "options": {
         "targetName": "lint"
       }

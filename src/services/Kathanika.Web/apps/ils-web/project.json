@@ -8,12 +8,16 @@
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:application",
-      "outputs": ["{options.outputPath}"],
+      "outputs": [
+        "{options.outputPath}"
+      ],
       "options": {
         "outputPath": "dist/src/services/Kathanika.Web/apps/ils-web",
         "index": "src/services/Kathanika.Web/apps/ils-web/src/index.html",
         "browser": "src/services/Kathanika.Web/apps/ils-web/src/main.ts",
-        "polyfills": ["zone.js"],
+        "polyfills": [
+          "zone.js"
+        ],
         "tsConfig": "src/services/Kathanika.Web/apps/ils-web/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
@@ -22,7 +26,9 @@
             "input": "src/services/Kathanika.Web/apps/ils-web/public"
           }
         ],
-        "styles": ["src/services/Kathanika.Web/apps/ils-web/src/styles.scss"],
+        "styles": [
+          "src/services/Kathanika.Web/apps/ils-web/src/styles.scss"
+        ],
         "scripts": [],
         "server": "src/services/Kathanika.Web/apps/ils-web/src/main.server.ts",
         "prerender": true,
@@ -44,7 +50,8 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all"
+          "outputHashing": "all",
+          "serviceWorker": "src/services/Kathanika.Web/apps/ils-web/ngsw-config.json"
         },
         "development": {
           "optimization": false,
@@ -77,7 +84,9 @@
     },
     "test": {
       "executor": "@nx/jest:jest",
-      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "outputs": [
+        "{workspaceRoot}/coverage/{projectRoot}"
+      ],
       "options": {
         "jestConfig": "src/services/Kathanika.Web/apps/ils-web/jest.config.ts"
       }

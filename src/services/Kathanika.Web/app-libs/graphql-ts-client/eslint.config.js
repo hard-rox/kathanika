@@ -6,13 +6,16 @@ module.exports = [
     ...nx.configs['flat/angular'],
     ...nx.configs['flat/angular-template'],
     {
+        ignores: ['./src/lib/graphql/generated/**.ts']
+    },
+    {
         files: ['**/*.ts'],
         rules: {
             '@angular-eslint/directive-selector': [
                 'error',
                 {
                     type: 'attribute',
-                    prefix: 'lib',
+                    prefix: 'kn',
                     style: 'camelCase',
                 },
             ],
@@ -20,7 +23,7 @@ module.exports = [
                 'error',
                 {
                     type: 'element',
-                    prefix: 'lib',
+                    prefix: 'kn',
                     style: 'kebab-case',
                 },
             ],
@@ -29,7 +32,6 @@ module.exports = [
     {
         files: ['**/*.html'],
         // Override or add rules here
-        rules: {},
-        ignores: ['**/generated/*']
+        rules: {}
     },
 ];
