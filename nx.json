@@ -34,11 +34,11 @@
           "configName": "tsconfig.lib.json"
         }
       },
-      "exclude": ["src/services/Kathanika.Web/app-libs/tw-theming/*"]
+      "exclude": ["apps/libs/tw-theming/*"]
     },
     {
       "plugin": "@nx/eslint/plugin",
-      "include": ["src/services/Kathanika.Web/apps/**/*", "src/services/Kathanika.Web/app-libs/**/*"],
+      "include": ["apps/**/*", "apps/libs/**/*"],
       "options": {
         "targetName": "lint"
       }

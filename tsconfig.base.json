@@ -16,17 +16,11 @@
     "baseUrl": ".",
     "paths": {
       "@kathanika/graphql-ts-client": [
-        "src/services/Kathanika.Web/app-libs/graphql-ts-client/src/index.ts"
+        "apps/libs/graphql-ts-client/src/index.ts"
       ],
-      "@kathanika/ils-features": [
-        "src/services/Kathanika.Web/app-libs/ils-features/src/index.ts"
-      ],
-      "@kathanika/kn-ui": [
-        "src/services/Kathanika.Web/app-libs/kn-ui/src/index.ts"
-      ],
-      "@kathanika/tw-theming": [
-        "src/services/Kathanika.Web/app-libs/tw-theming/src/index.ts"
-      ]
+      "@kathanika/ils-features": ["apps/libs/ils-features/src/index.ts"],
+      "@kathanika/kn-ui": ["apps/libs/kn-ui/src/index.ts"],
+      "@kathanika/tw-theming": ["apps/libs/tw-theming/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

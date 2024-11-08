@@ -10,29 +10,29 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "infrastructure", "infrastru
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "tests", "tests", "{38F729CC-C4D2-4913-951F-73D8BB4E20AB}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Domain", "src\core\Kathanika.Domain\Kathanika.Domain.csproj", "{B4722E06-E1FC-47B4-99F0-A6D836CF111D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Domain", "server\src\core\Kathanika.Domain\Kathanika.Domain.csproj", "{B4722E06-E1FC-47B4-99F0-A6D836CF111D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Application", "src\core\Kathanika.Application\Kathanika.Application.csproj", "{9EAC28B7-8E0F-4C85-AEF1-D2F625005EF6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Application", "server\src\core\Kathanika.Application\Kathanika.Application.csproj", "{9EAC28B7-8E0F-4C85-AEF1-D2F625005EF6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Graphql", "src\infrastructure\Kathanika.Infrastructure.Graphql\Kathanika.Infrastructure.Graphql.csproj", "{690B953D-7C11-4B4E-A230-5C69BE40BF42}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Graphql", "server\src\infrastructure\Kathanika.Infrastructure.Graphql\Kathanika.Infrastructure.Graphql.csproj", "{690B953D-7C11-4B4E-A230-5C69BE40BF42}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Persistence", "src\infrastructure\Kathanika.Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj", "{0281B598-BFF1-4BE3-BA50-DAC22AC91610}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Persistence", "server\src\infrastructure\Kathanika.Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj", "{0281B598-BFF1-4BE3-BA50-DAC22AC91610}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Workers", "src\infrastructure\Kathanika.Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj", "{EF34C72C-2C7C-4173-A7DE-904F95A93945}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Workers", "server\src\infrastructure\Kathanika.Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj", "{EF34C72C-2C7C-4173-A7DE-904F95A93945}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Web", "src\services\Kathanika.Web\Kathanika.Web.csproj", "{087F5945-174A-47EE-AD71-7630A6BBD71A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Web", "server\src\services\Kathanika.Web\Kathanika.Web.csproj", "{087F5945-174A-47EE-AD71-7630A6BBD71A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Domain.Tests", "tests\Kathanika.Domain.Tests\Kathanika.Domain.Tests.csproj", "{4AE2CCAD-4C53-4256-B86C-47CE2BA545E3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Domain.Tests", "server\tests\Kathanika.Domain.Tests\Kathanika.Domain.Tests.csproj", "{4AE2CCAD-4C53-4256-B86C-47CE2BA545E3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Application.Tests", "tests\Kathanika.Application.Tests\Kathanika.Application.Tests.csproj", "{F7BFB991-5FBC-4FBC-AFF4-20F70BB394B4}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Application.Tests", "server\tests\Kathanika.Application.Tests\Kathanika.Application.Tests.csproj", "{F7BFB991-5FBC-4FBC-AFF4-20F70BB394B4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Graphql.Tests", "tests\Kathanika.Infrastructure.Graphql.Tests\Kathanika.Infrastructure.Graphql.Tests.csproj", "{B8971D8D-29FB-4634-91F3-664378608028}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Graphql.Tests", "server\tests\Kathanika.Infrastructure.Graphql.Tests\Kathanika.Infrastructure.Graphql.Tests.csproj", "{B8971D8D-29FB-4634-91F3-664378608028}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Persistence.Tests", "tests\Kathanika.Infrastructure.Persistence.Tests\Kathanika.Infrastructure.Persistence.Tests.csproj", "{1EF41C47-4985-4DEA-92E3-03AF7D4B3125}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Persistence.Tests", "server\tests\Kathanika.Infrastructure.Persistence.Tests\Kathanika.Infrastructure.Persistence.Tests.csproj", "{1EF41C47-4985-4DEA-92E3-03AF7D4B3125}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Workers.Tests", "tests\Kathanika.Infrastructure.Workers.Tests\Kathanika.Infrastructure.Workers.Tests.csproj", "{600099BE-4EF4-4DC1-A6CF-B033C58AF6D3}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Infrastructure.Workers.Tests", "server\tests\Kathanika.Infrastructure.Workers.Tests\Kathanika.Infrastructure.Workers.Tests.csproj", "{600099BE-4EF4-4DC1-A6CF-B033C58AF6D3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Web.Tests", "tests\Kathanika.Web.Tests\Kathanika.Web.Tests.csproj", "{AC2FA64E-3AE0-499A-8AF6-83EF86CEEB07}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Web.Tests", "server\tests\Kathanika.Web.Tests\Kathanika.Web.Tests.csproj", "{AC2FA64E-3AE0-499A-8AF6-83EF86CEEB07}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
