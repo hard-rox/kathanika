@@ -1,3 +1,4 @@
+using System.Diagnostics.CodeAnalysis;
 using System.Linq.Expressions;
 using System.Reflection;
 using HotChocolate.Data.Filters;
@@ -6,13 +7,16 @@ using HotChocolate.Language;
 
 namespace Kathanika.Infrastructure.Graphql.GraphqlHelpers;
 
-internal sealed class QueryableStringInvariantContainsHandler(InputParser parser) : QueryableStringOperationHandler(parser)
+[SuppressMessage("ReSharper", "ClassNeverInstantiated.Global")]
+internal sealed class QueryableStringInvariantContainsHandler(InputParser parser)
+    : QueryableStringOperationHandler(parser)
 {
     private static readonly MethodInfo ToLower = typeof(string)
         .GetMethods()
         .Single(
             x => x.Name == nameof(string.ToLower) &&
-            x.GetParameters().Length == 0);
+                 x.GetParameters().Length == 0);
+
     protected override int Operation => DefaultFilterOperations.Contains;
 
     public override Expression HandleOperation(QueryableFilterContext context,
@@ -22,12 +26,9 @@ internal sealed class QueryableStringInvariantContainsHandler(InputParser parser
     {
         Expression property = context.GetInstance();
 
-        if (parsedValue is string parsedStringValue)
-        {
-            Expression propertyToLower = Expression.Call(property, ToLower);
-            return FilterExpressionBuilder.Contains(propertyToLower, parsedStringValue.ToLower());
-        }
+        if (parsedValue is not string parsedStringValue) throw new InvalidOperationException();
 
-        throw new InvalidOperationException();
+        Expression propertyToLower = Expression.Call(property, ToLower);
+        return FilterExpressionBuilder.Contains(propertyToLower, parsedStringValue.ToLower());
     }
 }

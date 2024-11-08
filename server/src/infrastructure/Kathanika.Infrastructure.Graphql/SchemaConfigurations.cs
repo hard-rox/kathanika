@@ -4,7 +4,6 @@ using HotChocolate.Data.Filters;
 using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Descriptors;
-using HotChocolate.Types.Pagination;
 using Kathanika.Infrastructure.Graphql.Schema;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -17,7 +16,7 @@ internal static class SchemaConfigurations
         Type[] types = Assembly.GetExecutingAssembly()
             .GetTypes()
             .Where(type => type.Namespace == nameSpace
-                && Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) == null)
+                           && Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) == null)
             .ToArray();
 
         return types;
@@ -42,35 +41,32 @@ internal static class SchemaConfigurations
         {
             Exception? exception = error.Exception;
             IError errorResult = error
-                    .RemoveException()
-                    .RemoveExtensions()
-                    .RemoveLocations();
+                .RemoveException()
+                .RemoveExtensions()
+                .RemoveLocations();
             if (exception is not null && exception.Source == "MongoDB.Driver.Core")
             {
                 return errorResult
-                    .WithMessage("Looks like MongoDB is offline or connection string is invalid. Make sure database is online to enjoy.");
+                    .WithMessage(
+                        "Looks like MongoDB is offline or connection string is invalid. Make sure database is online to enjoy.");
             }
+
             if (error.Exception is not null && error.Exception is not DomainException)
             {
                 return errorResult
                     .WithMessage("Something went terribly wrong. We are trying to fix it...");
             }
+
             return error;
         });
-        requestBuilder.ModifyRequestOptions(opt =>
+        requestBuilder.ModifyRequestOptions(opt => { opt.IncludeExceptionDetails = true; });
+        requestBuilder.ModifyPagingOptions(x =>
         {
-            opt.IncludeExceptionDetails = true;
+            x.DefaultPageSize = 10;
+            x.MaxPageSize = 100;
+            x.IncludeTotalCount = true;
         });
-        requestBuilder.SetPagingOptions(new PagingOptions
-        {
-            MaxPageSize = 100,
-            DefaultPageSize = 10,
-            IncludeTotalCount = true,
-        });
-        requestBuilder.ModifyOptions(opt =>
-        {
-            opt.SortFieldsByName = false;
-        });
+        requestBuilder.ModifyOptions(opt => { opt.SortFieldsByName = false; });
         requestBuilder.AddConvention<IFilterConvention>(
             new FilterConventionExtension(
                 x => x.AddProviderExtension(
@@ -87,5 +83,4 @@ internal static class SchemaConfigurations
 
         return requestBuilder;
     }
-
 }

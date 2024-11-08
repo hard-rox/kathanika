@@ -9,8 +9,7 @@ public static class DependencyInjector
     {
         services
             .BuildGraphQlSchema()
-            .AddInstrumentation()
-            .AddApolloTracing();
+            .AddInstrumentation();
 
         return services;
     }
