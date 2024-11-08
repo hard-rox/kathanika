@@ -2,7 +2,7 @@
   "name": "ils-web",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "prefix": "kn",
+  "prefix": "kn-ils-web",
   "sourceRoot": "apps/ils-web/src",
   "tags": [],
   "targets": {
@@ -15,10 +15,12 @@
         "browser": "apps/ils-web/src/main.ts",
         "polyfills": ["zone.js"],
         "tsConfig": "apps/ils-web/tsconfig.app.json",
+        "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/ils-web/src/favicon.ico",
-          "apps/ils-web/src/assets",
-          "apps/ils-web/src/manifest.webmanifest"
+          {
+            "glob": "**/*",
+            "input": "apps/ils-web/public"
+          }
         ],
         "styles": ["apps/ils-web/src/styles.scss"],
         "scripts": [],
@@ -26,18 +28,15 @@
         "prerender": true,
         "ssr": {
           "entry": "apps/ils-web/server.ts"
-        },
-        "allowedCommonJsDependencies": [
-          "sweetalert2"
-        ]
+        }
       },
       "configurations": {
         "production": {
           "budgets": [
             {
               "type": "initial",
-              "maximumWarning": "1mb",
-              "maximumError": "2mb"
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
             },
             {
               "type": "anyComponentStyle",
@@ -75,11 +74,7 @@
       }
     },
     "lint": {
-      "executor": "@nx/eslint:lint",
-      "outputs": ["{options.outputFile}"],
-      "options": {
-        "lintFilePatterns": ["apps/ils-web/**/*.ts", "apps/ils-web/**/*.html"]
-      }
+      "executor": "@nx/eslint:lint"
     },
     "test": {
       "executor": "@nx/jest:jest",
@@ -92,7 +87,9 @@
       "executor": "@nx/web:file-server",
       "options": {
         "buildTarget": "ils-web:build",
-        "staticFilePath": "dist/apps/ils-web/browser"
+        "port": 4200,
+        "staticFilePath": "dist/apps/ils-web/browser",
+        "spa": true
       }
     }
   }

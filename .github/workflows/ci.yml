@@ -68,9 +68,9 @@ jobs:
         args: >
           -Dsonar.organization=kathanika
           -Dsonar.projectKey=ts-projects
-          -Dsonar.sources="libs/shared/kn-ui/src","libs/ils-features/src","apps/ils-web/src"
-          -Dsonar.javascript.lcov.reportPaths="coverage/libs/shared/kn-ui/lcov.info","coverage/libs/ils-features/lcov.info","coverage/apps/ils-web/lcov.info"
-          -Dsonar.tests="libs/shared/kn-ui/src","libs/ils-features/src","apps/ils-web/src"
+          -Dsonar.sources="apps/libs/kn-ui/src","apps/libs/ils-features/src","apps/ils-web/src"
+          -Dsonar.javascript.lcov.reportPaths="coverage/lcov-report/libs/kn-ui/lcov.info","coverage/lcov-report/libs/ils-features/lcov.info","coverage/lcov-report/apps/ils-web/lcov.info"
+          -Dsonar.tests="apps/libs/kn-ui/src","apps/libs/ils-features/src","apps/ils-web/src"
           -Dsonar.test.inclusions=**/*.spec.ts
           -Dsonar.coverage.exclusions="**/*.stories.ts","**/*.config.ts","**/*.routes.ts","**/*.server.ts","**/main.ts","**/environment.ts",,"**/test-setup.ts"
 #         -Dsonar.qualitygate.wait=true
