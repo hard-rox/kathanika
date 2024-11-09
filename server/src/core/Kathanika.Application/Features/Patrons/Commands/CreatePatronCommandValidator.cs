@@ -19,7 +19,7 @@ internal sealed class CreatePatronCommandValidator : AbstractValidator<CreatePat
             .NotEmpty()
             .MustAsync(
                 async (cardNumber, cancellationToken)
-                => await patronRepository.ExistsAsync(x => x.CardNumber == cardNumber, cancellationToken)
+                    => !await patronRepository.ExistsAsync(x => x.CardNumber == cardNumber, cancellationToken)
             ).WithMessage("Card Number must be unique and not empty.");
 
         RuleFor(x => x.DateOfBirth)

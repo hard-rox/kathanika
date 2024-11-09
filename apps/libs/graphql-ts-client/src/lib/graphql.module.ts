@@ -1,7 +1,7 @@
-import { ModuleWithProviders, NgModule } from '@angular/core';
-import { ApolloModule, APOLLO_OPTIONS } from 'apollo-angular';
-import { ApolloClientOptions, InMemoryCache } from '@apollo/client/core';
-import { HttpLink } from 'apollo-angular/http';
+import {ModuleWithProviders, NgModule} from '@angular/core';
+import {APOLLO_OPTIONS, ApolloModule} from 'apollo-angular';
+import {ApolloClientOptions, InMemoryCache} from '@apollo/client/core';
+import {HttpLink} from 'apollo-angular/http';
 
 @NgModule({
     exports: [ApolloModule],
@@ -19,7 +19,7 @@ export class GraphQLModule {
                         httpLink: HttpLink
                     ): ApolloClientOptions<unknown> => {
                         return {
-                            link: httpLink.create({ uri: graphqlEndpoint }),
+                            link: httpLink.create({uri: graphqlEndpoint}),
                             cache: new InMemoryCache(),
                         };
                     },

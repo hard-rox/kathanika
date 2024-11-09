@@ -11,7 +11,7 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
             .NotEmpty()
             .MustAsync(
                 async (name, cancellationToken)
-                => await vendorRepository.ExistsAsync(x => x.Name == name, cancellationToken)
+                    => !await vendorRepository.ExistsAsync(x => x.Name == name, cancellationToken)
             ).WithMessage("Vendor Name must be unique and not empty.");
 
         RuleFor(v => v.Address)
@@ -28,7 +28,7 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
 
         RuleFor(v => v.Website)
             .Must((url) => Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
-                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
+                           (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
             ).WithMessage("Invalid website URL.")
             .When(v => !string.IsNullOrEmpty(v.Website));
 

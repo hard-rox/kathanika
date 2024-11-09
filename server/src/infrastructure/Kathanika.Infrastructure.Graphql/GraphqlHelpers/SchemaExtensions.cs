@@ -20,14 +20,11 @@ internal static class SchemaExtensions
         this Domain.Primitives.Result<TOut> result,
         IResolverContext context
     )
-    where TOut : class
+        where TOut : class
     {
-        if (result.IsFailure)
-        {
-            context.SetError(result.Errors);
-            return null;
-        }
+        if (!result.IsFailure) return result.Value;
 
-        return result.Value;
+        context.SetError(result.Errors);
+        return null;
     }
 }

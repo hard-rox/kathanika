@@ -11,10 +11,11 @@ public static class DependencyInjector
     {
         services.AddQuartz(configure =>
         {
+            //TODO: Get intervals from appSettings.
             JobKey processOutboxMessageJobKey = new(nameof(ProcessOutboxMessagesJob));
             configure.AddJob<ProcessOutboxMessagesJob>(processOutboxMessageJobKey)
                 .AddTrigger(trigger => trigger.ForJob(processOutboxMessageJobKey)
-                    .WithSimpleSchedule(schedule => schedule.WithIntervalInSeconds(10)
+                    .WithSimpleSchedule(schedule => schedule.WithIntervalInMinutes(10)
                         .RepeatForever()));
 
             JobKey unusedUploadedFileCleanupJobKey = new(nameof(UnusedUploadedFileCleanupJob));

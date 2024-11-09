@@ -14,7 +14,7 @@ public sealed class VendorMutations
     )
     {
         Domain.Primitives.Result<Vendor> result = await mediator.Send(input, cancellationToken);
-        return new(result);
+        return new AddVendorPayload(result);
     }
 
     public async Task<UpdateVendorPayload> UpdateVendorAsync(

@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+    <configuration default="false" name="Kathanika.Wek + ils-web" type="CompoundRunConfigurationType">
+        <toRun name="Kathanika.Web: http" type="LaunchSettings"/>
+        <toRun name="start ils-web" type="js.build_tools.npm"/>
+        <method v="2"/>
+    </configuration>
+</component>

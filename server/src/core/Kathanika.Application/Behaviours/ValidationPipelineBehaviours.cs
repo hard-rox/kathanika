@@ -19,7 +19,7 @@ public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IVali
         }
 
         KnError[] validationErrors = validators
-            .Select(async validator => await validator.ValidateAsync(request))
+            .Select(async validator => await validator.ValidateAsync(request, cancellationToken))
             .SelectMany(result => result.Result.Errors)
             .Where(error => error is not null)
             .Select(error => KnError.ValidationError(error.PropertyName, error.ErrorMessage))
@@ -44,12 +44,12 @@ public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IVali
 
         Type genericArgument = responseType.GetGenericArguments()[0];
         MethodInfo? failureMethod = typeof(Result<>)
-            .MakeGenericType(genericArgument)
-            .GetMethod("Failure", [typeof(IEnumerable<KnError>)])
-            ?? throw new Exception("Result method not found.");
+                                        .MakeGenericType(genericArgument)
+                                        .GetMethod("Failure", [typeof(IEnumerable<KnError>)])
+                                    ?? throw new Exception("Result method not found.");
 
-        object? resultInstance = failureMethod.Invoke(null, [validationErrors])
-            ?? throw new Exception("Could not create result");
+        var resultInstance = failureMethod.Invoke(null, [validationErrors])
+                             ?? throw new Exception("Could not create result");
         return (TResponse)resultInstance;
     }
 }
