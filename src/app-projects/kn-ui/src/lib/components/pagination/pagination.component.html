@@ -1,0 +1,87 @@
+<nav
+  class="bg-white mt-4 inline-flex items-center gap-4 border-b border-theme-rich-black"
+>
+  <span class="px-4 py-2">Items per page</span>
+  <select
+    (change)="onPageSizeChanged($event.target)"
+    class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver"
+  >
+    @for (pageSizeItem of pageSizes; track pageSizeItem) {
+      <option [value]="pageSizeItem" [selected]="pageSizeItem === pageSize">
+        {{ pageSizeItem }}
+      </option>
+    }
+  </select>
+  <span class="px-4 py-2">Page {{ currentPage }} of {{ lastPage }}</span>
+  <button
+    kn-button
+    variant="light"
+    [disabled]="currentPage === 1"
+    (click)="onPageChanged(1)"
+  >
+    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20">
+      <path
+        d="m13.707 4.707-1.414-1.414L3.586 12l8.707 8.707 1.414-1.414L6.414 12l7.293-7.293z"
+      />
+      <path
+        d="m19.707 4.707-1.414-1.414L9.586 12l8.707 8.707 1.414-1.414L12.414 12l7.293-7.293z"
+      />
+    </svg>
+  </button>
+  <button
+    kn-button
+    variant="light"
+    [disabled]="currentPage === 1"
+    (click)="onPageChanged(currentPage - 1)"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <polygon
+        points="15.293 3.293 6.586 12 15.293 20.707 16.707 19.293 9.414 12 16.707 4.707 15.293 3.293"
+      />
+    </svg>
+  </button>
+  <button
+    kn-button
+    variant="light"
+    [disabled]="currentPage === lastPage"
+    (click)="onPageChanged(currentPage + 1)"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <polygon
+        points="7.293 4.707 14.586 12 7.293 19.293 8.707 20.707 17.414 12 8.707 3.293 7.293 4.707"
+      />
+    </svg>
+  </button>
+  <button
+    kn-button
+    variant="light"
+    [disabled]="currentPage === lastPage"
+    (click)="onPageChanged(lastPage)"
+  >
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      width="20"
+      height="20"
+      viewBox="0 0 24 24"
+    >
+      <g>
+        <polygon
+          points="11.707 3.293 10.293 4.707 17.586 12 10.293 19.293 11.707 20.707 20.414 12 11.707 3.293"
+        />
+        <polygon
+          points="5.707 3.293 4.293 4.707 11.586 12 4.293 19.293 5.707 20.707 14.414 12 5.707 3.293"
+        />
+      </g>
+    </svg>
+  </button>
+</nav>
