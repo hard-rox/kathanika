@@ -1,0 +1,81 @@
+import {Component} from '@angular/core';
+import {RouterLink, RouterLinkActive} from "@angular/router";
+import {CommonModule} from "@angular/common";
+import {KnButton} from "@kathanika/kn-ui";
+
+@Component({
+    selector: 'app-sidebar',
+    standalone: true,
+    imports: [
+        CommonModule,
+        RouterLink,
+        RouterLinkActive,
+        KnButton
+    ],
+    templateUrl: './sidebar.component.html'
+})
+export class SidebarComponent {
+    selectedIndex: number | null = null;
+    menus = [
+        {
+            text: 'Authors',
+            icon: 'demography',
+            link: null,
+            children: [
+                {
+                    text: 'List',
+                    link: 'authors',
+                },
+                {
+                    text: 'Add',
+                    link: 'authors/add',
+                },
+            ],
+        },
+        {
+            text: 'Publication',
+            icon: 'menu_book',
+            link: null,
+            children: [
+                {
+                    text: 'List',
+                    link: 'publications',
+                },
+                {
+                    text: 'Acquire',
+                    link: 'publications/acquire',
+                }
+            ],
+        },
+        {
+            text: 'Publishers',
+            icon: 'print',
+            link: null,
+            children: [
+                {
+                    text: 'List',
+                    link: 'publishers',
+                },
+                {
+                    text: 'Add',
+                    link: 'publishers/add',
+                },
+            ],
+        },
+        {
+            text: 'Members',
+            icon: 'person',
+            link: null,
+            children: [
+                {
+                    text: 'List',
+                    link: 'members'
+                },
+                {
+                    text: 'Add',
+                    link: 'members/add'
+                }
+            ]
+        },
+    ];
+}

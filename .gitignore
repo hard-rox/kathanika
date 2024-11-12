@@ -514,3 +514,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+# Project files & directories
+src/services/Kathanika.Web/uploads

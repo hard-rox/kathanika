@@ -1,0 +1,179 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "src/app-projects",
+  "projects": {
+    "ils-web": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss"
+        }
+      },
+      "root": "src/app-projects/ils-web",
+      "sourceRoot": "src/app-projects/ils-web/src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:application",
+          "options": {
+            "outputPath": "dist/ils-web",
+            "index": "src/app-projects/ils-web/src/index.html",
+            "browser": "src/app-projects/ils-web/src/main.ts",
+            "polyfills": [
+              "zone.js"
+            ],
+            "tsConfig": "src/app-projects/ils-web/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              {
+                "glob": "**/*",
+                "input": "src/app-projects/ils-web/public"
+              }
+            ],
+            "styles": [
+              "src/app-projects/ils-web/src/styles.scss"
+            ],
+            "scripts": [],
+            "server": "src/app-projects/ils-web/src/main.server.ts",
+            "prerender": true,
+            "ssr": {
+              "entry": "src/app-projects/ils-web/server.ts"
+            }
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kB",
+                  "maximumError": "1MB"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kB",
+                  "maximumError": "4kB"
+                }
+              ],
+              "outputHashing": "all",
+              "serviceWorker": "src/app-projects/ils-web/ngsw-config.json"
+            },
+            "development": {
+              "optimization": false,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/app-projects/ils-web/src/environments/environment.ts",
+                  "with": "src/app-projects/ils-web/src/environments/environment.development.ts"
+                }
+              ]
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "buildTarget": "ils-web:build:production"
+            },
+            "development": {
+              "buildTarget": "ils-web:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/app-projects/ils-web/**/*.ts",
+              "src/app-projects/ils-web/**/*.html"
+            ],
+            "eslintConfig": "src/app-projects/ils-web/eslint.config.js"
+          }
+        }
+      }
+    },
+    "kn-ui": {
+      "projectType": "library",
+      "root": "src/app-projects/kn-ui",
+      "sourceRoot": "src/app-projects/kn-ui/src",
+      "prefix": "kn",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "src/app-projects/kn-ui/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "src/app-projects/kn-ui/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "src/app-projects/kn-ui/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "storybook": {
+          "builder": "@storybook/angular:start-storybook",
+          "options": {
+            "configDir": "src/app-projects/kn-ui/.storybook",
+            "browserTarget": "kn-ui:build",
+            "styles": [
+              "src/app-projects/kn-ui/src/kn-ui-tw-base.scss"
+            ],
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "src/app-projects/kn-ui"
+            ],
+            "port": 6006
+          }
+        },
+        "build-storybook": {
+          "builder": "@storybook/angular:build-storybook",
+          "options": {
+            "configDir": "src/app-projects/kn-ui/.storybook",
+            "browserTarget": "kn-ui:build",
+            "styles": [
+              "src/app-projects/kn-ui/src/kn-ui-tw-base.scss"
+            ],
+            "compodoc": true,
+            "compodocArgs": [
+              "-e",
+              "json",
+              "-d",
+              "src/app-projects/kn-ui"
+            ],
+            "outputDir": "dist/storybook/kn-ui"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/app-projects/kn-ui/**/*.ts",
+              "src/app-projects/kn-ui/**/*.html"
+            ],
+            "eslintConfig": "src/app-projects/kn-ui/eslint.config.js"
+          }
+        }
+      }
+    },
+    "graphql-client": {
+      "projectType": "library",
+      "root": "src/app-projects/graphql-client",
+      "sourceRoot": "src/app-projects/graphql-client/src",
+      "prefix": "lib",
+      "architect": {}
+    }
+  }
+}
