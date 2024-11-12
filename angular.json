@@ -87,25 +87,14 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
         },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
           "options": {
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
+            "lintFilePatterns": [
+              "src/app-projects/ils-web/**/*.ts",
+              "src/app-projects/ils-web/**/*.html"
             ],
-            "tsConfig": "src/app-projects/ils-web/tsconfig.spec.json",
-            "inlineStyleLanguage": "scss",
-            "assets": [
-              {
-                "glob": "**/*",
-                "input": "src/app-projects/ils-web/public"
-              }
-            ],
-            "styles": [
-              "src/app-projects/ils-web/src/styles.scss"
-            ],
-            "scripts": []
+            "eslintConfig": "src/app-projects/ils-web/eslint.config.js"
           }
         }
       }
@@ -130,16 +119,6 @@
             }
           },
           "defaultConfiguration": "development"
-        },
-        "test": {
-          "builder": "@angular-devkit/build-angular:karma",
-          "options": {
-            "tsConfig": "src/app-projects/kn-ui/tsconfig.spec.json",
-            "polyfills": [
-              "zone.js",
-              "zone.js/testing"
-            ]
-          }
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -175,6 +154,16 @@
               "src/app-projects/kn-ui"
             ],
             "outputDir": "dist/storybook/kn-ui"
+          }
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/app-projects/kn-ui/**/*.ts",
+              "src/app-projects/kn-ui/**/*.html"
+            ],
+            "eslintConfig": "src/app-projects/kn-ui/eslint.config.js"
           }
         }
       }

@@ -5,80 +5,85 @@ name: CI
 run-name: Pre-PR CI
 
 on:
-  pull_request:
-    branches: [ "main" ]
-  # push:
-  #   branches: [ "main" ]
+    pull_request:
+        branches: [ "main" ]
+    # push:
+    #   branches: [ "main" ]
 
 jobs:
-  lint-build-test:
-    name: Lint, Build, Unit Test & Sonar Scan
-    runs-on: ubuntu-latest
-    steps:
-    - name: Checkout
-      uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
+    lint-build-test:
+        name: Lint, Build, Unit Test & Sonar Scan
+        runs-on: ubuntu-latest
+        steps:
+            -   name: Checkout
+                uses: actions/checkout@v4
+                with:
+                    fetch-depth: 0
 
-    - name: Setup Node.js 22
-      uses: actions/setup-node@v4
-      with:
-        node-version: 22
-        cache: 'npm'
+            -   name: Setup Node.js 22
+                uses: actions/setup-node@v4
+                with:
+                    node-version: 22
+                    cache: 'npm'
 
-    - name: Installing Packages
-      run: npm ci
+            -   name: Installing Packages
+                run: npm ci
 
-    - name: Lint
-      run: npx nx affected -t lint --prod --no-cloud --verbose
+            -   name: Lint dotnet solution
+                run: dotnet format
 
-    - name: Build
-      run: npx nx affected -t build --prod --no-cloud --verbose
+            -   name: Lint angular workspace
+                run: ng lint
+                
+            -   name: Build dotnet
+                run: dotnet build
 
-    - name: Test
-      run: npx nx affected -t test --prod --no-cloud --verbose
+            -   name: Build angular workspace
+                run: ng build
 
-    - name: Set up JDK 17
-      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
-      uses: actions/setup-java@v4
-      with:
-        java-version: 17
-        distribution: 'zulu' # Alternative distribution options are available.
+            -   name: Test dotnet
+                run: dotnet test
+                
+            -   name: Test angular workspace
+                run: npm run test --code-coverage
 
-    - name: Install dotnet Sonar scanner
-      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
-      run: dotnet tool install --global dotnet-sonarscanner
+            -   name: Set up JDK 17
+                if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+                uses: actions/setup-java@v4
+                with:
+                    java-version: 17
+                    distribution: 'zulu' # Alternative distribution options are available.
 
-    - name: Collecting test coverage for TS projects
-      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
-      run: npx nx run-many -t test -p kn-ui ils-features ils-web --code-coverage --coverage
+            -   name: Install dotnet Sonar scanner
+                if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+                run: dotnet tool install --global dotnet-sonarscanner
 
-    - name: TS Sonar Analysis
-      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
-      uses: SonarSource/sonarcloud-github-action@master
-      env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      with:
-        args: >
-          -Dsonar.organization=kathanika
-          -Dsonar.projectKey=ts-projects
-          -Dsonar.sources="apps/libs/kn-ui/src","apps/libs/ils-features/src","apps/ils-web/src"
-          -Dsonar.javascript.lcov.reportPaths="coverage/lcov-report/libs/kn-ui/lcov.info","coverage/lcov-report/libs/ils-features/lcov.info","coverage/lcov-report/apps/ils-web/lcov.info"
-          -Dsonar.tests="apps/libs/kn-ui/src","apps/libs/ils-features/src","apps/ils-web/src"
-          -Dsonar.test.inclusions=**/*.spec.ts
-          -Dsonar.coverage.exclusions="**/*.stories.ts","**/*.config.ts","**/*.routes.ts","**/*.server.ts","**/main.ts","**/environment.ts",,"**/test-setup.ts"
-#         -Dsonar.qualitygate.wait=true
-#         -Dsonar.verbose=true
+            -   name: TS Sonar Analysis
+                if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+                uses: SonarSource/sonarcloud-github-action@master
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                with:
+                    args: >
+                        -Dsonar.organization=kathanika
+                        -Dsonar.projectKey=ts-projects
+                        -Dsonar.sources="src/app-projects/kn-ui/src", "src/app-projects/ils-web/src"
+                        -Dsonar.javascript.lcov.reportPaths="coverage/lcov-report/kn-ui/lcov.info", "coverage/lcov-report/ils-web/lcov.info"
+                        -Dsonar.tests="src/app-projects/kn-ui/src", "src/app-projects/ils-web/src"
+                        -Dsonar.test.inclusions=**/*.spec.ts
+                        -Dsonar.coverage.exclusions="**/*.stories.ts","**/*.config.ts","**/*.routes.ts","**/*.server.ts","**/main.ts","**/environment.ts",,"**/test-setup.ts"
+            #         -Dsonar.qualitygate.wait=true
+            #         -Dsonar.verbose=true
 
-    - name: .NET Sonar analysis
-      if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      run: |
-        dotnet sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml /d:sonar.coverage.exclusions="**\Program.cs","**\graphql\**"
-        dotnet build
-        dotnet test --collect:"XPlat Code Coverage;Format=opencover"
-        dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+            -   name: .NET Sonar analysis
+                if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
+                env:
+                    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+                    SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+                run: |
+                    dotnet sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml /d:sonar.coverage.exclusions="**\Program.cs","**\graphql\**"
+                    dotnet build
+                    dotnet test --collect:"XPlat Code Coverage;Format=opencover"
+                    dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 

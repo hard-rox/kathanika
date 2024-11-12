@@ -1,6 +1,6 @@
 // noinspection ES6PreferShortImport
 
-import { argsToTemplate, type Meta, type StoryObj } from '@storybook/angular';
+import { type Meta, type StoryObj } from '@storybook/angular';
 import { KnAlert } from './alert.component';
 
 import { within } from '@storybook/testing-library';
