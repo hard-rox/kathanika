@@ -40,20 +40,6 @@ updates:
           - "major"
           - "minor"
           - "patch"
-      react-deps:
-        patterns:
-          - "react*"
-        update-types:
-          - "major"
-          - "minor"
-          - "patch"
-      nx-deps:
-        patterns:
-          - "@nx/*"
-          - "nx"
-        update-types:
-          - "minor"
-          - "patch"
       storybook-deps:
         patterns:
           - "@storybook/*"
