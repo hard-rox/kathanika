@@ -4,7 +4,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build": "ng build",
+    "build": "ng build kn-ui && ng build ils-web",
     "watch": "ng build --watch --configuration development",
     "test": "jest",
     "serve:ssr:ils-web": "node dist/ils-web/server/server.mjs",
