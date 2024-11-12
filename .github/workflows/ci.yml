@@ -58,7 +58,7 @@ jobs:
                 if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
                 run: dotnet tool install --global dotnet-sonarscanner
 
-            -   name: TS Sonar Analysis
+            -   name: Sonar Analysis angular workspace
                 if: github.actor != 'dependabot[bot]' && github.actor != 'dependabot-preview[bot]'
                 uses: SonarSource/sonarcloud-github-action@master
                 env:
@@ -68,9 +68,9 @@ jobs:
                     args: >
                         -Dsonar.organization=kathanika
                         -Dsonar.projectKey=ts-projects
-                        -Dsonar.sources="src/app-projects/kn-ui/src", "src/app-projects/ils-web/src"
-                        -Dsonar.javascript.lcov.reportPaths="coverage/lcov-report/kn-ui/lcov.info", "coverage/lcov-report/ils-web/lcov.info"
-                        -Dsonar.tests="src/app-projects/kn-ui/src", "src/app-projects/ils-web/src"
+                        -Dsonar.sources="src/app-projects/kn-ui/src","src/app-projects/ils-web/src"
+                        -Dsonar.javascript.lcov.reportPaths="coverage/lcov-report/kn-ui/lcov.info","coverage/lcov-report/ils-web/lcov.info"
+                        -Dsonar.tests="src/app-projects/kn-ui/src","src/app-projects/ils-web/src"
                         -Dsonar.test.inclusions=**/*.spec.ts
                         -Dsonar.coverage.exclusions="**/*.stories.ts","**/*.config.ts","**/*.routes.ts","**/*.server.ts","**/main.ts","**/environment.ts",,"**/test-setup.ts"
             #         -Dsonar.qualitygate.wait=true
