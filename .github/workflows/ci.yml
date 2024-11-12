@@ -33,13 +33,13 @@ jobs:
                 run: dotnet format
 
             -   name: Lint angular workspace
-                run: ng lint
+                run: npm run lint
                 
             -   name: Build dotnet
                 run: dotnet build
 
             -   name: Build angular workspace
-                run: ng build
+                run: npm run build
 
             -   name: Test dotnet
                 run: dotnet test
