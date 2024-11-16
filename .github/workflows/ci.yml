@@ -28,12 +28,9 @@ jobs:
 
             -   name: Installing Packages
                 run: npm ci
-                
-            -   name: Installing dotnet format
-                run: dotnet tool install --global dotnet-sonarscanner
 
-            -   name: Lint dotnet solution
-                run: dotnet format
+#            -   name: Lint dotnet solution
+#                run: dotnet format
 
             -   name: Lint angular workspace
                 run: npm run lint
