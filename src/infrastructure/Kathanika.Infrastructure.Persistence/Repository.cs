@@ -35,8 +35,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     private static List<OutboxMessage> GetOutboxMessagesFromAggregate(T aggregate)
     {
-        List<IDomainEvent> domainEvents = aggregate.GetDomainEvents();
-        List<OutboxMessage> outboxMessages = domainEvents
+        List<OutboxMessage> outboxMessages = aggregate.DomainEvents
             .Select(domainEvent => new OutboxMessage(domainEvent))
             .ToList();
         aggregate.ClearDomainEvents();

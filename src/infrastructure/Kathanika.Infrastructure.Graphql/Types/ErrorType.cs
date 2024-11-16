@@ -1,3 +1,4 @@
+// ReSharper disable ClassNeverInstantiated.Global
 namespace Kathanika.Infrastructure.Graphql.Types;
 
 public class KnErrorType : ObjectType<KnError>;

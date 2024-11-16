@@ -29,6 +29,7 @@ internal static class SchemaConfigurations
         requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.Graphql.Types"));
         requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.Graphql.Inputs"));
         requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.Graphql.Schema"));
+        requestBuilder.TryAddTypeInterceptor<IgnorePublicMethodsTypeInterceptor>();
         requestBuilder.AddQueryType(q => q.Name(OperationTypeNames.Query));
         requestBuilder.AddMutationType(m => m.Name(OperationTypeNames.Mutation));
         requestBuilder.AddSubscriptionType<Subscriptions>();
@@ -66,7 +67,12 @@ internal static class SchemaConfigurations
             x.MaxPageSize = 100;
             x.IncludeTotalCount = true;
         });
-        requestBuilder.ModifyOptions(opt => { opt.SortFieldsByName = false; });
+        requestBuilder.ModifyOptions(opt =>
+        {
+            opt.SortFieldsByName = false;
+            opt.RemoveUnreachableTypes = true;
+        });
+        requestBuilder.ModifyCostOptions(opt => opt.EnforceCostLimits = false);
         requestBuilder.AddConvention<IFilterConvention>(
             new FilterConventionExtension(
                 x => x.AddProviderExtension(
