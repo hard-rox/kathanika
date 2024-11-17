@@ -29,8 +29,8 @@ jobs:
             -   name: Installing Packages
                 run: npm ci
 
-#            -   name: Lint dotnet solution
-#                run: dotnet format
+            -   name: Lint dotnet solution
+                run: dotnet format
 
             -   name: Lint angular workspace
                 run: npm run lint
