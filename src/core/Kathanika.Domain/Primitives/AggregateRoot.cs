@@ -18,7 +18,7 @@ public abstract class AggregateRoot : Entity
     public string? LastModifiedByUserName { get; private set; }
     [GraphQLIgnore]
     public DateTimeOffset? LastModifiedAt { get; private set; }
-    
+
     [GraphQLIgnore]
     public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
 
