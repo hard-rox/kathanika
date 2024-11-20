@@ -6,7 +6,7 @@ internal sealed class GetPatronsQueryHandler(IPatronRepository patronRepository)
 {
     public async Task<IQueryable<Patron>> Handle(GetPatronsQuery request, CancellationToken cancellationToken)
     {
-        IQueryable<Patron> patronQuery = await Task.Run(() => patronRepository.AsQueryable(), cancellationToken);
+        IQueryable<Patron> patronQuery = await Task.Run(patronRepository.AsQueryable, cancellationToken);
         return patronQuery;
     }
 }

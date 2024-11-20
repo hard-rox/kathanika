@@ -14,7 +14,7 @@ public sealed class Patron : AggregateRoot
     public string? ContactNumber { get; private set; }
     public string? Email { get; private set; }
     public string CardNumber { get; private set; }
-    public DateOnly RegistrationDate { get; private set; } = DateOnly.FromDateTime(DateTime.UtcNow);
+    public DateOnly RegistrationDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
 
     public string FullName => $"{Salutation} {FirstName} {Surname}";
 
@@ -82,21 +82,21 @@ public sealed class Patron : AggregateRoot
         Salutation = !string.IsNullOrWhiteSpace(salutation) ? salutation : Salutation;
         FirstName = !string.IsNullOrWhiteSpace(firstName) ? firstName : FirstName;
         Surname = !string.IsNullOrWhiteSpace(surname) ? surname : Surname;
-        DateOfBirth = dateOfBirth is not null ? dateOfBirth.Value : DateOfBirth;
+        DateOfBirth = dateOfBirth ?? DateOfBirth;
         Address = !string.IsNullOrWhiteSpace(address) ? address : Address;
         ContactNumber = !string.IsNullOrWhiteSpace(contactNumber) ? contactNumber : ContactNumber;
         Email = !string.IsNullOrWhiteSpace(email) ? email : Email;
 
-        if (!string.IsNullOrWhiteSpace(photoFileId))
-        {
-            IDomainEvent photoFileEvent
-                = PhotoFileId is null
+        if (string.IsNullOrWhiteSpace(photoFileId))
+            return Result.Success();
+        
+        IDomainEvent photoFileEvent
+            = PhotoFileId is null
                 ? new FileUsedDomainEvent(photoFileId)
                 : new FileReplacedDomainEvent(PhotoFileId, photoFileId);
 
-            PhotoFileId = photoFileId;
-            AddDomainEvent(photoFileEvent);
-        }
+        PhotoFileId = photoFileId;
+        AddDomainEvent(photoFileEvent);
 
         return Result.Success();
     }

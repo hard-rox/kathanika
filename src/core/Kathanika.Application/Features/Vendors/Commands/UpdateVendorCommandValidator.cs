@@ -3,6 +3,7 @@ using Kathanika.Domain.Aggregates.VendorAggregate;
 
 namespace Kathanika.Application.Features.Vendors.Commands;
 
+// ReSharper disable once UnusedType.Global
 internal sealed class UpdateVendorCommandValidator : AbstractValidator<UpdateVendorCommand>
 {
     public UpdateVendorCommandValidator(IVendorRepository vendorRepository)
@@ -20,7 +21,7 @@ internal sealed class UpdateVendorCommandValidator : AbstractValidator<UpdateVen
                     && a.Name == props.Patch.Name
                     && a.Address == props.Patch.Address
                     && a.ContactNumber == props.Patch.ContactNumber;
-                bool isDuplicate = await vendorRepository.ExistsAsync(expression, cancellationToken);
+                var isDuplicate = await vendorRepository.ExistsAsync(expression, cancellationToken);
                 return !isDuplicate;
             })
             .WithName("Name, Address, Contact Number")
@@ -54,7 +55,7 @@ internal class VendorPatchValidator : AbstractValidator<VendorPatch>
             .When(v => !string.IsNullOrEmpty(v.Email));
 
         RuleFor(v => v.Website)
-            .Must((url) => Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
+            .Must(url => Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
             ).WithMessage("Invalid website URL.")
             .When(v => !string.IsNullOrEmpty(v.Website));

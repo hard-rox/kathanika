@@ -33,16 +33,16 @@ internal class FileMetadataService(
         {
             Limit = 1
         };
-        long count = await _fileEntryCollection.CountDocumentsAsync(filterDefinition, countOptions, cancellationToken);
+        var count = await _fileEntryCollection.CountDocumentsAsync(filterDefinition, countOptions, cancellationToken);
         return count > 0;
     }
 
     public async Task<StoredFileMetadata?> GetAsync(string fileId, CancellationToken cancellationToken = default)
     {
         if (!IsValidFileId(fileId)) return null;
-        logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", typeof(StoredFileMetadata).Name, fileId, Constants.StoredFileMetadataCollectionName);
+        logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", nameof(StoredFileMetadata), fileId, Constants.StoredFileMetadataCollectionName);
 
-        string cacheKey = $"{typeof(StoredFileMetadata).Name.ToLower()}:{fileId}";
+        var cacheKey = $"{nameof(StoredFileMetadata).ToLower()}:{fileId}";
         logger.LogInformation("Trying to get document from cache with cache key: {@CacheKey}", cacheKey);
         // StoredFileMetadata? cachedDocument = cacheService.Get<StoredFileMetadata>(cacheKey);
         // if (cachedDocument is not null)
@@ -56,7 +56,7 @@ internal class FileMetadataService(
         FilterDefinition<StoredFileMetadata> filter = Builders<StoredFileMetadata>.Filter.Eq(x => x.Id, fileId);
         IAsyncCursor<StoredFileMetadata> cursor = await _fileEntryCollection.FindAsync(filter, cancellationToken: cancellationToken);
         StoredFileMetadata metadata = await cursor.SingleOrDefaultAsync(cancellationToken: cancellationToken);
-        logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", metadata, typeof(StoredFileMetadata).Name, Constants.StoredFileMetadataCollectionName);
+        logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", metadata, nameof(StoredFileMetadata), Constants.StoredFileMetadataCollectionName);
 
         logger.LogInformation("Setting document {@Document} into cache with cache key: {@CacheKey}", metadata, cacheKey);
         // cacheService.Set(cacheKey, metadata);

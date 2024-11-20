@@ -1,4 +1,3 @@
-
 using System.Text.RegularExpressions;
 
 namespace Kathanika.Infrastructure.Persistence.FileStorage;
@@ -27,32 +26,21 @@ internal abstract class FileValidator(
             && !HasValidContentType(metadata.ContentType, permittedContentTypes))
             return false;
 
-        if (permittedExtensions is not null
-            && !HasValidExtension(Path.GetExtension(metadata.FileName), permittedExtensions))
-            return false;
-
-        return true;
+        return permittedExtensions is null
+               || HasValidExtension(Path.GetExtension(metadata.FileName), permittedExtensions);
     }
 
     private static bool HasValidExtension(string extension, string[] permittedExtensions)
     {
-        if (permittedExtensions.Contains(extension)) return true;
-        return false;
+        return permittedExtensions.Contains(extension);
     }
 
     private static bool HasValidContentType(string contentType, string[] permittedContentTypes)
     {
         if (permittedContentTypes.Contains(contentType)) return true;
 
-        foreach (string permittedContentType in permittedContentTypes)
-        {
-            string regexPattern = "^" + Regex.Escape(permittedContentType).Replace(@"\*", ".*") + "$";
-            if (Regex.IsMatch(contentType, regexPattern, RegexOptions.IgnoreCase))
-            {
-                return true;
-            }
-        }
-
-        return false;
+        return permittedContentTypes
+            .Select(permittedContentType => "^" + Regex.Escape(permittedContentType).Replace(@"\*", ".*") + "$")
+            .Any(regexPattern => Regex.IsMatch(contentType, regexPattern, RegexOptions.IgnoreCase));
     }
 }

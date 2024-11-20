@@ -37,10 +37,10 @@ public class PatronTests
         Patron patronToUpdate = initialResult.Value;
 
         // New data for the update
-        string newFirstName = "UpdatedFirstName";
-        string newSurname = "UpdatedSurname";
-        string newCardNumber = "UpdatedCardNumber123";
-        string newAddress = "Updated Address";
+        const string newFirstName = "UpdatedFirstName";
+        const string newSurname = "UpdatedSurname";
+        const string newCardNumber = "UpdatedCardNumber123";
+        const string newAddress = "Updated Address";
 
         // Act
         Result updateResult = patronToUpdate.Update(newCardNumber, firstName: newFirstName, surname: newSurname, address: newAddress);

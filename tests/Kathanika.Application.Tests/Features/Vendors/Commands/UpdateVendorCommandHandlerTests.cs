@@ -8,11 +8,11 @@ public class UpdateVendorCommandHandlerTests
     [Fact]
     public async Task Handler_ShouldReturnFailureResult_WhenInvalidVendorId()
     {
-        string id = Guid.NewGuid().ToString();
+        var id = Guid.NewGuid().ToString();
         IVendorRepository vendorRepository = Substitute.For<IVendorRepository>();
         UpdateVendorCommand command = new(
             id,
-            new("UpdatedName")
+            new VendorPatch("UpdatedName")
         );
         UpdateVendorCommandHandler handler = new(vendorRepository);
 
@@ -25,7 +25,7 @@ public class UpdateVendorCommandHandlerTests
     [Fact]
     public async Task Handler_ShouldCallUpdateAsync_WithValidInput()
     {
-        string vendorId = Guid.NewGuid().ToString();
+        var vendorId = Guid.NewGuid().ToString();
         Vendor vendor = new Faker<Vendor>().CustomInstantiator(f => Vendor.Create(
             f.Company.CompanyName(),
                 f.Address.FullAddress(),

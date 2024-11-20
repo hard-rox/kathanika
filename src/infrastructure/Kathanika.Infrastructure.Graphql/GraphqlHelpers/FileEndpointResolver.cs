@@ -13,8 +13,8 @@ internal static class FileEndpointResolver
                     .GetRequiredService<IHttpContextAccessor>()
                     .HttpContext?
                     .Request;
-        string? scheme = request?.Scheme;
-        string? host = request?.Host.ToString();
+        var scheme = request?.Scheme;
+        var host = request?.Host.ToString();
         return scheme + "://" + host + "/fs/" + fileId;
     }
 }

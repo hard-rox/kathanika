@@ -19,16 +19,16 @@ internal static class MongoDbConfigurations
                     new IgnoreExtraElementsConvention(true),
                     new EnumRepresentationConvention(BsonType.String)
                 ];
-        ConventionRegistry.Register("ApplicationConventionPack", conventionPack, x => true);
+        ConventionRegistry.Register("ApplicationConventionPack", conventionPack, _ => true);
     }
 
     internal static void AddMongoDb(this IServiceCollection services, string? connectionString)
     {
-        BsonSerializer.RegisterSerializer(typeof(DateTimeOffset), new DateTimeOffsetSerializer(BsonType.Document));
+        BsonSerializer.RegisterSerializer(new DateTimeOffsetSerializer(BsonType.Document));
 
         RegisterConventionPacks();
 
-        services.AddSingleton(f =>
+        services.AddSingleton(_ =>
         {
             ServiceProvider sp = services.BuildServiceProvider();
             ILogger<MongoClientSettings> logger = sp.GetRequiredService<ILogger<MongoClientSettings>>();
@@ -39,7 +39,7 @@ internal static class MongoDbConfigurations
                 cc.Subscribe<CommandStartedEvent>(e =>
                 {
                     logger.LogInformation("MongoDB command {@CommandName} started, {@DBRequestId}, {@OperationId}, {@DatabaseName}, {@CommandText}",
-                    e.CommandName, e.RequestId, e.OperationId, e.DatabaseNamespace.DatabaseName, e.Command.ToJson(new JsonWriterSettings() { Indent = true }));
+                    e.CommandName, e.RequestId, e.OperationId, e.DatabaseNamespace.DatabaseName, e.Command.ToJson(new JsonWriterSettings { Indent = true }));
                 });
                 cc.Subscribe<CommandSucceededEvent>(e =>
                 {
@@ -49,7 +49,7 @@ internal static class MongoDbConfigurations
                 cc.Subscribe<CommandFailedEvent>(e =>
                 {
                     logger.LogError("MongoDB command {@CommandName} execution failed, {@DBRequestId}, {@OperationId}, {@Error}",
-                    e.CommandName, e.RequestId, e.OperationId, e.Failure.ToJson(new JsonWriterSettings() { Indent = true }));
+                    e.CommandName, e.RequestId, e.OperationId, e.Failure.ToJson(new JsonWriterSettings { Indent = true }));
                 });
             };
             mongoClientSettings.RetryWrites = true;

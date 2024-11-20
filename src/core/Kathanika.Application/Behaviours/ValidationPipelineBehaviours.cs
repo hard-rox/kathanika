@@ -43,10 +43,10 @@ public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IVali
         }
 
         Type genericArgument = responseType.GetGenericArguments()[0];
-        MethodInfo? failureMethod = typeof(Result<>)
-                                        .MakeGenericType(genericArgument)
-                                        .GetMethod("Failure", [typeof(IEnumerable<KnError>)])
-                                    ?? throw new Exception("Result method not found.");
+        MethodInfo failureMethod = typeof(Result<>)
+                                       .MakeGenericType(genericArgument)
+                                       .GetMethod("Failure", [typeof(IEnumerable<KnError>)])
+                                   ?? throw new Exception("Result method not found.");
 
         var resultInstance = failureMethod.Invoke(null, [validationErrors])
                              ?? throw new Exception("Could not create result");

@@ -34,7 +34,7 @@ public static class DependencyInjector
     {
         RegisterClassMapFromAssembly();
 
-        string? connectionString = configuration.GetConnectionString("mongoDbConnection");
+        var connectionString = configuration.GetConnectionString("mongoDbConnection");
         services.AddMongoDb(connectionString);
 
         services.AddMemoryCache();

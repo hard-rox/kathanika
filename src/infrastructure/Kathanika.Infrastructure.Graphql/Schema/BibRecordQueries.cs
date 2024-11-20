@@ -1,6 +1,8 @@
 using HotChocolate.Resolvers;
 using Kathanika.Application.Features.BibRecords.Queries;
 using Kathanika.Domain.Aggregates.BibRecordAggregate;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedType.Global
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 

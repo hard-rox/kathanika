@@ -35,7 +35,7 @@ public class GetVendorByIdQueryHandlerTests
     public async Task Handle_ShouldReturnSuccessResult_WhenVendorFound()
     {
         // Arrange
-        string vendorId = Guid.NewGuid().ToString();
+        var vendorId = Guid.NewGuid().ToString();
         Vendor vendor = new Faker<Vendor>()
             .CustomInstantiator(f => Vendor.Create(
                 f.Company.CompanyName(),

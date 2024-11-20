@@ -17,7 +17,7 @@ public sealed class FileValidatorTests
         _fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(metadata);
 
-        bool validationResult = await validator.ValidateAsync(
+        var validationResult = await validator.ValidateAsync(
             Guid.NewGuid().ToString(),
             500,
             2000
@@ -33,7 +33,7 @@ public sealed class FileValidatorTests
         _fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .ReturnsNull();
 
-        bool validationResult = await validator.ValidateAsync(
+        var validationResult = await validator.ValidateAsync(
             Guid.NewGuid().ToString(),
             500,
             2000
@@ -50,7 +50,7 @@ public sealed class FileValidatorTests
         _fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(metadata);
 
-        bool validationResult = await validator.ValidateAsync(
+        var validationResult = await validator.ValidateAsync(
             Guid.NewGuid().ToString(),
             500,
             2000
@@ -67,7 +67,7 @@ public sealed class FileValidatorTests
         _fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(metadata);
 
-        bool validationResult = await validator.ValidateAsync(
+        var validationResult = await validator.ValidateAsync(
             Guid.NewGuid().ToString(),
             500,
             2000
@@ -84,7 +84,7 @@ public sealed class FileValidatorTests
         _fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(metadata);
 
-        bool validationResult = await validator.ValidateAsync(
+        var validationResult = await validator.ValidateAsync(
             Guid.NewGuid().ToString(),
             500,
             2000,
@@ -102,7 +102,7 @@ public sealed class FileValidatorTests
         _fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(metadata);
 
-        bool validationResult = await validator.ValidateAsync(
+        var validationResult = await validator.ValidateAsync(
             Guid.NewGuid().ToString(),
             500,
             2000,
@@ -120,7 +120,7 @@ public sealed class FileValidatorTests
         _fileMetadataService.GetAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(metadata);
 
-        bool validationResult = await validator.ValidateAsync(
+        var validationResult = await validator.ValidateAsync(
             Guid.NewGuid().ToString(),
             100,
             2000

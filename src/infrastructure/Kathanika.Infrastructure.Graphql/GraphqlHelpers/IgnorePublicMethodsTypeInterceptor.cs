@@ -1,7 +1,5 @@
 using System.Reflection;
 using HotChocolate.Configuration;
-using HotChocolate.Data.Filters;
-using HotChocolate.Data.Sorting;
 using HotChocolate.Types.Descriptors.Definitions;
 
 namespace Kathanika.Infrastructure.Graphql.GraphqlHelpers;

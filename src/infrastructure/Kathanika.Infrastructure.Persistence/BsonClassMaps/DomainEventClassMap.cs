@@ -10,7 +10,7 @@ internal class DomainEventClassMap : IBsonClassMap
         IEnumerable<Type> domainEventTypes = typeof(IDomainEvent)
             .Assembly
             .GetTypes()
-            .Where(t => t.IsClass && !t.IsAbstract && typeof(IDomainEvent).IsAssignableFrom(t));
+            .Where(t => t is { IsClass: true, IsAbstract: false } && typeof(IDomainEvent).IsAssignableFrom(t));
 
         foreach (Type eventType in domainEventTypes)
         {

@@ -8,7 +8,7 @@ public class DeleteVendorCommandHandlerTests
     [Fact]
     public async Task Handler_ShouldCallDeleteAsync()
     {
-        string id = Guid.NewGuid().ToString();
+        var id = Guid.NewGuid().ToString();
         Vendor vendor = new Faker<Vendor>().CustomInstantiator(f => Vendor.Create(
             f.Company.CompanyName(),
                 f.Address.FullAddress(),
@@ -36,7 +36,7 @@ public class DeleteVendorCommandHandlerTests
     [Fact]
     public async Task Handler_ShouldReturnFailureResult_WhenInvalidVendorId()
     {
-        string id = Guid.NewGuid().ToString();
+        var id = Guid.NewGuid().ToString();
         IVendorRepository vendorRepository = Substitute.For<IVendorRepository>();
         DeleteVendorCommand command = new(id);
         DeleteVendorCommandHandler handler = new(vendorRepository);

@@ -5,6 +5,7 @@ public record KnError
     public string Code { get; private init; }
     public string? Description { get; private init; }
     public string Message { get; private init; }
+
     internal KnError(
         string code,
         string message,
@@ -27,6 +28,7 @@ public record KnError
 public sealed record ValidationError : KnError
 {
     public string FieldName { get; private init; }
+
     internal ValidationError(
         string fieldName,
         string message

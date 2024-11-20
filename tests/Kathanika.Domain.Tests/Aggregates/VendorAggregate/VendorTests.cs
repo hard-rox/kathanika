@@ -20,14 +20,14 @@ public class VendorTests
                 f.Phone.PhoneNumber("###########"),
                 f.Internet.Email(),
                 VendorStatus.Active
-            ).Value!);
+            ).Value);
     }
 
     [Fact]
     public void Create_ShouldReturnFailure_WhenNameIsEmpty()
     {
         // Arrange
-        string emptyName = string.Empty;
+        var emptyName = string.Empty;
         Vendor vendor = _vendorFaker.Generate();
 
         // Act
@@ -52,7 +52,7 @@ public class VendorTests
     public void Create_ShouldReturnFailure_WhenContactNumberIsInvalid()
     {
         // Arrange
-        string invalidPhoneNumber = "123abc";
+        const string invalidPhoneNumber = "123abc";
         Vendor vendor = _vendorFaker.Generate();
 
         // Act
@@ -77,7 +77,7 @@ public class VendorTests
     public void Update_ShouldReturnFailure_WhenContactPersonPhoneIsInvalid()
     {
         // Arrange
-        string invalidPhoneNumber = "invalid-phone";
+        const string invalidPhoneNumber = "invalid-phone";
         Vendor vendor = _vendorFaker.Generate();
 
         // Act
@@ -103,7 +103,7 @@ public class VendorTests
     {
         // Arrange
         Vendor vendor = _vendorFaker.Generate();
-        string newName = "New Vendor Name";
+        const string newName = "New Vendor Name";
 
         // Act
         Result updateResult = vendor.Update(

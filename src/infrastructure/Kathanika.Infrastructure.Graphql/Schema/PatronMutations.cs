@@ -1,6 +1,8 @@
 using Kathanika.Application.Features.Patrons.Commands;
 using Kathanika.Domain.Aggregates.PatronAggregate;
 using Kathanika.Infrastructure.Graphql.Payloads;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedType.Global
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
@@ -14,7 +16,7 @@ public sealed class PatronMutations
   )
     {
         Domain.Primitives.Result<Patron> result = await mediator.Send(input, cancellationToken);
-        return new(result);
+        return new CreatePatronPayload(result);
     }
 
     public async Task<UpdatePatronPayload> UpdatePatronAsync(
@@ -24,7 +26,7 @@ public sealed class PatronMutations
     )
     {
         Domain.Primitives.Result<Patron> result = await mediator.Send(input, cancellationToken);
-        return new(result);
+        return new UpdatePatronPayload(result);
     }
 
     public async Task<DeletePatronPayload> DeletePatronAsync(
@@ -34,6 +36,6 @@ public sealed class PatronMutations
     )
     {
         Result result = await mediator.Send(new DeletePatronCommand(id), cancellationToken);
-        return new(id, result);
+        return new DeletePatronPayload(id, result);
     }
 }

@@ -64,7 +64,7 @@ internal static class SchemaConfigurations
         requestBuilder.ModifyPagingOptions(x =>
         {
             x.DefaultPageSize = 10;
-            x.MaxPageSize = 100;
+            x.MaxPageSize = 50;
             x.IncludeTotalCount = true;
         });
         requestBuilder.ModifyOptions(opt =>

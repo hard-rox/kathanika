@@ -27,7 +27,7 @@ internal sealed class UnusedUploadedFileCleanupJob(
         logger.LogInformation("Found {@ExpiredFileCount} expired files in store.", storeExpiredFileIds.Count);
         if (storeExpiredFileIds.Count > 0)
         {
-            foreach (string expiredFileId in storeExpiredFileIds)
+            foreach (var expiredFileId in storeExpiredFileIds)
             {
                 logger.LogInformation("Deleting expired file: {@FileIdToDelete}.", expiredFileId);
                 await uploadedStore.DeleteFileAsync(expiredFileId, cancellationToken);
@@ -48,7 +48,7 @@ internal sealed class UnusedUploadedFileCleanupJob(
 
         if (unusedFileIds.Count > 0)
         {
-            foreach (string unusedFileId in unusedFileIds)
+            foreach (var unusedFileId in unusedFileIds)
             {
                 logger.LogInformation("Deleting unused file {@UnusedFileToDeleteId}", unusedFileId);
                 await uploadedStore.DeleteFileAsync(unusedFileId, cancellationToken);

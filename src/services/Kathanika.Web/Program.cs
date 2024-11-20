@@ -37,6 +37,7 @@ try
     if (builder.Environment.IsDevelopment())
     {
         builder.Services.AddCors();
+        builder.Services.AddHttpResponseFormatter(indented: true);
     }
 
     WebApplication app = builder.Build();
@@ -64,7 +65,7 @@ try
 
     app.MapGet("fs/{fileId}", async (string fileId, IFileStore fileStore) =>
     {
-        (Stream stream, string contentType) = await fileStore.GetAsync(fileId);
+        (Stream stream, var contentType) = await fileStore.GetAsync(fileId);
         return Results.File(stream, contentType);
     });
 
@@ -93,7 +94,7 @@ void ConfigureSerilog(ConfigureHostBuilder host)
 
 void AddOpenTelemetry(WebApplicationBuilder builder)
 {
-    string otlpExportEndpoint = builder.Configuration.GetValue<string>("OtlpExportEndpoint") ?? string.Empty;
+    var otlpExportEndpoint = builder.Configuration.GetValue<string>("OtlpExportEndpoint") ?? string.Empty;
     builder.Services.AddOpenTelemetry()
         .ConfigureResource(resource => resource.AddService("Kathanika-Web-Service"))
         .WithTracing(tracing =>
@@ -133,5 +134,6 @@ void AddOpenTelemetry(WebApplicationBuilder builder)
 
 namespace Kathanika.Web
 {
-    public static partial class Program { }
+    // ReSharper disable once PartialTypeWithSinglePart
+    public static partial class Program;
 }

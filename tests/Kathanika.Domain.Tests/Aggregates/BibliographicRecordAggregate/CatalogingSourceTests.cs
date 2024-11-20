@@ -10,11 +10,11 @@ public sealed class CatalogingSourceTests
     {
         // Arrange
         Faker faker = new();
-        string originalCatalogingAgency = faker.Company.CompanyName();
-        string languageOfCataloging = faker.Random.String2(3);
-        string transcribingAgency = faker.Company.CompanyName();
-        string modifyingAgency = faker.Company.CompanyName();
-        string descriptionConventions = faker.Lorem.Sentence();
+        var originalCatalogingAgency = faker.Company.CompanyName();
+        var languageOfCataloging = faker.Random.String2(3);
+        var transcribingAgency = faker.Company.CompanyName();
+        var modifyingAgency = faker.Company.CompanyName();
+        var descriptionConventions = faker.Lorem.Sentence();
 
         // Act
         Result<CatalogingSource> result = CatalogingSource.Create(
@@ -35,11 +35,11 @@ public sealed class CatalogingSourceTests
     {
         // Arrange
         Faker faker = new();
-        string originalCatalogingAgency = faker.Company.CompanyName();
-        string languageOfCataloging = faker.Random.String2(3);
-        string emptyTranscribingAgency = string.Empty;
-        string modifyingAgency = faker.Company.CompanyName();
-        string descriptionConventions = faker.Lorem.Sentence();
+        var originalCatalogingAgency = faker.Company.CompanyName();
+        var languageOfCataloging = faker.Random.String2(3);
+        var emptyTranscribingAgency = string.Empty;
+        var modifyingAgency = faker.Company.CompanyName();
+        var descriptionConventions = faker.Lorem.Sentence();
 
         // Act
         Result<CatalogingSource> result = CatalogingSource.Create(

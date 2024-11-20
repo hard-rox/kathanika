@@ -1,0 +1,22 @@
+mutation addVendor($input: AddVendorInput!){
+    addVendor(input: $input){
+        data {
+            id
+            name
+        }
+        errors {
+            ... on KnError{
+                code
+                message
+                description
+            }
+            ... on ValidationError{
+                code
+                fieldName
+                message
+                description
+            }
+        }
+        message
+    }
+}

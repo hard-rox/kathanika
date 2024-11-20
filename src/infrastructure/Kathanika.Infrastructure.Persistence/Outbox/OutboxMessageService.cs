@@ -28,8 +28,8 @@ internal sealed class OutboxMessageService(IMongoDatabase mongoDatabase) : IOutb
 
     public async Task SetOutboxMessageErrors(string id, Exception exception)
     {
-        string exceptionJson = JsonConvert.SerializeObject(exception,
-            new JsonSerializerSettings()
+        var exceptionJson = JsonConvert.SerializeObject(exception,
+            new JsonSerializerSettings
             {
                 TypeNameHandling = TypeNameHandling.All
             });

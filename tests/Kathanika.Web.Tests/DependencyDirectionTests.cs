@@ -3,7 +3,6 @@ using Kathanika.Domain.Primitives;
 using Kathanika.Infrastructure.Graphql;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers.Jobs;
-using Microsoft.VisualStudio.TestPlatform.TestHost;
 
 namespace Kathanika.Web.Tests;
 

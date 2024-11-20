@@ -10,15 +10,11 @@ namespace Kathanika.Infrastructure.Persistence.Tests;
 public sealed class BaseRepositoryTests
 {
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class DummyAggregate : AggregateRoot
-    {
-    };
+    public class DummyAggregate : AggregateRoot;
     private class DummyRepo(IMongoDatabase database,
         string collectionName,
         ILogger<DummyRepo> logger,
-        ICacheService cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService)
-    {
-    }
+        ICacheService cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService);
 
     private readonly ILogger<DummyRepo> _nullLogger = new NullLogger<DummyRepo>();
     private readonly ICacheService _cache = Substitute.For<ICacheService>();
@@ -78,7 +74,7 @@ public sealed class BaseRepositoryTests
     public async Task AddAsync_Should_Call_InsertOneAsync()
     {
         // Arrange
-        DummyAggregate aggregate = new() { };
+        DummyAggregate aggregate = new();
         DummyRepo repo = new(_database, "", _nullLogger, _cache);
 
         // Act
@@ -93,7 +89,7 @@ public sealed class BaseRepositoryTests
     public async Task UpdateAsync_Should_Call_ReplaceOneAsync()
     {
         // Arrange
-        DummyAggregate aggregate = new() { };
+        DummyAggregate aggregate = new();
         DummyRepo repo = new(_database, "", _nullLogger, _cache);
 
         // Act

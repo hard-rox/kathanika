@@ -15,7 +15,7 @@ public class FileUsedDomainEventHandlerTests
         IFileStore fileStorageService = Substitute.For<IFileStore>();
         FileUsedDomainEventHandler handler = new(logger, fileStorageService);
 
-        string fileId = Guid.NewGuid().ToString();
+        var fileId = Guid.NewGuid().ToString();
         FileUsedDomainEvent fileUsedEvent = new(fileId);
 
         await handler.Handle(fileUsedEvent, CancellationToken.None);
