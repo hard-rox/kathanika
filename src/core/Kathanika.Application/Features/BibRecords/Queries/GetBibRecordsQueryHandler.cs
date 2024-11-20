@@ -6,7 +6,7 @@ internal sealed class GetBibRecordsQueryHandler(IBibRecordRepository bibRecordRe
 {
     public async Task<IQueryable<BibRecord>> Handle(GetBibRecordsQuery request, CancellationToken cancellationToken)
     {
-        IQueryable<BibRecord> bibRecordsQuery = await Task.Run(bibRecordRepository.AsQueryable);
+        IQueryable<BibRecord> bibRecordsQuery = await Task.Run(bibRecordRepository.AsQueryable, cancellationToken);
         return bibRecordsQuery;
     }
 }

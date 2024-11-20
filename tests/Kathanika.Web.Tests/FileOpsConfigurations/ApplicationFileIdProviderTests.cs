@@ -15,7 +15,7 @@ public class ApplicationFileIdProviderTests
         _fileMetadataService.CreateAsync(Arg.Any<string>(), Arg.Any<string>())
             .Returns(Guid.NewGuid().ToString());
 
-        string fileId = await applicationFileIdProvider.CreateId(new Faker().Lorem.Paragraph());
+        var fileId = await applicationFileIdProvider.CreateId(new Faker().Lorem.Paragraph());
 
         Assert.NotNull(fileId);
     }
@@ -23,12 +23,12 @@ public class ApplicationFileIdProviderTests
     [Fact]
     public async Task ValidateId_Should_CallFileMetadataServiceAndReturnResult()
     {
-        bool existResult = new Faker().Random.Bool();
+        var existResult = new Faker().Random.Bool();
         ApplicationFileIdProvider applicationFileIdProvider = new(_fileMetadataService);
         _fileMetadataService.ExistAsync(Arg.Any<string>())
             .Returns(existResult);
 
-        bool valid = await applicationFileIdProvider.ValidateId(Guid.NewGuid().ToString());
+        var valid = await applicationFileIdProvider.ValidateId(Guid.NewGuid().ToString());
 
         Assert.Equal(existResult, valid);
     }

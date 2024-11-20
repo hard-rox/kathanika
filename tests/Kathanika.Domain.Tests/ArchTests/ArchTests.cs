@@ -17,7 +17,7 @@ public class ArchTests
             .GetTypes()
             .ToList();
 
-        string[] aggregateMethods = typeof(AggregateRoot)
+        var aggregateMethods = typeof(AggregateRoot)
             .GetMethods()
             .Select(m => m.Name)
             .ToArray();
@@ -28,8 +28,7 @@ public class ArchTests
                 m => !(m.IsSpecialName && m.Name.StartsWith("get_"))
                     && !(m.ReturnType == typeof(Result)
                         || m.ReturnType.IsGenericType && m.ReturnType.GetGenericTypeDefinition().BaseType == typeof(Result))
-                    && !aggregateMethods.Any(am => am == m.Name)
-            )
+                    && aggregateMethods.All(am => am != m.Name))
             .Select(x => new { MethodName = x.Name, Type = x.DeclaringType?.Name })
             .ToList();
 

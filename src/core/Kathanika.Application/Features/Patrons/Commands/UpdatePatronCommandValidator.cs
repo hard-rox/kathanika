@@ -2,6 +2,8 @@ using System.Linq.Expressions;
 using Kathanika.Domain.Aggregates.PatronAggregate;
 
 namespace Kathanika.Application.Features.Patrons.Commands;
+
+// ReSharper disable once UnusedType.Global
 internal sealed class UpdatePatronCommandValidator : AbstractValidator<UpdatePatronCommand>
 {
     public UpdatePatronCommandValidator(IPatronRepository patronRepository)
@@ -19,10 +21,11 @@ internal sealed class UpdatePatronCommandValidator : AbstractValidator<UpdatePat
                     && p.ContactNumber == props.Patch.ContactNumber
                     && p.Email == props.Patch.Email
                     && p.CardNumber == props.Patch.CardNumber;
-                bool isDuplicate = await patronRepository.ExistsAsync(expression, cancellationToken);
+                var isDuplicate = await patronRepository.ExistsAsync(expression, cancellationToken);
                 return !isDuplicate;
             })
             .WithName("ContactNumber, Email, CardNumber")
-            .WithMessage("Duplicate patron information {PropertyName}. Consider updating existing publication's 'Copies Available' field.");
+            .WithMessage(
+                "Duplicate patron information {PropertyName}. Consider updating existing publication's 'Copies Available' field.");
     }
 }

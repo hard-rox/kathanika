@@ -1,6 +1,8 @@
 using Kathanika.Application.Features.Vendors.Commands;
 using Kathanika.Domain.Aggregates.VendorAggregate;
 using Kathanika.Infrastructure.Graphql.Payloads;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedType.Global
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 
@@ -24,7 +26,7 @@ public sealed class VendorMutations
     )
     {
         Domain.Primitives.Result<Vendor> result = await mediator.Send(input, cancellationToken);
-        return new(result);
+        return new UpdateVendorPayload(result);
     }
 
     public async Task<DeleteVendorPayload> DeleteVendorAsync(
@@ -34,6 +36,6 @@ public sealed class VendorMutations
     )
     {
         Result result = await mediator.Send(new DeleteVendorCommand(id), cancellationToken);
-        return new(id, result);
+        return new DeleteVendorPayload(id, result);
     }
 }

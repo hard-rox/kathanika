@@ -2,7 +2,7 @@ using HotChocolate;
 
 namespace Kathanika.Domain.Primitives;
 
-public abstract record ValueObject : IEquatable<ValueObject>
+public abstract record ValueObject
 {
     [GraphQLIgnore]
     public abstract IEnumerable<object> GetAtomicValues();

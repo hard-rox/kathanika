@@ -1,6 +1,8 @@
 using HotChocolate.Resolvers;
 using Kathanika.Application.Features.Vendors.Queries;
 using Kathanika.Domain.Aggregates.VendorAggregate;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedType.Global
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
 

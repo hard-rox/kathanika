@@ -3,6 +3,7 @@ using Kathanika.Domain.Aggregates.VendorAggregate;
 
 namespace Kathanika.Application.Features.Vendors.Commands;
 
+// ReSharper disable once UnusedType.Global
 internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCommand>
 {
     public AddVendorCommandValidator(IVendorRepository vendorRepository)
@@ -27,7 +28,7 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
             .When(v => !string.IsNullOrEmpty(v.Email));
 
         RuleFor(v => v.Website)
-            .Must((url) => Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
+            .Must(url => Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
                            (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
             ).WithMessage("Invalid website URL.")
             .When(v => !string.IsNullOrEmpty(v.Website));

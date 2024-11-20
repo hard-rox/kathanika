@@ -34,6 +34,6 @@ public sealed class AzureBlobStoreTest
 
         _ = azureBlobStore.GetAsync("234");
 
-        await _uploadedStore.Received(1).GetFileContentAsync(Arg.Is<string>(x => x == "234"), default);
+        await _uploadedStore.Received(1).GetFileContentAsync(Arg.Is<string>(x => x == "234"));
     }
 }

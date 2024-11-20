@@ -8,7 +8,7 @@ internal static class TusConfiguration
 {
     internal static IServiceCollection AddTus(this IServiceCollection services, IConfiguration configuration)
     {
-        string tusUploadPath = configuration.GetValue<string>("ApplicationOptions:UploadPath") ?? string.Empty;
+        var tusUploadPath = configuration.GetValue<string>("ApplicationOptions:UploadPath") ?? string.Empty;
         if (!string.IsNullOrWhiteSpace(tusUploadPath) && !Directory.Exists(tusUploadPath))
             Directory.CreateDirectory(tusUploadPath);
 
@@ -22,7 +22,8 @@ internal static class TusConfiguration
 
     internal static Task<DefaultTusConfiguration> TusConfigurationFactory(HttpContext httpContext)
     {
-        DefaultTusConfiguration defaultTusConfiguration = httpContext.RequestServices.GetRequiredService<DefaultTusConfiguration>();
+        DefaultTusConfiguration defaultTusConfiguration =
+            httpContext.RequestServices.GetRequiredService<DefaultTusConfiguration>();
         return Task.FromResult(defaultTusConfiguration);
     }
 }

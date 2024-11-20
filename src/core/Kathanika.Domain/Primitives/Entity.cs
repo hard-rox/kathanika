@@ -4,6 +4,7 @@ namespace Kathanika.Domain.Primitives;
 
 public abstract class Entity : IEquatable<Entity>
 {
+    // ReSharper disable once ReplaceAutoPropertyWithComputedProperty
     public string Id { get; private init; } = string.Empty;
 
     [GraphQLIgnore]

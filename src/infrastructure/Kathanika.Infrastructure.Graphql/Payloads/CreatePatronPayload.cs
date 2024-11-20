@@ -8,8 +8,8 @@ public sealed record CreatePatronPayload
     public CreatePatronPayload(Domain.Primitives.Result<Patron> result) : base(
        result,
        result.IsSuccess ?
-       $"New patron {result.Value?.FullName} added successfully." :
-       $"New patron add failed."
+       $"New patron {result.Value.FullName} added successfully." :
+       "New patron add failed."
    )
     { }
 }

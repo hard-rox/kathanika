@@ -3,6 +3,8 @@ using Kathanika.Domain.Aggregates.BibRecordAggregate;
 using Kathanika.Infrastructure.Graphql.Payloads;
 
 namespace Kathanika.Infrastructure.Graphql.Schema;
+// ReSharper disable UnusedMember.Global
+// ReSharper disable UnusedType.Global
 
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public sealed class BibRecordMutations
@@ -14,6 +16,6 @@ public sealed class BibRecordMutations
     )
     {
         Domain.Primitives.Result<BibRecord> result = await mediator.Send(input, cancellationToken);
-        return new(result);
+        return new CreateBibRecordPayload(result);
     }
 }

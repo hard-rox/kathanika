@@ -8,4 +8,4 @@ internal class ApplicationTusDiskStore(IOptions<ApplicationOptions> options, ITu
     : TusDiskStore(directoryPath: options.Value.UploadPath,
             deletePartialFilesOnConcat: true,
             bufferSize: TusDiskBufferSize.Default,
-            fileIdProvider: databaseFileIdProvider), ITusStore;
+            fileIdProvider: databaseFileIdProvider);

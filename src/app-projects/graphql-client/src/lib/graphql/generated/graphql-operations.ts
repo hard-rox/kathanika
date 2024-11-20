@@ -57,15 +57,9 @@ export type BibRecordFilterInput = {
   catalogingSource?: InputMaybe<CatalogingSourceFilterInput>;
   controlNumber?: InputMaybe<StringOperationFilterInput>;
   controlNumberIdentifier?: InputMaybe<StringOperationFilterInput>;
-  createdAt?: InputMaybe<DateTimeOperationFilterInput>;
-  createdByUserId?: InputMaybe<StringOperationFilterInput>;
-  createdByUserName?: InputMaybe<StringOperationFilterInput>;
   dateAndTimeOfLatestTransaction?: InputMaybe<DateTimeOperationFilterInput>;
   fixedLengthDataElements?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
-  lastModifiedAt?: InputMaybe<DateTimeOperationFilterInput>;
-  lastModifiedByUserId?: InputMaybe<StringOperationFilterInput>;
-  lastModifiedByUserName?: InputMaybe<StringOperationFilterInput>;
   leader?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<BibRecordFilterInput>>;
 };
@@ -74,15 +68,9 @@ export type BibRecordSortInput = {
   catalogingSource?: InputMaybe<CatalogingSourceSortInput>;
   controlNumber?: InputMaybe<SortEnumType>;
   controlNumberIdentifier?: InputMaybe<SortEnumType>;
-  createdAt?: InputMaybe<SortEnumType>;
-  createdByUserId?: InputMaybe<SortEnumType>;
-  createdByUserName?: InputMaybe<SortEnumType>;
   dateAndTimeOfLatestTransaction?: InputMaybe<SortEnumType>;
   fixedLengthDataElements?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
-  lastModifiedAt?: InputMaybe<SortEnumType>;
-  lastModifiedByUserId?: InputMaybe<SortEnumType>;
-  lastModifiedByUserName?: InputMaybe<SortEnumType>;
   leader?: InputMaybe<SortEnumType>;
 };
 
@@ -98,6 +86,10 @@ export type BibRecordsCollectionSegment = {
 
 export type CatalogingSource = {
   __typename?: 'CatalogingSource';
+  descriptionConventions?: Maybe<Scalars['String']['output']>;
+  languageOfCataloging?: Maybe<Scalars['String']['output']>;
+  modifyingAgency?: Maybe<Scalars['String']['output']>;
+  originalCatalogingAgency?: Maybe<Scalars['String']['output']>;
   transcribingAgency: Scalars['String']['output'];
 };
 
@@ -286,9 +278,12 @@ export type Patron = {
   address?: Maybe<Scalars['String']['output']>;
   cardNumber: Scalars['String']['output'];
   contactNumber?: Maybe<Scalars['String']['output']>;
+  dateOfBirth?: Maybe<Scalars['Date']['output']>;
   email?: Maybe<Scalars['String']['output']>;
   firstName?: Maybe<Scalars['String']['output']>;
   fullName: Scalars['String']['output'];
+  id: Scalars['String']['output'];
+  photoFileId?: Maybe<Scalars['String']['output']>;
   registrationDate: Scalars['Date']['output'];
   salutation?: Maybe<Scalars['String']['output']>;
   surname: Scalars['String']['output'];
@@ -299,17 +294,11 @@ export type PatronFilterInput = {
   and?: InputMaybe<Array<PatronFilterInput>>;
   cardNumber?: InputMaybe<StringOperationFilterInput>;
   contactNumber?: InputMaybe<StringOperationFilterInput>;
-  createdAt?: InputMaybe<DateTimeOperationFilterInput>;
-  createdByUserId?: InputMaybe<StringOperationFilterInput>;
-  createdByUserName?: InputMaybe<StringOperationFilterInput>;
   dateOfBirth?: InputMaybe<DateOperationFilterInput>;
   email?: InputMaybe<StringOperationFilterInput>;
   firstName?: InputMaybe<StringOperationFilterInput>;
   fullName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
-  lastModifiedAt?: InputMaybe<DateTimeOperationFilterInput>;
-  lastModifiedByUserId?: InputMaybe<StringOperationFilterInput>;
-  lastModifiedByUserName?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<PatronFilterInput>>;
   photoFileId?: InputMaybe<StringOperationFilterInput>;
   registrationDate?: InputMaybe<DateOperationFilterInput>;
@@ -333,17 +322,11 @@ export type PatronSortInput = {
   address?: InputMaybe<SortEnumType>;
   cardNumber?: InputMaybe<SortEnumType>;
   contactNumber?: InputMaybe<SortEnumType>;
-  createdAt?: InputMaybe<SortEnumType>;
-  createdByUserId?: InputMaybe<SortEnumType>;
-  createdByUserName?: InputMaybe<SortEnumType>;
   dateOfBirth?: InputMaybe<SortEnumType>;
   email?: InputMaybe<SortEnumType>;
   firstName?: InputMaybe<SortEnumType>;
   fullName?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
-  lastModifiedAt?: InputMaybe<SortEnumType>;
-  lastModifiedByUserId?: InputMaybe<SortEnumType>;
-  lastModifiedByUserName?: InputMaybe<SortEnumType>;
   photoFileId?: InputMaybe<SortEnumType>;
   registrationDate?: InputMaybe<SortEnumType>;
   salutation?: InputMaybe<SortEnumType>;
@@ -564,6 +547,13 @@ export type VendorsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type AddVendorMutationVariables = Exact<{
+  input: AddVendorInput;
+}>;
+
+
+export type AddVendorMutation = { __typename?: 'Mutation', addVendor: { __typename?: 'AddVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+
 export type GetVendorsQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -572,16 +562,61 @@ export type GetVendorsQueryVariables = Exact<{
 }>;
 
 
-export type GetVendorsQuery = { __typename?: 'Query', vendors?: { __typename?: 'VendorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Vendor', id: string, contactNumber: string, email?: string | null, status: VendorStatus }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type GetVendorsQuery = { __typename?: 'Query', vendors?: { __typename?: 'VendorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Vendor', id: string, name: string, contactNumber: string, email?: string | null, status: VendorStatus, contactPersonName?: string | null, contactPersonPhone?: string | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
+export type GetVendorQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type GetVendorQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', id: string, name: string, contactNumber: string, address: string, email?: string | null, status: VendorStatus, contactPersonName?: string | null, contactPersonPhone?: string | null, contactPersonEmail?: string | null, accountDetail?: string | null, website?: string | null } | null };
+
+export const AddVendorDocument = gql`
+    mutation addVendor($input: AddVendorInput!) {
+  addVendor(input: $input) {
+    data {
+      id
+      name
+    }
+    errors {
+      ... on KnError {
+        code
+        message
+        description
+      }
+      ... on ValidationError {
+        code
+        fieldName
+        message
+        description
+      }
+    }
+    message
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class AddVendorGQL extends Apollo.Mutation<AddVendorMutation, AddVendorMutationVariables> {
+    override document = AddVendorDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const GetVendorsDocument = gql`
     query getVendors($skip: Int!, $take: Int!, $filter: VendorFilterInput, $sortBy: [VendorSortInput!]) {
   vendors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
     items {
       id
+      name
       contactNumber
       email
       status
+      contactPersonName
+      contactPersonPhone
     }
     pageInfo {
       hasNextPage
@@ -597,6 +632,34 @@ export const GetVendorsDocument = gql`
   })
   export class GetVendorsGQL extends Apollo.Query<GetVendorsQuery, GetVendorsQueryVariables> {
     override document = GetVendorsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const GetVendorDocument = gql`
+    query getVendor($id: String!) {
+  vendor(id: $id) {
+    id
+    name
+    contactNumber
+    address
+    email
+    status
+    contactPersonName
+    contactPersonPhone
+    contactPersonEmail
+    accountDetail
+    website
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class GetVendorGQL extends Apollo.Query<GetVendorQuery, GetVendorQueryVariables> {
+    override document = GetVendorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

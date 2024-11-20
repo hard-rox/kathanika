@@ -16,7 +16,7 @@ public sealed class FileMetadataServiceTests
     public FileMetadataServiceTests()
     {
         _mongoDatabase.GetCollection<StoredFileMetadata>(Arg.Any<string>()).Returns(_collection);
-        _fileMetadataService = new(_logger, _mongoDatabase);
+        _fileMetadataService = new FileMetadataService(_logger, _mongoDatabase);
     }
 
     [Fact]
@@ -30,7 +30,7 @@ public sealed class FileMetadataServiceTests
     [Fact]
     public async Task ExistAsync_ShouldReturnFalse_WhenFileIdInvalid()
     {
-        bool exists = await _fileMetadataService.ExistAsync("testId");
+        var exists = await _fileMetadataService.ExistAsync("testId");
 
         Assert.False(exists);
     }
@@ -48,12 +48,12 @@ public sealed class FileMetadataServiceTests
     [Fact]
     public async Task ExistAsync_ShouldReturnTrue_WhenFileIdValid()
     {
-        string fileId = ObjectId.GenerateNewId().ToString();
+        var fileId = ObjectId.GenerateNewId().ToString();
         _collection.CountDocumentsAsync(Arg.Any<FilterDefinition<StoredFileMetadata>>(),
                 Arg.Is<CountOptions>(x => x.Limit == 1))
                 .Returns(1);
 
-        bool exist = await _fileMetadataService.ExistAsync(fileId);
+        var exist = await _fileMetadataService.ExistAsync(fileId);
 
         Assert.True(exist);
     }
@@ -75,7 +75,7 @@ public sealed class FileMetadataServiceTests
     [Fact]
     public async Task RecordFileMoveAsync_ShouldUpdateMetadata_WhenCalled()
     {
-        string fileId = Guid.NewGuid().ToString();
+        var fileId = Guid.NewGuid().ToString();
 
         await _fileMetadataService.RecordFileMoveAsync(fileId);
 

@@ -2,7 +2,7 @@ namespace Kathanika.Domain.Primitives;
 
 public class Result
 {
-    protected Result(
+    private Result(
         bool isSuccess,
         KnError? error = null
     ) : this(
@@ -78,6 +78,6 @@ public class Result<TValue> : Result where TValue : class
     public TValue Value => IsSuccess && _value is not null ? _value : throw new InvalidDataException("Cannot access Value from failure result");
 
     public static Result<TValue> Success(TValue value) => new(true, value: value, error: null);
-    public static new Result<TValue> Failure(IEnumerable<KnError> errors) => new(false, errors: errors.ToArray());
-    public static new Result<TValue> Failure(KnError error) => new(false, errors: [error]);
+    public new static Result<TValue> Failure(IEnumerable<KnError> errors) => new(false, errors: errors.ToArray());
+    public new static Result<TValue> Failure(KnError error) => new(false, errors: [error]);
 }

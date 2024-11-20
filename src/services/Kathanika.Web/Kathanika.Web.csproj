@@ -26,51 +26,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <_ContentIncludedByDefault Remove="app\graphql-ts-client\ng-package.json"/>
-        <_ContentIncludedByDefault Remove="app\graphql-ts-client\package.json"/>
-        <_ContentIncludedByDefault Remove="app\graphql-ts-client\tsconfig.lib.json"/>
-        <_ContentIncludedByDefault Remove="app\graphql-ts-client\tsconfig.lib.prod.json"/>
-        <_ContentIncludedByDefault Remove="app\graphql-ts-client\tsconfig.spec.json"/>
-        <_ContentIncludedByDefault Remove="app\ils-app\ngsw-config.json"/>
-        <_ContentIncludedByDefault Remove="app\ils-app\tsconfig.app.json"/>
-        <_ContentIncludedByDefault Remove="app\ils-app\tsconfig.spec.json"/>
-        <_ContentIncludedByDefault Remove="app\ils-features\ng-package.json"/>
-        <_ContentIncludedByDefault Remove="app\ils-features\package.json"/>
-        <_ContentIncludedByDefault Remove="app\ils-features\tsconfig.lib.json"/>
-        <_ContentIncludedByDefault Remove="app\ils-features\tsconfig.lib.prod.json"/>
-        <_ContentIncludedByDefault Remove="app\ils-features\tsconfig.spec.json"/>
-        <_ContentIncludedByDefault Remove="app\kn-ui\ng-package.json"/>
-        <_ContentIncludedByDefault Remove="app\kn-ui\package.json"/>
-        <_ContentIncludedByDefault Remove="app\kn-ui\tsconfig.lib.json"/>
-        <_ContentIncludedByDefault Remove="app\kn-ui\tsconfig.lib.prod.json"/>
-        <_ContentIncludedByDefault Remove="app\kn-ui\tsconfig.spec.json"/>
-        <_ContentIncludedByDefault Remove="app\tw-theming\ng-package.json"/>
-        <_ContentIncludedByDefault Remove="app\tw-theming\package.json"/>
-        <_ContentIncludedByDefault Remove="app\tw-theming\tsconfig.lib.json"/>
-        <_ContentIncludedByDefault Remove="app\tw-theming\tsconfig.lib.prod.json"/>
-        <_ContentIncludedByDefault Remove="app\tw-theming\tsconfig.spec.json"/>
-        <_ContentIncludedByDefault Remove="app-libs\graphql-ts-client\project.json" />
-        <_ContentIncludedByDefault Remove="app-libs\graphql-ts-client\tsconfig.json" />
-        <_ContentIncludedByDefault Remove="app-libs\graphql-ts-client\tsconfig.lib.json" />
-        <_ContentIncludedByDefault Remove="app-libs\graphql-ts-client\tsconfig.spec.json" />
-        <_ContentIncludedByDefault Remove="app-libs\ils-features\project.json" />
-        <_ContentIncludedByDefault Remove="app-libs\ils-features\tsconfig.json" />
-        <_ContentIncludedByDefault Remove="app-libs\ils-features\tsconfig.lib.json" />
-        <_ContentIncludedByDefault Remove="app-libs\ils-features\tsconfig.spec.json" />
-        <_ContentIncludedByDefault Remove="app-libs\kn-ui\ng-package.json" />
-        <_ContentIncludedByDefault Remove="app-libs\kn-ui\package.json" />
-        <_ContentIncludedByDefault Remove="app-libs\kn-ui\project.json" />
-        <_ContentIncludedByDefault Remove="app-libs\kn-ui\tsconfig.json" />
-        <_ContentIncludedByDefault Remove="app-libs\kn-ui\tsconfig.lib.json" />
-        <_ContentIncludedByDefault Remove="app-libs\kn-ui\tsconfig.lib.prod.json" />
-        <_ContentIncludedByDefault Remove="app-libs\kn-ui\tsconfig.spec.json" />
-        <_ContentIncludedByDefault Remove="app-libs\tw-theming\project.json" />
-        <_ContentIncludedByDefault Remove="app-libs\tw-theming\tsconfig.json" />
-        <_ContentIncludedByDefault Remove="app-libs\tw-theming\tsconfig.lib.json" />
-        <_ContentIncludedByDefault Remove="app-libs\tw-theming\tsconfig.spec.json" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\..\core\Kathanika.Application\Kathanika.Application.csproj" />
       <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Graphql\Kathanika.Infrastructure.Graphql.csproj" />
       <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj" />

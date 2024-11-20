@@ -1,20 +1,39 @@
 query getVendors(
-  $skip: Int!
-  $take: Int!
-  $filter: VendorFilterInput
-  $sortBy: [VendorSortInput!]
+    $skip: Int!
+    $take: Int!
+    $filter: VendorFilterInput
+    $sortBy: [VendorSortInput!]
 ) {
-  vendors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
-    items {
-      id
-      contactNumber
-      email
-      status
+    vendors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+        items {
+            id
+            name
+            contactNumber
+            email
+            status
+            contactPersonName
+            contactPersonPhone
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+        totalCount
     }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
+}
+
+query getVendor($id: String!){
+    vendor(id: $id){
+        id
+        name
+        contactNumber
+        address
+        email
+        status
+        contactPersonName
+        contactPersonPhone
+        contactPersonEmail
+        accountDetail
+        website
     }
-    totalCount
-  }
 }
