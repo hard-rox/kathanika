@@ -3,22 +3,25 @@ using Kathanika.Application.Services;
 namespace Kathanika.Infrastructure.Persistence.FileStorage;
 
 internal sealed class DiskFileStore(
-    ILogger<DiskFileStore> logger,
+    // ILogger<DiskFileStore> logger,
     IFileMetadataService fileMetadataService,
     IUploadedStore uploadedFileStore)
-: FileValidator(fileMetadataService), IFileStore
+    : FileValidator(fileMetadataService), IFileStore
 {
     private readonly IFileMetadataService _fileMetadataService = fileMetadataService;
 
-    public async Task<(Stream stream, string contentType)> GetAsync(string fileId, CancellationToken cancellationToken = default)
+    public async Task<(Stream stream, string contentType)> GetAsync(string fileId,
+        CancellationToken cancellationToken = default)
     {
         StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken);
-        if (metadata is null) return (null, null);
+#pragma warning disable CS8619 // Nullability of reference types in value doesn't match target type.
+        if (metadata is null) return (null, null); //TODO: Find better approach
+#pragma warning restore CS8619 // Nullability of reference types in value doesn't match target type.
 
         if (!metadata.IsMoved)
             return (await uploadedFileStore.GetFileContentAsync(fileId, cancellationToken), metadata.ContentType);
-        
-        var filePath = "Files"; //TODO: Move to appsettings or constants...
+
+        var filePath = "Files"; //TODO: Move to appSettings or constants...
         if (metadata.SubDirectory is not null) filePath = Path.Combine(filePath, metadata.SubDirectory);
 
         filePath = Path.Combine(filePath, $"{fileId}{Path.GetExtension(metadata.FileName)}");
@@ -46,6 +49,7 @@ internal sealed class DiskFileStore(
             if (!Directory.Exists(filePath))
                 Directory.CreateDirectory(filePath);
         }
+
         filePath = Path.Combine(filePath, fileName);
 
         await using FileStream fileStream = new(filePath, FileMode.Create, FileAccess.Write);
@@ -71,6 +75,7 @@ internal sealed class DiskFileStore(
             {
                 filePath = Path.Combine(filePath, metadata.SubDirectory);
             }
+
             filePath = Path.Combine(filePath, fileName);
             if (File.Exists(filePath))
             {

@@ -1,6 +1,6 @@
 using Kathanika.Infrastructure.Graphql.Bases;
 
-namespace Kathanika.Infrastructure.Graphql.Payloads;
+namespace Kathanika.Infrastructure.Graphql.Schema.VendorGraph;
 
 public sealed record DeleteVendorPayload
     : Payload

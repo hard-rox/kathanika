@@ -5,7 +5,7 @@ namespace Kathanika.Domain.Primitives;
 public abstract record ValueObject
 {
     [GraphQLIgnore]
-    public abstract IEnumerable<object> GetAtomicValues();
+    public abstract IEnumerable<object?> GetAtomicValues();
 
     [GraphQLIgnore]
     private bool ValuesAreEqual(ValueObject other)

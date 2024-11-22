@@ -36,10 +36,10 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
         RuleFor(v => v.ContactPersonName)
             .NotEmpty().WithMessage("Contact Person Name cannot be empty.");
 
-        RuleFor(v => v.ContactPersonPhone)
-            .NotEmpty()
-            .ContactNumber()
-            .WithMessage("Invalid contact person phone number.");
+        // RuleFor(v => v.ContactPersonPhone)
+        //     .NotEmpty()
+        //     .ContactNumber()
+        //     .WithMessage("Invalid contact person phone number.");
 
         RuleFor(v => v.ContactPersonEmail)
             .EmailAddress().WithMessage("Invalid contact person email address.")

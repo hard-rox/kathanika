@@ -1,6 +1,6 @@
 using Kathanika.Infrastructure.Graphql.Bases;
 
-namespace Kathanika.Infrastructure.Graphql.Payloads;
+namespace Kathanika.Infrastructure.Graphql.Schema.PatronGraph;
 public sealed record DeletePatronPayload
     : Payload
 {

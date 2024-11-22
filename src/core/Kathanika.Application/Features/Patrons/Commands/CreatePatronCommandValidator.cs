@@ -1,4 +1,3 @@
-using Kathanika.Application.CommonValidators;
 using Kathanika.Domain.Aggregates.PatronAggregate;
 
 namespace Kathanika.Application.Features.Patrons.Commands;
@@ -26,9 +25,9 @@ internal sealed class CreatePatronCommandValidator : AbstractValidator<CreatePat
             .LessThan(DateOnly.FromDateTime(DateTime.UtcNow))
             .WithMessage("Date of birth cannot be in the future.");
 
-        RuleFor(x => x.ContactNumber)
-            .ContactNumber()
-            .When(x => x.ContactNumber is not null);
+        // RuleFor(x => x.ContactNumber)
+        //     .ContactNumber()
+        //     .When(x => x.ContactNumber is not null);
         RuleFor(x => x.Email)
             .EmailAddress()
             .When(x => x.Email is not null);

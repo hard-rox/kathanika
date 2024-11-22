@@ -1,10 +1,9 @@
 using Kathanika.Application.Features.Vendors.Commands;
-using Kathanika.Domain.Aggregates.VendorAggregate;
-using Kathanika.Infrastructure.Graphql.Payloads;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace Kathanika.Infrastructure.Graphql.Schema;
+namespace Kathanika.Infrastructure.Graphql.Schema.VendorGraph;
 
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public sealed class VendorMutations
@@ -15,7 +14,7 @@ public sealed class VendorMutations
         AddVendorCommand input
     )
     {
-        Domain.Primitives.Result<Vendor> result = await mediator.Send(input, cancellationToken);
+        Domain.Primitives.Result<Domain.Aggregates.VendorAggregate.Vendor> result = await mediator.Send(input, cancellationToken);
         return new AddVendorPayload(result);
     }
 
@@ -25,7 +24,7 @@ public sealed class VendorMutations
         UpdateVendorCommand input
     )
     {
-        Domain.Primitives.Result<Vendor> result = await mediator.Send(input, cancellationToken);
+        Domain.Primitives.Result<Domain.Aggregates.VendorAggregate.Vendor> result = await mediator.Send(input, cancellationToken);
         return new UpdateVendorPayload(result);
     }
 

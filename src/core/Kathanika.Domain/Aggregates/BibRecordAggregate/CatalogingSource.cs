@@ -19,7 +19,7 @@ public record CatalogingSource(string? OriginalCatalogingAgency,
             : Result.Success(new CatalogingSource(originalCatalogingAgency, languageOfCataloging, transcribingAgency, modifyingAgency, descriptionConventions));
     }
 
-    public override IEnumerable<object> GetAtomicValues()
+    public override IEnumerable<object?> GetAtomicValues()
     {
         yield return OriginalCatalogingAgency;
         yield return LanguageOfCataloging;

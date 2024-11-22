@@ -1,7 +1,7 @@
 using Kathanika.Domain.Aggregates.BibRecordAggregate;
 using Kathanika.Infrastructure.Graphql.Bases;
 
-namespace Kathanika.Infrastructure.Graphql.Payloads;
+namespace Kathanika.Infrastructure.Graphql.Schema.BibRecordGraph;
 
 public sealed record CreateBibRecordPayload
     : Payload<BibRecord>

@@ -1,11 +1,10 @@
-using Kathanika.Domain.Aggregates.PatronAggregate;
 using Kathanika.Infrastructure.Graphql.Bases;
 
-namespace Kathanika.Infrastructure.Graphql.Payloads;
+namespace Kathanika.Infrastructure.Graphql.Schema.PatronGraph;
 public sealed record CreatePatronPayload
-    : Payload<Patron>
+    : Payload<Domain.Aggregates.PatronAggregate.Patron>
 {
-    public CreatePatronPayload(Domain.Primitives.Result<Patron> result) : base(
+    public CreatePatronPayload(Domain.Primitives.Result<Domain.Aggregates.PatronAggregate.Patron> result) : base(
        result,
        result.IsSuccess ?
        $"New patron {result.Value.FullName} added successfully." :

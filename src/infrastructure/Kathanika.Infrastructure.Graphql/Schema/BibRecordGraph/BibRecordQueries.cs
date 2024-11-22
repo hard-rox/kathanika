@@ -1,13 +1,14 @@
 using HotChocolate.Resolvers;
 using Kathanika.Application.Features.BibRecords.Queries;
 using Kathanika.Domain.Aggregates.BibRecordAggregate;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace Kathanika.Infrastructure.Graphql.Schema;
+namespace Kathanika.Infrastructure.Graphql.Schema.BibRecordGraph;
 
 [ExtendObjectType(OperationTypeNames.Query)]
-public sealed partial class Queries
+public sealed class Queries
 {
     [UseOffsetPaging]
     [UseFiltering]
