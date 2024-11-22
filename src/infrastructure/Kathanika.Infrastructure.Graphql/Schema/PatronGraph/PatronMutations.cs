@@ -1,19 +1,19 @@
 using Kathanika.Application.Features.Patrons.Commands;
 using Kathanika.Domain.Aggregates.PatronAggregate;
-using Kathanika.Infrastructure.Graphql.Payloads;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace Kathanika.Infrastructure.Graphql.Schema;
+namespace Kathanika.Infrastructure.Graphql.Schema.PatronGraph;
 
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public sealed class PatronMutations
 {
     public async Task<CreatePatronPayload> CreatePatronAsync(
-      [Service] IMediator mediator,
-      CancellationToken cancellationToken,
-      CreatePatronCommand input
-  )
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken,
+        CreatePatronCommand input
+    )
     {
         Domain.Primitives.Result<Patron> result = await mediator.Send(input, cancellationToken);
         return new CreatePatronPayload(result);

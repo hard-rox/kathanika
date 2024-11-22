@@ -9,7 +9,10 @@ public interface IRepository<T> where T : AggregateRoot
     Task<bool> ExistsAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
     Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken = default);
     Task<IReadOnlyList<T>> ListAllAsync(CancellationToken cancellationToken = default);
-    Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
+
+    Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> expression,
+        CancellationToken cancellationToken = default);
+
     Task<long> CountAsync(CancellationToken cancellationToken = default);
     Task<long> CountAsync(Expression<Func<T, bool>> expression, CancellationToken cancellationToken = default);
     Task<T> AddAsync(T aggregate, CancellationToken cancellationToken = default);

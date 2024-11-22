@@ -5,6 +5,7 @@ using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers;
 using Kathanika.Web;
 using Kathanika.Web.FileOpsConfigurations;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -37,7 +38,7 @@ try
     if (builder.Environment.IsDevelopment())
     {
         builder.Services.AddCors();
-        builder.Services.AddHttpResponseFormatter(indented: true);
+        builder.Services.AddHttpResponseFormatter(true);
     }
 
     WebApplication app = builder.Build();
@@ -94,42 +95,41 @@ void ConfigureSerilog(ConfigureHostBuilder host)
 
 void AddOpenTelemetry(WebApplicationBuilder builder)
 {
+    const string serviceName = "Kathanika-Web-Service";
     var otlpExportEndpoint = builder.Configuration.GetValue<string>("OtlpExportEndpoint") ?? string.Empty;
     builder.Services.AddOpenTelemetry()
-        .ConfigureResource(resource => resource.AddService("Kathanika-Web-Service"))
-        .WithTracing(tracing =>
-        {
-            tracing
-                .AddAspNetCoreInstrumentation()
-                .AddHttpClientInstrumentation()
-                .AddMongoDBInstrumentation()
-                .AddQuartzInstrumentation()
-                .AddHotChocolateInstrumentation();
+        .ConfigureResource(resource => resource.AddService(serviceName))
+        .WithTracing(tracing => tracing
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            // .AddMongoDBInstrumentation()
+            .AddQuartzInstrumentation()
+            .AddHotChocolateInstrumentation()
+            // .AddConsoleExporter()
+            .AddOtlpExporter(options =>
+            {
+                options.Protocol = OtlpExportProtocol.Grpc;
+                options.Endpoint = new Uri(otlpExportEndpoint);
+            }))
+        .WithMetrics(metrics => metrics
+            .AddAspNetCoreInstrumentation()
+            .AddHttpClientInstrumentation()
+            // .AddConsoleExporter()
+            .AddOtlpExporter(options =>
+            {
+                options.Protocol = OtlpExportProtocol.Grpc;
+                options.Endpoint = new Uri(otlpExportEndpoint);
+            }));
 
-            tracing
-                // .AddConsoleExporter()
-                .AddOtlpExporter(options =>
-                {
-                    options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-                    options.Endpoint = new Uri(otlpExportEndpoint);
-                });
-        })
-        .WithMetrics(metrics =>
-        {
-            metrics
-                .AddAspNetCoreInstrumentation()
-                .AddHttpClientInstrumentation();
-
-            metrics
-                // .AddConsoleExporter()
-                .AddOtlpExporter(options =>
-                {
-                    options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
-                    options.Endpoint = new Uri(otlpExportEndpoint);
-                });
-        });
-
-    builder.Logging.AddOpenTelemetry(logging => logging.AddOtlpExporter());
+    builder.Logging.AddOpenTelemetry(options =>
+    {
+        options
+            .SetResourceBuilder(
+                ResourceBuilder.CreateDefault()
+                    .AddService(serviceName))
+            // .AddConsoleExporter();
+            .AddOtlpExporter();
+    });
 }
 
 namespace Kathanika.Web

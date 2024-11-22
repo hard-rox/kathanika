@@ -6,17 +6,6 @@ namespace Kathanika.Domain.Aggregates.VendorAggregate;
 
 public sealed class Vendor : AggregateRoot
 {
-    public string Name { get; private set; }
-    public string Address { get; private set; }
-    public string ContactNumber { get; private set; }
-    public string? Email { get; private set; }
-    public string? Website { get; private set; }
-    public string? AccountDetail { get; private set; }
-    public string? ContactPersonName { get; private set; }
-    public string? ContactPersonPhone { get; private set; }
-    public string? ContactPersonEmail { get; private set; }
-    public VendorStatus Status { get; private set; }
-
     private Vendor(
         string name,
         string address,
@@ -27,6 +16,17 @@ public sealed class Vendor : AggregateRoot
         Address = address;
         ContactNumber = contactNumber;
     }
+
+    public string Name { get; private set; }
+    public string Address { get; private set; }
+    public string ContactNumber { get; private set; }
+    public string? Email { get; private set; }
+    public string? Website { get; private set; }
+    public string? AccountDetail { get; private set; }
+    public string? ContactPersonName { get; private set; }
+    public string? ContactPersonPhone { get; private set; }
+    public string? ContactPersonEmail { get; private set; }
+    public VendorStatus Status { get; private set; }
 
     private static bool IsValidPhoneNumber(string phoneNumber)
     {
@@ -49,7 +49,7 @@ public sealed class Vendor : AggregateRoot
     private static bool IsValidUrl(string url)
     {
         return Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
-            (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
+               (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
     }
 
     public static Result<Vendor> Create(

@@ -1,44 +1,40 @@
 <div class="flex flex-col">
-  <label [for]="control?.name">
-    {{ label }}
-    @if (isRequired()) {
-      <span class="text-theme-fire-red">*</span>
-    }
-  </label>
-  <input
-    type="number"
-    [id]="control?.name"
-    [placeholder]="placeholder.length > 0 ? placeholder : label"
-    [ngModel]="value"
-    [disabled]="isDisabled"
-    (ngModelChange)="onModelChange($event)"
-    (blur)="onBlur()"
-    [ngClass]="
+    <label [for]="control?.name">
+        {{ label }}
+        @if (isRequired()) {
+            <span class="text-theme-fire-red">*</span>
+        }
+    </label>
+    <input
+        (blur)="onBlur()"
+        (ngModelChange)="onModelChange($event)"
+        [disabled]="isDisabled"
+        [id]="control?.name"
+        [ngClass]="
       (control?.dirty || control?.touched) && !control?.valid
         ? 'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
         : isDisabled
           ? 'border-theme-davys-gray border-opacity-50 bg-gray-200'
           : 'border-theme-gunmetal'
     "
-    class="peer"
-  />
-  <ul class="list-disc ml-4">
-    @if (
-      (control?.dirty || control?.touched) && control?.hasError('required')
-    ) {
-      <li class="text-theme-fire-red">{{ label }} is required</li>
-    }
-    @if (
-      (control?.dirty || control?.touched) && control?.hasError('integerOnly')
-    ) {
-      <li class="text-theme-fire-red">
-        {{ label }} must not be fractional number
-      </li>
-    }
-    @if ((control?.dirty || control?.touched) && control?.hasError('min')) {
-      <li class="text-theme-fire-red">
-        {{ label }} must be at least {{ control?.getError('min')?.min }}
-      </li>
-    }
-  </ul>
+        [ngModel]="value"
+        [placeholder]="placeholder.length > 0 ? placeholder : label"
+        class="peer"
+        type="number"
+    />
+    <ul class="list-disc ml-4">
+        @if ((control?.dirty || control?.touched) && control?.hasError('required')) {
+            <li class="text-theme-fire-red">{{ label }} is required</li>
+        }
+        @if ((control?.dirty || control?.touched) && control?.hasError('integerOnly')) {
+            <li class="text-theme-fire-red">
+                {{ label }} must not be fractional number
+            </li>
+        }
+        @if ((control?.dirty || control?.touched) && control?.hasError('min')) {
+            <li class="text-theme-fire-red">
+                {{ label }} must be at least {{ control?.getError('min')?.min }}
+            </li>
+        }
+    </ul>
 </div>

@@ -13,12 +13,14 @@ internal sealed class UnusedUploadedFileCleanupJob(
 {
     public async Task Execute(IJobExecutionContext context)
     {
-        logger.LogInformation("Started file cleaning Job at {@UnusedUploadedFileCleanupJobStartingTime}", DateTimeOffset.Now);
+        logger.LogInformation("Started file cleaning Job at {@UnusedUploadedFileCleanupJobStartingTime}",
+            DateTimeOffset.Now);
 
         await ProcessExpiredFiles(context.CancellationToken);
         await ProcessUnusedFiles(context.CancellationToken);
 
-        logger.LogInformation("Ended file cleaning Job at {@UnusedUploadedFileCleanupJobEndingTime}", DateTimeOffset.Now);
+        logger.LogInformation("Ended file cleaning Job at {@UnusedUploadedFileCleanupJobEndingTime}",
+            DateTimeOffset.Now);
     }
 
     private async Task ProcessExpiredFiles(CancellationToken cancellationToken = default)
@@ -33,7 +35,9 @@ internal sealed class UnusedUploadedFileCleanupJob(
                 await uploadedStore.DeleteFileAsync(expiredFileId, cancellationToken);
                 logger.LogInformation("Deleted expired file: {@FileIdToDelete}.", expiredFileId);
             }
-            logger.LogInformation("Deleted successfully {@ExpiredFileCount} expired files in store.", storeExpiredFileIds.Count);
+
+            logger.LogInformation("Deleted successfully {@ExpiredFileCount} expired files in store.",
+                storeExpiredFileIds.Count);
 
             logger.LogInformation("Deleting metadata {@DeletingFileMetadata}", storeExpiredFileIds);
             await fileMetadataService.DeleteAsync([.. storeExpiredFileIds], cancellationToken);
@@ -54,6 +58,7 @@ internal sealed class UnusedUploadedFileCleanupJob(
                 await uploadedStore.DeleteFileAsync(unusedFileId, cancellationToken);
                 logger.LogInformation("Deleted unused file {@UnusedFileToDeleteId}", unusedFileId);
             }
+
             logger.LogInformation("Deleting unused files metadata {UnusedFilesMetadataToDelete}", unusedFileIds);
             await fileMetadataService.DeleteAsync([.. unusedFileIds], cancellationToken);
         }

@@ -1,10 +1,11 @@
 using HotChocolate.Resolvers;
 using Kathanika.Application.Features.Patrons.Queries;
 using Kathanika.Domain.Aggregates.PatronAggregate;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace Kathanika.Infrastructure.Graphql.Schema;
+namespace Kathanika.Infrastructure.Graphql.Schema.PatronGraph;
 
 [ExtendObjectType(OperationTypeNames.Query)]
 public sealed class PatronQueries
@@ -13,9 +14,9 @@ public sealed class PatronQueries
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<Patron>> GetPatronsAsync(
-            [Service] IMediator mediator,
-            CancellationToken cancellationToken
-        )
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken
+    )
     {
         IQueryable<Patron> patrons = await mediator.Send(new GetPatronsQuery(), cancellationToken);
         return patrons;

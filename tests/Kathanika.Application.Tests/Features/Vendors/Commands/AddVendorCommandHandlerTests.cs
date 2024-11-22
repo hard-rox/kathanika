@@ -7,8 +7,8 @@ namespace Kathanika.Application.Tests.Features.Vendors.Commands;
 
 public sealed class AddVendorCommandHandlerTests
 {
-    private readonly IVendorRepository _vendorRepository = Substitute.For<IVendorRepository>();
     private readonly ILogger<AddVendorCommandHandler> _logger = new NullLogger<AddVendorCommandHandler>();
+    private readonly IVendorRepository _vendorRepository = Substitute.For<IVendorRepository>();
 
     [Fact]
     public async Task Handler_ShouldReturnVendor_OnSavingNewVendor()
@@ -16,15 +16,15 @@ public sealed class AddVendorCommandHandlerTests
         // Arrange
         Vendor dummyVendor = new Faker<Vendor>().CustomInstantiator(f => Vendor.Create(
             f.Company.CompanyName(),
-                f.Address.FullAddress(),
-                f.Phone.PhoneNumber("###########"),
-                f.Internet.Email(),
-                f.Internet.Url(),
-                f.Random.Word(),
-                f.Person.FullName,
-                f.Phone.PhoneNumber("###########"),
-                f.Internet.Email(),
-                VendorStatus.Active
+            f.Address.FullAddress(),
+            f.Phone.PhoneNumber("###########"),
+            f.Internet.Email(),
+            f.Internet.Url(),
+            f.Random.Word(),
+            f.Person.FullName,
+            f.Phone.PhoneNumber("###########"),
+            f.Internet.Email(),
+            VendorStatus.Active
         ).Value);
         AddVendorCommand command = new(
             dummyVendor.Name,
@@ -37,7 +37,7 @@ public sealed class AddVendorCommandHandlerTests
             dummyVendor.ContactPersonPhone,
             dummyVendor.ContactPersonEmail,
             dummyVendor.Status
-            );
+        );
         AddVendorCommandHandler handler = new(_logger, _vendorRepository);
 
         _vendorRepository.AddAsync(Arg.Any<Vendor>(), Arg.Any<CancellationToken>())

@@ -4,18 +4,18 @@ using HotChocolate.Data.Filters;
 using HotChocolate.Data.Filters.Expressions;
 using HotChocolate.Execution.Configuration;
 using HotChocolate.Types.Descriptors;
-using Kathanika.Infrastructure.Graphql.Schema;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Kathanika.Infrastructure.Graphql;
 
 internal static class SchemaConfigurations
 {
-    private static Type[] GetTypesFromNamespace(string nameSpace)
+    private static Type[] GetSchemaTypes()
     {
         Type[] types = Assembly.GetExecutingAssembly()
             .GetTypes()
-            .Where(type => type.Namespace == nameSpace
+            .Where(type => type.Namespace is not null
+                           && type.Namespace.Contains("Kathanika.Infrastructure.Graphql.Schema")
                            && Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) == null)
             .ToArray();
 
@@ -26,13 +26,10 @@ internal static class SchemaConfigurations
     {
         IRequestExecutorBuilder requestBuilder = services.AddGraphQLServer();
         //requestBuilder.AddAuthorization();
-        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.Graphql.Types"));
-        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.Graphql.Inputs"));
-        requestBuilder.AddTypes(GetTypesFromNamespace("Kathanika.Infrastructure.Graphql.Schema"));
+        requestBuilder.AddTypes(GetSchemaTypes());
         requestBuilder.TryAddTypeInterceptor<IgnorePublicMethodsTypeInterceptor>();
         requestBuilder.AddQueryType(q => q.Name(OperationTypeNames.Query));
         requestBuilder.AddMutationType(m => m.Name(OperationTypeNames.Mutation));
-        requestBuilder.AddSubscriptionType<Subscriptions>();
         requestBuilder.AddConvention<INamingConventions, ApplicationNamingConvention>();
         requestBuilder.AddInMemorySubscriptions();
         requestBuilder.AddProjections();
@@ -46,17 +43,13 @@ internal static class SchemaConfigurations
                 .RemoveExtensions()
                 .RemoveLocations();
             if (exception is not null && exception.Source == "MongoDB.Driver.Core")
-            {
                 return errorResult
                     .WithMessage(
                         "Looks like MongoDB is offline or connection string is invalid. Make sure database is online to enjoy.");
-            }
 
             if (error.Exception is not null && error.Exception is not DomainException)
-            {
                 return errorResult
                     .WithMessage("Something went terribly wrong. We are trying to fix it...");
-            }
 
             return error;
         });

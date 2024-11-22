@@ -1,3 +1,4 @@
+using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Kathanika.Application.Services;
@@ -9,12 +10,13 @@ internal sealed class AzureBlobStore(
     BlobServiceClient blobServiceClient,
     IUploadedStore uploadedStore,
     IFileMetadataService fileMetadataService
-    ) : FileValidator(fileMetadataService), IFileStore
+) : FileValidator(fileMetadataService), IFileStore
 {
     private const string ContainerName = "kathanika"; //TODO: from appsettings...
     private readonly IFileMetadataService _fileMetadataService = fileMetadataService;
 
-    public async Task<(Stream stream, string contentType)> GetAsync(string fileId, CancellationToken cancellationToken = default)
+    public async Task<(Stream stream, string contentType)> GetAsync(string fileId,
+        CancellationToken cancellationToken = default)
     {
         logger.LogInformation("Getting file {@FileId} from azure blob storage.", fileId);
         StoredFileMetadata metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken)
@@ -22,13 +24,12 @@ internal sealed class AzureBlobStore(
 
         if (!metadata.IsMoved)
             return (await uploadedStore.GetFileContentAsync(fileId, cancellationToken), metadata.ContentType);
-        
+
         var fileName = $"{fileId}{Path.GetExtension(metadata.FileName)}";
         BlobContainerClient blobContainerClient = blobServiceClient.GetBlobContainerClient(ContainerName);
         BlobClient blobClient = blobContainerClient.GetBlobClient(fileName);
-        Azure.Response<BlobDownloadResult> blobDownloadResult = await blobClient.DownloadContentAsync(cancellationToken);
+        Response<BlobDownloadResult> blobDownloadResult = await blobClient.DownloadContentAsync(cancellationToken);
         return (blobDownloadResult.Value.Content.ToStream(), blobDownloadResult.Value.Details.ContentType);
-
     }
 
     public async Task MoveToStoreAsync(string fileId, CancellationToken cancellationToken = default)
@@ -37,7 +38,7 @@ internal sealed class AzureBlobStore(
         await using Stream dataStream = await uploadedStore.GetFileContentAsync(fileId, cancellationToken);
         StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken);
         if (dataStream is null || dataStream.Length == 0 || metadata is null)
-            throw new Exception("File not found");
+            throw new FileNotFoundException();
 
         var fileName = $"{fileId}{Path.GetExtension(metadata.FileName)}";
 
@@ -57,7 +58,9 @@ internal sealed class AzureBlobStore(
         if (metadata is null) return;
 
         if (!metadata.IsMoved)
+        {
             await uploadedStore.DeleteFileAsync(fileId, cancellationToken);
+        }
         else
         {
             var fileName = $"{fileId}{Path.GetExtension(metadata.FileName)}";
@@ -66,6 +69,7 @@ internal sealed class AzureBlobStore(
 
             await blobClient.DeleteAsync(cancellationToken: cancellationToken);
         }
+
         await _fileMetadataService.DeleteAsync([fileId], cancellationToken);
     }
 }

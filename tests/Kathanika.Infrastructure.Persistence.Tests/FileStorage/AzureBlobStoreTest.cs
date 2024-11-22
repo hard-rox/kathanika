@@ -8,10 +8,10 @@ namespace Kathanika.Infrastructure.Persistence.Tests.FileStorage;
 
 public sealed class AzureBlobStoreTest
 {
-    private readonly ILogger<AzureBlobStore> _nullLogger = new NullLogger<AzureBlobStore>();
     private readonly BlobServiceClient _blobServiceClient = Substitute.For<BlobServiceClient>();
-    private readonly IUploadedStore _uploadedStore = Substitute.For<IUploadedStore>();
     private readonly IFileMetadataService _fileMetadataService = Substitute.For<IFileMetadataService>();
+    private readonly ILogger<AzureBlobStore> _nullLogger = new NullLogger<AzureBlobStore>();
+    private readonly IUploadedStore _uploadedStore = Substitute.For<IUploadedStore>();
 
     [Fact]
     public async Task GetAsync_ShouldThrowException_WhenMetadataNotFound()

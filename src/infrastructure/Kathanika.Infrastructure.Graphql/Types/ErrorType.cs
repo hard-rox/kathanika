@@ -1,7 +1,9 @@
 // ReSharper disable ClassNeverInstantiated.Global
+
 namespace Kathanika.Infrastructure.Graphql.Types;
 
 public class KnErrorType : ObjectType<KnError>;
+
 public class ValidationErrorType : ObjectType<ValidationError>;
 
 public class ErrorType : UnionType

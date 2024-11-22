@@ -1,27 +1,27 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { KnAlert } from './alert.component';
+import {KnAlert} from './alert.component';
 
 describe('KnAlert', () => {
-  let component: KnAlert;
-  let fixture: ComponentFixture<KnAlert>;
+    let component: KnAlert;
+    let fixture: ComponentFixture<KnAlert>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [KnAlert],
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [KnAlert],
+        });
+        fixture = TestBed.createComponent(KnAlert);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(KnAlert);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 
-  it('should emit onClosed output', () => {
-    const onClosedSpy = jest.spyOn(component['closed'], 'emit');
-    component['close']();
-    expect(onClosedSpy).toHaveBeenCalledTimes(1);
-  });
+    it('should emit onClosed output', () => {
+        const onClosedSpy = jest.spyOn(component['closed'], 'emit');
+        component['close']();
+        expect(onClosedSpy).toHaveBeenCalledTimes(1);
+    });
 });

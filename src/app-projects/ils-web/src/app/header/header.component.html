@@ -6,10 +6,10 @@
         <div class="flex items-center space-x-2">
             <div class="relative inline-block text-left">
                 <div>
-                    <button kn-button [rounded]="true"
+                    <button (click)="isNotificationVisible = !isNotificationVisible" (focusout)="isNotificationVisible = false"
+                            [rounded]="true"
                             id="notification-btn"
-                            (click)="isNotificationVisible = !isNotificationVisible"
-                            (focusout)="isNotificationVisible = false">
+                            kn-button>
                         <span class="material-symbols-sharp"> notifications </span>
                     </button>
                 </div>
@@ -33,7 +33,7 @@
                         aria-labelledby="menu-button"
                         tabindex="-1"
                     >
-                        <div class="py-1" role="dialog">
+                        <div class="py-1">
                             <!-- Active: "bg-theme-silver text-gray-900", Not Active: "text-gray-700" -->
                             <a
                                 href="#"
@@ -73,19 +73,19 @@
                 }
             </div>
             <img
+                alt="DP"
                 class="rounded-full border-gray-500 max-w-10 max-h-10"
                 src="https://picsum.photos/200"
-                alt="DP"
             />
             <div class="relative inline-block text-left">
                 <div>
-                    <button kn-button
-                            id="user-action-btn"
-                            type="button"
-                            (click)="isUserActionsVisible = !isUserActionsVisible"
+                    <button (click)="isUserActionsVisible = !isUserActionsVisible"
                             (focusout)="isUserActionsVisible = false"
                             aria-expanded="true"
                             aria-haspopup="true"
+                            id="user-action-btn"
+                            kn-button
+                            type="button"
                     >
                         John Doe
                         <span class="material-symbols-sharp">
@@ -113,7 +113,7 @@
                         aria-labelledby="menu-button"
                         tabindex="-1"
                     >
-                        <div class="py-1" role="none">
+                        <div class="py-1">
                             <!-- Active: "bg-theme-silver text-gray-900", Not Active: "text-gray-700" -->
                             <a
                                 href="#"

@@ -13,10 +13,7 @@ public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IVali
         CancellationToken cancellationToken
     )
     {
-        if (!validators.Any())
-        {
-            return await next();
-        }
+        if (!validators.Any()) return await next();
 
         KnError[] validationErrors = validators
             .Select(async validator => await validator.ValidateAsync(request, cancellationToken))
@@ -26,21 +23,13 @@ public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IVali
             .Distinct()
             .ToArray();
 
-        if (validationErrors.Length == 0)
-        {
-            return await next();
-        }
+        if (validationErrors.Length == 0) return await next();
 
         Type responseType = typeof(TResponse);
-        if (responseType == typeof(Result))
-        {
-            return (TResponse)(object)Result.Failure(validationErrors);
-        }
+        if (responseType == typeof(Result)) return (TResponse)(object)Result.Failure(validationErrors);
 
         if (!responseType.IsGenericType || responseType.GetGenericTypeDefinition() != typeof(Result<>))
-        {
             throw new Exception("Invalid response type"); //TODO: More specific...
-        }
 
         Type genericArgument = responseType.GetGenericArguments()[0];
         MethodInfo failureMethod = typeof(Result<>)

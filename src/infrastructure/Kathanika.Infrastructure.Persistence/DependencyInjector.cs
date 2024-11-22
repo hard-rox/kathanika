@@ -1,3 +1,4 @@
+using System.Reflection;
 using Azure.Storage.Blobs;
 using Kathanika.Application.Services;
 using Kathanika.Domain.Aggregates.BibRecordAggregate;
@@ -10,13 +11,14 @@ using Kathanika.Infrastructure.Persistence.Outbox;
 using Kathanika.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+
 namespace Kathanika.Infrastructure.Persistence;
 
 public static class DependencyInjector
 {
     private static void RegisterClassMapFromAssembly()
     {
-        System.Reflection.Assembly assembly = typeof(IBsonClassMap).Assembly;
+        Assembly assembly = typeof(IBsonClassMap).Assembly;
 
         List<Type> classMaps = assembly.GetTypes()
             .Where(t => typeof(IBsonClassMap).IsAssignableFrom(t)
@@ -30,7 +32,8 @@ public static class DependencyInjector
         });
     }
 
-    public static IServiceCollection AddPersistenceInfrastructure(this IServiceCollection services, IConfiguration configuration)
+    public static IServiceCollection AddPersistenceInfrastructure(this IServiceCollection services,
+        IConfiguration configuration)
     {
         RegisterClassMapFromAssembly();
 
@@ -45,7 +48,8 @@ public static class DependencyInjector
 
         // services.AddSingleton<IFileStore, DiskFileStore>();
         services.AddSingleton<IFileStore, AzureBlobStore>();
-        services.AddSingleton(_ => new BlobServiceClient(configuration.GetConnectionString("azureBlobStorageConnection")));
+        services.AddSingleton(_ =>
+            new BlobServiceClient(configuration.GetConnectionString("azureBlobStorageConnection")));
 
         services.AddScoped<IPatronRepository, PatronRepository>();
         services.AddScoped<IVendorRepository, VendorRepository>();

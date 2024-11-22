@@ -7,11 +7,15 @@ namespace Kathanika.Infrastructure.Persistence.Tests.FileStorage;
 
 public sealed class FileMetadataServiceTests
 {
+    private readonly IMongoCollection<StoredFileMetadata> _collection =
+        Substitute.For<IMongoCollection<StoredFileMetadata>>();
+
+    private readonly FileMetadataService _fileMetadataService;
+
     private readonly ILogger<FileMetadataService> _logger = Substitute.For<ILogger<FileMetadataService>>();
+
     // private readonly ICacheService cacheService = Substitute.For<ICacheService>();
     private readonly IMongoDatabase _mongoDatabase = Substitute.For<IMongoDatabase>();
-    private readonly IMongoCollection<StoredFileMetadata> _collection = Substitute.For<IMongoCollection<StoredFileMetadata>>();
-    private readonly FileMetadataService _fileMetadataService;
 
     public FileMetadataServiceTests()
     {
@@ -51,7 +55,7 @@ public sealed class FileMetadataServiceTests
         var fileId = ObjectId.GenerateNewId().ToString();
         _collection.CountDocumentsAsync(Arg.Any<FilterDefinition<StoredFileMetadata>>(),
                 Arg.Is<CountOptions>(x => x.Limit == 1))
-                .Returns(1);
+            .Returns(1);
 
         var exist = await _fileMetadataService.ExistAsync(fileId);
 

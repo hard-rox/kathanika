@@ -1,10 +1,11 @@
 using HotChocolate.Resolvers;
 using Kathanika.Application.Features.Vendors.Queries;
 using Kathanika.Domain.Aggregates.VendorAggregate;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace Kathanika.Infrastructure.Graphql.Schema;
+namespace Kathanika.Infrastructure.Graphql.Schema.VendorGraph;
 
 [ExtendObjectType(OperationTypeNames.Query)]
 public sealed class VendorQueries
@@ -13,9 +14,9 @@ public sealed class VendorQueries
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<Vendor>> GetVendorsAsync(
-            [Service] IMediator mediator,
-            CancellationToken cancellationToken
-        )
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken
+    )
     {
         IQueryable<Vendor> vendors = await mediator.Send(new GetVendorsQuery(), cancellationToken);
         return vendors;

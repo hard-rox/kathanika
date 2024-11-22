@@ -12,6 +12,7 @@ public abstract record Payload
 
     [GraphQLType<ListType<NonNullType<ErrorType>>>]
     public KnError[]? Errors { get; private init; }
+
     public string? Message { get; private init; }
 }
 

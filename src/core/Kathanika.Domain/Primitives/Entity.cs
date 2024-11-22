@@ -5,14 +5,23 @@ namespace Kathanika.Domain.Primitives;
 public abstract class Entity : IEquatable<Entity>
 {
     // ReSharper disable once ReplaceAutoPropertyWithComputedProperty
-    public string Id { get; private init; } = string.Empty;
+    public string Id { get; } = string.Empty;
+
+    [GraphQLIgnore]
+    public bool Equals(Entity? other)
+    {
+        if (other is null) return false;
+        if (other.GetType() != GetType()) return false;
+
+        return other.Id == Id;
+    }
 
     [GraphQLIgnore]
     public static bool operator ==(Entity? firstObject, Entity? secondObject)
     {
         return firstObject is not null
-            && secondObject is not null
-            && firstObject.Equals(secondObject);
+               && secondObject is not null
+               && firstObject.Equals(secondObject);
     }
 
     [GraphQLIgnore]
@@ -35,14 +44,5 @@ public abstract class Entity : IEquatable<Entity>
     public override int GetHashCode()
     {
         return Id.GetHashCode();
-    }
-
-    [GraphQLIgnore]
-    public bool Equals(Entity? other)
-    {
-        if (other is null) return false;
-        if (other.GetType() != GetType()) return false;
-
-        return other.Id == Id;
     }
 }

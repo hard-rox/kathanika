@@ -5,8 +5,6 @@ namespace Kathanika.Infrastructure.Persistence.Tests.FileStorage;
 
 public sealed class FileValidatorTests
 {
-    private class ConcreteFileValidator(IFileMetadataService fileMetadataService)
-    : FileValidator(fileMetadataService);
     private readonly IFileMetadataService _fileMetadataService = Substitute.For<IFileMetadataService>();
 
     [Fact]
@@ -113,7 +111,8 @@ public sealed class FileValidatorTests
     }
 
     [Fact]
-    public async Task ValidateAsync_ShouldSkipContentTypeAndExtensionCheck_WhenPermittedContentTypesAndExtensionsNotProvided()
+    public async Task
+        ValidateAsync_ShouldSkipContentTypeAndExtensionCheck_WhenPermittedContentTypesAndExtensionsNotProvided()
     {
         FileValidator validator = new ConcreteFileValidator(_fileMetadataService);
         StoredFileMetadata metadata = new("file", "text/plain", 100);
@@ -128,4 +127,7 @@ public sealed class FileValidatorTests
 
         Assert.True(validationResult);
     }
+
+    private class ConcreteFileValidator(IFileMetadataService fileMetadataService)
+        : FileValidator(fileMetadataService);
 }

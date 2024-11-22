@@ -5,6 +5,14 @@ namespace Kathanika.Domain.Aggregates.PatronAggregate;
 
 public sealed class Patron : AggregateRoot
 {
+    private Patron(
+        string surname,
+        string cardNumber)
+    {
+        Surname = surname;
+        CardNumber = cardNumber;
+    }
+
     public string? Salutation { get; private set; }
     public string? FirstName { get; private set; }
     public string Surname { get; private set; }
@@ -17,14 +25,6 @@ public sealed class Patron : AggregateRoot
     public DateOnly RegistrationDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
 
     public string FullName => $"{Salutation} {FirstName} {Surname}";
-
-    private Patron(
-        string surname,
-        string cardNumber)
-    {
-        Surname = surname;
-        CardNumber = cardNumber;
-    }
 
     public static Result<Patron> Create(
         string surname,
@@ -40,9 +40,7 @@ public sealed class Patron : AggregateRoot
     {
         List<KnError> errors = [];
         if (dateOfBirth is not null && dateOfBirth > DateOnly.FromDateTime(DateTime.UtcNow))
-        {
             errors.Add(PatronAggregateErrors.FutureDateOfBirth);
-        }
 
         if (errors.Count != 0)
             return Result.Failure<Patron>(errors);
@@ -89,7 +87,7 @@ public sealed class Patron : AggregateRoot
 
         if (string.IsNullOrWhiteSpace(photoFileId))
             return Result.Success();
-        
+
         IDomainEvent photoFileEvent
             = PhotoFileId is null
                 ? new FileUsedDomainEvent(photoFileId)

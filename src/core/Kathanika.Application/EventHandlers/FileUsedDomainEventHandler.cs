@@ -10,10 +10,12 @@ internal sealed class FileUsedDomainEventHandler(
 {
     public async Task Handle(FileUsedDomainEvent notification, CancellationToken cancellationToken)
     {
-        logger.LogInformation("Handling {@DomainEvent} with {@EventData}", nameof(FileUsedDomainEventHandler), notification);
+        logger.LogInformation("Handling {@DomainEvent} with {@EventData}", nameof(FileUsedDomainEventHandler),
+            notification);
 
         await fileStorageService.MoveToStoreAsync(notification.FileId, cancellationToken);
 
-        logger.LogInformation("Handled {@DomainEvent} with {@EventData}", nameof(FileUsedDomainEventHandler), notification);
+        logger.LogInformation("Handled {@DomainEvent} with {@EventData}", nameof(FileUsedDomainEventHandler),
+            notification);
     }
 }

@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { KnChip } from './chip.component';
+import {KnChip} from './chip.component';
 
 describe('KnChip', () => {
-  let component: KnChip;
-  let fixture: ComponentFixture<KnChip>;
+    let component: KnChip;
+    let fixture: ComponentFixture<KnChip>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [KnChip],
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [KnChip],
+        });
+        fixture = TestBed.createComponent(KnChip);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(KnChip);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

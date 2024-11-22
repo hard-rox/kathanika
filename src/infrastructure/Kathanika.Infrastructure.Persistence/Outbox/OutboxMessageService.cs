@@ -8,13 +8,15 @@ internal sealed class OutboxMessageService(IMongoDatabase mongoDatabase) : IOutb
     private readonly IMongoCollection<OutboxMessage> _outboxMessageCollection
         = mongoDatabase.GetCollection<OutboxMessage>(Constants.OutboxMessageCollectionName);
 
-    public async Task<IReadOnlyList<OutboxMessage>> GetUnprocessedOutboxMessagesFromDb(int limit = 20, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<OutboxMessage>> GetUnprocessedOutboxMessagesFromDb(int limit = 20,
+        CancellationToken cancellationToken = default)
     {
         FilterDefinition<OutboxMessage> filter = Builders<OutboxMessage>
             .Filter
             .And(
                 Builders<OutboxMessage>.Filter.Eq(x => x.ProcessedAt, null),
-                Builders<OutboxMessage>.Filter.Lt(x => x.ProcessAttempt, 5) //TODO: ProcessAttempt value will get from appSettings.json.
+                Builders<OutboxMessage>.Filter.Lt(x => x.ProcessAttempt,
+                    5) //TODO: ProcessAttempt value will get from appSettings.json.
             );
 
         List<OutboxMessage>? result = await _outboxMessageCollection

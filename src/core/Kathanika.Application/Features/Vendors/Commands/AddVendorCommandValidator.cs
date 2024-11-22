@@ -29,17 +29,12 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
 
         RuleFor(v => v.Website)
             .Must(url => Uri.TryCreate(url, UriKind.Absolute, out Uri? uriResult) &&
-                           (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
+                         (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
             ).WithMessage("Invalid website URL.")
             .When(v => !string.IsNullOrEmpty(v.Website));
 
         RuleFor(v => v.ContactPersonName)
             .NotEmpty().WithMessage("Contact Person Name cannot be empty.");
-
-        RuleFor(v => v.ContactPersonPhone)
-            .NotEmpty()
-            .ContactNumber()
-            .WithMessage("Invalid contact person phone number.");
 
         RuleFor(v => v.ContactPersonEmail)
             .EmailAddress().WithMessage("Invalid contact person email address.")

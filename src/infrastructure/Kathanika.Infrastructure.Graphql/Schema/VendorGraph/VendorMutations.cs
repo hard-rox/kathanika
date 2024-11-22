@@ -1,10 +1,10 @@
 using Kathanika.Application.Features.Vendors.Commands;
 using Kathanika.Domain.Aggregates.VendorAggregate;
-using Kathanika.Infrastructure.Graphql.Payloads;
+
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
 
-namespace Kathanika.Infrastructure.Graphql.Schema;
+namespace Kathanika.Infrastructure.Graphql.Schema.VendorGraph;
 
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public sealed class VendorMutations

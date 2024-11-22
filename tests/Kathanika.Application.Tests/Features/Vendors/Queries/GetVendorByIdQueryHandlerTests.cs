@@ -5,8 +5,8 @@ namespace Kathanika.Application.Tests.Features.Vendors.Queries;
 
 public class GetVendorByIdQueryHandlerTests
 {
-    private readonly IVendorRepository _vendorRepository;
     private readonly GetVendorByIdQueryHandler _handler;
+    private readonly IVendorRepository _vendorRepository;
 
     public GetVendorByIdQueryHandlerTests()
     {
@@ -51,7 +51,8 @@ public class GetVendorByIdQueryHandlerTests
             ).Value);
 
         GetVendorByIdQuery query = new(vendorId);
-        _vendorRepository.GetByIdAsync(query.Id, Arg.Any<CancellationToken>()).Returns(Task.FromResult<Vendor?>(vendor));
+        _vendorRepository.GetByIdAsync(query.Id, Arg.Any<CancellationToken>())
+            .Returns(Task.FromResult<Vendor?>(vendor));
 
         // Act
         Result<Vendor> result = await _handler.Handle(query, CancellationToken.None);

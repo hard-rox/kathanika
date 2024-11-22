@@ -10,9 +10,9 @@ internal static class FileEndpointResolver
     {
         if (fileId is null) return null;
         HttpRequest? request = context.RequestServices
-                    .GetRequiredService<IHttpContextAccessor>()
-                    .HttpContext?
-                    .Request;
+            .GetRequiredService<IHttpContextAccessor>()
+            .HttpContext?
+            .Request;
         var scheme = request?.Scheme;
         var host = request?.Host.ToString();
         return scheme + "://" + host + "/fs/" + fileId;

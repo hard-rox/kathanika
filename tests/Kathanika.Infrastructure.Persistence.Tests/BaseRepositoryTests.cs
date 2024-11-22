@@ -9,17 +9,11 @@ namespace Kathanika.Infrastructure.Persistence.Tests;
 
 public sealed class BaseRepositoryTests
 {
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    public class DummyAggregate : AggregateRoot;
-    private class DummyRepo(IMongoDatabase database,
-        string collectionName,
-        ILogger<DummyRepo> logger,
-        ICacheService cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService);
+    private readonly ICacheService _cache = Substitute.For<ICacheService>();
+    private readonly IMongoCollection<DummyAggregate> _collection = Substitute.For<IMongoCollection<DummyAggregate>>();
+    private readonly IMongoDatabase _database = Substitute.For<IMongoDatabase>();
 
     private readonly ILogger<DummyRepo> _nullLogger = new NullLogger<DummyRepo>();
-    private readonly ICacheService _cache = Substitute.For<ICacheService>();
-    private readonly IMongoDatabase _database = Substitute.For<IMongoDatabase>();
-    private readonly IMongoCollection<DummyAggregate> _collection = Substitute.For<IMongoCollection<DummyAggregate>>();
 
     public BaseRepositoryTests()
     {
@@ -115,4 +109,13 @@ public sealed class BaseRepositoryTests
         await _collection.Received(1).DeleteOneAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),
             Arg.Is<CancellationToken>(x => x == default));
     }
+
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    public class DummyAggregate : AggregateRoot;
+
+    private class DummyRepo(
+        IMongoDatabase database,
+        string collectionName,
+        ILogger<DummyRepo> logger,
+        ICacheService cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService);
 }
