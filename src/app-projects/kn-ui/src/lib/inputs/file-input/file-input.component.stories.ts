@@ -17,7 +17,7 @@ export const Primary: Story = {
 
 export const Heading: Story = {
     args: {},
-    play: async ({ canvasElement }) => {
+    play: async ({canvasElement}) => {
         const canvas = within(canvasElement);
         expect(canvas.getByText(/date-input works!/gi)).toBeTruthy();
     },

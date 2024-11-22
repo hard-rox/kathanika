@@ -1,61 +1,63 @@
-import { Component, Inject, Injector, Input, OnInit } from '@angular/core';
-import { ControlValueAccessor, NgControl, Validators } from '@angular/forms';
+import {Component, Inject, Injector, Input, OnInit} from '@angular/core';
+import {ControlValueAccessor, NgControl, Validators} from '@angular/forms';
 
 @Component({
-  template: '',
+    template: '',
 })
 export abstract class AbstractInput<TValueType>
-  implements ControlValueAccessor, OnInit
-{
-  @Input()
-  label = '';
+    implements ControlValueAccessor, OnInit {
+    @Input()
+    label = '';
 
-  @Input()
-  placeholder = '';
+    @Input()
+    placeholder = '';
 
-  protected value: TValueType | null = null;
-  protected isDisabled = false;
+    protected value: TValueType | null = null;
+    protected isDisabled = false;
 
-  protected control: NgControl | null = null;
+    protected control: NgControl | null = null;
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
-  private onChange = (value: TValueType) => {};
-  // eslint-disable-next-line @typescript-eslint/no-empty-function
-  private onTouched = () => {};
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars, @typescript-eslint/no-empty-function
+    private onChange = (value: TValueType) => {
+    };
+    // eslint-disable-next-line @typescript-eslint/no-empty-function
+    private onTouched = () => {
+    };
 
-  constructor(@Inject(Injector) private injector: Injector) {}
+    constructor(@Inject(Injector) private readonly injector: Injector) {
+    }
 
-  ngOnInit() {
-    this.control = this.injector.get(NgControl);
-  }
+    ngOnInit() {
+        this.control = this.injector.get(NgControl);
+    }
 
-  protected onBlur() {
-    this.onTouched();
-  }
+    protected onBlur() {
+        this.onTouched();
+    }
 
-  protected onModelChange(value: TValueType) {
-    this.value = value;
-    this.onChange(value);
-    this.onTouched();
-  }
+    protected onModelChange(value: TValueType) {
+        this.value = value;
+        this.onChange(value);
+        this.onTouched();
+    }
 
-  protected isRequired(): boolean {
-    return this.control?.control?.hasValidator(Validators.required) ?? false;
-  }
+    protected isRequired(): boolean {
+        return this.control?.control?.hasValidator(Validators.required) ?? false;
+    }
 
-  writeValue(obj: TValueType): void {
-    this.value = obj;
-  }
+    writeValue(obj: TValueType): void {
+        this.value = obj;
+    }
 
-  registerOnChange(fn: (value: TValueType) => void): void {
-    this.onChange = fn;
-  }
+    registerOnChange(fn: (value: TValueType) => void): void {
+        this.onChange = fn;
+    }
 
-  registerOnTouched(fn: () => void): void {
-    this.onTouched = fn;
-  }
+    registerOnTouched(fn: () => void): void {
+        this.onTouched = fn;
+    }
 
-  setDisabledState?(isDisabled: boolean): void {
-    this.isDisabled = isDisabled;
-  }
+    setDisabledState?(isDisabled: boolean): void {
+        this.isDisabled = isDisabled;
+    }
 }

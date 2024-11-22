@@ -5,7 +5,7 @@ namespace Kathanika.Domain.Tests.Aggregates.PatronAggregate;
 public class PatronTests
 {
     private readonly Faker<Patron> _patronFaker = new Faker<Patron>()
-            .CustomInstantiator(f => Patron.Create(f.Person.LastName, f.Random.AlphaNumeric(10)).Value);
+        .CustomInstantiator(f => Patron.Create(f.Person.LastName, f.Random.AlphaNumeric(10)).Value);
 
     [Fact]
     public void Create_ShouldReturnNewPatron_WithValidData()
@@ -43,7 +43,8 @@ public class PatronTests
         const string newAddress = "Updated Address";
 
         // Act
-        Result updateResult = patronToUpdate.Update(newCardNumber, firstName: newFirstName, surname: newSurname, address: newAddress);
+        Result updateResult = patronToUpdate.Update(newCardNumber, firstName: newFirstName, surname: newSurname,
+            address: newAddress);
 
         // Assert
         Assert.True(updateResult.IsSuccess);
@@ -52,10 +53,12 @@ public class PatronTests
         Assert.Equal(newSurname, patronToUpdate.Surname);
         Assert.Equal(newCardNumber, patronToUpdate.CardNumber);
         Assert.Equal(newAddress, patronToUpdate.Address);
-        Assert.Equal(existingPatron.PhotoFileId, patronToUpdate.PhotoFileId); // Assuming photo file ID should not change
-        Assert.Equal(existingPatron.DateOfBirth, patronToUpdate.DateOfBirth); // Assuming date of birth should not change
-        Assert.Equal(existingPatron.ContactNumber, patronToUpdate.ContactNumber); // Assuming contact number should not change
+        Assert.Equal(existingPatron.PhotoFileId,
+            patronToUpdate.PhotoFileId); // Assuming photo file ID should not change
+        Assert.Equal(existingPatron.DateOfBirth,
+            patronToUpdate.DateOfBirth); // Assuming date of birth should not change
+        Assert.Equal(existingPatron.ContactNumber,
+            patronToUpdate.ContactNumber); // Assuming contact number should not change
         Assert.Equal(existingPatron.Email, patronToUpdate.Email); // Assuming email should not change
     }
-
 }

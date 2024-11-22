@@ -11,7 +11,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="Bogus" Version="35.6.1" />
+        <PackageReference Include="Bogus" Version="35.6.1"/>
         <PackageReference Include="coverlet.collector" Version="6.0.2">
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -22,7 +22,7 @@
             <PrivateAssets>all</PrivateAssets>
             <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
-        <PackageReference Include="NetArchTest.Rules" Version="1.3.2" />
+        <PackageReference Include="NetArchTest.Rules" Version="1.3.2"/>
     </ItemGroup>
 
     <ItemGroup>
@@ -30,7 +30,7 @@
     </ItemGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\..\src\core\Kathanika.Domain\Kathanika.Domain.csproj" />
+        <ProjectReference Include="..\..\src\core\Kathanika.Domain\Kathanika.Domain.csproj"/>
     </ItemGroup>
 
 </Project>

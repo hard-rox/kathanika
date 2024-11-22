@@ -2,7 +2,8 @@ using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 
-public record CatalogingSource(string? OriginalCatalogingAgency,
+public record CatalogingSource(
+    string? OriginalCatalogingAgency,
     string? LanguageOfCataloging,
     string TranscribingAgency,
     string? ModifyingAgency,
@@ -16,7 +17,8 @@ public record CatalogingSource(string? OriginalCatalogingAgency,
     {
         return string.IsNullOrWhiteSpace(transcribingAgency)
             ? Result.Failure<CatalogingSource>(BibRecordAggregateErrors.TranscribingAgencyInvalid)
-            : Result.Success(new CatalogingSource(originalCatalogingAgency, languageOfCataloging, transcribingAgency, modifyingAgency, descriptionConventions));
+            : Result.Success(new CatalogingSource(originalCatalogingAgency, languageOfCataloging, transcribingAgency,
+                modifyingAgency, descriptionConventions));
     }
 
     public override IEnumerable<object?> GetAtomicValues()

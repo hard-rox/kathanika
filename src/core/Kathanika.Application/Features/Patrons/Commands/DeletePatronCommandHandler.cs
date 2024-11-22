@@ -2,9 +2,10 @@ using Kathanika.Domain.Aggregates.PatronAggregate;
 using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Features.Patrons.Commands;
+
 internal sealed class DeletePatronCommandHandler(
     IPatronRepository patronRepository)
-: IRequestHandler<DeletePatronCommand, Result>
+    : IRequestHandler<DeletePatronCommand, Result>
 {
     public async Task<Result> Handle(DeletePatronCommand request, CancellationToken cancellationToken)
     {

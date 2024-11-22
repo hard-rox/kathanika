@@ -8,6 +8,7 @@ namespace Kathanika.Web.FileOpsConfigurations;
 internal sealed class TusUploadStore(DefaultTusConfiguration defaultTusConfiguration) : IUploadedStore
 {
     private readonly TusDiskStore _tusStore = (TusDiskStore)defaultTusConfiguration.Store;
+
     public async Task DeleteFileAsync(string fileId, CancellationToken cancellationToken = default)
     {
         await _tusStore.DeleteFileAsync(fileId, cancellationToken);

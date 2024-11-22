@@ -2,9 +2,10 @@ using Kathanika.Domain.Aggregates.PatronAggregate;
 using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Features.Patrons.Commands;
+
 internal sealed class UpdatePatronCommandHandler(
     IPatronRepository patronRepository
-    ) : IRequestHandler<UpdatePatronCommand, Result<Patron>>
+) : IRequestHandler<UpdatePatronCommand, Result<Patron>>
 {
     public async Task<Result<Patron>> Handle(UpdatePatronCommand request, CancellationToken cancellationToken)
     {

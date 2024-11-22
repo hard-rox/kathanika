@@ -4,7 +4,6 @@ using Kathanika.Domain.Aggregates.BibRecordAggregate;
 namespace Kathanika.Infrastructure.Graphql.Schema.BibRecordGraph;
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
-
 [ExtendObjectType(OperationTypeNames.Mutation)]
 public sealed class BibRecordMutations
 {

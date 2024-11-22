@@ -1,21 +1,21 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import {ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { KnSearchbar } from './searchbar.component';
+import {KnSearchbar} from './searchbar.component';
 
 describe('SearchbarComponent', () => {
-  let component: KnSearchbar<unknown>;
-  let fixture: ComponentFixture<KnSearchbar<unknown>>;
+    let component: KnSearchbar<unknown>;
+    let fixture: ComponentFixture<KnSearchbar<unknown>>;
 
-  beforeEach(() => {
-    TestBed.configureTestingModule({
-      imports: [KnSearchbar],
+    beforeEach(() => {
+        TestBed.configureTestingModule({
+            imports: [KnSearchbar],
+        });
+        fixture = TestBed.createComponent(KnSearchbar);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
-    fixture = TestBed.createComponent(KnSearchbar);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
-  });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
-  });
+    it('should create', () => {
+        expect(component).toBeTruthy();
+    });
 });

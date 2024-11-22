@@ -43,17 +43,13 @@ internal static class SchemaConfigurations
                 .RemoveExtensions()
                 .RemoveLocations();
             if (exception is not null && exception.Source == "MongoDB.Driver.Core")
-            {
                 return errorResult
                     .WithMessage(
                         "Looks like MongoDB is offline or connection string is invalid. Make sure database is online to enjoy.");
-            }
 
             if (error.Exception is not null && error.Exception is not DomainException)
-            {
                 return errorResult
                     .WithMessage("Something went terribly wrong. We are trying to fix it...");
-            }
 
             return error;
         });

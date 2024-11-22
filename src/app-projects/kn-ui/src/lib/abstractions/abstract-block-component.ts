@@ -1,6 +1,6 @@
-import { Component, HostBinding } from '@angular/core';
+import {Component, HostBinding} from '@angular/core';
 
-@Component({ template: '' })
+@Component({template: ''})
 export abstract class AbstractBlockComponent {
-  @HostBinding('class') classes = 'block';
+    @HostBinding('class') classes = 'block';
 }

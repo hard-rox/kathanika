@@ -7,9 +7,7 @@ public sealed record DeleteVendorPayload
 {
     public DeleteVendorPayload(string id, Result result) : base(
         result,
-        result.IsSuccess ?
-        $"Vendor with Id: {id} deleted." :
-        $"Vendor with Id: {id} deletion failed."
+        result.IsSuccess ? $"Vendor with Id: {id} deleted." : $"Vendor with Id: {id} deletion failed."
     )
     {
     }

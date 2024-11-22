@@ -5,6 +5,7 @@ using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers;
 using Kathanika.Web;
 using Kathanika.Web.FileOpsConfigurations;
+using OpenTelemetry.Exporter;
 using OpenTelemetry.Logs;
 using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
@@ -37,7 +38,7 @@ try
     if (builder.Environment.IsDevelopment())
     {
         builder.Services.AddCors();
-        builder.Services.AddHttpResponseFormatter(indented: true);
+        builder.Services.AddHttpResponseFormatter(true);
     }
 
     WebApplication app = builder.Build();
@@ -107,7 +108,7 @@ void AddOpenTelemetry(WebApplicationBuilder builder)
             // .AddConsoleExporter()
             .AddOtlpExporter(options =>
             {
-                options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                options.Protocol = OtlpExportProtocol.Grpc;
                 options.Endpoint = new Uri(otlpExportEndpoint);
             }))
         .WithMetrics(metrics => metrics
@@ -116,7 +117,7 @@ void AddOpenTelemetry(WebApplicationBuilder builder)
             // .AddConsoleExporter()
             .AddOtlpExporter(options =>
             {
-                options.Protocol = OpenTelemetry.Exporter.OtlpExportProtocol.Grpc;
+                options.Protocol = OtlpExportProtocol.Grpc;
                 options.Endpoint = new Uri(otlpExportEndpoint);
             }));
 

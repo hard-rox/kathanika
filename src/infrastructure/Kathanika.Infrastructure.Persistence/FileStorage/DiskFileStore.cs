@@ -34,10 +34,10 @@ internal sealed class DiskFileStore(
         await using Stream dataStream = await uploadedFileStore.GetFileContentAsync(fileId, cancellationToken);
         StoredFileMetadata? metadata = await _fileMetadataService.GetAsync(fileId, cancellationToken);
         if (dataStream is null || dataStream.Length == 0 || metadata is null)
-            throw new Exception("File not found");
+            throw new FileNotFoundException();
 
         var fileName = $"{fileId}{Path.GetExtension(metadata.FileName)}";
-        var filePath = "Files"; //TODO: Move to appsettings or constants...
+        var filePath = "Files"; //TODO: Move to appSettings or constants...
 
         if (!Directory.Exists(filePath))
             Directory.CreateDirectory(filePath);
@@ -65,22 +65,18 @@ internal sealed class DiskFileStore(
         if (metadata is null) return;
 
         if (!metadata.IsMoved)
+        {
             await uploadedFileStore.DeleteFileAsync(fileId, cancellationToken);
+        }
         else
         {
             var fileName = $"{fileId}{Path.GetExtension(metadata.FileName)}";
             var filePath = "Files"; //TODO: Move to appsettings or constants...
 
-            if (metadata.SubDirectory is not null)
-            {
-                filePath = Path.Combine(filePath, metadata.SubDirectory);
-            }
+            if (metadata.SubDirectory is not null) filePath = Path.Combine(filePath, metadata.SubDirectory);
 
             filePath = Path.Combine(filePath, fileName);
-            if (File.Exists(filePath))
-            {
-                File.Delete(filePath);
-            }
+            if (File.Exists(filePath)) File.Delete(filePath);
         }
 
         await _fileMetadataService.DeleteAsync([fileId], cancellationToken);

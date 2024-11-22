@@ -11,15 +11,15 @@ public class DeleteVendorCommandHandlerTests
         var id = Guid.NewGuid().ToString();
         Vendor vendor = new Faker<Vendor>().CustomInstantiator(f => Vendor.Create(
             f.Company.CompanyName(),
-                f.Address.FullAddress(),
-                f.Phone.PhoneNumber("###########"),
-                f.Internet.Email(),
-                f.Internet.Url(),
-                f.Random.Word(),
-                f.Person.FullName,
-                f.Phone.PhoneNumber("###########"),
-                f.Internet.Email(),
-                VendorStatus.Active
+            f.Address.FullAddress(),
+            f.Phone.PhoneNumber("###########"),
+            f.Internet.Email(),
+            f.Internet.Url(),
+            f.Random.Word(),
+            f.Person.FullName,
+            f.Phone.PhoneNumber("###########"),
+            f.Internet.Email(),
+            VendorStatus.Active
         ).Value);
         IVendorRepository vendorRepository = Substitute.For<IVendorRepository>();
         vendorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())

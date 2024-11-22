@@ -22,7 +22,8 @@ public class ArchTests
             .BeSealed()
             .GetResult();
 
-        Assert.True(result.IsSuccessful, $"Non-sealed command/queries are: {string.Join(", ", result.FailingTypeNames ?? [])}");
+        Assert.True(result.IsSuccessful,
+            $"Non-sealed command/queries are: {string.Join(", ", result.FailingTypeNames ?? [])}");
     }
 
     [Fact]
@@ -41,7 +42,8 @@ public class ArchTests
             .BeSealed()
             .GetResult();
 
-        Assert.True(result.IsSuccessful, $"Non-sealed handlers are: {string.Join(", ", result.FailingTypeNames ?? [])}");
+        Assert.True(result.IsSuccessful,
+            $"Non-sealed handlers are: {string.Join(", ", result.FailingTypeNames ?? [])}");
     }
 
     [Fact]
@@ -60,6 +62,7 @@ public class ArchTests
             .HaveNameEndingWith("Handler")
             .GetResult();
 
-        Assert.True(result.IsSuccessful, $"Non-sealed handlers are: {string.Join(", ", result.FailingTypeNames ?? [])}");
+        Assert.True(result.IsSuccessful,
+            $"Non-sealed handlers are: {string.Join(", ", result.FailingTypeNames ?? [])}");
     }
 }

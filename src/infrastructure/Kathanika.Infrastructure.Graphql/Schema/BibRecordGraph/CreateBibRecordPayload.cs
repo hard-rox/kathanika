@@ -7,8 +7,10 @@ public sealed record CreateBibRecordPayload
     : Payload<BibRecord>
 {
     public CreateBibRecordPayload(Domain.Primitives.Result<BibRecord> result)
-        : base(result, result.IsSuccess ?
-    $"New bib record with control number {result.Value.ControlNumber} created successfully." :
-    "New bib record creation failed.")
-    { }
+        : base(result,
+            result.IsSuccess
+                ? $"New bib record with control number {result.Value.ControlNumber} created successfully."
+                : "New bib record creation failed.")
+    {
+    }
 }

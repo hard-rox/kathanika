@@ -11,12 +11,8 @@ internal class FileMetadataService(
     private readonly IMongoCollection<StoredFileMetadata> _fileEntryCollection
         = mongoDatabase.GetCollection<StoredFileMetadata>(Constants.StoredFileMetadataCollectionName);
 
-    private static bool IsValidFileId(string fileId)
-    {
-        return ObjectId.TryParse(fileId, out _);
-    }
-
-    public async Task<string> CreateAsync(string fileName, string contentType, CancellationToken cancellationToken = default)
+    public async Task<string> CreateAsync(string fileName, string contentType,
+        CancellationToken cancellationToken = default)
     {
         StoredFileMetadata storedFileEntry = new(fileName, contentType, 0);
         await _fileEntryCollection.InsertOneAsync(storedFileEntry, cancellationToken: cancellationToken);
@@ -28,7 +24,8 @@ internal class FileMetadataService(
     {
         if (!IsValidFileId(fileId)) return false;
 
-        FilterDefinition<StoredFileMetadata> filterDefinition = Builders<StoredFileMetadata>.Filter.Where(x => x.Id == fileId);
+        FilterDefinition<StoredFileMetadata> filterDefinition =
+            Builders<StoredFileMetadata>.Filter.Where(x => x.Id == fileId);
         CountOptions countOptions = new()
         {
             Limit = 1
@@ -40,7 +37,8 @@ internal class FileMetadataService(
     public async Task<StoredFileMetadata?> GetAsync(string fileId, CancellationToken cancellationToken = default)
     {
         if (!IsValidFileId(fileId)) return null;
-        logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}", nameof(StoredFileMetadata), fileId, Constants.StoredFileMetadataCollectionName);
+        logger.LogInformation("Getting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}",
+            nameof(StoredFileMetadata), fileId, Constants.StoredFileMetadataCollectionName);
 
         var cacheKey = $"{nameof(StoredFileMetadata).ToLower()}:{fileId}";
         logger.LogInformation("Trying to get document from cache with cache key: {@CacheKey}", cacheKey);
@@ -54,11 +52,14 @@ internal class FileMetadataService(
         logger.LogInformation("Document not found in cache with cache key: {@CacheKey}", cacheKey);
 
         FilterDefinition<StoredFileMetadata> filter = Builders<StoredFileMetadata>.Filter.Eq(x => x.Id, fileId);
-        IAsyncCursor<StoredFileMetadata> cursor = await _fileEntryCollection.FindAsync(filter, cancellationToken: cancellationToken);
-        StoredFileMetadata metadata = await cursor.SingleOrDefaultAsync(cancellationToken: cancellationToken);
-        logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", metadata, nameof(StoredFileMetadata), Constants.StoredFileMetadataCollectionName);
+        IAsyncCursor<StoredFileMetadata> cursor =
+            await _fileEntryCollection.FindAsync(filter, cancellationToken: cancellationToken);
+        StoredFileMetadata metadata = await cursor.SingleOrDefaultAsync(cancellationToken);
+        logger.LogInformation("Got document {@Document} of type {@DocumentType} from {CollectionName}", metadata,
+            nameof(StoredFileMetadata), Constants.StoredFileMetadataCollectionName);
 
-        logger.LogInformation("Setting document {@Document} into cache with cache key: {@CacheKey}", metadata, cacheKey);
+        logger.LogInformation("Setting document {@Document} into cache with cache key: {@CacheKey}", metadata,
+            cacheKey);
         // cacheService.Set(cacheKey, metadata);
 
         return metadata;
@@ -74,16 +75,19 @@ internal class FileMetadataService(
             .Set(x => x.IsMoved, true)
             .Set(x => x.LastMovedAt, DateTimeOffset.Now);
 
-        UpdateResult result = await _fileEntryCollection.UpdateOneAsync(filterDefinition, updateDefinition, cancellationToken: cancellationToken);
+        UpdateResult result = await _fileEntryCollection.UpdateOneAsync(filterDefinition, updateDefinition,
+            cancellationToken: cancellationToken);
         if (!result.IsAcknowledged)
         {
             logger.LogInformation("File Move recorded {@RecordFileMoveFileId}", fileId);
             return;
         }
+
         logger.LogInformation("File Move record failed. {@FileMoveRecordFailedFileId}", fileId);
     }
 
-    public async Task RecordUploadCompletedAsync(string fileId, long fileSizeInBytes, CancellationToken cancellationToken = default)
+    public async Task RecordUploadCompletedAsync(string fileId, long fileSizeInBytes,
+        CancellationToken cancellationToken = default)
     {
         FilterDefinition<StoredFileMetadata> filterDefinition = Builders<StoredFileMetadata>.Filter
             .Eq(x => x.Id, fileId);
@@ -91,12 +95,14 @@ internal class FileMetadataService(
             .Update
             .Set(x => x.SizeInBytes, fileSizeInBytes)
             .Set(x => x.UploadCompletedAt, DateTimeOffset.Now);
-        UpdateResult result = await _fileEntryCollection.UpdateOneAsync(filterDefinition, updateDefinition, cancellationToken: cancellationToken);
+        UpdateResult result = await _fileEntryCollection.UpdateOneAsync(filterDefinition, updateDefinition,
+            cancellationToken: cancellationToken);
         if (!result.IsAcknowledged)
         {
             logger.LogInformation("Upload Complete recorded {@RecordUploadCompleteFileId}", fileId);
             return;
         }
+
         logger.LogInformation("Upload Complete record failed. {@UploadCompleteRecordFailedFileId}", fileId);
     }
 
@@ -107,15 +113,17 @@ internal class FileMetadataService(
         DeleteResult deleteResult = await _fileEntryCollection.DeleteManyAsync(filterDefinition, cancellationToken);
         if (deleteResult.IsAcknowledged)
         {
-            logger.LogInformation("Deleted {@DeletedMetadataCount} files metadata {@DeletedMetadataIds}", deleteResult.DeletedCount, fileIds);
+            logger.LogInformation("Deleted {@DeletedMetadataCount} files metadata {@DeletedMetadataIds}",
+                deleteResult.DeletedCount, fileIds);
             return;
         }
+
         logger.LogInformation("Deletion failed files metadata {@DeletionFailedMetadataIds}", fileIds);
     }
 
     public async Task<IReadOnlyList<string>> GetUnusedFileIdsAsync(CancellationToken cancellationToken = default)
     {
-        DateTimeOffset timeBefore = DateTimeOffset.Now - TimeSpan.FromMinutes(10); //TODO: From appsettings...
+        DateTimeOffset timeBefore = DateTimeOffset.Now - TimeSpan.FromMinutes(10); //TODO: From appSettings...
         FilterDefinition<StoredFileMetadata> filterDefinition = Builders<StoredFileMetadata>.Filter
             .And(
                 Builders<StoredFileMetadata>.Filter.Eq(x => x.IsUsed, false),
@@ -126,5 +134,10 @@ internal class FileMetadataService(
             .Project(x => x.Id)
             .ToListAsync(cancellationToken);
         return unusedFileIds;
+    }
+
+    private static bool IsValidFileId(string fileId)
+    {
+        return ObjectId.TryParse(fileId, out _);
     }
 }

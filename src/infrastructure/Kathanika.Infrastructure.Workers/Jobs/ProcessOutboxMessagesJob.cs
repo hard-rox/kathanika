@@ -15,7 +15,6 @@ internal sealed class ProcessOutboxMessagesJob(
             .GetUnprocessedOutboxMessagesFromDb();
 
         foreach (OutboxMessage message in outboxMessages)
-        {
             try
             {
                 await publisher.Publish(message.DomainEvent, context.CancellationToken);
@@ -25,6 +24,5 @@ internal sealed class ProcessOutboxMessagesJob(
             {
                 await outboxMessageService.SetOutboxMessageErrors(message.Id, ex);
             }
-        }
     }
 }

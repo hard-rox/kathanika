@@ -14,7 +14,8 @@ public class BibRecordTests
         var controlNumberIdentifier = faker.Random.String2(10, 49);
         DateTime dateTimeOfLatestTransaction = faker.Date.Recent();
         var fixedLengthDataElements = faker.Random.String2(40);
-        CatalogingSource catalogingSource = CatalogingSource.Create(null, null, faker.Company.CompanyName(), null, null).Value;
+        CatalogingSource catalogingSource =
+            CatalogingSource.Create(null, null, faker.Company.CompanyName(), null, null).Value;
 
         // Act
         Result<BibRecord> result = BibRecord.Create(
@@ -40,7 +41,8 @@ public class BibRecordTests
         var controlNumberIdentifier = faker.Random.String2(10, 49);
         DateTime dateTimeOfLatestTransaction = faker.Date.Recent();
         var fixedLengthDataElements = faker.Random.String2(40);
-        CatalogingSource catalogingSource = CatalogingSource.Create(null, null, faker.Company.CompanyName(), null, null).Value;
+        CatalogingSource catalogingSource =
+            CatalogingSource.Create(null, null, faker.Company.CompanyName(), null, null).Value;
 
         // Act
         Result<BibRecord> result = BibRecord.Create(

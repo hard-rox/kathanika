@@ -1,4 +1,5 @@
 using Kathanika.Application.Features.Patrons.Commands;
+using Kathanika.Domain.Aggregates.PatronAggregate;
 
 // ReSharper disable UnusedMember.Global
 // ReSharper disable UnusedType.Global
@@ -9,12 +10,12 @@ namespace Kathanika.Infrastructure.Graphql.Schema.PatronGraph;
 public sealed class PatronMutations
 {
     public async Task<CreatePatronPayload> CreatePatronAsync(
-      [Service] IMediator mediator,
-      CancellationToken cancellationToken,
-      CreatePatronCommand input
-  )
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken,
+        CreatePatronCommand input
+    )
     {
-        Domain.Primitives.Result<Domain.Aggregates.PatronAggregate.Patron> result = await mediator.Send(input, cancellationToken);
+        Domain.Primitives.Result<Patron> result = await mediator.Send(input, cancellationToken);
         return new CreatePatronPayload(result);
     }
 
@@ -24,7 +25,7 @@ public sealed class PatronMutations
         UpdatePatronCommand input
     )
     {
-        Domain.Primitives.Result<Domain.Aggregates.PatronAggregate.Patron> result = await mediator.Send(input, cancellationToken);
+        Domain.Primitives.Result<Patron> result = await mediator.Send(input, cancellationToken);
         return new UpdatePatronPayload(result);
     }
 
