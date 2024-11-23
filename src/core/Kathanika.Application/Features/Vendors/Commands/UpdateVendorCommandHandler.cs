@@ -22,8 +22,7 @@ internal sealed class UpdateVendorCommandHandler(IVendorRepository vendorReposit
             request.Patch.AccountDetail,
             request.Patch.ContactPersonName,
             request.Patch.ContactPersonPhone,
-            request.Patch.ContactPersonEmail,
-            request.Patch.Status
+            request.Patch.ContactPersonEmail
         );
 
         await vendorRepository.UpdateAsync(existingVendor, cancellationToken);

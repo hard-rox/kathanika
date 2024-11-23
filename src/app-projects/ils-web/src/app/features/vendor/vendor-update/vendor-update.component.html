@@ -1,0 +1,19 @@
+@if (errors.length > 0) {
+    <div class="mb-2">
+        <kn-alert [closeable]="true" (closed)="closeAlert()">
+            <ul class="mt-1.5 ml-4 list-disc list-inside">
+                @for (error of errors; track error) {
+                    <li>{{ error }}</li>
+                }
+            </ul>
+        </kn-alert>
+    </div>
+}
+
+<kn-panel panelTitle="Member Update" [isLoading]="isPanelLoading">
+    <app-vendor-form
+        #vendorUpdateForm
+        [vendor]="vendorToUpdate"
+        (formSubmit)="onValidFormSubmit($event)"
+    />
+</kn-panel>

@@ -35,8 +35,7 @@ public class UpdateVendorCommandHandlerTests
             f.Random.Word(),
             f.Person.FullName,
             f.Phone.PhoneNumber("###########"),
-            f.Internet.Email(),
-            VendorStatus.Active
+            f.Internet.Email()
         ).Value);
         IVendorRepository vendorRepository = Substitute.For<IVendorRepository>();
         vendorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>()).Returns(vendor);

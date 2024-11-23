@@ -18,62 +18,32 @@ export class SidebarComponent {
     selectedIndex: number | null = null;
     menus = [
         {
-            text: 'Authors',
-            icon: 'demography',
+            text: 'Vendors',
+            icon: 'two_pager_store',
             link: null,
             children: [
                 {
                     text: 'List',
-                    link: 'authors',
+                    link: 'vendors',
                 },
                 {
                     text: 'Add',
-                    link: 'authors/add',
+                    link: 'vendors/add',
                 },
             ],
         },
         {
-            text: 'Publication',
-            icon: 'menu_book',
-            link: null,
-            children: [
-                {
-                    text: 'List',
-                    link: 'publications',
-                },
-                {
-                    text: 'Acquire',
-                    link: 'publications/acquire',
-                }
-            ],
-        },
-        {
-            text: 'Publishers',
-            icon: 'print',
-            link: null,
-            children: [
-                {
-                    text: 'List',
-                    link: 'publishers',
-                },
-                {
-                    text: 'Add',
-                    link: 'publishers/add',
-                },
-            ],
-        },
-        {
-            text: 'Members',
+            text: 'Patrons',
             icon: 'person',
             link: null,
             children: [
                 {
                     text: 'List',
-                    link: 'members'
+                    link: 'patrons'
                 },
                 {
                     text: 'Add',
-                    link: 'members/add'
+                    link: 'patrons/add'
                 }
             ]
         },

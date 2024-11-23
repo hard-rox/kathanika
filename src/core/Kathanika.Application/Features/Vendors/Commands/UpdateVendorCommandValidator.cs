@@ -37,10 +37,10 @@ internal class VendorPatchValidator : AbstractValidator<VendorPatch>
     public VendorPatchValidator(IVendorRepository vendorRepository)
     {
         RuleFor(v => v.Name)
-            .NotEmpty().WithMessage("Vendor Name must be unique and not empty.")
+            .NotEmpty()
             .MustAsync(
                 async (name, cancellationToken)
-                    => await vendorRepository.ExistsAsync(x => x.Name == name, cancellationToken)
+                    => !await vendorRepository.ExistsAsync(x => x.Name == name, cancellationToken)
             ).WithMessage("Vendor Name must be unique and not empty.");
 
         RuleFor(v => v.Address)

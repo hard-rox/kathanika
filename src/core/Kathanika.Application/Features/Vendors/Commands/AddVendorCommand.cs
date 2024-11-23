@@ -12,6 +12,5 @@ public sealed record AddVendorCommand(
     string? AccountDetail,
     string? ContactPersonName,
     string? ContactPersonPhone,
-    string? ContactPersonEmail,
-    VendorStatus Status
+    string? ContactPersonEmail
 ) : IRequest<Result<Vendor>>;

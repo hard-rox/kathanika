@@ -8,11 +8,8 @@ query getVendors(
         items {
             id
             name
-            contactNumber
-            email
             status
             contactPersonName
-            contactPersonPhone
         }
         pageInfo {
             hasNextPage

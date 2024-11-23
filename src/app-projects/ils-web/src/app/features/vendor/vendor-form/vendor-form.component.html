@@ -1,0 +1,16 @@
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+    <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
+        <kn-text-input label="Name" formControlName="name"/>
+        <kn-textarea-input label="Account Detail" formControlName="accountDetail"/>
+        <kn-textarea-input label="Address" formControlName="address"/>
+        <kn-text-input label="Contact Number" formControlName="contactNumber"/>
+        <kn-text-input label="Contact Person Email" formControlName="contactPersonEmail"/>
+        <kn-text-input label="Contact Person Name" formControlName="contactPersonName"/>
+        <kn-text-input label="Contact Person Phone" formControlName="contactPersonPhone"/>
+        <kn-text-input label="Email" formControlName="email"/>
+        <kn-text-input label="Website" formControlName="website"/>
+    </div>
+    <div class="flex flex-row-reverse mt-2">
+        <input type="submit" value="Save"/>
+    </div>
+</form>

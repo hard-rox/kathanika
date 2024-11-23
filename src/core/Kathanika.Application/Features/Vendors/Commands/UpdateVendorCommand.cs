@@ -14,6 +14,5 @@ public sealed record VendorPatch(
     string? AccountDetail = null,
     string? ContactPersonName = null,
     string? ContactPersonPhone = null,
-    string? ContactPersonEmail = null,
-    VendorStatus? Status = null
+    string? ContactPersonEmail = null
 );

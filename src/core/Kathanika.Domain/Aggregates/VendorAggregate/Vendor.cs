@@ -61,8 +61,7 @@ public sealed class Vendor : AggregateRoot
         string? accountDetail,
         string? contactPersonName,
         string? contactPersonPhone,
-        string? contactPersonEmail,
-        VendorStatus status
+        string? contactPersonEmail
     )
     {
         List<KnError> errors = [];
@@ -103,7 +102,7 @@ public sealed class Vendor : AggregateRoot
             ContactPersonName = contactPersonName,
             ContactPersonPhone = contactPersonPhone,
             ContactPersonEmail = contactPersonEmail,
-            Status = status
+            Status = VendorStatus.Active
         };
 
         return Result.Success(newVendor);
@@ -118,9 +117,7 @@ public sealed class Vendor : AggregateRoot
         string? accountDetail,
         string? contactPersonName,
         string? contactPersonPhone,
-        string? contactPersonEmail,
-        VendorStatus? status
-    )
+        string? contactPersonEmail)
     {
         List<KnError> errors = [];
 
@@ -157,7 +154,6 @@ public sealed class Vendor : AggregateRoot
         ContactPersonName = contactPersonName ?? ContactPersonName;
         ContactPersonPhone = contactPersonPhone ?? ContactPersonPhone;
         ContactPersonEmail = contactPersonEmail ?? ContactPersonEmail;
-        Status = status ?? Status;
 
         return Result.Success();
     }

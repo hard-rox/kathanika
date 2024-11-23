@@ -8,15 +8,15 @@
   }
 
   tr {
-    @apply border-b border-theme-rich-black;
+    @apply border-b border-theme-rich-black py-0;
   }
 
   th {
-    @apply px-6 py-3;
+    @apply px-1;
   }
 
   td {
-    @apply px-6;
+    @apply px-1;
   }
 
   input,

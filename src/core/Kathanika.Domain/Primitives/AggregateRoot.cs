@@ -14,7 +14,8 @@ public abstract class AggregateRoot : Entity
     [GraphQLIgnore] public string? LastModifiedByUserName { get; private set; } = null;
     [GraphQLIgnore] public DateTimeOffset? LastModifiedAt { get; private set; } = null;
 
-    [GraphQLIgnore] public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents;
+    // ReSharper disable once NullCoalescingConditionIsAlwaysNotNullAccordingToAPIContract
+    [GraphQLIgnore] public IReadOnlyList<IDomainEvent> DomainEvents => _domainEvents ?? [];
 
     protected void AddDomainEvent(IDomainEvent domainEvent)
     {
@@ -24,6 +25,7 @@ public abstract class AggregateRoot : Entity
     [GraphQLIgnore]
     public void ClearDomainEvents()
     {
-        _domainEvents.Clear();
+        // ReSharper disable once ConditionalAccessQualifierIsNonNullableAccordingToAPIContract
+        _domainEvents?.Clear();
     }
 }

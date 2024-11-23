@@ -21,8 +21,7 @@ internal sealed class AddVendorCommandHandler(
             request.AccountDetail,
             request.ContactPersonName,
             request.ContactPersonPhone,
-            request.ContactPersonEmail,
-            request.Status
+            request.ContactPersonEmail
         );
 
         if (vendorCreateResult.IsFailure) return vendorCreateResult;

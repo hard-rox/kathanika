@@ -18,8 +18,7 @@ public class VendorTests
                 f.Random.Word(),
                 f.Person.FullName,
                 f.Phone.PhoneNumber("###########"),
-                f.Internet.Email(),
-                VendorStatus.Active
+                f.Internet.Email()
             ).Value);
     }
 
@@ -40,8 +39,7 @@ public class VendorTests
             vendor.AccountDetail,
             vendor.ContactPersonName,
             vendor.ContactPersonPhone,
-            vendor.ContactPersonEmail,
-            VendorStatus.Active);
+            vendor.ContactPersonEmail);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -65,8 +63,7 @@ public class VendorTests
             vendor.AccountDetail,
             vendor.ContactPersonName,
             vendor.ContactPersonPhone,
-            vendor.ContactPersonEmail,
-            VendorStatus.Active);
+            vendor.ContactPersonEmail);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -90,7 +87,6 @@ public class VendorTests
             null,
             null,
             invalidPhoneNumber,
-            null,
             null);
 
         // Assert
@@ -115,8 +111,7 @@ public class VendorTests
             null,
             null,
             null,
-            null,
-            VendorStatus.Active);
+            null);
 
         // Assert
         Assert.True(updateResult.IsSuccess);
@@ -139,8 +134,7 @@ public class VendorTests
             vendor.AccountDetail,
             vendor.ContactPersonName,
             vendor.ContactPersonPhone,
-            vendor.ContactPersonEmail,
-            VendorStatus.Active);
+            vendor.ContactPersonEmail);
 
         // Assert
         Assert.True(result.IsSuccess);

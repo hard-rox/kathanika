@@ -23,8 +23,7 @@ public sealed class AddVendorCommandHandlerTests
             f.Random.Word(),
             f.Person.FullName,
             f.Phone.PhoneNumber("###########"),
-            f.Internet.Email(),
-            VendorStatus.Active
+            f.Internet.Email()
         ).Value);
         AddVendorCommand command = new(
             dummyVendor.Name,
@@ -35,8 +34,7 @@ public sealed class AddVendorCommandHandlerTests
             dummyVendor.AccountDetail,
             dummyVendor.ContactPersonName,
             dummyVendor.ContactPersonPhone,
-            dummyVendor.ContactPersonEmail,
-            dummyVendor.Status
+            dummyVendor.ContactPersonEmail
         );
         AddVendorCommandHandler handler = new(_logger, _vendorRepository);
 

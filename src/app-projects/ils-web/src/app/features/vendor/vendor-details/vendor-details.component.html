@@ -1,0 +1,8 @@
+<!--<pre>{{ queryRef.valueChanges | async | json }}</pre>-->
+@if (queryRef.valueChanges | async; as queryResult) {
+    @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
+        <kn-panel [panelTitle]="data.vendor?.name ?? 'Vendor'">
+            
+        </kn-panel>
+    }
+}
