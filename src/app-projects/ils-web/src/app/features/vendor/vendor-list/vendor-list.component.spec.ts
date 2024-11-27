@@ -2,11 +2,10 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {VendorListComponent} from './vendor-list.component';
 import {CommonModule} from "@angular/common";
-import {ActivatedRoute, Router, RouterLink} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {KnBadge, KnButton, KnPagination} from "@kathanika/kn-ui";
 import {DeleteVendorGQL, GetVendorsGQL, mockMutationGql, mockQueryGql} from "@kathanika/graphql-client";
 import {of} from "rxjs";
-import {MessageAlertService} from "../../../core/message-alert.service";
 
 describe('VendorListComponent', () => {
     let component: VendorListComponent;

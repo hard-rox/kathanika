@@ -1,6 +1,6 @@
 import {Component, Input, Output} from '@angular/core';
 import {BaseFormComponent, ControlsOf} from "../../../abstractions/base-form-component";
-import {AddVendorInput, Vendor, VendorPatchInput, VendorStatus} from "@kathanika/graphql-client";
+import {AddVendorInput, Vendor, VendorPatchInput} from "@kathanika/graphql-client";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {KnTextareaInput, KnTextInput} from "@kathanika/kn-ui";
 import {CommonModule} from "@angular/common";
