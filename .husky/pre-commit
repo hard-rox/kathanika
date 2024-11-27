@@ -1,0 +1,3 @@
+dotnet format
+dotnet build
+npm run build
