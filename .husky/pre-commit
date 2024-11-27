@@ -1,3 +1,4 @@
 dotnet format
+git add .
 dotnet build
 npm run build

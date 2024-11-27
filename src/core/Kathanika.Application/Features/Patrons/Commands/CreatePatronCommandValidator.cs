@@ -24,7 +24,7 @@ internal sealed class CreatePatronCommandValidator : AbstractValidator<CreatePat
         RuleFor(x => x.DateOfBirth)
             .LessThan(DateOnly.FromDateTime(DateTime.UtcNow))
             .WithMessage("Date of birth cannot be in the future.");
-        
+
         RuleFor(x => x.Email)
             .EmailAddress()
             .When(x => x.Email is not null);
