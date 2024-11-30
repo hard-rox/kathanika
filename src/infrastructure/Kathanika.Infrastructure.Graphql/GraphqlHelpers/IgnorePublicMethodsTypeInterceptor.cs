@@ -26,8 +26,6 @@ internal class IgnorePublicMethodsTypeInterceptor : TypeInterceptor
             .ToList();
         ignorableFields.ForEach(x =>
         {
-            Console.WriteLine(
-                $"{objectTypeDefinition.RuntimeType.Name}: {x.Name}: {x.Description}: {x.Type}: {x.Ignore}");
             x.Ignore = true;
         });
     }

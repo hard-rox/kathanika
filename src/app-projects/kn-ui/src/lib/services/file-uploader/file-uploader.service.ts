@@ -1,4 +1,4 @@
-import {Inject, Injectable, InjectionToken} from '@angular/core';
+import { Injectable, InjectionToken, inject } from '@angular/core';
 
 export const FILE_SERVER = new InjectionToken<string>('fileServer');
 
@@ -6,6 +6,5 @@ export const FILE_SERVER = new InjectionToken<string>('fileServer');
     providedIn: 'root',
 })
 export class FileUploaderService {
-    constructor(@Inject(FILE_SERVER) public fileServer: string) {
-    }
+    fileServer = inject(FILE_SERVER);
 }

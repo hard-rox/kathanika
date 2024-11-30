@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import { Component, ViewChild, inject } from '@angular/core';
 import {VendorFormComponent} from "../vendor-form/vendor-form.component";
 import {KnAlert, KnPanel} from "@kathanika/kn-ui";
 import {AddVendorGQL, AddVendorInput, VendorPatchInput} from "@kathanika/graphql-client";
@@ -18,14 +18,11 @@ import {finalize} from "rxjs";
     templateUrl: './vendor-add.component.html'
 })
 export class VendorAddComponent {
-    @ViewChild('addVendorForm') memberCreateForm: VendorFormComponent | undefined;
+    private gql = inject(AddVendorGQL);
+    private alertService = inject(MessageAlertService);
+    private router = inject(Router);
 
-    constructor(
-        private gql: AddVendorGQL,
-        private alertService: MessageAlertService,
-        private router: Router,
-    ) {
-    }
+    @ViewChild('addVendorForm') memberCreateForm: VendorFormComponent | undefined;
 
     isPanelLoading = false;
     errors: string[] = [];

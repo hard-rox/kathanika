@@ -1,4 +1,4 @@
-import {ChangeDetectorRef, Component, Inject, Injector, Input,} from '@angular/core';
+import { ChangeDetectorRef, Component, Injector, Input, inject } from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {AbstractInput} from '../../abstractions/abstract-input-component';
 import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
@@ -18,17 +18,18 @@ import {FileUploaderService} from '../../services/file-uploader/file-uploader.se
     ],
 })
 export class KnFileInput extends AbstractInput<string> {
+    private readonly fileUploaderService = inject(FileUploaderService);
+    private readonly changeDetectorRef = inject(ChangeDetectorRef);
+
     @Input()
     multiple = false;
 
     @Input()
     accept = '';
 
-    constructor(
-        @Inject(Injector) injector: Injector,
-        private readonly fileUploaderService: FileUploaderService,
-        private readonly changeDetectorRef: ChangeDetectorRef,
-    ) {
+    constructor() {
+        const injector = inject<Injector>(Injector);
+
         super(injector);
     }
 

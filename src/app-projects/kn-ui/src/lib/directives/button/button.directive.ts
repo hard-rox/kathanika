@@ -1,4 +1,4 @@
-import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
+import { Directive, ElementRef, Input, OnChanges, inject } from '@angular/core';
 
 @Directive({
     selector: '[kn-button]',
@@ -38,7 +38,9 @@ export class KnButton implements OnChanges {
     @Input() rounded = false;
     @Input() variant: 'light' | 'dark' | 'transparent' = 'dark';
 
-    constructor(el: ElementRef) {
+    constructor() {
+        const el = inject(ElementRef);
+
         this.element = el.nativeElement as HTMLElement;
         this.element.classList.add(...this.commonClasses);
         this.applyRoundedClasses();

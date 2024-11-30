@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-list-component";
 import {
     DeleteVendorGQL,
@@ -25,6 +25,9 @@ import {MessageAlertService} from "../../../core/message-alert.service";
     templateUrl: './vendor-list.component.html'
 })
 export class VendorListComponent extends BasePaginatedListComponent<GetVendorsQuery, GetVendorsQueryVariables> implements OnInit {
+    private deleteVendorGql = inject(DeleteVendorGQL);
+    private alertService = inject(MessageAlertService);
+
     protected setSearchTextQueryFilter(searchText: string): void {
         if (!searchText || searchText.length == 0) {
             this.queryVariables.filter = null;
@@ -42,13 +45,11 @@ export class VendorListComponent extends BasePaginatedListComponent<GetVendorsQu
         };
     }
 
-    constructor(
-        gql: GetVendorsGQL,
-        private deleteVendorGql: DeleteVendorGQL,
-        private alertService: MessageAlertService,
-        activatedRoute: ActivatedRoute,
-        router: Router
-    ) {
+    constructor() {
+        const gql = inject(GetVendorsGQL);
+        const activatedRoute = inject(ActivatedRoute);
+        const router = inject(Router);
+
         super(gql, activatedRoute, router, {
             skip: 0,
             take: 20,
