@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output,} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, input} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {debounceTime, map, Subject} from 'rxjs';
 
@@ -10,13 +10,13 @@ import {debounceTime, map, Subject} from 'rxjs';
         imports: [CommonModule, FormsModule],
 })
 export class KnSearchbar<T> implements OnInit {
-    @Input({required: true}) options: T[] = [];
-    @Input() label: string | null = null;
-    @Input() placeholder = 'Search...';
-    @Input() displayFn: (option: T) => string = (option) => option as string;
-    @Input() required = false;
-    @Input() hasError = false;
-    @Input() isDisabled = false;
+    readonly options = input.required<T[]>();
+    readonly label = input<string | null>(null);
+    readonly placeholder = input('Search...');
+    readonly displayFn = input<(option: T) => string>((option) => option as string);
+    readonly required = input(false);
+    readonly hasError = input(false);
+    readonly isDisabled = input(false);
 
     @Output() searchTextChanged: EventEmitter<string> =
         new EventEmitter<string>();

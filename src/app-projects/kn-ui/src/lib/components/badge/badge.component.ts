@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, Input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 @Component({
@@ -8,9 +8,7 @@ import {CommonModule} from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KnBadge {
-    @Input({required: true})
-    content!: string;
+    readonly content = input.required<string>();
 
-    @Input()
-    type: 'success' | 'warning' | 'info' | 'error' = 'info';
+    readonly type = input<'success' | 'warning' | 'info' | 'error'>('info');
 }

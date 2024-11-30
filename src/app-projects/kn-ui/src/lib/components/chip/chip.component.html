@@ -1,9 +1,9 @@
 <span class="inline-flex items-center px-2 py-1 bg-theme-silver">
   <ng-content></ng-content>
-    @if (key) {
+    @if (key()) {
         <button
             type="button"
-            (click)="actionPerformed.emit(key)"
+            (click)="actionPerformed.emit(key())"
             class="inline-flex items-center p-1 ml-2 text-sm bg-theme-davys-gray text-white hover:bg-theme-gunmetal active:bg-theme-rich-black"
         >
       <svg

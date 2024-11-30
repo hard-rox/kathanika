@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {Component, Input} from '@angular/core';
+import {Component, input} from '@angular/core';
 import {AbstractBlockComponent} from '../../abstractions/abstract-block-component';
 
 @Component({
@@ -9,9 +9,7 @@ import {AbstractBlockComponent} from '../../abstractions/abstract-block-componen
     imports: [CommonModule],
 })
 export class KnPanel extends AbstractBlockComponent {
-    @Input()
-    panelTitle: string | null = null;
+    readonly panelTitle = input<string | null>(null);
 
-    @Input()
-    isLoading = false;
+    readonly isLoading = input(false);
 }

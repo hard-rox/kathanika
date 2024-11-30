@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, Input, OnInit} from '@angular/core';
+import {Component, Inject, Injector, OnInit, input} from '@angular/core';
 import {ControlValueAccessor, NgControl, Validators} from '@angular/forms';
 
 @Component({
@@ -6,11 +6,9 @@ import {ControlValueAccessor, NgControl, Validators} from '@angular/forms';
 })
 export abstract class AbstractInput<TValueType>
     implements ControlValueAccessor, OnInit {
-    @Input()
-    label = '';
+    readonly label = input('');
 
-    @Input()
-    placeholder = '';
+    readonly placeholder = input('');
 
     protected value: TValueType | null = null;
     protected isDisabled = false;

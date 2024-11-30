@@ -1,4 +1,4 @@
-import { Directive, ElementRef, Input, OnChanges, inject } from '@angular/core';
+import { Directive, ElementRef, OnChanges, inject, input } from '@angular/core';
 
 @Directive({
     selector: '[kn-button]',
@@ -35,8 +35,8 @@ export class KnButton implements OnChanges {
 
     private readonly element!: HTMLElement;
 
-    @Input() rounded = false;
-    @Input() variant: 'light' | 'dark' | 'transparent' = 'dark';
+    readonly rounded = input(false);
+    readonly variant = input<'light' | 'dark' | 'transparent'>('dark');
 
     constructor() {
         const el = inject(ElementRef);
@@ -60,7 +60,7 @@ export class KnButton implements OnChanges {
 
     private applyRoundedClasses() {
         this.removeRoundedClasses();
-        if (this.rounded) {
+        if (this.rounded()) {
             this.element.classList.add(...this.roundedClasses);
             return;
         }
@@ -69,11 +69,12 @@ export class KnButton implements OnChanges {
 
     private applyVariantClasses() {
         this.removeVariantClasses();
-        if (this.variant === 'light') {
+        const variant = this.variant();
+        if (variant === 'light') {
             this.element.classList.add(...this.lightClasses);
             return;
         }
-        if (this.variant == 'transparent') {
+        if (variant == 'transparent') {
             this.element.classList.add(...this.transparentClasses);
             return;
         }

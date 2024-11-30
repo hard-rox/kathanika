@@ -1,4 +1,4 @@
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output,} from '@angular/core';
+import {ChangeDetectionStrategy, Component, EventEmitter, Output, input} from '@angular/core';
 import {CommonModule} from '@angular/common';
 
 @Component({
@@ -8,6 +8,6 @@ import {CommonModule} from '@angular/common';
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class KnChip {
-    @Input() key: string | undefined;
+    readonly key = input<string>();
     @Output() actionPerformed: EventEmitter<string> = new EventEmitter<string>();
 }
