@@ -7,8 +7,7 @@ import {CommonModule} from "@angular/common";
 
 @Component({
     selector: 'app-vendor-form',
-    standalone: true,
-    imports: [
+        imports: [
         CommonModule,
         ReactiveFormsModule,
         KnTextInput,

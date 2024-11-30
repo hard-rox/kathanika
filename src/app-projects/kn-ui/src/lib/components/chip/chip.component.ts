@@ -3,8 +3,7 @@ import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'kn-chip',
-    standalone: true,
-    imports: [CommonModule],
+        imports: [CommonModule],
     templateUrl: './chip.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

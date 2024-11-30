@@ -5,7 +5,7 @@ import {AbstractInput} from '../../abstractions/abstract-input-component';
 
 @Component({
     selector: 'kn-select-input',
-    standalone: true,
+    
     imports: [CommonModule, FormsModule],
     templateUrl: './select-input.component.html',
     providers: [

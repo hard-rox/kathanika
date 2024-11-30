@@ -38,7 +38,7 @@
             "server": "src/app-projects/ils-web/src/main.server.ts",
             "prerender": true,
             "ssr": {
-              "entry": "src/app-projects/ils-web/server.ts"
+              "entry": "src/app-projects/ils-web/src/server.ts"
             }
           },
           "configurations": {

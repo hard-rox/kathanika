@@ -2,8 +2,7 @@ import {Directive, ElementRef, Input, OnChanges} from '@angular/core';
 
 @Directive({
     selector: '[kn-button]',
-    standalone: true,
-})
+    })
 export class KnButton implements OnChanges {
     private readonly commonClasses = [
         'hover:bg-opacity-80',

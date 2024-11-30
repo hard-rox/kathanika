@@ -5,8 +5,7 @@ import {AbstractInput} from '../../abstractions/abstract-input-component';
 
 @Component({
     selector: 'kn-toggle',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
+        imports: [CommonModule, FormsModule],
     templateUrl: './toggle.component.html',
     providers: [
         {

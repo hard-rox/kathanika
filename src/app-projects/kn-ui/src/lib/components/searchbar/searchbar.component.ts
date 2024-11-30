@@ -7,8 +7,7 @@ import {debounceTime, map, Subject} from 'rxjs';
     selector: 'kn-searchbar',
     templateUrl: './searchbar.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    standalone: true,
-    imports: [CommonModule, FormsModule],
+        imports: [CommonModule, FormsModule],
 })
 export class KnSearchbar<T> implements OnInit {
     @Input({required: true}) options: T[] = [];

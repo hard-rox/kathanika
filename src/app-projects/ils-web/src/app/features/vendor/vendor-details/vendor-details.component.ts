@@ -7,8 +7,7 @@ import {KnPanel} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-vendor-details',
-    standalone: true,
-    imports: [
+        imports: [
         CommonModule,
         KnPanel
     ],

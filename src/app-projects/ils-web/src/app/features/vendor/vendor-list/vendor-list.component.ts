@@ -15,8 +15,7 @@ import {MessageAlertService} from "../../../core/message-alert.service";
 
 @Component({
     selector: 'app-vendor-list',
-    standalone: true,
-    imports: [
+        imports: [
         CommonModule,
         RouterLink,
         KnButton,

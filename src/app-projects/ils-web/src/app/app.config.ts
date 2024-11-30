@@ -2,7 +2,7 @@ import {ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
-import {provideClientHydration} from '@angular/platform-browser';
+import {provideClientHydration, withIncrementalHydration} from '@angular/platform-browser';
 import {provideServiceWorker} from '@angular/service-worker';
 import {provideHttpClient, withFetch} from "@angular/common/http";
 import {provideGraphqlClient} from "@kathanika/graphql-client";
@@ -20,6 +20,7 @@ export const appConfig: ApplicationConfig = {
         }),
         provideHttpClient(withFetch()),
         provideGraphqlClient(environment.graphqlServer),
-        provideTusFileServer(environment.fileServer)
+        provideTusFileServer(environment.fileServer),
+        provideClientHydration(withIncrementalHydration())
     ]
 };

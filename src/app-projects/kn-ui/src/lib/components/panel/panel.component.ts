@@ -3,8 +3,7 @@ import {Component, Input} from '@angular/core';
 import {AbstractBlockComponent} from '../../abstractions/abstract-block-component';
 
 @Component({
-    standalone: true,
-    selector: 'kn-panel',
+        selector: 'kn-panel',
     templateUrl: './panel.component.html',
     styleUrls: ['./panel.component.scss'],
     imports: [CommonModule],

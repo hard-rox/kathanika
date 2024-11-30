@@ -8,8 +8,7 @@ import {KnAlert, KnPanel} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-vendor-update',
-    standalone: true,
-    imports: [
+        imports: [
         KnAlert,
         KnPanel,
         VendorFormComponent

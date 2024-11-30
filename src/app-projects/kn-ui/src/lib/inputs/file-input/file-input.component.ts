@@ -7,8 +7,7 @@ import {FileUploaderService} from '../../services/file-uploader/file-uploader.se
 
 @Component({
     selector: 'kn-file-input',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
+        imports: [CommonModule, FormsModule],
     templateUrl: './file-input.component.html',
     providers: [
         {

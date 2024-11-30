@@ -4,8 +4,7 @@ import {KnButton} from '../../directives/button/button.directive';
 import {AbstractBlockComponent} from '../../abstractions/abstract-block-component';
 
 @Component({
-    standalone: true,
-    selector: 'kn-pagination',
+        selector: 'kn-pagination',
     templateUrl: './pagination.component.html',
     styles: [],
     changeDetection: ChangeDetectionStrategy.OnPush,

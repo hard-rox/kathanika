@@ -9,7 +9,6 @@ import {finalize} from "rxjs";
 
 @Component({
     selector: 'app-vendor-add',
-    standalone: true,
     imports: [
         CommonModule,
         VendorFormComponent,
