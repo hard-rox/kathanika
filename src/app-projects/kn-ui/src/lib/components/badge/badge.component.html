@@ -1,13 +1,13 @@
 <span
     [class]="
-    type === 'success'
+    type() === 'success'
       ? 'bg-theme-office-green'
-      : type === 'warning'
+      : type() === 'warning'
         ? 'bg-theme-spanish-orange'
-        : type === 'error'
+        : type() === 'error'
           ? 'bg-theme-fire-red'
           : 'bg-theme-gunmetal'
   "
     class="px-1 py-1 text-sm text-white rounded-sm"
->{{ content }}</span
+>{{ content() }}</span
 >

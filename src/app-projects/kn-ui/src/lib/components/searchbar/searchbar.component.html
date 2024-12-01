@@ -1,8 +1,8 @@
 <div class="flex flex-col">
-    @if (label) {
-        <label [for]="label + '-search'">
-            {{ label }}
-            @if (required) {
+    @if (label()) {
+        <label [for]="label() + '-search'">
+            {{ label() }}
+            @if (required()) {
                 <span class="text-theme-fire-red">*</span>
             }
         </label>
@@ -32,16 +32,16 @@
             <input
                 (input)="onInputChange()"
                 [(ngModel)]="searchInputValue"
-                [id]="label + '-search'"
+                [id]="label() + '-search'"
                 [ngClass]="
-          hasError
+          hasError()
             ? 'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
-            : isDisabled
+            : isDisabled()
               ? 'border-theme-davys-gray border-opacity-50 bg-gray-200'
               : 'border-theme-gunmetal'
         "
                 [placeholder]="
-          placeholder && placeholder.length > 0 ? placeholder : label
+          placeholder() && placeholder().length > 0 ? placeholder() : label()
         "
                 autocomplete="off"
                 class="block pl-8 w-full border-theme-gunmetal peer"
@@ -50,14 +50,14 @@
         </div>
         <div
             class="z-10 w-full border bg-white invisible shadow-md absolute top-12 transition-all opacity-0 flex flex-col group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
-            @if (options && options.length > 0) {
-                @for (option of options; track $index) {
+            @if (options() && options().length > 0) {
+                @for (option of options(); track $index) {
                     <button
                         type="button"
                         (click)="selectOption(option)"
                         class="w-full px-4 py-3 hover:bg-theme-silver active:bg-theme-silver text-left"
                     >
-                        {{ displayFn(option) }}
+                        {{ displayFn()(option) }}
                     </button>
                 }
             } @else {

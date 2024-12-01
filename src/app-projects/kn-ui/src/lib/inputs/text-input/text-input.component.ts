@@ -5,8 +5,7 @@ import {AbstractInput} from '../../abstractions/abstract-input-component';
 
 @Component({
     selector: 'kn-text-input',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
+        imports: [CommonModule, FormsModule],
     templateUrl: './text-input.component.html',
     providers: [
         {

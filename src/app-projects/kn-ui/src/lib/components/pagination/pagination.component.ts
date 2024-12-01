@@ -1,56 +1,24 @@
 import {CommonModule} from '@angular/common';
-import {ChangeDetectionStrategy, Component, EventEmitter, Input, Output,} from '@angular/core';
+import {ChangeDetectionStrategy, Component, effect, input, output} from '@angular/core';
 import {KnButton} from '../../directives/button/button.directive';
 import {AbstractBlockComponent} from '../../abstractions/abstract-block-component';
 
 @Component({
-    standalone: true,
     selector: 'kn-pagination',
     templateUrl: './pagination.component.html',
-    styles: [],
     changeDetection: ChangeDetectionStrategy.OnPush,
     imports: [CommonModule, KnButton],
 })
 export class KnPagination extends AbstractBlockComponent {
-    private _totalCount = 0;
-    private _pageSize = 1;
-    private _pageSizes: number[] = [5, 10, 20, 50, 100];
 
-    @Input({required: true})
-    set totalCount(totalCount: number) {
-        this._totalCount = totalCount;
-        this.lastPage = totalCount > 0 ? Math.ceil(totalCount / this._pageSize) : 1;
-    }
+    readonly pageSize = input.required<number>();
+    readonly totalCount = input.required<number>();
+    readonly pageSizes = input<number[]>([5, 10, 20, 50, 100]);
+    readonly pageChanged = output<number>();
+    readonly pageSizeChanged = output<number>();
 
-    @Input()
-    get pageSizes() {
-        return this._pageSizes;
-    }
-
-    set pageSizes(pageSizes: number[]) {
-        this._pageSizes = pageSizes.slice(0, 4);
-        this._pageSize = this._pageSizes[0] ?? 1;
-        this.lastPage = Math.ceil(this._totalCount / this._pageSize);
-    }
-
-    @Input({required: true})
-    get pageSize() {
-        return this._pageSize;
-    }
-
-    set pageSize(pageSize: number) {
-        this._pageSize = pageSize;
-        this.lastPage = Math.ceil(this._totalCount / this._pageSize);
-    }
-
-    @Output()
-    private readonly pageChanged: EventEmitter<number> = new EventEmitter<number>();
-
-    @Output()
-    private readonly pageSizeChanged: EventEmitter<number> = new EventEmitter<number>();
-
-    currentPage = 1;
-    lastPage = 1;
+    protected currentPage = 1;
+    protected lastPage = 1; //TODO: Use signal or clean.
 
     protected onPageChanged(pageNumber: number) {
         if (pageNumber >= 1 && pageNumber <= this.lastPage) {
@@ -62,11 +30,24 @@ export class KnPagination extends AbstractBlockComponent {
     protected onPageSizeChanged(element: EventTarget | null) {
         const elementValue = +(element as HTMLInputElement).value;
         const selectedPageSize = elementValue ?? 0;
-        if (selectedPageSize > 0 && this.pageSizes.includes(selectedPageSize)) {
-            this._pageSize = selectedPageSize;
+        if (selectedPageSize > 0 && this.pageSizes().includes(selectedPageSize)) {
             this.currentPage = 1;
-            this.lastPage = Math.ceil(this._totalCount / selectedPageSize);
+            this.lastPage = Math.ceil(this.totalCount() / selectedPageSize);
+            if(this.totalCount() == 0){
+                this.lastPage = this.currentPage;
+            }
             this.pageSizeChanged.emit(selectedPageSize);
         }
+    }
+
+    constructor() {
+        super();
+        effect(() => {
+            if(this.totalCount() == 0){
+                this.lastPage = this.currentPage;
+                return;
+            }
+            this.lastPage = Math.ceil(this.totalCount() / this.pageSize()) ?? 1;
+        });
     }
 }

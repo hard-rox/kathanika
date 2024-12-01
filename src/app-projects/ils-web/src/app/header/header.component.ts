@@ -3,8 +3,7 @@ import {KnButton} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-header',
-    standalone: true,
-    imports: [
+        imports: [
         KnButton
     ],
     templateUrl: './header.component.html'

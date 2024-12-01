@@ -34,10 +34,10 @@ jobs:
             -   name: Installing Packages
                 run: npm ci
 
-            -   name: Lint dotnet solution
-                run: dotnet format
+            -   name: Lint check dotnet solution
+                run: dotnet format --verify-no-changes
 
-            -   name: Lint angular workspace
+            -   name: Lint check angular workspace
                 run: npm run lint
                 
             -   name: Build dotnet

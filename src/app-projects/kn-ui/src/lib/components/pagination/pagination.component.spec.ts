@@ -1,9 +1,11 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
 
 import {KnPagination} from './pagination.component';
+import {ComponentRef} from "@angular/core";
 
 describe('KnPagination', () => {
     let component: KnPagination;
+    let componentRef: ComponentRef<KnPagination>;
     let fixture: ComponentFixture<KnPagination>;
 
     beforeEach(async () => {
@@ -12,6 +14,7 @@ describe('KnPagination', () => {
         }).compileComponents();
         fixture = TestBed.createComponent(KnPagination);
         component = fixture.componentInstance;
+        componentRef = fixture.componentRef;
     });
 
     it('should create', () => {
@@ -19,22 +22,26 @@ describe('KnPagination', () => {
     });
 
     it('should set last page on setting totalCount', () => {
-        component.totalCount = 10;
+        componentRef.setInput('pageSize', 1);
+        componentRef.setInput('totalCount', 10);
         fixture.detectChanges();
 
-        expect(component['_totalCount']).toEqual(10);
-        expect(component.lastPage).toEqual(10);
+        expect(component.totalCount()).toEqual(10);
+        expect(component['lastPage']).toEqual(10);
     });
 
     it('should set last page on setting pageSizes', () => {
-        component.totalCount = 10;
-        component.pageSizes = [3, 4, 5];
+        componentRef.setInput('totalCount', 10);
+        componentRef.setInput('pageSize', 3);
+        componentRef.setInput('pageSizes', [3, 4, 5]);
         fixture.detectChanges();
 
-        expect(component.lastPage).toEqual(4);
+        expect(component['lastPage']).toEqual(4);
     });
 
     it('should show default page sizes when not setting pageSizes input', () => {
+        componentRef.setInput('totalCount', 10);
+        componentRef.setInput('pageSize', 3);
         fixture.detectChanges();
         const nativeElement = fixture.nativeElement as HTMLElement;
         const pageSizeOptionNodes = nativeElement.querySelectorAll('option');
@@ -42,17 +49,17 @@ describe('KnPagination', () => {
             (x) => +x.value,
         );
 
-        expect(component.pageSizes).toEqual([5, 10, 20, 50, 100]);
+        expect(component.pageSizes()).toEqual([5, 10, 20, 50, 100]);
         expect(pageSizeOptionNodes.length).toEqual(5);
         expect(pageSizeOptionValues).toEqual([5, 10, 20, 50, 100]);
     });
 
     it('should set last page on setting pageSize', () => {
-        component.totalCount = 10;
-        component.pageSize = 10;
+        componentRef.setInput('totalCount', 10);
+        componentRef.setInput('pageSize', 10);
         fixture.detectChanges();
 
-        expect(component.lastPage).toEqual(1);
+        expect(component['lastPage']).toEqual(1);
     });
 
     it('should emit pageSizeChanged on pageSize change', () => {
@@ -60,7 +67,9 @@ describe('KnPagination', () => {
             component['pageSizeChanged'],
             'emit',
         );
-        component.pageSizes = [1, 2, 3];
+        componentRef.setInput('totalCount', 10);
+        componentRef.setInput('pageSize', 3);
+        componentRef.setInput('pageSizes', [1, 2, 3]);
         fixture.detectChanges();
         const selectElement = fixture.nativeElement.querySelector(
             'select',
@@ -75,6 +84,8 @@ describe('KnPagination', () => {
     it('should emit pageChanged on page change', () => {
         const pageChangedOutputSpy = jest.spyOn(component['pageChanged'], 'emit');
         component['onPageChanged'](1);
+        componentRef.setInput('totalCount', 10);
+        componentRef.setInput('pageSize', 3);
         fixture.detectChanges();
 
         expect(pageChangedOutputSpy).toHaveBeenCalledWith(1);
@@ -83,6 +94,8 @@ describe('KnPagination', () => {
     it('should not emit pageChanged on page change when pageNumber is greater than lastPage', () => {
         const pageChangedOutputSpy = jest.spyOn(component['pageChanged'], 'emit');
         component['onPageChanged'](3);
+        componentRef.setInput('totalCount', 10);
+        componentRef.setInput('pageSize', 3);
         fixture.detectChanges();
 
         expect(pageChangedOutputSpy).not.toHaveBeenCalled();

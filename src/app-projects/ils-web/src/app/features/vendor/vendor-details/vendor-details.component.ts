@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import {BaseQueryComponent} from "../../../abstractions/base-query-component";
 import {GetVendorGQL, GetVendorQuery, GetVendorQueryVariables} from "@kathanika/graphql-client";
 import {ActivatedRoute} from "@angular/router";
@@ -7,8 +7,7 @@ import {KnPanel} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-vendor-details',
-    standalone: true,
-    imports: [
+        imports: [
         CommonModule,
         KnPanel
     ],
@@ -16,10 +15,10 @@ import {KnPanel} from "@kathanika/kn-ui";
 })
 export class VendorDetailsComponent extends BaseQueryComponent<GetVendorQuery, GetVendorQueryVariables>
     implements OnInit {
-    constructor(
-        gql: GetVendorGQL,
-        private activatedRoute: ActivatedRoute,
-    ) {
+    private activatedRoute = inject(ActivatedRoute);
+
+    constructor() {
+        const gql = inject(GetVendorGQL);
         super(gql);
     }
 

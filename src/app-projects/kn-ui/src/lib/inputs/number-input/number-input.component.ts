@@ -5,8 +5,7 @@ import {FormsModule, NG_VALUE_ACCESSOR} from '@angular/forms';
 
 @Component({
     selector: 'kn-number-input',
-    standalone: true,
-    imports: [CommonModule, FormsModule],
+        imports: [CommonModule, FormsModule],
     templateUrl: './number-input.component.html',
     providers: [
         {

@@ -1,4 +1,4 @@
-import { EventEmitter } from '@angular/core';
+import {EventEmitter} from '@angular/core';
 import { FormGroup, FormControl } from '@angular/forms';
 
 export abstract class BaseFormComponent<TOutput extends Record<string, unknown>> {

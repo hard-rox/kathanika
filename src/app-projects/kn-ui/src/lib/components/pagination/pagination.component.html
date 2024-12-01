@@ -6,8 +6,8 @@
         (change)="onPageSizeChanged($event.target)"
         class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver"
     >
-        @for (pageSizeItem of pageSizes; track pageSizeItem) {
-            <option [value]="pageSizeItem" [selected]="pageSizeItem === pageSize">
+        @for (pageSizeItem of pageSizes(); track pageSizeItem) {
+            <option [value]="pageSizeItem" [selected]="pageSizeItem === pageSize()">
                 {{ pageSizeItem }}
             </option>
         }

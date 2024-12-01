@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import { Component, OnInit, inject, viewChild } from '@angular/core';
 import {VendorFormComponent} from "../vendor-form/vendor-form.component";
 import {AddVendorInput, GetVendorGQL, UpdateVendorGQL, Vendor, VendorPatchInput} from "@kathanika/graphql-client";
 import {MessageAlertService} from "../../../core/message-alert.service";
@@ -8,8 +8,7 @@ import {KnAlert, KnPanel} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-vendor-update',
-    standalone: true,
-    imports: [
+        imports: [
         KnAlert,
         KnPanel,
         VendorFormComponent
@@ -17,16 +16,13 @@ import {KnAlert, KnPanel} from "@kathanika/kn-ui";
     templateUrl: './vendor-update.component.html'
 })
 export class VendorUpdateComponent implements OnInit {
-    @ViewChild('vendorUpdateForm') vendorUpdateForm!: VendorFormComponent;
+    private gql = inject(GetVendorGQL);
+    private mutation = inject(UpdateVendorGQL);
+    private alertService = inject(MessageAlertService);
+    private activatedRoute = inject(ActivatedRoute);
+    private router = inject(Router);
 
-    constructor(
-        private gql: GetVendorGQL,
-        private mutation: UpdateVendorGQL,
-        private alertService: MessageAlertService,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
-    ) {
-    }
+    readonly vendorUpdateForm = viewChild.required<VendorFormComponent>('vendorUpdateForm');
 
     isPanelLoading = true;
     vendorId: string | undefined;
@@ -101,7 +97,7 @@ export class VendorUpdateComponent implements OnInit {
                             'success',
                             result.data?.updateVendor.message ?? 'Vendor updated.',
                         );
-                        this.vendorUpdateForm?.resetForm();
+                        this.vendorUpdateForm()?.resetForm();
                         this.router.navigate([
                             `/vendors/${result.data?.updateVendor.data?.id}`,
                         ]);

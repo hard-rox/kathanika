@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import { Component, inject, viewChild } from '@angular/core';
 import {VendorFormComponent} from "../vendor-form/vendor-form.component";
 import {KnAlert, KnPanel} from "@kathanika/kn-ui";
 import {AddVendorGQL, AddVendorInput, VendorPatchInput} from "@kathanika/graphql-client";
@@ -9,7 +9,6 @@ import {finalize} from "rxjs";
 
 @Component({
     selector: 'app-vendor-add',
-    standalone: true,
     imports: [
         CommonModule,
         VendorFormComponent,
@@ -19,14 +18,11 @@ import {finalize} from "rxjs";
     templateUrl: './vendor-add.component.html'
 })
 export class VendorAddComponent {
-    @ViewChild('addVendorForm') memberCreateForm: VendorFormComponent | undefined;
+    private gql = inject(AddVendorGQL);
+    private alertService = inject(MessageAlertService);
+    private router = inject(Router);
 
-    constructor(
-        private gql: AddVendorGQL,
-        private alertService: MessageAlertService,
-        private router: Router,
-    ) {
-    }
+    readonly memberCreateForm = viewChild<VendorFormComponent>('addVendorForm');
 
     isPanelLoading = false;
     errors: string[] = [];
@@ -59,7 +55,7 @@ export class VendorAddComponent {
                             'success',
                             result.data?.addVendor.message ?? 'Member added.',
                         );
-                        this.memberCreateForm?.resetForm();
+                        this.memberCreateForm()?.resetForm();
                         this.router.navigate([`/vendors/${result.data?.addVendor.data?.id}`]);
                     }
                 },

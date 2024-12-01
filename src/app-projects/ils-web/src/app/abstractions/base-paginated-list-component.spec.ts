@@ -48,8 +48,7 @@ describe('BasePaginatedListComponent', () => {
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
-            declarations: [BasePaginatedListTestingComponent],
-            imports: [RouterTestingModule],
+            imports: [RouterTestingModule, BasePaginatedListTestingComponent],
             providers: [
                 {
                     provide: Query<never, PaginationQueryVariables>,

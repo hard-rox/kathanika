@@ -5,8 +5,7 @@ import {KnButton} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-sidebar',
-    standalone: true,
-    imports: [
+        imports: [
         CommonModule,
         RouterLink,
         RouterLinkActive,

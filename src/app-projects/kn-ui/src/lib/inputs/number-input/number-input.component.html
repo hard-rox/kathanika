@@ -1,6 +1,6 @@
 <div class="flex flex-col">
     <label [for]="control?.name">
-        {{ label }}
+        {{ label() }}
         @if (isRequired()) {
             <span class="text-theme-fire-red">*</span>
         }
@@ -18,22 +18,22 @@
           : 'border-theme-gunmetal'
     "
         [ngModel]="value"
-        [placeholder]="placeholder.length > 0 ? placeholder : label"
+        [placeholder]="placeholder().length > 0 ? placeholder() : label()"
         class="peer"
         type="number"
     />
     <ul class="list-disc ml-4">
         @if ((control?.dirty || control?.touched) && control?.hasError('required')) {
-            <li class="text-theme-fire-red">{{ label }} is required</li>
+            <li class="text-theme-fire-red">{{ label() }} is required</li>
         }
         @if ((control?.dirty || control?.touched) && control?.hasError('integerOnly')) {
             <li class="text-theme-fire-red">
-                {{ label }} must not be fractional number
+                {{ label() }} must not be fractional number
             </li>
         }
         @if ((control?.dirty || control?.touched) && control?.hasError('min')) {
             <li class="text-theme-fire-red">
-                {{ label }} must be at least {{ control?.getError('min')?.min }}
+                {{ label() }} must be at least {{ control?.getError('min')?.min }}
             </li>
         }
     </ul>

@@ -1,5 +1,5 @@
 <div class="bg-white shadow-sm relative z-0">
-    @if (isLoading) {
+    @if (isLoading()) {
         <div
             class="absolute inset-0 flex justify-center items-center z-10 bg-theme-gunmetal bg-opacity-60"
         >
@@ -9,11 +9,11 @@
             </div>
         </div>
     }
-    @if (panelTitle) {
+    @if (panelTitle()) {
         <div
             class="border-b-2 border-theme-davys-gray bg-theme-silver bg-opacity-40 mb-4 px-6 py-2 text-xl"
         >
-            {{ panelTitle }}
+            {{ panelTitle() }}
         </div>
     }
     <div class="px-6 py-4">
