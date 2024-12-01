@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {Component, EventEmitter, Output, input} from '@angular/core';
+import {Component, input, output} from '@angular/core';
 import {AbstractBlockComponent} from '../../abstractions/abstract-block-component';
 
 @Component({
@@ -9,9 +9,7 @@ import {AbstractBlockComponent} from '../../abstractions/abstract-block-componen
 })
 export class KnAlert extends AbstractBlockComponent {
     readonly closeable = input(false);
-
-    @Output()
-    private readonly closed = new EventEmitter<void>();
+    readonly closed = output<void>();
 
     protected close() {
         this.closed.emit();

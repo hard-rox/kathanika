@@ -1,5 +1,5 @@
 import {CommonModule} from '@angular/common';
-import {ChangeDetectionStrategy, Component, EventEmitter, OnInit, Output, input} from '@angular/core';
+import {ChangeDetectionStrategy, Component, OnInit, input, output} from '@angular/core';
 import {FormsModule} from '@angular/forms';
 import {debounceTime, map, Subject} from 'rxjs';
 
@@ -18,9 +18,8 @@ export class KnSearchbar<T> implements OnInit {
     readonly hasError = input(false);
     readonly isDisabled = input(false);
 
-    @Output() searchTextChanged: EventEmitter<string> =
-        new EventEmitter<string>();
-    @Output() resultSelected: EventEmitter<T> = new EventEmitter<T>();
+    readonly searchTextChanged = output<string>();
+    readonly resultSelected = output<T>();
 
     private readonly _searchInputSubject: Subject<string> = new Subject<string>();
 
