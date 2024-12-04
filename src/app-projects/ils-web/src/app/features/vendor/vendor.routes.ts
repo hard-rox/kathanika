@@ -7,18 +7,22 @@ import {VendorUpdateComponent} from "./vendor-update/vendor-update.component";
 export const vendorRoutes: Routes = [
     {
         path: '',
-        component: VendorListComponent
+        loadComponent: () => import('./vendor-list/vendor-list.component')
+            .then(c => c.VendorListComponent)
     },
     {
         path: 'add',
-        component: VendorAddComponent
+        loadComponent: () => import('./vendor-add/vendor-add.component')
+            .then(c => c.VendorAddComponent)
     },
     {
         path: 'update/:vendorId',
-        component: VendorUpdateComponent,
+        loadComponent: () => import('./vendor-update/vendor-update.component')
+            .then(c => c.VendorUpdateComponent)
     },
     {
         path: ':vendorId',
-        component: VendorDetailsComponent
+        loadComponent: () => import('./vendor-details/vendor-details.component')
+            .then(c => c.VendorDetailsComponent)
     }
-]
+];
