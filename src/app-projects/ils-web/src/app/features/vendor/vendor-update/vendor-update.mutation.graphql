@@ -1,0 +1,22 @@
+mutation vendorUpdate($id: String!, $patch: VendorPatchInput!){
+    updateVendor(input: {id: $id, patch: $patch}){
+        data {
+            id
+            name
+        }
+        errors {
+            ... on KnError{
+                code
+                message
+                description
+            }
+            ... on ValidationError{
+                code
+                fieldName
+                message
+                description
+            }
+        }
+        message
+    }
+}

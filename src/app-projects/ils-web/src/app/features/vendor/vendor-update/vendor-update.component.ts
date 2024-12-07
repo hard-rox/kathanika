@@ -1,6 +1,11 @@
-import { Component, OnInit, inject, viewChild } from '@angular/core';
+import {Component, OnInit, inject, viewChild} from '@angular/core';
 import {VendorFormComponent} from "../vendor-form/vendor-form.component";
-import {AddVendorInput, GetVendorGQL, UpdateVendorGQL, Vendor, VendorPatchInput} from "@kathanika/graphql-client";
+import {
+    AddVendorInput,
+    Vendor,
+    VendorDetailsGQL,
+    VendorPatchInput, VendorUpdateGQL
+} from "../../../graphql/generated/graphql-operations";
 import {MessageAlertService} from "../../../core/message-alert.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {finalize} from "rxjs";
@@ -8,7 +13,7 @@ import {KnAlert, KnPanel} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-vendor-update',
-        imports: [
+    imports: [
         KnAlert,
         KnPanel,
         VendorFormComponent
@@ -16,8 +21,8 @@ import {KnAlert, KnPanel} from "@kathanika/kn-ui";
     templateUrl: './vendor-update.component.html'
 })
 export class VendorUpdateComponent implements OnInit {
-    private gql = inject(GetVendorGQL);
-    private mutation = inject(UpdateVendorGQL);
+    private gql = inject(VendorDetailsGQL);
+    private mutation = inject(VendorUpdateGQL);
     private alertService = inject(MessageAlertService);
     private activatedRoute = inject(ActivatedRoute);
     private router = inject(Router);
@@ -78,7 +83,9 @@ export class VendorUpdateComponent implements OnInit {
             }))
             .subscribe({
                 next: (result) => {
-                    // console.debug(JSON.stringify(result));
+                    if (result.loading)
+                        this.isPanelLoading = true;
+                    
                     if (result.errors || result.data?.updateVendor.errors) {
                         this.errors = [];
                         result.data?.updateVendor.errors?.forEach((x) => {

@@ -1,0 +1,15 @@
+query vendorDetails($id: String!){
+    vendor(id: $id){
+        id
+        name
+        contactNumber
+        address
+        email
+        status
+        contactPersonName
+        contactPersonPhone
+        contactPersonEmail
+        accountDetail
+        website
+    }
+}

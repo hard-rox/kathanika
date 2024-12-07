@@ -1,4 +1,4 @@
-query getVendors(
+query vendorList(
     $skip: Int!
     $take: Int!
     $filter: VendorFilterInput
@@ -16,21 +16,5 @@ query getVendors(
             hasPreviousPage
         }
         totalCount
-    }
-}
-
-query getVendor($id: String!){
-    vendor(id: $id){
-        id
-        name
-        contactNumber
-        address
-        email
-        status
-        contactPersonName
-        contactPersonPhone
-        contactPersonEmail
-        accountDetail
-        website
     }
 }

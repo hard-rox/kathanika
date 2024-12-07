@@ -8,7 +8,7 @@ import {RouterTestingModule} from '@angular/router/testing';
 import {Component} from '@angular/core';
 import {of} from 'rxjs';
 import {Query} from 'apollo-angular';
-import {mockQueryGql} from '@kathanika/graphql-client';
+import {mockQueryGql} from "../graphql/gql-test-utils";
 
 @Component({
     template: ''

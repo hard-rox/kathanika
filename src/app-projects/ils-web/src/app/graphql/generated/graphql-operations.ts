@@ -386,22 +386,6 @@ export type QueryVendorsArgs = {
   where?: InputMaybe<VendorFilterInput>;
 };
 
-export type ResultOfPatron = {
-  __typename?: 'ResultOfPatron';
-  errors: Array<KnError>;
-  isFailure: Scalars['Boolean']['output'];
-  isSuccess: Scalars['Boolean']['output'];
-  value: Patron;
-};
-
-export type ResultOfVendor = {
-  __typename?: 'ResultOfVendor';
-  errors: Array<KnError>;
-  isFailure: Scalars['Boolean']['output'];
-  isSuccess: Scalars['Boolean']['output'];
-  value: Vendor;
-};
-
 export enum SortEnumType {
   Asc = 'ASC',
   Desc = 'DESC'
@@ -432,7 +416,6 @@ export type UpdatePatronPayload = {
   data?: Maybe<Patron>;
   errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
-  result: ResultOfPatron;
 };
 
 export type UpdateVendorInput = {
@@ -445,7 +428,6 @@ export type UpdateVendorPayload = {
   data?: Maybe<Vendor>;
   errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
-  result: ResultOfVendor;
 };
 
 export type ValidationError = {
@@ -535,29 +517,28 @@ export type VendorsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
-export type AddVendorMutationVariables = Exact<{
+export type VendorAddMutationVariables = Exact<{
   input: AddVendorInput;
 }>;
 
 
-export type AddVendorMutation = { __typename?: 'Mutation', addVendor: { __typename?: 'AddVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type VendorAddMutation = { __typename?: 'Mutation', addVendor: { __typename?: 'AddVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
 
-export type UpdateVendorMutationVariables = Exact<{
-  id: Scalars['String']['input'];
-  patch: VendorPatchInput;
-}>;
-
-
-export type UpdateVendorMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
-
-export type DeleteVendorMutationVariables = Exact<{
+export type VendorDetailsQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type DeleteVendorMutation = { __typename?: 'Mutation', deleteVendor: { __typename?: 'DeleteVendorPayload', message?: string | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type VendorDetailsQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', id: string, name: string, contactNumber: string, address: string, email?: string | null, status: VendorStatus, contactPersonName?: string | null, contactPersonPhone?: string | null, contactPersonEmail?: string | null, accountDetail?: string | null, website?: string | null } | null };
 
-export type GetVendorsQueryVariables = Exact<{
+export type VendorDeleteMutationVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type VendorDeleteMutation = { __typename?: 'Mutation', deleteVendor: { __typename?: 'DeleteVendorPayload', message?: string | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+
+export type VendorListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
   filter?: InputMaybe<VendorFilterInput>;
@@ -565,17 +546,18 @@ export type GetVendorsQueryVariables = Exact<{
 }>;
 
 
-export type GetVendorsQuery = { __typename?: 'Query', vendors?: { __typename?: 'VendorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Vendor', id: string, name: string, status: VendorStatus, contactPersonName?: string | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type VendorListQuery = { __typename?: 'Query', vendors?: { __typename?: 'VendorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Vendor', id: string, name: string, status: VendorStatus, contactPersonName?: string | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
-export type GetVendorQueryVariables = Exact<{
+export type VendorUpdateMutationVariables = Exact<{
   id: Scalars['String']['input'];
+  patch: VendorPatchInput;
 }>;
 
 
-export type GetVendorQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', id: string, name: string, contactNumber: string, address: string, email?: string | null, status: VendorStatus, contactPersonName?: string | null, contactPersonPhone?: string | null, contactPersonEmail?: string | null, accountDetail?: string | null, website?: string | null } | null };
+export type VendorUpdateMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
 
-export const AddVendorDocument = gql`
-    mutation addVendor($input: AddVendorInput!) {
+export const VendorAddDocument = gql`
+    mutation vendorAdd($input: AddVendorInput!) {
   addVendor(input: $input) {
     data {
       id
@@ -602,15 +584,102 @@ export const AddVendorDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class AddVendorGQL extends Apollo.Mutation<AddVendorMutation, AddVendorMutationVariables> {
-    override document = AddVendorDocument;
+  export class VendorAddGQL extends Apollo.Mutation<VendorAddMutation, VendorAddMutationVariables> {
+    override document = VendorAddDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
     }
   }
-export const UpdateVendorDocument = gql`
-    mutation updateVendor($id: String!, $patch: VendorPatchInput!) {
+export const VendorDetailsDocument = gql`
+    query vendorDetails($id: String!) {
+  vendor(id: $id) {
+    id
+    name
+    contactNumber
+    address
+    email
+    status
+    contactPersonName
+    contactPersonPhone
+    contactPersonEmail
+    accountDetail
+    website
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class VendorDetailsGQL extends Apollo.Query<VendorDetailsQuery, VendorDetailsQueryVariables> {
+    override document = VendorDetailsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const VendorDeleteDocument = gql`
+    mutation vendorDelete($id: String!) {
+  deleteVendor(input: {id: $id}) {
+    errors {
+      ... on KnError {
+        code
+        message
+        description
+      }
+      ... on ValidationError {
+        code
+        fieldName
+        message
+        description
+      }
+    }
+    message
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class VendorDeleteGQL extends Apollo.Mutation<VendorDeleteMutation, VendorDeleteMutationVariables> {
+    override document = VendorDeleteDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const VendorListDocument = gql`
+    query vendorList($skip: Int!, $take: Int!, $filter: VendorFilterInput, $sortBy: [VendorSortInput!]) {
+  vendors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      name
+      status
+      contactPersonName
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class VendorListGQL extends Apollo.Query<VendorListQuery, VendorListQueryVariables> {
+    override document = VendorListDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const VendorUpdateDocument = gql`
+    mutation vendorUpdate($id: String!, $patch: VendorPatchInput!) {
   updateVendor(input: {id: $id, patch: $patch}) {
     data {
       id
@@ -637,95 +706,8 @@ export const UpdateVendorDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class UpdateVendorGQL extends Apollo.Mutation<UpdateVendorMutation, UpdateVendorMutationVariables> {
-    override document = UpdateVendorDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const DeleteVendorDocument = gql`
-    mutation deleteVendor($id: String!) {
-  deleteVendor(input: {id: $id}) {
-    errors {
-      ... on KnError {
-        code
-        message
-        description
-      }
-      ... on ValidationError {
-        code
-        fieldName
-        message
-        description
-      }
-    }
-    message
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class DeleteVendorGQL extends Apollo.Mutation<DeleteVendorMutation, DeleteVendorMutationVariables> {
-    override document = DeleteVendorDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetVendorsDocument = gql`
-    query getVendors($skip: Int!, $take: Int!, $filter: VendorFilterInput, $sortBy: [VendorSortInput!]) {
-  vendors(skip: $skip, take: $take, where: $filter, order: $sortBy) {
-    items {
-      id
-      name
-      status
-      contactPersonName
-    }
-    pageInfo {
-      hasNextPage
-      hasPreviousPage
-    }
-    totalCount
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetVendorsGQL extends Apollo.Query<GetVendorsQuery, GetVendorsQueryVariables> {
-    override document = GetVendorsDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const GetVendorDocument = gql`
-    query getVendor($id: String!) {
-  vendor(id: $id) {
-    id
-    name
-    contactNumber
-    address
-    email
-    status
-    contactPersonName
-    contactPersonPhone
-    contactPersonEmail
-    accountDetail
-    website
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class GetVendorGQL extends Apollo.Query<GetVendorQuery, GetVendorQueryVariables> {
-    override document = GetVendorDocument;
+  export class VendorUpdateGQL extends Apollo.Mutation<VendorUpdateMutation, VendorUpdateMutationVariables> {
+    override document = VendorUpdateDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

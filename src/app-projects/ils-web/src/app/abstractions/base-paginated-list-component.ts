@@ -52,7 +52,6 @@ export abstract class BasePaginatedListComponent<
                 debounceTime(700),
                 distinctUntilChanged(),
                 map((value) => {
-                    // console.debug(value);
                     this.searchText = value;
                     this.setSearchTextQueryFilter(value);
                     this.queryRef.refetch(this.queryVariables);
@@ -64,10 +63,10 @@ export abstract class BasePaginatedListComponent<
 
     protected searchTextSubject = new Subject<string>();
 
-    constructor(
+    protected constructor(
         gql: Query<TQuery, TQueryVariables>,
-        private activatedRoute: ActivatedRoute,
-        private router: Router,
+        private readonly activatedRoute: ActivatedRoute,
+        private readonly router: Router,
         paginationQueryVariables: TQueryVariables,
     ) {
         super(gql, paginationQueryVariables);

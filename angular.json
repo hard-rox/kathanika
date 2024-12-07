@@ -167,13 +167,6 @@
           }
         }
       }
-    },
-    "graphql-client": {
-      "projectType": "library",
-      "root": "src/app-projects/graphql-client",
-      "sourceRoot": "src/app-projects/graphql-client/src",
-      "prefix": "lib",
-      "architect": {}
     }
   }
 }
