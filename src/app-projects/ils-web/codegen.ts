@@ -2,9 +2,9 @@ import type {CodegenConfig} from '@graphql-codegen/cli';
 
 const config: CodegenConfig = {
     schema: 'http://localhost:5289/graphql',
-    documents: 'src/app-projects/graphql-client/src/lib/graphql/**/*.graphql',
+    documents: 'src/app-projects/ils-web/src/app/**/*.graphql',
     generates: {
-        'src/app-projects/graphql-client/src/lib/graphql/generated/graphql-operations.ts':
+        'src/app-projects/ils-web/src/app/graphql/generated/graphql-operations.ts':
             {
                 plugins: [
                     'typescript',

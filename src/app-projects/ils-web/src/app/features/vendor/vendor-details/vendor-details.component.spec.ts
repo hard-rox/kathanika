@@ -3,7 +3,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {VendorDetailsComponent} from './vendor-details.component';
 import {KnPanel} from "@kathanika/kn-ui";
 import {ActivatedRoute} from "@angular/router";
-import {GetVendorGQL, mockQueryGql} from "@kathanika/graphql-client";
+import {mockQueryGql} from "../../../graphql/gql-test-utils";
+import {VendorDetailsGQL} from "../../../graphql/generated/graphql-operations";
 
 describe('VendorDetailsComponent', () => {
     let component: VendorDetailsComponent;
@@ -14,7 +15,7 @@ describe('VendorDetailsComponent', () => {
             imports: [VendorDetailsComponent, KnPanel],
             providers: [
                 {
-                    provide: GetVendorGQL,
+                    provide: VendorDetailsGQL,
                     useValue: mockQueryGql
                 },
                 {

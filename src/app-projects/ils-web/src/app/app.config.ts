@@ -5,9 +5,9 @@ import {routes} from './app.routes';
 import {provideClientHydration, withIncrementalHydration} from '@angular/platform-browser';
 import {provideServiceWorker} from '@angular/service-worker';
 import {provideHttpClient, withFetch} from "@angular/common/http";
-import {provideGraphqlClient} from "@kathanika/graphql-client";
 import {environment} from "../environments/environment";
 import {provideTusFileServer} from "@kathanika/kn-ui";
+import {provideGraphqlClient} from "./graphql/graphql.provider";
 
 export const appConfig: ApplicationConfig = {
     providers: [

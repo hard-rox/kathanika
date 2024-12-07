@@ -1,17 +1,15 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-list-component";
-import {
-    DeleteVendorGQL,
-    GetVendorsGQL,
-    GetVendorsQuery,
-    GetVendorsQueryVariables,
-    SortEnumType,
-    VendorStatus
-} from "@kathanika/graphql-client";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {KnBadge, KnButton, KnPagination} from "@kathanika/kn-ui";
 import {MessageAlertService} from "../../../core/message-alert.service";
+import {
+    SortEnumType,
+    VendorDeleteGQL, VendorListGQL,
+    VendorListQuery,
+    VendorListQueryVariables, VendorStatus
+} from "../../../graphql/generated/graphql-operations";
 
 @Component({
     selector: 'app-vendor-list',
@@ -24,8 +22,8 @@ import {MessageAlertService} from "../../../core/message-alert.service";
     ],
     templateUrl: './vendor-list.component.html'
 })
-export class VendorListComponent extends BasePaginatedListComponent<GetVendorsQuery, GetVendorsQueryVariables> implements OnInit {
-    private deleteVendorGql = inject(DeleteVendorGQL);
+export class VendorListComponent extends BasePaginatedListComponent<VendorListQuery, VendorListQueryVariables> implements OnInit {
+    private deleteVendorGql = inject(VendorDeleteGQL);
     private alertService = inject(MessageAlertService);
 
     protected setSearchTextQueryFilter(searchText: string): void {
@@ -46,7 +44,7 @@ export class VendorListComponent extends BasePaginatedListComponent<GetVendorsQu
     }
 
     constructor() {
-        const gql = inject(GetVendorsGQL);
+        const gql = inject(VendorListGQL);
         const activatedRoute = inject(ActivatedRoute);
         const router = inject(Router);
 

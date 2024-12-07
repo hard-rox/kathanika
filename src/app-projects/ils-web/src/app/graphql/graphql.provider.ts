@@ -5,10 +5,12 @@ import {InMemoryCache} from "@apollo/client/core";
 
 export function provideGraphqlClient(graphqlEndpoint: string): Provider {
     return provideApollo(() => {
-        const httpLink = inject(HttpLink);
-        return {
-            link: httpLink.create({uri: graphqlEndpoint}),
-            cache: new InMemoryCache()
-        }
-    });
+            return {
+                link: inject(HttpLink).create({uri: graphqlEndpoint}),
+                cache: new InMemoryCache()
+            };
+        },
+        {
+            useMutationLoading: true,
+        });
 }

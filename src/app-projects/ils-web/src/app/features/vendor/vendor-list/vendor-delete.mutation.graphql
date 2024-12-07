@@ -1,0 +1,18 @@
+mutation vendorDelete($id: String!){
+    deleteVendor(input: {id: $id}){
+        errors {
+            ... on KnError{
+                code
+                message
+                description
+            }
+            ... on ValidationError{
+                code
+                fieldName
+                message
+                description
+            }
+        }
+        message
+    }
+}

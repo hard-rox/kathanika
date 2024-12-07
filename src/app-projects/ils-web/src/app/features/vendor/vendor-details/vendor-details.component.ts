@@ -1,6 +1,10 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {BaseQueryComponent} from "../../../abstractions/base-query-component";
-import {GetVendorGQL, GetVendorQuery, GetVendorQueryVariables} from "@kathanika/graphql-client";
+import {
+    VendorDetailsGQL,
+    VendorDetailsQuery,
+    VendorDetailsQueryVariables
+} from "../../../graphql/generated/graphql-operations";
 import {ActivatedRoute} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {KnPanel} from "@kathanika/kn-ui";
@@ -13,12 +17,12 @@ import {KnPanel} from "@kathanika/kn-ui";
     ],
     templateUrl: './vendor-details.component.html'
 })
-export class VendorDetailsComponent extends BaseQueryComponent<GetVendorQuery, GetVendorQueryVariables>
+export class VendorDetailsComponent extends BaseQueryComponent<VendorDetailsQuery, VendorDetailsQueryVariables>
     implements OnInit {
     private activatedRoute = inject(ActivatedRoute);
 
     constructor() {
-        const gql = inject(GetVendorGQL);
+        const gql = inject(VendorDetailsGQL);
         super(gql);
     }
 

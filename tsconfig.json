@@ -11,9 +11,6 @@
     "paths": {
       "@kathanika/kn-ui": [
         "./src/app-projects/kn-ui/src"
-      ],
-      "@kathanika/graphql-client": [
-        "./src/app-projects/graphql-client/src"
       ]
     },
     "noFallthroughCasesInSwitch": true,

@@ -5,7 +5,15 @@ const rootConfig = require("../../../eslint.config.js");
 module.exports = tseslint.config(
     ...rootConfig,
     {
-        files: ["**/*.ts"],
+        ignores:[
+            "src/app-projects/ils-web/src/app/graphql/generated/graphql-operations.ts",
+            "src/app-projects/ils-web/src/app/graphql/gql-test-utils.ts",
+        ]
+    },
+    {
+        files: [
+            "**/*.ts"
+        ],
         rules: {
             "@angular-eslint/directive-selector": [
                 "error",

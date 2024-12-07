@@ -3,7 +3,8 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {VendorAddComponent} from './vendor-add.component';
 import {VendorFormComponent} from "../vendor-form/vendor-form.component";
 import {KnAlert, KnPanel} from "@kathanika/kn-ui";
-import {AddVendorGQL, mockMutationGql} from "@kathanika/graphql-client";
+import {VendorAddGQL} from "../../../graphql/generated/graphql-operations";
+import {mockMutationGql} from "../../../graphql/gql-test-utils";
 
 describe('VendorAddComponent', () => {
     let component: VendorAddComponent;
@@ -19,7 +20,7 @@ describe('VendorAddComponent', () => {
             ],
             providers: [
                 {
-                    provide: AddVendorGQL,
+                    provide: VendorAddGQL,
                     useValue: mockMutationGql
                 }
             ]
