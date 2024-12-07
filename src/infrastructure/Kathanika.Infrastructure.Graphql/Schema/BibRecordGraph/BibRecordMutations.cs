@@ -13,7 +13,7 @@ public sealed class BibRecordMutations
         CancellationToken cancellationToken
     )
     {
-        Domain.Primitives.Result<BibRecord> result = await mediator.Send(input, cancellationToken);
-        return new CreateBibRecordPayload(result);
+        Domain.Primitives.KnResult<BibRecord> knResult = await mediator.Send(input, cancellationToken);
+        return new CreateBibRecordPayload(knResult);
     }
 }

@@ -4,9 +4,9 @@ namespace Kathanika.Infrastructure.Graphql.Bases;
 
 public abstract record Payload
 {
-    protected Payload(Result result, string? message = null)
+    protected Payload(KnResult knResult, string? message = null)
     {
-        Errors = result.Errors.Length != 0 ? result.Errors : null;
+        Errors = knResult.Errors.Length != 0 ? knResult.Errors : null;
         Message = message;
     }
 
@@ -19,11 +19,11 @@ public abstract record Payload
 public abstract record Payload<TData> : Payload
     where TData : class
 {
-    protected Payload(Domain.Primitives.Result<TData> result, string? message = null)
-        : base(result, message)
+    protected Payload(Domain.Primitives.KnResult<TData> knResult, string? message = null)
+        : base(knResult, message)
     {
-        if (result.IsSuccess)
-            Data = result.Value;
+        if (knResult.IsSuccess)
+            Data = knResult.Value;
     }
 
     public TData? Data { get; private init; }

@@ -26,9 +26,9 @@ public class ArchTests
             .SelectMany(t => t.GetMethods())
             .Where(
                 m => !(m.IsSpecialName && m.Name.StartsWith("get_"))
-                     && !(m.ReturnType == typeof(Result)
+                     && !(m.ReturnType == typeof(KnResult)
                           || (m.ReturnType.IsGenericType &&
-                              m.ReturnType.GetGenericTypeDefinition().BaseType == typeof(Result)))
+                              m.ReturnType.GetGenericTypeDefinition().BaseType == typeof(KnResult)))
                      && aggregateMethods.All(am => am != m.Name))
             .Select(x => new { MethodName = x.Name, Type = x.DeclaringType?.Name })
             .ToList();

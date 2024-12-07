@@ -4,14 +4,14 @@ using Kathanika.Domain.Primitives;
 namespace Kathanika.Application.Features.Vendors.Commands;
 
 internal sealed class UpdateVendorCommandHandler(IVendorRepository vendorRepository)
-    : IRequestHandler<UpdateVendorCommand, Result<Vendor>>
+    : IRequestHandler<UpdateVendorCommand, KnResult<Vendor>>
 {
-    public async Task<Result<Vendor>> Handle(UpdateVendorCommand request, CancellationToken cancellationToken)
+    public async Task<KnResult<Vendor>> Handle(UpdateVendorCommand request, CancellationToken cancellationToken)
     {
         Vendor? existingVendor = await vendorRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingVendor is null)
-            return Result.Failure<Vendor>(VendorAggregateErrors.NotFound(request.Id));
+            return KnResult.Failure<Vendor>(VendorAggregateErrors.NotFound(request.Id));
 
         existingVendor.Update(
             request.Patch.Name,
@@ -26,6 +26,6 @@ internal sealed class UpdateVendorCommandHandler(IVendorRepository vendorReposit
         );
 
         await vendorRepository.UpdateAsync(existingVendor, cancellationToken);
-        return Result.Success(existingVendor);
+        return KnResult.Success(existingVendor);
     }
 }

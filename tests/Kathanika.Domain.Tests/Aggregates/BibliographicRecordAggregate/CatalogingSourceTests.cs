@@ -17,7 +17,7 @@ public sealed class CatalogingSourceTests
         var descriptionConventions = faker.Lorem.Sentence();
 
         // Act
-        Result<CatalogingSource> result = CatalogingSource.Create(
+        KnResult<CatalogingSource> result = CatalogingSource.Create(
             originalCatalogingAgency,
             languageOfCataloging,
             transcribingAgency,
@@ -42,7 +42,7 @@ public sealed class CatalogingSourceTests
         var descriptionConventions = faker.Lorem.Sentence();
 
         // Act
-        Result<CatalogingSource> result = CatalogingSource.Create(
+        KnResult<CatalogingSource> result = CatalogingSource.Create(
             originalCatalogingAgency,
             languageOfCataloging,
             emptyTranscribingAgency,

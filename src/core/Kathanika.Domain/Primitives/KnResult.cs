@@ -1,8 +1,8 @@
 namespace Kathanika.Domain.Primitives;
 
-public class Result
+public class KnResult
 {
-    private Result(
+    private KnResult(
         bool isSuccess,
         KnError? error = null
     ) : this(
@@ -12,7 +12,7 @@ public class Result
     {
     }
 
-    protected Result(
+    protected KnResult(
         bool isSuccess,
         KnError[]? errors = null
     )
@@ -29,45 +29,45 @@ public class Result
     public bool IsFailure => !IsSuccess;
     public KnError[] Errors { get; protected init; }
 
-    public static Result Success()
+    public static KnResult Success()
     {
-        return new Result(true, error: null);
+        return new KnResult(true, error: null);
     }
 
-    public static Result<TValue> Success<TValue>(TValue value)
+    public static KnResult<TValue> Success<TValue>(TValue value)
         where TValue : class
     {
-        return Result<TValue>.Success(value);
+        return KnResult<TValue>.Success(value);
     }
 
-    public static Result Failure(KnError error)
+    public static KnResult Failure(KnError error)
     {
-        return new Result(false, error);
+        return new KnResult(false, error);
     }
 
-    public static Result Failure(IEnumerable<KnError> errors)
+    public static KnResult Failure(IEnumerable<KnError> errors)
     {
-        return new Result(false, errors.ToArray());
+        return new KnResult(false, errors.ToArray());
     }
 
-    public static Result<TValue> Failure<TValue>(IEnumerable<KnError> errors)
+    public static KnResult<TValue> Failure<TValue>(IEnumerable<KnError> errors)
         where TValue : class
     {
-        return Result<TValue>.Failure(errors);
+        return KnResult<TValue>.Failure(errors);
     }
 
-    public static Result<TValue> Failure<TValue>(KnError error)
+    public static KnResult<TValue> Failure<TValue>(KnError error)
         where TValue : class
     {
-        return Result<TValue>.Failure(error);
+        return KnResult<TValue>.Failure(error);
     }
 }
 
-public class Result<TValue> : Result where TValue : class
+public class KnResult<TValue> : KnResult where TValue : class
 {
     private readonly TValue? _value;
 
-    private Result(
+    private KnResult(
         bool isSuccess,
         TValue? value = null,
         KnError? error = null
@@ -79,7 +79,7 @@ public class Result<TValue> : Result where TValue : class
     {
     }
 
-    private Result(
+    private KnResult(
         bool isSuccess,
         TValue? value = null,
         KnError[]? errors = null
@@ -98,18 +98,18 @@ public class Result<TValue> : Result where TValue : class
         ? _value
         : throw new InvalidDataException("Cannot access Value from failure result");
 
-    public static Result<TValue> Success(TValue value)
+    public static KnResult<TValue> Success(TValue value)
     {
-        return new Result<TValue>(true, value, error: null);
+        return new KnResult<TValue>(true, value, error: null);
     }
 
-    public new static Result<TValue> Failure(IEnumerable<KnError> errors)
+    public new static KnResult<TValue> Failure(IEnumerable<KnError> errors)
     {
-        return new Result<TValue>(false, errors: errors.ToArray());
+        return new KnResult<TValue>(false, errors: errors.ToArray());
     }
 
-    public new static Result<TValue> Failure(KnError error)
+    public new static KnResult<TValue> Failure(KnError error)
     {
-        return new Result<TValue>(false, errors: [error]);
+        return new KnResult<TValue>(false, errors: [error]);
     }
 }

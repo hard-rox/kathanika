@@ -9,15 +9,15 @@ public record CatalogingSource(
     string? ModifyingAgency,
     string? DescriptionConventions) : ValueObject
 {
-    internal static Result<CatalogingSource> Create(string? originalCatalogingAgency,
+    internal static KnResult<CatalogingSource> Create(string? originalCatalogingAgency,
         string? languageOfCataloging,
         string transcribingAgency,
         string? modifyingAgency,
         string? descriptionConventions)
     {
         return string.IsNullOrWhiteSpace(transcribingAgency)
-            ? Result.Failure<CatalogingSource>(BibRecordAggregateErrors.TranscribingAgencyInvalid)
-            : Result.Success(new CatalogingSource(originalCatalogingAgency, languageOfCataloging, transcribingAgency,
+            ? KnResult.Failure<CatalogingSource>(BibRecordAggregateErrors.TranscribingAgencyInvalid)
+            : KnResult.Success(new CatalogingSource(originalCatalogingAgency, languageOfCataloging, transcribingAgency,
                 modifyingAgency, descriptionConventions));
     }
 

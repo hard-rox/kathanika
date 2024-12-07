@@ -8,10 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="HotChocolate.AspNetCore" Version="14.2.0"/>
-        <PackageReference Include="HotChocolate.Data" Version="14.2.0"/>
-        <PackageReference Include="HotChocolate.Diagnostics" Version="14.2.0"/>
-        <PackageReference Include="MediatR" Version="12.4.1"/>
+        <PackageReference Include="HotChocolate.AspNetCore"/>
+        <PackageReference Include="HotChocolate.Data"/>
+        <PackageReference Include="HotChocolate.Diagnostics"/>
+        <PackageReference Include="MediatR"/>
     </ItemGroup>
 
     <ItemGroup>

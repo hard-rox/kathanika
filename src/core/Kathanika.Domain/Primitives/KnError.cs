@@ -17,9 +17,9 @@ public record KnError
     public string? Description { get; private init; }
     public string Message { get; private init; }
 
-    public static implicit operator Result(KnError error)
+    public static implicit operator KnResult(KnError error)
     {
-        return Result.Failure(error);
+        return KnResult.Failure(error);
     }
 
     public static KnError ValidationError(string fieldName, string message)

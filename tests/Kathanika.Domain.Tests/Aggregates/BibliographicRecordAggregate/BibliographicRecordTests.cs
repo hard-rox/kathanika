@@ -18,7 +18,7 @@ public class BibRecordTests
             CatalogingSource.Create(null, null, faker.Company.CompanyName(), null, null).Value;
 
         // Act
-        Result<BibRecord> result = BibRecord.Create(
+        KnResult<BibRecord> result = BibRecord.Create(
             leader,
             controlNumber,
             controlNumberIdentifier,
@@ -45,7 +45,7 @@ public class BibRecordTests
             CatalogingSource.Create(null, null, faker.Company.CompanyName(), null, null).Value;
 
         // Act
-        Result<BibRecord> result = BibRecord.Create(
+        KnResult<BibRecord> result = BibRecord.Create(
             emptyLeader,
             controlNumber,
             controlNumberIdentifier,

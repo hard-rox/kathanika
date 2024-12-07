@@ -26,13 +26,13 @@ public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IVali
         if (validationErrors.Length == 0) return await next();
 
         Type responseType = typeof(TResponse);
-        if (responseType == typeof(Result)) return (TResponse)(object)Result.Failure(validationErrors);
+        if (responseType == typeof(KnResult)) return (TResponse)(object)KnResult.Failure(validationErrors);
 
-        if (!responseType.IsGenericType || responseType.GetGenericTypeDefinition() != typeof(Result<>))
+        if (!responseType.IsGenericType || responseType.GetGenericTypeDefinition() != typeof(KnResult<>))
             throw new Exception("Invalid response type"); //TODO: More specific...
 
         Type genericArgument = responseType.GetGenericArguments()[0];
-        MethodInfo failureMethod = typeof(Result<>)
+        MethodInfo failureMethod = typeof(KnResult<>)
                                        .MakeGenericType(genericArgument)
                                        .GetMethod("Failure", [typeof(IEnumerable<KnError>)])
                                    ?? throw new Exception("Result method not found.");

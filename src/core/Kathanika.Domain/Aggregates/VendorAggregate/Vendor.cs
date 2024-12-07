@@ -52,7 +52,7 @@ public sealed class Vendor : AggregateRoot
                (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps);
     }
 
-    public static Result<Vendor> Create(
+    public static KnResult<Vendor> Create(
         string name,
         string address,
         string contactNumber,
@@ -88,7 +88,7 @@ public sealed class Vendor : AggregateRoot
             errors.Add(VendorAggregateErrors.InvalidContactPersonEmail);
 
         if (errors.Count > 0)
-            return Result.Failure<Vendor>(errors);
+            return KnResult.Failure<Vendor>(errors);
 
         Vendor newVendor = new(
             name,
@@ -105,10 +105,10 @@ public sealed class Vendor : AggregateRoot
             Status = VendorStatus.Active
         };
 
-        return Result.Success(newVendor);
+        return KnResult.Success(newVendor);
     }
 
-    public Result Update(
+    public KnResult Update(
         string? name,
         string? address,
         string? contactNumber,
@@ -143,7 +143,7 @@ public sealed class Vendor : AggregateRoot
             errors.Add(VendorAggregateErrors.InvalidContactPersonEmail);
 
         if (errors.Count > 0)
-            return Result.Failure<Vendor>(errors);
+            return KnResult.Failure<Vendor>(errors);
 
         Name = name ?? Name;
         Address = address ?? Address;
@@ -155,6 +155,6 @@ public sealed class Vendor : AggregateRoot
         ContactPersonPhone = contactPersonPhone ?? ContactPersonPhone;
         ContactPersonEmail = contactPersonEmail ?? ContactPersonEmail;
 
-        return Result.Success();
+        return KnResult.Success();
     }
 }

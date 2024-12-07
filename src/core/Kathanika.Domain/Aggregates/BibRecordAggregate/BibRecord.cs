@@ -67,7 +67,7 @@ public sealed class BibRecord : AggregateRoot
         if (dateTime == default) errors.Add(errorType);
     }
 
-    public static Result<BibRecord> Create(string leader,
+    public static KnResult<BibRecord> Create(string leader,
         string controlNumber,
         string controlNumberIdentifier,
         DateTime dateTimeOfLatestTransaction,
@@ -83,7 +83,7 @@ public sealed class BibRecord : AggregateRoot
             errors);
         ValidateInput(fixedLengthDataElements, 40, BibRecordAggregateErrors.FixedLengthDataElementsInvalid, errors);
 
-        if (errors.Count > 0) return Result.Failure<BibRecord>(errors);
+        if (errors.Count > 0) return KnResult.Failure<BibRecord>(errors);
 
         BibRecord record = new(leader,
             controlNumber,
@@ -92,6 +92,6 @@ public sealed class BibRecord : AggregateRoot
             fixedLengthDataElements,
             catalogingSource);
 
-        return Result.Success(record);
+        return KnResult.Success(record);
     }
 }

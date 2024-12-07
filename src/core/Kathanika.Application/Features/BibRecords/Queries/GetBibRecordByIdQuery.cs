@@ -3,4 +3,4 @@ using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Features.BibRecords.Queries;
 
-public sealed record GetBibRecordByIdQuery(string Id) : IRequest<Result<BibRecord>>;
+public sealed record GetBibRecordByIdQuery(string Id) : IRequest<KnResult<BibRecord>>;

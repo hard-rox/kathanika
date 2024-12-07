@@ -42,7 +42,7 @@ public sealed class AddVendorCommandHandlerTests
             .Returns(dummyVendor);
 
         // Act
-        Result<Vendor> result = await handler.Handle(command, default);
+        KnResult<Vendor> result = await handler.Handle(command, default);
 
         // Assert
         Assert.True(result.IsSuccess);

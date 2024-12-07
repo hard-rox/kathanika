@@ -6,13 +6,13 @@ namespace Kathanika.Application.Features.Vendors.Commands;
 internal sealed class AddVendorCommandHandler(
     ILogger<AddVendorCommandHandler> logger,
     IVendorRepository vendorRepository
-) : IRequestHandler<AddVendorCommand, Result<Vendor>>
+) : IRequestHandler<AddVendorCommand, KnResult<Vendor>>
 {
-    public async Task<Result<Vendor>> Handle(AddVendorCommand request, CancellationToken cancellationToken)
+    public async Task<KnResult<Vendor>> Handle(AddVendorCommand request, CancellationToken cancellationToken)
     {
         logger.LogInformation("Adding new vendor with @{VendorName}", request.Name);
 
-        Result<Vendor> vendorCreateResult = Vendor.Create(
+        KnResult<Vendor> vendorCreateResult = Vendor.Create(
             request.Name,
             request.Address,
             request.ContactNumber,
@@ -28,6 +28,6 @@ internal sealed class AddVendorCommandHandler(
 
         Vendor vendor = await vendorRepository.AddAsync(vendorCreateResult.Value, cancellationToken);
 
-        return Result.Success(vendor);
+        return KnResult.Success(vendor);
     }
 }

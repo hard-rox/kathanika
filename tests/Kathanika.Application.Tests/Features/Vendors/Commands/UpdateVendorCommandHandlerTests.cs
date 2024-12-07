@@ -16,10 +16,10 @@ public class UpdateVendorCommandHandlerTests
         );
         UpdateVendorCommandHandler handler = new(vendorRepository);
 
-        Result result = await handler.Handle(command, default);
+        KnResult knResult = await handler.Handle(command, default);
 
-        Assert.True(result.IsFailure);
-        Assert.Equal(result.Errors.FirstOrDefault(), VendorAggregateErrors.NotFound(id));
+        Assert.True(knResult.IsFailure);
+        Assert.Equal(knResult.Errors.FirstOrDefault(), VendorAggregateErrors.NotFound(id));
     }
 
     [Fact]
@@ -45,7 +45,7 @@ public class UpdateVendorCommandHandlerTests
         ));
         UpdateVendorCommandHandler handler = new(vendorRepository);
 
-        Result<Vendor> updatedVendor = await handler.Handle(command, default);
+        KnResult<Vendor> updatedVendor = await handler.Handle(command, default);
 
         Assert.True(updatedVendor.IsSuccess);
         Assert.Equal("Updated Name", updatedVendor.Value.Name);

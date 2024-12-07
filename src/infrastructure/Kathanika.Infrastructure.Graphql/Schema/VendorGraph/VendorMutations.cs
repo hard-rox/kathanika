@@ -15,8 +15,8 @@ public sealed class VendorMutations
         AddVendorCommand input
     )
     {
-        Domain.Primitives.Result<Vendor> result = await mediator.Send(input, cancellationToken);
-        return new AddVendorPayload(result);
+        Domain.Primitives.KnResult<Vendor> knResult = await mediator.Send(input, cancellationToken);
+        return new AddVendorPayload(knResult);
     }
 
     public async Task<UpdateVendorPayload> UpdateVendorAsync(
@@ -25,8 +25,8 @@ public sealed class VendorMutations
         UpdateVendorCommand input
     )
     {
-        Domain.Primitives.Result<Vendor> result = await mediator.Send(input, cancellationToken);
-        return new UpdateVendorPayload(result);
+        Domain.Primitives.KnResult<Vendor> knResult = await mediator.Send(input, cancellationToken);
+        return new UpdateVendorPayload(knResult);
     }
 
     public async Task<DeleteVendorPayload> DeleteVendorAsync(
@@ -35,7 +35,7 @@ public sealed class VendorMutations
         string id
     )
     {
-        Result result = await mediator.Send(new DeleteVendorCommand(id), cancellationToken);
-        return new DeleteVendorPayload(id, result);
+        KnResult knResult = await mediator.Send(new DeleteVendorCommand(id), cancellationToken);
+        return new DeleteVendorPayload(id, knResult);
     }
 }

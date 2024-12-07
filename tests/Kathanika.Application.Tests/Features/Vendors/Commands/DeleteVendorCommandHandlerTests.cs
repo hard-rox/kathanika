@@ -40,9 +40,9 @@ public class DeleteVendorCommandHandlerTests
         DeleteVendorCommand command = new(id);
         DeleteVendorCommandHandler handler = new(vendorRepository);
 
-        Result result = await handler.Handle(command, default);
+        KnResult knResult = await handler.Handle(command, default);
 
-        Assert.True(result.IsFailure);
-        Assert.Equal(result.Errors.FirstOrDefault(), VendorAggregateErrors.NotFound(id));
+        Assert.True(knResult.IsFailure);
+        Assert.Equal(knResult.Errors.FirstOrDefault(), VendorAggregateErrors.NotFound(id));
     }
 }
