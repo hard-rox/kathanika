@@ -5,15 +5,15 @@ namespace Kathanika.Application.Features.Patrons.Commands;
 
 internal sealed class UpdatePatronCommandHandler(
     IPatronRepository patronRepository
-) : IRequestHandler<UpdatePatronCommand, Result<Patron>>
+) : IRequestHandler<UpdatePatronCommand, KnResult<Patron>>
 {
-    public async Task<Result<Patron>> Handle(UpdatePatronCommand request, CancellationToken cancellationToken)
+    public async Task<KnResult<Patron>> Handle(UpdatePatronCommand request, CancellationToken cancellationToken)
     {
         Patron? patron = await patronRepository.GetByIdAsync(request.Id, cancellationToken);
         if (patron is null)
-            return Result.Failure<Patron>(PatronAggregateErrors.NotFound(request.Id));
+            return KnResult.Failure<Patron>(PatronAggregateErrors.NotFound(request.Id));
 
-        Result patronUpdateResult = patron.Update(
+        KnResult patronUpdateKnResult = patron.Update(
             request.Patch.CardNumber,
             request.Patch.Salutation,
             request.Patch.FirstName,
@@ -25,11 +25,11 @@ internal sealed class UpdatePatronCommandHandler(
             request.Patch.Email
         );
 
-        if (patronUpdateResult.IsFailure)
-            return Result.Failure<Patron>(patronUpdateResult.Errors);
+        if (patronUpdateKnResult.IsFailure)
+            return KnResult.Failure<Patron>(patronUpdateKnResult.Errors);
 
         await patronRepository.UpdateAsync(patron, cancellationToken);
 
-        return Result.Success(patron);
+        return KnResult.Success(patron);
     }
 }

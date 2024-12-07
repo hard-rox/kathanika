@@ -5,11 +5,11 @@ namespace Kathanika.Application.Features.Patrons.Commands;
 
 internal sealed class CreatePatronCommandHandler(
     IPatronRepository patronRepository
-) : IRequestHandler<CreatePatronCommand, Result<Patron>>
+) : IRequestHandler<CreatePatronCommand, KnResult<Patron>>
 {
-    public async Task<Result<Patron>> Handle(CreatePatronCommand request, CancellationToken cancellationToken)
+    public async Task<KnResult<Patron>> Handle(CreatePatronCommand request, CancellationToken cancellationToken)
     {
-        Result<Patron> patronResult = Patron.Create(
+        KnResult<Patron> patronResult = Patron.Create(
             request.Surname,
             request.CardNumber,
             request.Salutation,
@@ -25,6 +25,6 @@ internal sealed class CreatePatronCommandHandler(
             return patronResult;
 
         Patron patron = await patronRepository.AddAsync(patronResult.Value, cancellationToken);
-        return Result.Success(patron);
+        return KnResult.Success(patron);
     }
 }

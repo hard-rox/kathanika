@@ -13,7 +13,7 @@ public class PatronTests
         // Arrange
         Patron dummyPatron = _patronFaker.Generate();
         // Act
-        Result<Patron> patronResult = Patron.Create(dummyPatron.Surname, dummyPatron.CardNumber);
+        KnResult<Patron> patronResult = Patron.Create(dummyPatron.Surname, dummyPatron.CardNumber);
         Patron patron = patronResult.Value;
 
         // Assert
@@ -33,7 +33,7 @@ public class PatronTests
     {
         // Arrange
         Patron existingPatron = _patronFaker.Generate();
-        Result<Patron> initialResult = Patron.Create(existingPatron.Surname, existingPatron.CardNumber);
+        KnResult<Patron> initialResult = Patron.Create(existingPatron.Surname, existingPatron.CardNumber);
         Patron patronToUpdate = initialResult.Value;
 
         // New data for the update
@@ -43,11 +43,11 @@ public class PatronTests
         const string newAddress = "Updated Address";
 
         // Act
-        Result updateResult = patronToUpdate.Update(newCardNumber, firstName: newFirstName, surname: newSurname,
+        KnResult updateKnResult = patronToUpdate.Update(newCardNumber, firstName: newFirstName, surname: newSurname,
             address: newAddress);
 
         // Assert
-        Assert.True(updateResult.IsSuccess);
+        Assert.True(updateKnResult.IsSuccess);
         Assert.NotNull(patronToUpdate);
         Assert.Equal(newFirstName, patronToUpdate.FirstName);
         Assert.Equal(newSurname, patronToUpdate.Surname);

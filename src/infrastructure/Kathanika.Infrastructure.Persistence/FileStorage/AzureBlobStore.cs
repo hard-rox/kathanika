@@ -2,6 +2,7 @@ using Azure;
 using Azure.Storage.Blobs;
 using Azure.Storage.Blobs.Models;
 using Kathanika.Application.Services;
+using Path = System.IO.Path;
 
 namespace Kathanika.Infrastructure.Persistence.FileStorage;
 

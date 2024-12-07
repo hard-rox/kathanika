@@ -15,8 +15,8 @@ public sealed class PatronMutations
         CreatePatronCommand input
     )
     {
-        Domain.Primitives.Result<Patron> result = await mediator.Send(input, cancellationToken);
-        return new CreatePatronPayload(result);
+        Domain.Primitives.KnResult<Patron> knResult = await mediator.Send(input, cancellationToken);
+        return new CreatePatronPayload(knResult);
     }
 
     public async Task<UpdatePatronPayload> UpdatePatronAsync(
@@ -25,8 +25,8 @@ public sealed class PatronMutations
         UpdatePatronCommand input
     )
     {
-        Domain.Primitives.Result<Patron> result = await mediator.Send(input, cancellationToken);
-        return new UpdatePatronPayload(result);
+        Domain.Primitives.KnResult<Patron> knResult = await mediator.Send(input, cancellationToken);
+        return new UpdatePatronPayload(knResult);
     }
 
     public async Task<DeletePatronPayload> DeletePatronAsync(
@@ -35,7 +35,7 @@ public sealed class PatronMutations
         string id
     )
     {
-        Result result = await mediator.Send(new DeletePatronCommand(id), cancellationToken);
-        return new DeletePatronPayload(id, result);
+        KnResult knResult = await mediator.Send(new DeletePatronCommand(id), cancellationToken);
+        return new DeletePatronPayload(id, knResult);
     }
 }

@@ -4,11 +4,11 @@ using Kathanika.Domain.Primitives;
 namespace Kathanika.Application.Features.BibRecords.Commands;
 
 internal sealed class CreateBibRecordCommandHandler(IBibRecordRepository bibRecordRepository)
-    : IRequestHandler<CreateBibRecordCommand, Result<BibRecord>>
+    : IRequestHandler<CreateBibRecordCommand, KnResult<BibRecord>>
 {
-    public async Task<Result<BibRecord>> Handle(CreateBibRecordCommand request, CancellationToken cancellationToken)
+    public async Task<KnResult<BibRecord>> Handle(CreateBibRecordCommand request, CancellationToken cancellationToken)
     {
-        Result<BibRecord> bibRecordResult = BibRecord.Create(
+        KnResult<BibRecord> bibRecordResult = BibRecord.Create(
             request.Leader,
             request.ControlNumber,
             request.ControlNumberIdentifier,
@@ -22,6 +22,6 @@ internal sealed class CreateBibRecordCommandHandler(IBibRecordRepository bibReco
 
         BibRecord createdBibRecord = await bibRecordRepository.AddAsync(bibRecordResult.Value, cancellationToken);
 
-        return Result.Success(createdBibRecord);
+        return KnResult.Success(createdBibRecord);
     }
 }

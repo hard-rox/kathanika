@@ -15,14 +15,14 @@ internal static class SchemaExtensions
     }
 
     internal static TOut? Match<TOut>(
-        this Domain.Primitives.Result<TOut> result,
+        this Domain.Primitives.KnResult<TOut> knResult,
         IResolverContext context
     )
         where TOut : class
     {
-        if (!result.IsFailure) return result.Value;
+        if (!knResult.IsFailure) return knResult.Value;
 
-        context.SetError(result.Errors);
+        context.SetError(knResult.Errors);
         return null;
     }
 }

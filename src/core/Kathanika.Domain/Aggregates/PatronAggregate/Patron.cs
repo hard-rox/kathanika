@@ -26,7 +26,7 @@ public sealed class Patron : AggregateRoot
 
     public string FullName => $"{Salutation} {FirstName} {Surname}";
 
-    public static Result<Patron> Create(
+    public static KnResult<Patron> Create(
         string surname,
         string cardNumber,
         string? salutation = null,
@@ -43,7 +43,7 @@ public sealed class Patron : AggregateRoot
             errors.Add(PatronAggregateErrors.FutureDateOfBirth);
 
         if (errors.Count != 0)
-            return Result.Failure<Patron>(errors);
+            return KnResult.Failure<Patron>(errors);
 
         Patron newPatron = new(
             surname,
@@ -62,10 +62,10 @@ public sealed class Patron : AggregateRoot
         if (!string.IsNullOrWhiteSpace(photoFileId))
             newPatron.AddDomainEvent(new FileUsedDomainEvent(photoFileId));
 
-        return Result.Success(newPatron);
+        return KnResult.Success(newPatron);
     }
 
-    public Result Update(
+    public KnResult Update(
         string? cardNumber = null,
         string? salutation = null,
         string? firstName = null,
@@ -86,7 +86,7 @@ public sealed class Patron : AggregateRoot
         Email = !string.IsNullOrWhiteSpace(email) ? email : Email;
 
         if (string.IsNullOrWhiteSpace(photoFileId))
-            return Result.Success();
+            return KnResult.Success();
 
         IDomainEvent photoFileEvent
             = PhotoFileId is null
@@ -96,6 +96,6 @@ public sealed class Patron : AggregateRoot
         PhotoFileId = photoFileId;
         AddDomainEvent(photoFileEvent);
 
-        return Result.Success();
+        return KnResult.Success();
     }
 }

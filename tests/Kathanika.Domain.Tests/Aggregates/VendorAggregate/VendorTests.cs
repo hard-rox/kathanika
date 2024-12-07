@@ -30,7 +30,7 @@ public class VendorTests
         Vendor vendor = _vendorFaker.Generate();
 
         // Act
-        Result<Vendor> result = Vendor.Create(
+        KnResult<Vendor> result = Vendor.Create(
             emptyName,
             vendor.Address,
             vendor.ContactNumber,
@@ -54,7 +54,7 @@ public class VendorTests
         Vendor vendor = _vendorFaker.Generate();
 
         // Act
-        Result<Vendor> result = Vendor.Create(
+        KnResult<Vendor> result = Vendor.Create(
             vendor.Name,
             vendor.Address,
             invalidPhoneNumber,
@@ -78,7 +78,7 @@ public class VendorTests
         Vendor vendor = _vendorFaker.Generate();
 
         // Act
-        Result updateResult = vendor.Update(
+        KnResult updateKnResult = vendor.Update(
             null,
             null,
             null,
@@ -90,8 +90,8 @@ public class VendorTests
             null);
 
         // Assert
-        Assert.True(updateResult.IsFailure);
-        Assert.Contains(updateResult.Errors, e => e.Code == VendorAggregateErrors.InvalidContactPersonPhone.Code);
+        Assert.True(updateKnResult.IsFailure);
+        Assert.Contains(updateKnResult.Errors, e => e.Code == VendorAggregateErrors.InvalidContactPersonPhone.Code);
     }
 
     [Fact]
@@ -102,7 +102,7 @@ public class VendorTests
         const string newName = "New Vendor Name";
 
         // Act
-        Result updateResult = vendor.Update(
+        KnResult updateKnResult = vendor.Update(
             newName,
             null,
             null,
@@ -114,7 +114,7 @@ public class VendorTests
             null);
 
         // Assert
-        Assert.True(updateResult.IsSuccess);
+        Assert.True(updateKnResult.IsSuccess);
         Assert.Equal(newName, vendor.Name);
     }
 
@@ -125,7 +125,7 @@ public class VendorTests
         Vendor vendor = _vendorFaker.Generate();
 
         // Act
-        Result<Vendor> result = Vendor.Create(
+        KnResult<Vendor> result = Vendor.Create(
             vendor.Name,
             vendor.Address,
             vendor.ContactNumber,

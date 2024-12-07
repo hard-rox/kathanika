@@ -10,4 +10,4 @@ public sealed record CreateBibRecordCommand(
     DateTime DateTimeOfLatestTransaction,
     string FixedLengthDataElements,
     CatalogingSource CatalogingSource
-) : IRequest<Result<BibRecord>>;
+) : IRequest<KnResult<BibRecord>>;

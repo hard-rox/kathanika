@@ -6,9 +6,9 @@ namespace Kathanika.Infrastructure.Graphql.Schema.PatronGraph;
 public sealed record CreatePatronPayload
     : Payload<Patron>
 {
-    public CreatePatronPayload(Domain.Primitives.Result<Patron> result) : base(
-        result,
-        result.IsSuccess ? $"New patron {result.Value.FullName} added successfully." : "New patron add failed."
+    public CreatePatronPayload(Domain.Primitives.KnResult<Patron> knResult) : base(
+        knResult,
+        knResult.IsSuccess ? $"New patron {knResult.Value.FullName} added successfully." : "New patron add failed."
     )
     {
     }

@@ -4,14 +4,14 @@ using Kathanika.Domain.Primitives;
 namespace Kathanika.Application.Features.BibRecords.Queries;
 
 internal sealed class GetBibRecordByIdQueryHandler(IBibRecordRepository bibRecordRepository)
-    : IRequestHandler<GetBibRecordByIdQuery, Result<BibRecord>>
+    : IRequestHandler<GetBibRecordByIdQuery, KnResult<BibRecord>>
 {
-    public async Task<Result<BibRecord>> Handle(GetBibRecordByIdQuery request, CancellationToken cancellationToken)
+    public async Task<KnResult<BibRecord>> Handle(GetBibRecordByIdQuery request, CancellationToken cancellationToken)
     {
         BibRecord? bibRecord = await bibRecordRepository.GetByIdAsync(request.Id, cancellationToken);
 
         return bibRecord is null
-            ? Result.Failure<BibRecord>(BibRecordAggregateErrors.NotFound(request.Id))
-            : Result.Success(bibRecord);
+            ? KnResult.Failure<BibRecord>(BibRecordAggregateErrors.NotFound(request.Id))
+            : KnResult.Success(bibRecord);
     }
 }

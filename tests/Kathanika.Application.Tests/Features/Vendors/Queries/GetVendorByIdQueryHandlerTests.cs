@@ -23,7 +23,7 @@ public class GetVendorByIdQueryHandlerTests
             .Returns(Task.FromResult<Vendor?>(null));
 
         // Act
-        Result<Vendor> result = await _handler.Handle(query, CancellationToken.None);
+        KnResult<Vendor> result = await _handler.Handle(query, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsFailure);
@@ -54,7 +54,7 @@ public class GetVendorByIdQueryHandlerTests
             .Returns(Task.FromResult<Vendor?>(vendor));
 
         // Act
-        Result<Vendor> result = await _handler.Handle(query, CancellationToken.None);
+        KnResult<Vendor> result = await _handler.Handle(query, CancellationToken.None);
 
         // Assert
         Assert.True(result.IsSuccess);

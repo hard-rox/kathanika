@@ -13,4 +13,4 @@ public sealed record AddVendorCommand(
     string? ContactPersonName,
     string? ContactPersonPhone,
     string? ContactPersonEmail
-) : IRequest<Result<Vendor>>;
+) : IRequest<KnResult<Vendor>>;
