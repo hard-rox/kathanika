@@ -14,7 +14,7 @@
         <PackageVersion Include="HotChocolate.Diagnostics" Version="14.3.0"/>
         <PackageVersion Include="MediatR" Version="12.4.1"/>
         <PackageVersion Include="Microsoft.Extensions.Caching.Memory" Version="9.0.0"/>
-        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.0"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.1"/>
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.0"/>
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.0"/>
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
