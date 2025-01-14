@@ -30,7 +30,7 @@ public sealed class Queries
         CancellationToken cancellationToken
     )
     {
-        Domain.Primitives.KnResult<BibRecord> knResult
+        KnResult<BibRecord> knResult
             = await mediator.Send(new GetBibRecordByIdQuery(id), cancellationToken);
         return knResult.Match(context);
     }

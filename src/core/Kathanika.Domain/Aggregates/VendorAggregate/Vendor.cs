@@ -6,6 +6,12 @@ namespace Kathanika.Domain.Aggregates.VendorAggregate;
 
 public sealed class Vendor : AggregateRoot
 {
+#pragma warning disable CS8618, CS9264
+    private Vendor()
+    {
+    }
+#pragma warning restore CS8618, CS9264
+
     private Vendor(
         string name,
         string address,

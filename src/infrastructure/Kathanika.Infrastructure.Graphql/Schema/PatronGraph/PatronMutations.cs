@@ -15,7 +15,7 @@ public sealed class PatronMutations
         CreatePatronCommand input
     )
     {
-        Domain.Primitives.KnResult<Patron> knResult = await mediator.Send(input, cancellationToken);
+        KnResult<Patron> knResult = await mediator.Send(input, cancellationToken);
         return new CreatePatronPayload(knResult);
     }
 
@@ -25,7 +25,7 @@ public sealed class PatronMutations
         UpdatePatronCommand input
     )
     {
-        Domain.Primitives.KnResult<Patron> knResult = await mediator.Send(input, cancellationToken);
+        KnResult<Patron> knResult = await mediator.Send(input, cancellationToken);
         return new UpdatePatronPayload(knResult);
     }
 

@@ -113,7 +113,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _logger.LogInformation(
             "Getting document count of all documents of type {@DocumentType} from collection {@CollectionName}",
             typeof(T).Name, _collectionName);
-        var cacheKey = $"{typeof(T).Name.ToLower()}:count";
+        var cacheKey = $"{typeof(T).Name.ToLower()}-count";
         var cachedDocumentCount = _cacheService.Get<long?>(cacheKey);
         if (cachedDocumentCount is not null)
         {
@@ -164,6 +164,9 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
             "Added new document with _id {@_id} of type {@DocumentType} into collection {@CollectionName}",
             aggregate.ToBsonDocument()["_id"].ToJson(), typeof(T).Name, _collectionName);
 
+        var cacheKey = $"{typeof(T).Name.ToLower()}-{aggregate.Id}";
+        _cacheService.Set(cacheKey, aggregate);
+
         List<OutboxMessage> outboxMessages = GetOutboxMessagesFromAggregate(aggregate);
         if (outboxMessages.Count > 0)
             await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
@@ -191,7 +194,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         if (outboxMessages.Count > 0)
             await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
 
-        var cacheKey = $"{typeof(T).Name.ToLower()}:{aggregate.Id}";
+        var cacheKey = $"{typeof(T).Name.ToLower()}-{aggregate.Id}";
         T? cachedDocument = _cacheService.Get<T>(cacheKey);
         if (cachedDocument is not null)
         {
@@ -211,7 +214,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         _logger.LogInformation("Deleted document of type {@DocumentType} with id {@DocumentId} from {CollectionName}",
             typeof(T).Name, id, _collectionName);
 
-        var cacheKey = $"{typeof(T).Name.ToLower()}:{id}";
+        var cacheKey = $"{typeof(T).Name.ToLower()}-{id}";
         T? cachedDocument = _cacheService.Get<T>(cacheKey);
         if (cachedDocument is not null)
         {

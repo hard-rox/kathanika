@@ -19,7 +19,7 @@ public abstract record Payload
 public abstract record Payload<TData> : Payload
     where TData : class
 {
-    protected Payload(Domain.Primitives.KnResult<TData> knResult, string? message = null)
+    protected Payload(KnResult<TData> knResult, string? message = null)
         : base(knResult, message)
     {
         if (knResult.IsSuccess)

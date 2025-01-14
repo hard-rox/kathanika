@@ -15,7 +15,7 @@ internal static class SchemaExtensions
     }
 
     internal static TOut? Match<TOut>(
-        this Domain.Primitives.KnResult<TOut> knResult,
+        this KnResult<TOut> knResult,
         IResolverContext context
     )
         where TOut : class
