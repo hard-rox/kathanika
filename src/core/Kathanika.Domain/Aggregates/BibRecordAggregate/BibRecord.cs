@@ -11,6 +11,13 @@ namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 /// </remarks>
 public sealed class BibRecord : AggregateRoot
 {
+    // ReSharper disable once UnusedMember.Local
+#pragma warning disable CS8618, CS9264
+    private BibRecord()
+    {
+    }
+#pragma warning restore CS8618, CS9264
+
     private BibRecord(string leader,
         string controlNumber,
         string controlNumberIdentifier,

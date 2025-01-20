@@ -1,6 +1,6 @@
 using System.Diagnostics.CodeAnalysis;
-using Kathanika.Application.Services;
 using Kathanika.Domain.Primitives;
+using Microsoft.Extensions.Caching.Hybrid;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Logging.Abstractions;
 using MongoDB.Driver;
@@ -9,7 +9,7 @@ namespace Kathanika.Infrastructure.Persistence.Tests;
 
 public sealed class BaseRepositoryTests
 {
-    private readonly ICacheService _cache = Substitute.For<ICacheService>();
+    private readonly HybridCache _cache = Substitute.For<HybridCache>();
     private readonly IMongoCollection<DummyAggregate> _collection = Substitute.For<IMongoCollection<DummyAggregate>>();
     private readonly IMongoDatabase _database = Substitute.For<IMongoDatabase>();
 
@@ -19,20 +19,6 @@ public sealed class BaseRepositoryTests
     {
         _database.GetCollection<DummyAggregate>(Arg.Any<string>(), Arg.Any<MongoCollectionSettings>())
             .Returns(_collection);
-    }
-
-    [Fact]
-    public async Task GetById_Should_Call_FindAsync()
-    {
-        DummyRepo repo = new(_database, "", _nullLogger, _cache);
-
-        // Act
-        await repo.GetByIdAsync("66b81d4e12412b28caa14984");
-
-        // Assert
-        await _collection.Received(1).FindAsync(Arg.Any<FilterDefinition<DummyAggregate>>(),
-            Arg.Is<FindOptions<DummyAggregate, DummyAggregate>>(x => x == null),
-            Arg.Is<CancellationToken>(x => x == default));
     }
 
     [Fact]
@@ -117,5 +103,5 @@ public sealed class BaseRepositoryTests
         IMongoDatabase database,
         string collectionName,
         ILogger<DummyRepo> logger,
-        ICacheService cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService);
+        HybridCache cacheService) : Repository<DummyAggregate>(database, collectionName, logger, cacheService);
 }

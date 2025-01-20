@@ -7,6 +7,7 @@ namespace Kathanika.Domain.Aggregates.VendorAggregate;
 public sealed class Vendor : AggregateRoot
 {
 #pragma warning disable CS8618, CS9264
+    // ReSharper disable once UnusedMember.Local
     private Vendor()
     {
     }

@@ -5,6 +5,13 @@ namespace Kathanika.Domain.Aggregates.PatronAggregate;
 
 public sealed class Patron : AggregateRoot
 {
+    // ReSharper disable once UnusedMember.Local
+#pragma warning disable CS8618, CS9264
+    private Patron()
+    {
+    }
+#pragma warning restore CS8618, CS9264
+
     private Patron(
         string surname,
         string cardNumber)
