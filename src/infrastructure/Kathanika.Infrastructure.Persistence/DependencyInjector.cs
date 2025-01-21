@@ -37,11 +37,17 @@ public static class DependencyInjector
     {
         RegisterClassMapFromAssembly();
 
-        var connectionString = configuration.GetConnectionString("mongoDbConnection");
+        var connectionString = configuration.GetConnectionString("mongoDb");
         services.AddMongoDb(connectionString);
 
-        services.AddMemoryCache();
-        services.AddScoped<ICacheService, MemoryCacheService>();
+#pragma warning disable EXTEXP0018
+        services.AddHybridCache()
+            .AddSerializerFactory<CacheJsonSerializerFactory>();
+#pragma warning restore EXTEXP0018
+        services.AddStackExchangeRedisCache(opt =>
+        {
+            opt.Configuration = configuration.GetConnectionString("redis");
+        });
 
         services.AddScoped<IOutboxMessageService, OutboxMessageService>();
         services.AddSingleton<IFileMetadataService, FileMetadataService>();
@@ -49,7 +55,7 @@ public static class DependencyInjector
         // services.AddSingleton<IFileStore, DiskFileStore>();
         services.AddSingleton<IFileStore, AzureBlobStore>();
         services.AddSingleton(_ =>
-            new BlobServiceClient(configuration.GetConnectionString("azureBlobStorageConnection")));
+            new BlobServiceClient(configuration.GetConnectionString("azureBlobStorage")));
 
         services.AddScoped<IPatronRepository, PatronRepository>();
         services.AddScoped<IVendorRepository, VendorRepository>();

@@ -6,7 +6,7 @@ namespace Kathanika.Infrastructure.Graphql.Schema.VendorGraph;
 public sealed record UpdateVendorPayload
     : Payload<Vendor>
 {
-    public UpdateVendorPayload(Domain.Primitives.KnResult<Vendor> knResult)
+    public UpdateVendorPayload(KnResult<Vendor> knResult)
         : base(knResult,
             knResult.IsSuccess
                 ? $"New vendor {knResult.Value.Name} added successfully."

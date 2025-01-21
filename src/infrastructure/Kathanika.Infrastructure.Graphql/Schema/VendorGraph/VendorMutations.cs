@@ -15,7 +15,7 @@ public sealed class VendorMutations
         AddVendorCommand input
     )
     {
-        Domain.Primitives.KnResult<Vendor> knResult = await mediator.Send(input, cancellationToken);
+        KnResult<Vendor> knResult = await mediator.Send(input, cancellationToken);
         return new AddVendorPayload(knResult);
     }
 
@@ -25,7 +25,7 @@ public sealed class VendorMutations
         UpdateVendorCommand input
     )
     {
-        Domain.Primitives.KnResult<Vendor> knResult = await mediator.Send(input, cancellationToken);
+        KnResult<Vendor> knResult = await mediator.Send(input, cancellationToken);
         return new UpdateVendorPayload(knResult);
     }
 

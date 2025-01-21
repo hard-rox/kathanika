@@ -6,7 +6,7 @@ namespace Kathanika.Infrastructure.Graphql.Schema.BibRecordGraph;
 public sealed record CreateBibRecordPayload
     : Payload<BibRecord>
 {
-    public CreateBibRecordPayload(Domain.Primitives.KnResult<BibRecord> knResult)
+    public CreateBibRecordPayload(KnResult<BibRecord> knResult)
         : base(knResult,
             knResult.IsSuccess
                 ? $"New bib record with control number {knResult.Value.ControlNumber} created successfully."

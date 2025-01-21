@@ -29,7 +29,7 @@ public sealed class PatronQueries
         CancellationToken cancellationToken
     )
     {
-        Domain.Primitives.KnResult<Patron> knResult = await mediator.Send(new GetPatronByIdQuery(id), cancellationToken);
+        KnResult<Patron> knResult = await mediator.Send(new GetPatronByIdQuery(id), cancellationToken);
         return knResult.Match(context);
     }
 }

@@ -29,7 +29,7 @@ public sealed class VendorQueries
         CancellationToken cancellationToken
     )
     {
-        Domain.Primitives.KnResult<Vendor> knResult = await mediator.Send(new GetVendorByIdQuery(id), cancellationToken);
+        KnResult<Vendor> knResult = await mediator.Send(new GetVendorByIdQuery(id), cancellationToken);
         return knResult.Match(context);
     }
 }
