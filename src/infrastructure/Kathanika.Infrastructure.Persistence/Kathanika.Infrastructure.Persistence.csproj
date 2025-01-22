@@ -16,7 +16,6 @@
         <PackageReference Include="Microsoft.Extensions.Logging.Abstractions"/>
         <PackageReference Include="MongoDB.Driver"/>
         <PackageReference Include="Newtonsoft.Json"/>
-        <PackageReference Include="Microsoft.Extensions.Caching.Memory"/>
     </ItemGroup>
 
     <ItemGroup>
