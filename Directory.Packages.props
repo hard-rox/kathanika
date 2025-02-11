@@ -15,7 +15,7 @@
         <PackageVersion Include="MediatR" Version="12.4.1"/>
         <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.0.0-preview.9.24556.5" />
         <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.1" />
-        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.1"/>
+        <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.2"/>
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.1"/>
         <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.1"/>
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.11.1"/>
