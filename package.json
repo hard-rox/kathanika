@@ -43,7 +43,7 @@
     "@angular/compiler-cli": "^19.1.6",
     "@chromatic-com/storybook": "^3.2.4",
     "@compodoc/compodoc": "^1.1.26",
-    "@graphql-codegen/cli": "^5.0.4",
+    "@graphql-codegen/cli": "^5.0.5",
     "@graphql-codegen/typescript": "^4.1.2",
     "@graphql-codegen/typescript-apollo-angular": "^4.0.0",
     "@graphql-codegen/typescript-operations": "^4.4.1",
