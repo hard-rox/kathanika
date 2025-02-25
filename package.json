@@ -30,7 +30,7 @@
     "apollo-angular": "^10.0.2",
     "express": "^4.21.2",
     "graphql": "^16.10.0",
-    "rxjs": "~7.8.0",
+    "rxjs": "~7.8.2",
     "sweetalert2": "^11.15.10",
     "ts-node": "^10.9.2",
     "tslib": "^2.3.0",
