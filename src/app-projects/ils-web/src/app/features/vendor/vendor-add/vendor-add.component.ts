@@ -35,8 +35,10 @@ export class VendorAddComponent {
             }))
             .subscribe({
                 next: (result) => {
-                    if (result.loading)
+                    if (result.loading){
                         this.isPanelLoading = true;
+                        return;
+                    }
 
                     if (result.errors || result.data?.addVendor.errors) {
                         this.errors = [];

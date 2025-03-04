@@ -83,8 +83,10 @@ export class VendorUpdateComponent implements OnInit {
             }))
             .subscribe({
                 next: (result) => {
-                    if (result.loading)
+                    if (result.loading){
                         this.isPanelLoading = true;
+                        return;
+                    }
                     
                     if (result.errors || result.data?.updateVendor.errors) {
                         this.errors = [];
