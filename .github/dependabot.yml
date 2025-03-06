@@ -43,6 +43,7 @@ updates:
       storybook-deps:
         patterns:
           - "@storybook/*"
+          - "storybook"
         update-types:
           - "major"
           - "minor"
