@@ -19,15 +19,15 @@ public sealed class PurchaseOrderMutations
         return new CreatePurchaseOrderPayload(knResult);
     }
 
-    // public async Task<UpdatePurchaseOrderPayload> UpdatePurchaseOrderAsync(
-    //     [Service] IMediator mediator,
-    //     CancellationToken cancellationToken,
-    //     UpdatePurchaseOrderCommand input
-    // )
-    // {
-    //     KnResult<PurchaseOrder> knResult = await mediator.Send(input, cancellationToken);
-    //     return new UpdatePurchaseOrderPayload(knResult);
-    // }
+    public async Task<UpdatePurchaseOrderPayload> UpdatePurchaseOrderAsync(
+        [Service] IMediator mediator,
+        CancellationToken cancellationToken,
+        UpdatePurchaseOrderCommand input
+    )
+    {
+        KnResult<PurchaseOrder> knResult = await mediator.Send(input, cancellationToken);
+        return new UpdatePurchaseOrderPayload(knResult);
+    }
     //
     // public async Task<DeletePurchaseOrderPayload> DeletePurchaseOrderAsync(
     //     [Service] IMediator mediator,

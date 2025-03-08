@@ -9,5 +9,5 @@ internal sealed class PurchaseOrderRepository(
     HybridCache hybridCache)
     : Repository<PurchaseOrder>(database, CollectionName, logger, hybridCache), IPurchaseOrderRepository
 {
-    private const string CollectionName = "purchaseRequests";
+    private const string CollectionName = "purchaseOrders";
 }

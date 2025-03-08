@@ -21,6 +21,6 @@ internal sealed class CreateBibRecordCommandHandler(IBibRecordRepository bibReco
 
         BibRecord createdBibRecord = await bibRecordRepository.AddAsync(bibRecordResult.Value, cancellationToken);
 
-        return KnResult.Success(createdBibRecord);
+        return createdBibRecord;
     }
 }

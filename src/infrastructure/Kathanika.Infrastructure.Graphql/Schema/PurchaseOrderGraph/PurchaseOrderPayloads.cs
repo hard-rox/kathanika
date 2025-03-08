@@ -12,3 +12,13 @@ public sealed record CreatePurchaseOrderPayload : Payload<PurchaseOrder>
     {
     }
 }
+
+public sealed record UpdatePurchaseOrderPayload : Payload<PurchaseOrder>
+{
+    public UpdatePurchaseOrderPayload(KnResult<PurchaseOrder> knResult) : base(
+        knResult,
+        knResult.IsSuccess ? $"Purchase order updated successfully." : "Purchase order update failed."
+    )
+    {
+    }
+}

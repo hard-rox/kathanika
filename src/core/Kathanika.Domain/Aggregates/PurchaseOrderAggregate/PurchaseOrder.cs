@@ -50,4 +50,18 @@ public sealed class PurchaseOrder : AggregateRoot
             internalNote,
             vendorNote);
     }
+
+    public KnResult Update(
+        string? vendorId,
+        string? vendorName,
+        string? internalNote,
+        string? vendorNote)
+    {
+        VendorId = !string.IsNullOrWhiteSpace(vendorId) ? vendorId : VendorId;
+        VendorName = !string.IsNullOrWhiteSpace(vendorName) ? vendorName : VendorName;
+        InternalNote = !string.IsNullOrWhiteSpace(internalNote) ? internalNote : InternalNote;
+        VendorNote = !string.IsNullOrWhiteSpace(vendorNote) ? vendorNote : VendorNote;
+
+        return KnResult.Success();
+    }
 }

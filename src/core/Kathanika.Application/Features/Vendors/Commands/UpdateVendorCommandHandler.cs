@@ -10,7 +10,7 @@ internal sealed class UpdateVendorCommandHandler(IVendorRepository vendorReposit
         Vendor? existingVendor = await vendorRepository.GetByIdAsync(request.Id, cancellationToken);
 
         if (existingVendor is null)
-            return KnResult.Failure<Vendor>(VendorAggregateErrors.NotFound(request.Id));
+            return VendorAggregateErrors.NotFound(request.Id);
 
         existingVendor.Update(
             request.Patch.Name,
@@ -25,6 +25,6 @@ internal sealed class UpdateVendorCommandHandler(IVendorRepository vendorReposit
         );
 
         await vendorRepository.UpdateAsync(existingVendor, cancellationToken);
-        return KnResult.Success(existingVendor);
+        return existingVendor;
     }
 }

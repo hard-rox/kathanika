@@ -17,7 +17,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     protected Repository(IMongoDatabase database, string collectionName, ILogger<Repository<T>> logger, HybridCache hybridCache)
     {
-        _collectionName = collectionName.ToLower();
+        _collectionName = collectionName;
         _outboxMessageCollection = database.GetCollection<OutboxMessage>(Constants.OutboxMessageCollectionName);
         _collection = database.GetCollection<T>(_collectionName);
         _logger = logger;

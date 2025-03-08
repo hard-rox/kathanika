@@ -32,14 +32,14 @@ internal sealed class CreatePurchaseOrderCommandHandler(
         ));
 
         PurchaseOrder purchaseOrder = PurchaseOrder.Create(
-            request.VendorId,
+            vendor.Id,
             vendor.Name,
             purchaseItems,
             request.InternalNote,
             request.VendorNote);
 
-        await purchaseOrderRepository.AddAsync(purchaseOrder, cancellationToken);
+        PurchaseOrder createdPurchaseOrder = await purchaseOrderRepository.AddAsync(purchaseOrder, cancellationToken);
 
-        return KnResult.Success(purchaseOrder);
+        return KnResult.Success(createdPurchaseOrder);
     }
 }

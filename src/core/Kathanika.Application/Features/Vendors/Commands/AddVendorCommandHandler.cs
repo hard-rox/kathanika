@@ -27,6 +27,6 @@ internal sealed class AddVendorCommandHandler(
 
         Vendor vendor = await vendorRepository.AddAsync(vendorCreateResult.Value, cancellationToken);
 
-        return KnResult.Success(vendor);
+        return vendor;
     }
 }

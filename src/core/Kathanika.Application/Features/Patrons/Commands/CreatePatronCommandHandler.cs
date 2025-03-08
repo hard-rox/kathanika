@@ -24,6 +24,6 @@ internal sealed class CreatePatronCommandHandler(
             return patronResult;
 
         Patron patron = await patronRepository.AddAsync(patronResult.Value, cancellationToken);
-        return KnResult.Success(patron);
+        return patron;
     }
 }

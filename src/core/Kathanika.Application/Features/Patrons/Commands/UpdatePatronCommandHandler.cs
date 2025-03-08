@@ -10,7 +10,7 @@ internal sealed class UpdatePatronCommandHandler(
     {
         Patron? patron = await patronRepository.GetByIdAsync(request.Id, cancellationToken);
         if (patron is null)
-            return KnResult.Failure<Patron>(PatronAggregateErrors.NotFound(request.Id));
+            return PatronAggregateErrors.NotFound(request.Id);
 
         KnResult patronUpdateKnResult = patron.Update(
             request.Patch.CardNumber,
@@ -25,10 +25,10 @@ internal sealed class UpdatePatronCommandHandler(
         );
 
         if (patronUpdateKnResult.IsFailure)
-            return KnResult.Failure<Patron>(patronUpdateKnResult.Errors);
+            return patronUpdateKnResult.Errors;
 
         await patronRepository.UpdateAsync(patron, cancellationToken);
 
-        return KnResult.Success(patron);
+        return patron;
     }
 }
