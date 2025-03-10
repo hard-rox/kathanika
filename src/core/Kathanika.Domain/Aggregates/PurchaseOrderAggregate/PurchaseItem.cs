@@ -42,7 +42,7 @@ public sealed class PurchaseItem : Entity
         VendorNote = vendorNote;
     }
 
-    public static PurchaseItem Create(
+    public static KnResult<PurchaseItem> Create(
         string title,
         int quantity,
         string? author,

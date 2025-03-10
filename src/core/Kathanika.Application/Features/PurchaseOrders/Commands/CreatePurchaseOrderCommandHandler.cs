@@ -28,17 +28,20 @@ internal sealed class CreatePurchaseOrderCommandHandler(
                 purchaseItemDto.VendorPrice,
                 purchaseItemDto.InternalNote,
                 purchaseItemDto.VendorNote
-            )
+            ).Value
         ));
 
-        PurchaseOrder purchaseOrder = PurchaseOrder.Create(
+        KnResult<PurchaseOrder> purchaseOrderResult = PurchaseOrder.Create(
             vendor.Id,
             vendor.Name,
             purchaseItems,
             request.InternalNote,
             request.VendorNote);
 
-        PurchaseOrder createdPurchaseOrder = await purchaseOrderRepository.AddAsync(purchaseOrder, cancellationToken);
+        if (purchaseOrderResult.IsFailure)
+            return purchaseOrderResult;
+
+        PurchaseOrder createdPurchaseOrder = await purchaseOrderRepository.AddAsync(purchaseOrderResult.Value, cancellationToken);
 
         return KnResult.Success(createdPurchaseOrder);
     }

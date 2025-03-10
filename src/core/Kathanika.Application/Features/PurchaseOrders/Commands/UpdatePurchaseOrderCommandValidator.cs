@@ -16,7 +16,7 @@ internal sealed class UpdatePurchaseOrderCommandValidator : AbstractValidator<Up
             .WithMessage("Invalid order");
 
         RuleFor(x => x.Patch.VendorId)
-            .MustAsync(vendorRepository.ExistsAsync)
+            .MustAsync(vendorRepository.ExistsAsync!)
             .When(x => x.Patch.VendorId is not null)
             .WithMessage("Invalid order");
 

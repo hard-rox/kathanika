@@ -4,7 +4,7 @@ namespace Kathanika.Domain.Aggregates.PurchaseOrderAggregate;
 
 public sealed class PurchaseOrder : AggregateRoot
 {
-    private readonly List<PurchaseItem> _items = [];
+    private readonly List<PurchaseItem> _purchaseItems = [];
 
     private PurchaseOrder()
     {
@@ -18,8 +18,8 @@ public sealed class PurchaseOrder : AggregateRoot
 
     public IReadOnlyCollection<PurchaseItem> PurchaseItems
     {
-        get => _items;
-        init => _items = value?.ToList() ?? [];
+        get => _purchaseItems;
+        init => _purchaseItems = value?.ToList() ?? [];
     }
 
     private PurchaseOrder(
@@ -31,12 +31,12 @@ public sealed class PurchaseOrder : AggregateRoot
     {
         VendorId = vendorId;
         VendorName = vendorName;
-        _items = purchaseItems?.ToList() ?? [];
+        _purchaseItems = purchaseItems?.ToList() ?? [];
         InternalNote = internalNote;
         VendorNote = vendorNote;
     }
 
-    public static PurchaseOrder Create(
+    public static KnResult<PurchaseOrder> Create(
         string vendorId,
         string vendorName,
         IEnumerable<PurchaseItem> purchaseItems,
