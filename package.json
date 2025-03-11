@@ -60,7 +60,7 @@
     "@types/jest": "^29.5.14",
     "@types/node": "^22.13.9",
     "angular-eslint": "^19.2.1",
-    "autoprefixer": "^10.4.20",
+    "autoprefixer": "^10.4.21",
     "cypress": "^14.1.0",
     "eslint": "^9.22.0",
     "husky": "^9.1.7",
