@@ -32,10 +32,10 @@ public sealed class VendorMutations
     public async Task<DeleteVendorPayload> DeleteVendorAsync(
         [Service] IMediator mediator,
         CancellationToken cancellationToken,
-        string id
+        DeleteVendorCommand input
     )
     {
-        KnResult knResult = await mediator.Send(new DeleteVendorCommand(id), cancellationToken);
-        return new DeleteVendorPayload(id, knResult);
+        KnResult knResult = await mediator.Send(input, cancellationToken);
+        return new DeleteVendorPayload(input.Id, knResult);
     }
 }

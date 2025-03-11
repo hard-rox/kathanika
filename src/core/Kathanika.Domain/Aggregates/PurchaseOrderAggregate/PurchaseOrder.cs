@@ -15,6 +15,9 @@ public sealed class PurchaseOrder : AggregateRoot
     public string VendorName { get; private set; }
     public string? InternalNote { get; private set; }
     public string? VendorNote { get; private set; }
+    public PurchaseOrderStatus Status { get; private set; }
+    public int TotalQuantity => _purchaseItems.Sum(i => i.Quantity);
+    public decimal TotalCost => _purchaseItems.Sum(i => (i.VendorPrice ?? 0) * i.Quantity);
 
     public IReadOnlyCollection<PurchaseItem> PurchaseItems
     {
@@ -34,6 +37,7 @@ public sealed class PurchaseOrder : AggregateRoot
         _purchaseItems = purchaseItems?.ToList() ?? [];
         InternalNote = internalNote;
         VendorNote = vendorNote;
+        Status = PurchaseOrderStatus.Pending;
     }
 
     public static KnResult<PurchaseOrder> Create(

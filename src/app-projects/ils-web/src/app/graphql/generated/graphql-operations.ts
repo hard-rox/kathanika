@@ -19,6 +19,10 @@ export type Scalars = {
   Date: { input: any; output: any; }
   /** The `DateTime` scalar represents an ISO-8601 compliant date time type. */
   DateTime: { input: any; output: any; }
+  /** The `Decimal` scalar type represents a decimal floating-point number. */
+  Decimal: { input: any; output: any; }
+  /** The `LocalDate` scalar type represents a ISO date string, represented as UTF-8 character sequences YYYY-MM-DD. The scalar follows the specification defined in RFC3339 */
+  LocalDate: { input: any; output: any; }
 };
 
 export type AddVendorInput = {
@@ -162,19 +166,18 @@ export type CreatePatronPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
-export type DateOperationFilterInput = {
-  eq?: InputMaybe<Scalars['Date']['input']>;
-  gt?: InputMaybe<Scalars['Date']['input']>;
-  gte?: InputMaybe<Scalars['Date']['input']>;
-  in?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
-  lt?: InputMaybe<Scalars['Date']['input']>;
-  lte?: InputMaybe<Scalars['Date']['input']>;
-  neq?: InputMaybe<Scalars['Date']['input']>;
-  ngt?: InputMaybe<Scalars['Date']['input']>;
-  ngte?: InputMaybe<Scalars['Date']['input']>;
-  nin?: InputMaybe<Array<InputMaybe<Scalars['Date']['input']>>>;
-  nlt?: InputMaybe<Scalars['Date']['input']>;
-  nlte?: InputMaybe<Scalars['Date']['input']>;
+export type CreatePurchaseOrderInput = {
+  internalNote?: InputMaybe<Scalars['String']['input']>;
+  items: Array<PurchaseItemInput>;
+  vendorId: Scalars['String']['input'];
+  vendorNote?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type CreatePurchaseOrderPayload = {
+  __typename?: 'CreatePurchaseOrderPayload';
+  data?: Maybe<PurchaseOrder>;
+  errors?: Maybe<Array<ErrorType>>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type DateTimeOperationFilterInput = {
@@ -190,6 +193,21 @@ export type DateTimeOperationFilterInput = {
   nin?: InputMaybe<Array<InputMaybe<Scalars['DateTime']['input']>>>;
   nlt?: InputMaybe<Scalars['DateTime']['input']>;
   nlte?: InputMaybe<Scalars['DateTime']['input']>;
+};
+
+export type DecimalOperationFilterInput = {
+  eq?: InputMaybe<Scalars['Decimal']['input']>;
+  gt?: InputMaybe<Scalars['Decimal']['input']>;
+  gte?: InputMaybe<Scalars['Decimal']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Decimal']['input']>>>;
+  lt?: InputMaybe<Scalars['Decimal']['input']>;
+  lte?: InputMaybe<Scalars['Decimal']['input']>;
+  neq?: InputMaybe<Scalars['Decimal']['input']>;
+  ngt?: InputMaybe<Scalars['Decimal']['input']>;
+  ngte?: InputMaybe<Scalars['Decimal']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['Decimal']['input']>>>;
+  nlt?: InputMaybe<Scalars['Decimal']['input']>;
+  nlte?: InputMaybe<Scalars['Decimal']['input']>;
 };
 
 export type DeletePatronInput = {
@@ -214,6 +232,21 @@ export type DeleteVendorPayload = {
 
 export type ErrorType = KnError | ValidationError;
 
+export type IntOperationFilterInput = {
+  eq?: InputMaybe<Scalars['Int']['input']>;
+  gt?: InputMaybe<Scalars['Int']['input']>;
+  gte?: InputMaybe<Scalars['Int']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  lt?: InputMaybe<Scalars['Int']['input']>;
+  lte?: InputMaybe<Scalars['Int']['input']>;
+  neq?: InputMaybe<Scalars['Int']['input']>;
+  ngt?: InputMaybe<Scalars['Int']['input']>;
+  ngte?: InputMaybe<Scalars['Int']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['Int']['input']>>>;
+  nlt?: InputMaybe<Scalars['Int']['input']>;
+  nlte?: InputMaybe<Scalars['Int']['input']>;
+};
+
 export type KnError = {
   __typename?: 'KnError';
   code: Scalars['String']['output'];
@@ -221,14 +254,38 @@ export type KnError = {
   message: Scalars['String']['output'];
 };
 
+export type ListFilterInputTypeOfPurchaseItemFilterInput = {
+  all?: InputMaybe<PurchaseItemFilterInput>;
+  any?: InputMaybe<Scalars['Boolean']['input']>;
+  none?: InputMaybe<PurchaseItemFilterInput>;
+  some?: InputMaybe<PurchaseItemFilterInput>;
+};
+
+export type LocalDateOperationFilterInput = {
+  eq?: InputMaybe<Scalars['LocalDate']['input']>;
+  gt?: InputMaybe<Scalars['LocalDate']['input']>;
+  gte?: InputMaybe<Scalars['LocalDate']['input']>;
+  in?: InputMaybe<Array<InputMaybe<Scalars['LocalDate']['input']>>>;
+  lt?: InputMaybe<Scalars['LocalDate']['input']>;
+  lte?: InputMaybe<Scalars['LocalDate']['input']>;
+  neq?: InputMaybe<Scalars['LocalDate']['input']>;
+  ngt?: InputMaybe<Scalars['LocalDate']['input']>;
+  ngte?: InputMaybe<Scalars['LocalDate']['input']>;
+  nin?: InputMaybe<Array<InputMaybe<Scalars['LocalDate']['input']>>>;
+  nlt?: InputMaybe<Scalars['LocalDate']['input']>;
+  nlte?: InputMaybe<Scalars['LocalDate']['input']>;
+};
+
 export type Mutation = {
   __typename?: 'Mutation';
   addVendor: AddVendorPayload;
   createBibRecord: CreateBibRecordPayload;
   createPatron: CreatePatronPayload;
+  createPurchaseOrder: CreatePurchaseOrderPayload;
   deletePatron: DeletePatronPayload;
   deleteVendor: DeleteVendorPayload;
   updatePatron: UpdatePatronPayload;
+  updatePurchaseOrder: UpdatePurchaseOrderPayload;
   updateVendor: UpdateVendorPayload;
 };
 
@@ -248,6 +305,11 @@ export type MutationCreatePatronArgs = {
 };
 
 
+export type MutationCreatePurchaseOrderArgs = {
+  input: CreatePurchaseOrderInput;
+};
+
+
 export type MutationDeletePatronArgs = {
   input: DeletePatronInput;
 };
@@ -260,6 +322,11 @@ export type MutationDeleteVendorArgs = {
 
 export type MutationUpdatePatronArgs = {
   input: UpdatePatronInput;
+};
+
+
+export type MutationUpdatePurchaseOrderArgs = {
+  input: UpdatePurchaseOrderInput;
 };
 
 
@@ -288,14 +355,14 @@ export type PatronFilterInput = {
   and?: InputMaybe<Array<PatronFilterInput>>;
   cardNumber?: InputMaybe<StringOperationFilterInput>;
   contactNumber?: InputMaybe<StringOperationFilterInput>;
-  dateOfBirth?: InputMaybe<DateOperationFilterInput>;
+  dateOfBirth?: InputMaybe<LocalDateOperationFilterInput>;
   email?: InputMaybe<StringOperationFilterInput>;
   firstName?: InputMaybe<StringOperationFilterInput>;
   fullName?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<PatronFilterInput>>;
   photoFileId?: InputMaybe<StringOperationFilterInput>;
-  registrationDate?: InputMaybe<DateOperationFilterInput>;
+  registrationDate?: InputMaybe<LocalDateOperationFilterInput>;
   salutation?: InputMaybe<StringOperationFilterInput>;
   surname?: InputMaybe<StringOperationFilterInput>;
 };
@@ -337,12 +404,124 @@ export type PatronsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type PurchaseItem = {
+  __typename?: 'PurchaseItem';
+  author?: Maybe<Scalars['String']['output']>;
+  edition?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  internalNote?: Maybe<Scalars['String']['output']>;
+  isbn?: Maybe<Scalars['String']['output']>;
+  publisher?: Maybe<Scalars['String']['output']>;
+  publishingYear?: Maybe<Scalars['Int']['output']>;
+  quantity: Scalars['Int']['output'];
+  title: Scalars['String']['output'];
+  vendorNote?: Maybe<Scalars['String']['output']>;
+  vendorPrice?: Maybe<Scalars['Decimal']['output']>;
+};
+
+export type PurchaseItemFilterInput = {
+  and?: InputMaybe<Array<PurchaseItemFilterInput>>;
+  author?: InputMaybe<StringOperationFilterInput>;
+  edition?: InputMaybe<StringOperationFilterInput>;
+  id?: InputMaybe<StringOperationFilterInput>;
+  internalNote?: InputMaybe<StringOperationFilterInput>;
+  isbn?: InputMaybe<StringOperationFilterInput>;
+  or?: InputMaybe<Array<PurchaseItemFilterInput>>;
+  publisher?: InputMaybe<StringOperationFilterInput>;
+  publishingYear?: InputMaybe<IntOperationFilterInput>;
+  quantity?: InputMaybe<IntOperationFilterInput>;
+  title?: InputMaybe<StringOperationFilterInput>;
+  vendorNote?: InputMaybe<StringOperationFilterInput>;
+  vendorPrice?: InputMaybe<DecimalOperationFilterInput>;
+};
+
+export type PurchaseItemInput = {
+  author?: InputMaybe<Scalars['String']['input']>;
+  edition?: InputMaybe<Scalars['String']['input']>;
+  internalNote?: InputMaybe<Scalars['String']['input']>;
+  isbn?: InputMaybe<Scalars['String']['input']>;
+  publisher?: InputMaybe<Scalars['String']['input']>;
+  publishingYear?: InputMaybe<Scalars['Int']['input']>;
+  quantity: Scalars['Int']['input'];
+  title: Scalars['String']['input'];
+  vendorNote?: InputMaybe<Scalars['String']['input']>;
+  vendorPrice?: InputMaybe<Scalars['Decimal']['input']>;
+};
+
+export type PurchaseOrder = {
+  __typename?: 'PurchaseOrder';
+  id: Scalars['String']['output'];
+  internalNote?: Maybe<Scalars['String']['output']>;
+  purchaseItems: Array<PurchaseItem>;
+  status: PurchaseOrderStatus;
+  totalCost: Scalars['Decimal']['output'];
+  totalQuantity: Scalars['Int']['output'];
+  vendorId: Scalars['String']['output'];
+  vendorName: Scalars['String']['output'];
+  vendorNote?: Maybe<Scalars['String']['output']>;
+};
+
+export type PurchaseOrderFilterInput = {
+  and?: InputMaybe<Array<PurchaseOrderFilterInput>>;
+  id?: InputMaybe<StringOperationFilterInput>;
+  internalNote?: InputMaybe<StringOperationFilterInput>;
+  or?: InputMaybe<Array<PurchaseOrderFilterInput>>;
+  purchaseItems?: InputMaybe<ListFilterInputTypeOfPurchaseItemFilterInput>;
+  status?: InputMaybe<PurchaseOrderStatusOperationFilterInput>;
+  totalCost?: InputMaybe<DecimalOperationFilterInput>;
+  totalQuantity?: InputMaybe<IntOperationFilterInput>;
+  vendorId?: InputMaybe<StringOperationFilterInput>;
+  vendorName?: InputMaybe<StringOperationFilterInput>;
+  vendorNote?: InputMaybe<StringOperationFilterInput>;
+};
+
+export type PurchaseOrderPatchInput = {
+  internalNote?: InputMaybe<Scalars['String']['input']>;
+  vendorId?: InputMaybe<Scalars['String']['input']>;
+  vendorNote?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type PurchaseOrderSortInput = {
+  id?: InputMaybe<SortEnumType>;
+  internalNote?: InputMaybe<SortEnumType>;
+  status?: InputMaybe<SortEnumType>;
+  totalCost?: InputMaybe<SortEnumType>;
+  totalQuantity?: InputMaybe<SortEnumType>;
+  vendorId?: InputMaybe<SortEnumType>;
+  vendorName?: InputMaybe<SortEnumType>;
+  vendorNote?: InputMaybe<SortEnumType>;
+};
+
+export enum PurchaseOrderStatus {
+  Completed = 'COMPLETED',
+  Pending = 'PENDING'
+}
+
+export type PurchaseOrderStatusOperationFilterInput = {
+  eq?: InputMaybe<PurchaseOrderStatus>;
+  in?: InputMaybe<Array<PurchaseOrderStatus>>;
+  neq?: InputMaybe<PurchaseOrderStatus>;
+  nin?: InputMaybe<Array<PurchaseOrderStatus>>;
+};
+
+/** A segment of a collection. */
+export type PurchaseOrdersCollectionSegment = {
+  __typename?: 'PurchaseOrdersCollectionSegment';
+  /** A flattened list of the items. */
+  items?: Maybe<Array<PurchaseOrder>>;
+  /** Information to aid in pagination. */
+  pageInfo: CollectionSegmentInfo;
+  totalCount: Scalars['Int']['output'];
+};
+
 export type Query = {
   __typename?: 'Query';
   bibRecord?: Maybe<BibRecord>;
   bibRecords?: Maybe<BibRecordsCollectionSegment>;
   patron?: Maybe<Patron>;
   patrons?: Maybe<PatronsCollectionSegment>;
+  purchaseOrder?: Maybe<PurchaseOrder>;
+  purchaseOrders?: Maybe<PurchaseOrdersCollectionSegment>;
   vendor?: Maybe<Vendor>;
   vendors?: Maybe<VendorsCollectionSegment>;
 };
@@ -371,6 +550,19 @@ export type QueryPatronsArgs = {
   skip?: InputMaybe<Scalars['Int']['input']>;
   take?: InputMaybe<Scalars['Int']['input']>;
   where?: InputMaybe<PatronFilterInput>;
+};
+
+
+export type QueryPurchaseOrderArgs = {
+  id: Scalars['String']['input'];
+};
+
+
+export type QueryPurchaseOrdersArgs = {
+  order?: InputMaybe<Array<PurchaseOrderSortInput>>;
+  skip?: InputMaybe<Scalars['Int']['input']>;
+  take?: InputMaybe<Scalars['Int']['input']>;
+  where?: InputMaybe<PurchaseOrderFilterInput>;
 };
 
 
@@ -414,6 +606,18 @@ export type UpdatePatronInput = {
 export type UpdatePatronPayload = {
   __typename?: 'UpdatePatronPayload';
   data?: Maybe<Patron>;
+  errors?: Maybe<Array<ErrorType>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type UpdatePurchaseOrderInput = {
+  id: Scalars['String']['input'];
+  patch: PurchaseOrderPatchInput;
+};
+
+export type UpdatePurchaseOrderPayload = {
+  __typename?: 'UpdatePurchaseOrderPayload';
+  data?: Maybe<PurchaseOrder>;
   errors?: Maybe<Array<ErrorType>>;
   message?: Maybe<Scalars['String']['output']>;
 };
@@ -517,6 +721,16 @@ export type VendorsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type PurchaseOrderListQueryVariables = Exact<{
+  skip: Scalars['Int']['input'];
+  take: Scalars['Int']['input'];
+  filter?: InputMaybe<PurchaseOrderFilterInput>;
+  sortBy?: InputMaybe<Array<PurchaseOrderSortInput> | PurchaseOrderSortInput>;
+}>;
+
+
+export type PurchaseOrderListQuery = { __typename?: 'Query', purchaseOrders?: { __typename?: 'PurchaseOrdersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'PurchaseOrder', id: string, vendorName: string, totalQuantity: number, totalCost: any, status: PurchaseOrderStatus }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+
 export type VendorAddMutationVariables = Exact<{
   input: AddVendorInput;
 }>;
@@ -556,6 +770,35 @@ export type VendorUpdateMutationVariables = Exact<{
 
 export type VendorUpdateMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
 
+export const PurchaseOrderListDocument = gql`
+    query purchaseOrderList($skip: Int!, $take: Int!, $filter: PurchaseOrderFilterInput, $sortBy: [PurchaseOrderSortInput!]) {
+  purchaseOrders(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+    items {
+      id
+      vendorName
+      totalQuantity
+      totalCost
+      status
+    }
+    pageInfo {
+      hasNextPage
+      hasPreviousPage
+    }
+    totalCount
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class PurchaseOrderListGQL extends Apollo.Query<PurchaseOrderListQuery, PurchaseOrderListQueryVariables> {
+    override document = PurchaseOrderListDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const VendorAddDocument = gql`
     mutation vendorAdd($input: AddVendorInput!) {
   addVendor(input: $input) {
