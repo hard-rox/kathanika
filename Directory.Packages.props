@@ -13,11 +13,11 @@
         <PackageVersion Include="HotChocolate.Data" Version="15.0.3"/>
         <PackageVersion Include="HotChocolate.Diagnostics" Version="15.0.3"/>
         <PackageVersion Include="MediatR" Version="12.4.1"/>
-        <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.0.0-preview.9.24556.5" />
+        <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.3.0" />
         <PackageVersion Include="Microsoft.Extensions.Caching.StackExchangeRedis" Version="9.0.2" />
         <PackageVersion Include="Microsoft.Extensions.Configuration" Version="9.0.2"/>
         <PackageVersion Include="Microsoft.Extensions.DependencyInjection" Version="9.0.2"/>
-        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.2"/>
+        <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="9.0.3"/>
         <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="17.13.0"/>
         <PackageVersion Include="MongoDB.Driver" Version="3.2.1"/>
         <PackageVersion Include="NetArchTest.Rules" Version="1.3.2"/>
