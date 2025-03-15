@@ -415,6 +415,7 @@ export type PurchaseItem = {
   publishingYear?: Maybe<Scalars['Int']['output']>;
   quantity: Scalars['Int']['output'];
   title: Scalars['String']['output'];
+  totalCost: Scalars['Decimal']['output'];
   vendorNote?: Maybe<Scalars['String']['output']>;
   vendorPrice?: Maybe<Scalars['Decimal']['output']>;
 };
@@ -431,6 +432,7 @@ export type PurchaseItemFilterInput = {
   publishingYear?: InputMaybe<IntOperationFilterInput>;
   quantity?: InputMaybe<IntOperationFilterInput>;
   title?: InputMaybe<StringOperationFilterInput>;
+  totalCost?: InputMaybe<DecimalOperationFilterInput>;
   vendorNote?: InputMaybe<StringOperationFilterInput>;
   vendorPrice?: InputMaybe<DecimalOperationFilterInput>;
 };
@@ -452,6 +454,7 @@ export type PurchaseOrder = {
   __typename?: 'PurchaseOrder';
   id: Scalars['String']['output'];
   internalNote?: Maybe<Scalars['String']['output']>;
+  orderDate: Scalars['Date']['output'];
   purchaseItems: Array<PurchaseItem>;
   status: PurchaseOrderStatus;
   totalCost: Scalars['Decimal']['output'];
@@ -466,6 +469,7 @@ export type PurchaseOrderFilterInput = {
   id?: InputMaybe<StringOperationFilterInput>;
   internalNote?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<PurchaseOrderFilterInput>>;
+  orderDate?: InputMaybe<LocalDateOperationFilterInput>;
   purchaseItems?: InputMaybe<ListFilterInputTypeOfPurchaseItemFilterInput>;
   status?: InputMaybe<PurchaseOrderStatusOperationFilterInput>;
   totalCost?: InputMaybe<DecimalOperationFilterInput>;
@@ -484,6 +488,7 @@ export type PurchaseOrderPatchInput = {
 export type PurchaseOrderSortInput = {
   id?: InputMaybe<SortEnumType>;
   internalNote?: InputMaybe<SortEnumType>;
+  orderDate?: InputMaybe<SortEnumType>;
   status?: InputMaybe<SortEnumType>;
   totalCost?: InputMaybe<SortEnumType>;
   totalQuantity?: InputMaybe<SortEnumType>;
@@ -721,6 +726,20 @@ export type VendorsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type CreatePurchaseOrderMutationVariables = Exact<{
+  input: CreatePurchaseOrderInput;
+}>;
+
+
+export type CreatePurchaseOrderMutation = { __typename?: 'Mutation', createPurchaseOrder: { __typename?: 'CreatePurchaseOrderPayload', message?: string | null, data?: { __typename?: 'PurchaseOrder', id: string, vendorName: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+
+export type PurchaseOrderDetailsQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type PurchaseOrderDetailsQuery = { __typename?: 'Query', purchaseOrder?: { __typename?: 'PurchaseOrder', id: string, orderDate: any, vendorName: string, internalNote?: string | null, vendorNote?: string | null, totalQuantity: number, totalCost: any, status: PurchaseOrderStatus, purchaseItems: Array<{ __typename?: 'PurchaseItem', id: string, title: string, author?: string | null, edition?: string | null, publisher?: string | null, publishingYear?: number | null, internalNote?: string | null, vendorNote?: string | null, quantity: number, vendorPrice?: any | null, totalCost: any }> } | null };
+
 export type PurchaseOrderListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -731,12 +750,12 @@ export type PurchaseOrderListQueryVariables = Exact<{
 
 export type PurchaseOrderListQuery = { __typename?: 'Query', purchaseOrders?: { __typename?: 'PurchaseOrdersCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'PurchaseOrder', id: string, vendorName: string, totalQuantity: number, totalCost: any, status: PurchaseOrderStatus }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
-export type VendorAddMutationVariables = Exact<{
+export type AddVendorMutationVariables = Exact<{
   input: AddVendorInput;
 }>;
 
 
-export type VendorAddMutation = { __typename?: 'Mutation', addVendor: { __typename?: 'AddVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type AddVendorMutation = { __typename?: 'Mutation', addVendor: { __typename?: 'AddVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
 
 export type VendorDetailsQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -745,12 +764,12 @@ export type VendorDetailsQueryVariables = Exact<{
 
 export type VendorDetailsQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', id: string, name: string, contactNumber: string, address: string, email?: string | null, status: VendorStatus, contactPersonName?: string | null, contactPersonPhone?: string | null, contactPersonEmail?: string | null, accountDetail?: string | null, website?: string | null } | null };
 
-export type VendorDeleteMutationVariables = Exact<{
+export type DeleteVendorMutationVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type VendorDeleteMutation = { __typename?: 'Mutation', deleteVendor: { __typename?: 'DeleteVendorPayload', message?: string | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type DeleteVendorMutation = { __typename?: 'Mutation', deleteVendor: { __typename?: 'DeleteVendorPayload', message?: string | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
 
 export type VendorListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -762,14 +781,87 @@ export type VendorListQueryVariables = Exact<{
 
 export type VendorListQuery = { __typename?: 'Query', vendors?: { __typename?: 'VendorsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'Vendor', id: string, name: string, status: VendorStatus, contactPersonName?: string | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
-export type VendorUpdateMutationVariables = Exact<{
+export type UpdateVendorMutationVariables = Exact<{
   id: Scalars['String']['input'];
   patch: VendorPatchInput;
 }>;
 
 
-export type VendorUpdateMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type UpdateVendorMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
 
+export const CreatePurchaseOrderDocument = gql`
+    mutation createPurchaseOrder($input: CreatePurchaseOrderInput!) {
+  createPurchaseOrder(input: $input) {
+    data {
+      id
+      vendorName
+    }
+    errors {
+      ... on KnError {
+        code
+        message
+        description
+      }
+      ... on ValidationError {
+        code
+        fieldName
+        message
+        description
+      }
+    }
+    message
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreatePurchaseOrderGQL extends Apollo.Mutation<CreatePurchaseOrderMutation, CreatePurchaseOrderMutationVariables> {
+    override document = CreatePurchaseOrderDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const PurchaseOrderDetailsDocument = gql`
+    query purchaseOrderDetails($id: String!) {
+  purchaseOrder(id: $id) {
+    id
+    orderDate
+    vendorName
+    internalNote
+    vendorNote
+    totalQuantity
+    totalCost
+    status
+    purchaseItems {
+      id
+      title
+      author
+      edition
+      publisher
+      publishingYear
+      internalNote
+      vendorNote
+      quantity
+      vendorPrice
+      totalCost
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class PurchaseOrderDetailsGQL extends Apollo.Query<PurchaseOrderDetailsQuery, PurchaseOrderDetailsQueryVariables> {
+    override document = PurchaseOrderDetailsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const PurchaseOrderListDocument = gql`
     query purchaseOrderList($skip: Int!, $take: Int!, $filter: PurchaseOrderFilterInput, $sortBy: [PurchaseOrderSortInput!]) {
   purchaseOrders(skip: $skip, take: $take, where: $filter, order: $sortBy) {
@@ -799,8 +891,8 @@ export const PurchaseOrderListDocument = gql`
       super(apollo);
     }
   }
-export const VendorAddDocument = gql`
-    mutation vendorAdd($input: AddVendorInput!) {
+export const AddVendorDocument = gql`
+    mutation addVendor($input: AddVendorInput!) {
   addVendor(input: $input) {
     data {
       id
@@ -827,8 +919,8 @@ export const VendorAddDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class VendorAddGQL extends Apollo.Mutation<VendorAddMutation, VendorAddMutationVariables> {
-    override document = VendorAddDocument;
+  export class AddVendorGQL extends Apollo.Mutation<AddVendorMutation, AddVendorMutationVariables> {
+    override document = AddVendorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -862,8 +954,8 @@ export const VendorDetailsDocument = gql`
       super(apollo);
     }
   }
-export const VendorDeleteDocument = gql`
-    mutation vendorDelete($id: String!) {
+export const DeleteVendorDocument = gql`
+    mutation deleteVendor($id: String!) {
   deleteVendor(input: {id: $id}) {
     errors {
       ... on KnError {
@@ -886,8 +978,8 @@ export const VendorDeleteDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class VendorDeleteGQL extends Apollo.Mutation<VendorDeleteMutation, VendorDeleteMutationVariables> {
-    override document = VendorDeleteDocument;
+  export class DeleteVendorGQL extends Apollo.Mutation<DeleteVendorMutation, DeleteVendorMutationVariables> {
+    override document = DeleteVendorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -921,8 +1013,8 @@ export const VendorListDocument = gql`
       super(apollo);
     }
   }
-export const VendorUpdateDocument = gql`
-    mutation vendorUpdate($id: String!, $patch: VendorPatchInput!) {
+export const UpdateVendorDocument = gql`
+    mutation updateVendor($id: String!, $patch: VendorPatchInput!) {
   updateVendor(input: {id: $id, patch: $patch}) {
     data {
       id
@@ -949,8 +1041,8 @@ export const VendorUpdateDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class VendorUpdateGQL extends Apollo.Mutation<VendorUpdateMutation, VendorUpdateMutationVariables> {
-    override document = VendorUpdateDocument;
+  export class UpdateVendorGQL extends Apollo.Mutation<UpdateVendorMutation, UpdateVendorMutationVariables> {
+    override document = UpdateVendorDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

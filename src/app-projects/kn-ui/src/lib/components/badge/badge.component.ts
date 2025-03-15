@@ -3,7 +3,7 @@ import {CommonModule} from '@angular/common';
 
 @Component({
     selector: 'kn-badge',
-        imports: [CommonModule],
+    imports: [CommonModule],
     templateUrl: './badge.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
 })

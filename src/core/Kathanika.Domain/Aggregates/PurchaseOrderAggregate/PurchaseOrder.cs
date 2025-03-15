@@ -8,7 +8,6 @@ public sealed class PurchaseOrder : AggregateRoot
 
     private PurchaseOrder()
     {
-
     }
 
     public string VendorId { get; private set; }
@@ -18,6 +17,7 @@ public sealed class PurchaseOrder : AggregateRoot
     public PurchaseOrderStatus Status { get; private set; }
     public int TotalQuantity => _purchaseItems.Sum(i => i.Quantity);
     public decimal TotalCost => _purchaseItems.Sum(i => (i.VendorPrice ?? 0) * i.Quantity);
+    public DateOnly OrderDate => DateOnly.FromDateTime(CreatedAt.Date);
 
     public IReadOnlyCollection<PurchaseItem> PurchaseItems
     {

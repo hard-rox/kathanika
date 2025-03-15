@@ -1,4 +1,4 @@
-import {ApplicationConfig, isDevMode, provideZoneChangeDetection} from '@angular/core';
+import {ApplicationConfig, DEFAULT_CURRENCY_CODE, isDevMode, provideZoneChangeDetection} from '@angular/core';
 import {provideRouter} from '@angular/router';
 
 import {routes} from './app.routes';
@@ -8,6 +8,7 @@ import {provideHttpClient, withFetch} from "@angular/common/http";
 import {environment} from "../environments/environment";
 import {provideTusFileServer} from "@kathanika/kn-ui";
 import {provideGraphqlClient} from "./graphql/graphql.provider";
+import {DATE_PIPE_DEFAULT_OPTIONS} from "@angular/common";
 
 export const appConfig: ApplicationConfig = {
     providers: [
@@ -21,6 +22,14 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(withFetch()),
         provideGraphqlClient(environment.graphqlServer),
         provideTusFileServer(environment.fileServer),
-        provideClientHydration(withIncrementalHydration())
+        provideClientHydration(withIncrementalHydration()),
+        {
+            provide: DEFAULT_CURRENCY_CODE,
+            useValue: 'BDT'
+        },
+        {
+            provide: DATE_PIPE_DEFAULT_OPTIONS,
+            useValue: 'dd/MMM/yyyy'
+        }
     ]
 };

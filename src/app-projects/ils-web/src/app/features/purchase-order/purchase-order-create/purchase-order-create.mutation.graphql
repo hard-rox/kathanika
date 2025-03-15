@@ -1,5 +1,9 @@
-mutation deleteVendor($id: String!){
-    deleteVendor(input: {id: $id}){
+mutation createPurchaseOrder($input: CreatePurchaseOrderInput!){
+    createPurchaseOrder(input: $input){
+        data {
+            id
+            vendorName
+        }
         errors {
             ... on KnError{
                 code

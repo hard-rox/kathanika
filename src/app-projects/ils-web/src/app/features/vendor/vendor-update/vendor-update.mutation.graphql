@@ -1,4 +1,4 @@
-mutation vendorUpdate($id: String!, $patch: VendorPatchInput!){
+mutation updateVendor($id: String!, $patch: VendorPatchInput!){
     updateVendor(input: {id: $id, patch: $patch}){
         data {
             id

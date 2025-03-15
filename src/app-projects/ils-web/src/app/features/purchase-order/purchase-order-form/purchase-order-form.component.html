@@ -1,0 +1,34 @@
+<pre>{{ formGroup.valid | json }}</pre>
+<pre>{{ formGroup.value | json }}</pre>
+
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+    <div class="space-y-4">
+        <kn-searchbar label="Vendor" [required]="true" [options]="[]"/>
+        <kn-textarea-input label="Vendor note" formControlName="vendorNote"/>
+        <kn-textarea-input label="Internal note" formControlName="internalNote"/>
+        <h3>Order Items</h3>
+        <ng-container formArrayName="items">
+            @for (item of formGroup.controls.items.controls; track item; let idx = $index) {
+
+            }
+            <button kn-button (click)="addItem()">+ Add Item</button>
+        </ng-container>
+    </div>
+    <div class="flex flex-row-reverse mt-2">
+        <input type="submit" value="Save"/>
+    </div>
+</form>
+<kn-modal #purchaseItemFormModal>
+    <form [formGroup]="purchaseItemFormGroup" class="grid grid-cols-2 gap-4">
+        <kn-text-input label="Title" formControlName="title"/>
+        <kn-number-input label="Quantity" formControlName="quantity"/>
+        <kn-text-input label="Author" formControlName="author"/>
+        <kn-text-input label="Edition" formControlName="edition"/>
+        <kn-textarea-input label="Internal Note" formControlName="internalNote"/>
+        <kn-text-input label="ISBN" formControlName="isbn"/>
+        <kn-text-input label="Publisher" formControlName="publisher"/>
+        <kn-number-input label="Publishing Year" formControlName="publishingYear"/>
+        <kn-textarea-input label="Vendor Note" formControlName="vendorNote"/>
+        <kn-number-input label="Vendor Price" formControlName="vendorPrice"/>
+    </form>
+</kn-modal>

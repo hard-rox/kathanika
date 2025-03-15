@@ -1,0 +1,110 @@
+@if (queryRef.valueChanges | async; as queryResult) {
+    @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
+        <kn-panel panelTitle="📄 Purchase Order Details">
+            <a [routerLink]="['../update', data.purchaseOrder?.id]" kn-button class="float-right">
+                <span class="material-symbols-sharp">edit</span>
+                Update</a>
+            <div class="grid grid-cols-2 gap-1 border-b pb-1">
+                <div>
+                    <h5 class="font-semibold">Order ID:</h5>
+                    <p class="text-gray-700">{{ data.purchaseOrder?.id | uppercase }}</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold">Order Date:</h5>
+                    <p class="text-gray-700">{{ data.purchaseOrder?.orderDate }}</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold">Vendor:</h5>
+                    <p class="text-gray-700">{{ data.purchaseOrder?.vendorName }}</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold">Status:</h5>
+                    <kn-badge [content]="data?.purchaseOrder?.status ?? ''" [type]="
+            data?.purchaseOrder?.status === purchaseOrderStatus.Pending
+              ? 'info'
+              : 'success'
+          "/>
+                </div>
+                <div class="col-span-2">
+                    <h5 class="font-semibold">Internal Note:</h5>
+                    <p class="text-gray-700 italic">{{ data.purchaseOrder?.internalNote || '—' }}</p>
+                </div>
+                <div class="col-span-2">
+                    <h5 class="font-semibold">Vendor Note:</h5>
+                    <p class="text-gray-700 italic">{{ data.purchaseOrder?.vendorNote || '—' }}</p>
+                </div>
+            </div>
+
+            <!-- Items Table -->
+            <div class="mt-6">
+                <h3 class="text-lg font-semibold pb-2">📚 Ordered Items</h3>
+                <div class="overflow-x-auto">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Details</th>
+                            <th>Notes</th>
+                            <th class="text-right">Qty</th>
+                            <th class="text-right">Vendor Price</th>
+                            <th class="text-right">Total</th>
+                            <th>Actions</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of data?.purchaseOrder?.purchaseItems; track item; let idx = $index) {
+                                <tr>
+                                    <td>
+                                        <div class="flex flex-col">
+                                            <strong>{{ item.title }}</strong>
+                                            <span class="italic text-sm">{{ item.author }}</span>
+                                            <span class="italic text-sm">{{ item.edition }}</span>
+                                            <span class="italic text-sm">{{ item.publisher }}</span>
+                                            <span class="italic text-sm">{{ item.publishingYear }}</span>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="flex flex-col">
+                                            <span class="italic text-sm">Internal Note: {{ item.internalNote }}</span>
+                                            <span class="italic text-sm">Vendor Note: {{ item.vendorNote }}</span>
+                                        </div>
+                                    </td>
+                                    <td class="text-right">{{ item.quantity }}</td>
+                                    <td class="font-semibold text-right">{{ item.vendorPrice | currency }}</td>
+                                    <td class="font-semibold text-right">{{ item.totalCost | currency }}</td>
+                                    <td>
+                                        <div class="flex flex-col space-y-1 items-center">
+                                            <button
+                                                class="px-2 py-1 bg-theme-silver bg-opacity-80 hover:bg-opacity-100 rounded active:bg-theme-silver text-theme-fire-red">
+                                                <span class="material-symbols-sharp my-auto">delete</span>
+                                            </button>
+                                            <button
+                                                class="px-2 py-1 bg-theme-silver bg-opacity-80 hover:bg-opacity-100 rounded active:bg-theme-silver text-theme-rich-black">
+                                                <span class="material-symbols-sharp my-auto">edit</span>
+                                            </button>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="flex justify-between font-semibold mt-2 px-2">
+                <span>Total Cost:</span>
+                <span class="text-blue-600">{{ data.purchaseOrder?.totalCost | currency }}</span>
+            </div>
+
+            <div class="sticky bottom-0 flex justify-end space-x-2 border-t pt-2">
+                <a [routerLink]="['../update', data.purchaseOrder?.id]" kn-button>Update</a>
+                <!--                Red-->
+                <button kn-button>Reject</button>
+                <!--                Green-->
+                <button kn-button>Approve</button>
+                <button kn-button>Cancel</button>
+                <button kn-button>Receive Shipment</button>
+            </div>
+
+        </kn-panel>
+    }
+}

@@ -1,7 +1,7 @@
 import {Component, inject, viewChild} from '@angular/core';
 import {VendorFormComponent} from "../vendor-form/vendor-form.component";
 import {KnAlert, KnPanel} from "@kathanika/kn-ui";
-import {AddVendorInput, VendorAddGQL, VendorPatchInput} from "../../../graphql/generated/graphql-operations";
+import {AddVendorGQL, AddVendorInput, VendorPatchInput} from "../../../graphql/generated/graphql-operations";
 import {CommonModule} from "@angular/common";
 import {MessageAlertService} from "../../../core/message-alert.service";
 import {Router} from "@angular/router";
@@ -18,7 +18,7 @@ import {finalize} from "rxjs";
     templateUrl: './vendor-add.component.html'
 })
 export class VendorAddComponent {
-    private gql = inject(VendorAddGQL);
+    private gql = inject(AddVendorGQL);
     private alertService = inject(MessageAlertService);
     private router = inject(Router);
 
@@ -35,7 +35,7 @@ export class VendorAddComponent {
             }))
             .subscribe({
                 next: (result) => {
-                    if (result.loading){
+                    if (result.loading) {
                         this.isPanelLoading = true;
                         return;
                     }

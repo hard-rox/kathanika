@@ -10,7 +10,7 @@ export * from './lib/inputs/text-input/text-input.component';
 export * from './lib/inputs/textarea-input/textarea-input.component';
 export * from './lib/inputs/toggle/toggle.component';
 export * from './lib/components/searchbar/searchbar.component';
+export * from './lib/components/modal/modal.component';
 export * from './lib/directives/button/button.directive';
-export * from './lib/abstractions/abstract-input-component';
 export * from './lib/inputs/file-input/file-input.component';
 export * from './lib/inputs/file-input/tus-file-server.provider';

@@ -1,10 +1,10 @@
 import {Component, OnInit, inject, viewChild} from '@angular/core';
 import {VendorFormComponent} from "../vendor-form/vendor-form.component";
 import {
-    AddVendorInput,
+    AddVendorInput, UpdateVendorGQL,
     Vendor,
     VendorDetailsGQL,
-    VendorPatchInput, VendorUpdateGQL
+    VendorPatchInput
 } from "../../../graphql/generated/graphql-operations";
 import {MessageAlertService} from "../../../core/message-alert.service";
 import {ActivatedRoute, Router} from "@angular/router";
@@ -22,7 +22,7 @@ import {KnAlert, KnPanel} from "@kathanika/kn-ui";
 })
 export class VendorUpdateComponent implements OnInit {
     private gql = inject(VendorDetailsGQL);
-    private mutation = inject(VendorUpdateGQL);
+    private mutation = inject(UpdateVendorGQL);
     private alertService = inject(MessageAlertService);
     private activatedRoute = inject(ActivatedRoute);
     private router = inject(Router);

@@ -1,5 +1,5 @@
 import {EventEmitter} from '@angular/core';
-import { FormGroup, FormControl } from '@angular/forms';
+import {FormGroup, FormControl, FormArray} from '@angular/forms';
 
 export abstract class BaseFormComponent<TOutput extends Record<string, unknown>> {
     protected readonly formGroup: FormGroup<ControlsOf<TOutput>>;
@@ -28,7 +28,9 @@ export abstract class BaseFormComponent<TOutput extends Record<string, unknown>>
 
 export type ControlsOf<T extends Record<string, unknown>> = {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    [K in keyof T]: T[K] extends Record<any, unknown>
-        ? FormGroup<ControlsOf<T[K]>>
-        : FormControl<T[K]>;
+    [K in keyof T]: T[K] extends Array<infer U extends Record<string, unknown>>
+        ? FormArray<FormGroup<ControlsOf<U>>>
+        : T[K] extends Record<any, unknown>
+            ? FormGroup<ControlsOf<T[K]>>
+            : FormControl<T[K]>;
 };

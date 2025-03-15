@@ -18,6 +18,8 @@ public sealed class PurchaseItem : Entity
     public string? InternalNote { get; private set; }
     public string? VendorNote { get; private set; }
 
+    public decimal TotalCost => Quantity * (VendorPrice ?? 0);
+
     private PurchaseItem(
         string title,
         int quantity,
