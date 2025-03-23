@@ -25,7 +25,7 @@ export const appConfig: ApplicationConfig = {
         provideClientHydration(withIncrementalHydration()),
         {
             provide: DEFAULT_CURRENCY_CODE,
-            useValue: 'BDT'
+            useValue: 'BDT '
         },
         {
             provide: DATE_PIPE_DEFAULT_OPTIONS,

@@ -33,7 +33,7 @@
                     <td>{{ idx + 1 }}</td>
                     <td>{{ item.vendorName }}</td>
                     <td>{{ item.totalQuantity }}</td>
-                    <td>{{ item.totalCost }}</td>
+                    <td>{{ item.totalCost | currency }}</td>
                     <td>
                         <kn-badge [content]="item?.status ?? ''" [type]="
             item?.status === purchaseOrderStatus.Pending

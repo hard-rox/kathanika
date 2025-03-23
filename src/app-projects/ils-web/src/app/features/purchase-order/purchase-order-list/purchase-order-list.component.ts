@@ -1,5 +1,5 @@
 import {Component, inject, OnInit} from '@angular/core';
-import {AsyncPipe} from "@angular/common";
+import {CommonModule} from "@angular/common";
 import {KnBadge, KnButton, KnPagination} from "@kathanika/kn-ui";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-list-component";
@@ -7,12 +7,12 @@ import {
     PurchaseOrderListGQL,
     PurchaseOrderListQuery,
     PurchaseOrderListQueryVariables,
-    PurchaseOrderStatus, SortEnumType, VendorListGQL, VendorStatus
+    PurchaseOrderStatus
 } from "../../../graphql/generated/graphql-operations";
 
 @Component({
     imports: [
-        AsyncPipe,
+        CommonModule,
         KnBadge,
         KnButton,
         KnPagination,

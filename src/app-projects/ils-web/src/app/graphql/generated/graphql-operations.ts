@@ -740,6 +740,13 @@ export type PurchaseOrderDetailsQueryVariables = Exact<{
 
 export type PurchaseOrderDetailsQuery = { __typename?: 'Query', purchaseOrder?: { __typename?: 'PurchaseOrder', id: string, orderDate: any, vendorName: string, internalNote?: string | null, vendorNote?: string | null, totalQuantity: number, totalCost: any, status: PurchaseOrderStatus, purchaseItems: Array<{ __typename?: 'PurchaseItem', id: string, title: string, author?: string | null, edition?: string | null, publisher?: string | null, publishingYear?: number | null, internalNote?: string | null, vendorNote?: string | null, quantity: number, vendorPrice?: any | null, totalCost: any }> } | null };
 
+export type SearchVendorsQueryVariables = Exact<{
+  searchTerm: Scalars['String']['input'];
+}>;
+
+
+export type SearchVendorsQuery = { __typename?: 'Query', vendors?: { __typename?: 'VendorsCollectionSegment', items?: Array<{ __typename?: 'Vendor', id: string, name: string }> | null } | null };
+
 export type PurchaseOrderListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -857,6 +864,32 @@ export const PurchaseOrderDetailsDocument = gql`
   })
   export class PurchaseOrderDetailsGQL extends Apollo.Query<PurchaseOrderDetailsQuery, PurchaseOrderDetailsQueryVariables> {
     override document = PurchaseOrderDetailsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const SearchVendorsDocument = gql`
+    query searchVendors($searchTerm: String!) {
+  vendors(
+    skip: 0
+    take: 100
+    order: {name: ASC}
+    where: {and: [{status: {eq: ACTIVE}}, {or: [{name: {contains: $searchTerm}}]}]}
+  ) {
+    items {
+      id
+      name
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class SearchVendorsGQL extends Apollo.Query<SearchVendorsQuery, SearchVendorsQueryVariables> {
+    override document = SearchVendorsDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

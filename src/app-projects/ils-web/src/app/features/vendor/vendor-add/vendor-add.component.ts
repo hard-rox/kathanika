@@ -3,7 +3,7 @@ import {VendorFormComponent} from "../vendor-form/vendor-form.component";
 import {KnAlert, KnPanel} from "@kathanika/kn-ui";
 import {AddVendorGQL, AddVendorInput, VendorPatchInput} from "../../../graphql/generated/graphql-operations";
 import {CommonModule} from "@angular/common";
-import {MessageAlertService} from "../../../core/message-alert.service";
+import {MessageAlertService} from "../../../core/message-alert/message-alert.service";
 import {Router} from "@angular/router";
 import {finalize} from "rxjs";
 

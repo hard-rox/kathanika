@@ -2,7 +2,7 @@ import {Component, inject, viewChild} from '@angular/core';
 import {
     CreatePurchaseOrderGQL, CreatePurchaseOrderInput, PurchaseOrderPatchInput
 } from "../../../graphql/generated/graphql-operations";
-import {MessageAlertService} from "../../../core/message-alert.service";
+import {MessageAlertService} from "../../../core/message-alert/message-alert.service";
 import {Router} from "@angular/router";
 import {finalize} from "rxjs";
 import {PurchaseOrderFormComponent} from "../purchase-order-form/purchase-order-form.component";
@@ -29,6 +29,7 @@ export class PurchaseOrderCreateComponent {
     errors: string[] = [];
 
     onValidFormSubmit(formValue: CreatePurchaseOrderInput | PurchaseOrderPatchInput) {
+        console.debug(formValue);
         this.isPanelLoading = true;
         this.gql.mutate({input: formValue as CreatePurchaseOrderInput})
             .pipe(finalize(() => {
@@ -36,6 +37,7 @@ export class PurchaseOrderCreateComponent {
             }))
             .subscribe({
                 next: (result) => {
+                    console.debug(result);
                     if (result.loading) {
                         this.isPanelLoading = true;
                         return;
@@ -58,7 +60,7 @@ export class PurchaseOrderCreateComponent {
                             result.data?.createPurchaseOrder.message ?? 'PurchaseOrder created.',
                         );
                         this.purchaseOrderEntryForm()?.resetForm();
-                        this.router.navigate([`/purchaseOrders/${result.data?.createPurchaseOrder.data?.id}`]).then();
+                        this.router.navigate([`/purchase-orders/${result.data?.createPurchaseOrder.data?.id}`]).then();
                     }
                 },
                 error: (err) => {

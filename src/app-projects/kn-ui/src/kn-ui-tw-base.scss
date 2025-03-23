@@ -32,8 +32,4 @@
   input[type='search'] {
     @apply outline-offset-0;
   }
-
-  input[type='submit'] {
-    @apply bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black px-4 py-2 text-white;
-  }
 }

@@ -15,7 +15,6 @@ internal static class MongoDbConfigurations
         ConventionPack conventionPack =
         [
             new CamelCaseElementNameConvention(),
-            new StringIdStoredAsObjectIdConvention(),
             new IgnoreExtraElementsConvention(true),
             new EnumRepresentationConvention(BsonType.String)
         ];

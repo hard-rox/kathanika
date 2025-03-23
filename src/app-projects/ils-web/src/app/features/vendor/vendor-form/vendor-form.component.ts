@@ -2,7 +2,7 @@ import {Component, Input, Output} from '@angular/core';
 import {BaseFormComponent, ControlsOf} from "../../../abstractions/base-form-component";
 import {AddVendorInput, Vendor, VendorPatchInput} from "../../../graphql/generated/graphql-operations";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {KnTextareaInput, KnTextInput} from "@kathanika/kn-ui";
+import {KnButton, KnTextareaInput, KnTextInput} from "@kathanika/kn-ui";
 import {CommonModule} from "@angular/common";
 
 @Component({
@@ -11,7 +11,8 @@ import {CommonModule} from "@angular/common";
         CommonModule,
         ReactiveFormsModule,
         KnTextInput,
-        KnTextareaInput
+        KnTextareaInput,
+        KnButton
     ],
     templateUrl: './vendor-form.component.html'
 })

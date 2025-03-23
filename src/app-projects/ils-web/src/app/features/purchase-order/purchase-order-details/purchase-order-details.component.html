@@ -35,7 +35,6 @@
                 </div>
             </div>
 
-            <!-- Items Table -->
             <div class="mt-6">
                 <h3 class="text-lg font-semibold pb-2">📚 Ordered Items</h3>
                 <div class="overflow-x-auto">
@@ -72,14 +71,12 @@
                                     <td class="font-semibold text-right">{{ item.vendorPrice | currency }}</td>
                                     <td class="font-semibold text-right">{{ item.totalCost | currency }}</td>
                                     <td>
-                                        <div class="flex flex-col space-y-1 items-center">
-                                            <button
-                                                class="px-2 py-1 bg-theme-silver bg-opacity-80 hover:bg-opacity-100 rounded active:bg-theme-silver text-theme-fire-red">
-                                                <span class="material-symbols-sharp my-auto">delete</span>
-                                            </button>
-                                            <button
-                                                class="px-2 py-1 bg-theme-silver bg-opacity-80 hover:bg-opacity-100 rounded active:bg-theme-silver text-theme-rich-black">
+                                        <div class="flex space-x-1 items-center">
+                                            <button type="button" kn-button variant="solid">
                                                 <span class="material-symbols-sharp my-auto">edit</span>
+                                            </button>
+                                            <button type="button" kn-button variant="solid">
+                                                <span class="material-symbols-sharp my-auto">delete</span>
                                             </button>
                                         </div>
                                     </td>

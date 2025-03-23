@@ -3,7 +3,7 @@ import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-l
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {KnBadge, KnButton, KnPagination} from "@kathanika/kn-ui";
-import {MessageAlertService} from "../../../core/message-alert.service";
+import {MessageAlertService} from "../../../core/message-alert/message-alert.service";
 import {
     DeleteVendorGQL,
     SortEnumType,

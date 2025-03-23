@@ -6,7 +6,7 @@ import {
     VendorDetailsGQL,
     VendorPatchInput
 } from "../../../graphql/generated/graphql-operations";
-import {MessageAlertService} from "../../../core/message-alert.service";
+import {MessageAlertService} from "../../../core/message-alert/message-alert.service";
 import {ActivatedRoute, Router} from "@angular/router";
 import {finalize} from "rxjs";
 import {KnAlert, KnPanel} from "@kathanika/kn-ui";

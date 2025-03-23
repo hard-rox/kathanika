@@ -1,0 +1,19 @@
+<kn-panel panelTitle="Add item">
+    <form [formGroup]="purchaseItemFormGroup" name="purchaseItemForm" (submit)="submit()">
+        <div class="grid grid-cols-2 gap-4">
+            <kn-text-input label="Title" formControlName="title"/>
+            <kn-number-input label="Quantity" formControlName="quantity"/>
+            <kn-number-input label="Vendor Price" formControlName="vendorPrice"/>
+            <kn-text-input label="Author" formControlName="author"/>
+            <kn-text-input label="Edition" formControlName="edition"/>
+            <kn-text-input label="ISBN" formControlName="isbn"/>
+            <kn-text-input label="Publisher" formControlName="publisher"/>
+            <kn-number-input label="Publishing Year" formControlName="publishingYear"/>
+            <kn-textarea-input label="Internal Note" formControlName="internalNote"/>
+            <kn-textarea-input label="Vendor Note" formControlName="vendorNote"/>
+        </div>
+        <div class="flex flex-row-reverse mt-2">
+            <input kn-button type="submit" value="Add"/>
+        </div>
+    </form>
+</kn-panel>

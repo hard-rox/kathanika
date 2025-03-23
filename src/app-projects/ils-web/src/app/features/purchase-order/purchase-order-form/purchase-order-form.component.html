@@ -1,34 +1,77 @@
-<pre>{{ formGroup.valid | json }}</pre>
-<pre>{{ formGroup.value | json }}</pre>
+<!--<pre>{{ formGroup.valid | json }}</pre>-->
+<!--<pre>{{ formGroup.value | json }}</pre>-->
 
-<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+<form [formGroup]="formGroup" name="purchaseOrderForm" (ngSubmit)="submitForm()">
     <div class="space-y-4">
-        <kn-searchbar label="Vendor" [required]="true" [options]="[]"/>
+        <kn-searchbar label="Vendor" [required]="true"
+                      [hasError]="(formGroup.get('vendorId')?.touched ?? false) && !formGroup.get('vendorId')?.valid"
+                      [options]="(vendorSearchQueryRef.valueChanges | async)?.data?.vendors?.items ?? []"
+        [displayFn]="getVendorName"
+        (searchTextChanged)="searchTextChanged($event)" (resultSelected)="selectVendor($event)"/>
+
+        <div class="mt-6">
+            <h3 class="text-lg font-semibold pb-2">📚 Ordered Items</h3>
+            <div class="overflow-x-auto">
+                <table>
+                    <thead>
+                    <tr>
+                        <th>Details</th>
+                        <th>Notes</th>
+                        <th class="text-right">Qty</th>
+                        <th class="text-right">Vendor Price</th>
+                        <th class="text-right">Total</th>
+                        <th>Actions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        @for (item of purchaseItems(); track item; let idx = $index) {
+                            <tr>
+                                <td>
+                                    <div class="flex flex-col">
+                                        <strong>{{ item.title }}</strong>
+                                        <span class="italic text-sm">{{ item.author }}</span>
+                                        <span class="italic text-sm">{{ item.edition }}</span>
+                                        <span class="italic text-sm">{{ item.publisher }}</span>
+                                        <span class="italic text-sm">{{ item.publishingYear }}</span>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="flex flex-col">
+                                        <span class="italic text-sm">Internal Note: {{ item.internalNote }}</span>
+                                        <span class="italic text-sm">Vendor Note: {{ item.vendorNote }}</span>
+                                    </div>
+                                </td>
+                                <td class="text-right">{{ item.quantity }}</td>
+                                <td class="font-semibold text-right">{{ item.vendorPrice | currency }}</td>
+                                <td class="font-semibold text-right">{{ item.quantity * item.vendorPrice | currency }}</td>
+                                <td>
+                                    <div class="flex space-x-1 items-center">
+                                        <button type="button" kn-button variant="transparent" (click)="updateItem(idx)">
+                                            <span class="material-symbols-sharp my-auto">edit</span>
+                                        </button>
+                                        <button type="button" kn-button variant="transparent" (click)="removeItem(idx)">
+                                            <span class="material-symbols-sharp my-auto">delete</span>
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="flex justify-between font-semibold mt-2 px-2">
+            <span>Total Cost:</span>
+            <span class="text-blue-600">{{ totalCost() | currency }}</span>
+        </div>
+
+        <button kn-button (click)="addItem()">+ Add Item</button>
+
         <kn-textarea-input label="Vendor note" formControlName="vendorNote"/>
         <kn-textarea-input label="Internal note" formControlName="internalNote"/>
-        <h3>Order Items</h3>
-        <ng-container formArrayName="items">
-            @for (item of formGroup.controls.items.controls; track item; let idx = $index) {
-
-            }
-            <button kn-button (click)="addItem()">+ Add Item</button>
-        </ng-container>
     </div>
     <div class="flex flex-row-reverse mt-2">
-        <input type="submit" value="Save"/>
+        <input kn-button type="submit" value="Save"/>
     </div>
 </form>
-<kn-modal #purchaseItemFormModal>
-    <form [formGroup]="purchaseItemFormGroup" class="grid grid-cols-2 gap-4">
-        <kn-text-input label="Title" formControlName="title"/>
-        <kn-number-input label="Quantity" formControlName="quantity"/>
-        <kn-text-input label="Author" formControlName="author"/>
-        <kn-text-input label="Edition" formControlName="edition"/>
-        <kn-textarea-input label="Internal Note" formControlName="internalNote"/>
-        <kn-text-input label="ISBN" formControlName="isbn"/>
-        <kn-text-input label="Publisher" formControlName="publisher"/>
-        <kn-number-input label="Publishing Year" formControlName="publishingYear"/>
-        <kn-textarea-input label="Vendor Note" formControlName="vendorNote"/>
-        <kn-number-input label="Vendor Price" formControlName="vendorPrice"/>
-    </form>
-</kn-modal>

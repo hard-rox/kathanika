@@ -26,7 +26,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 
     private static bool IsValidId(string id)
     {
-        return ObjectId.TryParse(id, out ObjectId _);
+        return Ulid.TryParse(id, out Ulid _);
     }
 
     private static List<OutboxMessage> GetOutboxMessagesFromAggregate(T aggregate)
@@ -34,7 +34,6 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         List<OutboxMessage> outboxMessages = aggregate.DomainEvents
             .Select(domainEvent => new OutboxMessage(domainEvent))
             .ToList();
-        aggregate.ClearDomainEvents();
         return outboxMessages;
     }
 
@@ -186,6 +185,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         await _hybridCache.SetAsync(cacheKey, aggregate, cancellationToken: cancellationToken);
 
         List<OutboxMessage> outboxMessages = GetOutboxMessagesFromAggregate(aggregate);
+        aggregate.ClearDomainEvents();
         if (outboxMessages.Count > 0)
             await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
 
@@ -209,6 +209,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
             typeof(T).Name, aggregate.Id, _collectionName, aggregate);
 
         List<OutboxMessage> outboxMessages = GetOutboxMessagesFromAggregate(aggregate);
+        aggregate.ClearDomainEvents();
         if (outboxMessages.Count > 0)
             await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
 

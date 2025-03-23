@@ -17,7 +17,7 @@ export abstract class BaseFormComponent<TOutput extends Record<string, unknown>>
             this.formGroup.markAllAsTouched();
             return;
         }
-        const formValue = this.formGroup.getRawValue() as TOutput;
+        const formValue = this.formGroup.value as TOutput;
         this.submitEventEmitter.emit(formValue);
     }
 
