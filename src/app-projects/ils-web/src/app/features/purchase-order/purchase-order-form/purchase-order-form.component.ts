@@ -1,14 +1,14 @@
-import {Component, computed, Input, Output, signal} from '@angular/core';
-import {BaseFormComponent, ControlsOf} from "../../../abstractions/base-form-component";
+import {Component, computed, EventEmitter, Input, Output, signal} from '@angular/core';
+import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {
-    CreatePurchaseOrderInput,
+    CreatePurchaseOrderInput, InputMaybe,
     PurchaseItemInput,
     PurchaseOrder,
-    PurchaseOrderPatchInput, SearchVendorsGQL,
+    PurchaseOrderPatchInput, Scalars, SearchVendorsGQL,
     SearchVendorsQuery,
     SearchVendorsQueryVariables
 } from "../../../graphql/generated/graphql-operations";
-import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {Form, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {
     KnButton,
@@ -30,7 +30,7 @@ import {QueryRef} from "apollo-angular";
         KnButton
     ]
 })
-export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchaseOrderInput | PurchaseOrderPatchInput> {
+export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchaseOrderInput> {
     @Input()
     set vendor(input: PurchaseOrder | null) {
         if (input) {
@@ -39,7 +39,7 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
     }
 
     @Output()
-    formSubmit = this.submitEventEmitter;
+    formSubmit = new EventEmitter<CreatePurchaseOrderInput>();
 
     protected readonly purchaseItems = signal<PurchaseItemInput[]>([]);
     protected readonly totalCost = computed(() => {
@@ -52,7 +52,8 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
 
     constructor(
         private modalDialogService: ModalDialogService,
-        vendorSearchGql: SearchVendorsGQL
+        vendorSearchGql: SearchVendorsGQL,
+        private formBuilder: FormBuilder,
     ) {
         super();
         this.vendorSearchQueryRef = vendorSearchGql.watch({searchTerm: ''});
@@ -60,8 +61,8 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
 
     createItem(data?: Partial<PurchaseItemInput>): FormGroup {
         return new FormGroup({
-            title: new FormControl(data?.title ?? '', { validators: [Validators.required] }),
-            quantity: new FormControl(data?.quantity ?? 1, { validators: [Validators.required, Validators.min(1)] }),
+            title: new FormControl(data?.title ?? '', {validators: [Validators.required]}),
+            quantity: new FormControl(data?.quantity ?? 1, {validators: [Validators.required, Validators.min(1)]}),
             author: new FormControl(data?.author ?? ''),
             publisher: new FormControl(data?.publisher ?? ''),
             edition: new FormControl(data?.edition ?? ''),
@@ -73,12 +74,12 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
         });
     }
 
-    protected override createFormGroup(): FormGroup<ControlsOf<CreatePurchaseOrderInput | PurchaseOrderPatchInput>> {
-        return new FormGroup<ControlsOf<CreatePurchaseOrderInput | PurchaseOrderPatchInput>>({
+    protected override createFormGroup(): FormGroup<FormControlsOf<CreatePurchaseOrderInput>> {
+        return new FormGroup<FormControlsOf<CreatePurchaseOrderInput>>({
             vendorId: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
             internalNote: new FormControl<string | null>(null),
             vendorNote: new FormControl<string | null>(null),
-            items: new FormArray<FormGroup<ControlsOf<PurchaseItemInput>>>([], [Validators.required])
+            items: new FormArray<FormGroup<FormControlsOf<PurchaseItemInput>>>([], [Validators.required])
         });
     }
 
@@ -99,7 +100,7 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
                     return;
                 this.purchaseItems
                     .update((prev) => [...prev, item]);
-                (this.formGroup.get('items') as FormArray).push(this.createItem(item));
+                this.formGroup.controls.items.push(this.createItem(item));
             });
     }
 

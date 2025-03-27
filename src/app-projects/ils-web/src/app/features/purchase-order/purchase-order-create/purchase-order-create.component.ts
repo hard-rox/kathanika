@@ -59,7 +59,7 @@ export class PurchaseOrderCreateComponent {
                             'success',
                             result.data?.createPurchaseOrder.message ?? 'PurchaseOrder created.',
                         );
-                        this.purchaseOrderEntryForm()?.resetForm();
+                        // this.purchaseOrderEntryForm()?.resetForm();
                         this.router.navigate([`/purchase-orders/${result.data?.createPurchaseOrder.data?.id}`]).then();
                     }
                 },

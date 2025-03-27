@@ -1,5 +1,5 @@
 import {Component, Input, Output} from '@angular/core';
-import {BaseFormComponent, ControlsOf} from "../../../abstractions/base-form-component";
+import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {AddVendorInput, Vendor, VendorPatchInput} from "../../../graphql/generated/graphql-operations";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
 import {KnButton, KnTextareaInput, KnTextInput} from "@kathanika/kn-ui";
@@ -27,8 +27,8 @@ export class VendorFormComponent extends BaseFormComponent<AddVendorInput | Vend
     @Output()
     formSubmit = this.submitEventEmitter;
 
-    protected override createFormGroup(): FormGroup<ControlsOf<AddVendorInput | VendorPatchInput>> {
-        return new FormGroup<ControlsOf<AddVendorInput | VendorPatchInput>>({
+    protected override createFormGroup(): FormGroup<FormControlsOf<AddVendorInput | VendorPatchInput>> {
+        return new FormGroup<FormControlsOf<AddVendorInput | VendorPatchInput>>({
             name: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
             accountDetail: new FormControl<string | null>(null),
             address: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),

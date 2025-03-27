@@ -37,17 +37,15 @@ describe('Purchase order Form Test', () => {
                 if (random % 2 == 0)
                     cy.get('input[id="publishingYear"]').type(faker.date.past().getFullYear().toString());
 
-                if (random % 2 == 1) {
+                if (random % 2 == 1)
                     cy.get('textarea[id="vendorNote"]').type(faker.lorem.paragraph(3));
-                }
             });
             cy.get('[name="purchaseItemForm"]').submit();
         }
 
         cy.get('textarea[id="vendorNote"]').type(faker.lorem.paragraph(1));
         cy.get('textarea[id="internalNote"]').type(faker.lorem.paragraph(1));
+        cy.wait(300);
         cy.get('form[name="purchaseOrderForm"]').submit();
-        
-        // cy.contains(vendorName).should('be.visible');
     });
 });

@@ -1,7 +1,7 @@
 import {Component} from '@angular/core';
 import {ModalDialogService} from "../../../core/modal-dialog/modal-dialog.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
-import {ControlsOf} from "../../../abstractions/base-form-component";
+import {FormControlsOf} from "../../../abstractions/base-form-component";
 import {PurchaseItemInput} from "../../../graphql/generated/graphql-operations";
 import {CommonModule} from "@angular/common";
 import {KnButton, KnNumberInput, KnPanel, KnTextareaInput, KnTextInput} from "@kathanika/kn-ui";
@@ -22,7 +22,7 @@ export class PurchaseItemFormComponent {
     constructor(private readonly modalDialogService: ModalDialogService) {
     }
 
-    protected purchaseItemFormGroup = new FormGroup<ControlsOf<PurchaseItemInput>>({
+    protected purchaseItemFormGroup = new FormGroup<FormControlsOf<PurchaseItemInput>>({
         title: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
         quantity: new FormControl<number>(0, {nonNullable: true, validators: [Validators.required, Validators.min(1)]}),
         vendorPrice: new FormControl<number | null>(null, {nonNullable: false}),
