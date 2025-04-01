@@ -29,7 +29,7 @@
     "@storybook/jest": "^0.2.3",
     "@storybook/testing-library": "^0.2.2",
     "apollo-angular": "^10.0.3",
-    "express": "^4.21.2",
+    "express": "^5.1.0",
     "graphql": "^16.10.0",
     "rxjs": "~7.8.2",
     "sweetalert2": "^11.15.10",
