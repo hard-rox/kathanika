@@ -1,14 +1,13 @@
 import {Component, computed, EventEmitter, Input, Output, signal} from '@angular/core';
 import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {
-    CreatePurchaseOrderInput, InputMaybe,
-    PurchaseItemInput,
+    CreatePurchaseOrderInput, PurchaseItemInput,
     PurchaseOrder,
-    PurchaseOrderPatchInput, Scalars, SearchVendorsGQL,
+    SearchVendorsGQL,
     SearchVendorsQuery,
     SearchVendorsQueryVariables
 } from "../../../graphql/generated/graphql-operations";
-import {Form, FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {
     KnButton,
@@ -111,6 +110,7 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
     }
 
     updateItem(index: number) {
+        console.debug(index);
         this.formGroup.patchValue({items: this.purchaseItems()})
     }
 
