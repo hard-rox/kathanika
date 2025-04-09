@@ -45,7 +45,7 @@ type MapNullableScalarToFormControl<T> = T extends InputMaybe<infer U>
 
 // **Utility Type: Converts GraphQL Input Types into Angular FormControls**
 export type FormControlsOf<T> = {
-    [K in keyof T]: T[K] extends Array<infer U>
+    [K in keyof T]: T[K] extends (infer U)[]
         ? FormArray<FormGroup<FormControlsOf<U>>> // Convert arrays to FormArray<FormGroup<T>>
         : MapNullableScalarToFormControl<T[K]>; // Use mapped FormControl type
 };

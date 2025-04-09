@@ -1,4 +1,4 @@
-import {Directive, ElementRef, OnChanges, inject, input, computed, effect} from '@angular/core';
+import {Directive, ElementRef, inject, input, effect} from '@angular/core';
 import {Color} from "../../types/color";
 
 @Directive({
