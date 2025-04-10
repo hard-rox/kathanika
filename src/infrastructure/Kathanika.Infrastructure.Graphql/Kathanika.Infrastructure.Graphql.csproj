@@ -11,6 +11,7 @@
         <PackageReference Include="HotChocolate.AspNetCore"/>
         <PackageReference Include="HotChocolate.Data"/>
         <PackageReference Include="HotChocolate.Diagnostics"/>
+        <PackageReference Include="HotChocolate.Types.OffsetPagination" />
         <PackageReference Include="MediatR"/>
     </ItemGroup>
 
