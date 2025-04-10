@@ -1,0 +1,61 @@
+@import 'tailwindcss';
+
+@theme {
+  --color-theme-rich-black: #00171f;
+  --color-theme-office-green: #0a8218;
+  --color-theme-davys-gray: #53585a;
+  --color-theme-fire-red: #cb2929;
+  --color-theme-spanish-orange: #e46e14;
+  --color-theme-gunmetal: #2a383d;
+  --color-theme-silver: #b9baba;
+}
+
+/*
+  The default border color has changed to `currentcolor` in Tailwind CSS v4,
+  so we've added these compatibility styles to make sure everything still
+  looks the same as it did with Tailwind CSS v3.
+
+  If we ever want to remove these styles, we need to add an explicit border
+  color utility to any element that depends on these defaults.
+*/
+@layer base {
+  *,
+  ::after,
+  ::before,
+  ::backdrop,
+  ::file-selector-button {
+    border-color: var(--color-gray-200, currentcolor);
+  }
+}
+
+@layer components {
+  table {
+    @apply table-auto w-full shadow-xs bg-white text-left mt-2;
+  }
+
+  tr {
+    @apply border-b border-theme-rich-black py-0;
+  }
+
+  th {
+    @apply px-1;
+  }
+
+  td {
+    @apply px-1;
+  }
+
+  input,
+  select,
+  textarea {
+    @apply border p-2;
+  }
+
+  input[type='search'] {
+    @apply outline-offset-0;
+  }
+
+  input[type='submit'] {
+    @apply bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black px-4 py-2 text-white;
+  }
+}
