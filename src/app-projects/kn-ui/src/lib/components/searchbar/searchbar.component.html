@@ -32,7 +32,7 @@
             <input
                 (input)="onInputChange()"
                 [(ngModel)]="searchInputValue"
-                [id]="label() + '-search'"
+                [id]="label()?.toLowerCase() + '-search'"
                 [ngClass]="
           hasError()
             ? 'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
@@ -44,12 +44,13 @@
           placeholder() && placeholder().length > 0 ? placeholder() : label()
         "
                 autocomplete="off"
-                class="block pl-8 w-full border-theme-gunmetal peer"
+                class="block pl-8 w-full border-theme-gunmetal peer rounded-sm"
                 type="search"
             />
         </div>
         <div
-            class="z-10 w-full border bg-white invisible shadow-md absolute top-12 transition-all opacity-0 flex flex-col group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
+            class="z-10 w-full border bg-white invisible shadow-md absolute top-12 transition-all opacity-0 flex flex-col group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1"
+            [id]="label()?.toLowerCase() + '-search-results'">
             @if (options() && options().length > 0) {
                 @for (option of options(); track $index) {
                     <button

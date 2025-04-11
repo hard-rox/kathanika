@@ -46,5 +46,16 @@ export class SidebarComponent {
                 }
             ]
         },
+        {
+            text: 'Acquisitions',
+            icon: 'library_books',
+            link: null,
+            children: [
+                {
+                    text: 'Purchase Orders',
+                    link: 'purchase-orders',
+                },
+            ]
+        }
     ];
 }

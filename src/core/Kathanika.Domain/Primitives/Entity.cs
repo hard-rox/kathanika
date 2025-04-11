@@ -5,7 +5,7 @@ namespace Kathanika.Domain.Primitives;
 public abstract class Entity : IEquatable<Entity>
 {
     // ReSharper disable once ReplaceAutoPropertyWithComputedProperty
-    public string Id { get; private set; } = string.Empty;
+    public string Id { get; private set; } = Ulid.NewUlid().ToString();
 
     [GraphQLIgnore]
     public bool Equals(Entity? other)

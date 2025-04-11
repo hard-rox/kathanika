@@ -1,14 +1,10 @@
 using System.Reflection;
 using Azure.Storage.Blobs;
 using Kathanika.Application.Services;
-using Kathanika.Domain.Aggregates.BibRecordAggregate;
-using Kathanika.Domain.Aggregates.PatronAggregate;
-using Kathanika.Domain.Aggregates.VendorAggregate;
 using Kathanika.Infrastructure.Persistence.BsonClassMaps;
 using Kathanika.Infrastructure.Persistence.Caching;
 using Kathanika.Infrastructure.Persistence.FileStorage;
 using Kathanika.Infrastructure.Persistence.Outbox;
-using Kathanika.Infrastructure.Persistence.Repositories;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -57,10 +53,27 @@ public static class DependencyInjector
         services.AddSingleton(_ =>
             new BlobServiceClient(configuration.GetConnectionString("azureBlobStorage")));
 
-        services.AddScoped<IPatronRepository, PatronRepository>();
-        services.AddScoped<IVendorRepository, VendorRepository>();
-        services.AddScoped<IBibRecordRepository, BibRecordRepository>();
+        services.RegisterRepositories();
 
         return services;
+    }
+
+    private static void RegisterRepositories(this IServiceCollection services)
+    {
+        List<Type> types = Assembly.GetExecutingAssembly().GetTypes()
+            .Where(t => t.Name.Contains("Repository")
+                        && t is { IsClass: true, IsAbstract: false }).ToList();
+
+        foreach (Type type in types)
+        {
+            Type? interfaceType = type
+                .GetInterfaces()
+                .FirstOrDefault(x => !x.IsGenericType
+                                     && x.Name.Contains(type.Name));
+            if (interfaceType != null)
+            {
+                services.AddScoped(interfaceType, type);
+            }
+        }
     }
 }

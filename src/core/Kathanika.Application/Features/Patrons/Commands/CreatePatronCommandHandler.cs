@@ -1,5 +1,4 @@
 using Kathanika.Domain.Aggregates.PatronAggregate;
-using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Features.Patrons.Commands;
 
@@ -25,6 +24,6 @@ internal sealed class CreatePatronCommandHandler(
             return patronResult;
 
         Patron patron = await patronRepository.AddAsync(patronResult.Value, cancellationToken);
-        return KnResult.Success(patron);
+        return patron;
     }
 }

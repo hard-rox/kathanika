@@ -112,4 +112,19 @@ public class KnResult<TValue> : KnResult where TValue : class
     {
         return new KnResult<TValue>(false, errors: [error]);
     }
+
+    public static implicit operator KnResult<TValue>(TValue value)
+    {
+        return Success(value);
+    }
+
+    public static implicit operator KnResult<TValue>(KnError error)
+    {
+        return Failure(error);
+    }
+
+    public static implicit operator KnResult<TValue>(KnError[] errors)
+    {
+        return Failure(errors);
+    }
 }

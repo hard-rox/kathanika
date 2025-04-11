@@ -1,5 +1,4 @@
 using Kathanika.Domain.Aggregates.PatronAggregate;
-using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Features.Patrons.Queries;
 

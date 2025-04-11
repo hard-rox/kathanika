@@ -1,9 +1,7 @@
 <div class="space-y-2">
     <div class="flex justify-between">
         <h2 class="text-xl font-bold">Vendors</h2>
-        <a [routerLink]="['add']"
-           class="bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black text-white px-4 py-2"
-        >Add new</a>
+        <a [routerLink]="['add']" kn-button>Add new</a>
     </div>
     <input
         [value]="searchText"
@@ -21,6 +19,7 @@
             <th scope="col">Name</th>
             <th scope="col">Status</th>
             <th scope="col">Contact Person</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>

@@ -1,5 +1,4 @@
 using Kathanika.Domain.Aggregates.BibRecordAggregate;
-using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Features.BibRecords.Commands;
 

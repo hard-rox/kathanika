@@ -1,0 +1,22 @@
+mutation createPurchaseOrder($input: CreatePurchaseOrderInput!){
+    createPurchaseOrder(input: $input){
+        data {
+            id
+            vendorName
+        }
+        errors {
+            ... on KnError{
+                code
+                message
+                description
+            }
+            ... on ValidationError{
+                code
+                fieldName
+                message
+                description
+            }
+        }
+        message
+    }
+}

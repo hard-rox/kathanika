@@ -70,7 +70,6 @@ internal static class SchemaConfigurations
         );
         requestBuilder.BindRuntimeType<DateTime, DateTimeType>();
         requestBuilder.BindRuntimeType<DateOnly, DateType>();
-        requestBuilder.AddMutationConventions();
         requestBuilder.InitializeOnStartup();
 
         return requestBuilder;

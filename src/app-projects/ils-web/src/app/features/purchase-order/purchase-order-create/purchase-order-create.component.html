@@ -1,0 +1,15 @@
+@if (errors.length > 0) {
+    <div class="mb-2">
+        <kn-alert [closeable]="true" (closed)="closeAlert()">
+            <ul class="mt-1.5 ml-4 list-disc list-inside">
+                @for (error of errors; track error) {
+                    <li>{{ error }}</li>
+                }
+            </ul>
+        </kn-alert>
+    </div>
+}
+
+<kn-panel panelTitle="📦 Purchase Order Entry" [isLoading]="isPanelLoading">
+    <app-purchase-order-form #purchaseOrderEntryForm (formSubmit)="onValidFormSubmit($event)"/>
+</kn-panel>

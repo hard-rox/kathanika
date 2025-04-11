@@ -1,3 +1,4 @@
+using Kathanika.Domain.Aggregates.PurchaseOrderAggregate;
 using Kathanika.Domain.Primitives;
 using Kathanika.Infrastructure.Persistence.Outbox;
 using MongoDB.Bson;

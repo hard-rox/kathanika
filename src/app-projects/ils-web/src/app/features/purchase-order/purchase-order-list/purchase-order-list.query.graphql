@@ -1,0 +1,21 @@
+query purchaseOrderList(
+    $skip: Int!
+    $take: Int!
+    $filter: PurchaseOrderFilterInput
+    $sortBy: [PurchaseOrderSortInput!]
+) {
+    purchaseOrders(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+        items {
+            id
+            vendorName
+            totalQuantity
+            totalCost
+            status
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+        totalCount
+    }
+}

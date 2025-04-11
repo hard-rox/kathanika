@@ -1,5 +1,4 @@
 using Kathanika.Domain.Aggregates.VendorAggregate;
-using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Features.Vendors.Commands;
 

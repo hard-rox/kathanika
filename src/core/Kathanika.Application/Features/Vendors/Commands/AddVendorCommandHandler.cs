@@ -1,5 +1,4 @@
 using Kathanika.Domain.Aggregates.VendorAggregate;
-using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Features.Vendors.Commands;
 
@@ -28,6 +27,6 @@ internal sealed class AddVendorCommandHandler(
 
         Vendor vendor = await vendorRepository.AddAsync(vendorCreateResult.Value, cancellationToken);
 
-        return KnResult.Success(vendor);
+        return vendor;
     }
 }
