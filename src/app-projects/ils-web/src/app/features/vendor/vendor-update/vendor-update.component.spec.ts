@@ -3,7 +3,7 @@ import {ComponentFixture, TestBed} from '@angular/core/testing';
 import {VendorUpdateComponent} from './vendor-update.component';
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {KnBadge, KnButton, KnPagination} from "@kathanika/kn-ui";
-import {VendorDetailsGQL, VendorUpdateGQL} from "../../../graphql/generated/graphql-operations";
+import {VendorDetailsGQL, UpdateVendorGQL} from "../../../graphql/generated/graphql-operations";
 import {mockMutationGql, mockQueryGql} from "../../../graphql/gql-test-utils";
 
 describe('VendorUpdateComponent', () => {
@@ -25,7 +25,7 @@ describe('VendorUpdateComponent', () => {
                     useValue: mockQueryGql,
                 },
                 {
-                    provide: VendorUpdateGQL,
+                    provide: UpdateVendorGQL,
                     useValue: mockMutationGql,
                 },
                 {
