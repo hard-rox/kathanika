@@ -17,11 +17,13 @@ describe('MessageAlertService', () => {
     });
 
     it('showPopup should call themesSwal.fire with default value', () => {
+        swalSpy.mockReset();
         service.showPopup('success', 'Test message');
         expect(swalSpy).toHaveBeenCalledTimes(1);
     });
 
     it('showPopup should call themesSwal.fire with parameter value', () => {
+        swalSpy.mockReset();
         service.showPopup('error', 'Test message');
         expect(swalSpy).toHaveBeenCalledWith({
             icon: 'error',
