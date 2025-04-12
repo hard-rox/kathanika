@@ -1,12 +1,11 @@
-import {Injectable, Type} from '@angular/core';
+import {inject, Injectable, Type} from '@angular/core';
 import {ModalService} from "ngx-modal-ease";
 
 @Injectable({
     providedIn: 'root'
 })
 export class ModalDialogService {
-    constructor(private readonly easeModalService: ModalService) {
-    }
+    private easeModalService = inject(ModalService);
 
     open(component: Type<unknown>): Promise<{
         closedOnClickOrEscape: boolean

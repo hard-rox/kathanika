@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {ModalDialogService} from "../../../core/modal-dialog/modal-dialog.service";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {FormControlsOf} from "../../../abstractions/base-form-component";
@@ -19,9 +19,7 @@ import {KnButton, KnNumberInput, KnPanel, KnTextareaInput, KnTextInput} from "@k
     templateUrl: './purchase-item-form.component.html'
 })
 export class PurchaseItemFormComponent {
-    constructor(private readonly modalDialogService: ModalDialogService) {
-    }
-
+    private modalDialogService = inject(ModalDialogService);
     protected purchaseItemFormGroup = new FormGroup<FormControlsOf<PurchaseItemInput>>({
         title: new FormControl('', {nonNullable: true, validators: [Validators.required]}),
         quantity: new FormControl<number>(0, {nonNullable: true, validators: [Validators.required, Validators.min(1)]}),

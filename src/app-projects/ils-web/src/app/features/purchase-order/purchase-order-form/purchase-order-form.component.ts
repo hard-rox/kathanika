@@ -1,4 +1,4 @@
-import {Component, computed, EventEmitter, Input, Output, signal} from '@angular/core';
+import {Component, computed, EventEmitter, inject, Input, Output, signal} from '@angular/core';
 import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {
     CreatePurchaseOrderInput, PurchaseItemInput,
@@ -7,7 +7,7 @@ import {
     SearchVendorsQuery,
     SearchVendorsQueryVariables
 } from "../../../graphql/generated/graphql-operations";
-import {FormArray, FormBuilder, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
+import {FormArray, FormControl, FormGroup, ReactiveFormsModule, Validators} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {
     KnButton,
@@ -30,6 +30,7 @@ import {QueryRef} from "apollo-angular";
     ]
 })
 export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchaseOrderInput> {
+    private modalDialogService = inject(ModalDialogService);
     @Input()
     set vendor(input: PurchaseOrder | null) {
         if (input) {
@@ -49,11 +50,7 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
     });
     protected readonly vendorSearchQueryRef: QueryRef<SearchVendorsQuery, SearchVendorsQueryVariables>;
 
-    constructor(
-        private modalDialogService: ModalDialogService,
-        vendorSearchGql: SearchVendorsGQL,
-        private formBuilder: FormBuilder,
-    ) {
+    constructor(vendorSearchGql: SearchVendorsGQL) {
         super();
         this.vendorSearchQueryRef = vendorSearchGql.watch({searchTerm: ''});
     }
