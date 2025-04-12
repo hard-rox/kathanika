@@ -1,4 +1,4 @@
-mutation vendorDelete($id: String!){
+mutation deleteVendor($id: String!){
     deleteVendor(input: {id: $id}){
         errors {
             ... on KnError{

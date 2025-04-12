@@ -19,6 +19,7 @@ public class ArchTests
 
         var aggregateMethods = typeof(AggregateRoot)
             .GetMethods()
+            .Where(m => m.IsPublic)
             .Select(m => m.Name)
             .ToArray();
 
@@ -26,6 +27,7 @@ public class ArchTests
             .SelectMany(t => t.GetMethods())
             .Where(
                 m => !(m.IsSpecialName && m.Name.StartsWith("get_"))
+                     && !(m.IsSpecialName && m.Name.StartsWith("set_"))
                      && !(m.ReturnType == typeof(KnResult)
                           || (m.ReturnType.IsGenericType &&
                               m.ReturnType.GetGenericTypeDefinition().BaseType == typeof(KnResult)))

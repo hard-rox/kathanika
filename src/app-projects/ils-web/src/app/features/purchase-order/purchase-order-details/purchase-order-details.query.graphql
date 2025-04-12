@@ -1,0 +1,25 @@
+query purchaseOrderDetails($id: String!){
+    purchaseOrder(id: $id){
+        id
+        orderDate
+        vendorName
+        internalNote
+        vendorNote
+        totalQuantity
+        totalCost
+        status
+        purchaseItems {
+            id
+            title
+            author
+            edition
+            publisher
+            publishingYear
+            internalNote
+            vendorNote
+            quantity
+            vendorPrice
+            totalCost
+        }
+    }
+}

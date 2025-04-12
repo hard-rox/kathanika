@@ -1,0 +1,22 @@
+query searchVendors($searchTerm: String!) {
+    vendors(
+        skip: 0
+        take: 100
+        order: { name: ASC }
+        where: {
+            and:[
+                { status: { eq: ACTIVE } }
+                {
+                    or:[
+                        {name: {contains: $searchTerm}}
+                    ]
+                }
+            ]
+        }
+    ) {
+        items {
+            id
+            name
+        }
+    }
+}

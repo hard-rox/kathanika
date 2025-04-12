@@ -1,5 +1,4 @@
 using System.Reflection;
-using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Application.Behaviours;
 

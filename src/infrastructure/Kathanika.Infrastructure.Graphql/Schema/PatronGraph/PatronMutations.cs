@@ -32,10 +32,10 @@ public sealed class PatronMutations
     public async Task<DeletePatronPayload> DeletePatronAsync(
         [Service] IMediator mediator,
         CancellationToken cancellationToken,
-        string id
+        DeletePatronCommand input
     )
     {
-        KnResult knResult = await mediator.Send(new DeletePatronCommand(id), cancellationToken);
-        return new DeletePatronPayload(id, knResult);
+        KnResult knResult = await mediator.Send(input, cancellationToken);
+        return new DeletePatronPayload(input.Id, knResult);
     }
 }

@@ -5,7 +5,7 @@ using HotChocolate.Types.Descriptors.Definitions;
 namespace Kathanika.Infrastructure.Graphql.GraphqlHelpers;
 
 // ReSharper disable once ClassNeverInstantiated.Global
-internal class IgnorePublicMethodsTypeInterceptor : TypeInterceptor
+internal sealed class IgnorePublicMethodsTypeInterceptor : TypeInterceptor
 {
     public override void OnAfterInitialize(ITypeDiscoveryContext discoveryContext, DefinitionBase definition)
     {

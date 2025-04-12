@@ -1,4 +1,4 @@
-mutation vendorAdd($input: AddVendorInput!){
+mutation addVendor($input: AddVendorInput!){
     addVendor(input: $input){
         data {
             id

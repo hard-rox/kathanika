@@ -13,6 +13,11 @@ internal sealed class ApplicationNamingConvention : DefaultNamingConventions
             && name.EndsWith("CommandInput"))
             name = name.Replace("Command", string.Empty);
 
+        if (kind == TypeKind.InputObject
+            && type.Name.EndsWith("Dto")
+            && name.EndsWith("DtoInput"))
+            name = name.Replace("Dto", string.Empty);
+
         return name;
     }
 }

@@ -9,7 +9,8 @@
 
     <ItemGroup>
         <PackageReference Include="HotChocolate.Abstractions"/>
-        <PackageReference Include="MediatR"/>
+        <PackageReference Include="MediatR.Contracts" />
+        <PackageReference Include="Ulid" />
     </ItemGroup>
 
     <ItemGroup>
