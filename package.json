@@ -46,7 +46,7 @@
     "@angular/compiler-cli": "^19.2.6",
     "@chromatic-com/storybook": "^3.2.6",
     "@compodoc/compodoc": "^1.1.26",
-    "@faker-js/faker": "^9.6.0",
+    "@faker-js/faker": "^9.7.0",
     "@graphql-codegen/cli": "^5.0.5",
     "@graphql-codegen/typescript": "^4.1.6",
     "@graphql-codegen/typescript-apollo-angular": "^4.0.0",
