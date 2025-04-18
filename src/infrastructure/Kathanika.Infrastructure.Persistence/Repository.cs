@@ -7,6 +7,20 @@ using MongoDB.Bson;
 
 namespace Kathanika.Infrastructure.Persistence;
 
+/// <summary>
+/// Represents a generic repository that provides basic data access functionality for an entity of type <typeparamref name="T"/>.
+/// </summary>
+/// <typeparam name="T">
+/// The type of the entity that this repository will manage. Must inherit from <see cref="AggregateRoot"/>.
+/// </typeparam>
+/// <remarks>
+/// This abstract class implements the <see cref="IRepository{T}"/> interface and provides commonly used operations
+/// such as querying, checking existence, retrieving, adding, updating, deleting, and counting entities in a given MongoDB collection.
+/// </remarks>
+/// <example>
+/// This class is intended for use as a base class for specific repositories in your system.
+/// Examples include repositories for vendors, bibliographic records, patrons, and purchase orders.
+/// </example>
 internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
 {
     private readonly HybridCache _hybridCache;
@@ -70,11 +84,32 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         lastModifiedByUserNameProperty?.SetValue(aggregate, "not implemented");
     }
 
+    /// <summary>
+    /// Provides a LINQ queryable interface for entities of type <typeparamref name="T"/> within the MongoDB collection.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the entity that the repository manages. Must inherit from <see cref="AggregateRoot"/>.
+    /// </typeparam>
+    /// <returns>
+    /// An <see cref="IQueryable{T}"/> that allows LINQ queries to be performed on the entities in the collection.
+    /// </returns>
     public IQueryable<T> AsQueryable()
     {
         return _collection.AsQueryable();
     }
 
+    /// <summary>
+    /// Asynchronously checks whether an entity with the specified ID exists in the repository.
+    /// </summary>
+    /// <param name="id">
+    /// The unique identifier of the entity to check for existence.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// An optional <see cref="CancellationToken"/> to observe while waiting for the task to complete.
+    /// </param>
+    /// <returns>
+    /// A <see cref="Task{Boolean}"/> representing the asynchronous operation. The task result is <c>true</c> if an entity with the given ID exists in the repository; otherwise, <c>false</c>.
+    /// </returns>
     public async Task<bool> ExistsAsync(string id, CancellationToken cancellationToken = default)
     {
         if (!IsValidId(id)) return false;
@@ -87,6 +122,19 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return count > 0;
     }
 
+    /// <summary>
+    /// Asynchronously checks whether any entities in the MongoDB collection satisfy the specified predicate.
+    /// </summary>
+    /// <param name="expression">
+    /// A LINQ expression to define the condition that entities should fulfill to be considered as existing.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// Optional. A token to observe while waiting for the task to complete.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation. The task result contains a boolean value indicating whether
+    /// any entity satisfies the specified condition.
+    /// </returns>
     public async Task<bool> ExistsAsync(Expression<Func<T, bool>> expression,
         CancellationToken cancellationToken = default)
     {
@@ -99,6 +147,21 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return count > 0;
     }
 
+    /// <summary>
+    /// Retrieves an entity of type <typeparamref name="T"/> by its unique identifier asynchronously.
+    /// </summary>
+    /// <param name="id">
+    /// The unique identifier of the entity to retrieve.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A <see cref="CancellationToken"/> to observe while waiting for the task to complete.
+    /// </param>
+    /// <typeparam name="T">
+    /// The type of the entity that the repository manages. Must inherit from <see cref="AggregateRoot"/>.
+    /// </typeparam>
+    /// <returns>
+    /// An entity of type <typeparamref name="T"/> if found; otherwise, <c>null</c>.
+    /// </returns>
     public async Task<T?> GetByIdAsync(string id, CancellationToken cancellationToken = default)
     {
         if (!IsValidId(id)) return null;
@@ -114,6 +177,18 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return document;
     }
 
+    /// <summary>
+    /// Retrieves all entities of type <typeparamref name="T"/> from the MongoDB collection.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the entity that the repository manages. Must inherit from <see cref="AggregateRoot"/>.
+    /// </typeparam>
+    /// <param name="cancellationToken">
+    /// A cancellation token that can be used to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A task that represents the asynchronous operation. The task's result contains a read-only list of entities of type <typeparamref name="T"/> retrieved from the collection.
+    /// </returns>
     public async Task<IReadOnlyList<T>> ListAllAsync(CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Getting all documents of type {@DocumentType} from collection {@CollectionName}",
@@ -123,6 +198,21 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return await cursor.ToListAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// Retrieves a read-only list of entities of type <typeparamref name="T"/> from the repository that satisfy the specified condition.
+    /// </summary>
+    /// <param name="expression">
+    /// A LINQ expression to define the condition that the entities must satisfy.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A token to monitor for cancellation requests.
+    /// </param>
+    /// <typeparam name="T">
+    /// The type of the entity that the repository manages. Must inherit from <see cref="AggregateRoot"/>.
+    /// </typeparam>
+    /// <returns>
+    /// A task that represents the asynchronous operation. The task result contains a read-only list of entities of type <typeparamref name="T"/>.
+    /// </returns>
     public async Task<IReadOnlyList<T>> ListAllAsync(Expression<Func<T, bool>> expression,
         CancellationToken cancellationToken = default)
     {
@@ -136,6 +226,15 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return await cursor.ToListAsync(cancellationToken);
     }
 
+    /// <summary>
+    /// Asynchronously retrieves the current count of documents of type <typeparamref name="T"/> in the corresponding MongoDB collection.
+    /// </summary>
+    /// <param name="cancellationToken">
+    /// A token that allows the asynchronous operation to be canceled.
+    /// </param>
+    /// <returns>
+    /// A task that represents the asynchronous operation, containing the count of documents as a <see cref="long"/>.
+    /// </returns>
     public async Task<long> CountAsync(CancellationToken cancellationToken = default)
     {
         _logger.LogInformation(
@@ -144,7 +243,7 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         var cacheKey = $"{typeof(T).Name.ToLower()}-count";
 
         FilterDefinition<T> filter = Builders<T>.Filter.Empty;
-        var documentCount = await _hybridCache.GetOrCreateAsync<long>(
+        var documentCount = await _hybridCache.GetOrCreateAsync(
             cacheKey,
             async token => await _collection.CountDocumentsAsync(filter, cancellationToken: token),
             cancellationToken: cancellationToken);
@@ -154,6 +253,19 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return documentCount;
     }
 
+    /// <summary>
+    /// Asynchronously counts the number of documents of type <typeparamref name="T"/> in the MongoDB collection
+    /// that satisfy the specified filter expression.
+    /// </summary>
+    /// <param name="expression">
+    /// An expression specifying the condition that the documents must satisfy to be included in the count.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// An optional token to cancel the asynchronous operation.
+    /// </param>
+    /// <returns>
+    /// A <see cref="Task{TResult}"/> representing the asynchronous operation, with the result being the count of documents that match the condition.
+    /// </returns>
     public async Task<long> CountAsync(Expression<Func<T, bool>> expression,
         CancellationToken cancellationToken = default)
     {
@@ -170,6 +282,18 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return documentCount;
     }
 
+    /// <summary>
+    /// Adds a new aggregate of type <typeparamref name="T"/> to the corresponding repository and persists it.
+    /// </summary>
+    /// <param name="aggregate">
+    /// The aggregate instance to be added. Must inherit from <see cref="AggregateRoot"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A <see cref="CancellationToken"/> that can be used to cancel the operation. Defaults to <see cref="CancellationToken.None"/>.
+    /// </param>
+    /// <returns>
+    /// The added aggregate of type <typeparamref name="T"/> with updated state.
+    /// </returns>
     public async Task<T> AddAsync(T aggregate, CancellationToken cancellationToken = default)
     {
         SetCreationAuditProperties(aggregate);
@@ -192,6 +316,21 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         return aggregate;
     }
 
+    /// <summary>
+    /// Updates an existing entity of type <typeparamref name="T"/> in the repository and persists the changes to the MongoDB collection.
+    /// </summary>
+    /// <typeparam name="T">
+    /// The type of the entity that the repository manages. Must inherit from <see cref="AggregateRoot"/>.
+    /// </typeparam>
+    /// <param name="aggregate">
+    /// The aggregate to be updated in the database. Must be an instance of <typeparamref name="T"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// The cancellation token that can be used to cancel the operation. Defaults to <see cref="CancellationToken.None"/>.
+    /// </param>
+    /// <returns>
+    /// A <see cref="Task"/> that represents the asynchronous operation of updating the entity.
+    /// </returns>
     public async Task UpdateAsync(T aggregate, CancellationToken cancellationToken = default)
     {
         SetModificationAuditProperties(aggregate);
@@ -217,6 +356,18 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         await _hybridCache.SetAsync(cacheKey, aggregate, cancellationToken: cancellationToken);
     }
 
+    /// <summary>
+    /// Deletes a document with the specified identifier from the collection and removes its associated cache entry.
+    /// </summary>
+    /// <param name="id">
+    /// The unique identifier of the document to be deleted.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A cancellation token that can be used to cancel the operation.
+    /// </param>
+    /// <returns>
+    /// A task representing the asynchronous operation.
+    /// </returns>
     public async Task DeleteAsync(string id, CancellationToken cancellationToken = default)
     {
         _logger.LogInformation("Deleting document of type {@DocumentType} with id {@DocumentId} from {CollectionName}",
