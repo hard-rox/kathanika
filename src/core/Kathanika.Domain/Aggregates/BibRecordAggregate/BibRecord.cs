@@ -3,35 +3,19 @@ using Kathanika.Domain.Primitives;
 namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 
 /// <summary>
-///     Represents a bibliographic record with specific data elements.
+/// Represents a bibliographic record with specific data elements.
 /// </summary>
-/// <remarks>
-///     This class enforces validation rules for each data element and provides a method to create a new bibliographic
-///     record instance.
-/// </remarks>
 public sealed class BibRecord : AggregateRoot
 {
-    // ReSharper disable once UnusedMember.Local
-#pragma warning disable CS8618, CS9264
-    private BibRecord()
+    private static class ValidationRules
     {
+        public const int LeaderLength = 24;
+        public const int ControlNumberMaxLength = 50;
+        public const int ControlNumberIdentifierMaxLength = 50;
+        public const int FixedLengthDataElementsLength = 40;
     }
-#pragma warning restore CS8618, CS9264
 
-    private BibRecord(string leader,
-        string controlNumber,
-        string controlNumberIdentifier,
-        DateTime dateTimeOfLatestTransaction,
-        string fixedLengthDataElements,
-        CatalogingSource catalogingSource)
-    {
-        Leader = leader;
-        ControlNumber = controlNumber;
-        ControlNumberIdentifier = controlNumberIdentifier;
-        DateAndTimeOfLatestTransaction = dateTimeOfLatestTransaction;
-        FixedLengthDataElements = fixedLengthDataElements;
-        CatalogingSource = catalogingSource;
-    }
+    private record struct ValidationResult(bool IsValid, KnError? Error);
 
     /// <summary>
     ///     000 (Record Leader) - Must be exactly 24 characters.
@@ -59,44 +43,111 @@ public sealed class BibRecord : AggregateRoot
     public string FixedLengthDataElements { get; private set; }
 
     /// <summary>
+    /// 020 (International Standard Book Number) - Optional
+    /// Contains the International Standard Book Number (ISBN) assigned to the resource.
+    /// </summary>
+    public string? InternationalStandardBookNumber { get; private set; }
+
+    /// <summary>
+    /// 022 (International Standard Serial Number) - Optional
+    /// Contains the International Standard Serial Number (ISSN) assigned to the resource.
+    /// </summary>
+    public string? InternationalStandardSerialNumber { get; private set; }
+
+    /// <summary>
     ///     040 (Cataloging Source) - Must be a valid CatalogingSource.
     /// </summary>
     public CatalogingSource CatalogingSource { get; private set; }
 
-    private static void ValidateInput(string input, int? maxLength, KnError errorType, List<KnError> errors)
-    {
-        if (string.IsNullOrWhiteSpace(input) || (maxLength.HasValue && input.Length > maxLength.Value))
-            errors.Add(errorType);
-    }
 
-    private static void ValidateDateTime(DateTime dateTime, KnError errorType, List<KnError> errors)
-    {
-        if (dateTime == default) errors.Add(errorType);
-    }
+    /// <summary>
+    /// Represents the MARC21 Language Code field (041), containing information
+    /// about the language(s) of the resource, such as the text or sound track
+    /// and optionally the original language.
+    /// </summary>
+    public LanguageCode LanguageCode { get; private set; }
 
-    public static KnResult<BibRecord> Create(string leader,
+    /// <summary>
+    /// Represents the MARC21 Title Statement (Field 245).
+    /// Contains the title and optionally the remainder of the title
+    /// and statement of responsibility.
+    /// </summary>
+    public TitleStatement TitleStatement { get; private set; }
+
+
+    public PublicationDistribution PublicationDistribution { get; private set; }
+
+    private BibRecord(
+        string leader,
         string controlNumber,
         string controlNumberIdentifier,
         DateTime dateTimeOfLatestTransaction,
         string fixedLengthDataElements,
+        string? internationalStandardBookNumber,
+        string? internationalStandardSerialNumber,
         CatalogingSource catalogingSource)
     {
-        List<KnError> errors = [];
+        Leader = leader;
+        ControlNumber = controlNumber;
+        ControlNumberIdentifier = controlNumberIdentifier;
+        DateAndTimeOfLatestTransaction = dateTimeOfLatestTransaction;
+        FixedLengthDataElements = fixedLengthDataElements;
+        CatalogingSource = catalogingSource;
+        InternationalStandardBookNumber = internationalStandardBookNumber;
+        InternationalStandardSerialNumber = internationalStandardSerialNumber;
+    }
 
-        ValidateInput(leader, 24, BibRecordAggregateErrors.LeaderInvalid, errors);
-        ValidateInput(controlNumber, 50, BibRecordAggregateErrors.ControlNumberInvalid, errors);
-        ValidateInput(controlNumberIdentifier, 50, BibRecordAggregateErrors.ControlNumberIdentifierInvalid, errors);
-        ValidateDateTime(dateTimeOfLatestTransaction, BibRecordAggregateErrors.DateTimeOfLatestTransactionInvalid,
-            errors);
-        ValidateInput(fixedLengthDataElements, 40, BibRecordAggregateErrors.FixedLengthDataElementsInvalid, errors);
+    private static ValidationResult ValidateStringField(string input, int? maxLength, KnError errorType)
+    {
+        var isValid = !string.IsNullOrWhiteSpace(input) &&
+                      (!maxLength.HasValue || input.Length <= maxLength.Value);
+        return new ValidationResult(isValid, isValid ? null : errorType);
+    }
 
-        if (errors.Count > 0) return KnResult.Failure<BibRecord>(errors);
+    private static ValidationResult ValidateDateTime(DateTime dateTime, KnError errorType)
+    {
+        var isValid = dateTime != default;
+        return new ValidationResult(isValid, isValid ? null : errorType);
+    }
 
-        BibRecord record = new(leader,
+    public static KnResult<BibRecord> Create(
+        string leader,
+        string controlNumber,
+        string controlNumberIdentifier,
+        DateTime dateTimeOfLatestTransaction,
+        string fixedLengthDataElements,
+        string? internationalStandardBookNumber,
+        string? internationalStandardSerialNumber,
+        CatalogingSource catalogingSource)
+    {
+        ValidationResult[] validations =
+        [
+            ValidateStringField(leader, ValidationRules.LeaderLength, BibRecordAggregateErrors.LeaderInvalid),
+            ValidateStringField(controlNumber, ValidationRules.ControlNumberMaxLength,
+                BibRecordAggregateErrors.ControlNumberInvalid),
+            ValidateStringField(controlNumberIdentifier, ValidationRules.ControlNumberIdentifierMaxLength,
+                BibRecordAggregateErrors.ControlNumberIdentifierInvalid),
+            ValidateDateTime(dateTimeOfLatestTransaction, BibRecordAggregateErrors.DateTimeOfLatestTransactionInvalid),
+            ValidateStringField(fixedLengthDataElements, ValidationRules.FixedLengthDataElementsLength,
+                BibRecordAggregateErrors.FixedLengthDataElementsInvalid)
+        ];
+
+        List<KnError> errors = validations
+            .Where(v => !v.IsValid)
+            .Select(v => v.Error!)
+            .ToList();
+
+        if (errors.Count != 0)
+            return KnResult.Failure<BibRecord>(errors);
+
+        BibRecord record = new(
+            leader,
             controlNumber,
             controlNumberIdentifier,
             dateTimeOfLatestTransaction,
             fixedLengthDataElements,
+            internationalStandardBookNumber,
+            internationalStandardSerialNumber,
             catalogingSource);
 
         return KnResult.Success(record);

@@ -13,6 +13,8 @@ internal sealed class CreateBibRecordCommandHandler(IBibRecordRepository bibReco
             request.ControlNumberIdentifier,
             request.DateTimeOfLatestTransaction,
             request.FixedLengthDataElements,
+            request.InternationalStandardBookNumber,
+            request.InternationalStandardSerialNumber,
             request.CatalogingSource
         );
 

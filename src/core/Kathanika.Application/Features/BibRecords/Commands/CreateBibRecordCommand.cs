@@ -8,5 +8,7 @@ public sealed record CreateBibRecordCommand(
     string ControlNumberIdentifier,
     DateTime DateTimeOfLatestTransaction,
     string FixedLengthDataElements,
+    string? InternationalStandardBookNumber,
+    string? InternationalStandardSerialNumber,
     CatalogingSource CatalogingSource
 ) : IRequest<KnResult<BibRecord>>;

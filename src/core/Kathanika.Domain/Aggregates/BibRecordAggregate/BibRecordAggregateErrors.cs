@@ -30,8 +30,28 @@ public static class BibRecordAggregateErrors
     );
 
     public static readonly KnError TranscribingAgencyInvalid = new(
-        "040.c",
-        "040.c TranscribingAgency is required."
+        "BibRecord.TranscribingAgencyInvalid",
+        "040.c Transcribing Agency is required."
+    );
+
+    public static readonly KnError IsbnInvalid = new(
+        "BibRecord.IsbnInvalid",
+        "020 ISBN must be a valid ISBN format."
+    );
+
+    public static readonly KnError IssnInvalid = new(
+        "BibRecord.ISSNInvalid",
+        "022 ISSN must be a valid ISSN format."
+    );
+
+    public static readonly KnError LanguageCodeInvalid = new(
+        "BibRecord.LanguageCodeInvalid",
+        "041 Language Code is required and must be valid."
+    );
+
+    public static readonly KnError TitleRequired = new(
+        "BibRecord.TitleRequired",
+        "245 Title is required."
     );
 
     public static KnError NotFound(string id)

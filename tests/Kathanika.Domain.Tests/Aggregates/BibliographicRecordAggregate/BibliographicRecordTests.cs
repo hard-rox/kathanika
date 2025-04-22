@@ -24,6 +24,8 @@ public class BibRecordTests
             controlNumberIdentifier,
             dateTimeOfLatestTransaction,
             fixedLengthDataElements,
+            null,
+            null,
             catalogingSource);
 
         // Assert
@@ -51,6 +53,8 @@ public class BibRecordTests
             controlNumberIdentifier,
             dateTimeOfLatestTransaction,
             fixedLengthDataElements,
+            null,
+            null,
             catalogingSource);
 
         // Assert
