@@ -61,7 +61,7 @@
     "@tailwindcss/postcss": "^4.1.6",
     "@types/express": "^5.0.1",
     "@types/jest": "^29.5.14",
-    "@types/node": "^22.15.17",
+    "@types/node": "^22.15.18",
     "angular-eslint": "^19.4.0",
     "autoprefixer": "^10.4.21",
     "cypress": "^14.3.3",
