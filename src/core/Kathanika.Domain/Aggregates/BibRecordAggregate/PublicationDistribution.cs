@@ -2,31 +2,57 @@ using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 
-
-public record PublicationDistribution : ValueObject
+/// <summary>
+/// Represents MARC21 Field 260 - Publication, Distribution, etc. (R)
+/// </summary>
+public sealed record PublicationDistribution : ValueObject
 {
-    /// <summary>
-    /// 260 (Publication, Distribution, etc. (Imprint)) - Optional
-    /// Contains information about the publication, distribution, and manufacture of the resource.
-    /// </summary>
-    public string? PublisherName { get; }
+    private List<string> _placesOfPublication = [];
+    private List<string> _namesOfPublisher = [];
+    private List<string> _datesOfPublication = [];
 
     /// <summary>
-    /// 260 (Publication, Distribution, etc. (Imprint)) - Optional
-    /// Contains information about the publication, distribution, and manufacture of the resource.
+    /// Place of publication, distribution, etc. (Subfield $a) - Repeatable
     /// </summary>
-    public string? PlaceOfPublication { get; }
+    public IReadOnlyList<string> PlacesOfPublication
+    {
+        get => _placesOfPublication;
+        private set { _placesOfPublication = value.ToList(); }
+    }
 
     /// <summary>
-    /// 260 (Publication, Distribution, etc. (Imprint)) - Optional
-    /// Contains information about the publication, distribution, and manufacture of the resource.
+    /// Name of publisher, distributor, etc. (Subfield $b) - Repeatable
     /// </summary>
-    public string? DateOfPublication { get; }
+    public IReadOnlyList<string> NamesOfPublisher
+    {
+        get => _namesOfPublisher;
+        private set { _namesOfPublisher = value.ToList(); }
+    }
+
+    /// <summary>
+    /// Date of publication, distribution, etc. (Subfield $c) - Repeatable
+    /// </summary>
+    public IReadOnlyList<string> DatesOfPublication
+    {
+        get => _datesOfPublication;
+        private set { _datesOfPublication = value.ToList(); }
+    }
+
+    internal PublicationDistribution(
+        string? publisherName,
+        string? publicationDate)
+    {
+        if (!string.IsNullOrWhiteSpace(publisherName))
+            _namesOfPublisher = [publisherName];
+
+        if (!string.IsNullOrWhiteSpace(publicationDate))
+            _datesOfPublication = [publicationDate];
+    }
 
     public override IEnumerable<object?> GetAtomicValues()
     {
-        yield return PublisherName;
-        yield return PlaceOfPublication;
-        yield return DateOfPublication;
+        yield return PlacesOfPublication;
+        yield return NamesOfPublisher;
+        yield return DatesOfPublication;
     }
 }
