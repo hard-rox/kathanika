@@ -36,6 +36,11 @@ public sealed record PhysicalDescription : ValueObject
         private set { _dimensions = value.ToList(); }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PhysicalDescription"/> record with optional extent and dimensions values.
+    /// </summary>
+    /// <param name="extent">A string representing the extent (MARC21 subfield $a), added if non-null and not whitespace.</param>
+    /// <param name="dimensions">A string representing the dimensions (MARC21 subfield $c), added if non-null and not whitespace.</param>
     internal PhysicalDescription(
         string? extent,
         string? dimensions)
@@ -47,6 +52,10 @@ public sealed record PhysicalDescription : ValueObject
             _dimensions = [dimensions];
     }
 
+    /// <summary>
+    /// Returns the atomic values used for equality comparison, including the extents and dimensions collections.
+    /// </summary>
+    /// <returns>An enumeration containing the extents and dimensions.</returns>
     public override IEnumerable<object?> GetAtomicValues()
     {
         yield return Extents;

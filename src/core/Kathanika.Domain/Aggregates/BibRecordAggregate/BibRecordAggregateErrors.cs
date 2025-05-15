@@ -54,6 +54,11 @@ public static class BibRecordAggregateErrors
         "245 Title is required."
     );
 
+    /// <summary>
+    /// Returns an error indicating that no bibliographic record exists for the specified identifier.
+    /// </summary>
+    /// <param name="id">The unique identifier of the bibliographic record.</param>
+    /// <returns>A <see cref="KnError"/> representing the not found error for the given ID.</returns>
     public static KnError NotFound(string id)
     {
         return new KnError("BibRecord.NotFound",

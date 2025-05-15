@@ -87,6 +87,9 @@ public sealed class BibRecord : AggregateRoot
     public string? CoverImageId { get; private set; }
 
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="BibRecord"/> class with default values.
+    /// </summary>
     private BibRecord()
     {
     }
@@ -105,7 +108,15 @@ public sealed class BibRecord : AggregateRoot
     /// The Leader is the first field in a MARC record and contains 24 character positions (00-23)
     /// with numbers or coded values that define parameters for processing the record.
     /// For detailed format specifications see: https://www.loc.gov/marc/bibliographic/bdleader.html
-    /// </remarks>
+    /// <summary>
+    /// Generates and sets the 24-character MARC21 Leader field for the bibliographic record.
+    /// </summary>
+    /// <param name="recordStatus">Single-character code indicating the record status (default 'n').</param>
+    /// <param name="recordType">Single-character code for the type of record (default 'a').</param>
+    /// <param name="bibLevel">Single-character code for the bibliographic level (default 'm').</param>
+    /// <param name="controlType">Single-character code for the type of control (default ' ').</param>
+    /// <param name="encodingLevel">Single-character code for the encoding level (default ' ').</param>
+    /// <param name="catalogingForm">Single-character code for the descriptive cataloging form (default 'i').</param>
     private void GenerateLeader(
         char recordStatus = 'n',
         char recordType = 'a',
@@ -142,7 +153,9 @@ public sealed class BibRecord : AggregateRoot
     /// <remarks>
     /// Field 001 contains the control number assigned by the organization creating, using, or distributing the record.
     /// For detailed format specifications see: https://www.loc.gov/marc/bibliographic/bd001.html
-    /// </remarks>
+    /// <summary>
+    /// Generates and assigns a unique control number using a fixed prefix, the current UTC timestamp, and a GUID segment.
+    /// </summary>
     private void GenerateControlNumber()
     {
         // Use a combination of prefix, timestamp, and GUID to ensure uniqueness
@@ -156,6 +169,10 @@ public sealed class BibRecord : AggregateRoot
     /// Gets material-specific data for positions 18-34 of the 008 field based on material type.
     /// </summary>
     /// <param name="materialType">The type of material being cataloged.</param>
+    /// <summary>
+    /// Returns the MARC21 material-specific 17-character string for positions 18-34 of the 008 field based on the given material type.
+    /// </summary>
+    /// <param name="materialType">The type of material for which to generate the data.</param>
     /// <returns>A 17-character string for positions 18-34 of the 008 field.</returns>
     private static string GetMaterialSpecificData(MaterialType materialType)
     {
@@ -185,7 +202,13 @@ public sealed class BibRecord : AggregateRoot
     /// Field 008 contains 40 character positions (00-39) that provide coded information about the record as a whole
     /// and about special bibliographic aspects of the item being cataloged.
     /// For detailed format specifications see: https://www.loc.gov/marc/bibliographic/bd008.html
-    /// </remarks>
+    /// <summary>
+    /// Generates and sets the 40-character MARC21 fixed-length data elements (field 008) for the bibliographic record.
+    /// </summary>
+    /// <param name="publicationDate">The publication year (4 digits) or empty if unknown.</param>
+    /// <param name="publicationPlace">The MARC21 place of publication code (default "xx").</param>
+    /// <param name="language">The MARC21 language code (default "xxx").</param>
+    /// <param name="materialType">The material type used to determine material-specific data fields.</param>
     private void GenerateFixedLengthDataElements(
         string publicationDate = "",
         string publicationPlace = "xx",
@@ -211,6 +234,21 @@ public sealed class BibRecord : AggregateRoot
     }
 
 
+    /// <summary>
+    /// Creates a new <see cref="BibRecord"/> instance for a book with the specified bibliographic details.
+    /// </summary>
+    /// <param name="title">The title of the book. Must be valid according to <see cref="TitleStatement"/> validation.</param>
+    /// <param name="isbn">The International Standard Book Number (ISBN) of the book, if available.</param>
+    /// <param name="personalName">The main entry personal name (author) of the book, if available.</param>
+    /// <param name="publisherName">The name of the publisher, if available.</param>
+    /// <param name="publicationDate">The publication date, if available.</param>
+    /// <param name="extent">The physical extent (e.g., number of pages), if available.</param>
+    /// <param name="dimensions">The physical dimensions of the book, if available.</param>
+    /// <param name="coverImageId">The identifier for the cover image, if available.</param>
+    /// <returns>
+    /// A <see cref="KnResult{BibRecord}"/> containing the created <see cref="BibRecord"/> if successful,
+    /// or a failure result with validation errors if the title is invalid.
+    /// </returns>
     public static KnResult<BibRecord> CreateBookRecord(
         string title,
         string? isbn,

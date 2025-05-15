@@ -38,6 +38,11 @@ public sealed record PublicationDistribution : ValueObject
         private set { _datesOfPublication = value.ToList(); }
     }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="PublicationDistribution"/> record with optional publisher name and publication date.
+    /// </summary>
+    /// <param name="publisherName">The name of the publisher or distributor, or <c>null</c> if not specified.</param>
+    /// <param name="publicationDate">The date of publication or distribution, or <c>null</c> if not specified.</param>
     internal PublicationDistribution(
         string? publisherName,
         string? publicationDate)
@@ -49,6 +54,10 @@ public sealed record PublicationDistribution : ValueObject
             _datesOfPublication = [publicationDate];
     }
 
+    /// <summary>
+    /// Returns the lists of places of publication, names of publisher, and dates of publication as atomic values for value object equality comparisons.
+    /// </summary>
+    /// <returns>An enumerable containing the three publication-related lists.</returns>
     public override IEnumerable<object?> GetAtomicValues()
     {
         yield return PlacesOfPublication;

@@ -14,11 +14,19 @@ public sealed record MainEntryPersonalName : ValueObject
     /// </summary>
     public string PersonalName { get; private set; }
 
+    /// <summary>
+    /// Initializes a new instance of the <see cref="MainEntryPersonalName"/> record with the specified personal name.
+    /// </summary>
+    /// <param name="personalName">The personal name associated with the main entry (MARC21 Field 100).</param>
     internal MainEntryPersonalName(string personalName)
     {
         PersonalName = personalName;
     }
 
+    /// <summary>
+    /// Returns the atomic values used for value-based equality, yielding the personal name.
+    /// </summary>
+    /// <returns>An enumerable containing the personal name.</returns>
     public override IEnumerable<object?> GetAtomicValues()
     {
         yield return PersonalName;
