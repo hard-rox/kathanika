@@ -18,10 +18,11 @@ import {
         KnPagination,
         RouterLink
     ],
+    standalone: true,
     templateUrl: './purchase-order-list.component.html'
 })
-export class PurchaseOrderListComponent 
-    extends BasePaginatedListComponent<PurchaseOrderListQuery, PurchaseOrderListQueryVariables> 
+export class PurchaseOrderListComponent
+    extends BasePaginatedListComponent<PurchaseOrderListQuery, PurchaseOrderListQueryVariables>
     implements OnInit {
     protected override setSearchTextQueryFilter(searchText: string): void {
         if (!searchText || searchText.length == 0) {
