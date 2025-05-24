@@ -1,0 +1,141 @@
+{
+  "marc21_fields": [
+    {
+      "tag": "001",
+      "description": "Control Number (NR)",
+      "validation": {
+        "required": true,
+        "repeatable": false,
+        "allowed_characters": "alphanumeric",
+        "max_length": "variable"
+      }
+    },
+    {
+      "tag": "003",
+      "description": "Control Number Identifier (NR)",
+      "validation": {
+        "required": false,
+        "repeatable": false,
+        "allowed_characters": "alphanumeric",
+        "max_length": "variable"
+      }
+    },
+    {
+      "tag": "005",
+      "description": "Date & Time of Latest Transaction (NR)",
+      "validation": {
+        "required": true,
+        "repeatable": false,
+        "allowed_characters": "YYYYMMDDHHMMSS.Thhmm",
+        "max_length": 16
+      }
+    },
+    {
+      "tag": "020",
+      "description": "ISBN (R)",
+      "subfields": [
+        {
+          "code": "a",
+          "description": "ISBN (NR)",
+          "validation": {
+            "required": true,
+            "repeatable": false,
+            "allowed_characters": "ISBN-10/13 format",
+            "max_length": 17
+          }
+        }
+      ]
+    },
+    {
+      "tag": "022",
+      "description": "ISSN (R)",
+      "subfields": [
+        {
+          "code": "a",
+          "description": "ISSN (NR)",
+          "validation": {
+            "required": true,
+            "repeatable": false,
+            "allowed_characters": "XXXX-XXXX",
+            "max_length": 9
+          }
+        }
+      ]
+    },
+    {
+      "tag": "050",
+      "description": "Library of Congress Call Number",
+      "indicators": [
+        {
+          "position": 1,
+          "allowed_values": ["0", "1", "4"],
+          "description": "Source of call number"
+        }
+      ],
+      "subfields": [
+        {
+          "code": "a",
+          "description": "Classification number",
+          "validation": {
+            "required": true,
+            "repeatable": false,
+            "allowed_characters": "alphanumeric + punctuation",
+            "max_length": 50
+          }
+        }
+      ]
+    },
+    {
+      "tag": "082",
+      "description": "DDC Number (R)",
+      "indicators": [
+        {
+          "position": 1,
+          "allowed_values": ["0", "1"],
+          "description": "Edition type"
+        }
+      ],
+      "subfields": [
+        {
+          "code": "a",
+          "description": "Classification number",
+          "validation": {
+            "required": true,
+            "repeatable": false,
+            "allowed_characters": "numeric + decimal",
+            "max_length": 15
+          }
+        }
+      ]
+    },
+    {
+      "tag": "856",
+      "description": "Electronic Location and Access (R)",
+      "subfields": [
+        {
+          "code": "u",
+          "description": "Uniform Resource Locator (NR)",
+          "validation": {
+            "required": true,
+            "repeatable": false,
+            "allowed_characters": "URL syntax",
+            "max_length": 500
+          }
+        }
+      ]
+    }
+  ],
+  "validation_rules": {
+    "general": {
+      "required_fields": ["001", "005", "008"],
+      "repeatable_subfields": "marked with (R)",
+      "non_repeatable_subfields": "marked with (NR)",
+      "indicator_values": "defined per MARC21 concise format",
+      "data_types": {
+        "dates": "ISO 8601 (e.g., 20231001)",
+        "language_codes": "ISO 639-2b",
+        "identifiers": "ISBN/ISSN/CODEN formats"
+      }
+    }
+  }
+}
