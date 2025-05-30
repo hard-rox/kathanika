@@ -5,17 +5,29 @@ import {KnButton} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-sidebar',
-        imports: [
+    imports: [
         CommonModule,
         RouterLink,
         RouterLinkActive,
         KnButton
     ],
+    standalone: true,
     templateUrl: './sidebar.component.html'
 })
 export class SidebarComponent {
     selectedIndex: number | null = null;
     menus = [
+        {
+            text: 'Cataloging',
+            icon: 'data_table',
+            link: null,
+            children: [
+                {
+                    text: 'Bibliographic Records',
+                    link: 'cataloging',
+                }
+            ],
+        },
         {
             text: 'Vendors',
             icon: 'two_pager_store',

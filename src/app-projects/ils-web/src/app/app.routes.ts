@@ -10,5 +10,10 @@ export const routes: Routes = [
         path: 'purchase-orders',
         loadChildren: () => import('./features/purchase-order/purchase-order.route')
             .then(x => x.purchaseOrderRoutes)
+    },
+    {
+        path: 'cataloging',
+        loadChildren: () => import('./features/cataloging/cataloging.routes')
+            .then(x => x.catalogingRoutes)
     }
 ];

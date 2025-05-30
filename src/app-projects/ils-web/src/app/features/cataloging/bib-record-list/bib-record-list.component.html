@@ -1,0 +1,115 @@
+<div class="space-y-2">
+    <div class="flex justify-between">
+        <h2 class="text-xl font-bold">📚 Bibliographic Records</h2>
+        <a [routerLink]="['create']" kn-button>
+            <span class="material-symbols-sharp">add</span>
+            New Record</a>
+    </div>
+    <input
+        [value]="searchText"
+        (keyup)="onSearchTextChanged($event)"
+        type="text"
+        placeholder="Search text"
+        class="border-theme-gunmetal border p-2 w-full"
+    />
+</div>
+@if (queryRef.valueChanges | async; as queryResult) {
+    <table>
+        <thead>
+        <tr>
+            <th scope="col">Serial</th>
+            <th scope="col">Title</th>
+            <th scope="col">Statement of Responsibility</th>
+            <th scope="col">Publisher(s)</th>
+            <th scope="col">Publication Date(s)</th>
+            <th scope="col">Extent(s)</th>
+            <th scope="col">Dimensions</th>
+            <th scope="col">Actions</th>
+        </tr>
+        </thead>
+        <tbody>
+            @for (item of queryResult?.data?.bibRecords?.items; track item; let idx = $index) {
+                <tr>
+                    <td>{{ idx + 1 }}</td>
+                    <td>{{ item.titleStatement.title }}</td>
+                    <td>{{ item.titleStatement.statementOfResponsibility }}</td>
+                    <td>
+                        <ng-container *ngIf="item.publicationDistributions?.length; else noPublisher">
+                            <ng-container *ngFor="let pd of item.publicationDistributions; let last = last">
+                                {{ pd.namesOfPublisher.length ? pd.namesOfPublisher.join(', ') : '' }}<span *ngIf="!last">; </span>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noPublisher></ng-template>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="item.publicationDistributions?.length; else noPubDate">
+                            <ng-container *ngFor="let pd of item.publicationDistributions; let last = last">
+                                {{ pd.datesOfPublication.length ? pd.datesOfPublication.join(', ') : '' }}<span *ngIf="!last">; </span>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noPubDate></ng-template>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="item.physicalDescriptions?.length; else noExtent">
+                            <ng-container *ngFor="let pd of item.physicalDescriptions; let last = last">
+                                {{ pd.extents.length ? pd.extents.join(', ') : '' }}<span *ngIf="!last">; </span>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noExtent></ng-template>
+                    </td>
+                    <td>
+                        <ng-container *ngIf="item.physicalDescriptions?.length; else noDim">
+                            <ng-container *ngFor="let pd of item.physicalDescriptions; let last = last">
+                                {{ pd.dimensions.length ? pd.dimensions.join(', ') : '' }}<span *ngIf="!last">; </span>
+                            </ng-container>
+                        </ng-container>
+                        <ng-template #noDim></ng-template>
+                    </td>
+                    <td>
+                        <div class="group relative">
+                            <button kn-button variant="transparent">
+                                <span class="material-symbols-sharp"> more_vert </span>
+                            </button>
+                            <div
+                                class="z-10 border bg-white invisible shadow-md w-30 absolute top-0 right-16 transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
+                                <div class="py-2">
+                                    <a
+                                        routerLink="{{ item?.id }}"
+                                        class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver"
+                                    >
+                                        <span class="material-symbols-sharp"> visibility </span>
+                                        <span class="my-auto">View</span>
+                                    </a>
+                                    <a
+                                        routerLink="update/{{ item?.id }}"
+                                        class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver"
+                                    >
+                                        <span class="material-symbols-sharp my-auto"> edit </span>
+                                        <span class="my-auto">Update</span>
+                                    </a>
+                                    <button
+                                        class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                                        <span class="material-symbols-sharp my-auto"> delete </span>
+                                        <span class="my-auto">Delete</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            } @empty {
+                <tr>
+                    <td colspan="100%" class="text-center">No data to show</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    <div class="w-full inline-flex justify-center">
+        <kn-pagination
+            [totalCount]="queryResult.data.bibRecords?.totalCount ?? 0"
+            [pageSize]="pageSize"
+            (pageChanged)="changePage($event)"
+            (pageSizeChanged)="changePageSize($event)"
+        />
+    </div>
+}
