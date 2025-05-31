@@ -17,14 +17,12 @@ import {CommonModule} from "@angular/common";
         PurchaseOrderFormComponent
     ],
     templateUrl: './purchase-order-create.component.html',
+    standalone: true
 })
 export class PurchaseOrderCreateComponent {
     private readonly gql = inject(CreatePurchaseOrderGQL);
     private readonly alertService = inject(MessageAlertService);
     private readonly router = inject(Router);
-
-    readonly purchaseOrderEntryForm = viewChild<PurchaseOrderFormComponent>('createPurchaseOrderForm');
-
     isPanelLoading = false;
     errors: string[] = [];
 

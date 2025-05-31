@@ -22,7 +22,7 @@ public sealed record PhysicalDescription : ValueObject
     public IReadOnlyList<string> Extents
     {
         get => _extents;
-        private set { _extents = value.ToList(); }
+        private set { _extents = [.. value]; }
     }
 
     /// <summary>
@@ -33,7 +33,7 @@ public sealed record PhysicalDescription : ValueObject
     public IReadOnlyList<string> Dimensions
     {
         get => _dimensions;
-        private set { _dimensions = value.ToList(); }
+        private set { _dimensions = [.. value]; }
     }
 
     internal PhysicalDescription(
@@ -52,4 +52,6 @@ public sealed record PhysicalDescription : ValueObject
         yield return Extents;
         yield return Dimensions;
     }
+    
+    private PhysicalDescription() { }
 }

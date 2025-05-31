@@ -1,0 +1,22 @@
+query BibRecordDetails($id: String!) {
+    bibRecord(id: $id) {
+        id
+        titleStatement {
+            title
+            statementOfResponsibility
+        }
+        internationalStandardBookNumbers
+        mainEntryPersonalName {
+            personalName
+        }
+        publicationDistributions {
+            namesOfPublisher
+            datesOfPublication
+        }
+        physicalDescriptions {
+            extents
+            dimensions
+        }
+        coverImageUrl
+    }
+}

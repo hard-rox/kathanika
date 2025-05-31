@@ -53,7 +53,7 @@ public sealed class BibRecord : AggregateRoot
     /// Contains information about the main entry of a personal name,
     /// including title, dates associated with the name, and relator term.
     /// </summary>
-    public MainEntryPersonalName MainEntryPersonalName { get; private set; }
+    public MainEntryPersonalName? MainEntryPersonalName { get; private set; }
 
     /// <summary>
     /// Represents the MARC21 Title Statement (Field 245).
@@ -214,12 +214,11 @@ public sealed class BibRecord : AggregateRoot
     public static KnResult<BibRecord> CreateBookRecord(
         string title,
         string? isbn,
-        string? personalName,
+        string? author,
         string? publisherName,
         string? publicationDate,
         string? extent,
-        string? dimensions,
-        string? coverImageId)
+        string? dimensions)
     {
         List<KnError> errors = [];
 
@@ -232,15 +231,14 @@ public sealed class BibRecord : AggregateRoot
 
         BibRecord record = new()
         {
-            TitleStatement = titleStatementResult.Value,
-            CoverImageId = coverImageId,
+            TitleStatement = titleStatementResult.Value
         };
 
         if (!string.IsNullOrWhiteSpace(isbn))
             record.InternationalStandardBookNumbers = [isbn];
 
-        if (!string.IsNullOrWhiteSpace(personalName))
-            record.MainEntryPersonalName = new MainEntryPersonalName(personalName);
+        if (!string.IsNullOrWhiteSpace(author))
+            record.MainEntryPersonalName = new MainEntryPersonalName(author, ["author"]);
 
         if (!string.IsNullOrWhiteSpace(publisherName) || !string.IsNullOrWhiteSpace(publicationDate))
             record.PublicationDistributions =

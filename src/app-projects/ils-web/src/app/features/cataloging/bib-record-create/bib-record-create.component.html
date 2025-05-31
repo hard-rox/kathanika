@@ -1,8 +1,8 @@
-@if (errors.length > 0) {
+@if (errors().length > 0) {
     <div class="mb-2">
         <kn-alert [closeable]="true" (closed)="closeAlert()">
             <ul class="mt-1.5 ml-4 list-disc list-inside">
-                @for (error of errors; track error) {
+                @for (error of errors(); track error) {
                     <li>{{ error }}</li>
                 }
             </ul>
@@ -10,6 +10,6 @@
     </div>
 }
 
-<kn-panel panelTitle="📦 Purchase Order Entry" [isLoading]="isPanelLoading">
-    <app-purchase-order-form (formSubmit)="onValidFormSubmit($event)"/>
+<kn-panel panelTitle="Create Book Bibliographic Record" [isLoading]="isPanelLoading()">
+    <kn-book-record-form #bookRecordForm (formSubmit)="onValidFormSubmit($event)"/>
 </kn-panel>

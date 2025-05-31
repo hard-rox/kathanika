@@ -38,6 +38,8 @@ public sealed record PublicationDistribution : ValueObject
         private set { _datesOfPublication = value.ToList(); }
     }
 
+    private PublicationDistribution() { }
+
     internal PublicationDistribution(
         string? publisherName,
         string? publicationDate)

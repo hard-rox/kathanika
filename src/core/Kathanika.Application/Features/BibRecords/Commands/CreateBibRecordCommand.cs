@@ -5,7 +5,7 @@ namespace Kathanika.Application.Features.BibRecords.Commands;
 public sealed record CreateBibRecordCommand(
     string Title,
     string? Isbn,
-    string? PersonalName,
+    string? Author,
     string? PublisherName,
     string? PublicationDate,
     string? Extent,

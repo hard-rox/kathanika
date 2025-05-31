@@ -16,10 +16,6 @@
     </ItemGroup>
 
     <ItemGroup>
-        <Folder Include="Types\"/>
-    </ItemGroup>
-
-    <ItemGroup>
         <ProjectReference Include="..\..\core\Kathanika.Application\Kathanika.Application.csproj"/>
         <ProjectReference Include="..\..\core\Kathanika.Domain\Kathanika.Domain.csproj"/>
     </ItemGroup>

@@ -19,11 +19,9 @@
         <tr>
             <th scope="col">Serial</th>
             <th scope="col">Title</th>
-            <th scope="col">Statement of Responsibility</th>
-            <th scope="col">Publisher(s)</th>
             <th scope="col">Publication Date(s)</th>
-            <th scope="col">Extent(s)</th>
-            <th scope="col">Dimensions</th>
+            <th scope="col">Publisher(s)</th>
+            <th scope="col">Call Number</th>
             <th scope="col">Actions</th>
         </tr>
         </thead>
@@ -32,39 +30,25 @@
                 <tr>
                     <td>{{ idx + 1 }}</td>
                     <td>{{ item.titleStatement.title }}</td>
-                    <td>{{ item.titleStatement.statementOfResponsibility }}</td>
-                    <td>
-                        <ng-container *ngIf="item.publicationDistributions?.length; else noPublisher">
-                            <ng-container *ngFor="let pd of item.publicationDistributions; let last = last">
-                                {{ pd.namesOfPublisher.length ? pd.namesOfPublisher.join(', ') : '' }}<span *ngIf="!last">; </span>
-                            </ng-container>
-                        </ng-container>
-                        <ng-template #noPublisher></ng-template>
-                    </td>
                     <td>
                         <ng-container *ngIf="item.publicationDistributions?.length; else noPubDate">
                             <ng-container *ngFor="let pd of item.publicationDistributions; let last = last">
-                                {{ pd.datesOfPublication.length ? pd.datesOfPublication.join(', ') : '' }}<span *ngIf="!last">; </span>
+                                {{ pd.datesOfPublication.length ? pd.datesOfPublication.join(', ') : '' }}<span
+                                *ngIf="!last">; </span>
                             </ng-container>
                         </ng-container>
                         <ng-template #noPubDate></ng-template>
                     </td>
                     <td>
-                        <ng-container *ngIf="item.physicalDescriptions?.length; else noExtent">
-                            <ng-container *ngFor="let pd of item.physicalDescriptions; let last = last">
-                                {{ pd.extents.length ? pd.extents.join(', ') : '' }}<span *ngIf="!last">; </span>
+                        <ng-container *ngIf="item.publicationDistributions?.length; else noPublisher">
+                            <ng-container *ngFor="let pd of item.publicationDistributions; let last = last">
+                                {{ pd.namesOfPublisher.length ? pd.namesOfPublisher.join(', ') : '' }}<span
+                                *ngIf="!last">; </span>
                             </ng-container>
                         </ng-container>
-                        <ng-template #noExtent></ng-template>
+                        <ng-template #noPublisher></ng-template>
                     </td>
-                    <td>
-                        <ng-container *ngIf="item.physicalDescriptions?.length; else noDim">
-                            <ng-container *ngFor="let pd of item.physicalDescriptions; let last = last">
-                                {{ pd.dimensions.length ? pd.dimensions.join(', ') : '' }}<span *ngIf="!last">; </span>
-                            </ng-container>
-                        </ng-container>
-                        <ng-template #noDim></ng-template>
-                    </td>
+                    <td></td>
                     <td>
                         <div class="group relative">
                             <button kn-button variant="transparent">

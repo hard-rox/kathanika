@@ -15,7 +15,7 @@
         ? 'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
         : isDisabled
           ? 'border-theme-davys-gray border-opacity-50 bg-gray-200'
-          : 'border-theme-gunmetal'
+          : 'border-theme-gunmetal placeholder:text-theme-gunmetal placeholder:text-opacity-20'
     "
         [ngModel]="value"
         [placeholder]="placeholder().length > 0 ? placeholder() : label()"

@@ -1,0 +1,27 @@
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
+    <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
+        <kn-text-input label="Title" formControlName="title" placeholder="The great Gatsby"/>
+        <kn-text-input label="ISBN" formControlName="isbn" placeholder="9781234567890"/>
+        <kn-text-input label="Author" formControlName="author" placeholder="Fitzgerald, F. Scott"/>
+        <kn-text-input label="Publisher Name" formControlName="publisherName" placeholder="Oxford University Press"/>
+        <kn-text-input label="Publication Date" formControlName="publicationDate" placeholder="2023"/>
+        <kn-text-input label="Extent" formControlName="extent" placeholder="325 pages"/>
+        <kn-text-input label="Dimensions" formControlName="dimensions" placeholder="23 cm"/>
+    </div>
+    <div class="flex flex-row-reverse mt-2">
+        <input kn-button type="submit" value="Save"/>
+    </div>
+</form>
+
+<div class="mt-6 p-4 bg-gray-50 rounded-md">
+    <h3 class="text-sm font-medium text-gray-700 mb-2">MARC21 Bibliographic Record Structure:</h3>
+    <ul class="text-xs text-gray-600 list-disc list-inside space-y-1">
+        <li><strong>Title (245$a):</strong> Title proper only, without statement of responsibility</li>
+        <li><strong>ISBN (020$a):</strong> International Standard Book Number without hyphens</li>
+        <li><strong>Author (100$a):</strong> Main entry personal name in inverted form (Surname, Forename)</li>
+        <li><strong>Publisher (260/264$b):</strong> Name of publisher</li>
+        <li><strong>Date (260/264$c):</strong> Date of publication (YYYY)</li>
+        <li><strong>Extent (300$a):</strong> Number and specific material designation (325 pages)</li>
+        <li><strong>Dimensions (300$c):</strong> Dimensions (23 cm)</li>
+    </ul>
+</div>

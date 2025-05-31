@@ -4,7 +4,7 @@ import {VendorListComponent} from './vendor-list.component';
 import {CommonModule} from "@angular/common";
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {KnBadge, KnButton, KnPagination} from "@kathanika/kn-ui";
-import {VendorDeleteGQL, VendorDetailsGQL} from "../../../graphql/generated/graphql-operations";
+import {DeleteVendorGQL, VendorDetailsGQL} from "../../../graphql/generated/graphql-operations";
 import {of} from "rxjs";
 import {mockMutationGql, mockQueryGql} from "../../../graphql/gql-test-utils";
 
@@ -28,7 +28,7 @@ describe('VendorListComponent', () => {
                     useValue: mockQueryGql,
                 },
                 {
-                    provide: VendorDeleteGQL,
+                    provide: DeleteVendorGQL,
                     useValue: mockMutationGql,
                 },
                 {

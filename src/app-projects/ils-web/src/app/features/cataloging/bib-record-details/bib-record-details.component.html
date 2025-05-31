@@ -1,0 +1,33 @@
+@if (queryRef.valueChanges | async; as queryResult) {
+    @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
+        <kn-panel panelTitle="📚 Bibliographic Record Details">
+            <a [routerLink]="['../edit', data.bibRecord?.id]" kn-button class="float-right">
+                <span class="material-symbols-sharp">edit</span>
+                Edit
+            </a>
+
+            <div class="grid grid-cols-2 gap-1 border-b pb-1">
+                <div>
+                    <h5 class="font-semibold">Record ID:</h5>
+                    <p class="text-gray-700">{{ data.bibRecord?.id | uppercase }}</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold">ISBN:</h5>
+                    <p class="text-gray-700">{{ data.bibRecord?.internationalStandardBookNumbers || '—' }}</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold">Title:</h5>
+                    <p class="text-gray-700">{{ data.bibRecord?.titleStatement?.title }}</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold">Author:</h5>
+                    <p class="text-gray-700">{{ data.bibRecord?.titleStatement?.statementOfResponsibility }}</p>
+                </div>
+                <div>
+                    <h5 class="font-semibold">Publication Year:</h5>
+                    <p class="text-gray-700">{{ data.bibRecord?.publicationDistributions || '—' }}</p>
+                </div>
+            </div>
+        </kn-panel>
+    }
+}

@@ -15,5 +15,6 @@
   ],
   "include": [
     "src/**/*.d.ts"
-  ]
+  ],
+  "exclude": ["cypress", "./cypress.config.ts", "**/*.cy.tsx"]
 }

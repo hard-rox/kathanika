@@ -21,6 +21,7 @@ export type Scalars = {
   Decimal: { input: any; output: any; }
   /** The `LocalDate` scalar type represents a ISO date string, represented as UTF-8 character sequences YYYY-MM-DD. The scalar follows the specification defined in RFC3339 */
   LocalDate: { input: any; output: any; }
+  URL: { input: any; output: any; }
 };
 
 export type AddVendorInput = {
@@ -46,13 +47,13 @@ export type BibRecord = {
   __typename?: 'BibRecord';
   controlNumber: Scalars['String']['output'];
   controlNumberIdentifier: Scalars['String']['output'];
-  coverImageId?: Maybe<Scalars['String']['output']>;
+  coverImageUrl?: Maybe<Scalars['URL']['output']>;
   dateAndTimeOfLatestTransaction: Scalars['String']['output'];
   fixedLengthDataElements: Scalars['String']['output'];
   id: Scalars['String']['output'];
   internationalStandardBookNumbers: Array<Scalars['String']['output']>;
   leader: Scalars['String']['output'];
-  mainEntryPersonalName: MainEntryPersonalName;
+  mainEntryPersonalName?: Maybe<MainEntryPersonalName>;
   physicalDescriptions: Array<PhysicalDescription>;
   publicationDistributions: Array<PublicationDistribution>;
   titleStatement: TitleStatement;
@@ -107,11 +108,11 @@ export type CollectionSegmentInfo = {
 };
 
 export type CreateBibRecordInput = {
+  author?: InputMaybe<Scalars['String']['input']>;
   coverImageId?: InputMaybe<Scalars['String']['input']>;
   dimensions?: InputMaybe<Scalars['String']['input']>;
   extent?: InputMaybe<Scalars['String']['input']>;
   isbn?: InputMaybe<Scalars['String']['input']>;
-  personalName?: InputMaybe<Scalars['String']['input']>;
   publicationDate?: InputMaybe<Scalars['String']['input']>;
   publisherName?: InputMaybe<Scalars['String']['input']>;
   title: Scalars['String']['input'];
@@ -262,12 +263,14 @@ export type LocalDateOperationFilterInput = {
 export type MainEntryPersonalName = {
   __typename?: 'MainEntryPersonalName';
   personalName: Scalars['String']['output'];
+  relatorTerms: Array<Scalars['String']['output']>;
 };
 
 export type MainEntryPersonalNameFilterInput = {
   and?: InputMaybe<Array<MainEntryPersonalNameFilterInput>>;
   or?: InputMaybe<Array<MainEntryPersonalNameFilterInput>>;
   personalName?: InputMaybe<StringOperationFilterInput>;
+  relatorTerms?: InputMaybe<ListStringOperationFilterInput>;
 };
 
 export type MainEntryPersonalNameSortInput = {
@@ -773,6 +776,20 @@ export type VendorsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type CreateBibRecordMutationVariables = Exact<{
+  input: CreateBibRecordInput;
+}>;
+
+
+export type CreateBibRecordMutation = { __typename?: 'Mutation', createBibRecord: { __typename?: 'CreateBibRecordPayload', message?: string | null, data?: { __typename?: 'BibRecord', id: string, titleStatement: { __typename?: 'TitleStatement', title: string } } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+
+export type BibRecordDetailsQueryVariables = Exact<{
+  id: Scalars['String']['input'];
+}>;
+
+
+export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, mainEntryPersonalName?: { __typename?: 'MainEntryPersonalName', personalName: string } | null, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }>, physicalDescriptions: Array<{ __typename?: 'PhysicalDescription', extents: Array<string>, dimensions: Array<string> }> } | null };
+
 export type BibRecordListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
   take: Scalars['Int']['input'];
@@ -781,7 +798,7 @@ export type BibRecordListQueryVariables = Exact<{
 }>;
 
 
-export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }>, physicalDescriptions: Array<{ __typename?: 'PhysicalDescription', extents: Array<string>, dimensions: Array<string> }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, titleStatement: { __typename?: 'TitleStatement', title: string }, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type CreatePurchaseOrderMutationVariables = Exact<{
   input: CreatePurchaseOrderInput;
@@ -853,6 +870,78 @@ export type UpdateVendorMutationVariables = Exact<{
 
 export type UpdateVendorMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
 
+export const CreateBibRecordDocument = gql`
+    mutation createBibRecord($input: CreateBibRecordInput!) {
+  createBibRecord(input: $input) {
+    data {
+      id
+      titleStatement {
+        title
+      }
+    }
+    errors {
+      ... on KnError {
+        code
+        message
+        description
+      }
+      ... on ValidationError {
+        code
+        fieldName
+        message
+        description
+      }
+    }
+    message
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class CreateBibRecordGQL extends Apollo.Mutation<CreateBibRecordMutation, CreateBibRecordMutationVariables> {
+    override document = CreateBibRecordDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const BibRecordDetailsDocument = gql`
+    query BibRecordDetails($id: String!) {
+  bibRecord(id: $id) {
+    id
+    titleStatement {
+      title
+      statementOfResponsibility
+    }
+    internationalStandardBookNumbers
+    mainEntryPersonalName {
+      personalName
+    }
+    publicationDistributions {
+      namesOfPublisher
+      datesOfPublication
+    }
+    physicalDescriptions {
+      extents
+      dimensions
+    }
+    coverImageUrl
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class BibRecordDetailsGQL extends Apollo.Query<BibRecordDetailsQuery, BibRecordDetailsQueryVariables> {
+    override document = BibRecordDetailsDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
 export const BibRecordListDocument = gql`
     query bibRecordList($skip: Int!, $take: Int!, $filter: BibRecordFilterInput, $sortBy: [BibRecordSortInput!]) {
   bibRecords(skip: $skip, take: $take, where: $filter, order: $sortBy) {
@@ -860,15 +949,10 @@ export const BibRecordListDocument = gql`
       id
       titleStatement {
         title
-        statementOfResponsibility
       }
       publicationDistributions {
         namesOfPublisher
         datesOfPublication
-      }
-      physicalDescriptions {
-        extents
-        dimensions
       }
     }
     pageInfo {

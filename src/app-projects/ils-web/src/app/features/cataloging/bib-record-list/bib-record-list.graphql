@@ -9,15 +9,10 @@ query bibRecordList(
             id
             titleStatement {
                 title
-                statementOfResponsibility
             }
             publicationDistributions {
                 namesOfPublisher
                 datesOfPublication
-            }
-            physicalDescriptions {
-                extents
-                dimensions
             }
         }
         pageInfo {

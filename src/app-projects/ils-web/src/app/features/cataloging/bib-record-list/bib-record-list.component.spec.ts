@@ -63,7 +63,8 @@ describe('BibRecordListComponent', () => {
     component['init'] = originalInit;
   });
 
-  xit('should update searchText and filter on searchTextSubject emission', () => {
+  it('should update searchText and filter on searchTextSubject emission', () => {
+    jest.useFakeTimers();
     component['queryVariables'].skip = 0;
     component['queryVariables'].take = 10;
     component['searchText'] = '';
@@ -71,6 +72,8 @@ describe('BibRecordListComponent', () => {
     component['setSearchTextQueryFilter'] = setSearchTextQueryFilter;
     component['setQueryParams'] = () => undefined;
     component['searchTextSubject'].next('abc');
+    jest.advanceTimersByTime(800); // debounceTime is 700ms
     expect(setSearchTextQueryFilter.mock.calls.some(call => call[0] === 'abc')).toBe(true);
+    jest.useRealTimers();
   });
 });

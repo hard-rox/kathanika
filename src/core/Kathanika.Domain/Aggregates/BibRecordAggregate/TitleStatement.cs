@@ -51,4 +51,6 @@ public sealed record TitleStatement : ValueObject
         yield return RemainderOfTitle;
         yield return StatementOfResponsibility;
     }
+    
+    private TitleStatement() { }
 }

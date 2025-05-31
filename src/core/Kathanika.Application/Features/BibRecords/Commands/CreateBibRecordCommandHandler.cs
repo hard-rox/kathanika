@@ -10,12 +10,11 @@ internal sealed class CreateBibRecordCommandHandler(IBibRecordRepository bibReco
         KnResult<BibRecord> bibRecordResult = BibRecord.CreateBookRecord(
             request.Title,
             request.Isbn,
-            request.PersonalName,
+            request.Author,
             request.PublisherName,
             request.PublicationDate,
             request.Extent,
-            request.Dimensions,
-            request.CoverImageId
+            request.Dimensions
         );
 
         if (bibRecordResult.IsFailure)
