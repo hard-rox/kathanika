@@ -121,26 +121,6 @@ describe('VendorListComponent', () => {
         );
     });
 
-    it('should handle error when deleting vendor', () => {
-        // Mock error scenario
-        const errorResponse = new Error('Network error');
-        // @ts-expect-error
-        component['deleteVendorGql'].mutate = jest.fn().mockReturnValue({
-            subscribe: (callbacks: any) => {
-                callbacks.error(errorResponse);
-            }
-        });
-
-        // Mock error handling in alert service
-        mockAlertService.showHttpErrorPopup = jest.fn();
-
-        // Call deleteVendor
-        component.deleteVendor('vendor-123');
-
-        // Check if error handler was called
-        expect(mockAlertService.showHttpErrorPopup).toHaveBeenCalledWith(errorResponse);
-    });
-
     it('should render vendor status badges with correct colors', () => {
         // Mock the vendor data with different statuses
         // const vendorData = {

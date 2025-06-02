@@ -21,7 +21,7 @@ internal static class SchemaConfigurations
 
         return types;
     }
-    
+
     private static Type[] GetTypes()
     {
         Type[] types = Assembly.GetExecutingAssembly()

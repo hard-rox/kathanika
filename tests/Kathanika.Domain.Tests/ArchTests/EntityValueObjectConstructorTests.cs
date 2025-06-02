@@ -1,7 +1,5 @@
 using System.Reflection;
-using Kathanika.Domain.Primitives;
 using NetArchTest.Rules;
-using Xunit;
 
 namespace Kathanika.Domain.Tests.ArchTests;
 
@@ -22,8 +20,8 @@ public class EntityValueObjectConstructorTests
 
         List<string> typesWithoutPrivateConstructor = [];
         typesWithoutPrivateConstructor.AddRange(from type in entityTypes
-            where !HasPrivateParameterlessConstructor(type)
-            select type.FullName ?? type.Name);
+                                                where !HasPrivateParameterlessConstructor(type)
+                                                select type.FullName ?? type.Name);
 
         // Assert that all types have private parameterless constructors
         Assert.Empty(typesWithoutPrivateConstructor);

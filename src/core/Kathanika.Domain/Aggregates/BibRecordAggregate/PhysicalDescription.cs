@@ -52,6 +52,6 @@ public sealed record PhysicalDescription : ValueObject
         yield return Extents;
         yield return Dimensions;
     }
-    
+
     private PhysicalDescription() { }
 }

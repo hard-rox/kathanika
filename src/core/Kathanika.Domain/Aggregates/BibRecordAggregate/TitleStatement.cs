@@ -26,7 +26,7 @@ public sealed record TitleStatement : ValueObject
     public string? StatementOfResponsibility { get; private set; }
 
     private TitleStatement() { }
-    
+
     private TitleStatement(
         string title,
         string? remainderOfTitle = null,

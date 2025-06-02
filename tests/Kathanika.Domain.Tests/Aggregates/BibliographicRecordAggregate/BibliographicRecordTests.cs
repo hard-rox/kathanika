@@ -16,7 +16,7 @@ public class BibRecordTests
         var publicationDate = faker.Date.Past().Year.ToString();
         var extent = $"{faker.Random.Number(100, 1000)} pages";
         var dimensions = $"{faker.Random.Number(20, 30)} cm";
-    
+
         // Act
         KnResult<BibRecord> result = BibRecord.CreateBookRecord(
             title,
@@ -26,7 +26,7 @@ public class BibRecordTests
             publicationDate,
             extent,
             dimensions);
-    
+
         // Assert
         Assert.True(result.IsSuccess);
         Assert.NotNull(result.Value);
@@ -51,7 +51,7 @@ public class BibRecordTests
         var publicationDate = faker.Date.Past().Year.ToString();
         var extent = $"{faker.Random.Number(100, 1000)} pages";
         var dimensions = $"{faker.Random.Number(20, 30)} cm";
-    
+
         // Act
         KnResult<BibRecord> result = BibRecord.CreateBookRecord(
             emptyTitle,
@@ -61,7 +61,7 @@ public class BibRecordTests
             publicationDate,
             extent,
             dimensions);
-    
+
         // Assert
         Assert.True(result.IsFailure);
     }

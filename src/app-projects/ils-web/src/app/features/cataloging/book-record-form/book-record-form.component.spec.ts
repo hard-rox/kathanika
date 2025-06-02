@@ -9,7 +9,7 @@ import { Component } from '@angular/core';
 
 // Create a test host component to receive output from BookRecordFormComponent
 @Component({
-  template: `<kn-book-record-form (formSubmit)="onFormSubmit($event)"></kn-book-record-form>`
+  template: `<app-book-record-form (formSubmit)="onFormSubmit($event)"></app-book-record-form>`
 })
 class TestHostComponent {
   submittedData: CreateBibRecordInput | null = null;
@@ -96,7 +96,7 @@ describe('BookRecordFormComponent', () => {
   });
 
   it('should emit form values when form is valid', () => {
-    // Fill out required fields to make form valid
+    // Fill out required fields to make the form valid
     component['formGroup'].get('title')?.setValue('Test Book Title');
 
     // Optional fields
@@ -141,7 +141,7 @@ describe('BookRecordFormComponent', () => {
     const inputLabels = hostFixture.nativeElement.querySelectorAll('kn-text-input');
     expect(inputLabels.length).toBe(7); // Total number of fields
 
-    // Check for submit button
+    // Check for `submit` button
     const submitButton = hostFixture.nativeElement.querySelector('input[type="submit"]');
     expect(submitButton).toBeTruthy();
     expect(submitButton.value).toBe('Save');
