@@ -21,6 +21,7 @@ import {
         KnPagination,
         KnBadge
     ],
+    standalone: true,
     templateUrl: './vendor-list.component.html'
 })
 export class VendorListComponent extends BasePaginatedListComponent<VendorListQuery, VendorListQueryVariables> implements OnInit {

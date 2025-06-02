@@ -25,6 +25,8 @@ public sealed record TitleStatement : ValueObject
     /// </summary>
     public string? StatementOfResponsibility { get; private set; }
 
+    private TitleStatement() { }
+    
     private TitleStatement(
         string title,
         string? remainderOfTitle = null,
@@ -51,6 +53,4 @@ public sealed record TitleStatement : ValueObject
         yield return RemainderOfTitle;
         yield return StatementOfResponsibility;
     }
-    
-    private TitleStatement() { }
 }

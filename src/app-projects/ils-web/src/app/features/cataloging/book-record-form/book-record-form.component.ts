@@ -1,12 +1,12 @@
-import {Component, computed, Input, Output} from '@angular/core';
+import {Component, computed, Output} from '@angular/core';
 import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {CreateBibRecordInput} from "../../../graphql/generated/graphql-operations";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {KnButton, KnTextareaInput, KnTextInput} from "@kathanika/kn-ui";
+import {KnButton, KnTextInput} from "@kathanika/kn-ui";
 import {CommonModule} from "@angular/common";
 
 @Component({
-    selector: 'kn-book-record-form',
+    selector: 'app-book-record-form',
     imports: [
         CommonModule,
         ReactiveFormsModule,
