@@ -13,6 +13,7 @@
     - DO NOT use `karma`
     - DO NOT create `.spec.ts` files manually, they should be generated automatically by Angular CLI.
     - DO NOT use `any` type in tests.
+    - DO NOT test private methods & properties directly. Use html templates and public methods to verify behavior.
     - DO use `jest`
     - Always modify the generated `.spec.ts` file
     - Include at least:
