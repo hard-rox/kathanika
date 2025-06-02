@@ -74,7 +74,7 @@ describe('VendorListComponent', () => {
 
     it('should update search filter when search text changes', () => {
         // Mock the setSearchTextQueryFilter method
-        jest.spyOn(component as any, 'setSearchTextQueryFilter');
+        jest.spyOn(component, 'setSearchTextQueryFilter' as never);
 
         // Mock the search event
         const mockEvent = { target: { value: 'test vendor' } };

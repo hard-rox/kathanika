@@ -8,9 +8,12 @@
         - 1 edge case
         - 1 failure case
 - **For angular test file should live and beside the components with `.spec.ts` extension already**.
-- **For angular components use `jest` for testing** 
 - **For angular components, always create a test for the component's template**.
     - DO NOT use `jasmine`
+    - DO NOT use `karma`
+    - DO NOT create `.spec.ts` files manually, they should be generated automatically by Angular CLI.
+    - DO use `jest`
+    - Always modify the generated `.spec.ts` file
     - Include at least:
         - 1 test for expected use
         - 1 edge case
