@@ -124,6 +124,7 @@ describe('VendorListComponent', () => {
     it('should handle error when deleting vendor', () => {
         // Mock error scenario
         const errorResponse = new Error('Network error');
+        // @ts-ignore
         component['deleteVendorGql'].mutate = jest.fn().mockReturnValue({
             subscribe: (callbacks: any) => {
                 callbacks.error(errorResponse);
@@ -142,19 +143,19 @@ describe('VendorListComponent', () => {
 
     it('should render vendor status badges with correct colors', () => {
         // Mock the vendor data with different statuses
-        const vendorData = {
-            valueChanges: of({
-                data: {
-                    vendors: {
-                        items: [
-                            { id: '1', name: 'Vendor 1', status: VendorStatus.Active, contactPersonName: 'Contact 1' },
-                            { id: '2', name: 'Vendor 2', status: VendorStatus.Inactive, contactPersonName: 'Contact 2' }
-                        ],
-                        totalCount: 2
-                    }
-                }
-            })
-        };
+        // const vendorData = {
+        //     valueChanges: of({
+        //         data: {
+        //             vendors: {
+        //                 items: [
+        //                     { id: '1', name: 'Vendor 1', status: VendorStatus.Active, contactPersonName: 'Contact 1' },
+        //                     { id: '2', name: 'Vendor 2', status: VendorStatus.Inactive, contactPersonName: 'Contact 2' }
+        //                 ],
+        //                 totalCount: 2
+        //             }
+        //         }
+        //     })
+        // };
 
         // Set the mock query reference
         // component['_queryRef'] = vendorData as any;

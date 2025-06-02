@@ -12,6 +12,7 @@
     - DO NOT use `jasmine`
     - DO NOT use `karma`
     - DO NOT create `.spec.ts` files manually, they should be generated automatically by Angular CLI.
+    - DO NOT use `any` type in tests.
     - DO use `jest`
     - Always modify the generated `.spec.ts` file
     - Include at least:
