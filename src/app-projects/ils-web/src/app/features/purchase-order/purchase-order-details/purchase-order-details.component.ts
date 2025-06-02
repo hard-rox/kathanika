@@ -16,6 +16,7 @@ import {KnBadge, KnButton, KnPanel} from "@kathanika/kn-ui";
         KnButton,
         RouterLink
     ],
+    standalone: true,
     templateUrl: './purchase-order-details.component.html'
 })
 export class PurchaseOrderDetailsComponent

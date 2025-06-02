@@ -15,6 +15,7 @@ import {finalize} from "rxjs";
         KnAlert,
         KnPanel
     ],
+    standalone: true,
     templateUrl: './vendor-add.component.html'
 })
 export class VendorAddComponent {

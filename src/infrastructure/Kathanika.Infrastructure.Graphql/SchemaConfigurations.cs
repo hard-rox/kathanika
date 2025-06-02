@@ -22,10 +22,23 @@ internal static class SchemaConfigurations
         return types;
     }
 
+    private static Type[] GetTypes()
+    {
+        Type[] types = Assembly.GetExecutingAssembly()
+            .GetTypes()
+            .Where(type => type.Namespace is not null
+                           && type.Namespace.Contains("Kathanika.Infrastructure.Graphql.Types")
+                           && Attribute.GetCustomAttribute(type, typeof(CompilerGeneratedAttribute)) == null)
+            .ToArray();
+
+        return types;
+    }
+
     internal static IRequestExecutorBuilder BuildGraphQlSchema(this IServiceCollection services)
     {
         IRequestExecutorBuilder requestBuilder = services.AddGraphQLServer();
         //requestBuilder.AddAuthorization();
+        requestBuilder.AddTypes(GetTypes());
         requestBuilder.AddTypes(GetSchemaTypes());
         requestBuilder.TryAddTypeInterceptor<IgnorePublicMethodsTypeInterceptor>();
         requestBuilder.AddQueryType(q => q.Name(OperationTypeNames.Query));

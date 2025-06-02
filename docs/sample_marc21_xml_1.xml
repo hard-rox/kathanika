@@ -1,0 +1,90 @@
+<record
+	xmlns="http://www.loc.gov/MARC21/slim">
+	<leader>01450nam a2200361 i 4500</leader>
+	<controlfield tag="001">123456789</controlfield>
+	<controlfield tag="005">20250422094500.0</controlfield>
+	<controlfield tag="008">851231s2020    nyu           000 1 eng  </controlfield>
+	<datafield tag="020" ind1=" " ind2=" ">
+		<subfield code="a">9780061120084</subfield>
+	</datafield>
+	<datafield tag="040" ind1=" " ind2=" ">
+		<subfield code="a">DLC</subfield>
+		<subfield code="b">eng</subfield>
+		<subfield code="e">rda</subfield>
+		<subfield code="c">DLC</subfield>
+	</datafield>
+	<datafield tag="100" ind1="1" ind2=" ">
+		<subfield code="a">Lee, Harper,</subfield>
+		<subfield code="e">author.</subfield>
+	</datafield>
+	<datafield tag="245" ind1="1" ind2="0">
+		<subfield code="a">To kill a mockingbird /</subfield>
+		<subfield code="c">Harper Lee.</subfield>
+	</datafield>
+	<datafield tag="250" ind1=" " ind2=" ">
+		<subfield code="a">60th anniversary edition.</subfield>
+	</datafield>
+	<datafield tag="264" ind1=" " ind2="1">
+		<subfield code="a">New York :</subfield>
+		<subfield code="b">Harper Perennial Modern Classics,</subfield>
+		<subfield code="c">2020.</subfield>
+	</datafield>
+	<datafield tag="300" ind1=" " ind2=" ">
+		<subfield code="a">336 pages ;</subfield>
+		<subfield code="c">21 cm</subfield>
+	</datafield>
+	<datafield tag="336" ind1=" " ind2=" ">
+		<subfield code="a">text</subfield>
+		<subfield code="b">txt</subfield>
+		<subfield code="2">rdacontent</subfield>
+	</datafield>
+	<datafield tag="337" ind1=" " ind2=" ">
+		<subfield code="a">unmediated</subfield>
+		<subfield code="b">n</subfield>
+		<subfield code="2">rdamedia</subfield>
+	</datafield>
+	<datafield tag="338" ind1=" " ind2=" ">
+		<subfield code="a">volume</subfield>
+		<subfield code="b">nc</subfield>
+		<subfield code="2">rdacarrier</subfield>
+	</datafield>
+	<datafield tag="500" ind1=" " ind2=" ">
+		<subfield code="a">Originally published in 1960.</subfield>
+	</datafield>
+	<datafield tag="520" ind1=" " ind2=" ">
+		<subfield code="a">The unforgettable novel of a childhood in a sleepy Southern town and the crisis of conscience that rocked it.</subfield>
+	</datafield>
+	<datafield tag="650" ind1=" " ind2="0">
+		<subfield code="a">Race relations</subfield>
+		<subfield code="v">Fiction.</subfield>
+	</datafield>
+	<datafield tag="650" ind1=" " ind2="0">
+		<subfield code="a">Trials (Rape)</subfield>
+		<subfield code="v">Fiction.</subfield>
+	</datafield>
+	<datafield tag="650" ind1=" " ind2="0">
+		<subfield code="a">Southern States</subfield>
+		<subfield code="v">Fiction.</subfield>
+	</datafield>
+	<datafield tag="655" ind1="7" ind2=" ">
+		<subfield code="a">Historical fiction.</subfield>
+		<subfield code="2">lcgft</subfield>
+	</datafield>
+	<datafield tag="700" ind1="1" ind2=" ">
+		<subfield code="a">Lee, Harper.</subfield>
+		<subfield code="t">To kill a mockingbird.</subfield>
+		<subfield code="l">English.</subfield>
+	</datafield>
+	<datafield tag="776" ind1="0" ind2="8">
+		<subfield code="i">Online version:</subfield>
+		<subfield code="a">Lee, Harper.</subfield>
+		<subfield code="t">To kill a mockingbird.</subfield>
+		<subfield code="d">New York : Harper Perennial, 2020</subfield>
+		<subfield code="z">9780062368683</subfield>
+	</datafield>
+	<datafield tag="999" ind1=" " ind2=" ">
+		<subfield code="a">KohaBiblio</subfield>
+		<subfield code="b">KohaItem</subfield>
+		<subfield code="c">20250422</subfield>
+	</datafield>
+</record>

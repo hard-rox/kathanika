@@ -18,6 +18,7 @@ import {KnAlert, KnPanel} from "@kathanika/kn-ui";
         KnPanel,
         VendorFormComponent
     ],
+    standalone: true,
     templateUrl: './vendor-update.component.html'
 })
 export class VendorUpdateComponent implements OnInit {

@@ -1,4 +1,4 @@
-import {Component, inject, viewChild} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {
     CreatePurchaseOrderGQL, CreatePurchaseOrderInput, PurchaseOrderPatchInput
 } from "../../../graphql/generated/graphql-operations";
@@ -17,19 +17,16 @@ import {CommonModule} from "@angular/common";
         PurchaseOrderFormComponent
     ],
     templateUrl: './purchase-order-create.component.html',
+    standalone: true
 })
 export class PurchaseOrderCreateComponent {
     private readonly gql = inject(CreatePurchaseOrderGQL);
     private readonly alertService = inject(MessageAlertService);
     private readonly router = inject(Router);
-
-    readonly purchaseOrderEntryForm = viewChild<PurchaseOrderFormComponent>('createPurchaseOrderForm');
-
     isPanelLoading = false;
     errors: string[] = [];
 
     onValidFormSubmit(formValue: CreatePurchaseOrderInput | PurchaseOrderPatchInput) {
-        console.debug(formValue);
         this.isPanelLoading = true;
         this.gql.mutate({input: formValue as CreatePurchaseOrderInput})
             .pipe(finalize(() => {

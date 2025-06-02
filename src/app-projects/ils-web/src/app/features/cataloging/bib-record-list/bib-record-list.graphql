@@ -1,0 +1,24 @@
+query bibRecordList(
+    $skip: Int!
+    $take: Int!
+    $filter: BibRecordFilterInput
+    $sortBy: [BibRecordSortInput!]
+) {
+    bibRecords(skip: $skip, take: $take, where: $filter, order: $sortBy) {
+        items {
+            id
+            titleStatement {
+                title
+            }
+            publicationDistributions {
+                namesOfPublisher
+                datesOfPublication
+            }
+        }
+        pageInfo {
+            hasNextPage
+            hasPreviousPage
+        }
+        totalCount
+    }
+}

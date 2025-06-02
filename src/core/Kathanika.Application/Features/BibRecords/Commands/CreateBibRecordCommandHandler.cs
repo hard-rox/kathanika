@@ -7,13 +7,14 @@ internal sealed class CreateBibRecordCommandHandler(IBibRecordRepository bibReco
 {
     public async Task<KnResult<BibRecord>> Handle(CreateBibRecordCommand request, CancellationToken cancellationToken)
     {
-        KnResult<BibRecord> bibRecordResult = BibRecord.Create(
-            request.Leader,
-            request.ControlNumber,
-            request.ControlNumberIdentifier,
-            request.DateTimeOfLatestTransaction,
-            request.FixedLengthDataElements,
-            request.CatalogingSource
+        KnResult<BibRecord> bibRecordResult = BibRecord.CreateBookRecord(
+            request.Title,
+            request.Isbn,
+            request.Author,
+            request.PublisherName,
+            request.PublicationDate,
+            request.Extent,
+            request.Dimensions
         );
 
         if (bibRecordResult.IsFailure)

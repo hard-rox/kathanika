@@ -1,5 +1,4 @@
 using System.Linq.Expressions;
-using Kathanika.Domain.Aggregates.PatronAggregate;
 using Kathanika.Domain.Aggregates.PurchaseOrderAggregate;
 using Kathanika.Domain.Aggregates.VendorAggregate;
 

@@ -3,10 +3,12 @@ using Kathanika.Domain.Aggregates.BibRecordAggregate;
 namespace Kathanika.Application.Features.BibRecords.Commands;
 
 public sealed record CreateBibRecordCommand(
-    string Leader,
-    string ControlNumber,
-    string ControlNumberIdentifier,
-    DateTime DateTimeOfLatestTransaction,
-    string FixedLengthDataElements,
-    CatalogingSource CatalogingSource
+    string Title,
+    string? Isbn,
+    string? Author,
+    string? PublisherName,
+    string? PublicationDate,
+    string? Extent,
+    string? Dimensions,
+    string? CoverImageId
 ) : IRequest<KnResult<BibRecord>>;

@@ -14,6 +14,7 @@ import {CommonModule} from "@angular/common";
         KnTextareaInput,
         KnButton
     ],
+    standalone: true,
     templateUrl: './vendor-form.component.html'
 })
 export class VendorFormComponent extends BaseFormComponent<AddVendorInput | VendorPatchInput> {

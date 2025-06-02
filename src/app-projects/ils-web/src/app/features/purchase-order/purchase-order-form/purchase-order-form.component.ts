@@ -21,6 +21,7 @@ import {QueryRef} from "apollo-angular";
 @Component({
     selector: 'app-purchase-order-form',
     templateUrl: './purchase-order-form.component.html',
+    standalone: true,
     imports: [
         CommonModule,
         KnTextareaInput,
