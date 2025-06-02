@@ -23,34 +23,32 @@ describe('BookRecordFormComponent', () => {
   let hostComponent: TestHostComponent;
   let hostFixture: ComponentFixture<TestHostComponent>;
   let component: BookRecordFormComponent;
-  let createBibRecordGQL: CreateBibRecordGQL;
 
-  beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      imports: [
-        CommonModule,
-        ReactiveFormsModule,
-        ApolloTestingModule,
-        BookRecordFormComponent,
-        KnTextInput,
-        KnButton
-      ],
-      declarations: [TestHostComponent],
-      providers: [
-        {
-          provide: CreateBibRecordGQL,
-          useValue: {
-            mutate: jest.fn()
-          }
-        }
-      ]
-    }).compileComponents();
+    beforeEach(async () => {
+        await TestBed.configureTestingModule({
+            imports: [
+                CommonModule,
+                ReactiveFormsModule,
+                ApolloTestingModule,
+                BookRecordFormComponent,
+                KnTextInput,
+                KnButton
+            ],
+            declarations: [TestHostComponent],
+            providers: [
+                {
+                    provide: CreateBibRecordGQL,
+                    useValue: {
+                        mutate: jest.fn()
+                    }
+                }
+            ]
+        }).compileComponents();
 
-    hostFixture = TestBed.createComponent(TestHostComponent);
-    hostComponent = hostFixture.componentInstance;
-    component = hostFixture.debugElement.children[0].componentInstance;
-    createBibRecordGQL = TestBed.inject(CreateBibRecordGQL);
-    hostFixture.detectChanges();
+        hostFixture = TestBed.createComponent(TestHostComponent);
+        hostComponent = hostFixture.componentInstance;
+        component = hostFixture.debugElement.children[0].componentInstance;
+        hostFixture.detectChanges();
   });
 
   it('should create', () => {

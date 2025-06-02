@@ -13,7 +13,6 @@ describe('VendorListComponent', () => {
     let fixture: ComponentFixture<VendorListComponent>;
     let mockRouter: Router;
     let mockAlertService: MessageAlertService;
-    let mockDeleteVendorGQL: any;
 
     beforeEach(async () => {
         await TestBed.configureTestingModule({
@@ -58,8 +57,6 @@ describe('VendorListComponent', () => {
         mockAlertService = TestBed.inject(MessageAlertService);
         mockAlertService.showConfirmation = jest.fn().mockReturnValue(of(true));
         mockAlertService.showPopup = jest.fn();
-
-        mockDeleteVendorGQL = TestBed.inject(DeleteVendorGQL);
     });
 
     it('should create', () => {
@@ -106,14 +103,6 @@ describe('VendorListComponent', () => {
     });
 
     it('should handle deleteVendor when confirmed', () => {
-        // Mock the deleteVendorGQL.mutate method
-        mockDeleteVendorGQL.mutate = jest.fn().mockReturnValue(of({
-            data: {
-                deleteVendor: {
-                    message: 'Vendor deleted successfully'
-                }
-            }
-        }));
 
         // Call deleteVendor
         component.deleteVendor('vendor-123');
@@ -124,7 +113,7 @@ describe('VendorListComponent', () => {
         );
 
         // Check if mutation was called with the correct ID
-        expect(mockDeleteVendorGQL.mutate).toHaveBeenCalledWith({ id: 'vendor-123' });
+        expect(component['deleteVendorGql'].mutate).toHaveBeenCalledWith({ id: 'vendor-123' });
 
         // Check if success message was shown
         expect(mockAlertService.showPopup).toHaveBeenCalledWith(
@@ -135,7 +124,7 @@ describe('VendorListComponent', () => {
     it('should handle error when deleting vendor', () => {
         // Mock error scenario
         const errorResponse = new Error('Network error');
-        mockDeleteVendorGQL.mutate = jest.fn().mockReturnValue({
+        component['deleteVendorGql'].mutate = jest.fn().mockReturnValue({
             subscribe: (callbacks: any) => {
                 callbacks.error(errorResponse);
             }
