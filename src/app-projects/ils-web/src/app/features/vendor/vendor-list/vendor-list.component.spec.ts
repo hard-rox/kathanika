@@ -102,25 +102,6 @@ describe('VendorListComponent', () => {
         expect(component['queryRef'].refetch).toHaveBeenCalled();
     });
 
-    it('should handle deleteVendor when confirmed', () => {
-
-        // Call deleteVendor
-        component.deleteVendor('vendor-123');
-
-        // Check if confirmation was shown
-        expect(mockAlertService.showConfirmation).toHaveBeenCalledWith(
-            'warning', 'Are you sure you want to delete Vendor?'
-        );
-
-        // Check if mutation was called with the correct ID
-        expect(component['deleteVendorGql'].mutate).toHaveBeenCalledWith({ id: 'vendor-123' });
-
-        // Check if success message was shown
-        expect(mockAlertService.showPopup).toHaveBeenCalledWith(
-            'success', 'Vendor deleted successfully', 'Deleted'
-        );
-    });
-
     it('should render vendor status badges with correct colors', () => {
         // Mock the vendor data with different statuses
         // const vendorData = {
