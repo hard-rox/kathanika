@@ -124,7 +124,7 @@ describe('VendorListComponent', () => {
     it('should handle error when deleting vendor', () => {
         // Mock error scenario
         const errorResponse = new Error('Network error');
-        // @ts-ignore
+        // @ts-expect-error
         component['deleteVendorGql'].mutate = jest.fn().mockReturnValue({
             subscribe: (callbacks: any) => {
                 callbacks.error(errorResponse);
