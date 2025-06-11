@@ -9,26 +9,29 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\core\Kathanika.Application\Kathanika.Application.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Graphql\Kathanika.Infrastructure.Graphql.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj"/>
-        <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj"/>
+        <ProjectReference Include="..\..\core\Kathanika.Application\Kathanika.Application.csproj" />
+        <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Graphql\Kathanika.Infrastructure.Graphql.csproj" />
+        <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj" />
+        <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Workers\Kathanika.Infrastructure.Workers.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="OpenTelemetry.Exporter.Console"/>
-        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
-        <PackageReference Include="OpenTelemetry.Extensions.Hosting"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.Http"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.Quartz"/>
-        <PackageReference Include="Serilog.AspNetCore"/>
-        <PackageReference Include="tusdotnet"/>
-        <PackageReference Include="Serilog.Enrichers.ClientInfo"/>
-        <PackageReference Include="Serilog.Enrichers.Process"/>
-        <PackageReference Include="Serilog.Enrichers.Thread"/>
-        <PackageReference Include="Serilog.Exceptions"/>
-        <PackageReference Include="Serilog.Sinks.Seq"/>
+        <PackageReference Include="Microsoft.Extensions.Configuration" />
+        <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+        <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+        <PackageReference Include="OpenTelemetry.Exporter.Console" />
+        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" />
+        <PackageReference Include="OpenTelemetry.Extensions.Hosting" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.Http" />
+        <PackageReference Include="OpenTelemetry.Instrumentation.Quartz" />
+        <PackageReference Include="Serilog.AspNetCore" />
+        <PackageReference Include="tusdotnet" />
+        <PackageReference Include="Serilog.Enrichers.ClientInfo" />
+        <PackageReference Include="Serilog.Enrichers.Process" />
+        <PackageReference Include="Serilog.Enrichers.Thread" />
+        <PackageReference Include="Serilog.Exceptions" />
+        <PackageReference Include="Serilog.Sinks.Seq" />
     </ItemGroup>
 
     <ItemGroup>
