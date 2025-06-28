@@ -1,3 +1,6 @@
+### Kathanika
+
+
 ### 🧪 Testing & Reliability
 - **Always create `xUnit` unit tests for new features in C#** (methods, classes, etc.).
 - **Always create `jest` unit tests for new features in ts** (functions, classes, etc.).
@@ -13,6 +16,7 @@
     - DO NOT use `karma`
     - DO NOT create `.spec.ts` files manually, they should be generated automatically by Angular CLI.
     - DO NOT use `any` type in tests.
+    - DO NOT test private methods & properties directly. Use html templates and public methods to verify behavior.
     - DO use `jest`
     - Always modify the generated `.spec.ts` file
     - Include at least:
