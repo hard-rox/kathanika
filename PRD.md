@@ -1,4 +1,4 @@
-# Kathanika - Library Management System
+# Kathanika - Integrated Library System
 
 ## Product Requirements Document
 
