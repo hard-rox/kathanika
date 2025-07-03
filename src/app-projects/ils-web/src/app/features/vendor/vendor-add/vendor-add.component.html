@@ -11,5 +11,5 @@
 }
 
 <kn-panel panelTitle="Add Vendor" [isLoading]="isPanelLoading">
-    <app-vendor-form #addVendorForm (formSubmit)="onValidFormSubmit($event)"/>
+    <app-vendor-form #addVendorForm (formSubmitted)="onValidFormSubmit($event)"/>
 </kn-panel>

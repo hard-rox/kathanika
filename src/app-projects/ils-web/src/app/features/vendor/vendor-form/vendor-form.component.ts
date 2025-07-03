@@ -1,4 +1,4 @@
-import {Component, Input, Output} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {AddVendorInput, Vendor, VendorPatchInput} from "../../../graphql/generated/graphql-operations";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -24,9 +24,6 @@ export class VendorFormComponent extends BaseFormComponent<AddVendorInput | Vend
             this.formGroup.patchValue(input);
         }
     }
-
-    @Output()
-    formSubmit = this.submitEventEmitter;
 
     protected override createFormGroup(): FormGroup<FormControlsOf<AddVendorInput | VendorPatchInput>> {
         return new FormGroup<FormControlsOf<AddVendorInput | VendorPatchInput>>({

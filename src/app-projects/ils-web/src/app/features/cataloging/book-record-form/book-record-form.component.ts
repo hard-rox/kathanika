@@ -1,4 +1,4 @@
-import {Component, computed, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {CreateBibRecordInput} from "../../../graphql/generated/graphql-operations";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
@@ -17,11 +17,6 @@ import {CommonModule} from "@angular/common";
     templateUrl: './book-record-form.component.html'
 })
 export class BookRecordFormComponent extends BaseFormComponent<CreateBibRecordInput> {
-    @Output()
-    formSubmit = this.submitEventEmitter;
-
-    readonly isFormValid = computed(() => this.formGroup.valid);
-
     protected override createFormGroup(): FormGroup<FormControlsOf<CreateBibRecordInput>> {
         return new FormGroup<FormControlsOf<CreateBibRecordInput>>({
             title: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),

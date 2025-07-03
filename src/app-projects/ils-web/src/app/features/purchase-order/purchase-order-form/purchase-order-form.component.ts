@@ -1,4 +1,4 @@
-import {Component, computed, EventEmitter, inject, Input, Output, signal} from '@angular/core';
+import {Component, computed, inject, Input, signal} from '@angular/core';
 import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {
     CreatePurchaseOrderInput, PurchaseItemInput,
@@ -38,9 +38,6 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
             this.formGroup.patchValue(input);
         }
     }
-
-    @Output()
-    formSubmit = new EventEmitter<CreatePurchaseOrderInput>();
 
     protected readonly purchaseItems = signal<PurchaseItemInput[]>([]);
     protected readonly totalCost = computed(() => {
