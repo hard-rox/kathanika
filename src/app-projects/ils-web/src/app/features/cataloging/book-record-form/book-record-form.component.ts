@@ -1,4 +1,4 @@
-import {Component, computed, Output} from '@angular/core';
+import {Component} from '@angular/core';
 import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
 import {CreateBibRecordInput} from "../../../graphql/generated/graphql-operations";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';

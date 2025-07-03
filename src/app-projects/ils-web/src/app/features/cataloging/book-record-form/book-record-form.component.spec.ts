@@ -4,12 +4,10 @@ import {ReactiveFormsModule} from '@angular/forms';
 import {CommonModule} from '@angular/common';
 import {KnTextInput, KnButton} from '@kathanika/kn-ui';
 import {ApolloTestingModule} from 'apollo-angular/testing';
-import {CreateBibRecordGQL, CreateBibRecordInput} from '../../../graphql/generated/graphql-operations';
-import {Component} from '@angular/core';
+import {CreateBibRecordGQL} from '../../../graphql/generated/graphql-operations';
 
 describe('BookRecordFormComponent', () => {
-    let hostComponent: BookRecordFormComponent;
-    let hostFixture: ComponentFixture<BookRecordFormComponent>;
+    let fixture: ComponentFixture<BookRecordFormComponent>;
     let component: BookRecordFormComponent;
 
     beforeEach(async () => {
@@ -32,10 +30,9 @@ describe('BookRecordFormComponent', () => {
             ]
         }).compileComponents();
 
-        hostFixture = TestBed.createComponent(BookRecordFormComponent);
-        hostComponent = hostFixture.componentInstance;
-        component = hostFixture.debugElement.children[0].componentInstance;
-        hostFixture.detectChanges();
+        fixture = TestBed.createComponent(BookRecordFormComponent);
+        component = fixture.componentInstance;
+        fixture.detectChanges();
     });
 
     it('should create', () => {
