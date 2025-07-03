@@ -1,11 +1,14 @@
-import {EventEmitter} from '@angular/core';
+import {Component, output, OutputEmitterRef} from '@angular/core';
 import {FormGroup, FormControl, FormArray} from '@angular/forms';
 import {InputMaybe, Scalars} from "../graphql/generated/graphql-operations";
 
+@Component({
+    template: ''
+})
 export abstract class BaseFormComponent<TOutput extends Record<string, unknown>> {
     protected readonly formGroup: FormGroup<FormControlsOf<TOutput>>;
-    protected submitEventEmitter: EventEmitter<TOutput> =
-        new EventEmitter<TOutput>();
+    
+    formSubmitted: OutputEmitterRef<TOutput> = output<TOutput>();
 
     protected abstract createFormGroup(): FormGroup<FormControlsOf<TOutput>>;
 
@@ -19,7 +22,7 @@ export abstract class BaseFormComponent<TOutput extends Record<string, unknown>>
             return;
         }
         const formValue = this.formGroup.value as TOutput;
-        this.submitEventEmitter.emit(formValue);
+        this.formSubmitted.emit(formValue);
     }
 
     resetForm(): void {

@@ -39,9 +39,6 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
         }
     }
 
-    @Output()
-    formSubmit = new EventEmitter<CreatePurchaseOrderInput>();
-
     protected readonly purchaseItems = signal<PurchaseItemInput[]>([]);
     protected readonly totalCost = computed(() => {
         return this.purchaseItems().reduce((total, item) => {

@@ -34,7 +34,6 @@ export class PurchaseOrderCreateComponent {
             }))
             .subscribe({
                 next: (result) => {
-                    console.debug(result);
                     if (result.loading) {
                         this.isPanelLoading = true;
                         return;

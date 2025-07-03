@@ -25,9 +25,6 @@ export class VendorFormComponent extends BaseFormComponent<AddVendorInput | Vend
         }
     }
 
-    @Output()
-    formSubmit = this.submitEventEmitter;
-
     protected override createFormGroup(): FormGroup<FormControlsOf<AddVendorInput | VendorPatchInput>> {
         return new FormGroup<FormControlsOf<AddVendorInput | VendorPatchInput>>({
             name: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),

@@ -11,5 +11,5 @@
 }
 
 <kn-panel panelTitle="📦 Purchase Order Entry" [isLoading]="isPanelLoading">
-    <app-purchase-order-form (formSubmit)="onValidFormSubmit($event)"/>
+    <app-purchase-order-form (formSubmitted)="onValidFormSubmit($event)"/>
 </kn-panel>

@@ -11,5 +11,5 @@
 }
 
 <kn-panel panelTitle="Create Book Bibliographic Record" [isLoading]="isPanelLoading()">
-    <app-book-record-form #bookRecordForm (formSubmit)="onValidFormSubmit($event)"/>
+    <app-book-record-form #bookRecordForm (formSubmitted)="onValidFormSubmit($event)"/>
 </kn-panel>

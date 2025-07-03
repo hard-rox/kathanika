@@ -17,11 +17,6 @@ import {CommonModule} from "@angular/common";
     templateUrl: './book-record-form.component.html'
 })
 export class BookRecordFormComponent extends BaseFormComponent<CreateBibRecordInput> {
-    @Output()
-    formSubmit = this.submitEventEmitter;
-
-    readonly isFormValid = computed(() => this.formGroup.valid);
-
     protected override createFormGroup(): FormGroup<FormControlsOf<CreateBibRecordInput>> {
         return new FormGroup<FormControlsOf<CreateBibRecordInput>>({
             title: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
