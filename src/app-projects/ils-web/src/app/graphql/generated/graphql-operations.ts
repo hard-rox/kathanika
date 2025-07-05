@@ -843,7 +843,7 @@ export type VendorDetailsQueryVariables = Exact<{
 }>;
 
 
-export type VendorDetailsQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', id: string, name: string, contactNumber: string, address: string, email?: string | null, status: VendorStatus, contactPersonName?: string | null, contactPersonPhone?: string | null, contactPersonEmail?: string | null, accountDetail?: string | null, website?: string | null } | null };
+export type VendorDetailsQuery = { __typename?: 'Query', vendor?: { __typename?: 'Vendor', id: string, name: string, contactNumber: string, address: string, email?: string | null, status: VendorStatus, contactPersonName?: string | null, contactPersonPhone?: string | null, contactPersonEmail?: string | null, accountDetail?: string | null, website?: string | null } | null, latestPurchaseOrders?: { __typename?: 'PurchaseOrdersCollectionSegment', items?: Array<{ __typename?: 'PurchaseOrder', id: string, orderDate: any, totalCost: any, status: PurchaseOrderStatus }> | null } | null };
 
 export type DeleteVendorMutationVariables = Exact<{
   id: Scalars['String']['input'];
@@ -1151,6 +1151,19 @@ export const VendorDetailsDocument = gql`
     contactPersonEmail
     accountDetail
     website
+  }
+  latestPurchaseOrders: purchaseOrders(
+    skip: 0
+    take: 10
+    where: {vendorId: {eq: $id}}
+    order: {id: DESC}
+  ) {
+    items {
+      id
+      orderDate
+      totalCost
+      status
+    }
   }
 }
     `;

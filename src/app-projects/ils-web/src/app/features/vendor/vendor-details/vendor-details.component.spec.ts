@@ -39,4 +39,14 @@ describe('VendorDetailsComponent', () => {
     it('should create', () => {
         expect(component).toBeTruthy();
     });
+    
+    it('should have vendorId from route', () => {
+        expect(component.queryVariables.id).toBe('11111223445688');
+    });
+    
+    it('should call refetch with query variables on init', () => {
+        const refetchSpy = jest.spyOn(component.queryRef, 'refetch');
+        component.ngOnInit();
+        expect(refetchSpy).toHaveBeenCalledWith({ id: '11111223445688' });
+    });
 });

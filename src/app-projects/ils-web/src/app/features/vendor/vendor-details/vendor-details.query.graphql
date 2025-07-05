@@ -12,4 +12,12 @@ query vendorDetails($id: String!){
         accountDetail
         website
     }
+    latestPurchaseOrders: purchaseOrders(skip: 0, take: 10, where: {vendorId: {eq: $id}}, order: {id: DESC}) {
+        items {
+            id
+            orderDate
+            totalCost
+            status
+        }
+    }
 }

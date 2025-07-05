@@ -1,8 +1,114 @@
 <!--<pre>{{ queryRef.valueChanges | async | json }}</pre>-->
 @if (queryRef.valueChanges | async; as queryResult) {
     @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
-        <kn-panel [panelTitle]="data.vendor?.name ?? 'Vendor'">
-            
-        </kn-panel>
+        <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
+            <div class="flex-1 space-y-4">
+                <kn-panel [panelTitle]="data.vendor?.name ?? 'Vendor'">
+                    <div class="space-x-2">
+                        <kn-badge [content]="data.vendor?.status ?? ''" type="success"></kn-badge>
+                        <span class="text-gray-400 text-sm">ID: {{ data.vendor?.id }}</span>
+                    </div>
+
+                    <div class="flex justify-between mt-4 text-sm">
+                        <div>
+                            <h4 class="mb-2 font-semibold text-theme-davys-gray">Contact Information</h4>
+                            <div class="flex space-x-2">
+                                <span class="material-symbols-sharp text-theme-silver">call</span>
+                                <div>
+                                    <p>{{ data.vendor?.contactNumber }}</p>
+                                    <p class="text-theme-silver">Contact Number</p>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span class="material-symbols-sharp text-theme-silver">email</span>
+                                <div>
+                                    <p>{{ data.vendor?.email }}</p>
+                                    <p class="text-theme-silver">Email</p>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span class="material-symbols-sharp text-theme-silver">location_on</span>
+                                <div>
+                                    <p>{{ data.vendor?.address }}</p>
+                                    <p class="text-theme-silver">Address</p>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span class="material-symbols-sharp text-theme-silver">captive_portal</span>
+                                <div>
+                                    <p>{{ data.vendor?.website }}</p>
+                                    <p class="text-theme-silver">Website</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="mb-2 font-semibold text-theme-davys-gray">Contact Person</h4>
+                            <div class="flex space-x-2">
+                                <span class="material-symbols-sharp text-theme-silver">person</span>
+                                <div>
+                                    <p>{{ data.vendor?.contactPersonName }}</p>
+                                    <p class="text-theme-silver">Contact Person Name</p>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span class="material-symbols-sharp text-theme-silver">call</span>
+                                <div>
+                                    <p>{{ data.vendor?.contactPersonPhone }}</p>
+                                    <p class="text-theme-silver">Contact Person Phone</p>
+                                </div>
+                            </div>
+                            <div class="flex space-x-2">
+                                <span class="material-symbols-sharp text-theme-silver">email</span>
+                                <div>
+                                    <p>{{ data.vendor?.contactPersonEmail }}</p>
+                                    <p class="text-theme-silver">Contact Person Email</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </kn-panel>
+                <kn-panel panelTitle="Purchase Orders">
+                    <table class="text-sm">
+                        <thead>
+                        <tr>
+                            <th scope="col">Serial</th>
+                            <th scope="col">Date</th>
+                            <th scope="col">Total Cost</th>
+                            <th scope="col">Status</th>
+                            <th scope="col">Action</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            @for (item of data.latestPurchaseOrders?.items;
+                                track item;
+                                let idx = $index) {
+                                <tr>
+                                    <td>{{ idx + 1 }}</td>
+                                    <td>{{ item.orderDate | date }}</td>
+                                    <td>{{ item.totalCost | currency }}</td>
+                                    <td>
+                                        <kn-badge [content]="item?.status ?? ''"
+                                                  [type]="item?.status === purchaseOrderStatus.Completed ? 'success': item?.status === purchaseOrderStatus.Pending? 'warning': 'error'"/>
+                                    </td>
+                                    <td>
+                                        <a kn-button [routerLink]="['/purchase-orders', item?.id]">
+                                        <span class="material-symbols-sharp"> visibility </span>
+                                        </a>
+                                    </td>
+                                </tr>
+                            } @empty {
+                                <tr>
+                                    <td colspan="100%" class="text-center">No data to show</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </kn-panel>
+            </div>
+
+            <!--            <div class="w-full space-y-4 lg:w-1/3">-->
+            <!--                <kn-panel panelTitle="Quick Actions"></kn-panel>-->
+            <!--            </div>-->
+        </div>
     }
 }

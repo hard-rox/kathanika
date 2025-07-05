@@ -11,12 +11,12 @@
     }
     @if (panelTitle()) {
         <div
-            class="border-b-2 border-theme-davys-gray bg-theme-silver bg-opacity-40 mb-4 px-6 py-2 text-lg rounded-t-sm"
+            class="border-b-2 border-theme-davys-gray bg-theme-silver bg-opacity-40 px-6 py-2 text-lg rounded-t-sm"
         >
             {{ panelTitle() }}
         </div>
     }
-    <div class="px-6 py-4">
+    <div class="px-6 py-2">
         <ng-content/>
     </div>
 </div>
