@@ -9,7 +9,6 @@ import {
 import {ActivatedRoute, RouterLink} from "@angular/router";
 import {CommonModule} from "@angular/common";
 import {KnBadge, KnButton, KnPanel} from "@kathanika/kn-ui";
-import {da} from "@faker-js/faker";
 
 @Component({
     selector: 'app-vendor-details',
@@ -42,6 +41,5 @@ export class VendorDetailsComponent extends BaseQueryComponent<VendorDetailsQuer
         }
     }
 
-    protected readonly da = da;
     protected readonly vendorStatus = VendorStatus;
 }

@@ -5,7 +5,7 @@
             <div class="flex-1 space-y-4">
                 <kn-panel [panelTitle]="data.vendor?.name ?? 'Vendor'">
                     <div class="space-x-2">
-                        <kn-badge [content]="data.vendor?.status ?? ''" type="success"></kn-badge>
+                        <kn-badge [content]="data.vendor?.status ?? ''" [type]="data.vendor?.status === vendorStatus.Active ? 'success' : 'error'"></kn-badge>
                         <span class="text-gray-400 text-sm">ID: {{ data.vendor?.id }}</span>
                     </div>
 
@@ -15,14 +15,14 @@
                             <div class="flex space-x-2">
                                 <span class="material-symbols-sharp text-theme-silver">call</span>
                                 <div>
-                                    <p>{{ data.vendor?.contactNumber }}</p>
+                                    <p><a href="tel:{{ data.vendor?.contactNumber }}" class="text-theme-primary hover:underline">{{ data.vendor?.contactNumber }}</a></p>
                                     <p class="text-theme-silver">Contact Number</p>
                                 </div>
                             </div>
                             <div class="flex space-x-2">
                                 <span class="material-symbols-sharp text-theme-silver">email</span>
                                 <div>
-                                    <p>{{ data.vendor?.email }}</p>
+                                    <p><a href="mailto:{{ data.vendor?.email }}" class="text-theme-primary hover:underline">{{ data.vendor?.email }}</a></p>
                                     <p class="text-theme-silver">Email</p>
                                 </div>
                             </div>
@@ -36,7 +36,7 @@
                             <div class="flex space-x-2">
                                 <span class="material-symbols-sharp text-theme-silver">captive_portal</span>
                                 <div>
-                                    <p>{{ data.vendor?.website }}</p>
+                                    <p><a [href]="data.vendor?.website" target="_blank" rel="noopener noreferrer" class="text-theme-primary hover:underline">{{ data.vendor?.website }} <span class="material-symbols-sharp text-xs">open_in_new</span></a></p>
                                     <p class="text-theme-silver">Website</p>
                                 </div>
                             </div>
@@ -53,14 +53,14 @@
                             <div class="flex space-x-2">
                                 <span class="material-symbols-sharp text-theme-silver">call</span>
                                 <div>
-                                    <p>{{ data.vendor?.contactPersonPhone }}</p>
+                                    <p><a href="tel:{{ data.vendor?.contactPersonPhone }}" class="text-theme-primary hover:underline">{{ data.vendor?.contactPersonPhone }}</a></p>
                                     <p class="text-theme-silver">Contact Person Phone</p>
                                 </div>
                             </div>
                             <div class="flex space-x-2">
                                 <span class="material-symbols-sharp text-theme-silver">email</span>
                                 <div>
-                                    <p>{{ data.vendor?.contactPersonEmail }}</p>
+                                    <p><a href="mailto:{{ data.vendor?.contactPersonEmail }}" class="text-theme-primary hover:underline">{{ data.vendor?.contactPersonEmail }}</a></p>
                                     <p class="text-theme-silver">Contact Person Email</p>
                                 </div>
                             </div>
