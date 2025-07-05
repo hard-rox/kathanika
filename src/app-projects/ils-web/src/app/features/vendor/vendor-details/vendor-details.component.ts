@@ -1,25 +1,30 @@
 import { Component, OnInit, inject } from '@angular/core';
 import {BaseQueryComponent} from "../../../abstractions/base-query-component";
 import {
+    PurchaseOrderStatus,
     VendorDetailsGQL,
     VendorDetailsQuery,
-    VendorDetailsQueryVariables
+    VendorDetailsQueryVariables, VendorStatus
 } from "../../../graphql/generated/graphql-operations";
-import {ActivatedRoute} from "@angular/router";
+import {ActivatedRoute, RouterLink} from "@angular/router";
 import {CommonModule} from "@angular/common";
-import {KnPanel} from "@kathanika/kn-ui";
+import {KnBadge, KnButton, KnPanel} from "@kathanika/kn-ui";
 
 @Component({
     selector: 'app-vendor-details',
-        imports: [
+    imports: [
         CommonModule,
-        KnPanel
+        KnPanel,
+        KnBadge,
+        KnButton,
+        RouterLink
     ],
     templateUrl: './vendor-details.component.html'
 })
 export class VendorDetailsComponent extends BaseQueryComponent<VendorDetailsQuery, VendorDetailsQueryVariables>
     implements OnInit {
     private activatedRoute = inject(ActivatedRoute);
+    protected purchaseOrderStatus = PurchaseOrderStatus;
 
     constructor() {
         const gql = inject(VendorDetailsGQL);
@@ -35,4 +40,6 @@ export class VendorDetailsComponent extends BaseQueryComponent<VendorDetailsQuer
             this.queryRef.refetch(this.queryVariables);
         }
     }
+
+    protected readonly vendorStatus = VendorStatus;
 }
