@@ -74,14 +74,20 @@ export class VendorListComponent extends BasePaginatedListComponent<VendorListQu
                             id: vendorId
                         }).subscribe({
                             next: (result) => {
-                                if (result.errors) {
-                                    this.alertService.showPopup(
-                                        'error',
-                                        (result.errors?.join('<br/>') as string),
-                                    );
+                                if (result.loading) {
                                     return;
                                 }
-                                this.alertService.showPopup('success', result.data?.deleteVendor.message ?? 'Vendor deleted', 'Deleted');
+
+                                if (result.data?.deleteVendor.errors && result.data.deleteVendor.errors.length > 0) {
+                                    const errorMessage = result.data.deleteVendor.errors
+                                        .map(error => error.message)
+                                        .join('<br/>');
+                                    this.alertService.showPopup('error', errorMessage, 'Error Deleting Vendor');
+                                    return;
+                                } else {
+                                    this.alertService.showPopup('success', result.data?.deleteVendor.message ?? 'Vendor deleted', 'Deleted');
+                                    this.queryRef.refetch();
+                                }
                             },
                             error: (err) => {
                                 this.alertService.showHttpErrorPopup(err);
@@ -89,6 +95,6 @@ export class VendorListComponent extends BasePaginatedListComponent<VendorListQu
                         })
                     }
                 }
-            })
+            });
     }
 }
