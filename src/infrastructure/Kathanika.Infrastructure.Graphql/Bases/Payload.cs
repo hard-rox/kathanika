@@ -6,7 +6,7 @@ public abstract record Payload
 {
     protected Payload(KnResult knResult, string? message = null)
     {
-        Errors = knResult.Errors.Length != 0 ? knResult.Errors : null;
+        Errors = knResult.Errors?.Length != 0 ? knResult.Errors : null;
         Message = message;
     }
 
