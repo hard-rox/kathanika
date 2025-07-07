@@ -1,3 +1,4 @@
+using System.Linq.Expressions;
 using Kathanika.Application.Features.Vendors.Commands;
 using Kathanika.Domain.Aggregates.PurchaseOrderAggregate;
 using Kathanika.Domain.Aggregates.VendorAggregate;
@@ -47,5 +48,69 @@ public class DeleteVendorCommandHandlerTests
 
         Assert.True(knResult.IsFailure);
         Assert.Equal(knResult.Errors.FirstOrDefault(), VendorAggregateErrors.NotFound(id));
+    }
+
+    [Fact]
+    public async Task Handler_ShouldDeleteVendor_WhenNoActivePurchaseOrders()
+    {
+        var id = Guid.NewGuid().ToString();
+        Vendor vendor = new Faker<Vendor>().CustomInstantiator(f => Vendor.Create(
+            f.Company.CompanyName(),
+            f.Address.FullAddress(),
+            f.Phone.PhoneNumber("###########"),
+            f.Internet.Email(),
+            f.Internet.Url(),
+            f.Random.Word(),
+            f.Person.FullName,
+            f.Phone.PhoneNumber("###########"),
+            f.Internet.Email()
+        ).Value);
+        IVendorRepository vendorRepository = Substitute.For<IVendorRepository>();
+        IPurchaseOrderRepository purchaseOrderRepository = Substitute.For<IPurchaseOrderRepository>();
+        vendorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(vendor);
+        purchaseOrderRepository.ExistsAsync(
+                Arg.Any<Expression<Func<PurchaseOrder, bool>>>(),
+                Arg.Any<CancellationToken>())
+            .Returns(false);
+        DeleteVendorCommand command = new(id);
+        DeleteVendorCommandHandler handler = new(vendorRepository, purchaseOrderRepository);
+
+        await handler.Handle(command, default);
+
+        await vendorRepository.Received(1)
+            .DeleteAsync(Arg.Is<string>(x => x == id), Arg.Any<CancellationToken>());
+    }
+
+    [Fact]
+    public async Task Handler_ShouldReturnFailure_WhenVendorHasActivePurchaseOrders()
+    {
+        var id = Guid.NewGuid().ToString();
+        Vendor vendor = new Faker<Vendor>().CustomInstantiator(f => Vendor.Create(
+            f.Company.CompanyName(),
+            f.Address.FullAddress(),
+            f.Phone.PhoneNumber("###########"),
+            f.Internet.Email(),
+            f.Internet.Url(),
+            f.Random.Word(),
+            f.Person.FullName,
+            f.Phone.PhoneNumber("###########"),
+            f.Internet.Email()
+        ).Value);
+        IVendorRepository vendorRepository = Substitute.For<IVendorRepository>();
+        IPurchaseOrderRepository purchaseOrderRepository = Substitute.For<IPurchaseOrderRepository>();
+        vendorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
+            .Returns(vendor);
+        purchaseOrderRepository.ExistsAsync(
+                Arg.Any<Expression<Func<PurchaseOrder, bool>>>(),
+                Arg.Any<CancellationToken>())
+            .Returns(true);
+        DeleteVendorCommand command = new(id);
+        DeleteVendorCommandHandler handler = new(vendorRepository, purchaseOrderRepository);
+
+        KnResult result = await handler.Handle(command, default);
+
+        Assert.True(result.IsFailure);
+        Assert.Equal(result.Errors.FirstOrDefault(), VendorAggregateErrors.HasActivePurchaseOrders(id));
     }
 }
