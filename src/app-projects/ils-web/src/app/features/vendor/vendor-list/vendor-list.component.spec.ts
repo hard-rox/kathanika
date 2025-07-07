@@ -3,7 +3,12 @@ import {VendorListComponent} from './vendor-list.component';
 import {CommonModule} from "@angular/common";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {KnBadge, KnButton, KnPagination} from "@kathanika/kn-ui";
-import {DeleteVendorGQL, SortEnumType, VendorListGQL, VendorStatus} from "../../../graphql/generated/graphql-operations";
+import {
+    DeleteVendorGQL,
+    SortEnumType,
+    VendorListGQL,
+    VendorStatus
+} from "../../../graphql/generated/graphql-operations";
 import {of} from "rxjs";
 import {mockMutationGql, mockQueryGql} from "../../../graphql/gql-test-utils";
 import {MessageAlertService} from "../../../core/message-alert/message-alert.service";
@@ -77,7 +82,7 @@ describe('VendorListComponent', () => {
         jest.spyOn(component, 'setSearchTextQueryFilter' as never);
 
         // Mock the search event
-        const mockEvent = { target: { value: 'test vendor' } };
+        const mockEvent = {target: {value: 'test vendor'}};
         component['onSearchTextChanged'](mockEvent);
 
         // Use setTimeout to wait for the debounce time
@@ -144,5 +149,113 @@ describe('VendorListComponent', () => {
         expect(component['queryVariables'].skip).toBe(0); // Reset to first page
         expect(component['queryRef'].refetch).toHaveBeenCalled();
         expect(component['router'].navigate).toHaveBeenCalled();
+    });
+
+    it('should delete vendor and show confirmation alert', () => {
+        const vendorId = '123';
+        const mockMutationResponse = {
+            data: {
+                deleteVendor: {
+                    errors: [],
+                }
+            },
+            loading: false
+        };
+
+        // Mock the deleteVendorGql mutation
+        component['deleteVendorGql'].mutate = jest.fn().mockReturnValue(of(mockMutationResponse));
+
+        // Call deleteVendor
+        component.deleteVendor(vendorId);
+
+        // Check if the confirmation alert was shown
+        expect(mockAlertService.showConfirmation).toHaveBeenCalledWith('warning', 'Are you sure you want to delete Vendor?');
+
+        // Check if the mutation was called with the correct vendor ID
+        expect(component['deleteVendorGql'].mutate).toHaveBeenCalledWith({id: vendorId});
+
+        // Verify that no errors were returned
+        expect(mockMutationResponse.data.deleteVendor.errors.length).toBe(0);
+    });
+
+    it('should handle vendor deletion errors', () => {
+        const vendorId = '123';
+        const mockErrorResponse = {
+            data: {
+                deleteVendor: {
+                    errors: [{message: 'Error deleting vendor'}],
+                }
+            },
+            loading: false
+        };
+
+        // Mock the deleteVendorGql mutation to return an error
+        component['deleteVendorGql'].mutate = jest.fn().mockReturnValue(of(mockErrorResponse));
+
+        // Call deleteVendor
+        component.deleteVendor(vendorId);
+
+        // Check if the error alert was shown
+        expect(mockAlertService.showPopup).toHaveBeenCalledWith('error', 'Error deleting vendor', 'Error Deleting Vendor');
+    });
+
+    it('should handle successful vendor deletion', () => {
+        const vendorId = '123';
+        const mockSuccessResponse = {
+            data: {
+                deleteVendor: {
+                    message: 'Vendor deleted successfully',
+                    errors: [],
+                }
+            },
+            loading: false
+        };
+
+        component['queryRef'].refetch = jest.fn();
+        // Mock the deleteVendorGql mutation to return a success response
+        component['deleteVendorGql'].mutate = jest.fn().mockReturnValue(of(mockSuccessResponse));
+
+        // Call deleteVendor
+        component.deleteVendor(vendorId);
+
+        // Check if the success alert was shown
+        expect(mockAlertService.showPopup).toHaveBeenCalledWith('success', 'Vendor deleted successfully', 'Deleted');
+
+        // Verify that refetch was called to update the vendor list
+        expect(component['queryRef'].refetch).toHaveBeenCalled();
+    });
+
+    it('should handle vendor deletion confirmation cancellation', () => {
+        const vendorId = '123';
+
+        // Mock the alert service to return false for confirmation
+        mockAlertService.showConfirmation = jest.fn().mockReturnValue(of(false));
+
+        // Call deleteVendor
+        component.deleteVendor(vendorId);
+
+        // Check that the mutation was not called
+        expect(component['deleteVendorGql'].mutate).not.toHaveBeenCalled();
+    });
+
+    it('should handle vendor deletion when loading', () => {
+        const vendorId = '123';
+        const mockLoadingResponse = {
+            data: {
+                deleteVendor: {
+                    errors: [],
+                }
+            },
+            loading: true
+        };
+
+        // Mock the deleteVendorGql mutation to return a loading state
+        component['deleteVendorGql'].mutate = jest.fn().mockReturnValue(of(mockLoadingResponse));
+
+        // Call deleteVendor
+        component.deleteVendor(vendorId);
+
+        // Check that no alerts are shown while loading
+        expect(mockAlertService.showPopup).not.toHaveBeenCalled();
     });
 });

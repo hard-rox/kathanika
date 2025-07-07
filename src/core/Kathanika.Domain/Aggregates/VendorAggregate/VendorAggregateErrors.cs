@@ -46,4 +46,12 @@ public static class VendorAggregateErrors
             $"No Vendor found with this Id: \"{id}\""
         );
     }
+
+    public static KnError HasActivePurchaseOrders(string requestId)
+    {
+        return new KnError(
+            "Vendor.HasActivePurchaseOrders",
+            $"Vendor with Id: {requestId} has active purchase orders and cannot be deleted."
+        );
+    }
 }
