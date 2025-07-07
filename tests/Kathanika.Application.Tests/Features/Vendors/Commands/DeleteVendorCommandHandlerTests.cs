@@ -1,4 +1,5 @@
 using Kathanika.Application.Features.Vendors.Commands;
+using Kathanika.Domain.Aggregates.PurchaseOrderAggregate;
 using Kathanika.Domain.Aggregates.VendorAggregate;
 
 namespace Kathanika.Application.Tests.Features.Vendors.Commands;
@@ -21,10 +22,11 @@ public class DeleteVendorCommandHandlerTests
             f.Internet.Email()
         ).Value);
         IVendorRepository vendorRepository = Substitute.For<IVendorRepository>();
+        IPurchaseOrderRepository purchaseOrderRepository = Substitute.For<IPurchaseOrderRepository>();
         vendorRepository.GetByIdAsync(Arg.Any<string>(), Arg.Any<CancellationToken>())
             .Returns(vendor);
         DeleteVendorCommand command = new(id);
-        DeleteVendorCommandHandler handler = new(vendorRepository);
+        DeleteVendorCommandHandler handler = new(vendorRepository, purchaseOrderRepository);
 
         await handler.Handle(command, default);
 
@@ -37,8 +39,9 @@ public class DeleteVendorCommandHandlerTests
     {
         var id = Guid.NewGuid().ToString();
         IVendorRepository vendorRepository = Substitute.For<IVendorRepository>();
+        IPurchaseOrderRepository purchaseOrderRepository = Substitute.For<IPurchaseOrderRepository>();
         DeleteVendorCommand command = new(id);
-        DeleteVendorCommandHandler handler = new(vendorRepository);
+        DeleteVendorCommandHandler handler = new(vendorRepository, purchaseOrderRepository);
 
         KnResult knResult = await handler.Handle(command, default);
 
