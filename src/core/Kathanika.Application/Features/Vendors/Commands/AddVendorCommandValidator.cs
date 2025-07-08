@@ -10,9 +10,8 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
     {
         RuleFor(v => v.Name)
             .NotEmpty()
-            .MustAsync(
-                async (name, cancellationToken)
-                    => !await vendorRepository.ExistsAsync(x => x.Name == name, cancellationToken)
+            .MustAsync(async (name, cancellationToken)
+                => !await vendorRepository.ExistsAsync(x => x.Name == name, cancellationToken)
             ).WithMessage("Vendor Name must be unique and not empty.");
 
         RuleFor(v => v.Address)
@@ -32,12 +31,5 @@ internal sealed class AddVendorCommandValidator : AbstractValidator<AddVendorCom
                          (uriResult.Scheme == Uri.UriSchemeHttp || uriResult.Scheme == Uri.UriSchemeHttps)
             ).WithMessage("Invalid website URL.")
             .When(v => !string.IsNullOrEmpty(v.Website));
-
-        RuleFor(v => v.ContactPersonName)
-            .NotEmpty().WithMessage("Contact Person Name cannot be empty.");
-
-        RuleFor(v => v.ContactPersonEmail)
-            .EmailAddress().WithMessage("Invalid contact person email address.")
-            .When(v => !string.IsNullOrEmpty(v.ContactPersonEmail));
     }
 }
