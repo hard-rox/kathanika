@@ -29,7 +29,11 @@
             @for (item of queryResult?.data?.bibRecords?.items; track item; let idx = $index) {
                 <tr>
                     <td>{{ idx + 1 }}</td>
-                    <td>{{ item.titleStatement.title }}</td>
+                    <td>
+                        <a [routerLink]="[item.id]">
+                            {{ item.titleStatement.title }}
+                        </a>
+                    </td>
                     <td>
                         <ng-container *ngIf="item.publicationDistributions?.length; else noPubDate">
                             <ng-container *ngFor="let pd of item.publicationDistributions; let last = last">

@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {ActivatedRoute, RouterLink} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {BaseQueryComponent} from '../../../abstractions/base-query-component';
 import {KnButton, KnPanel} from '@kathanika/kn-ui';
 import {
@@ -17,7 +17,6 @@ import {
         CommonModule,
         KnPanel,
         KnButton,
-        RouterLink
     ],
 })
 export class BibRecordDetailsComponent

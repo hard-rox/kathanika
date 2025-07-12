@@ -14,7 +14,7 @@ import {
         CommonModule,
         KnButton,
         KnPagination,
-        RouterLink
+        RouterLink,
     ],
     standalone: true,
     templateUrl: './bib-record-list.component.html'
