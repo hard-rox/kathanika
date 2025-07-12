@@ -13,7 +13,7 @@
                                 by {{ record?.titleStatement?.statementOfResponsibility }}</p>
                             <div class="text-sm mt-1">
                                 <ul class="list-inline">
-                                    <li>ISBN: {{ record.internationalStandardBookNumbers }}</li>
+                                    <li>ISBN: {{ record.internationalStandardBookNumbers.join(', ') }}</li>
                                     <li>ISSN:</li>
                                     <li>Control Number: {{ record.controlNumber }}</li>
                                 </ul>
@@ -61,7 +61,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img [src]="record.coverImageUrl" alt="Cover"
+                        <img [src]="record.coverImageUrl" [alt]="record?.titleStatement?.title || 'Book cover'"
                              class="w-32 h-48 bg-gray-300 dark:bg-gray-700 flex items-center justify-center"/>
                     </div>
                 </kn-panel>

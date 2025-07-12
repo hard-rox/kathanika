@@ -30,7 +30,7 @@
                 <tr>
                     <td>{{ idx + 1 }}</td>
                     <td>
-                        <a routerLink="{{ item?.id }}">
+                        <a [routerLink]="[item.id]">
                             {{ item.titleStatement.title }}
                         </a>
                     </td>
