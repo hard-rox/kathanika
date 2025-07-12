@@ -10,7 +10,9 @@ export class KnButton {
         'disabled:pointer-events-none',
         'disabled:fill-gray-400',
         'inline-flex',
-        'rounded-sm'
+        'rounded-sm',
+        'items-center',
+        'justify-center',
     ];
     private readonly roundedClasses = ['rounded-full', 'p-2'];
     private readonly rectanglePaddingClasses = ['px-2', 'py-2'];
