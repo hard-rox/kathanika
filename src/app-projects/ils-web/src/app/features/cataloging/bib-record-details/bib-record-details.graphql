@@ -1,6 +1,7 @@
 query BibRecordDetails($id: String!) {
     bibRecord(id: $id) {
         id
+        controlNumber
         titleStatement {
             title
             statementOfResponsibility
@@ -18,5 +19,9 @@ query BibRecordDetails($id: String!) {
             dimensions
         }
         coverImageUrl
+        createdAt
+        createdByUserName
+        lastModifiedAt
+        lastModifiedByUserName
     }
 }

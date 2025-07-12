@@ -1,33 +1,155 @@
 @if (queryRef.valueChanges | async; as queryResult) {
-    @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
-        <kn-panel panelTitle="📚 Bibliographic Record Details">
-            <a [routerLink]="['../edit', data.bibRecord?.id]" kn-button class="float-right">
-                <span class="material-symbols-sharp">edit</span>
-                Edit
-            </a>
+    @if (!queryResult.error && !queryResult.errors && queryResult.data.bibRecord; as record) {
 
-            <div class="grid grid-cols-2 gap-1 border-b pb-1">
-                <div>
-                    <h5 class="font-semibold">Record ID:</h5>
-                    <p class="text-gray-700">{{ data.bibRecord?.id | uppercase }}</p>
-                </div>
-                <div>
-                    <h5 class="font-semibold">ISBN:</h5>
-                    <p class="text-gray-700">{{ data.bibRecord?.internationalStandardBookNumbers || '—' }}</p>
-                </div>
-                <div>
-                    <h5 class="font-semibold">Title:</h5>
-                    <p class="text-gray-700">{{ data.bibRecord?.titleStatement?.title }}</p>
-                </div>
-                <div>
-                    <h5 class="font-semibold">Author:</h5>
-                    <p class="text-gray-700">{{ data.bibRecord?.titleStatement?.statementOfResponsibility }}</p>
-                </div>
-                <div>
-                    <h5 class="font-semibold">Publication Year:</h5>
-                    <p class="text-gray-700">{{ data.bibRecord?.publicationDistributions || '—' }}</p>
-                </div>
+        <div class="flex flex-col lg:flex-row gap-4">
+            <!-- Left Section -->
+            <div class="flex-1 flex flex-col gap-4">
+                <!-- Book Info -->
+                <kn-panel>
+                    <div class="flex flex-col sm:flex-row gap-2">
+                        <div class="flex-1">
+                            <h2 class="text-xl font-semibold">{{ record?.titleStatement?.title }}</h2>
+                            <p class="text-sm text-gray-600 dark:text-gray-400">
+                                by {{ record?.titleStatement?.statementOfResponsibility }}</p>
+                            <div class="text-sm mt-1">
+                                <ul class="list-inline">
+                                    <li>ISBN: {{ record.internationalStandardBookNumbers }}</li>
+                                    <li>ISSN:</li>
+                                    <li>Control Number: {{ record.controlNumber }}</li>
+                                </ul>
+                            </div>
+                            <div class="flex justify-between">
+                                <div class="mt-4 text-sm">
+                                    <p><strong>Publisher:</strong>
+                                        <ng-container *ngIf="record.publicationDistributions?.length; else noPublisher">
+                                            <ng-container
+                                                *ngFor="let pd of record.publicationDistributions; let last = last">
+                                                {{ pd.namesOfPublisher.length ? pd.namesOfPublisher.join(', ') : '' }}
+                                                <span *ngIf="!last">; </span>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-template #noPublisher></ng-template>
+                                    </p>
+                                    <p><strong>Year:</strong>
+                                        <ng-container *ngIf="record.publicationDistributions?.length; else noPubDate">
+                                            <ng-container
+                                                *ngFor="let pd of record.publicationDistributions; let last = last">
+                                                {{ pd.datesOfPublication.length ? pd.datesOfPublication.join(', ') : '' }}
+                                                <span *ngIf="!last">; </span>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-template #noPubDate></ng-template>
+                                    </p>
+                                    <p><strong>Edition:</strong></p>
+                                    <p><strong>Pages:</strong>
+                                        <ng-container *ngIf="record.physicalDescriptions?.length; else noPages">
+                                            <ng-container
+                                                *ngFor="let pd of record.physicalDescriptions; let last = last">
+                                                {{ pd.extents.length ? pd.extents.join(', ') : '' }}<span *ngIf="!last">; </span>
+                                            </ng-container>
+                                        </ng-container>
+                                        <ng-template #noPages></ng-template>
+                                    </p>
+                                    <p><strong>Language:</strong></p>
+                                </div>
+                                <div class="mt-4 text-sm">
+                                    <p><strong>Call Number:</strong></p>
+                                    <p><strong>Dewey:</strong></p>
+                                    <p><strong>LC Class:</strong></p>
+                                    <p><strong>Genre:</strong></p>
+                                    <p><strong>Format:</strong></p>
+                                </div>
+                            </div>
+                        </div>
+                        <img [src]="record.coverImageUrl" alt="Cover"
+                             class="w-32 h-48 bg-gray-300 dark:bg-gray-700 flex items-center justify-center"/>
+                    </div>
+                </kn-panel>
+
+                <!-- Holdings & Availability -->
+                <kn-panel panelTitle="Holdings & Availability">
+                    <table>
+                        <thead>
+                        <tr>
+                            <th>Location</th>
+                            <th>Call Number</th>
+                            <th>Barcode</th>
+                            <th>Status</th>
+                            <th>Due Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Main Library - Fiction</td>
+                            <td>PS3511.I9 G7 2004</td>
+                            <td>31234567890123</td>
+                            <td><span>Available</span></td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>Branch Library - Fiction</td>
+                            <td>PS3511.I9 G7 2004 c.2</td>
+                            <td>31234567890124</td>
+                            <td><span>Checked Out</span></td>
+                            <td>2025-01-15</td>
+                        </tr>
+                        <tr>
+                            <td>Reference Collection</td>
+                            <td>REF PS3511.I9 G7 2004</td>
+                            <td>31234567890125</td>
+                            <td><span>Reference Only</span></td>
+                            <td>-</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </kn-panel>
             </div>
-        </kn-panel>
+
+            <!-- Right Sidebar -->
+            <div class="w-full lg:w-80 flex flex-col gap-4">
+                <kn-panel>
+                    <div class="flex flex-col gap-2">
+                        <button kn-button>
+                            <span class="material-symbols-rounded">front_hand</span>
+                            Place Hold
+                        </button>
+                        <button kn-button>
+                            <span class="material-symbols-rounded">edit_square</span>
+                            Edit Record
+                        </button>
+                        <button kn-button>
+                            <span class="material-symbols-rounded">content_copy</span>
+                            Duplicate Record
+                        </button>
+                        <button kn-button>
+                            <span class="material-symbols-rounded">share</span>
+                            Share Record
+                        </button>
+                    </div>
+                </kn-panel>
+
+                <kn-panel panelTitle="Item Summary">
+                    <div class="text-sm">
+                        <p class="flex justify-between"><span>Total Copies:</span> <span>3</span></p>
+                        <p class="flex justify-between"><span>Available:</span> <span>2</span></p>
+                        <p class="flex justify-between"><span>Checked Out:</span> <span>1</span></p>
+                        <p class="flex justify-between"><span>On Hold:</span> <span>0</span></p>
+                        <hr/>
+                        <p class="flex justify-between"><span>Total Checkouts:</span> <span>247</span></p>
+                        <p class="flex justify-between"><span>This Year:</span> <span>23</span></p>
+                    </div>
+                </kn-panel>
+
+                <kn-panel panelTitle="Record History">
+                    <div class="text-sm">
+                        <p><strong>Created:</strong> {{record.createdAt | date}}</p>
+                        <p><strong>Created By:</strong> {{record.createdByUserName}}</p>
+                        <p><strong>Last Modified:</strong> {{record.lastModifiedAt | date}}</p>
+                        <p><strong>Modified By:</strong> {{record.lastModifiedByUserName}}</p>
+                        <p><strong>Source:</strong> </p>
+                    </div>
+                </kn-panel>
+            </div>
+        </div>
     }
 }

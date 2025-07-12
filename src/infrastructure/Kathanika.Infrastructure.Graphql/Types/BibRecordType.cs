@@ -12,5 +12,9 @@ public sealed class BibRecordType : ObjectType<BibRecord>
             .Type<UrlType>()
             .Resolve(context =>
                 FileEndpointResolver.ResolveAsFileUrl(context, context.Parent<BibRecord>().CoverImageId));
+        descriptor.Field(x => x.CreatedAt);
+        descriptor.Field(x => x.CreatedByUserName);
+        descriptor.Field(x => x.LastModifiedAt);
+        descriptor.Field(x => x.LastModifiedByUserName);
     }
 }

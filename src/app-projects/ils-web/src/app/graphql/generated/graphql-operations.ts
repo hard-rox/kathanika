@@ -17,6 +17,8 @@ export type Scalars = {
   Float: { input: number; output: number; }
   /** The `Date` scalar represents an ISO-8601 compliant date type. */
   Date: { input: any; output: any; }
+  /** The `DateTime` scalar represents an ISO-8601 compliant date time type. */
+  DateTime: { input: any; output: any; }
   /** The `Decimal` scalar type represents a decimal floating-point number. */
   Decimal: { input: any; output: any; }
   /** The `LocalDate` scalar type represents a ISO date string, represented as UTF-8 character sequences YYYY-MM-DD. The scalar follows the specification defined in RFC3339 */
@@ -48,10 +50,14 @@ export type BibRecord = {
   controlNumber: Scalars['String']['output'];
   controlNumberIdentifier: Scalars['String']['output'];
   coverImageUrl?: Maybe<Scalars['URL']['output']>;
+  createdAt: Scalars['DateTime']['output'];
+  createdByUserName: Scalars['String']['output'];
   dateAndTimeOfLatestTransaction: Scalars['String']['output'];
   fixedLengthDataElements: Scalars['String']['output'];
   id: Scalars['String']['output'];
   internationalStandardBookNumbers: Array<Scalars['String']['output']>;
+  lastModifiedAt?: Maybe<Scalars['DateTime']['output']>;
+  lastModifiedByUserName?: Maybe<Scalars['String']['output']>;
   leader: Scalars['String']['output'];
   mainEntryPersonalName?: Maybe<MainEntryPersonalName>;
   physicalDescriptions: Array<PhysicalDescription>;
@@ -788,7 +794,7 @@ export type BibRecordDetailsQueryVariables = Exact<{
 }>;
 
 
-export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, mainEntryPersonalName?: { __typename?: 'MainEntryPersonalName', personalName: string } | null, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }>, physicalDescriptions: Array<{ __typename?: 'PhysicalDescription', extents: Array<string>, dimensions: Array<string> }> } | null };
+export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, controlNumber: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, mainEntryPersonalName?: { __typename?: 'MainEntryPersonalName', personalName: string } | null, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }>, physicalDescriptions: Array<{ __typename?: 'PhysicalDescription', extents: Array<string>, dimensions: Array<string> }> } | null };
 
 export type BibRecordListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -911,6 +917,7 @@ export const BibRecordDetailsDocument = gql`
     query BibRecordDetails($id: String!) {
   bibRecord(id: $id) {
     id
+    controlNumber
     titleStatement {
       title
       statementOfResponsibility
@@ -928,6 +935,10 @@ export const BibRecordDetailsDocument = gql`
       dimensions
     }
     coverImageUrl
+    createdAt
+    createdByUserName
+    lastModifiedAt
+    lastModifiedByUserName
   }
 }
     `;
