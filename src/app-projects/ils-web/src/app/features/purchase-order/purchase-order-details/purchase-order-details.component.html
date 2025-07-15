@@ -2,7 +2,7 @@
     @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
         <kn-panel panelTitle="📄 Purchase Order Details">
             <a [routerLink]="['../update', data.purchaseOrder?.id]" kn-button class="float-right">
-                <span class="material-symbols-sharp">edit</span>
+                <span class="material-symbols-rounded">edit</span>
                 Update</a>
             <div class="grid grid-cols-2 gap-1 border-b pb-1">
                 <div>
@@ -73,10 +73,10 @@
                                     <td>
                                         <div class="flex space-x-1 items-center">
                                             <button type="button" kn-button variant="solid">
-                                                <span class="material-symbols-sharp my-auto">edit</span>
+                                                <span class="material-symbols-rounded my-auto">edit</span>
                                             </button>
                                             <button type="button" kn-button variant="solid">
-                                                <span class="material-symbols-sharp my-auto">delete</span>
+                                                <span class="material-symbols-rounded my-auto">delete</span>
                                             </button>
                                         </div>
                                     </td>

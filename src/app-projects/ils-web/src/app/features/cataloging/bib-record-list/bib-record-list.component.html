@@ -2,7 +2,7 @@
     <div class="flex justify-between">
         <h2 class="text-xl font-bold">📚 Bibliographic Records</h2>
         <a [routerLink]="['create']" kn-button>
-            <span class="material-symbols-sharp">add</span>
+            <span class="material-symbols-rounded">add</span>
             New Record</a>
     </div>
     <input
@@ -56,7 +56,7 @@
                     <td>
                         <div class="group relative">
                             <button kn-button variant="transparent">
-                                <span class="material-symbols-sharp"> more_vert </span>
+                                <span class="material-symbols-rounded"> more_vert </span>
                             </button>
                             <div
                                 class="z-10 border bg-white invisible shadow-md w-30 absolute top-0 right-16 transition-all opacity-0 group-focus-within:visible group-focus-within:opacity-100 group-focus-within:translate-y-1">
@@ -65,19 +65,19 @@
                                         routerLink="{{ item?.id }}"
                                         class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver"
                                     >
-                                        <span class="material-symbols-sharp"> visibility </span>
+                                        <span class="material-symbols-rounded"> visibility </span>
                                         <span class="my-auto">View</span>
                                     </a>
                                     <a
                                         routerLink="update/{{ item?.id }}"
                                         class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver"
                                     >
-                                        <span class="material-symbols-sharp my-auto"> edit </span>
+                                        <span class="material-symbols-rounded my-auto"> edit </span>
                                         <span class="my-auto">Update</span>
                                     </a>
                                     <button
                                         class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
-                                        <span class="material-symbols-sharp my-auto"> delete </span>
+                                        <span class="material-symbols-rounded my-auto"> delete </span>
                                         <span class="my-auto">Delete</span>
                                     </button>
                                 </div>
