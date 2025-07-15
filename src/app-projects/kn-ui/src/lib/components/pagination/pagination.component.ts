@@ -2,12 +2,13 @@ import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, effect, input, output} from '@angular/core';
 import {KnButton} from '../../directives/button/button.directive';
 import {AbstractBlockComponent} from '../../abstractions/abstract-block-component';
+import {KnSelectInput} from "../../inputs/select-input/select-input.component";
 
 @Component({
     selector: 'kn-pagination',
     templateUrl: './pagination.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, KnButton],
+    imports: [CommonModule, KnButton, KnSelectInput],
 })
 export class KnPagination extends AbstractBlockComponent {
 
@@ -18,7 +19,7 @@ export class KnPagination extends AbstractBlockComponent {
     readonly pageSizeChanged = output<number>();
 
     protected currentPage = 1;
-    protected lastPage = 1; //TODO: Use signal or clean.
+    protected lastPage = 1;
 
     protected onPageChanged(pageNumber: number) {
         if (pageNumber >= 1 && pageNumber <= this.lastPage) {

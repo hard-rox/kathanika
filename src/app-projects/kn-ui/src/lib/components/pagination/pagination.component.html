@@ -2,16 +2,15 @@
     class="bg-white mt-4 inline-flex items-center gap-4 border-b border-theme-rich-black"
 >
     <span class="px-4 py-2">Items per page</span>
-    <select
+    <kn-select-input
         (change)="onPageSizeChanged($event.target)"
-        class="px-4 py-2 hover:bg-theme-silver active:bg-theme-silver"
     >
         @for (pageSizeItem of pageSizes(); track pageSizeItem) {
             <option [value]="pageSizeItem" [selected]="pageSizeItem === pageSize()">
                 {{ pageSizeItem }}
             </option>
         }
-    </select>
+    </kn-select-input>
     <span class="px-4 py-2">Page {{ currentPage }} of {{ lastPage }}</span>
     <button
         (click)="onPageChanged(1)"
