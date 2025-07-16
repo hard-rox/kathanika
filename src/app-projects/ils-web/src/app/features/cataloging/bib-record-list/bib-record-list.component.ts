@@ -1,12 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {KnButton, KnPagination} from "@kathanika/kn-ui";
+import {KnButton, KnPagination, KnPanel, KnSelectInput} from "@kathanika/kn-ui";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-list-component";
 import {
     BibRecordListGQL,
     BibRecordListQuery,
-    BibRecordListQueryVariables
+    BibRecordListQueryVariables, SortEnumType
 } from "../../../graphql/generated/graphql-operations";
 
 @Component({
@@ -15,6 +15,8 @@ import {
         KnButton,
         KnPagination,
         RouterLink,
+        KnPanel,
+        KnSelectInput,
     ],
     standalone: true,
     templateUrl: './bib-record-list.component.html'
@@ -64,6 +66,11 @@ export class BibRecordListComponent
         super(gql, activatedRoute, router, {
             skip: 0,
             take: 20,
+            sortBy: {
+                titleStatement: {
+                    title: SortEnumType.Asc
+                }
+            }
         });
     }
 
