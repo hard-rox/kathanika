@@ -1,4 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {NgControl} from '@angular/forms';
 
 import {KnToggle} from './toggle.component';
 
@@ -9,10 +10,16 @@ describe('KnToggle', () => {
     beforeEach(() => {
         TestBed.configureTestingModule({
             imports: [KnToggle],
+            providers: [
+                {
+                    provide: NgControl,
+                    useValue: {}
+                }
+            ]
         });
         fixture = TestBed.createComponent(KnToggle);
         component = fixture.componentInstance;
-        // fixture.detectChanges();
+        fixture.detectChanges();
     });
 
     it('should create', () => {

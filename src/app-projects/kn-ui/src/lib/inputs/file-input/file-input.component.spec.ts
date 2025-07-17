@@ -1,4 +1,5 @@
 import {ComponentFixture, TestBed} from '@angular/core/testing';
+import {NgControl} from '@angular/forms';
 import {KnFileInput} from './file-input.component';
 
 describe('FileInputComponent', () => {
@@ -8,6 +9,12 @@ describe('FileInputComponent', () => {
     beforeEach(async () => {
         await TestBed.configureTestingModule({
             imports: [KnFileInput],
+            providers: [
+                {
+                    provide: NgControl,
+                    useValue: {}
+                }
+            ]
         }).compileComponents();
 
         fixture = TestBed.createComponent(KnFileInput);
