@@ -27,7 +27,7 @@
     "@angular/router": "^19.2.13",
     "@angular/service-worker": "^19.2.13",
     "@angular/ssr": "^19.2.13",
-    "apollo-angular": "^10.0.3",
+    "apollo-angular": "^11.0.0",
     "express": "^5.1.0",
     "graphql": "^16.11.0",
     "ngx-modal-ease": "^0.1.3",
