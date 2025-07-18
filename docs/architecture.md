@@ -71,3 +71,58 @@ Conclusion
 This document has provided an overview of the architecture of the project, including its layers, components, and technologies. The project follows a CQRS architecture with a separate domain and application layer, and includes infrastructure layers for GraphQL, persistence, and services, as well as a separate tests folder for automated testing.
 
 This architecture provides a clear separation of concerns, making it easier to maintain and extend the application over time. The use of DDD principles and CQRS pattern ensures that the business logic of the application is well-defined and that changes to the application are made in a controlled manner. The use of automated testing ensures that changes to the application are thoroughly tested and that the application remains reliable and resilient.
+
+System Architecture
+-------------------
+
+This document describes the architectural design of Kathanika Library Management System.
+
+### High-Level Architecture Diagram
+
+```mermaid
+graph TB
+    subgraph Frontend
+        A[ILS Web UI]
+        B[KN UI Components]
+    end
+    
+    subgraph Backend
+        C[GraphQL API]
+        D[Application Layer]
+        E[Domain Layer]
+        F[Infrastructure]
+    end
+    
+    subgraph Database
+        G[Persistence]
+    end
+    
+    A --> C
+    B --> A
+    C --> D
+    D --> E
+    E --> F
+    F --> G
+```
+
+### Layer Details
+
+#### Frontend Layer
+- **ILS Web UI**: Main web interface for library staff and users
+- **KN UI Components**: Reusable UI component library
+
+#### Backend Layer
+- **GraphQL API**: API gateway handling all client-server communication
+- **Application Layer**: Business logic and application services
+- **Domain Layer**: Core domain models and business rules
+- **Infrastructure**: Cross-cutting concerns and external service integrations
+
+#### Database Layer
+- **Persistence**: Data storage and retrieval layer
+
+### Communication Flow
+1. Client requests flow through the ILS Web UI
+2. Requests are formatted as GraphQL queries/mutations
+3. Application layer processes the business logic
+4. Domain layer ensures business rules
+5. Infrastructure layer handles persistence and external services
