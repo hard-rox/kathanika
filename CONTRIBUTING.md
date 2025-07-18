@@ -24,6 +24,37 @@ Here are some ways you can contribute to the project:
     4.  Open a pull request from your branch to the main repository.
     5.  Wait for feedback and address any comments or suggestions.
 
+Development Workflow
+--------------------
+
+```mermaid
+gitGraph
+    commit id: "initial"
+    branch develop
+    checkout develop
+    commit id: "feature-start"
+    branch feature
+    checkout feature
+    commit id: "feature-work"
+    commit id: "feature-complete"
+    checkout develop
+    merge feature
+    checkout main
+    merge develop tag: "v1.0.0"
+```
+
+### Branch Strategy
+- `main`: Production-ready code
+- `develop`: Integration branch for features
+- `feature/*`: Individual feature branches
+
+### Development Process
+1. Create a feature branch from `develop`
+2. Implement your changes
+3. Write tests and ensure all tests pass
+4. Submit a pull request to `develop`
+5. After review and approval, your changes will be merged
+
 Code Style
 ----------
 
