@@ -55,6 +55,9 @@ gitGraph
 4. Submit a pull request to `develop`
 5. After review and approval, your changes will be merged
 
+### Commit Messages
+We follow the Conventional Commits specification for all commit messages. This helps maintain a clear project history and enables automated versioning and changelog generation. Please refer to our [Commit Convention Guide](COMMIT_CONVENTION.md) for detailed instructions and examples.
+
 Code Style
 ----------
 

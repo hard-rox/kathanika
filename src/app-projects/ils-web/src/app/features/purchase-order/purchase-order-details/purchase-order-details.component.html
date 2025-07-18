@@ -72,11 +72,17 @@
                                     <td class="font-semibold text-right">{{ item.totalCost | currency }}</td>
                                     <td>
                                         <div class="flex space-x-1 items-center">
-                                            <button type="button" kn-button variant="solid">
-                                                <span class="material-symbols-rounded my-auto">edit</span>
+                                            <button type="button" 
+                                                    kn-button 
+                                                    variant="solid"
+                                                    aria-label="Edit purchase order item">
+                                                <span class="material-symbols-rounded my-auto" aria-hidden="true">edit</span>
                                             </button>
-                                            <button type="button" kn-button variant="solid">
-                                                <span class="material-symbols-rounded my-auto">delete</span>
+                                            <button type="button" 
+                                                    kn-button 
+                                                    variant="solid"
+                                                    aria-label="Delete purchase order item">
+                                                <span class="material-symbols-rounded my-auto" aria-hidden="true">delete</span>
                                             </button>
                                         </div>
                                     </td>

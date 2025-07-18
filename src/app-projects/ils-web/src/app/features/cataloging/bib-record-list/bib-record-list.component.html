@@ -65,14 +65,18 @@
                                 <p class="text-sm text-theme-davys-gray">{{ item.titleStatement.statementOfResponsibility }}</p>
                             </td>
                             <td>{{ item.controlNumber }}</td>
-                            <td>{{ item.internationalStandardBookNumbers.join(' | ') }}</td>
+                            <td>{{ item.internationalStandardBookNumbers?.join(' | ') || '—' }}</td>
                             <td>
-                                <ng-container *ngIf="item.publicationDistributions?.length;">
-                                    <ng-container *ngFor="let pd of item.publicationDistributions; let last = last">
-                                        {{ pd.namesOfPublisher.length ? pd.namesOfPublisher.join(', ') : '' }} |
-                                        {{ pd.datesOfPublication.length ? pd.datesOfPublication.join(', ') : '' }}
-                                    </ng-container>
-                                </ng-container>
+                                @for (pd of item.publicationDistributions || []; track pd) {
+                                    <div class="text-sm">
+                                        @if (pd.namesOfPublisher?.length) {
+                                            {{ pd.namesOfPublisher.join(', ') }}
+                                        }
+                                        @if (pd.datesOfPublication?.length) {
+                                            | {{ pd.datesOfPublication.join(', ') }}
+                                        }
+                                    </div>
+                                }
                             </td>
                             <td>
                                 <div class="flex text-sm text-shadow-theme-davys-gray">

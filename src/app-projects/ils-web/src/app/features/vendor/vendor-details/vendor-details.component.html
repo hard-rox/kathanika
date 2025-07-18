@@ -13,30 +13,30 @@
                         <div>
                             <h4 class="mb-2 font-semibold text-theme-davys-gray">Contact Information</h4>
                             <div class="flex space-x-2">
-                                <span class="material-symbols-rounded text-theme-silver">call</span>
+                                <span class="material-symbols-rounded text-theme-silver" aria-hidden="true">call</span>
                                 <div>
                                     <p><a href="tel:{{ data.vendor?.contactNumber }}" class="text-theme-primary hover:underline">{{ data.vendor?.contactNumber }}</a></p>
                                     <p class="text-theme-silver">Contact Number</p>
                                 </div>
                             </div>
                             <div class="flex space-x-2">
-                                <span class="material-symbols-rounded text-theme-silver">email</span>
+                                <span class="material-symbols-rounded text-theme-silver" aria-hidden="true">email</span>
                                 <div>
                                     <p><a href="mailto:{{ data.vendor?.email }}" class="text-theme-primary hover:underline">{{ data.vendor?.email }}</a></p>
                                     <p class="text-theme-silver">Email</p>
                                 </div>
                             </div>
                             <div class="flex space-x-2">
-                                <span class="material-symbols-rounded text-theme-silver">location_on</span>
+                                <span class="material-symbols-rounded text-theme-silver" aria-hidden="true">location_on</span>
                                 <div>
                                     <p>{{ data.vendor?.address }}</p>
                                     <p class="text-theme-silver">Address</p>
                                 </div>
                             </div>
                             <div class="flex space-x-2">
-                                <span class="material-symbols-rounded text-theme-silver">captive_portal</span>
+                                <span class="material-symbols-rounded text-theme-silver" aria-hidden="true">captive_portal</span>
                                 <div>
-                                    <p><a [href]="data.vendor?.website" target="_blank" rel="noopener noreferrer" class="text-theme-primary hover:underline">{{ data.vendor?.website }} <span class="material-symbols-rounded text-xs">open_in_new</span></a></p>
+                                    <p><a [href]="data.vendor?.website" target="_blank" rel="noopener noreferrer" class="text-theme-primary hover:underline">{{ data.vendor?.website }} <span class="material-symbols-rounded text-xs" aria-hidden="true">open_in_new</span></a></p>
                                     <p class="text-theme-silver">Website</p>
                                 </div>
                             </div>
@@ -44,21 +44,21 @@
                         <div>
                             <h4 class="mb-2 font-semibold text-theme-davys-gray">Contact Person</h4>
                             <div class="flex space-x-2">
-                                <span class="material-symbols-rounded text-theme-silver">person</span>
+                                <span class="material-symbols-rounded text-theme-silver" aria-hidden="true">person</span>
                                 <div>
                                     <p>{{ data.vendor?.contactPersonName }}</p>
                                     <p class="text-theme-silver">Contact Person Name</p>
                                 </div>
                             </div>
                             <div class="flex space-x-2">
-                                <span class="material-symbols-rounded text-theme-silver">call</span>
+                                <span class="material-symbols-rounded text-theme-silver" aria-hidden="true">call</span>
                                 <div>
                                     <p><a href="tel:{{ data.vendor?.contactPersonPhone }}" class="text-theme-primary hover:underline">{{ data.vendor?.contactPersonPhone }}</a></p>
                                     <p class="text-theme-silver">Contact Person Phone</p>
                                 </div>
                             </div>
                             <div class="flex space-x-2">
-                                <span class="material-symbols-rounded text-theme-silver">email</span>
+                                <span class="material-symbols-rounded text-theme-silver" aria-hidden="true">email</span>
                                 <div>
                                     <p><a href="mailto:{{ data.vendor?.contactPersonEmail }}" class="text-theme-primary hover:underline">{{ data.vendor?.contactPersonEmail }}</a></p>
                                     <p class="text-theme-silver">Contact Person Email</p>
@@ -92,7 +92,7 @@
                                     </td>
                                     <td>
                                         <a kn-button [routerLink]="['/purchase-orders', item?.id]">
-                                        <span class="material-symbols-rounded"> visibility </span>
+                                        <span class="material-symbols-rounded text-theme-silver" aria-hidden="true">visibility</span>
                                         </a>
                                     </td>
                                 </tr>
