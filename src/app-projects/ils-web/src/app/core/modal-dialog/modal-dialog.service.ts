@@ -1,4 +1,4 @@
-import {inject, Injectable, Type} from '@angular/core';
+import {Injectable, Type} from '@angular/core';
 
 @Injectable({
     providedIn: 'root'
@@ -10,7 +10,10 @@ export class ModalDialogService {
         closedOnClickOrEscape: boolean
         data: unknown
     }> {
-        return new Promise((resolve) => {});
+        console.log('open', component);
+        return new Promise((resolve) => {
+            console.log(resolve);
+        });
         // return this.easeModalService.open(component, {
         //     modal: {
         //         enter: 'enter-scale-down 0.1s ease-out'
@@ -33,6 +36,7 @@ export class ModalDialogService {
     }
 
     close(data: unknown) {
+        console.log('close', data);
         // this.easeModalService.close(data);
     }
 }

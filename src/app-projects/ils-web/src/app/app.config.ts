@@ -27,7 +27,10 @@ export const appConfig: ApplicationConfig = {
         provideHttpClient(withFetch()),
         provideGraphqlClient(environment.graphqlServer),
         provideTusFileServer(environment.fileServer),
-        provideClientHydration(withIncrementalHydration()),
+        provideClientHydration(
+            withIncrementalHydration(),
+            withEventReplay()
+        ),
         {
             provide: DEFAULT_CURRENCY_CODE,
             useValue: 'BDT '

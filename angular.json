@@ -80,6 +80,16 @@
         },
         "extract-i18n": {
           "builder": "@angular/build:extract-i18n"
+        },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": [
+              "src/app-projects/ils-web/**/*.ts",
+              "src/app-projects/ils-web/**/*.html"
+            ],
+            "eslintConfig": "src/app-projects/ils-web/eslint.config.js"
+          }
         }
       }
     },
