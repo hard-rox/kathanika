@@ -2,6 +2,11 @@ import {Routes} from '@angular/router';
 
 export const routes: Routes = [
     {
+        path: '',
+        pathMatch: 'full',
+        redirectTo: 'vendors', //TODO: Change this to the default landing page
+    },
+    {
         path: 'vendors',
         loadChildren: () => import('./features/vendor/vendor.routes')
             .then(x => x.vendorRoutes)

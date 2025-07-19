@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, signal} from '@angular/core';
 import {RouterOutlet} from '@angular/router';
 import {HeaderComponent} from "./header/header.component";
 import {SidebarComponent} from "./sidebar/sidebar.component";
@@ -16,6 +16,6 @@ import {FooterComponent} from "./footer/footer.component";
         <app-footer></app-footer>
     `
 })
-export class AppComponent {
-    title = 'ils-web';
+export class App {
+    protected readonly title = signal('ils-web');
 }
