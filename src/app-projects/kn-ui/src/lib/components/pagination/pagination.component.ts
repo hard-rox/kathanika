@@ -8,7 +8,7 @@ import {KnSelectInput} from "../../inputs/select-input/select-input.component";
     selector: 'kn-pagination',
     templateUrl: './pagination.component.html',
     changeDetection: ChangeDetectionStrategy.OnPush,
-    imports: [CommonModule, KnButton, KnSelectInput],
+    imports: [CommonModule, KnButton],
 })
 export class KnPagination extends AbstractBlockComponent {
 

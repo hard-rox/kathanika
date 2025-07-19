@@ -65,14 +65,14 @@
                                 <p class="text-sm text-theme-davys-gray">{{ item.titleStatement.statementOfResponsibility }}</p>
                             </td>
                             <td>{{ item.controlNumber }}</td>
-                            <td>{{ item.internationalStandardBookNumbers?.join(' | ') || '—' }}</td>
+                            <td>{{ item.internationalStandardBookNumbers.join(' | ') || '—' }}</td>
                             <td>
                                 @for (pd of item.publicationDistributions || []; track pd) {
                                     <div class="text-sm">
-                                        @if (pd.namesOfPublisher?.length) {
+                                        @if (pd.namesOfPublisher.length) {
                                             {{ pd.namesOfPublisher.join(', ') }}
                                         }
-                                        @if (pd.datesOfPublication?.length) {
+                                        @if (pd.datesOfPublication.length) {
                                             | {{ pd.datesOfPublication.join(', ') }}
                                         }
                                     </div>
