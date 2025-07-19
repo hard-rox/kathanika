@@ -94,7 +94,6 @@ export class MessageAlertService {
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     showHttpErrorPopup(error: ApolloError | any) {
-        console.debug(typeof error, typeof ApolloError, JSON.stringify(error))
         if (error instanceof ApolloError) {
             this.showPopup('error',
                 error?.networkError?.message ?? 'There is an unfortunate GraphQL Error');

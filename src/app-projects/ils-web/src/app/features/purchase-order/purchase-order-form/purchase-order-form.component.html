@@ -46,11 +46,19 @@
                                 <td class="font-semibold text-right">{{ item.quantity * item.vendorPrice | currency }}</td>
                                 <td>
                                     <div class="flex space-x-1 items-center">
-                                        <button type="button" kn-button variant="transparent" (click)="updateItem(idx)">
-                                            <span class="material-symbols-sharp my-auto">edit</span>
+                                        <button type="button" 
+                                                kn-button 
+                                                variant="transparent"
+                                                aria-label="Edit item" 
+                                                (click)="updateItem(idx)">
+                                            <span class="material-symbols-rounded my-auto" aria-hidden="true">edit</span>
                                         </button>
-                                        <button type="button" kn-button variant="transparent" (click)="removeItem(idx)">
-                                            <span class="material-symbols-sharp my-auto">delete</span>
+                                        <button type="button" 
+                                                kn-button 
+                                                variant="transparent"
+                                                aria-label="Delete item" 
+                                                (click)="removeItem(idx)">
+                                            <span class="material-symbols-rounded my-auto" aria-hidden="true">delete</span>
                                         </button>
                                     </div>
                                 </td>

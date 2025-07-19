@@ -804,7 +804,7 @@ export type BibRecordListQueryVariables = Exact<{
 }>;
 
 
-export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, titleStatement: { __typename?: 'TitleStatement', title: string }, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, controlNumber: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type CreatePurchaseOrderMutationVariables = Exact<{
   input: CreatePurchaseOrderInput;
@@ -958,8 +958,12 @@ export const BibRecordListDocument = gql`
   bibRecords(skip: $skip, take: $take, where: $filter, order: $sortBy) {
     items {
       id
+      controlNumber
+      internationalStandardBookNumbers
+      coverImageUrl
       titleStatement {
         title
+        statementOfResponsibility
       }
       publicationDistributions {
         namesOfPublisher

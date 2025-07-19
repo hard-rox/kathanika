@@ -6,11 +6,13 @@
         <div class="flex items-center space-x-2">
             <div class="relative inline-block text-left">
                 <div>
-                    <button (click)="isNotificationVisible = !isNotificationVisible" (focusout)="isNotificationVisible = false"
+                    <button (click)="isNotificationVisible = !isNotificationVisible" 
+                            (focusout)="isNotificationVisible = false"
                             [rounded]="true"
                             id="notification-btn"
-                            kn-button>
-                        <span class="material-symbols-sharp"> notifications </span>
+                            kn-button
+                            aria-label="View notifications">
+                        <span class="material-symbols-rounded" aria-hidden="true"> notifications </span>
                     </button>
                 </div>
 
@@ -86,9 +88,10 @@
                             id="user-action-btn"
                             kn-button
                             type="button"
+                            aria-label="User actions"
                     >
                         John Doe
-                        <span class="material-symbols-sharp">
+                        <span class="material-symbols-rounded">
               {{ isUserActionsVisible ? 'expand_less' : 'expand_more' }}
             </span>
                     </button>

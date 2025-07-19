@@ -1,6 +1,7 @@
 import {TestBed} from '@angular/core/testing';
 
 import {MessageAlertService} from './message-alert.service';
+import {ApolloError} from "@apollo/client/errors";
 
 describe('MessageAlertService', () => {
     let service: MessageAlertService;
@@ -61,6 +62,23 @@ describe('MessageAlertService', () => {
             icon: 'warning',
             title: 'Warning',
             text: 'Test message',
+        });
+    });
+    
+    it('should call showPopup with error when error type is ApolloError', () => {
+        const error = new ApolloError({
+            graphQLErrors: [{message: 'GraphQL error occurred'}],
+            networkError: new Error('Network error occurred'),
+        });
+
+        swalSpy.mockReset();
+        
+        service.showHttpErrorPopup(error);
+        
+        expect(swalSpy).toHaveBeenCalledWith({
+            icon: 'error',
+            title: 'Error',
+            text: 'Network error occurred',
         });
     });
 });

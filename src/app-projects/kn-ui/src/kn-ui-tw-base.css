@@ -38,11 +38,11 @@
   }
 
   th {
-    @apply px-1;
+    @apply px-1 text-center;
   }
 
   td {
-    @apply px-1;
+    @apply px-2;
   }
 
   input,
