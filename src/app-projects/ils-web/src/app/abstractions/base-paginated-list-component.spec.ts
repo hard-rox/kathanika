@@ -5,7 +5,7 @@ import {
 } from './base-paginated-list-component';
 import {ActivatedRoute, Params, Router} from '@angular/router';
 import {RouterTestingModule} from '@angular/router/testing';
-import {Component} from '@angular/core';
+import {Component, inject} from '@angular/core';
 import {of} from 'rxjs';
 import {Query} from 'apollo-angular';
 import {mockQueryGql} from "../graphql/gql-test-utils";
@@ -13,19 +13,15 @@ import {mockQueryGql} from "../graphql/gql-test-utils";
 @Component({
     template: ''
 })
-class BasePaginatedListTestingComponent extends BasePaginatedListComponent<
-    unknown,
-    PaginationQueryVariables
-> {
+class BasePaginatedListTestingComponent extends BasePaginatedListComponent<unknown, PaginationQueryVariables> {
     protected setSearchTextQueryFilter(searchText: string): void {
         throw new Error(`Method not implemented. ${searchText}`);
     }
 
-    constructor(
-        gql: Query<unknown, PaginationQueryVariables>,
-        activatedRoute: ActivatedRoute,
-        router: Router,
-    ) {
+    constructor() {
+        const gql = inject(Query<unknown, PaginationQueryVariables>);
+        const activatedRoute = inject(ActivatedRoute);
+        const router = inject(Router);
         super(gql, activatedRoute, router, {
             skip: 0,
             take: 10,
