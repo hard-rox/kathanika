@@ -8,13 +8,13 @@
       "node"
     ]
   },
-  "files": [
-    "src/main.ts",
-    "src/main.server.ts",
-    "src/server.ts"
-  ],
   "include": [
-    "src/**/*.d.ts"
+    "src/**/*.ts"
   ],
-  "exclude": ["cypress", "./cypress.config.ts", "**/*.cy.tsx"]
+  "exclude": [
+    "src/**/*.spec.ts",
+    "cypress",
+    "./cypress.config.ts",
+    "**/*.cy.tsx"
+  ]
 }

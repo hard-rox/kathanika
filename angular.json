@@ -15,14 +15,9 @@
       "prefix": "app",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:application",
+          "builder": "@angular/build:application",
           "options": {
-            "outputPath": "dist/ils-web",
-            "index": "src/app-projects/ils-web/src/index.html",
             "browser": "src/app-projects/ils-web/src/main.ts",
-            "polyfills": [
-              "zone.js"
-            ],
             "tsConfig": "src/app-projects/ils-web/tsconfig.app.json",
             "inlineStyleLanguage": "scss",
             "assets": [
@@ -34,25 +29,27 @@
             "styles": [
               "src/app-projects/ils-web/src/styles.scss"
             ],
-            "scripts": [],
             "server": "src/app-projects/ils-web/src/main.server.ts",
-            "prerender": true,
+            "outputMode": "server",
             "ssr": {
               "entry": "src/app-projects/ils-web/src/server.ts"
-            }
+            },
+            "allowedCommonJsDependencies": [
+              "tus-js-client"
+            ]
           },
           "configurations": {
             "production": {
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kB",
-                  "maximumError": "1MB"
+                  "maximumWarning": "1MB",
+                  "maximumError": "5MB"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kB",
-                  "maximumError": "4kB"
+                  "maximumWarning": "4kB",
+                  "maximumError": "8kB"
                 }
               ],
               "outputHashing": "all",
@@ -73,7 +70,7 @@
           "defaultConfiguration": "production"
         },
         "serve": {
-          "builder": "@angular-devkit/build-angular:dev-server",
+          "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
               "buildTarget": "ils-web:build:production"
@@ -85,7 +82,7 @@
           "defaultConfiguration": "development"
         },
         "extract-i18n": {
-          "builder": "@angular-devkit/build-angular:extract-i18n"
+          "builder": "@angular/build:extract-i18n"
         },
         "lint": {
           "builder": "@angular-eslint/builder:lint",
@@ -106,10 +103,7 @@
       "prefix": "kn",
       "architect": {
         "build": {
-          "builder": "@angular-devkit/build-angular:ng-packagr",
-          "options": {
-            "project": "src/app-projects/kn-ui/ng-package.json"
-          },
+          "builder": "@angular/build:ng-packagr",
           "configurations": {
             "production": {
               "tsConfig": "src/app-projects/kn-ui/tsconfig.lib.prod.json"
@@ -118,7 +112,7 @@
               "tsConfig": "src/app-projects/kn-ui/tsconfig.lib.json"
             }
           },
-          "defaultConfiguration": "development"
+          "defaultConfiguration": "production"
         },
         "storybook": {
           "builder": "@storybook/angular:start-storybook",
@@ -126,7 +120,7 @@
             "configDir": "src/app-projects/kn-ui/.storybook",
             "browserTarget": "kn-ui:build",
             "styles": [
-              "src/app-projects/kn-ui/src/kn-ui-tw-base.scss"
+              "src/app-projects/kn-ui/src/kn-ui-tw-base.css"
             ],
             "compodoc": true,
             "compodocArgs": [
@@ -144,7 +138,7 @@
             "configDir": "src/app-projects/kn-ui/.storybook",
             "browserTarget": "kn-ui:build",
             "styles": [
-              "src/app-projects/kn-ui/src/kn-ui-tw-base.scss"
+              "src/app-projects/kn-ui/src/kn-ui-tw-base.css"
             ],
             "compodoc": true,
             "compodocArgs": [
@@ -154,16 +148,6 @@
               "src/app-projects/kn-ui"
             ],
             "outputDir": "dist/storybook/kn-ui"
-          }
-        },
-        "lint": {
-          "builder": "@angular-eslint/builder:lint",
-          "options": {
-            "lintFilePatterns": [
-              "src/app-projects/kn-ui/**/*.ts",
-              "src/app-projects/kn-ui/**/*.html"
-            ],
-            "eslintConfig": "src/app-projects/kn-ui/eslint.config.js"
           }
         }
       }

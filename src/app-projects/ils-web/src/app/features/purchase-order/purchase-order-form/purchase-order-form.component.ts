@@ -48,7 +48,9 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
     });
     protected readonly vendorSearchQueryRef: QueryRef<SearchVendorsQuery, SearchVendorsQueryVariables>;
 
-    constructor(vendorSearchGql: SearchVendorsGQL) {
+    constructor() {
+        const vendorSearchGql = inject(SearchVendorsGQL);
+
         super();
         this.vendorSearchQueryRef = vendorSearchGql.watch({searchTerm: ''});
     }

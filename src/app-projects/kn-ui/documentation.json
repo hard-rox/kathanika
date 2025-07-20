@@ -24,16 +24,6 @@
                 "name": "Default",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Story",
-                "defaultValue": "{\n    render: (args) => ({\n        props: args,\n        template: `<button kn-button>Default</button>`,\n    }),\n    play: async ({canvasElement}) => {\n        const canvas = within(canvasElement);\n        expect(canvas.getByText(/pagination works!/gi)).toBeTruthy();\n    },\n}"
-            },
-            {
-                "name": "Default",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app-projects/kn-ui/src/lib/components/alert/alert.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -109,6 +99,16 @@
                 "deprecationMessage": "",
                 "type": "Story",
                 "defaultValue": "{\n    args: {\n        label: 'Switch',\n    },\n    play: async ({canvasElement}) => {\n        const canvas = within(canvasElement);\n        expect(canvas.getByText(/toggle works!/gi)).toBeTruthy();\n    },\n}"
+            },
+            {
+                "name": "Default",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Story",
+                "defaultValue": "{\n    render: (args) => ({\n        props: args,\n        template: `<button kn-button>Default</button>`,\n    }),\n    play: async ({canvasElement}) => {\n        const canvas = within(canvasElement);\n        expect(canvas.getByText(/pagination works!/gi)).toBeTruthy();\n    },\n}"
             },
             {
                 "name": "ErrorBadge",
@@ -214,16 +214,6 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<KnButton>",
-                "defaultValue": "{\n    component: KnButton,\n    title: 'directives/kn-button',\n    tags: ['autodocs'],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app-projects/kn-ui/src/lib/components/alert/alert.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
@@ -254,21 +244,21 @@
                 "name": "meta",
                 "ctype": "miscellaneous",
                 "subtype": "variable",
-                "file": "src/app-projects/kn-ui/src/lib/components/pagination/pagination.component.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "type": "Meta<KnPagination>",
-                "defaultValue": "{\n    component: KnPagination,\n    title: 'components/kn-pagination',\n    tags: ['autodocs'],\n}"
-            },
-            {
-                "name": "meta",
-                "ctype": "miscellaneous",
-                "subtype": "variable",
                 "file": "src/app-projects/kn-ui/src/lib/components/panel/panel.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "type": "Meta<KnPanel>",
                 "defaultValue": "{\n    component: KnPanel,\n    title: 'components/kn-panel',\n    tags: ['autodocs'],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app-projects/kn-ui/src/lib/components/pagination/pagination.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<KnPagination>",
+                "defaultValue": "{\n    component: KnPagination,\n    title: 'components/kn-pagination',\n    tags: ['autodocs'],\n}"
             },
             {
                 "name": "meta",
@@ -349,6 +339,16 @@
                 "deprecationMessage": "",
                 "type": "Meta<KnToggle>",
                 "defaultValue": "{\n    component: KnToggle,\n    title: 'inputs/kn-toggle',\n    tags: ['autodocs'],\n}"
+            },
+            {
+                "name": "meta",
+                "ctype": "miscellaneous",
+                "subtype": "variable",
+                "file": "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "type": "Meta<KnButton>",
+                "defaultValue": "{\n    component: KnButton,\n    title: 'directives/kn-button',\n    tags: ['autodocs'],\n}"
             },
             {
                 "name": "preview",
@@ -437,17 +437,6 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<KnButton>",
-                "file": "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts",
-                "deprecated": false,
-                "deprecationMessage": "",
-                "description": "",
-                "kind": 183
-            },
-            {
-                "name": "Story",
-                "ctype": "miscellaneous",
-                "subtype": "typealias",
                 "rawtype": "StoryObj<KnAlert>",
                 "file": "src/app-projects/kn-ui/src/lib/components/alert/alert.component.stories.ts",
                 "deprecated": false,
@@ -481,8 +470,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<KnPagination>",
-                "file": "src/app-projects/kn-ui/src/lib/components/pagination/pagination.component.stories.ts",
+                "rawtype": "StoryObj<KnPanel>",
+                "file": "src/app-projects/kn-ui/src/lib/components/panel/panel.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -492,8 +481,8 @@
                 "name": "Story",
                 "ctype": "miscellaneous",
                 "subtype": "typealias",
-                "rawtype": "StoryObj<KnPanel>",
-                "file": "src/app-projects/kn-ui/src/lib/components/panel/panel.component.stories.ts",
+                "rawtype": "StoryObj<KnPagination>",
+                "file": "src/app-projects/kn-ui/src/lib/components/pagination/pagination.component.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -582,6 +571,17 @@
                 "subtype": "typealias",
                 "rawtype": "StoryObj<KnToggle>",
                 "file": "src/app-projects/kn-ui/src/lib/inputs/toggle/toggle.component.stories.ts",
+                "deprecated": false,
+                "deprecationMessage": "",
+                "description": "",
+                "kind": 183
+            },
+            {
+                "name": "Story",
+                "ctype": "miscellaneous",
+                "subtype": "typealias",
+                "rawtype": "StoryObj<KnButton>",
+                "file": "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts",
                 "deprecated": false,
                 "deprecationMessage": "",
                 "description": "",
@@ -1044,19 +1044,6 @@
         "groupedFunctions": {},
         "groupedEnumerations": {},
         "groupedTypeAliases": {
-            "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<KnButton>",
-                    "file": "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
             "src/app-projects/kn-ui/src/lib/components/alert/alert.component.stories.ts": [
                 {
                     "name": "Story",
@@ -1096,19 +1083,6 @@
                     "kind": 183
                 }
             ],
-            "src/app-projects/kn-ui/src/lib/components/pagination/pagination.component.stories.ts": [
-                {
-                    "name": "Story",
-                    "ctype": "miscellaneous",
-                    "subtype": "typealias",
-                    "rawtype": "StoryObj<KnPagination>",
-                    "file": "src/app-projects/kn-ui/src/lib/components/pagination/pagination.component.stories.ts",
-                    "deprecated": false,
-                    "deprecationMessage": "",
-                    "description": "",
-                    "kind": 183
-                }
-            ],
             "src/app-projects/kn-ui/src/lib/components/panel/panel.component.stories.ts": [
                 {
                     "name": "Story",
@@ -1116,6 +1090,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<KnPanel>",
                     "file": "src/app-projects/kn-ui/src/lib/components/panel/panel.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "src/app-projects/kn-ui/src/lib/components/pagination/pagination.component.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<KnPagination>",
+                    "file": "src/app-projects/kn-ui/src/lib/components/pagination/pagination.component.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
@@ -1220,6 +1207,19 @@
                     "subtype": "typealias",
                     "rawtype": "StoryObj<KnToggle>",
                     "file": "src/app-projects/kn-ui/src/lib/inputs/toggle/toggle.component.stories.ts",
+                    "deprecated": false,
+                    "deprecationMessage": "",
+                    "description": "",
+                    "kind": 183
+                }
+            ],
+            "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts": [
+                {
+                    "name": "Story",
+                    "ctype": "miscellaneous",
+                    "subtype": "typealias",
+                    "rawtype": "StoryObj<KnButton>",
+                    "file": "src/app-projects/kn-ui/src/lib/directives/button/button.directive.stories.ts",
                     "deprecated": false,
                     "deprecationMessage": "",
                     "description": "",
