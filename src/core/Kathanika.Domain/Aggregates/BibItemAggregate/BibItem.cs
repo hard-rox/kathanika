@@ -1,3 +1,4 @@
+using System.Text.RegularExpressions;
 using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates.BibItemAggregate;
@@ -11,7 +12,7 @@ public class BibItem : AggregateRoot
     public ItemType ItemType { get; private set; }
     public ItemVendor? Vendor { get; private set; }
     public DateOnly? AcquisitionDate { get; private set; }
-    public AcquisitionType AcquisitionType { get; private set; } = AcquisitionType.Purchase;
+    public AcquisitionType AcquisitionType { get; private set; } = AcquisitionType.Transfer;
     public ItemStatus Status { get; private set; } = ItemStatus.Available;
     public DateTime? LastCheckOutDate { get; private set; }
     public DateTime? LastCheckInDate { get; private set; }
@@ -19,9 +20,12 @@ public class BibItem : AggregateRoot
     public string? Notes { get; private set; }
     public DateTime? WithdrawnDate { get; private set; }
 
+#pragma warning disable CS8618, CS9264
+    // ReSharper disable once UnusedMember.Local
     private BibItem()
     {
     }
+#pragma warning restore CS8618, CS9264
 
     private BibItem(
         string bibRecordId,
@@ -29,12 +33,7 @@ public class BibItem : AggregateRoot
         string callNumber,
         string location,
         ItemType itemType,
-        ItemStatus status,
-        ItemVendor? vendor = null,
-        DateOnly? acquisitionDate = null,
-        AcquisitionType acquisitionType = AcquisitionType.Purchase,
-        string? conditionNote = null,
-        string? notes = null)
+        ItemStatus status)
     {
         BibRecordId = bibRecordId;
         Barcode = barcode;
@@ -42,37 +41,163 @@ public class BibItem : AggregateRoot
         Location = location;
         ItemType = itemType;
         Status = status;
-        Vendor = vendor;
-        AcquisitionDate = acquisitionDate ?? DateOnly.FromDateTime(DateTime.Today);
-        AcquisitionType = acquisitionType;
-        ConditionNote = conditionNote;
-        Notes = notes;
     }
 
-    public static BibItem Create(
+    private static bool IsValidBarcode(string barcode)
+    {
+        // Basic barcode validation - alphanumeric, minimum 6 characters, maximum 20
+        return !string.IsNullOrWhiteSpace(barcode) && 
+               Regex.IsMatch(barcode, @"^[A-Za-z0-9]{6,20}$");
+    }
+
+    private static bool IsValidCallNumber(string callNumber)
+    {
+        // Basic call number validation - allow letters, numbers, periods, and spaces
+        return !string.IsNullOrWhiteSpace(callNumber) && 
+               Regex.IsMatch(callNumber, @"^[A-Za-z0-9\.\s]{1,50}$");
+    }
+
+    public static KnResult<BibItem> Create(
         string bibRecordId,
         string barcode,
         string callNumber,
         string location,
         ItemType itemType,
-        ItemStatus status,
-        ItemVendor? vendor = null,
-        DateOnly? acquisitionDate = null,
-        AcquisitionType acquisitionType = AcquisitionType.Purchase,
+        ItemStatus status = ItemStatus.Available,
         string? conditionNote = null,
-        string? notes = null)
+        string? notes = null,
+        ItemVendor? vendor = null,
+        AcquisitionType acquisitionType = AcquisitionType.Transfer,
+        DateOnly? acquisitionDate = null)
     {
-        return new BibItem(
+        List<KnError> errors = [];
+
+        if (string.IsNullOrWhiteSpace(bibRecordId))
+            errors.Add(BibItemAggregateErrors.BibRecordIdIsEmpty);
+
+        if (string.IsNullOrWhiteSpace(barcode))
+            errors.Add(BibItemAggregateErrors.BarcodeIsEmpty);
+        else if (!IsValidBarcode(barcode))
+            errors.Add(BibItemAggregateErrors.InvalidBarcode);
+
+        if (string.IsNullOrWhiteSpace(callNumber))
+            errors.Add(BibItemAggregateErrors.CallNumberIsEmpty);
+        else if (!IsValidCallNumber(callNumber))
+            errors.Add(BibItemAggregateErrors.InvalidCallNumber);
+
+        if (string.IsNullOrWhiteSpace(location))
+            errors.Add(BibItemAggregateErrors.LocationIsEmpty);
+
+        if (errors.Count > 0)
+            return KnResult.Failure<BibItem>(errors);
+
+        BibItem newBibItem = new(
             bibRecordId,
             barcode,
             callNumber,
             location,
             itemType,
-            status,
-            vendor,
-            acquisitionDate,
-            acquisitionType,
-            conditionNote,
-            notes);
+            status)
+        {
+            ConditionNote = conditionNote,
+            Notes = notes,
+            Vendor = vendor,
+            AcquisitionType = acquisitionType,
+            AcquisitionDate = acquisitionDate
+        };
+
+        return KnResult.Success(newBibItem);
+    }
+
+    public KnResult Update(
+        string? barcode = null,
+        string? callNumber = null,
+        string? location = null,
+        ItemType? itemType = null,
+        string? conditionNote = null,
+        string? notes = null)
+    {
+        List<KnError> errors = [];
+
+        if (barcode is not null && string.IsNullOrWhiteSpace(barcode))
+            errors.Add(BibItemAggregateErrors.BarcodeIsEmpty);
+        else if (barcode is not null && !IsValidBarcode(barcode))
+            errors.Add(BibItemAggregateErrors.InvalidBarcode);
+
+        if (callNumber is not null && string.IsNullOrWhiteSpace(callNumber))
+            errors.Add(BibItemAggregateErrors.CallNumberIsEmpty);
+        else if (callNumber is not null && !IsValidCallNumber(callNumber))
+            errors.Add(BibItemAggregateErrors.InvalidCallNumber);
+
+        if (location is not null && string.IsNullOrWhiteSpace(location))
+            errors.Add(BibItemAggregateErrors.LocationIsEmpty);
+
+        if (errors.Count > 0)
+            return KnResult.Failure(errors);
+
+        Barcode = barcode ?? Barcode;
+        CallNumber = callNumber ?? CallNumber;
+        Location = location ?? Location;
+        ItemType = itemType ?? ItemType;
+        ConditionNote = conditionNote ?? ConditionNote;
+        Notes = notes ?? Notes;
+
+        return KnResult.Success();
+    }
+    
+    public KnResult CheckOut()
+    {
+        if (Status != ItemStatus.Available)
+        {
+            return KnResult.Failure(BibItemAggregateErrors.InvalidStatus);
+        }
+        
+        Status = ItemStatus.CheckedOut;
+        LastCheckOutDate = DateTime.UtcNow;
+        
+        return KnResult.Success();
+    }
+
+    public KnResult CheckIn()
+    {
+        if (Status != ItemStatus.CheckedOut)
+        {
+            return KnResult.Failure(BibItemAggregateErrors.InvalidStatus);
+        }
+        
+        Status = ItemStatus.Available;
+        LastCheckInDate = DateTime.UtcNow;
+        
+        return KnResult.Success();
+    }
+
+    public KnResult Withdraw(string? reason = null)
+    {
+        if (Status == ItemStatus.Withdrawn)
+        {
+            return KnResult.Failure(BibItemAggregateErrors.AlreadyWithdrawn);
+        }
+
+        Status = ItemStatus.Withdrawn;
+        WithdrawnDate = DateTime.UtcNow;
+        
+        if (!string.IsNullOrWhiteSpace(reason))
+        {
+            Notes = string.IsNullOrEmpty(Notes) ? $"Withdrawn: {reason}" : $"{Notes}\nWithdrawn: {reason}";
+        }
+        
+        return KnResult.Success();
+    }
+
+    public KnResult UpdateStatus(ItemStatus newStatus)
+    {
+        // Add business logic for status transitions if needed
+        if (Status == ItemStatus.Withdrawn && newStatus != ItemStatus.Withdrawn)
+        {
+            return KnResult.Failure(BibItemAggregateErrors.InvalidStatus);
+        }
+
+        Status = newStatus;
+        return KnResult.Success();
     }
 }
