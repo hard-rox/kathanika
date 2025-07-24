@@ -43,20 +43,6 @@ public class BibItem : AggregateRoot
         Status = status;
     }
 
-    private static bool IsValidBarcode(string barcode)
-    {
-        // Basic barcode validation - alphanumeric, minimum 6 characters, maximum 20
-        return !string.IsNullOrWhiteSpace(barcode) && 
-               Regex.IsMatch(barcode, @"^[A-Za-z0-9]{6,20}$");
-    }
-
-    private static bool IsValidCallNumber(string callNumber)
-    {
-        // Basic call number validation - allow letters, numbers, periods, and spaces
-        return !string.IsNullOrWhiteSpace(callNumber) && 
-               Regex.IsMatch(callNumber, @"^[A-Za-z0-9\.\s]{1,50}$");
-    }
-
     public static KnResult<BibItem> Create(
         string bibRecordId,
         string barcode,
@@ -77,13 +63,9 @@ public class BibItem : AggregateRoot
 
         if (string.IsNullOrWhiteSpace(barcode))
             errors.Add(BibItemAggregateErrors.BarcodeIsEmpty);
-        else if (!IsValidBarcode(barcode))
-            errors.Add(BibItemAggregateErrors.InvalidBarcode);
 
         if (string.IsNullOrWhiteSpace(callNumber))
             errors.Add(BibItemAggregateErrors.CallNumberIsEmpty);
-        else if (!IsValidCallNumber(callNumber))
-            errors.Add(BibItemAggregateErrors.InvalidCallNumber);
 
         if (string.IsNullOrWhiteSpace(location))
             errors.Add(BibItemAggregateErrors.LocationIsEmpty);
@@ -121,13 +103,9 @@ public class BibItem : AggregateRoot
 
         if (barcode is not null && string.IsNullOrWhiteSpace(barcode))
             errors.Add(BibItemAggregateErrors.BarcodeIsEmpty);
-        else if (barcode is not null && !IsValidBarcode(barcode))
-            errors.Add(BibItemAggregateErrors.InvalidBarcode);
 
         if (callNumber is not null && string.IsNullOrWhiteSpace(callNumber))
             errors.Add(BibItemAggregateErrors.CallNumberIsEmpty);
-        else if (callNumber is not null && !IsValidCallNumber(callNumber))
-            errors.Add(BibItemAggregateErrors.InvalidCallNumber);
 
         if (location is not null && string.IsNullOrWhiteSpace(location))
             errors.Add(BibItemAggregateErrors.LocationIsEmpty);

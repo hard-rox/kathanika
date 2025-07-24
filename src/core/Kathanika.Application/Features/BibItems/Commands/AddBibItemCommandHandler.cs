@@ -17,6 +17,11 @@ public sealed class AddBibItemCommandHandler(IBibItemRepository bibItemRepositor
             request.ConditionNote,
             request.Notes);
 
+        if (bibItemResult.IsFailure)
+        {
+            return bibItemResult;
+        }
+
         await bibItemRepository.AddAsync(bibItemResult.Value, cancellationToken);
 
         return KnResult.Success(bibItemResult.Value);
