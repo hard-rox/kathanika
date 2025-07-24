@@ -17,7 +17,7 @@ public sealed class BibRecordType : ObjectType<BibRecord>
         descriptor.Field(x => x.CreatedByUserName);
         descriptor.Field(x => x.LastModifiedAt);
         descriptor.Field(x => x.LastModifiedByUserName);
-        
+
         descriptor.Field("items")
             .Resolve(context =>
             {

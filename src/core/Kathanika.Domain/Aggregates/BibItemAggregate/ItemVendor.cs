@@ -9,7 +9,7 @@ public sealed record ItemVendor : ValueObject
     private ItemVendor()
     {
     }
-    
+
     internal ItemVendor(string id, string name)
     {
         Id = id;

@@ -10,7 +10,7 @@ public sealed class GetBibItemByIdQueryHandler(IBibItemRepository bibItemReposit
         BibItem? bibItem = await bibItemRepository.GetByIdAsync(request.Id, cancellationToken);
 
         return bibItem is null ?
-            KnResult.Failure<BibItem>(BibItemAggregateErrors.NotFound) 
+            KnResult.Failure<BibItem>(BibItemAggregateErrors.NotFound)
             : KnResult.Success(bibItem);
     }
 }

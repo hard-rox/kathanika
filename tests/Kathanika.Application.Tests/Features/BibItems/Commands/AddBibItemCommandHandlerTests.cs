@@ -40,7 +40,7 @@ public class AddBibItemCommandHandlerTests
         Assert.Equal(command.Location, result.Value.Location);
         Assert.Equal(command.ItemType, result.Value.ItemType);
         Assert.Equal(command.Status, result.Value.Status);
-        
+
         await _bibItemRepository.Received(1).AddAsync(Arg.Any<BibItem>(), Arg.Any<CancellationToken>());
     }
 
@@ -63,7 +63,7 @@ public class AddBibItemCommandHandlerTests
         Assert.NotNull(result.Value);
         Assert.Equal(ItemStatus.Available, result.Value.Status); // Default status
         Assert.Null(result.Value.Vendor); // No vendor support in current implementation
-        
+
         await _bibItemRepository.Received(1).AddAsync(Arg.Any<BibItem>(), Arg.Any<CancellationToken>());
     }
 }

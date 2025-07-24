@@ -181,7 +181,7 @@ public class GetBibItemsQueryHandlerTests
         // Assert
         Assert.NotNull(result);
         Assert.Equal(2, result.Count());
-        Assert.All(result, item => 
+        Assert.All(result, item =>
         {
             Assert.Equal(targetBibRecordId, item.BibRecordId);
             Assert.NotEqual(otherBibRecordId, item.BibRecordId);

@@ -41,13 +41,13 @@ public class CheckInBibItemCommandHandlerTests
         // Arrange
         BibItem bibItem = CreateTestBibItem(); // Item is available, not checked out
         CheckInBibItemCommand command = new("item-123");
-    
+
         _bibItemRepository.GetByIdAsync("item-123", Arg.Any<CancellationToken>())
             .Returns(bibItem);
-    
+
         // Act
         KnResult<BibItem> result = await _handler.Handle(command, CancellationToken.None);
-    
+
         // Assert
         Assert.False(result.IsSuccess);
         Assert.Equal(BibItemAggregateErrors.InvalidStatus, result.Errors[0]);

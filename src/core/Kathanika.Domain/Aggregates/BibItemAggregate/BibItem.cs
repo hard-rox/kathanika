@@ -122,17 +122,17 @@ public class BibItem : AggregateRoot
 
         return KnResult.Success();
     }
-    
+
     public KnResult CheckOut()
     {
         if (Status != ItemStatus.Available)
         {
             return KnResult.Failure(BibItemAggregateErrors.InvalidStatus);
         }
-        
+
         Status = ItemStatus.CheckedOut;
         LastCheckOutDate = DateTime.UtcNow;
-        
+
         return KnResult.Success();
     }
 
@@ -142,10 +142,10 @@ public class BibItem : AggregateRoot
         {
             return KnResult.Failure(BibItemAggregateErrors.InvalidStatus);
         }
-        
+
         Status = ItemStatus.Available;
         LastCheckInDate = DateTime.UtcNow;
-        
+
         return KnResult.Success();
     }
 
@@ -158,12 +158,12 @@ public class BibItem : AggregateRoot
 
         Status = ItemStatus.Withdrawn;
         WithdrawnDate = DateTime.UtcNow;
-        
+
         if (!string.IsNullOrWhiteSpace(reason))
         {
             Notes = string.IsNullOrEmpty(Notes) ? $"Withdrawn: {reason}" : $"{Notes}\nWithdrawn: {reason}";
         }
-        
+
         return KnResult.Success();
     }
 
