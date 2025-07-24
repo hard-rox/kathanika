@@ -76,7 +76,7 @@ public class UpdateBibItemCommandHandlerTests
         BibItem bibItem = CreateTestBibItem();
         UpdateBibItemCommand command = new(
             "item-123",
-            "123", // Invalid barcode (too short)
+            "",
             "QA76.73.NEW",
             "Reference Library",
             ItemType.Journal,
@@ -90,7 +90,7 @@ public class UpdateBibItemCommandHandlerTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Contains(result.Errors, error => error.Code == "BibItem.InvalidBarcode");
+        Assert.Contains(result.Errors, error => error.Code == "BibItem.BarcodeIsEmpty");
     }
 
     [Fact]
