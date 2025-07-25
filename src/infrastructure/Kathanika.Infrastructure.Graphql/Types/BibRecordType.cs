@@ -1,3 +1,4 @@
+using Kathanika.Application.Features.BibItems.Queries;
 using Kathanika.Domain.Aggregates.BibRecordAggregate;
 
 namespace Kathanika.Infrastructure.Graphql.Types;
@@ -16,5 +17,12 @@ public sealed class BibRecordType : ObjectType<BibRecord>
         descriptor.Field(x => x.CreatedByUserName);
         descriptor.Field(x => x.LastModifiedAt);
         descriptor.Field(x => x.LastModifiedByUserName);
+
+        descriptor.Field("items")
+            .Resolve(context =>
+            {
+                IMediator mediator = context.Service<IMediator>();
+                return mediator.Send(new GetBibItemsQuery(context.Parent<BibRecord>().Id));
+            });
     }
 }

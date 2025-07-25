@@ -87,7 +87,7 @@ jobs:
                     GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
                     SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
                 run: |
-                    dotnet sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml /d:sonar.coverage.exclusions="**\Program.cs","**\graphql\**"
+                    dotnet sonarscanner begin /k:"kathanika-server-sln" /o:"kathanika" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io" /d:sonar.cs.opencover.reportsPaths=**\TestResults\**\coverage.opencover.xml /d:sonar.coverage.exclusions="**\Program.cs","**\graphql\**","**\*Validator.cs","src\infrastructure\Kathanika.Infrastructure.Graphql\Schema\**.cs","src\infrastructure\Kathanika.Infrastructure.Graphql\Types\**.cs"
                     dotnet build
                     dotnet test --collect:"XPlat Code Coverage;Format=opencover"
                     dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

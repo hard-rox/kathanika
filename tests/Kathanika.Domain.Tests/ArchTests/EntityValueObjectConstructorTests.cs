@@ -36,7 +36,7 @@ public class EntityValueObjectConstructorTests
             .Inherit(typeof(ValueObject))
             .GetTypes();
 
-        List<string> typesWithoutPrivateConstructor = new List<string>();
+        List<string> typesWithoutPrivateConstructor = [];
 
         // Check each type for a private parameterless constructor
         foreach (Type type in valueObjectTypes)
