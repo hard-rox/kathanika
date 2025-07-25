@@ -1,9 +1,8 @@
 using Kathanika.Domain.Aggregates.BibItemAggregate;
-using Kathanika.Domain.Aggregates.VendorAggregate;
 
 namespace Kathanika.Application.Features.BibItems.Commands;
 
-public sealed class UpdateBibItemCommandHandler(IBibItemRepository bibItemRepository, IVendorRepository vendorRepository)
+public sealed class UpdateBibItemCommandHandler(IBibItemRepository bibItemRepository)
     : IRequestHandler<UpdateBibItemCommand, KnResult<BibItem>>
 {
     public async Task<KnResult<BibItem>> Handle(UpdateBibItemCommand request, CancellationToken cancellationToken)
@@ -25,16 +24,6 @@ public sealed class UpdateBibItemCommandHandler(IBibItemRepository bibItemReposi
         if (!updateResult.IsSuccess)
         {
             return KnResult.Failure<BibItem>(updateResult.Errors);
-        }
-
-        // Update status using the new UpdateStatus method with proper business rules
-        if (request.Status != bibItem.Status)
-        {
-            KnResult statusUpdateResult = bibItem.UpdateStatus(request.Status);
-            if (!statusUpdateResult.IsSuccess)
-            {
-                return KnResult.Failure<BibItem>(statusUpdateResult.Errors);
-            }
         }
 
         await bibItemRepository.UpdateAsync(bibItem, cancellationToken);

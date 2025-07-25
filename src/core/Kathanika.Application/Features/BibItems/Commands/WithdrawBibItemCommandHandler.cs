@@ -13,7 +13,12 @@ public sealed class WithdrawBibItemCommandHandler(IBibItemRepository bibItemRepo
             return KnResult.Failure<BibItem>(BibItemAggregateErrors.NotFound);
         }
 
-        bibItem.Withdraw(request.Reason);
+        KnResult result = bibItem.Withdraw(request.Reason);
+        if (result.IsFailure)
+        {
+            return KnResult.Failure<BibItem>(result.Errors);
+        }
+
         await bibItemRepository.UpdateAsync(bibItem, cancellationToken);
         return KnResult.Success(bibItem);
     }

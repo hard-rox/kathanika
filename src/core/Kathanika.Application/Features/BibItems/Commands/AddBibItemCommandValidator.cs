@@ -1,18 +1,29 @@
+using Kathanika.Domain.Aggregates.BibItemAggregate;
+using Kathanika.Domain.Aggregates.BibRecordAggregate;
+
 namespace Kathanika.Application.Features.BibItems.Commands;
 
 public sealed class AddBibItemCommandValidator : AbstractValidator<AddBibItemCommand>
 {
-    public AddBibItemCommandValidator()
+    public AddBibItemCommandValidator(IBibItemRepository bibItemRepository, IBibRecordRepository bibRecordRepository)
     {
         RuleFor(x => x.BibRecordId)
             .NotEmpty()
-            .WithMessage("BibRecord ID is required");
+            .WithMessage("BibRecord ID is required")
+            .MustAsync(async (bibRecordId, cancellation) =>
+                await bibRecordRepository.ExistsAsync(bibRecordId, cancellation))
+            .WithMessage("BibRecord with this ID does not exist");
 
         RuleFor(x => x.Barcode)
             .NotEmpty()
             .WithMessage("Barcode is required")
             .MaximumLength(50)
-            .WithMessage("Barcode must not exceed 50 characters");
+            .WithMessage("Barcode must not exceed 50 characters")
+            .MustAsync(async (barcode, cancellation) =>
+            {
+                return !await bibItemRepository.ExistsAsync(x => x.Barcode == barcode, cancellation);
+            })
+            .WithMessage("A BibItem with this barcode already exists");
 
         RuleFor(x => x.CallNumber)
             .NotEmpty()

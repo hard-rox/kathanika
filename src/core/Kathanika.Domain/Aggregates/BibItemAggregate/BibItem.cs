@@ -43,6 +43,11 @@ public class BibItem : AggregateRoot
         Status = status;
     }
 
+    private bool IsAvailableToCheckOut()
+    {
+        return Status == ItemStatus.Available;
+    }
+
     public static KnResult<BibItem> Create(
         string bibRecordId,
         string barcode,
@@ -125,9 +130,9 @@ public class BibItem : AggregateRoot
 
     public KnResult CheckOut()
     {
-        if (Status != ItemStatus.Available)
+        if (!IsAvailableToCheckOut())
         {
-            return KnResult.Failure(BibItemAggregateErrors.InvalidStatus);
+            return KnResult.Failure(BibItemAggregateErrors.ItemNotAvailableForCheckOut);
         }
 
         Status = ItemStatus.CheckedOut;
@@ -164,18 +169,6 @@ public class BibItem : AggregateRoot
             Notes = string.IsNullOrEmpty(Notes) ? $"Withdrawn: {reason}" : $"{Notes}\nWithdrawn: {reason}";
         }
 
-        return KnResult.Success();
-    }
-
-    public KnResult UpdateStatus(ItemStatus newStatus)
-    {
-        // Add business logic for status transitions if needed
-        if (Status == ItemStatus.Withdrawn && newStatus != ItemStatus.Withdrawn)
-        {
-            return KnResult.Failure(BibItemAggregateErrors.InvalidStatus);
-        }
-
-        Status = newStatus;
         return KnResult.Success();
     }
 }

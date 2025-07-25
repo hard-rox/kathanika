@@ -13,7 +13,12 @@ public sealed class CheckOutBibItemCommandHandler(IBibItemRepository bibItemRepo
             return KnResult.Failure<BibItem>(BibItemAggregateErrors.NotFound);
         }
 
-        bibItem.CheckOut();
+        KnResult result = bibItem.CheckOut();
+        if (result.IsFailure)
+        {
+            return KnResult.Failure<BibItem>(result.Errors);
+        }
+
         await bibItemRepository.UpdateAsync(bibItem, cancellationToken);
         return KnResult.Success(bibItem);
     }

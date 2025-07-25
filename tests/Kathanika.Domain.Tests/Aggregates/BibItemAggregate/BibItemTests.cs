@@ -91,7 +91,7 @@ public class BibItemTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal(BibItemAggregateErrors.InvalidStatus, result.Errors[0]);
+        Assert.Equal(BibItemAggregateErrors.ItemNotAvailableForCheckOut, result.Errors[0]);
     }
 
     [Fact]
@@ -106,7 +106,7 @@ public class BibItemTests
 
         // Assert
         Assert.False(result.IsSuccess);
-        Assert.Equal(BibItemAggregateErrors.InvalidStatus, result.Errors[0]);
+        Assert.Equal(BibItemAggregateErrors.ItemNotAvailableForCheckOut, result.Errors[0]);
     }
 
     #endregion

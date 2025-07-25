@@ -26,10 +26,8 @@ public class GetBibItemsQueryHandlerTests
             CreateTestBibItem(bibRecordId, "987654321")
         ];
 
-        _bibItemRepository.ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>())
-            .Returns(expectedBibItems);
+        _bibItemRepository.AsQueryable()
+            .Returns(expectedBibItems.AsQueryable());
 
         GetBibItemsQuery query = new(bibRecordId);
 
@@ -41,9 +39,7 @@ public class GetBibItemsQueryHandlerTests
         Assert.Equal(2, result.Count());
         Assert.All(result, item => Assert.Equal(bibRecordId, item.BibRecordId));
 
-        await _bibItemRepository.Received(1).ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>());
+        _bibItemRepository.Received(1).AsQueryable();
     }
 
     [Fact]
@@ -53,10 +49,8 @@ public class GetBibItemsQueryHandlerTests
         const string bibRecordId = "non-existent-bib";
         List<BibItem> emptyBibItems = [];
 
-        _bibItemRepository.ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>())
-            .Returns(emptyBibItems);
+        _bibItemRepository.AsQueryable()
+            .Returns(emptyBibItems.AsQueryable());
 
         GetBibItemsQuery query = new(bibRecordId);
 
@@ -67,9 +61,7 @@ public class GetBibItemsQueryHandlerTests
         Assert.NotNull(result);
         Assert.Empty(result);
 
-        await _bibItemRepository.Received(1).ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>());
+        _bibItemRepository.Received(1).AsQueryable();
     }
 
     [Fact]
@@ -79,10 +71,8 @@ public class GetBibItemsQueryHandlerTests
         const string bibRecordId = "bib-456";
         List<BibItem> bibItems = [CreateTestBibItem(bibRecordId, "111111111")];
 
-        _bibItemRepository.ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>())
-            .Returns(bibItems);
+        _bibItemRepository.AsQueryable()
+            .Returns(bibItems.AsQueryable());
 
         GetBibItemsQuery query = new(bibRecordId);
 
@@ -90,9 +80,7 @@ public class GetBibItemsQueryHandlerTests
         await _handler.Handle(query, CancellationToken.None);
 
         // Assert
-        await _bibItemRepository.Received(1).ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>());
+        _bibItemRepository.Received(1).AsQueryable();
     }
 
     [Fact]
@@ -108,10 +96,8 @@ public class GetBibItemsQueryHandlerTests
             CreateTestBibItem(bibRecordId, "100000004")
         ];
 
-        _bibItemRepository.ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>())
-            .Returns(expectedBibItems);
+        _bibItemRepository.AsQueryable()
+            .Returns(expectedBibItems.AsQueryable());
 
         GetBibItemsQuery query = new(bibRecordId);
 
@@ -139,10 +125,8 @@ public class GetBibItemsQueryHandlerTests
         using CancellationTokenSource cancellationTokenSource = new();
         CancellationToken cancellationToken = cancellationTokenSource.Token;
 
-        _bibItemRepository.ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>())
-            .Returns(new List<BibItem>());
+        _bibItemRepository.AsQueryable()
+            .Returns(new List<BibItem>().AsQueryable());
 
         GetBibItemsQuery query = new(bibRecordId);
 
@@ -150,9 +134,7 @@ public class GetBibItemsQueryHandlerTests
         await _handler.Handle(query, cancellationToken);
 
         // Assert
-        await _bibItemRepository.Received(1).ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Is<CancellationToken>(ct => ct == cancellationToken));
+        _bibItemRepository.Received(1).AsQueryable();
     }
 
     [Fact]
@@ -168,10 +150,8 @@ public class GetBibItemsQueryHandlerTests
             CreateTestBibItem(targetBibRecordId, "200000002")
         ];
 
-        _bibItemRepository.ListAllAsync(
-            Arg.Any<Expression<Func<BibItem, bool>>>(),
-            Arg.Any<CancellationToken>())
-            .Returns(targetBibItems);
+        _bibItemRepository.AsQueryable()
+            .Returns(targetBibItems.AsQueryable());
 
         GetBibItemsQuery query = new(targetBibRecordId);
 

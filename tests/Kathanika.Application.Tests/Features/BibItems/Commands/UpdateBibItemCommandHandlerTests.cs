@@ -7,14 +7,13 @@ namespace Kathanika.Application.Tests.Features.BibItems.Commands;
 public class UpdateBibItemCommandHandlerTests
 {
     private readonly IBibItemRepository _bibItemRepository;
-    private readonly IVendorRepository _vendorRepository;
     private readonly UpdateBibItemCommandHandler _handler;
 
     public UpdateBibItemCommandHandlerTests()
     {
         _bibItemRepository = Substitute.For<IBibItemRepository>();
-        _vendorRepository = Substitute.For<IVendorRepository>();
-        _handler = new UpdateBibItemCommandHandler(_bibItemRepository, _vendorRepository);
+        Substitute.For<IVendorRepository>();
+        _handler = new UpdateBibItemCommandHandler(_bibItemRepository);
     }
 
     [Fact]
@@ -118,54 +117,6 @@ public class UpdateBibItemCommandHandlerTests
     }
 
     [Fact]
-    public async Task Handle_WithStatusChange_ShouldUpdateStatus()
-    {
-        // Arrange
-        BibItem bibItem = CreateTestBibItem();
-        UpdateBibItemCommand command = new(
-            "item-123",
-            "987654321",
-            "QA76.73.NEW",
-            "Reference Library",
-            ItemType.Journal,
-            ItemStatus.CheckedOut); // Different status
-
-        _bibItemRepository.GetByIdAsync("item-123", Arg.Any<CancellationToken>())
-            .Returns(bibItem);
-
-        // Act
-        KnResult<BibItem> result = await _handler.Handle(command, CancellationToken.None);
-
-        // Assert
-        Assert.True(result.IsSuccess);
-        Assert.Equal(ItemStatus.CheckedOut, result.Value.Status);
-    }
-
-    [Fact]
-    public async Task Handle_WithInvalidStatusTransition_ShouldReturnFailure()
-    {
-        // Arrange
-        BibItem withdrawnItem = CreateWithdrawnBibItem();
-        UpdateBibItemCommand command = new(
-            "item-123",
-            "987654321",
-            "QA76.73.NEW",
-            "Reference Library",
-            ItemType.Journal,
-            ItemStatus.Available); // Trying to change from withdrawn to available
-
-        _bibItemRepository.GetByIdAsync("item-123", Arg.Any<CancellationToken>())
-            .Returns(withdrawnItem);
-
-        // Act
-        KnResult<BibItem> result = await _handler.Handle(command, CancellationToken.None);
-
-        // Assert
-        Assert.False(result.IsSuccess);
-        Assert.Equal(BibItemAggregateErrors.InvalidStatus, result.Errors[0]);
-    }
-
-    [Fact]
     public async Task Handle_WithOptionalFields_ShouldUpdateAllFields()
     {
         // Arrange
@@ -228,19 +179,5 @@ public class UpdateBibItemCommandHandlerTests
             "Main Library",
             ItemType.Book,
             ItemStatus.Available).Value;
-    }
-
-    private static BibItem CreateWithdrawnBibItem()
-    {
-        BibItem bibItem = BibItem.Create(
-            "bib-456",
-            "987654321",
-            "QA76.73.W789",
-            "Storage",
-            ItemType.Book,
-            ItemStatus.Available).Value;
-
-        bibItem.Withdraw("Damaged");
-        return bibItem;
     }
 }

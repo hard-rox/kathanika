@@ -7,8 +7,9 @@ public sealed class GetBibItemsQueryHandler(IBibItemRepository bibItemRepository
 {
     public async Task<IQueryable<BibItem>> Handle(GetBibItemsQuery request, CancellationToken cancellationToken)
     {
-        IReadOnlyList<BibItem> bibItems = await bibItemRepository
-            .ListAllAsync(x => x.BibRecordId == request.BibRecordId, cancellationToken);
-        return bibItems.AsQueryable();
+        IQueryable<BibItem> query = bibItemRepository
+            .AsQueryable()
+            .Where(x => x.BibRecordId == request.BibRecordId);
+        return await Task.FromResult(query);
     }
 }

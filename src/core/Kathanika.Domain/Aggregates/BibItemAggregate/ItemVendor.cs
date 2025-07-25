@@ -2,18 +2,10 @@ using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates.BibItemAggregate;
 
-public sealed record ItemVendor : ValueObject
+public sealed record ItemVendor(string Id, string Name) : ValueObject
 {
-    public string Id { get; private set; }
-    public string Name { get; private set; }
-    private ItemVendor()
+    private ItemVendor() : this(string.Empty, string.Empty)
     {
-    }
-
-    internal ItemVendor(string id, string name)
-    {
-        Id = id;
-        Name = name;
     }
 
     public override IEnumerable<object?> GetAtomicValues()
