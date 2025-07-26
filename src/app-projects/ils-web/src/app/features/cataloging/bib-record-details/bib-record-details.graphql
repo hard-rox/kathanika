@@ -23,5 +23,13 @@ query BibRecordDetails($id: String!) {
         createdByUserName
         lastModifiedAt
         lastModifiedByUserName
+        bibItems {
+            id
+            callNumber
+            barcode
+            status
+            itemType
+            location
+        }
     }
 }

@@ -26,6 +26,31 @@ export type Scalars = {
   URL: { input: any; output: any; }
 };
 
+export enum AcquisitionType {
+  Donation = 'DONATION',
+  Exchange = 'EXCHANGE',
+  Purchase = 'PURCHASE',
+  Transfer = 'TRANSFER'
+}
+
+export type AddBibItemInput = {
+  barcode: Scalars['String']['input'];
+  bibRecordId: Scalars['String']['input'];
+  callNumber: Scalars['String']['input'];
+  conditionNote?: InputMaybe<Scalars['String']['input']>;
+  itemType: ItemType;
+  location: Scalars['String']['input'];
+  notes?: InputMaybe<Scalars['String']['input']>;
+  status?: ItemStatus;
+};
+
+export type AddBibItemPayload = {
+  __typename?: 'AddBibItemPayload';
+  data?: Maybe<BibItem>;
+  errors?: Maybe<Array<ErrorType>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 export type AddVendorInput = {
   accountDetail?: InputMaybe<Scalars['String']['input']>;
   address: Scalars['String']['input'];
@@ -45,8 +70,28 @@ export type AddVendorPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
+export type BibItem = {
+  __typename?: 'BibItem';
+  acquisitionDate?: Maybe<Scalars['Date']['output']>;
+  acquisitionType: AcquisitionType;
+  barcode: Scalars['String']['output'];
+  bibRecordId: Scalars['String']['output'];
+  callNumber: Scalars['String']['output'];
+  conditionNote?: Maybe<Scalars['String']['output']>;
+  id: Scalars['String']['output'];
+  itemType: ItemType;
+  lastCheckInDate?: Maybe<Scalars['DateTime']['output']>;
+  lastCheckOutDate?: Maybe<Scalars['DateTime']['output']>;
+  location: Scalars['String']['output'];
+  notes?: Maybe<Scalars['String']['output']>;
+  status: ItemStatus;
+  vendor?: Maybe<ItemVendor>;
+  withdrawnDate?: Maybe<Scalars['DateTime']['output']>;
+};
+
 export type BibRecord = {
   __typename?: 'BibRecord';
+  bibItems?: Maybe<Array<Maybe<BibItem>>>;
   controlNumber: Scalars['String']['output'];
   controlNumberIdentifier: Scalars['String']['output'];
   coverImageUrl?: Maybe<Scalars['URL']['output']>;
@@ -102,6 +147,28 @@ export type BibRecordsCollectionSegment = {
   /** Information to aid in pagination. */
   pageInfo: CollectionSegmentInfo;
   totalCount: Scalars['Int']['output'];
+};
+
+export type CheckInBibItemInput = {
+  id: Scalars['String']['input'];
+};
+
+export type CheckInBibItemPayload = {
+  __typename?: 'CheckInBibItemPayload';
+  data?: Maybe<BibItem>;
+  errors?: Maybe<Array<ErrorType>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
+export type CheckOutBibItemInput = {
+  id: Scalars['String']['input'];
+};
+
+export type CheckOutBibItemPayload = {
+  __typename?: 'CheckOutBibItemPayload';
+  data?: Maybe<BibItem>;
+  errors?: Maybe<Array<ErrorType>>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 /** Information about the offset pagination. */
@@ -216,6 +283,30 @@ export type IntOperationFilterInput = {
   nlte?: InputMaybe<Scalars['Int']['input']>;
 };
 
+export enum ItemStatus {
+  Available = 'AVAILABLE',
+  CheckedOut = 'CHECKED_OUT',
+  Damaged = 'DAMAGED',
+  Lost = 'LOST',
+  Withdrawn = 'WITHDRAWN'
+}
+
+export enum ItemType {
+  AudioVisual = 'AUDIO_VISUAL',
+  Book = 'BOOK',
+  DigitalResource = 'DIGITAL_RESOURCE',
+  Journal = 'JOURNAL',
+  Magazine = 'MAGAZINE',
+  Newspaper = 'NEWSPAPER',
+  Other = 'OTHER'
+}
+
+export type ItemVendor = {
+  __typename?: 'ItemVendor';
+  id: Scalars['String']['output'];
+  name: Scalars['String']['output'];
+};
+
 export type KnError = {
   __typename?: 'KnError';
   code: Scalars['String']['output'];
@@ -285,20 +376,40 @@ export type MainEntryPersonalNameSortInput = {
 
 export type Mutation = {
   __typename?: 'Mutation';
+  addBibItem: AddBibItemPayload;
   addVendor: AddVendorPayload;
+  checkInBibItem: CheckInBibItemPayload;
+  checkOutBibItem: CheckOutBibItemPayload;
   createBibRecord: CreateBibRecordPayload;
   createPatron: CreatePatronPayload;
   createPurchaseOrder: CreatePurchaseOrderPayload;
   deletePatron: DeletePatronPayload;
   deleteVendor: DeleteVendorPayload;
+  updateBibItem: UpdateBibItemPayload;
   updatePatron: UpdatePatronPayload;
   updatePurchaseOrder: UpdatePurchaseOrderPayload;
   updateVendor: UpdateVendorPayload;
+  withdrawBibItem: WithdrawBibItemPayload;
+};
+
+
+export type MutationAddBibItemArgs = {
+  input: AddBibItemInput;
 };
 
 
 export type MutationAddVendorArgs = {
   input: AddVendorInput;
+};
+
+
+export type MutationCheckInBibItemArgs = {
+  input: CheckInBibItemInput;
+};
+
+
+export type MutationCheckOutBibItemArgs = {
+  input: CheckOutBibItemInput;
 };
 
 
@@ -327,6 +438,11 @@ export type MutationDeleteVendorArgs = {
 };
 
 
+export type MutationUpdateBibItemArgs = {
+  input: UpdateBibItemInput;
+};
+
+
 export type MutationUpdatePatronArgs = {
   input: UpdatePatronInput;
 };
@@ -339,6 +455,11 @@ export type MutationUpdatePurchaseOrderArgs = {
 
 export type MutationUpdateVendorArgs = {
   input: UpdateVendorInput;
+};
+
+
+export type MutationWithdrawBibItemArgs = {
+  input: WithdrawBibItemInput;
 };
 
 export type Patron = {
@@ -556,6 +677,7 @@ export type PurchaseOrdersCollectionSegment = {
 
 export type Query = {
   __typename?: 'Query';
+  bibItem?: Maybe<BibItem>;
   bibRecord?: Maybe<BibRecord>;
   bibRecords?: Maybe<BibRecordsCollectionSegment>;
   patron?: Maybe<Patron>;
@@ -564,6 +686,11 @@ export type Query = {
   purchaseOrders?: Maybe<PurchaseOrdersCollectionSegment>;
   vendor?: Maybe<Vendor>;
   vendors?: Maybe<VendorsCollectionSegment>;
+};
+
+
+export type QueryBibItemArgs = {
+  id: Scalars['String']['input'];
 };
 
 
@@ -657,6 +784,24 @@ export type TitleStatementSortInput = {
   remainderOfTitle?: InputMaybe<SortEnumType>;
   statementOfResponsibility?: InputMaybe<SortEnumType>;
   title?: InputMaybe<SortEnumType>;
+};
+
+export type UpdateBibItemInput = {
+  barcode: Scalars['String']['input'];
+  callNumber: Scalars['String']['input'];
+  conditionNote?: InputMaybe<Scalars['String']['input']>;
+  id: Scalars['String']['input'];
+  itemType: ItemType;
+  location: Scalars['String']['input'];
+  notes?: InputMaybe<Scalars['String']['input']>;
+  status: ItemStatus;
+};
+
+export type UpdateBibItemPayload = {
+  __typename?: 'UpdateBibItemPayload';
+  data?: Maybe<BibItem>;
+  errors?: Maybe<Array<ErrorType>>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type UpdatePatronInput = {
@@ -782,6 +927,18 @@ export type VendorsCollectionSegment = {
   totalCount: Scalars['Int']['output'];
 };
 
+export type WithdrawBibItemInput = {
+  id: Scalars['String']['input'];
+  reason?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type WithdrawBibItemPayload = {
+  __typename?: 'WithdrawBibItemPayload';
+  data?: Maybe<BibItem>;
+  errors?: Maybe<Array<ErrorType>>;
+  message?: Maybe<Scalars['String']['output']>;
+};
+
 export type CreateBibRecordMutationVariables = Exact<{
   input: CreateBibRecordInput;
 }>;
@@ -794,7 +951,7 @@ export type BibRecordDetailsQueryVariables = Exact<{
 }>;
 
 
-export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, controlNumber: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, mainEntryPersonalName?: { __typename?: 'MainEntryPersonalName', personalName: string } | null, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }>, physicalDescriptions: Array<{ __typename?: 'PhysicalDescription', extents: Array<string>, dimensions: Array<string> }> } | null };
+export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, controlNumber: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, mainEntryPersonalName?: { __typename?: 'MainEntryPersonalName', personalName: string } | null, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }>, physicalDescriptions: Array<{ __typename?: 'PhysicalDescription', extents: Array<string>, dimensions: Array<string> }>, bibItems?: Array<{ __typename?: 'BibItem', id: string, callNumber: string, barcode: string, status: ItemStatus, itemType: ItemType, location: string } | null> | null } | null };
 
 export type BibRecordListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -939,6 +1096,14 @@ export const BibRecordDetailsDocument = gql`
     createdByUserName
     lastModifiedAt
     lastModifiedByUserName
+    bibItems {
+      id
+      callNumber
+      barcode
+      status
+      itemType
+      location
+    }
   }
 }
     `;

@@ -1,4 +1,3 @@
-using System.Text.RegularExpressions;
 using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates.BibItemAggregate;

@@ -2,7 +2,7 @@ import {Component, OnInit, inject} from '@angular/core';
 import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-list-component";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {CommonModule} from "@angular/common";
-import {KnBadge, KnButton, KnPagination} from "@kathanika/kn-ui";
+import {KnBadge, KnButton, KnPagination, KnPanel} from "@kathanika/kn-ui";
 import {MessageAlertService} from "../../../core/message-alert/message-alert.service";
 import {
     DeleteVendorGQL,
@@ -19,7 +19,8 @@ import {
         RouterLink,
         KnButton,
         KnPagination,
-        KnBadge
+        KnBadge,
+        KnPanel
     ],
     standalone: true,
     templateUrl: './vendor-list.component.html'

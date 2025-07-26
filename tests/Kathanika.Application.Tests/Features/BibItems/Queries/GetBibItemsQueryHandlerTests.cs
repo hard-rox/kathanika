@@ -1,4 +1,3 @@
-using System.Linq.Expressions;
 using Kathanika.Application.Features.BibItems.Queries;
 using Kathanika.Domain.Aggregates.BibItemAggregate;
 
