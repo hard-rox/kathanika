@@ -1,12 +1,12 @@
-import {Component, inject, OnInit} from '@angular/core';
+import {Component, inject, OnInit, Pipe, PipeTransform} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {ActivatedRoute} from '@angular/router';
 import {BaseQueryComponent} from '../../../abstractions/base-query-component';
-import {KnButton, KnPanel} from '@kathanika/kn-ui';
+import {KnBadge, KnButton, KnPanel} from '@kathanika/kn-ui';
 import {
     BibRecordDetailsQuery,
     BibRecordDetailsQueryVariables,
-    BibRecordDetailsGQL
+    BibRecordDetailsGQL, VendorStatus, ItemStatus, BibItem
 } from '../../../graphql/generated/graphql-operations';
 
 @Component({
@@ -17,6 +17,7 @@ import {
         CommonModule,
         KnPanel,
         KnButton,
+        KnBadge,
     ],
 })
 export class BibRecordDetailsComponent
@@ -24,9 +25,16 @@ export class BibRecordDetailsComponent
     implements OnInit {
     private readonly activatedRoute = inject(ActivatedRoute);
 
+    protected readonly bibItemStatus = ItemStatus;
+
     constructor() {
         const gql = inject(BibRecordDetailsGQL);
         super(gql);
+    }
+
+    protected itemCountByStatus(items: any[] | undefined | null, status: ItemStatus): number {
+        console.log('called');
+        return items?.filter(item => item.status === status).length ?? 0;
     }
 
     ngOnInit(): void {

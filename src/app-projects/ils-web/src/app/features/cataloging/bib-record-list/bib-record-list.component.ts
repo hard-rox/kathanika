@@ -24,7 +24,7 @@ import {
 export class BibRecordListComponent
     extends BasePaginatedListComponent<BibRecordListQuery, BibRecordListQueryVariables>
     implements OnInit {
-    protected override setSearchTextQueryFilter(searchText: string): void {
+    protected setSearchTextQueryFilter(searchText: string): void {
         if (!searchText || searchText.length == 0) {
             this.queryVariables.filter = null;
             return;
@@ -39,20 +39,6 @@ export class BibRecordListComponent
                 {
                     titleStatement: {
                         statementOfResponsibility: {contains: searchText}
-                    }
-                },
-                {
-                    publicationDistributions: {
-                        some: {
-                            namesOfPublisher: {some: {contains: searchText}}
-                        }
-                    }
-                },
-                {
-                    physicalDescriptions: {
-                        some: {
-                            extents: {some: {contains: searchText}}
-                        }
                     }
                 }
             ]
