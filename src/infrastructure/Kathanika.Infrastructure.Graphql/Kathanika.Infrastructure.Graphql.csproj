@@ -8,16 +8,16 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="HotChocolate.AspNetCore"/>
-        <PackageReference Include="HotChocolate.Data"/>
-        <PackageReference Include="HotChocolate.Diagnostics"/>
+        <PackageReference Include="HotChocolate.AspNetCore" />
+        <PackageReference Include="HotChocolate.Data" />
+        <PackageReference Include="HotChocolate.Diagnostics" />
         <PackageReference Include="HotChocolate.Types.OffsetPagination" />
-        <PackageReference Include="MediatR"/>
+        <PackageReference Include="MediatR" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\core\Kathanika.Application\Kathanika.Application.csproj"/>
-        <ProjectReference Include="..\..\core\Kathanika.Domain\Kathanika.Domain.csproj"/>
+        <ProjectReference Include="..\..\core\Kathanika.Application\Kathanika.Application.csproj" />
+        <ProjectReference Include="..\..\core\Kathanika.Domain\Kathanika.Domain.csproj" />
     </ItemGroup>
 
     <ItemGroup>
