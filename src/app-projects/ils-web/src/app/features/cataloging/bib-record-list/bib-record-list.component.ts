@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {KnButton, KnPagination, KnPanel, KnSelectInput} from "@kathanika/kn-ui";
+import {KnButton, KnPagination, KnPanel} from "@kathanika/kn-ui";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-list-component";
 import {
