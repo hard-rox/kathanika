@@ -6,7 +6,7 @@ import {KnBadge, KnButton, KnPanel} from '@kathanika/kn-ui';
 import {
     BibRecordDetailsQuery,
     BibRecordDetailsQueryVariables,
-    BibRecordDetailsGQL, ItemStatus, BibItem
+    BibRecordDetailsGQL, ItemStatus
 } from '../../../graphql/generated/graphql-operations';
 
 @Component({
