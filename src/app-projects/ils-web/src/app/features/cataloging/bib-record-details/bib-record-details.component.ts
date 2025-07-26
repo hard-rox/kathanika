@@ -33,7 +33,6 @@ export class BibRecordDetailsComponent
     }
 
     protected itemCountByStatus(items: ({status: ItemStatus} | null)[] | undefined | null, status: ItemStatus): number {
-        console.log('called');
         return items?.filter(item => item?.status === status).length ?? 0;
     }
 
