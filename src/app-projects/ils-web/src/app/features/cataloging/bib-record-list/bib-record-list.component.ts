@@ -15,8 +15,7 @@ import {
         KnButton,
         KnPagination,
         RouterLink,
-        KnPanel,
-        KnSelectInput,
+        KnPanel
     ],
     standalone: true,
     templateUrl: './bib-record-list.component.html'

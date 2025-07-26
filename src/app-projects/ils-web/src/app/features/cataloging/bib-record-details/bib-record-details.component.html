@@ -125,11 +125,11 @@
                             <span>{{ record.bibItems?.length ?? 0 }}</span></p>
                         <p class="flex justify-between">
                             <span>Available:</span>
-                            <span>{{ itemCountByStatus(record.bibItems, bibItemStatus.Available) }}</span>
+                            <span>{{ itemCountByStatus(record?.bibItems, bibItemStatus.Available) }}</span>
                         </p>
                         <p class="flex justify-between">
                             <span>Checked Out:</span>
-                            <span>{{ itemCountByStatus(record.bibItems, bibItemStatus.CheckedOut) }}</span>
+                            <span>{{ itemCountByStatus(record?.bibItems, bibItemStatus.CheckedOut) }}</span>
                         </p>
 <!--                        <p class="flex justify-between"><span>On Hold:</span> <span>0</span></p>-->
                     </div>
