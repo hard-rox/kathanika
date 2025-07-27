@@ -32,9 +32,11 @@ export class BibRecordDetailsComponent
         super(gql);
     }
 
-    protected itemCountByStatus(items: ({status: ItemStatus} | null)[] | undefined | null, status: ItemStatus): number {
-        return items?.filter(item => item?.status === status).length ?? 0;
-    }
+    protected itemsCountByStatus: Record<ItemStatus, number> = Object.values(ItemStatus)
+        .reduce((acc, status) => ({
+            ...acc,
+            [status]: 0
+        }), {} as Record<ItemStatus, number>);
 
     ngOnInit(): void {
         const bibRecordId = this.activatedRoute.snapshot.params['id'];
@@ -42,7 +44,22 @@ export class BibRecordDetailsComponent
             this.queryVariables = {
                 id: bibRecordId,
             };
-            this.queryRef.refetch(this.queryVariables);
+            this.queryRef.refetch(this.queryVariables)
+                .then(result => {
+                    const bibItems = result.data?.bibRecord?.bibItems;
+
+                    // Reset item counts
+                    Object.keys(this.itemsCountByStatus).forEach(status => {
+                        this.itemsCountByStatus[status as ItemStatus] = 0;
+                    });
+
+                    // Count items by status
+                    bibItems?.forEach(item => {
+                        if (item?.status) {
+                            this.itemsCountByStatus[item.status] = (this.itemsCountByStatus[item.status] || 0) + 1;
+                        }
+                    });
+                })
         }
     }
 }

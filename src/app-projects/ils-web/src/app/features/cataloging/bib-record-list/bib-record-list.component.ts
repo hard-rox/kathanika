@@ -23,7 +23,7 @@ import {
 export class BibRecordListComponent
     extends BasePaginatedListComponent<BibRecordListQuery, BibRecordListQueryVariables>
     implements OnInit {
-    protected setSearchTextQueryFilter(searchText: string): void {
+    protected override setSearchTextQueryFilter(searchText: string): void {
         if (!searchText || searchText.length == 0) {
             this.queryVariables.filter = null;
             return;

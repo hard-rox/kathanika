@@ -29,7 +29,7 @@ export class VendorListComponent extends BasePaginatedListComponent<VendorListQu
     private deleteVendorGql = inject(DeleteVendorGQL);
     private alertService = inject(MessageAlertService);
 
-    protected setSearchTextQueryFilter(searchText: string): void {
+    protected override setSearchTextQueryFilter(searchText: string): void {
         if (!searchText || searchText.length == 0) {
             this.queryVariables.filter = null;
             return;
