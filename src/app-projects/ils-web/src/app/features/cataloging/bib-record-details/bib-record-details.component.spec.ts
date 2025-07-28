@@ -35,7 +35,7 @@ describe('BibRecordDetailsComponent', () => {
       })),
       fetch: jest.fn(),
       document: 'BibRecordDetailsDocument'
-    } as unknown as jest.Mocked<BibRecordDetailsGQL>;
+    } satisfies Partial<BibRecordDetailsGQL> as jest.Mocked<BibRecordDetailsGQL>;
 
     await TestBed.configureTestingModule({
       imports: [
@@ -76,11 +76,7 @@ describe('BibRecordDetailsComponent', () => {
   });
 
   it('should update itemsCountByStatus after data is fetched', async () => {
-    // Force component's ngOnInit to execute again to ensure our spy captures the call
-    component.ngOnInit();
-
-    // Wait for any promises to resolve
-    await fixture.whenStable();
+    await fixture.detectChanges();
 
     // Verify the item counts were updated correctly based on the mock data
     expect(component['itemsCountByStatus'][ItemStatus.Available]).toBe(2);
