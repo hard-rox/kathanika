@@ -1,6 +1,6 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {KnButton, KnPagination, KnPanel, KnSelectInput} from "@kathanika/kn-ui";
+import {KnButton, KnPagination, KnPanel} from "@kathanika/kn-ui";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-list-component";
 import {
@@ -15,8 +15,7 @@ import {
         KnButton,
         KnPagination,
         RouterLink,
-        KnPanel,
-        KnSelectInput,
+        KnPanel
     ],
     standalone: true,
     templateUrl: './bib-record-list.component.html'
@@ -39,20 +38,6 @@ export class BibRecordListComponent
                 {
                     titleStatement: {
                         statementOfResponsibility: {contains: searchText}
-                    }
-                },
-                {
-                    publicationDistributions: {
-                        some: {
-                            namesOfPublisher: {some: {contains: searchText}}
-                        }
-                    }
-                },
-                {
-                    physicalDescriptions: {
-                        some: {
-                            extents: {some: {contains: searchText}}
-                        }
                     }
                 }
             ]

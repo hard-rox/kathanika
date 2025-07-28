@@ -71,35 +71,26 @@
                     <table>
                         <thead>
                         <tr>
+                            <th>Item Type</th>
                             <th>Location</th>
                             <th>Call Number</th>
                             <th>Barcode</th>
                             <th>Status</th>
-                            <th>Due Date</th>
                         </tr>
                         </thead>
                         <tbody>
-                        <tr>
-                            <td>Main Library - Fiction</td>
-                            <td>PS3511.I9 G7 2004</td>
-                            <td>31234567890123</td>
-                            <td><span>Available</span></td>
-                            <td>-</td>
-                        </tr>
-                        <tr>
-                            <td>Branch Library - Fiction</td>
-                            <td>PS3511.I9 G7 2004 c.2</td>
-                            <td>31234567890124</td>
-                            <td><span>Checked Out</span></td>
-                            <td>2025-01-15</td>
-                        </tr>
-                        <tr>
-                            <td>Reference Collection</td>
-                            <td>REF PS3511.I9 G7 2004</td>
-                            <td>31234567890125</td>
-                            <td><span>Reference Only</span></td>
-                            <td>-</td>
-                        </tr>
+                            @for (item of record.bibItems || []; track item; let idx = $index) {
+                                <tr>
+                                    <td>{{ item?.itemType }}</td>
+                                    <td>{{ item?.location }}</td>
+                                    <td>{{ item?.callNumber }}</td>
+                                    <td>{{ item?.barcode }}</td>
+                                    <td class="text-center">
+                                        <kn-badge [content]="item?.status ?? ''"
+                                                  [type]="item?.status === bibItemStatus.Available? 'success': item?.status === bibItemStatus.CheckedOut? 'warning': 'error'"/>
+                                    </td>
+                                </tr>
+                            }
                         </tbody>
                     </table>
                 </kn-panel>
@@ -130,23 +121,27 @@
 
                 <kn-panel panelTitle="Item Summary">
                     <div class="text-sm">
-                        <p class="flex justify-between"><span>Total Copies:</span> <span>3</span></p>
-                        <p class="flex justify-between"><span>Available:</span> <span>2</span></p>
-                        <p class="flex justify-between"><span>Checked Out:</span> <span>1</span></p>
-                        <p class="flex justify-between"><span>On Hold:</span> <span>0</span></p>
-                        <hr/>
-                        <p class="flex justify-between"><span>Total Checkouts:</span> <span>247</span></p>
-                        <p class="flex justify-between"><span>This Year:</span> <span>23</span></p>
+                        <p class="flex justify-between"><span>Total Copies:</span>
+                            <span>{{ record.bibItems?.length ?? 0 }}</span></p>
+                        <p class="flex justify-between">
+                            <span>Available:</span>
+                            <span>{{ itemsCountByStatus[bibItemStatus.Available] }}</span>
+                        </p>
+                        <p class="flex justify-between">
+                            <span>Checked Out:</span>
+                            <span>{{ itemsCountByStatus[bibItemStatus.CheckedOut] }}</span>
+                        </p>
+<!--                        <p class="flex justify-between"><span>On Hold:</span> <span>0</span></p>-->
                     </div>
                 </kn-panel>
 
                 <kn-panel panelTitle="Record History">
                     <div class="text-sm">
-                        <p><strong>Created:</strong> {{record.createdAt | date}}</p>
-                        <p><strong>Created By:</strong> {{record.createdByUserName}}</p>
-                        <p><strong>Last Modified:</strong> {{record.lastModifiedAt | date}}</p>
-                        <p><strong>Modified By:</strong> {{record.lastModifiedByUserName}}</p>
-                        <p><strong>Source:</strong> </p>
+                        <p><strong>Created:</strong> {{ record.createdAt | date }}</p>
+                        <p><strong>Created By:</strong> {{ record.createdByUserName }}</p>
+                        <p><strong>Last Modified:</strong> {{ record.lastModifiedAt | date }}</p>
+                        <p><strong>Modified By:</strong> {{ record.lastModifiedByUserName }}</p>
+                        <p><strong>Source:</strong></p>
                     </div>
                 </kn-panel>
             </div>

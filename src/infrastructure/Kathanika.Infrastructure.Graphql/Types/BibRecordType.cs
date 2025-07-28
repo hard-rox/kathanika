@@ -18,7 +18,7 @@ public sealed class BibRecordType : ObjectType<BibRecord>
         descriptor.Field(x => x.LastModifiedAt);
         descriptor.Field(x => x.LastModifiedByUserName);
 
-        descriptor.Field("items")
+        descriptor.Field("bibItems")
             .Resolve(context =>
             {
                 IMediator mediator = context.Service<IMediator>();
