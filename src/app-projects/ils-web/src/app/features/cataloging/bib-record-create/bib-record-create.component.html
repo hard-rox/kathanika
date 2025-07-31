@@ -9,7 +9,17 @@
         </kn-alert>
     </div>
 }
-
-<kn-panel panelTitle="Create Book Bibliographic Record" [isLoading]="isPanelLoading()">
-    <app-book-record-form #bookRecordForm (formSubmitted)="onValidFormSubmit($event)"/>
-</kn-panel>
+<div class="flex flex-col gap-4">
+    <kn-panel>
+        <div class="flex flex-col items-center justify-center text-center py-2">
+            <div class="p-4 rounded-full bg-theme-silver flex items-center justify-center">
+                <span class="material-symbols-rounded">book_2</span>
+            </div>
+            <p class="text-xl font-semibold">Add a New Book to the Library</p>
+            <p class="text-sm">Fill in the basic information below to quickly add a book to our collection</p>
+        </div>
+    </kn-panel>
+    <kn-panel panelTitle="Book Information" [isLoading]="isPanelLoading()">
+        <app-book-record-form #bookRecordForm (formSubmitted)="onValidFormSubmit($event)"/>
+    </kn-panel>
+</div>
