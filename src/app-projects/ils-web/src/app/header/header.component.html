@@ -3,14 +3,15 @@
         <!-- Left section: Menu toggle and logo -->
         <div class="flex items-center space-x-4">
             <button
+                id="sidebar-toggle-btn"
                 (click)="toggleSidebar()"
                 class="p-2 rounded-lg hover:bg-gray-700 transition-colors duration-200"
                 aria-label="Toggle sidebar"
                 type="button">
                 <span class="material-symbols-rounded text-xl" aria-hidden="true">menu</span>
             </button>
-            
-            <h1 class="text-xl lg:text-2xl font-bold text-white">কথনিকা</h1>
+
+            <h1 id="app-title" class="text-xl lg:text-2xl font-bold text-white">কথনিকা</h1>
         </div>
 
         <!-- Right section: Notifications, user profile -->
@@ -18,6 +19,7 @@
             <!-- Notifications dropdown -->
             <div class="relative">
                 <button
+                    id="notification-btn"
                     (click)="toggleNotifications()"
                     (blur)="closeDropdowns()"
                     class="p-2 rounded-lg hover:bg-gray-700 transition-colors duration-200 relative"
@@ -26,12 +28,14 @@
                     <span class="material-symbols-rounded text-xl" aria-hidden="true">notifications</span>
                     <!-- Notification badge -->
                     <span
+                        id="notification-badge"
                         class="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center">3</span>
                 </button>
 
                 <!-- Notifications dropdown -->
                 @if (isNotificationVisible()) {
                     <div
+                        id="notification-dropdown"
                         class="absolute right-0 mt-2 w-80 bg-white rounded-lg shadow-xl border border-gray-200 z-60 transform opacity-100 scale-100 transition-all duration-200">
                         <div class="p-4">
                             <h3 class="text-lg font-semibold text-gray-900 mb-3">Notifications</h3>
@@ -59,8 +63,9 @@
             </div>
 
             <!-- User profile -->
-            <div class="flex items-center space-x-3">
+            <div id="user-profile" class="flex items-center space-x-3">
                 <img
+                    id="user-avatar"
                     alt="User profile"
                     class="w-8 h-8 lg:w-10 lg:h-10 rounded-full border-2 border-gray-500 object-cover"
                     src="https://picsum.photos/200"
@@ -69,13 +74,14 @@
                 <!-- User actions dropdown -->
                 <div class="relative">
                     <button
+                        id="user-actions-btn"
                         (click)="toggleUserActions()"
                         (blur)="closeDropdowns()"
                         class="flex items-center space-x-2 p-2 rounded-lg hover:bg-gray-700 transition-colors duration-200"
                         aria-label="User actions"
                         type="button">
-                        <span class="hidden sm:block text-sm lg:text-base font-medium">John Doe</span>
-                        <span class="material-symbols-rounded text-lg">
+                        <span id="user-name" class="hidden sm:block text-sm lg:text-base font-medium">John Doe</span>
+                        <span id="expand-icon" class="material-symbols-rounded text-lg">
               {{ isUserActionsVisible() ? 'expand_less' : 'expand_more' }}
             </span>
                     </button>
@@ -83,6 +89,7 @@
                     <!-- User actions dropdown -->
                     @if (isUserActionsVisible()) {
                         <div
+                            id="user-actions-dropdown"
                             class="absolute right-0 mt-2 w-56 bg-white rounded-lg shadow-xl border border-gray-200 z-60 transform opacity-100 scale-100 transition-all duration-200">
                             <div class="py-2">
                                 <a href="#"
