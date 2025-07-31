@@ -19,6 +19,9 @@
     >
         <ng-content select="option"></ng-content>
     </select>
+    @if (helpText()) {
+        <p class="text-xs text-theme-gunmetal text-opacity-50 mt-1">{{ helpText() }}</p>
+    }
     <ul class="list-disc ml-4">
         @if ((control?.dirty || control?.touched) && control?.hasError('required')) {
             <li class="text-theme-fire-red">{{ label() }} is required</li>

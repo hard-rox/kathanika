@@ -1,15 +1,20 @@
-<label class="relative inline-flex items-center cursor-pointer">
-    <input
-        (blur)="onBlur()"
-        (ngModelChange)="onModelChange($event)"
-        [checked]="value"
-        [id]="control?.name"
-        [ngModel]="value"
-        class="sr-only peer"
-        type="checkbox"
-    />
-    <div
-        class="w-11 h-6 bg-theme-silver rounded-full peer peer-focus:ring-2 peer-focus:ring-theme-davys-gray peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-theme-gunmetal"
-    ></div>
-    <span class="ml-3 text-sm font-medium text-gray-900">{{ label() }}</span>
-</label>
+<div class="flex flex-col">
+    <label class="relative inline-flex items-center cursor-pointer">
+        <input
+            (blur)="onBlur()"
+            (ngModelChange)="onModelChange($event)"
+            [checked]="value"
+            [id]="control?.name"
+            [ngModel]="value"
+            class="sr-only peer"
+            type="checkbox"
+        />
+        <div
+            class="w-11 h-6 bg-theme-silver rounded-full peer peer-focus:ring-2 peer-focus:ring-theme-davys-gray peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-theme-gunmetal"
+        ></div>
+        <span class="ml-3 text-sm font-medium text-gray-900">{{ label() }}</span>
+    </label>
+    @if (helpText()) {
+        <p class="text-xs text-theme-gunmetal text-opacity-50 mt-1 ml-14">{{ helpText() }}</p>
+    }
+</div>
