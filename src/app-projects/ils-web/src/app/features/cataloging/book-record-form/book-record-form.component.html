@@ -30,13 +30,13 @@
     <div class="grid md:grid-cols-3 gap-6">
         <kn-text-input
             label="Publisher"
-            formControlName="publisherName"
+            formControlName="publisher"
             placeholder="Oxford University Press"
             helpText="MARC21: 260$b - Name of the publishing company"
         />
-        <kn-text-input
+        <kn-number-input
             label="Publication Year"
-            formControlName="publicationDate"
+            formControlName="yearOfPublication"
             placeholder="2023"
             helpText="MARC21: 260$c - Year the book was published (YYYY format)"
         />
@@ -50,9 +50,9 @@
 
     <!-- Additional Details Grid -->
     <div class="grid md:grid-cols-3 gap-6">
-        <kn-text-input
+        <kn-number-input
             label="Number of Pages"
-            formControlName="extent"
+            formControlName="numberOfPages"
             placeholder="325 pages"
             helpText="MARC21: 300$a - Total number of pages in the book"
         />
@@ -61,12 +61,6 @@
             formControlName="edition"
             placeholder="First Edition"
             helpText="MARC21: 250$a - Edition statement (e.g., First, Second, Revised)"
-        />
-        <kn-text-input
-            label="Category"
-            formControlName="category"
-            placeholder="Fiction"
-            helpText="MARC21: 650$a - Subject category or genre of the book"
         />
     </div>
 
