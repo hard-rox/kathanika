@@ -1,0 +1,21 @@
+mutation BookQuickAdd($input: BookQuickAddInput!) {
+    bookQuickAdd(input: $input) {
+        message
+        data{
+            id
+        }
+        errors{
+            ...on ValidationError{
+                code
+                fieldName
+                description
+                message
+            }
+            ...on KnError{
+                code
+                description
+                message
+            }
+        }
+    }
+}

@@ -12,12 +12,12 @@ export const catalogingRoutes: Routes = [
             .then(c => c.BibRecordListComponent)
     },
     {
-        path: 'add',
+        path: 'bibs/add',
         loadComponent: () => import('./bib-record-create/bib-record-create.component')
             .then(c => c.BibRecordCreateComponent)
     },
     {
-        path: ':id',
+        path: 'bibs/:id',
         loadComponent: () => import('./bib-record-details/bib-record-details.component')
             .then(c => c.BibRecordDetailsComponent)
     }

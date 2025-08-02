@@ -153,7 +153,6 @@ export type BibRecordsCollectionSegment = {
 
 export type BookQuickAddInput = {
   author: Scalars['String']['input'];
-  category?: InputMaybe<Scalars['String']['input']>;
   coverImageId?: InputMaybe<Scalars['String']['input']>;
   description?: InputMaybe<Scalars['String']['input']>;
   edition?: InputMaybe<Scalars['String']['input']>;
