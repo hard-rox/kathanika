@@ -36,7 +36,7 @@ export class SidebarComponent {
             isExpanded: false,
             children: [
                 {label: 'Bibliographic Records', icon: 'library_books', route: '/cataloging/bibs'},
-                {label: 'Add New Record', icon: 'add', route: '/cataloging/add'}
+                {label: 'Add New Record', icon: 'add', route: '/cataloging/bibs/add'}
             ]
         },
         {

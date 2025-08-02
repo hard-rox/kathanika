@@ -23,6 +23,8 @@ export type Scalars = {
   Decimal: { input: any; output: any; }
   /** The `LocalDate` scalar type represents a ISO date string, represented as UTF-8 character sequences YYYY-MM-DD. The scalar follows the specification defined in RFC3339 */
   LocalDate: { input: any; output: any; }
+  /** The `Long` scalar type represents non-fractional signed whole 64-bit numeric values. Long can represent values between -(2^63) and 2^63 - 1. */
+  Long: { input: any; output: any; }
   URL: { input: any; output: any; }
 };
 
@@ -147,6 +149,28 @@ export type BibRecordsCollectionSegment = {
   /** Information to aid in pagination. */
   pageInfo: CollectionSegmentInfo;
   totalCount: Scalars['Int']['output'];
+};
+
+export type BookQuickAddInput = {
+  author: Scalars['String']['input'];
+  category?: InputMaybe<Scalars['String']['input']>;
+  coverImageId?: InputMaybe<Scalars['String']['input']>;
+  description?: InputMaybe<Scalars['String']['input']>;
+  edition?: InputMaybe<Scalars['String']['input']>;
+  isbn?: InputMaybe<Scalars['String']['input']>;
+  language?: InputMaybe<Scalars['String']['input']>;
+  numberOfCopies: Scalars['Int']['input'];
+  numberOfPages?: InputMaybe<Scalars['Long']['input']>;
+  publisher?: InputMaybe<Scalars['String']['input']>;
+  title: Scalars['String']['input'];
+  yearOfPublication?: InputMaybe<Scalars['Int']['input']>;
+};
+
+export type BookQuickAddPayload = {
+  __typename?: 'BookQuickAddPayload';
+  data?: Maybe<BibRecord>;
+  errors?: Maybe<Array<ErrorType>>;
+  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type CheckInBibItemInput = {
@@ -378,6 +402,7 @@ export type Mutation = {
   __typename?: 'Mutation';
   addBibItem: AddBibItemPayload;
   addVendor: AddVendorPayload;
+  bookQuickAdd: BookQuickAddPayload;
   checkInBibItem: CheckInBibItemPayload;
   checkOutBibItem: CheckOutBibItemPayload;
   createBibRecord: CreateBibRecordPayload;
@@ -400,6 +425,11 @@ export type MutationAddBibItemArgs = {
 
 export type MutationAddVendorArgs = {
   input: AddVendorInput;
+};
+
+
+export type MutationBookQuickAddArgs = {
+  input: BookQuickAddInput;
 };
 
 
@@ -963,6 +993,13 @@ export type BibRecordListQueryVariables = Exact<{
 
 export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, controlNumber: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
+export type BookQuickAddMutationVariables = Exact<{
+  input: BookQuickAddInput;
+}>;
+
+
+export type BookQuickAddMutation = { __typename?: 'Mutation', bookQuickAdd: { __typename?: 'BookQuickAddPayload', message?: string | null, data?: { __typename?: 'BibRecord', id: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, description?: string | null, message: string } | { __typename?: 'ValidationError', code: string, fieldName: string, description?: string | null, message: string }> | null } };
+
 export type CreatePurchaseOrderMutationVariables = Exact<{
   input: CreatePurchaseOrderInput;
 }>;
@@ -1149,6 +1186,40 @@ export const BibRecordListDocument = gql`
   })
   export class BibRecordListGQL extends Apollo.Query<BibRecordListQuery, BibRecordListQueryVariables> {
     override document = BibRecordListDocument;
+    
+    constructor(apollo: Apollo.Apollo) {
+      super(apollo);
+    }
+  }
+export const BookQuickAddDocument = gql`
+    mutation BookQuickAdd($input: BookQuickAddInput!) {
+  bookQuickAdd(input: $input) {
+    message
+    data {
+      id
+    }
+    errors {
+      ... on ValidationError {
+        code
+        fieldName
+        description
+        message
+      }
+      ... on KnError {
+        code
+        description
+        message
+      }
+    }
+  }
+}
+    `;
+
+  @Injectable({
+    providedIn: 'root'
+  })
+  export class BookQuickAddGQL extends Apollo.Mutation<BookQuickAddMutation, BookQuickAddMutationVariables> {
+    override document = BookQuickAddDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
