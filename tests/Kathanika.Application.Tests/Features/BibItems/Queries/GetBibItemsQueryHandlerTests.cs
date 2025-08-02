@@ -110,7 +110,7 @@ public class GetBibItemsQueryHandlerTests
 
         // Verify that the result maintains the order from repository
         List<BibItem> resultList = result.ToList();
-        for (int i = 0; i < expectedBibItems.Count; i++)
+        for (var i = 0; i < expectedBibItems.Count; i++)
         {
             Assert.Equal(expectedBibItems[i].Barcode, resultList[i].Barcode);
         }

@@ -210,8 +210,8 @@ public sealed class BibRecord : AggregateRoot
         FixedLengthDataElements = fixedLengthDataElements.ToString();
     }
 
-
-    public static KnResult<BibRecord> CreateBookRecord(
+    [Obsolete("Use CreateBookRecord method instead.")]
+    public static KnResult<BibRecord> Create(
         string title,
         string? isbn,
         string? author,
@@ -231,6 +231,7 @@ public sealed class BibRecord : AggregateRoot
 
         BibRecord record = new()
         {
+            ControlNumber = string.Empty,
             TitleStatement = titleStatementResult.Value
         };
 
@@ -240,16 +241,46 @@ public sealed class BibRecord : AggregateRoot
         if (!string.IsNullOrWhiteSpace(author))
             record.MainEntryPersonalName = new MainEntryPersonalName(author, ["author"]);
 
-        if (!string.IsNullOrWhiteSpace(publisherName) || !string.IsNullOrWhiteSpace(publicationDate))
+        return KnResult.Success(record);
+    }
+
+
+    public static KnResult<BibRecord> CreateBookRecord(
+        string title,
+        string? author,
+        string? isbn,
+        string? publisher,
+        int? publicationYear,
+        string? language,
+        long? numberOrPages,
+        string? coverImageId)
+    {
+        List<KnError> errors = [];
+
+        KnResult<TitleStatement> titleStatementResult = TitleStatement.Create(title);
+        if (titleStatementResult.IsFailure)
+            errors.AddRange(titleStatementResult.Errors);
+
+        if (errors.Count != 0)
+            return KnResult.Failure<BibRecord>(errors);
+
+        BibRecord record = new()
+        {
+            ControlNumber = string.Empty,
+            TitleStatement = titleStatementResult.Value,
+            CoverImageId = coverImageId
+        };
+
+        if (!string.IsNullOrWhiteSpace(isbn))
+            record.InternationalStandardBookNumbers = [isbn];
+
+        if (!string.IsNullOrWhiteSpace(author))
+            record.MainEntryPersonalName = new MainEntryPersonalName(author, ["author"]);
+
+        if (!string.IsNullOrWhiteSpace(publisher) || publicationYear is not null)
             record.PublicationDistributions =
             [
-                new PublicationDistribution(publisherName, publicationDate)
-            ];
-
-        if (!string.IsNullOrWhiteSpace(extent) || !string.IsNullOrWhiteSpace(dimensions))
-            record.PhysicalDescriptions =
-            [
-                new PhysicalDescription(extent, dimensions)
+                new PublicationDistribution(publisher, publicationYear?.ToString())
             ];
 
         return KnResult.Success(record);

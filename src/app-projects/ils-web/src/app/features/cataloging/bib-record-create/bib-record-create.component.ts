@@ -1,6 +1,6 @@
 import {Component, inject, signal, viewChild} from '@angular/core';
 import {
-    CreateBibRecordGQL, CreateBibRecordInput
+    BookQuickAddGQL, BookQuickAddInput
 } from "../../../graphql/generated/graphql-operations";
 import {MessageAlertService} from "../../../core/message-alert/message-alert.service";
 import {Router} from "@angular/router";
@@ -18,7 +18,7 @@ import {BookRecordFormComponent} from "../book-record-form/book-record-form.comp
     templateUrl: './bib-record-create.component.html'
 })
 export class BibRecordCreateComponent {
-    private readonly gql = inject(CreateBibRecordGQL);
+    private readonly gql = inject(BookQuickAddGQL);
     private readonly alertService = inject(MessageAlertService);
     private readonly router = inject(Router);
 
@@ -27,10 +27,10 @@ export class BibRecordCreateComponent {
     isPanelLoading = signal(false);
     errors = signal<string[]>([]);
 
-    onValidFormSubmit(formValue: CreateBibRecordInput) {
+    onValidFormSubmit(formValue: BookQuickAddInput) {
         console.debug(formValue);
         this.isPanelLoading.set(true);
-        this.gql.mutate({input: formValue as CreateBibRecordInput})
+        this.gql.mutate({input: formValue})
             .pipe(finalize(() => {
                 this.isPanelLoading.set(false);
             }))
@@ -42,9 +42,9 @@ export class BibRecordCreateComponent {
                         return;
                     }
 
-                    if (result.errors || result.data?.createBibRecord.errors) {
+                    if (result.errors || result.data?.bookQuickAdd.errors) {
                         const newErrors: string[] = [];
-                        result.data?.createBibRecord.errors?.forEach((x) => {
+                        result.data?.bookQuickAdd.errors?.forEach((x) => {
                                 if (x?.__typename === 'ValidationError') {
                                     newErrors.push(`${x.fieldName} - ${x.message}`);
                                 } else {
@@ -57,14 +57,14 @@ export class BibRecordCreateComponent {
                     } else {
                         this.alertService.showToast(
                             'success',
-                            result.data?.createBibRecord.message ?? 'BibRecord created.',
+                            result.data?.bookQuickAdd.message ?? 'Book added.',
                         );
                         this.bookRecordForm()?.resetForm();
-                        this.router.navigate([`/cataloging/${result.data?.createBibRecord.data?.id}`]).then();
+                        this.router.navigate(['cataloging', 'bibs', result.data?.bookQuickAdd.data?.id]).then();
                     }
                 },
                 error: (err) => {
-                    this.alertService.showHttpErrorPopup(err);
+                    this.alertService.showHttpErrorPopup(JSON.stringify(err, null, 2));
                 }
             });
     }

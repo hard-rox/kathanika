@@ -14,3 +14,15 @@ public sealed record CreateBibRecordPayload
     {
     }
 }
+
+public sealed record BookQuickAddPayload
+    : Payload<BibRecord>
+{
+    public BookQuickAddPayload(KnResult<BibRecord> knResult)
+        : base(knResult,
+            knResult.IsSuccess
+                ? $"New book record with control number {knResult.Value.ControlNumber} created successfully."
+                : "New book record creation failed.")
+    {
+    }
+}

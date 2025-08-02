@@ -1,8 +1,8 @@
 import {Component} from '@angular/core';
 import {BaseFormComponent, FormControlsOf} from "../../../abstractions/base-form-component";
-import {CreateBibRecordInput} from "../../../graphql/generated/graphql-operations";
+import {BookQuickAddInput} from "../../../graphql/generated/graphql-operations";
 import {FormControl, FormGroup, ReactiveFormsModule, Validators} from '@angular/forms';
-import {KnButton, KnTextInput} from "@kathanika/kn-ui";
+import {KnButton, KnNumberInput, KnTextareaInput, KnTextInput} from "@kathanika/kn-ui";
 import {CommonModule} from "@angular/common";
 
 @Component({
@@ -11,21 +11,26 @@ import {CommonModule} from "@angular/common";
         CommonModule,
         ReactiveFormsModule,
         KnTextInput,
-        KnButton
+        KnButton,
+        KnTextareaInput,
+        KnNumberInput
     ],
     standalone: true,
     templateUrl: './book-record-form.component.html'
 })
-export class BookRecordFormComponent extends BaseFormComponent<CreateBibRecordInput> {
-    protected override createFormGroup(): FormGroup<FormControlsOf<CreateBibRecordInput>> {
-        return new FormGroup<FormControlsOf<CreateBibRecordInput>>({
+export class BookRecordFormComponent extends BaseFormComponent<BookQuickAddInput> {
+    protected override createFormGroup(): FormGroup<FormControlsOf<BookQuickAddInput>> {
+        return new FormGroup<FormControlsOf<BookQuickAddInput>>({
             title: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+            author: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
+            numberOfCopies: new FormControl<number>(1, {nonNullable: true, validators: [Validators.min(1)]}),
             isbn: new FormControl<string | null>(null),
-            author: new FormControl<string | null>(null),
-            publisherName: new FormControl<string | null>(null),
-            publicationDate: new FormControl<string | null>(null),
-            extent: new FormControl<string | null>(null),
-            dimensions: new FormControl<string | null>(null),
+            publisher: new FormControl<string | null>(null),
+            yearOfPublication: new FormControl<number | null>(null),
+            numberOfPages: new FormControl<number | null>(null),
+            language: new FormControl<string | null>(null),
+            edition: new FormControl<string | null>(null),
+            description: new FormControl<string | null>(null),
             coverImageId: new FormControl<string | null>(null)
         });
     }

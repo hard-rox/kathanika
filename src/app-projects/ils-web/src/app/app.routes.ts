@@ -7,12 +7,12 @@ export const routes: Routes = [
         redirectTo: 'vendors', //TODO: Change this to the default landing page
     },
     {
-        path: 'vendors',
+        path: 'acquisition/vendors',
         loadChildren: () => import('./features/vendor/vendor.routes')
             .then(x => x.vendorRoutes)
     },
     {
-        path: 'purchase-orders',
+        path: 'acquisition/purchase-orders',
         loadChildren: () => import('./features/purchase-order/purchase-order.route')
             .then(x => x.purchaseOrderRoutes)
     },

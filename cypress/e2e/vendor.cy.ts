@@ -3,7 +3,7 @@ import {faker} from "@faker-js/faker/locale/en";
 describe('Vendor Form Test', () => {
     beforeEach(() => {
         // Visit the page containing the form
-        cy.visit('/vendors/add');
+        cy.visit('/acquisition/vendors/add');
     });
 
     it('should fill out and submit the vendor form', () => {

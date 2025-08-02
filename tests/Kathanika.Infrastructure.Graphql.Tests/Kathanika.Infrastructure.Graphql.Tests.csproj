@@ -38,4 +38,8 @@
       <None Remove="TestResults\**" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Folder Include="Schema\" />
+    </ItemGroup>
+
 </Project>
