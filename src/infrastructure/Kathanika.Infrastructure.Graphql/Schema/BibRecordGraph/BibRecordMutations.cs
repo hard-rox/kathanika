@@ -17,7 +17,7 @@ public sealed class BibRecordMutations
         KnResult<BibRecord> knResult = await mediator.Send(input, cancellationToken);
         return new CreateBibRecordPayload(knResult);
     }
-    
+
     public async Task<BookQuickAddPayload> BookQuickAddAsync(
         [Service] IMediator mediator,
         BookQuickAddCommand input,
