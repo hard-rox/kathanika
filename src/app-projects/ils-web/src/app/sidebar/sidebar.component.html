@@ -48,7 +48,8 @@
     [class.-translate-x-full]="!isMobileOpen()"
     [class.lg:translate-x-0]="true"
     [class.w-64]="!isCollapsed() || isMobileOpen()"
-    [class.w-16]="isCollapsed() && !isMobileOpen()">
+    [class.w-16]="isCollapsed() && !isMobileOpen()"
+    (keydown.escape)="closeMobileSidebar()">
 
     <!-- Sidebar header -->
     <div class="flex items-center p-4 border-b border-gray-200"
@@ -81,6 +82,8 @@
                             (mouseleave)="onMenuItemLeave()"
                             class="flex items-center w-full px-3 py-2 text-sm font-medium text-gray-700 rounded-lg hover:bg-gray-100 transition-colors duration-200"
                             [class.justify-center]="isCollapsed() && !isMobileOpen()"
+                            [attr.aria-expanded]="item.isExpanded"
+                            [attr.aria-label]="item.label"
                             type="button">
               
               <span class="material-symbols-rounded text-xl flex-shrink-0"

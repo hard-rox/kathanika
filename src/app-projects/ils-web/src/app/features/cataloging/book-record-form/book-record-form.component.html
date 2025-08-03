@@ -13,7 +13,7 @@
     <!-- Primary Details Grid -->
     <div class="grid md:grid-cols-2 gap-6">
         <kn-text-input
-                label="Author"
+            label="Author"
             formControlName="author"
             placeholder="Fitzgerald, F. Scott"
             helpText="MARC21: 100$a - Primary author's name in Last, First format"
@@ -64,6 +64,16 @@
         />
     </div>
 
+    <!-- New Field: Number of Copies -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <kn-number-input
+            label="Number of Copies"
+            formControlName="numberOfCopies"
+            placeholder="Enter number of copies"
+            helpText="Enter the total number of copies to be added"
+        ></kn-number-input>
+    </div>
+
     <!-- Description Section -->
     <div class="space-y-2">
         <kn-textarea-input
@@ -77,12 +87,6 @@
 
     <!-- Action Buttons -->
     <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
-        <button
-            type="button"
-            kn-button
-        >
-            Cancel
-        </button>
         <input
             kn-button
             type="submit"

@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, PLATFORM_ID, Inject, signal } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Injectable({
   providedIn: 'root'
@@ -11,13 +12,16 @@ export class SidebarService {
   readonly isCollapsed = this._isCollapsed.asReadonly();
   readonly isMobileOpen = this._isMobileOpen.asReadonly();
 
-  toggle() {
-    // On mobile (< lg), toggle mobile sidebar
-    // On desktop (>= lg), toggle collapsed state
-    if (window.innerWidth < 1024) {
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
+
+  toggle(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      const isMobile = window.innerWidth < 768;
       this._isMobileOpen.set(!this._isMobileOpen());
-    } else {
-      this._isCollapsed.set(!this._isCollapsed());
+
+      if (!isMobile) {
+        localStorage.setItem('sidebarOpen', String(this._isMobileOpen()));
+      }
     }
   }
 

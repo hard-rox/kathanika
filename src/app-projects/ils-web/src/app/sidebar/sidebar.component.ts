@@ -18,7 +18,7 @@ interface NavigationItem {
 export class SidebarComponent {
     private sidebarService = inject(SidebarService);
     private router = inject(Router);
-    private hoverTimeout: NodeJS.Timeout | null = null;
+    private hoverTimeout: ReturnType<typeof setTimeout> | null = null;
 
     protected readonly isCollapsed = this.sidebarService.isCollapsed;
     protected readonly isMobileOpen = this.sidebarService.isMobileOpen;

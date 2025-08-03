@@ -64,7 +64,7 @@ export class BibRecordCreateComponent {
                     }
                 },
                 error: (err) => {
-                    this.alertService.showHttpErrorPopup(JSON.stringify(err, null, 2));
+                    this.alertService.showHttpErrorPopup(err.message);
                 }
             });
     }

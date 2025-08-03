@@ -16,7 +16,6 @@ describe('Quick Add Books Feature', () => {
             language: 'English',
             numberOfPages: faker.number.int({min: 50, max: 800}),
             edition: faker.helpers.arrayElement(['First Edition', 'Second Edition', 'Revised Edition', 'Third Edition']),
-            category: faker.helpers.arrayElement(['Fiction', 'Non-Fiction', 'Science', 'History', 'Biography', 'Technology']),
             description: faker.lorem.paragraph(3)
         };
 
@@ -63,7 +62,6 @@ describe('Quick Add Books Feature', () => {
             isbn: faker.string.numeric(13),
             publisher: faker.company.name(),
             yearOfPublication: faker.date.past({years: 15}).getFullYear(),
-            category: faker.helpers.arrayElement(['Fiction', 'Non-Fiction', 'Science', 'Biography'])
         }));
 
         books.forEach((book, index) => {
@@ -95,7 +93,6 @@ describe('Quick Add Books Feature', () => {
             yearOfPublication: faker.date.past({years: 8}).getFullYear(),
             language: 'French',
             numberOfPages: faker.number.int({min: 200, max: 400}),
-            category: 'Literature',
             description: 'Une histoire captivante qui se déroule dans le célèbre café parisien...'
         };
 
