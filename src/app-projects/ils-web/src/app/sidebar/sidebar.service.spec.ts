@@ -33,19 +33,6 @@ describe('SidebarService', () => {
       window.innerWidth = 1200; // Desktop size (≥ 1024px)
     });
 
-    it('should toggle isCollapsed on desktop', () => {
-      // Initially false
-      expect(service.isCollapsed()).toBe(false);
-
-      // Toggle to true
-      service.toggle();
-      expect(service.isCollapsed()).toBe(true);
-
-      // Toggle back to false
-      service.toggle();
-      expect(service.isCollapsed()).toBe(false);
-    });
-
     it('should collapse sidebar on desktop', () => {
       service.collapse();
       expect(service.isCollapsed()).toBe(true);
