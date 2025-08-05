@@ -44,12 +44,22 @@ internal sealed class BookQuickAddCommandValidator : AbstractValidator<BookQuick
         RuleFor(x => x)
             .MustAsync(async (command, cancellationToken) =>
             {
+                if (!string.IsNullOrWhiteSpace(command.Isbn))
+                {
+                    return !await bibRecordRepository.ExistsAsync(
+                        x => x.InternationalStandardBookNumbers.Contains(command.Isbn) || (
+                            x.TitleStatement.Title.Equals(command.Title, StringComparison.CurrentCultureIgnoreCase) &&
+                            x.MainEntryPersonalName != null &&
+                            x.MainEntryPersonalName.PersonalName.Equals(command.Author,
+                                StringComparison.CurrentCultureIgnoreCase)),
+                        cancellationToken);
+                }
+
                 return !await bibRecordRepository.ExistsAsync(
-                    x => x.InternationalStandardBookNumbers.Contains(command.Isbn) || (
-                        x.TitleStatement.Title.Equals(command.Title, StringComparison.CurrentCultureIgnoreCase) &&
-                        x.MainEntryPersonalName != null &&
-                        x.MainEntryPersonalName.PersonalName.Equals(command.Author,
-                            StringComparison.CurrentCultureIgnoreCase)),
+                    x => x.TitleStatement.Title.Equals(command.Title, StringComparison.CurrentCultureIgnoreCase) &&
+                         x.MainEntryPersonalName != null &&
+                         x.MainEntryPersonalName.PersonalName.Equals(command.Author,
+                             StringComparison.CurrentCultureIgnoreCase),
                     cancellationToken);
             })
             .WithMessage(

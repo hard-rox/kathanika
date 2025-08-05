@@ -19,6 +19,8 @@ internal sealed class BookQuickAddCommandHandler(
             request.YearOfPublication,
             request.Language,
             request.NumberOfPages,
+            request.Edition,
+            request.Description,
             request.CoverImageId
         );
 

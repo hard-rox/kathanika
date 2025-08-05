@@ -252,7 +252,9 @@ public sealed class BibRecord : AggregateRoot
         string? publisher,
         int? publicationYear,
         string? language,
-        long? numberOrPages,
+        long? numberOfPages,
+        string? edition,
+        string? description,
         string? coverImageId)
     {
         List<KnError> errors = [];
