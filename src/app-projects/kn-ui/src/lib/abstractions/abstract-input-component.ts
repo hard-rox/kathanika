@@ -10,6 +10,8 @@ export abstract class AbstractInput<TValueType>
 
     readonly placeholder = input('');
 
+    readonly helpText = input('');
+
     protected value: TValueType | null = null;
     protected isDisabled = false;
 

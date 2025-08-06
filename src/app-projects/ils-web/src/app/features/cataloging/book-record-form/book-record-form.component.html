@@ -1,27 +1,96 @@
-<form [formGroup]="formGroup" (ngSubmit)="submitForm()">
-    <div class="grid md:grid-cols-2 sm:grid-cols-1 gap-x-6 gap-y-4">
-        <kn-text-input label="Title" formControlName="title" placeholder="The great Gatsby"/>
-        <kn-text-input label="ISBN" formControlName="isbn" placeholder="9781234567890"/>
-        <kn-text-input label="Author" formControlName="author" placeholder="Fitzgerald, F. Scott"/>
-        <kn-text-input label="Publisher Name" formControlName="publisherName" placeholder="Oxford University Press"/>
-        <kn-text-input label="Publication Date" formControlName="publicationDate" placeholder="2023"/>
-        <kn-text-input label="Extent" formControlName="extent" placeholder="325 pages"/>
-        <kn-text-input label="Dimensions" formControlName="dimensions" placeholder="23 cm"/>
+<form [formGroup]="formGroup" (ngSubmit)="submitForm()" class="space-y-4">
+    <!-- Main Title Section -->
+    <div class="space-y-4">
+        <kn-text-input
+            label="Title"
+            formControlName="title"
+            placeholder="The great Gatsby"
+            helpText="MARC21: 245$a - Enter the main title of the book as it appears on the title page"
+            class="w-full"
+        />
     </div>
-    <div class="flex flex-row-reverse mt-2">
-        <input kn-button type="submit" value="Save"/>
+
+    <!-- Primary Details Grid -->
+    <div class="grid md:grid-cols-2 gap-6">
+        <kn-text-input
+            label="Author"
+            formControlName="author"
+            placeholder="Fitzgerald, F. Scott"
+            helpText="MARC21: 100$a - Primary author's name in Last, First format"
+        />
+        <kn-text-input
+            label="ISBN"
+            formControlName="isbn"
+            placeholder="9781234567890"
+            helpText="MARC21: 020$a - 13-digit ISBN number (International Standard Book Number)"
+        />
+    </div>
+
+    <!-- Secondary Details Grid -->
+    <div class="grid md:grid-cols-3 gap-6">
+        <kn-text-input
+            label="Publisher"
+            formControlName="publisher"
+            placeholder="Oxford University Press"
+            helpText="MARC21: 260$b - Name of the publishing company"
+        />
+        <kn-number-input
+            label="Publication Year"
+            formControlName="yearOfPublication"
+            placeholder="2023"
+            helpText="MARC21: 260$c - Year the book was published (YYYY format)"
+        />
+        <kn-text-input
+            label="Language"
+            formControlName="language"
+            placeholder="English"
+            helpText="MARC21: 041$a - Primary language of the book content"
+        />
+    </div>
+
+    <!-- Additional Details Grid -->
+    <div class="grid md:grid-cols-3 gap-6">
+        <kn-number-input
+            label="Number of Pages"
+            formControlName="numberOfPages"
+            placeholder="325 pages"
+            helpText="MARC21: 300$a - Total number of pages in the book"
+        />
+        <kn-text-input
+            label="Edition"
+            formControlName="edition"
+            placeholder="First Edition"
+            helpText="MARC21: 250$a - Edition statement (e.g., First, Second, Revised)"
+        />
+    </div>
+
+    <!-- New Field: Number of Copies -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <kn-number-input
+            label="Number of Copies"
+            formControlName="numberOfCopies"
+            placeholder="Enter number of copies"
+            helpText="Enter the total number of copies to be added"
+        ></kn-number-input>
+    </div>
+
+    <!-- Description Section -->
+    <div class="space-y-2">
+        <kn-textarea-input
+            label="Description"
+            formControlName="description"
+            placeholder="A brief description of the book..."
+            helpText="MARC21: 520$a - Brief summary or description of the book's content"
+            class="w-full"
+        />
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="flex justify-end space-x-4 pt-6 border-t border-gray-200">
+        <input
+            kn-button
+            type="submit"
+            value="Save Book"
+        />
     </div>
 </form>
-
-<div class="mt-6 p-4 bg-gray-50 rounded-md">
-    <h3 class="text-sm font-medium text-gray-700 mb-2">MARC21 Bibliographic Record Structure:</h3>
-    <ul class="text-xs text-gray-600 list-disc list-inside space-y-1">
-        <li><strong>Title (245$a):</strong> Title proper only, without statement of responsibility</li>
-        <li><strong>ISBN (020$a):</strong> International Standard Book Number without hyphens</li>
-        <li><strong>Author (100$a):</strong> Main entry personal name in inverted form (Surname, Forename)</li>
-        <li><strong>Publisher (260/264$b):</strong> Name of publisher</li>
-        <li><strong>Date (260/264$c):</strong> Date of publication (YYYY)</li>
-        <li><strong>Extent (300$a):</strong> Number and specific material designation (325 pages)</li>
-        <li><strong>Dimensions (300$c):</strong> Dimensions (23 cm)</li>
-    </ul>
-</div>

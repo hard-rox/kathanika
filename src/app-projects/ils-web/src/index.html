@@ -12,6 +12,40 @@
         rel="stylesheet"
     />
     <meta content="#1976d2" name="theme-color">
+    <style>
+        /* App component global styles for responsive layout */
+
+        /* Ensure body and html don't have unwanted margins */
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+
+        /* Header height constant for consistent spacing */
+        :root {
+            --header-height: 4rem; /* 64px */
+        }
+
+
+        /* Custom scrollbar for webkit browsers */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 3px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
+    </style>
 </head>
 <body class="bg-gray-100">
 <app-root></app-root>
