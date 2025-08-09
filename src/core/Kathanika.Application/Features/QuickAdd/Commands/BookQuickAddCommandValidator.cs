@@ -27,8 +27,7 @@ internal sealed class BookQuickAddCommandValidator : AbstractValidator<BookQuick
 
         RuleFor(x => x.YearOfPublication)
             .GreaterThan(1000)
-            .WithMessage("Year of publication must be a valid year.")
-            .When(x => x.YearOfPublication.HasValue);
+            .WithMessage("Year of publication must be a valid year.");
 
         RuleFor(x => x.Language)
             .MaximumLength(50)
@@ -41,28 +40,28 @@ internal sealed class BookQuickAddCommandValidator : AbstractValidator<BookQuick
             .When(x => !string.IsNullOrWhiteSpace(x.Publisher));
 
         // Check for duplicate books based on ISBN or Title-Author combination
-        RuleFor(x => x)
-            .MustAsync(async (command, cancellationToken) =>
-            {
-                if (!string.IsNullOrWhiteSpace(command.Isbn))
-                {
-                    return !await bibRecordRepository.ExistsAsync(
-                        x => x.InternationalStandardBookNumbers.Contains(command.Isbn) || (
-                            x.TitleStatement.Title.Equals(command.Title, StringComparison.CurrentCultureIgnoreCase) &&
-                            x.MainEntryPersonalName != null &&
-                            x.MainEntryPersonalName.PersonalName.Equals(command.Author,
-                                StringComparison.CurrentCultureIgnoreCase)),
-                        cancellationToken);
-                }
-
-                return !await bibRecordRepository.ExistsAsync(
-                    x => x.TitleStatement.Title.Equals(command.Title, StringComparison.CurrentCultureIgnoreCase) &&
-                         x.MainEntryPersonalName != null &&
-                         x.MainEntryPersonalName.PersonalName.Equals(command.Author,
-                             StringComparison.CurrentCultureIgnoreCase),
-                    cancellationToken);
-            })
-            .WithMessage(
-                "A book with the same ISBN or Title-Author combination already exists. Consider adding more copies to the existing record instead.");
+        // RuleFor(x => x)
+        //     .MustAsync(async (command, cancellationToken) =>
+        //     {
+        //         if (!string.IsNullOrWhiteSpace(command.Isbn))
+        //         {
+        //             return !await bibRecordRepository.ExistsAsync(
+        //                 x => x.InternationalStandardBookNumbers.Contains(command.Isbn) || (
+        //                     x.TitleStatement.Title.Equals(command.Title, StringComparison.CurrentCultureIgnoreCase) &&
+        //                     x.MainEntryPersonalName != null &&
+        //                     x.MainEntryPersonalName.PersonalName.Equals(command.Author,
+        //                         StringComparison.CurrentCultureIgnoreCase)),
+        //                 cancellationToken);
+        //         }
+        //
+        //         return !await bibRecordRepository.ExistsAsync(
+        //             x => x.TitleStatement.Title.Equals(command.Title, StringComparison.CurrentCultureIgnoreCase) &&
+        //                  x.MainEntryPersonalName != null &&
+        //                  x.MainEntryPersonalName.PersonalName.Equals(command.Author,
+        //                      StringComparison.CurrentCultureIgnoreCase),
+        //             cancellationToken);
+        //     })
+        //     .WithMessage(
+        //         "A book with the same ISBN or Title-Author combination already exists. Consider adding more copies to the existing record instead.");
     }
 }
