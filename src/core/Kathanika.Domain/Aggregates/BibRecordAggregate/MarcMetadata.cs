@@ -104,4 +104,38 @@ public class MarcMetadata : Entity
 
         return KnResult.Success();
     }
+
+    public string GetControlFieldValue(string tag)
+    {
+        ControlField? field = _controlFields.FirstOrDefault(f => f.Tag == tag);
+        return field?.Data ?? string.Empty;
+    }
+
+    public string GetDataFieldValue(string tag, char subfieldCode)
+    {
+        DataField? field = _dataFields.FirstOrDefault(f => f.Tag == tag);
+        if (field == null)
+            return string.Empty;
+
+        Subfield? subfield = field.Subfields.FirstOrDefault(s => s.Code == subfieldCode);
+        return subfield?.Value ?? string.Empty;
+    }
+
+    public string GetMaterialType()
+    {
+        var controlField008Value = GetControlFieldValue("008");
+        if (controlField008Value.Length < 6)
+            return "Unknown";
+        return controlField008Value[6] switch
+        {
+            'a' => "Books",
+            'b' => "Continuing Resources",
+            'c' => "Computer Files",
+            'd' => "Visual Materials",
+            'e' => "Sound Recordings",
+            'f' => "Mixed Materials",
+            'g' => "Manuscripts",
+            _ => "Unknown"
+        };
+    }
 }

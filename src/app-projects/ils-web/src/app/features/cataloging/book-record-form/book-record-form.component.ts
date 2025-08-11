@@ -30,7 +30,7 @@ export class BookRecordFormComponent extends BaseFormComponent<BookQuickAddInput
             numberOfPages: new FormControl<number | null>(null),
             language: new FormControl<string | null>(null),
             edition: new FormControl<string | null>(null),
-            description: new FormControl<string | null>(null),
+            note: new FormControl<string | null>(null),
             coverImageId: new FormControl<string | null>(null)
         });
     }
