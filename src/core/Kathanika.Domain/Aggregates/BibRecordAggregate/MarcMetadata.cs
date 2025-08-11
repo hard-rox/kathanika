@@ -105,13 +105,13 @@ public class MarcMetadata : Entity
         return KnResult.Success();
     }
 
-    public string GetControlFieldValue(string tag)
+    internal string GetControlFieldValue(string tag)
     {
         ControlField? field = _controlFields.FirstOrDefault(f => f.Tag == tag);
         return field?.Data ?? string.Empty;
     }
 
-    public string GetDataFieldValue(string tag, char subfieldCode)
+    internal string GetDataFieldValue(string tag, char subfieldCode)
     {
         DataField? field = _dataFields.FirstOrDefault(f => f.Tag == tag);
         if (field == null)
@@ -121,7 +121,7 @@ public class MarcMetadata : Entity
         return subfield?.Value ?? string.Empty;
     }
 
-    public string GetMaterialType()
+    internal string GetMaterialType()
     {
         var controlField008Value = GetControlFieldValue("008");
         if (controlField008Value.Length < 6)
