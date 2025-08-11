@@ -6,7 +6,7 @@ import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-l
 import {
     BibRecordListGQL,
     BibRecordListQuery,
-    BibRecordListQueryVariables, SortEnumType
+    BibRecordListQueryVariables
 } from "../../../graphql/generated/graphql-operations";
 
 @Component({
