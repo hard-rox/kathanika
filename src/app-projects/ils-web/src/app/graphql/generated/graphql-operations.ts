@@ -872,7 +872,7 @@ export type BibRecordDetailsQueryVariables = Exact<{
 }>;
 
 
-export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, bibItems?: Array<{ __typename?: 'BibItem', id: string, callNumber: string, barcode: string, status: ItemStatus, itemType: ItemType, location: string } | null> | null } | null };
+export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, title: string, author: string, controlNumber: string, isbn: string, issn: string, publisher: string, publicationYear?: number | null, materialType?: string | null, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, bibItems?: Array<{ __typename?: 'BibItem', id: string, callNumber: string, barcode: string, status: ItemStatus, itemType: ItemType, location: string } | null> | null } | null };
 
 export type BibRecordListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -992,6 +992,14 @@ export const BibRecordDetailsDocument = gql`
     query BibRecordDetails($id: String!) {
   bibRecord(id: $id) {
     id
+    title
+    author
+    controlNumber
+    isbn
+    issn
+    publisher
+    publicationYear
+    materialType
     coverImageUrl
     createdAt
     createdByUserName

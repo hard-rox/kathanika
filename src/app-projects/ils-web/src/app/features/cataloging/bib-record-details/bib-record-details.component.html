@@ -8,52 +8,27 @@
                 <kn-panel>
                     <div class="flex flex-col sm:flex-row gap-2">
                         <div class="flex-1">
-                            <h2 class="text-xl font-semibold">{{ record?.titleStatement?.title }}</h2>
+                            <h2 class="text-xl font-semibold">{{ record.title }}</h2>
                             <p class="text-sm text-gray-600 dark:text-gray-400">
-                                by {{ record?.titleStatement?.statementOfResponsibility }}</p>
+                                by {{ record.author }}</p>
                             <div class="text-sm mt-1">
                                 <ul class="list-inline">
-                                    <li>ISBN: {{ record.internationalStandardBookNumbers.join(', ') }}</li>
-                                    <li>ISSN:</li>
+                                    <li>ISBN: {{ record.isbn }}</li>
+                                    <li>ISSN: {{ record.issn }}</li>
                                     <li>Control Number: {{ record.controlNumber }}</li>
                                 </ul>
                             </div>
                             <div class="flex justify-between">
                                 <div class="mt-4 text-sm">
-                                    <p><strong>Publisher:</strong>
-                                        <ng-container *ngIf="record.publicationDistributions?.length; else noPublisher">
-                                            <ng-container
-                                                *ngFor="let pd of record.publicationDistributions; let last = last">
-                                                {{ pd.namesOfPublisher.length ? pd.namesOfPublisher.join(', ') : '' }}
-                                                <span *ngIf="!last">; </span>
-                                            </ng-container>
-                                        </ng-container>
-                                        <ng-template #noPublisher></ng-template>
+                                    <p><strong>Publisher: {{ record.publisher }}</strong>
                                     </p>
-                                    <p><strong>Year:</strong>
-                                        <ng-container *ngIf="record.publicationDistributions?.length; else noPubDate">
-                                            <ng-container
-                                                *ngFor="let pd of record.publicationDistributions; let last = last">
-                                                {{ pd.datesOfPublication.length ? pd.datesOfPublication.join(', ') : '' }}
-                                                <span *ngIf="!last">; </span>
-                                            </ng-container>
-                                        </ng-container>
-                                        <ng-template #noPubDate></ng-template>
+                                    <p><strong>Year: {{ record.publicationYear }}</strong>
                                     </p>
                                     <p><strong>Edition:</strong></p>
-                                    <p><strong>Pages:</strong>
-                                        <ng-container *ngIf="record.physicalDescriptions?.length; else noPages">
-                                            <ng-container
-                                                *ngFor="let pd of record.physicalDescriptions; let last = last">
-                                                {{ pd.extents.length ? pd.extents.join(', ') : '' }}<span *ngIf="!last">; </span>
-                                            </ng-container>
-                                        </ng-container>
-                                        <ng-template #noPages></ng-template>
-                                    </p>
+                                    <p><strong>Pages:</strong></p>
                                     <p><strong>Language:</strong></p>
                                 </div>
                                 <div class="mt-4 text-sm">
-                                    <p><strong>Call Number:</strong></p>
                                     <p><strong>Dewey:</strong></p>
                                     <p><strong>LC Class:</strong></p>
                                     <p><strong>Genre:</strong></p>
@@ -61,7 +36,7 @@
                                 </div>
                             </div>
                         </div>
-                        <img [src]="record.coverImageUrl" [alt]="record?.titleStatement?.title || 'Book cover'"
+                        <img [src]="record.coverImageUrl" alt="Cover not available"
                              class="w-32 h-48 bg-gray-300 dark:bg-gray-700 flex items-center justify-center"/>
                     </div>
                 </kn-panel>
@@ -89,6 +64,10 @@
                                         <kn-badge [content]="item?.status ?? ''"
                                                   [type]="item?.status === bibItemStatus.Available? 'success': item?.status === bibItemStatus.CheckedOut? 'warning': 'error'"/>
                                     </td>
+                                </tr>
+                            }@empty {
+                                <tr>
+                                    <td colspan="100%" class="text-center">Currently no holdings.</td>
                                 </tr>
                             }
                         </tbody>
@@ -131,7 +110,7 @@
                             <span>Checked Out:</span>
                             <span>{{ itemsCountByStatus[bibItemStatus.CheckedOut] }}</span>
                         </p>
-<!--                        <p class="flex justify-between"><span>On Hold:</span> <span>0</span></p>-->
+                        <!--                        <p class="flex justify-between"><span>On Hold:</span> <span>0</span></p>-->
                     </div>
                 </kn-panel>
 
