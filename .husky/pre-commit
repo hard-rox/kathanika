@@ -1,2 +1,5 @@
+dotnet format --verify-no-changes
 dotnet build
+
+npm run lint
 npm run build

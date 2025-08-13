@@ -11,7 +11,7 @@ public sealed class BibRecordType : ObjectType<BibRecord>
     {
         base.Configure(descriptor);
         descriptor.Ignore(x => x.MarcMetadata);
-        
+
         descriptor.Field(x => x.CreatedAt);
         descriptor.Field(x => x.CreatedByUserName);
         descriptor.Field(x => x.LastModifiedAt);
@@ -37,6 +37,7 @@ public sealed class BibRecordSortInputType : SortInputType<BibRecord>
     {
         base.Configure(descriptor);
         descriptor.Ignore(x => x.MarcMetadata);
+        descriptor.Ignore(x => x.CoverImageId);
     }
 }
 
@@ -46,5 +47,6 @@ public sealed class BibRecordFilterInputType : FilterInputType<BibRecord>
     {
         base.Configure(descriptor);
         descriptor.Ignore(x => x.MarcMetadata);
+        descriptor.Ignore(x => x.CoverImageId);
     }
 }
