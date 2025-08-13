@@ -23,7 +23,7 @@ export class BookRecordFormComponent extends BaseFormComponent<BookQuickAddInput
         return new FormGroup<FormControlsOf<BookQuickAddInput>>({
             title: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
             author: new FormControl<string>('', {nonNullable: true, validators: [Validators.required]}),
-            numberOfCopies: new FormControl<number>(1, {nonNullable: true, validators: [Validators.min(1)]}),
+            numberOfCopies: new FormControl<number>(1, {nonNullable: true, validators: [Validators.min(1001)]}),
             isbn: new FormControl<string | null>(null),
             publisher: new FormControl<string | null>(null),
             yearOfPublication: new FormControl<number | null>(null),

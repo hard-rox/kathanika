@@ -33,21 +33,20 @@ public record ControlField : ValueObject
 
     internal static KnResult<ControlField> Create(string tag, string data)
     {
-        // Validate tag format (001-009)
+        if (string.IsNullOrWhiteSpace(tag))
+            return KnResult.Failure<ControlField>(BibRecordAggregateErrors.ControlField.EmptyTag);
+
         if (!ControlFieldTagPattern.IsMatch(tag))
-            return KnResult.Failure<ControlField>(new KnError("ControlField.InvalidTag",
-                $"Control field tag must be 001-009, got: {tag}"));
+            return KnResult.Failure<ControlField>(BibRecordAggregateErrors.ControlField.InvalidTag(tag));
 
-        // Validate data is not empty
-        if (string.IsNullOrEmpty(data))
-            return KnResult.Failure<ControlField>(new KnError("ControlField.EmptyData",
-                $"Control field {tag} data cannot be empty"));
-
-        return KnResult.Success(new ControlField(tag, data));
+        return string.IsNullOrWhiteSpace(data)
+            ? KnResult.Failure<ControlField>(BibRecordAggregateErrors.ControlField.EmptyData(tag))
+            : KnResult.Success(new ControlField(tag, data));
     }
 
     public override IEnumerable<object?> GetAtomicValues()
     {
-        throw new NotImplementedException();
+        yield return Tag;
+        yield return Data;
     }
 }
