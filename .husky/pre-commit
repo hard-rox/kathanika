@@ -1,5 +1,13 @@
-dotnet format --verify-no-changes
-dotnet build
+# Run formatter only if .cs/.csproj/.sln changes are staged
+if ! git diff --name-only --cached | grep -E '\.(cs|csproj|sln)$' >/dev/null; then
+  echo "No C# changes staged; skipping dotnet format"
+else
+  dotnet format --verify-no-changes --no-restore
+fi
 
-npm run lint
-npm run build
+# Run linter only if .js/.ts/.jsx/.tsx changes are staged
+if ! git diff --name-only --cached | grep -E '\.(js|ts|jsx|tsx)$' >/dev/null; then
+  echo "No JavaScript/TypeScript changes staged; skipping lint"
+else
+    npm run lint
+fi

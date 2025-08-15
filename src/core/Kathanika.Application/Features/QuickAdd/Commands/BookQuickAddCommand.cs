@@ -11,7 +11,7 @@ public sealed record BookQuickAddCommand(
     int YearOfPublication,
     string Language,
     long NumberOfPages,
-    string Edition,
+    string? Edition = null,
     string? Note = null,
     string? CoverImageId = null
 ) : IRequest<KnResult<BibRecord>>;

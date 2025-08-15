@@ -9,7 +9,7 @@ namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 /// </summary>
 public record ControlField : ValueObject
 {
-    private static readonly Regex ControlFieldTagPattern = new(@"^00[1-9]$", RegexOptions.Compiled);
+    private static readonly Regex ControlFieldTagPattern = new(@"^00[1-9]$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(100));
 
     /// <summary>
     /// Three-digit tag identifying the field (001-009).

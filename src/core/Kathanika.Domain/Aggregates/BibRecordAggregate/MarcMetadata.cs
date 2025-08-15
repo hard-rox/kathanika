@@ -14,9 +14,11 @@ public class MarcMetadata : Entity
 
     /// <summary>
     /// MARC21 Leader - Fixed-length 24-character field containing metadata about the record.
-    /// Position 0-4: Record length, 5: Record status, 6: Type of record, 7: Bibliographic level, etc.
+    /// Position 0-4: Record length, 5: Record status, 6: Type of record, 7: Bibliographic level, 8: Encoding level,
+    /// 9: Descriptive cataloging form, 10-11: Character coding scheme,
+    /// 12-16: Base address of data, 17-23: Undefined.
     /// </summary>
-    public string Leader { get; private set; } = string.Empty;
+    public string Leader { get; private set; }
 
     /// <summary>
     /// Control Fields (001-009) - Variable-length fields without indicators or subfields.
@@ -39,70 +41,97 @@ public class MarcMetadata : Entity
         private init => _dataFields = value.ToList();
     }
 
+    private string RecalculateLeader()
+    {
+        // Calculate total record length
+        var recordLength = CalculateRecordLength();
+
+        // Get current leader as a char array for modification
+        var leader = Leader.ToCharArray();
+
+        // Update record length (positions 0-4)
+        var lengthString = recordLength.ToString("D5");
+        for (var i = 0; i < 5; i++)
+        {
+            leader[i] = lengthString[i];
+        }
+
+        // Calculate the base address of data (positions 12-16)
+        var baseAddress = CalculateBaseAddress();
+        var baseAddressString = baseAddress.ToString("D5");
+        for (var i = 0; i < 5; i++)
+        {
+            leader[12 + i] = baseAddressString[i];
+        }
+
+        return new string(leader);
+    }
+
+    private int CalculateRecordLength()
+    {
+        // Leader: 24 bytes
+        var length = 24;
+
+        // Directory entries: 12 bytes per field (control + data fields)
+        var totalFields = _controlFields.Count + _dataFields.Count;
+        length += totalFields * 12;
+
+        // Directory terminator: 1 byte
+        length += 1;
+
+        // Control fields data
+        length += _controlFields.Sum(field => field.Data.Length + 1);
+
+        // Data fields data
+        foreach (DataField field in _dataFields)
+        {
+            length += 2; // indicators
+            foreach (Subfield subfield in field.Subfields)
+            {
+                length += 1; // subfield delimiter
+                length += 1; // subfield code
+                length += subfield.Value.Length;
+            }
+
+            length += 1; // field terminator
+        }
+
+        // Record terminator: 1 byte
+        length += 1;
+
+        return length;
+    }
+
+    private int CalculateBaseAddress()
+    {
+        // Leader: 24 bytes
+        var baseAddress = 24;
+
+        // Directory entries: 12 bytes per field
+        var totalFields = _controlFields.Count + _dataFields.Count;
+        baseAddress += totalFields * 12;
+
+        // Directory terminator: 1 byte
+        baseAddress += 1;
+
+        return baseAddress;
+    }
+
     private MarcMetadata()
     {
     }
 
-    /// <summary>
-    /// Creates a new MARC21 metadata record with validation.
-    /// Validates all MARC21 constraints, including field repeatability and format requirements.
-    /// </summary>
-    public static KnResult<MarcMetadata> Create(
-        string leader,
-        IEnumerable<ControlField> controlFields,
-        IEnumerable<DataField> dataFields)
+    internal static KnResult<MarcMetadata> Create()
     {
-        List<ControlField> controlFieldsList = controlFields.ToList();
-        List<DataField> dataFieldsList = dataFields.ToList();
+        MarcMetadata metadata = new();
 
-        // Validate Leader (24 characters exactly)
-        KnResult leaderValidation = ValidateLeader(leader);
-        if (leaderValidation.IsFailure)
-            return KnResult.Failure<MarcMetadata>(leaderValidation.Errors);
+        metadata._controlFields.AddRange([
+            ControlField.Create("001", "KN" + Guid.NewGuid().ToString("N")[..10].ToUpper()).Value,
+            ControlField.Create("005", DateTime.UtcNow.ToString("yyyyMMddHHmmss.f")).Value
+        ]);
 
-        // Validate Control Fields
-        KnResult controlFieldsValidation = ValidateControlFields(controlFieldsList);
-        if (controlFieldsValidation.IsFailure)
-            return KnResult.Failure<MarcMetadata>(controlFieldsValidation.Errors);
-
-        return KnResult.Success(new MarcMetadata
-        {
-            Leader = leader,
-            ControlFields = controlFieldsList,
-            DataFields = dataFieldsList
-        });
-    }
-
-    private static KnResult ValidateLeader(string leader)
-    {
-        if (string.IsNullOrEmpty(leader) || leader.Length != 24)
-            return KnResult.Failure(BibRecordAggregateErrors.LeaderInvalid);
-
-        return KnResult.Success();
-    }
-
-    private static KnResult ValidateControlFields(IList<ControlField> controlFields)
-    {
-        List<string> tags = controlFields.Select(cf => cf.Tag).ToList();
-
-        // Check for required non-repeatable fields: 001, 005
-        ControlField? controlNumber = controlFields.FirstOrDefault(cf => cf.Tag == "001");
-        if (controlNumber == null)
-            return KnResult.Failure(BibRecordAggregateErrors.ControlNumberInvalid);
-
-        ControlField? dateTimeField = controlFields.FirstOrDefault(cf => cf.Tag == "005");
-        if (dateTimeField == null)
-            return KnResult.Failure(BibRecordAggregateErrors.DateTimeOfLatestTransactionInvalid);
-
-        // Validate non-repeatability for 001 and 005
-        if (tags.Count(t => t == "001") > 1)
-            return KnResult.Failure(BibRecordAggregateErrors.ControlNumberInvalid);
-
-        if (tags.Count(t => t == "005") > 1)
-            return KnResult.Failure(BibRecordAggregateErrors.DateTimeOfLatestTransactionInvalid);
-
-
-        return KnResult.Success();
+        metadata.Leader = metadata.RecalculateLeader();
+        return KnResult.Success(metadata);
     }
 
     internal string GetControlFieldValue(string tag)
@@ -137,5 +166,17 @@ public class MarcMetadata : Entity
             'g' => "Manuscripts",
             _ => "Unknown"
         };
+    }
+
+    internal KnResult AddDataField(string tag, char indicator1, char indicator2, IEnumerable<Subfield> subfields)
+    {
+        KnResult<DataField> dataFieldResult = DataField.Create(tag, indicator1, indicator2, subfields);
+        if (dataFieldResult.IsFailure)
+            return KnResult.Failure(dataFieldResult.Errors);
+
+        _dataFields.Add(dataFieldResult.Value);
+        Leader = RecalculateLeader();
+
+        return KnResult.Success();
     }
 }

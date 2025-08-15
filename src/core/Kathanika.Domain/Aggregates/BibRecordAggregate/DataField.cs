@@ -9,8 +9,8 @@ namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 /// </summary>
 public record DataField : ValueObject
 {
-    private static readonly Regex DataFieldTagPattern = new(@"^(0[1-9]\d|[1-9]\d\d)$", RegexOptions.Compiled);
-    private static readonly Regex IndicatorPattern = new(@"^[\d ]$", RegexOptions.Compiled);
+    private static readonly Regex DataFieldTagPattern = new(@"^(0[1-9]\d|[1-9]\d\d)$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(100));
+    private static readonly Regex IndicatorPattern = new(@"^[\d ]$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(100));
 
     /// <summary>
     /// Three-digit tag identifying the field (010-999).
@@ -69,7 +69,7 @@ public record DataField : ValueObject
                 $"Indicator2 must be digit 0-9 or space, got: '{indicator2}'"));
 
         // Validate subfields
-        if (!subfields.Any())
+        if (subfields is null || !subfields.Any())
             return KnResult.Failure<DataField>(new KnError("DataField.NoSubfields",
                 $"Data field {tag} must contain at least one subfield"));
 
@@ -84,6 +84,12 @@ public record DataField : ValueObject
 
     public override IEnumerable<object?> GetAtomicValues()
     {
-        throw new NotImplementedException();
+        yield return Tag;
+        yield return Indicator1;
+        yield return Indicator2;
+        foreach (Subfield subfield in Subfields)
+        {
+            yield return subfield;
+        }
     }
 }
