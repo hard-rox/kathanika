@@ -1,4 +1,3 @@
-using HotChocolate;
 using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
@@ -96,19 +95,5 @@ public sealed class BibRecord : AggregateRoot
         record.MarcMetadata.AddDataField("300", ' ', ' ', [Subfield.Create('a', $"{numberOfPages} pages").Value]);
 
         return KnResult.Success(record);
-    }
-
-    private static string CreateField008(int publicationYear, string language)
-    {
-        var dateEntered = DateTime.UtcNow.ToString("yyMMdd");
-        var typeOfDate = "s"; // Single known date
-        var date1 = publicationYear.ToString().PadLeft(4, '0');
-        var date2 = "    "; // Blank for single date
-        var placeOfPublication = "   "; // Unknown
-        var languageCode = language.Length >= 3 ? language[..3].ToLower() : language.PadRight(3);
-        var modifiedRecord = " "; // Not modified
-
-        return
-            $"{dateEntered}{typeOfDate}{date1}{date2}{placeOfPublication}{languageCode}     000 0 {languageCode} {modifiedRecord}";
     }
 }

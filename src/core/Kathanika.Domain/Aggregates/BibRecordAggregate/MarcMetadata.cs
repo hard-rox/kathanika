@@ -117,6 +117,127 @@ public class MarcMetadata : Entity
         return baseAddress;
     }
 
+    /// <summary>
+    /// Generates MARC21 008 field (Fixed-Length Data Elements) for books.
+    /// 008 field contains 40 positions with coded data elements for various bibliographic aspects.
+    /// </summary>
+    /// <param name="dateOfCreation">Date of creation (positions 0-5)</param>
+    /// <param name="publicationYear">Year of publication (positions 7-10)</param>
+    /// <param name="language">Language code (positions 35-37)</param>
+    /// <returns>40-character 008 field value</returns>
+    private static string GenerateFixedLengthDataElements(DateTime? dateOfCreation = null, string? publicationYear = null, string? language = null)
+    {
+        var field008 = new char[40];
+
+        // Fill with default values (blank/pipe characters)
+        for (var i = 0; i < 40; i++)
+        {
+            field008[i] = ' ';
+        }
+
+        // Positions 0-5: Date entered on file (YYMMDD)
+        DateTime creationDate = dateOfCreation ?? DateTime.UtcNow;
+        var dateEntered = creationDate.ToString("yyMMdd");
+        for (var i = 0; i < 6; i++)
+        {
+            field008[i] = dateEntered[i];
+        }
+
+        // Position 6: Type of date/Publication status
+        field008[6] = 's'; // Single known date
+
+        // Positions 7-10: Date 1 (Publication year)
+        if (!string.IsNullOrEmpty(publicationYear) && publicationYear.Length == 4)
+        {
+            for (var i = 0; i < 4; i++)
+            {
+                field008[7 + i] = publicationYear[i];
+            }
+        }
+        else
+        {
+            // Unknown date
+            for (var i = 7; i <= 10; i++)
+            {
+                field008[i] = 'u';
+            }
+        }
+
+        // Positions 11-14: Date 2 (blank for single date)
+        for (var i = 11; i <= 14; i++)
+        {
+            field008[i] = ' ';
+        }
+
+        // Position 15-17: Place of publication (XXX for unknown)
+        field008[15] = 'x';
+        field008[16] = 'x';
+        field008[17] = ' ';
+
+        // Positions 18-21: Illustrations (blank = no illustrations)
+        for (var i = 18; i <= 21; i++)
+        {
+            field008[i] = ' ';
+        }
+
+        // Position 22: Target audience
+        field008[22] = ' '; // Unknown or not specified
+
+        // Position 23: Form of item
+        field008[23] = ' '; // None of the following
+
+        // Positions 24-27: Nature of contents
+        for (var i = 24; i <= 27; i++)
+        {
+            field008[i] = ' ';
+        }
+
+        // Position 28: Government publication
+        field008[28] = ' '; // Not a government publication
+
+        // Position 29: Conference publication
+        field008[29] = '0'; // Not a conference publication
+
+        // Position 30: Festschrift
+        field008[30] = '0'; // Not a festschrift
+
+        // Position 31: Index
+        field008[31] = '0'; // No index
+
+        // Position 32: Undefined
+        field008[32] = ' ';
+
+        // Position 33: Literary form
+        field008[33] = '0'; // Not fiction
+
+        // Position 34: Biography
+        field008[34] = ' '; // No biographical material
+
+        // Positions 35-37: Language
+        var lang = language?.ToLowerInvariant() ?? "eng";
+        if (lang.Length >= 3)
+        {
+            for (var i = 0; i < 3; i++)
+            {
+                field008[35 + i] = lang[i];
+            }
+        }
+        else
+        {
+            field008[35] = 'e';
+            field008[36] = 'n';
+            field008[37] = 'g';
+        }
+
+        // Position 38: Modified record
+        field008[38] = ' '; // Not modified
+
+        // Position 39: Cataloging source
+        field008[39] = 'd'; // Other
+
+        return new string(field008);
+    }
+
     private MarcMetadata()
     {
     }
@@ -127,7 +248,8 @@ public class MarcMetadata : Entity
 
         metadata._controlFields.AddRange([
             ControlField.Create("001", "KN" + Guid.NewGuid().ToString("N")[..10].ToUpper()).Value,
-            ControlField.Create("005", DateTime.UtcNow.ToString("yyyyMMddHHmmss.f")).Value
+            ControlField.Create("005", DateTime.UtcNow.ToString("yyyyMMddHHmmss.f")).Value,
+            ControlField.Create("008", GenerateFixedLengthDataElements()).Value,
         ]);
 
         metadata.Leader = metadata.RecalculateLeader();
