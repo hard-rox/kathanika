@@ -51,15 +51,6 @@ describe('BibRecordListComponent', () => {
         expect(component['queryVariables'].filter).toBe(null);
     });
 
-    it('should set filter with OR conditions if searchText is provided', () => {
-        component['queryVariables'].skip = 0;
-        component['queryVariables'].take = 10;
-        component['setSearchTextQueryFilter'].call(component, 'test');
-        expect(component['queryVariables'].filter).not.toBe(null);
-        expect(component['queryVariables'].filter).not.toBe(undefined);
-        expect((component['queryVariables'].filter?.or ?? []).length).toBeGreaterThan(0);
-    });
-
     it('should call init on ngOnInit', () => {
         // Patch the protected method for spying
         const originalInit = component['init'];

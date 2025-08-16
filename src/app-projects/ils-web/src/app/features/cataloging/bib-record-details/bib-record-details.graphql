@@ -1,23 +1,14 @@
 query BibRecordDetails($id: String!) {
     bibRecord(id: $id) {
         id
+        title
+        author
         controlNumber
-        titleStatement {
-            title
-            statementOfResponsibility
-        }
-        internationalStandardBookNumbers
-        mainEntryPersonalName {
-            personalName
-        }
-        publicationDistributions {
-            namesOfPublisher
-            datesOfPublication
-        }
-        physicalDescriptions {
-            extents
-            dimensions
-        }
+        isbn
+        issn
+        publisher
+        publicationYear
+        materialType
         coverImageUrl
         createdAt
         createdByUserName

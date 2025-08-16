@@ -1,4 +1,4 @@
-using Kathanika.Application.Features.BibRecords.Commands;
+using Kathanika.Application.Features.Vendors.Commands;
 using Kathanika.Domain.Primitives;
 using Kathanika.Infrastructure.Graphql;
 using Kathanika.Infrastructure.Persistence;
@@ -13,7 +13,7 @@ public sealed class DependencyDirectionTests
     [Fact]
     public void Domain_ShouldNot_HaveDependencyOnApplication()
     {
-        Assembly applicationAssembly = typeof(CreateBibRecordCommand).Assembly;
+        Assembly applicationAssembly = typeof(AddVendorCommand).Assembly;
 
         TestResult result = Types.InAssembly(_domainAssembly)
             .ShouldNot()
@@ -57,7 +57,7 @@ public sealed class DependencyDirectionTests
     [Fact]
     public void Application_ShouldNot_HaveDependencyOnInfrastructure()
     {
-        Assembly applicationAssembly = typeof(CreateBibRecordCommand).Assembly;
+        Assembly applicationAssembly = typeof(AddVendorCommand).Assembly;
         Assembly graphqlInfraAssembly = typeof(SchemaConfigurations).Assembly;
         Assembly persistenceInfraAssembly = typeof(MongoDbConfigurations).Assembly;
         Assembly workersInfraAssembly = typeof(ProcessOutboxMessagesJob).Assembly;

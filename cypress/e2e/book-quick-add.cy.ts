@@ -28,7 +28,7 @@ describe('Quick Add Books Feature', () => {
         cy.get('input[id="language"]').type(bookData.language);
         cy.get('input[id="numberOfPages"]').type(bookData.numberOfPages.toString());
         cy.get('input[id="edition"]').type(bookData.edition);
-        cy.get('textarea[id="description"]').type(bookData.description);
+        cy.get('textarea[id="note"]').type(bookData.description);
 
         // Submit the form
         cy.get('form').submit();
@@ -104,7 +104,7 @@ describe('Quick Add Books Feature', () => {
         cy.get('input[id="yearOfPublication"]').type(internationalBookData.yearOfPublication.toString());
         cy.get('input[id="language"]').type(internationalBookData.language);
         cy.get('input[id="numberOfPages"]').type(internationalBookData.numberOfPages.toString());
-        cy.get('textarea[id="description"]').type(internationalBookData.description);
+        cy.get('textarea[id="note"]').type(internationalBookData.description);
 
         // Submit and verify
         cy.get('input[type="submit"][value="Save Book"]').click();
