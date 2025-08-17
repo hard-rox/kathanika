@@ -18,7 +18,7 @@ public class MarcMetadata : Entity
     /// 9: Descriptive cataloging form, 10-11: Character coding scheme,
     /// 12-16: Base address of data, 17-23: Undefined.
     /// </summary>
-    public string Leader { get; private set; }
+    public string Leader { get; private set; } = new(' ', 24);
 
     /// <summary>
     /// Control Fields (001-009) - Variable-length fields without indicators or subfields.
@@ -125,7 +125,8 @@ public class MarcMetadata : Entity
     /// <param name="publicationYear">Year of publication (positions 7-10)</param>
     /// <param name="language">Language code (positions 35-37)</param>
     /// <returns>40-character 008 field value</returns>
-    private static string GenerateFixedLengthDataElements(DateTime? dateOfCreation = null, string? publicationYear = null, string? language = null)
+    private static string GenerateFixedLengthDataElements(DateTime? dateOfCreation = null,
+        string? publicationYear = null, string? language = null)
     {
         var field008 = new char[40];
 

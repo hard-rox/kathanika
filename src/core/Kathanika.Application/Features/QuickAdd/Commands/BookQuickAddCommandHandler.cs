@@ -24,11 +24,11 @@ internal sealed class BookQuickAddCommandHandler(
             return bibRecordResult;
 
         if (!string.IsNullOrWhiteSpace(request.CoverImageId))
-            bibRecordResult.Value.AddCoverImage(request.CoverImageId);
+            bibRecordResult.Value.UpdateCoverImage(request.CoverImageId);
         if (!string.IsNullOrWhiteSpace(request.Edition))
-            bibRecordResult.Value.AddEdition(request.Edition);
+            bibRecordResult.Value.UpdateEdition(request.Edition);
         if (!string.IsNullOrWhiteSpace(request.Note))
-            bibRecordResult.Value.AddNote(request.Note);
+            bibRecordResult.Value.UpdateNote(request.Note);
 
         BibRecord createdBibRecord = await bibRecordRepository.AddAsync(bibRecordResult.Value, cancellationToken);
 

@@ -31,7 +31,7 @@ public sealed class BibRecord : AggregateRoot
     {
     }
 
-    public KnResult AddCoverImage(string coverImageId)
+    public KnResult UpdateCoverImage(string coverImageId)
     {
         if (string.IsNullOrWhiteSpace(coverImageId))
             return KnResult.Failure(new KnError("BibRecord.InvalidCoverImageId",
@@ -41,7 +41,7 @@ public sealed class BibRecord : AggregateRoot
         return KnResult.Success();
     }
 
-    public KnResult AddEdition(string edition)
+    public KnResult UpdateEdition(string edition)
     {
         if (string.IsNullOrWhiteSpace(edition))
             return KnResult.Failure(new KnError("BibRecord.InvalidEdition",
@@ -53,7 +53,7 @@ public sealed class BibRecord : AggregateRoot
         return result.IsFailure ? KnResult.Failure(result.Errors) : KnResult.Success();
     }
 
-    public KnResult AddNote(string note)
+    public KnResult UpdateNote(string note)
     {
         if (string.IsNullOrWhiteSpace(note))
             return KnResult.Failure(new KnError("BibRecord.InvalidNote",
