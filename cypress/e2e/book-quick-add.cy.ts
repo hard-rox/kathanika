@@ -16,7 +16,7 @@ describe('Quick Add Books Feature', () => {
             language: 'English',
             numberOfPages: faker.number.int({min: 50, max: 800}),
             edition: faker.helpers.arrayElement(['First Edition', 'Second Edition', 'Revised Edition', 'Third Edition']),
-            description: faker.lorem.paragraph(3)
+            note: faker.lorem.paragraph(3)
         };
 
         // Fill out the form
@@ -28,7 +28,7 @@ describe('Quick Add Books Feature', () => {
         cy.get('input[id="language"]').type(bookData.language);
         cy.get('input[id="numberOfPages"]').type(bookData.numberOfPages.toString());
         cy.get('input[id="edition"]').type(bookData.edition);
-        cy.get('textarea[id="note"]').type(bookData.description);
+        cy.get('textarea[id="note"]').type(bookData.note);
 
         // Submit the form
         cy.get('form').submit();
@@ -93,7 +93,7 @@ describe('Quick Add Books Feature', () => {
             yearOfPublication: faker.date.past({years: 8}).getFullYear(),
             language: 'French',
             numberOfPages: faker.number.int({min: 200, max: 400}),
-            description: 'Une histoire captivante qui se déroule dans le célèbre café parisien...'
+            note: 'Une histoire captivante qui se déroule dans le célèbre café parisien...'
         };
 
         // Fill form with international characters
@@ -104,7 +104,7 @@ describe('Quick Add Books Feature', () => {
         cy.get('input[id="yearOfPublication"]').type(internationalBookData.yearOfPublication.toString());
         cy.get('input[id="language"]').type(internationalBookData.language);
         cy.get('input[id="numberOfPages"]').type(internationalBookData.numberOfPages.toString());
-        cy.get('textarea[id="note"]').type(internationalBookData.description);
+        cy.get('textarea[id="note"]').type(internationalBookData.note);
 
         // Submit and verify
         cy.get('input[type="submit"][value="Save Book"]').click();
@@ -123,7 +123,7 @@ describe('Quick Add Books Feature', () => {
                 language: faker.helpers.arrayElement(['English', 'Spanish', 'French', 'German', 'Italian']),
                 numberOfPages: faker.number.int({min: 50, max: 1000}),
                 edition: faker.helpers.arrayElement(['First', 'Second', 'Third', 'Revised', 'Updated']),
-                description: faker.lorem.sentences(faker.number.int({min: 2, max: 5}))
+                note: faker.lorem.sentences(faker.number.int({min: 2, max: 5}))
             };
 
             // If not first iteration, navigate back
@@ -133,7 +133,7 @@ describe('Quick Add Books Feature', () => {
 
             // Fill all fields rapidly
             Object.entries(randomBook).forEach(([field, value]) => {
-                if (field === 'description') {
+                if (field === 'note') {
                     cy.get(`textarea[id="${field}"]`).type(value.toString(), {delay: 0});
                 } else {
                     cy.get(`input[id="${field}"]`).type(value.toString(), {delay: 0});

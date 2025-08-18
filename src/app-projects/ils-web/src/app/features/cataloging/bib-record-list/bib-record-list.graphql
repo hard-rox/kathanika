@@ -10,8 +10,8 @@ query bibRecordList(
             title
             author
             controlNumber
-            isbn
-            issn
+            isbns
+            issns
             publisher
             publicationYear
             materialType

@@ -9,7 +9,7 @@ namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 /// </summary>
 public record Subfield : ValueObject
 {
-    private static readonly Regex SubfieldCodePattern = new(@"^[a-z0-9!$%]$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(100));
+    private static readonly Regex SubfieldCodePattern = new("^[a-z0-9!$%]$", RegexOptions.Compiled, TimeSpan.FromMilliseconds(100));
 
     /// <summary>
     /// Single character subfield code (a-z, 0-9, !, $, %).

@@ -4,21 +4,32 @@ namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 
 public sealed class BibRecord : AggregateRoot
 {
-    public string Title => MarcMetadata?.GetDataFieldValue("245", 'a') ?? string.Empty;
-    public string Author => MarcMetadata?.GetDataFieldValue("100", 'a') ?? string.Empty;
-    public string ControlNumber => MarcMetadata?.GetControlFieldValue("001") ?? string.Empty;
-    public string Isbn => MarcMetadata?.GetDataFieldValue("020", 'a') ?? string.Empty;
-    public string Issn => MarcMetadata?.GetDataFieldValue("022", 'a') ?? string.Empty;
-    public string Publisher => MarcMetadata?.GetDataFieldValue("260", 'b') ?? string.Empty;
-
+    public string Title => MarcMetadata.GetDataFieldValue("245", 'a');
+    public string Author => MarcMetadata.GetDataFieldValue("100", 'a');
+    public string ControlNumber => MarcMetadata.GetControlFieldValue("001");
+    public string Isbns => string.Join(", ", MarcMetadata.DataFields
+        .Where(df => df.Tag == "020")
+        .SelectMany(df => df.Subfields.Where(sf => sf.Code == 'a')
+            .Select(sf => sf.Value))
+        .Where(v => !string.IsNullOrWhiteSpace(v))
+        .Distinct()
+        .ToArray());
+    public string Issns => string.Join(", ", MarcMetadata.DataFields
+        .Where(df => df.Tag == "022")
+        .SelectMany(df => df.Subfields.Where(sf => sf.Code == 'a')
+            .Select(sf => sf.Value))
+        .Where(v => !string.IsNullOrWhiteSpace(v))
+        .Distinct()
+        .ToArray());
+    public string Publisher => MarcMetadata.GetDataFieldValue("260", 'b');
     public int? PublicationYear =>
-        MarcMetadata?.GetDataFieldValue("260", 'c') is { } yearStr
+        MarcMetadata.GetDataFieldValue("260", 'c') is { } yearStr
         && int.TryParse(yearStr, out var year)
             ? year
             : null;
 
-    public string? MaterialType => MarcMetadata?.GetMaterialType();
-    public string? Note => MarcMetadata?.GetDataFieldValue("500", 'a');
+    public string? MaterialType => MarcMetadata.GetMaterialType();
+    public string? Note => MarcMetadata.GetDataFieldValue("500", 'a');
     public string? CoverImageId { get; private set; }
 
     /// <summary>

@@ -130,14 +130,25 @@ public class MarcMetadata : Entity
     {
         var field008 = new char[40];
 
-        // Fill with default values (blank/pipe characters)
+        // Initialize with spaces
         for (var i = 0; i < 40; i++)
         {
             field008[i] = ' ';
         }
 
+        SetDateEntered(field008, dateOfCreation ?? DateTime.UtcNow);
+        SetPublicationData(field008, publicationYear);
+        SetPublicationPlace(field008);
+        SetContentAttributes(field008);
+        SetLanguage(field008, language);
+        SetRecordAttributes(field008);
+
+        return new string(field008);
+    }
+
+    private static void SetDateEntered(char[] field008, DateTime creationDate)
+    {
         // Positions 0-5: Date entered on file (YYMMDD)
-        DateTime creationDate = dateOfCreation ?? DateTime.UtcNow;
         var dateEntered = creationDate.ToString("yyMMdd");
         for (var i = 0; i < 6; i++)
         {
@@ -146,7 +157,10 @@ public class MarcMetadata : Entity
 
         // Position 6: Type of date/Publication status
         field008[6] = 's'; // Single known date
+    }
 
+    private static void SetPublicationData(char[] field008, string? publicationYear)
+    {
         // Positions 7-10: Date 1 (Publication year)
         if (!string.IsNullOrEmpty(publicationYear) && publicationYear.Length == 4)
         {
@@ -169,12 +183,18 @@ public class MarcMetadata : Entity
         {
             field008[i] = ' ';
         }
+    }
 
+    private static void SetPublicationPlace(char[] field008)
+    {
         // Position 15-17: Place of publication (XXX for unknown)
         field008[15] = 'x';
         field008[16] = 'x';
         field008[17] = ' ';
+    }
 
+    private static void SetContentAttributes(char[] field008)
+    {
         // Positions 18-21: Illustrations (blank = no illustrations)
         for (var i = 18; i <= 21; i++)
         {
@@ -213,7 +233,10 @@ public class MarcMetadata : Entity
 
         // Position 34: Biography
         field008[34] = ' '; // No biographical material
+    }
 
+    private static void SetLanguage(char[] field008, string? language)
+    {
         // Positions 35-37: Language
         var lang = language?.ToLowerInvariant() ?? "eng";
         if (lang.Length >= 3)
@@ -229,14 +252,15 @@ public class MarcMetadata : Entity
             field008[36] = 'n';
             field008[37] = 'g';
         }
+    }
 
+    private static void SetRecordAttributes(char[] field008)
+    {
         // Position 38: Modified record
         field008[38] = ' '; // Not modified
 
         // Position 39: Cataloging source
         field008[39] = 'd'; // Other
-
-        return new string(field008);
     }
 
     private MarcMetadata()
@@ -276,7 +300,7 @@ public class MarcMetadata : Entity
     internal string GetMaterialType()
     {
         var controlField008Value = GetControlFieldValue("008");
-        if (controlField008Value.Length < 6)
+        if (controlField008Value.Length < 7)
             return "Unknown";
         return controlField008Value[6] switch
         {

@@ -5,123 +5,6 @@ namespace Kathanika.Domain.Tests.Aggregates.BibRecordAggregate;
 public sealed class BibRecordTests
 {
     [Fact]
-    public void Title_ShouldReturnEmptyString_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var title = bibRecord.Title;
-
-        // Assert
-        Assert.Equal(string.Empty, title);
-    }
-
-    [Fact]
-    public void Author_ShouldReturnEmptyString_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var author = bibRecord.Author;
-
-        // Assert
-        Assert.Equal(string.Empty, author);
-    }
-
-    [Fact]
-    public void ControlNumber_ShouldReturnEmptyString_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var controlNumber = bibRecord.ControlNumber;
-
-        // Assert
-        Assert.Equal(string.Empty, controlNumber);
-    }
-
-    [Fact]
-    public void Isbn_ShouldReturnEmptyString_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var isbn = bibRecord.Isbn;
-
-        // Assert
-        Assert.Equal(string.Empty, isbn);
-    }
-
-    [Fact]
-    public void Issn_ShouldReturnEmptyString_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var issn = bibRecord.Issn;
-
-        // Assert
-        Assert.Equal(string.Empty, issn);
-    }
-
-    [Fact]
-    public void Publisher_ShouldReturnEmptyString_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var publisher = bibRecord.Publisher;
-
-        // Assert
-        Assert.Equal(string.Empty, publisher);
-    }
-
-    [Fact]
-    public void PublicationYear_ShouldReturnNull_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var publicationYear = bibRecord.PublicationYear;
-
-        // Assert
-        Assert.Null(publicationYear);
-    }
-
-    [Fact]
-    public void MaterialType_ShouldReturnNull_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var materialType = bibRecord.MaterialType;
-
-        // Assert
-        Assert.Null(materialType);
-    }
-
-    [Fact]
-    public void Note_ShouldReturnNull_WhenMarcMetadataIsNull()
-    {
-        // Arrange - Use reflection to create BibRecord with null MarcMetadata
-        BibRecord bibRecord = (BibRecord)Activator.CreateInstance(typeof(BibRecord), true)!;
-
-        // Act
-        var note = bibRecord.Note;
-
-        // Assert
-        Assert.Null(note);
-    }
-
-    [Fact]
     public void CoverImageId_ShouldReturnNull_WhenNotSet()
     {
         // Arrange - Use reflection to create BibRecord with null MarcMetadata
@@ -217,7 +100,8 @@ public sealed class BibRecordTests
         const long numberOfPages = 250L;
 
         // Act
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord(title, author, isbn, publisher, publicationYear, language, numberOfPages);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord(title, author, isbn, publisher, publicationYear, language, numberOfPages);
 
         // Assert
         Assert.True(result.IsSuccess);
@@ -238,13 +122,14 @@ public sealed class BibRecordTests
         var numberOfPages = 300L;
 
         // Act
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord(title, author, isbn, publisher, publicationYear, language, numberOfPages);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord(title, author, isbn, publisher, publicationYear, language, numberOfPages);
 
         // Assert
         BibRecord bibRecord = result.Value;
         Assert.Equal(title, bibRecord.Title);
         Assert.Equal(author, bibRecord.Author);
-        Assert.Equal(isbn, bibRecord.Isbn);
+        Assert.Equal(isbn, bibRecord.Isbns);
         Assert.Equal(publisher, bibRecord.Publisher);
         Assert.Equal(publicationYear, bibRecord.PublicationYear);
     }
@@ -257,7 +142,8 @@ public sealed class BibRecordTests
     public void UpdateEdition_ShouldReturnFailure_WhenEditionIsNullOrWhitespace(string? edition)
     {
         // Arrange
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
         BibRecord bibRecord = result.Value;
 
         // Act
@@ -273,7 +159,8 @@ public sealed class BibRecordTests
     public void UpdateEdition_ShouldReturnSuccess_WhenValidEditionProvided()
     {
         // Arrange
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
         BibRecord bibRecord = result.Value;
         var edition = "2nd Edition";
 
@@ -292,7 +179,8 @@ public sealed class BibRecordTests
     public void UpdateNote_ShouldReturnFailure_WhenNoteIsNullOrWhitespace(string? note)
     {
         // Arrange
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
         BibRecord bibRecord = result.Value;
 
         // Act
@@ -308,7 +196,8 @@ public sealed class BibRecordTests
     public void UpdateNote_ShouldReturnSuccess_WhenValidNoteProvided()
     {
         // Arrange
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
         BibRecord bibRecord = result.Value;
         var note = "This is a test note";
 
@@ -326,7 +215,8 @@ public sealed class BibRecordTests
     public void PublicationYear_ShouldParseCorrectly_WhenValidYearInMarc(int expectedYear)
     {
         // Arrange
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", expectedYear, "eng", 100);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", expectedYear, "eng", 100);
         BibRecord bibRecord = result.Value;
 
         // Act
@@ -353,7 +243,7 @@ public sealed class BibRecordTests
         // Assert
         Assert.Equal(title, bibRecord.Title);
         Assert.Equal(author, bibRecord.Author);
-        Assert.Equal(isbn, bibRecord.Isbn);
+        Assert.Equal(isbn, bibRecord.Isbns);
         Assert.Equal(publisher, bibRecord.Publisher);
         Assert.Equal(year, bibRecord.PublicationYear);
         Assert.NotNull(bibRecord.MarcMetadata);
@@ -363,7 +253,8 @@ public sealed class BibRecordTests
     public void UpdateCoverImage_ShouldUpdateCoverImageId_WhenValidIdProvided()
     {
         // Arrange
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
         BibRecord bibRecord = result.Value;
         var coverImageId = "cover-123";
 
@@ -379,7 +270,8 @@ public sealed class BibRecordTests
     public void UpdateCoverImage_ShouldOverwritePreviousValue_WhenCalledMultipleTimes()
     {
         // Arrange
-        KnResult<BibRecord> result = BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
+        KnResult<BibRecord> result =
+            BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
         BibRecord bibRecord = result.Value;
         const string firstId = "cover-001";
         const string secondId = "cover-002";

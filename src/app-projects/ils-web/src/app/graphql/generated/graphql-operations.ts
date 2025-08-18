@@ -95,14 +95,13 @@ export type BibRecord = {
   __typename?: 'BibRecord';
   author: Scalars['String']['output'];
   bibItems?: Maybe<Array<Maybe<BibItem>>>;
-  callNumber: Scalars['String']['output'];
   controlNumber: Scalars['String']['output'];
   coverImageUrl?: Maybe<Scalars['URL']['output']>;
   createdAt: Scalars['DateTime']['output'];
   createdByUserName: Scalars['String']['output'];
   id: Scalars['String']['output'];
-  isbn: Scalars['String']['output'];
-  issn: Scalars['String']['output'];
+  isbns: Scalars['String']['output'];
+  issns: Scalars['String']['output'];
   lastModifiedAt?: Maybe<Scalars['DateTime']['output']>;
   lastModifiedByUserName?: Maybe<Scalars['String']['output']>;
   materialType?: Maybe<Scalars['String']['output']>;
@@ -115,12 +114,10 @@ export type BibRecord = {
 export type BibRecordFilterInput = {
   and?: InputMaybe<Array<BibRecordFilterInput>>;
   author?: InputMaybe<StringOperationFilterInput>;
-  callNumber?: InputMaybe<StringOperationFilterInput>;
   controlNumber?: InputMaybe<StringOperationFilterInput>;
-  coverImageId?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
-  isbn?: InputMaybe<StringOperationFilterInput>;
-  issn?: InputMaybe<StringOperationFilterInput>;
+  isbns?: InputMaybe<StringOperationFilterInput>;
+  issns?: InputMaybe<StringOperationFilterInput>;
   materialType?: InputMaybe<StringOperationFilterInput>;
   note?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<BibRecordFilterInput>>;
@@ -131,12 +128,10 @@ export type BibRecordFilterInput = {
 
 export type BibRecordSortInput = {
   author?: InputMaybe<SortEnumType>;
-  callNumber?: InputMaybe<SortEnumType>;
   controlNumber?: InputMaybe<SortEnumType>;
-  coverImageId?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
-  isbn?: InputMaybe<SortEnumType>;
-  issn?: InputMaybe<SortEnumType>;
+  isbns?: InputMaybe<SortEnumType>;
+  issns?: InputMaybe<SortEnumType>;
   materialType?: InputMaybe<SortEnumType>;
   note?: InputMaybe<SortEnumType>;
   publicationYear?: InputMaybe<SortEnumType>;
@@ -157,7 +152,7 @@ export type BibRecordsCollectionSegment = {
 export type BookQuickAddInput = {
   author: Scalars['String']['input'];
   coverImageId?: InputMaybe<Scalars['String']['input']>;
-  edition: Scalars['String']['input'];
+  edition?: InputMaybe<Scalars['String']['input']>;
   isbn: Scalars['String']['input'];
   language: Scalars['String']['input'];
   note?: InputMaybe<Scalars['String']['input']>;
@@ -872,7 +867,7 @@ export type BibRecordDetailsQueryVariables = Exact<{
 }>;
 
 
-export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, title: string, author: string, controlNumber: string, isbn: string, issn: string, publisher: string, publicationYear?: number | null, materialType?: string | null, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, bibItems?: Array<{ __typename?: 'BibItem', id: string, callNumber: string, barcode: string, status: ItemStatus, itemType: ItemType, location: string } | null> | null } | null };
+export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, title: string, author: string, controlNumber: string, isbns: string, issns: string, publisher: string, publicationYear?: number | null, materialType?: string | null, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, bibItems?: Array<{ __typename?: 'BibItem', id: string, callNumber: string, barcode: string, status: ItemStatus, itemType: ItemType, location: string } | null> | null } | null };
 
 export type BibRecordListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -882,7 +877,7 @@ export type BibRecordListQueryVariables = Exact<{
 }>;
 
 
-export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, title: string, author: string, controlNumber: string, isbn: string, issn: string, publisher: string, publicationYear?: number | null, materialType?: string | null, createdAt: any, lastModifiedAt?: any | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
+export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, title: string, author: string, controlNumber: string, isbns: string, issns: string, publisher: string, publicationYear?: number | null, materialType?: string | null, createdAt: any, lastModifiedAt?: any | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type CreatePurchaseOrderMutationVariables = Exact<{
   input: CreatePurchaseOrderInput;
@@ -995,8 +990,8 @@ export const BibRecordDetailsDocument = gql`
     title
     author
     controlNumber
-    isbn
-    issn
+    isbns
+    issns
     publisher
     publicationYear
     materialType
@@ -1035,8 +1030,8 @@ export const BibRecordListDocument = gql`
       title
       author
       controlNumber
-      isbn
-      issn
+      isbns
+      issns
       publisher
       publicationYear
       materialType
