@@ -10,7 +10,6 @@ internal sealed class BookQuickAddCommandHandler(
 {
     public async Task<KnResult<BibRecord>> Handle(BookQuickAddCommand request, CancellationToken cancellationToken)
     {
-        // Create the BibRecord with the provided metadata
         KnResult<BibRecord> bibRecordResult = BibRecord.CreateBookRecord(
             request.Title,
             request.Author,
@@ -18,16 +17,19 @@ internal sealed class BookQuickAddCommandHandler(
             request.Publisher,
             request.YearOfPublication,
             request.Language,
-            request.NumberOfPages,
-            request.Edition,
-            request.Description,
-            request.CoverImageId
+            request.NumberOfPages
         );
 
         if (bibRecordResult.IsFailure)
             return bibRecordResult;
 
-        // Add the BibRecord to the repository
+        if (!string.IsNullOrWhiteSpace(request.CoverImageId))
+            bibRecordResult.Value.UpdateCoverImage(request.CoverImageId);
+        if (!string.IsNullOrWhiteSpace(request.Edition))
+            bibRecordResult.Value.UpdateEdition(request.Edition);
+        if (!string.IsNullOrWhiteSpace(request.Note))
+            bibRecordResult.Value.UpdateNote(request.Note);
+
         BibRecord createdBibRecord = await bibRecordRepository.AddAsync(bibRecordResult.Value, cancellationToken);
 
         // Create the specified number of BibItems

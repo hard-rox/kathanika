@@ -20,12 +20,6 @@
         <div class="flex justify-between">
             <div class="flex space-x-2 items-center">
                 <p>Sort by: </p>
-<!--                <kn-select-input>-->
-<!--                    <option value="title">Title (A-Z)</option>-->
-<!--                    <option value="-title">Title (Z-A)</option>-->
-<!--                    <option value="author">Author (A-Z)</option>-->
-<!--                    <option value="-author">Author (Z-A)</option>-->
-<!--                </kn-select-input>-->
             </div>
             <div class="flex space-x-2 items-center">
                 <p>View: </p>
@@ -49,8 +43,9 @@
                     <th scope="col">Serial</th>
                     <th scope="col">Title | Author</th>
                     <th scope="col">Control Number</th>
-                    <th scope="col">ISBN | ISSN</th>
-                    <th scope="col">Publication & Distribution</th>
+                    <th scope="col">ISBN/ISSN</th>
+                    <th scope="col">Publication</th>
+                    <th scope="col">Material Type</th>
                     <th scope="col">Actions</th>
                 </tr>
                 </thead>
@@ -59,24 +54,24 @@
                         <tr>
                             <td class="text-right">{{ idx + 1 }}</td>
                             <td>
-                                <a [routerLink]="[item.id]">
-                                    {{ item.titleStatement.title }}
-                                </a>
-                                <p class="text-sm text-theme-davys-gray">{{ item.titleStatement.statementOfResponsibility }}</p>
+                                <a [routerLink]="[item.id]">{{ item.title }}</a>
+                                <p class="text-sm text-theme-davys-gray">{{ item.author }}</p>
+                                <!--                                Creation info-->
                             </td>
                             <td>{{ item.controlNumber }}</td>
-                            <td>{{ item.internationalStandardBookNumbers.join(' | ') || '—' }}</td>
                             <td>
-                                @for (pd of item.publicationDistributions || []; track pd) {
-                                    <div class="text-sm">
-                                        @if (pd.namesOfPublisher.length) {
-                                            {{ pd.namesOfPublisher.join(', ') }}
-                                        }
-                                        @if (pd.datesOfPublication.length) {
-                                            | {{ pd.datesOfPublication.join(', ') }}
-                                        }
-                                    </div>
-                                }
+                                {{ item.isbns }}/{{ item.issns }}
+                            </td>
+                            <td>
+                                <p class="text-sm text-theme-davys-gray">
+                                    {{ item.publisher }}
+                                </p>
+                                <p class="text-sm text-theme-davys-gray">
+                                    {{ item.publicationYear }}
+                                </p>
+                            </td>
+                            <td>
+                                <kn-chip>{{ item.materialType }}</kn-chip>
                             </td>
                             <td>
                                 <div class="flex text-sm text-shadow-theme-davys-gray">

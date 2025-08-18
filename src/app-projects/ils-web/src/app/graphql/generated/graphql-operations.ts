@@ -93,52 +93,50 @@ export type BibItem = {
 
 export type BibRecord = {
   __typename?: 'BibRecord';
+  author: Scalars['String']['output'];
   bibItems?: Maybe<Array<Maybe<BibItem>>>;
   controlNumber: Scalars['String']['output'];
-  controlNumberIdentifier: Scalars['String']['output'];
   coverImageUrl?: Maybe<Scalars['URL']['output']>;
   createdAt: Scalars['DateTime']['output'];
   createdByUserName: Scalars['String']['output'];
-  dateAndTimeOfLatestTransaction: Scalars['String']['output'];
-  fixedLengthDataElements: Scalars['String']['output'];
   id: Scalars['String']['output'];
-  internationalStandardBookNumbers: Array<Scalars['String']['output']>;
+  isbns: Scalars['String']['output'];
+  issns: Scalars['String']['output'];
   lastModifiedAt?: Maybe<Scalars['DateTime']['output']>;
   lastModifiedByUserName?: Maybe<Scalars['String']['output']>;
-  leader: Scalars['String']['output'];
-  mainEntryPersonalName?: Maybe<MainEntryPersonalName>;
-  physicalDescriptions: Array<PhysicalDescription>;
-  publicationDistributions: Array<PublicationDistribution>;
-  titleStatement: TitleStatement;
+  materialType?: Maybe<Scalars['String']['output']>;
+  note?: Maybe<Scalars['String']['output']>;
+  publicationYear?: Maybe<Scalars['Int']['output']>;
+  publisher: Scalars['String']['output'];
+  title: Scalars['String']['output'];
 };
 
 export type BibRecordFilterInput = {
   and?: InputMaybe<Array<BibRecordFilterInput>>;
+  author?: InputMaybe<StringOperationFilterInput>;
   controlNumber?: InputMaybe<StringOperationFilterInput>;
-  controlNumberIdentifier?: InputMaybe<StringOperationFilterInput>;
-  coverImageId?: InputMaybe<StringOperationFilterInput>;
-  dateAndTimeOfLatestTransaction?: InputMaybe<StringOperationFilterInput>;
-  fixedLengthDataElements?: InputMaybe<StringOperationFilterInput>;
   id?: InputMaybe<StringOperationFilterInput>;
-  internationalStandardBookNumbers?: InputMaybe<ListStringOperationFilterInput>;
-  leader?: InputMaybe<StringOperationFilterInput>;
-  mainEntryPersonalName?: InputMaybe<MainEntryPersonalNameFilterInput>;
+  isbns?: InputMaybe<StringOperationFilterInput>;
+  issns?: InputMaybe<StringOperationFilterInput>;
+  materialType?: InputMaybe<StringOperationFilterInput>;
+  note?: InputMaybe<StringOperationFilterInput>;
   or?: InputMaybe<Array<BibRecordFilterInput>>;
-  physicalDescriptions?: InputMaybe<ListFilterInputTypeOfPhysicalDescriptionFilterInput>;
-  publicationDistributions?: InputMaybe<ListFilterInputTypeOfPublicationDistributionFilterInput>;
-  titleStatement?: InputMaybe<TitleStatementFilterInput>;
+  publicationYear?: InputMaybe<IntOperationFilterInput>;
+  publisher?: InputMaybe<StringOperationFilterInput>;
+  title?: InputMaybe<StringOperationFilterInput>;
 };
 
 export type BibRecordSortInput = {
+  author?: InputMaybe<SortEnumType>;
   controlNumber?: InputMaybe<SortEnumType>;
-  controlNumberIdentifier?: InputMaybe<SortEnumType>;
-  coverImageId?: InputMaybe<SortEnumType>;
-  dateAndTimeOfLatestTransaction?: InputMaybe<SortEnumType>;
-  fixedLengthDataElements?: InputMaybe<SortEnumType>;
   id?: InputMaybe<SortEnumType>;
-  leader?: InputMaybe<SortEnumType>;
-  mainEntryPersonalName?: InputMaybe<MainEntryPersonalNameSortInput>;
-  titleStatement?: InputMaybe<TitleStatementSortInput>;
+  isbns?: InputMaybe<SortEnumType>;
+  issns?: InputMaybe<SortEnumType>;
+  materialType?: InputMaybe<SortEnumType>;
+  note?: InputMaybe<SortEnumType>;
+  publicationYear?: InputMaybe<SortEnumType>;
+  publisher?: InputMaybe<SortEnumType>;
+  title?: InputMaybe<SortEnumType>;
 };
 
 /** A segment of a collection. */
@@ -154,15 +152,15 @@ export type BibRecordsCollectionSegment = {
 export type BookQuickAddInput = {
   author: Scalars['String']['input'];
   coverImageId?: InputMaybe<Scalars['String']['input']>;
-  description?: InputMaybe<Scalars['String']['input']>;
   edition?: InputMaybe<Scalars['String']['input']>;
-  isbn?: InputMaybe<Scalars['String']['input']>;
-  language?: InputMaybe<Scalars['String']['input']>;
+  isbn: Scalars['String']['input'];
+  language: Scalars['String']['input'];
+  note?: InputMaybe<Scalars['String']['input']>;
   numberOfCopies: Scalars['Int']['input'];
-  numberOfPages?: InputMaybe<Scalars['Long']['input']>;
-  publisher?: InputMaybe<Scalars['String']['input']>;
+  numberOfPages: Scalars['Long']['input'];
+  publisher: Scalars['String']['input'];
   title: Scalars['String']['input'];
-  yearOfPublication?: InputMaybe<Scalars['Int']['input']>;
+  yearOfPublication: Scalars['Int']['input'];
 };
 
 export type BookQuickAddPayload = {
@@ -201,24 +199,6 @@ export type CollectionSegmentInfo = {
   hasNextPage: Scalars['Boolean']['output'];
   /** Indicates whether more items exist prior the set defined by the clients arguments. */
   hasPreviousPage: Scalars['Boolean']['output'];
-};
-
-export type CreateBibRecordInput = {
-  author?: InputMaybe<Scalars['String']['input']>;
-  coverImageId?: InputMaybe<Scalars['String']['input']>;
-  dimensions?: InputMaybe<Scalars['String']['input']>;
-  extent?: InputMaybe<Scalars['String']['input']>;
-  isbn?: InputMaybe<Scalars['String']['input']>;
-  publicationDate?: InputMaybe<Scalars['String']['input']>;
-  publisherName?: InputMaybe<Scalars['String']['input']>;
-  title: Scalars['String']['input'];
-};
-
-export type CreateBibRecordPayload = {
-  __typename?: 'CreateBibRecordPayload';
-  data?: Maybe<BibRecord>;
-  errors?: Maybe<Array<ErrorType>>;
-  message?: Maybe<Scalars['String']['output']>;
 };
 
 export type CreatePatronInput = {
@@ -337,32 +317,11 @@ export type KnError = {
   message: Scalars['String']['output'];
 };
 
-export type ListFilterInputTypeOfPhysicalDescriptionFilterInput = {
-  all?: InputMaybe<PhysicalDescriptionFilterInput>;
-  any?: InputMaybe<Scalars['Boolean']['input']>;
-  none?: InputMaybe<PhysicalDescriptionFilterInput>;
-  some?: InputMaybe<PhysicalDescriptionFilterInput>;
-};
-
-export type ListFilterInputTypeOfPublicationDistributionFilterInput = {
-  all?: InputMaybe<PublicationDistributionFilterInput>;
-  any?: InputMaybe<Scalars['Boolean']['input']>;
-  none?: InputMaybe<PublicationDistributionFilterInput>;
-  some?: InputMaybe<PublicationDistributionFilterInput>;
-};
-
 export type ListFilterInputTypeOfPurchaseItemFilterInput = {
   all?: InputMaybe<PurchaseItemFilterInput>;
   any?: InputMaybe<Scalars['Boolean']['input']>;
   none?: InputMaybe<PurchaseItemFilterInput>;
   some?: InputMaybe<PurchaseItemFilterInput>;
-};
-
-export type ListStringOperationFilterInput = {
-  all?: InputMaybe<StringOperationFilterInput>;
-  any?: InputMaybe<Scalars['Boolean']['input']>;
-  none?: InputMaybe<StringOperationFilterInput>;
-  some?: InputMaybe<StringOperationFilterInput>;
 };
 
 export type LocalDateOperationFilterInput = {
@@ -380,23 +339,6 @@ export type LocalDateOperationFilterInput = {
   nlte?: InputMaybe<Scalars['LocalDate']['input']>;
 };
 
-export type MainEntryPersonalName = {
-  __typename?: 'MainEntryPersonalName';
-  personalName: Scalars['String']['output'];
-  relatorTerms: Array<Scalars['String']['output']>;
-};
-
-export type MainEntryPersonalNameFilterInput = {
-  and?: InputMaybe<Array<MainEntryPersonalNameFilterInput>>;
-  or?: InputMaybe<Array<MainEntryPersonalNameFilterInput>>;
-  personalName?: InputMaybe<StringOperationFilterInput>;
-  relatorTerms?: InputMaybe<ListStringOperationFilterInput>;
-};
-
-export type MainEntryPersonalNameSortInput = {
-  personalName?: InputMaybe<SortEnumType>;
-};
-
 export type Mutation = {
   __typename?: 'Mutation';
   addBibItem: AddBibItemPayload;
@@ -404,7 +346,6 @@ export type Mutation = {
   bookQuickAdd: BookQuickAddPayload;
   checkInBibItem: CheckInBibItemPayload;
   checkOutBibItem: CheckOutBibItemPayload;
-  createBibRecord: CreateBibRecordPayload;
   createPatron: CreatePatronPayload;
   createPurchaseOrder: CreatePurchaseOrderPayload;
   deletePatron: DeletePatronPayload;
@@ -439,11 +380,6 @@ export type MutationCheckInBibItemArgs = {
 
 export type MutationCheckOutBibItemArgs = {
   input: CheckOutBibItemInput;
-};
-
-
-export type MutationCreateBibRecordArgs = {
-  input: CreateBibRecordInput;
 };
 
 
@@ -559,34 +495,6 @@ export type PatronsCollectionSegment = {
   /** Information to aid in pagination. */
   pageInfo: CollectionSegmentInfo;
   totalCount: Scalars['Int']['output'];
-};
-
-export type PhysicalDescription = {
-  __typename?: 'PhysicalDescription';
-  dimensions: Array<Scalars['String']['output']>;
-  extents: Array<Scalars['String']['output']>;
-};
-
-export type PhysicalDescriptionFilterInput = {
-  and?: InputMaybe<Array<PhysicalDescriptionFilterInput>>;
-  dimensions?: InputMaybe<ListStringOperationFilterInput>;
-  extents?: InputMaybe<ListStringOperationFilterInput>;
-  or?: InputMaybe<Array<PhysicalDescriptionFilterInput>>;
-};
-
-export type PublicationDistribution = {
-  __typename?: 'PublicationDistribution';
-  datesOfPublication: Array<Scalars['String']['output']>;
-  namesOfPublisher: Array<Scalars['String']['output']>;
-  placesOfPublication: Array<Scalars['String']['output']>;
-};
-
-export type PublicationDistributionFilterInput = {
-  and?: InputMaybe<Array<PublicationDistributionFilterInput>>;
-  datesOfPublication?: InputMaybe<ListStringOperationFilterInput>;
-  namesOfPublisher?: InputMaybe<ListStringOperationFilterInput>;
-  or?: InputMaybe<Array<PublicationDistributionFilterInput>>;
-  placesOfPublication?: InputMaybe<ListStringOperationFilterInput>;
 };
 
 export type PurchaseItem = {
@@ -794,27 +702,6 @@ export type StringOperationFilterInput = {
   startsWith?: InputMaybe<Scalars['String']['input']>;
 };
 
-export type TitleStatement = {
-  __typename?: 'TitleStatement';
-  remainderOfTitle?: Maybe<Scalars['String']['output']>;
-  statementOfResponsibility?: Maybe<Scalars['String']['output']>;
-  title: Scalars['String']['output'];
-};
-
-export type TitleStatementFilterInput = {
-  and?: InputMaybe<Array<TitleStatementFilterInput>>;
-  or?: InputMaybe<Array<TitleStatementFilterInput>>;
-  remainderOfTitle?: InputMaybe<StringOperationFilterInput>;
-  statementOfResponsibility?: InputMaybe<StringOperationFilterInput>;
-  title?: InputMaybe<StringOperationFilterInput>;
-};
-
-export type TitleStatementSortInput = {
-  remainderOfTitle?: InputMaybe<SortEnumType>;
-  statementOfResponsibility?: InputMaybe<SortEnumType>;
-  title?: InputMaybe<SortEnumType>;
-};
-
 export type UpdateBibItemInput = {
   barcode: Scalars['String']['input'];
   callNumber: Scalars['String']['input'];
@@ -968,19 +855,19 @@ export type WithdrawBibItemPayload = {
   message?: Maybe<Scalars['String']['output']>;
 };
 
-export type CreateBibRecordMutationVariables = Exact<{
-  input: CreateBibRecordInput;
+export type BookQuickAddMutationVariables = Exact<{
+  input: BookQuickAddInput;
 }>;
 
 
-export type CreateBibRecordMutation = { __typename?: 'Mutation', createBibRecord: { __typename?: 'CreateBibRecordPayload', message?: string | null, data?: { __typename?: 'BibRecord', id: string, titleStatement: { __typename?: 'TitleStatement', title: string } } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type BookQuickAddMutation = { __typename?: 'Mutation', bookQuickAdd: { __typename?: 'BookQuickAddPayload', message?: string | null, data?: { __typename?: 'BibRecord', id: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, description?: string | null, message: string } | { __typename?: 'ValidationError', code: string, fieldName: string, description?: string | null, message: string }> | null } };
 
 export type BibRecordDetailsQueryVariables = Exact<{
   id: Scalars['String']['input'];
 }>;
 
 
-export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, controlNumber: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, mainEntryPersonalName?: { __typename?: 'MainEntryPersonalName', personalName: string } | null, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }>, physicalDescriptions: Array<{ __typename?: 'PhysicalDescription', extents: Array<string>, dimensions: Array<string> }>, bibItems?: Array<{ __typename?: 'BibItem', id: string, callNumber: string, barcode: string, status: ItemStatus, itemType: ItemType, location: string } | null> | null } | null };
+export type BibRecordDetailsQuery = { __typename?: 'Query', bibRecord?: { __typename?: 'BibRecord', id: string, title: string, author: string, controlNumber: string, isbns: string, issns: string, publisher: string, publicationYear?: number | null, materialType?: string | null, coverImageUrl?: any | null, createdAt: any, createdByUserName: string, lastModifiedAt?: any | null, lastModifiedByUserName?: string | null, bibItems?: Array<{ __typename?: 'BibItem', id: string, callNumber: string, barcode: string, status: ItemStatus, itemType: ItemType, location: string } | null> | null } | null };
 
 export type BibRecordListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -990,14 +877,7 @@ export type BibRecordListQueryVariables = Exact<{
 }>;
 
 
-export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, controlNumber: string, internationalStandardBookNumbers: Array<string>, coverImageUrl?: any | null, titleStatement: { __typename?: 'TitleStatement', title: string, statementOfResponsibility?: string | null }, publicationDistributions: Array<{ __typename?: 'PublicationDistribution', namesOfPublisher: Array<string>, datesOfPublication: Array<string> }> }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
-
-export type BookQuickAddMutationVariables = Exact<{
-  input: BookQuickAddInput;
-}>;
-
-
-export type BookQuickAddMutation = { __typename?: 'Mutation', bookQuickAdd: { __typename?: 'BookQuickAddPayload', message?: string | null, data?: { __typename?: 'BibRecord', id: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, description?: string | null, message: string } | { __typename?: 'ValidationError', code: string, fieldName: string, description?: string | null, message: string }> | null } };
+export type BibRecordListQuery = { __typename?: 'Query', bibRecords?: { __typename?: 'BibRecordsCollectionSegment', totalCount: number, items?: Array<{ __typename?: 'BibRecord', id: string, title: string, author: string, controlNumber: string, isbns: string, issns: string, publisher: string, publicationYear?: number | null, materialType?: string | null, createdAt: any, lastModifiedAt?: any | null }> | null, pageInfo: { __typename?: 'CollectionSegmentInfo', hasNextPage: boolean, hasPreviousPage: boolean } } | null };
 
 export type CreatePurchaseOrderMutationVariables = Exact<{
   input: CreatePurchaseOrderInput;
@@ -1069,29 +949,26 @@ export type UpdateVendorMutationVariables = Exact<{
 
 export type UpdateVendorMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
 
-export const CreateBibRecordDocument = gql`
-    mutation createBibRecord($input: CreateBibRecordInput!) {
-  createBibRecord(input: $input) {
+export const BookQuickAddDocument = gql`
+    mutation BookQuickAdd($input: BookQuickAddInput!) {
+  bookQuickAdd(input: $input) {
+    message
     data {
       id
-      titleStatement {
-        title
-      }
     }
     errors {
-      ... on KnError {
-        code
-        message
-        description
-      }
       ... on ValidationError {
         code
         fieldName
-        message
         description
+        message
+      }
+      ... on KnError {
+        code
+        description
+        message
       }
     }
-    message
   }
 }
     `;
@@ -1099,8 +976,8 @@ export const CreateBibRecordDocument = gql`
   @Injectable({
     providedIn: 'root'
   })
-  export class CreateBibRecordGQL extends Apollo.Mutation<CreateBibRecordMutation, CreateBibRecordMutationVariables> {
-    override document = CreateBibRecordDocument;
+  export class BookQuickAddGQL extends Apollo.Mutation<BookQuickAddMutation, BookQuickAddMutationVariables> {
+    override document = BookQuickAddDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);
@@ -1110,23 +987,14 @@ export const BibRecordDetailsDocument = gql`
     query BibRecordDetails($id: String!) {
   bibRecord(id: $id) {
     id
+    title
+    author
     controlNumber
-    titleStatement {
-      title
-      statementOfResponsibility
-    }
-    internationalStandardBookNumbers
-    mainEntryPersonalName {
-      personalName
-    }
-    publicationDistributions {
-      namesOfPublisher
-      datesOfPublication
-    }
-    physicalDescriptions {
-      extents
-      dimensions
-    }
+    isbns
+    issns
+    publisher
+    publicationYear
+    materialType
     coverImageUrl
     createdAt
     createdByUserName
@@ -1159,17 +1027,16 @@ export const BibRecordListDocument = gql`
   bibRecords(skip: $skip, take: $take, where: $filter, order: $sortBy) {
     items {
       id
+      title
+      author
       controlNumber
-      internationalStandardBookNumbers
-      coverImageUrl
-      titleStatement {
-        title
-        statementOfResponsibility
-      }
-      publicationDistributions {
-        namesOfPublisher
-        datesOfPublication
-      }
+      isbns
+      issns
+      publisher
+      publicationYear
+      materialType
+      createdAt
+      lastModifiedAt
     }
     pageInfo {
       hasNextPage
@@ -1185,40 +1052,6 @@ export const BibRecordListDocument = gql`
   })
   export class BibRecordListGQL extends Apollo.Query<BibRecordListQuery, BibRecordListQueryVariables> {
     override document = BibRecordListDocument;
-    
-    constructor(apollo: Apollo.Apollo) {
-      super(apollo);
-    }
-  }
-export const BookQuickAddDocument = gql`
-    mutation BookQuickAdd($input: BookQuickAddInput!) {
-  bookQuickAdd(input: $input) {
-    message
-    data {
-      id
-    }
-    errors {
-      ... on ValidationError {
-        code
-        fieldName
-        description
-        message
-      }
-      ... on KnError {
-        code
-        description
-        message
-      }
-    }
-  }
-}
-    `;
-
-  @Injectable({
-    providedIn: 'root'
-  })
-  export class BookQuickAddGQL extends Apollo.Mutation<BookQuickAddMutation, BookQuickAddMutationVariables> {
-    override document = BookQuickAddDocument;
     
     constructor(apollo: Apollo.Apollo) {
       super(apollo);

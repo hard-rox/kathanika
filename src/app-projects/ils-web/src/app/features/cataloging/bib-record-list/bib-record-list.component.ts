@@ -1,12 +1,12 @@
 import {Component, inject, OnInit} from '@angular/core';
 import {CommonModule} from "@angular/common";
-import {KnButton, KnPagination, KnPanel} from "@kathanika/kn-ui";
+import {KnButton, KnChip, KnPagination, KnPanel} from "@kathanika/kn-ui";
 import {ActivatedRoute, Router, RouterLink} from "@angular/router";
 import {BasePaginatedListComponent} from "../../../abstractions/base-paginated-list-component";
 import {
     BibRecordListGQL,
     BibRecordListQuery,
-    BibRecordListQueryVariables, SortEnumType
+    BibRecordListQueryVariables
 } from "../../../graphql/generated/graphql-operations";
 
 @Component({
@@ -15,7 +15,8 @@ import {
         KnButton,
         KnPagination,
         RouterLink,
-        KnPanel
+        KnPanel,
+        KnChip
     ],
     standalone: true,
     templateUrl: './bib-record-list.component.html'
@@ -29,18 +30,7 @@ export class BibRecordListComponent
             return;
         }
         this.queryVariables.filter = {
-            or: [
-                {
-                    titleStatement: {
-                        title: {contains: searchText}
-                    }
-                },
-                {
-                    titleStatement: {
-                        statementOfResponsibility: {contains: searchText}
-                    }
-                }
-            ]
+            or: []
         };
     }
 
@@ -51,11 +41,6 @@ export class BibRecordListComponent
         super(gql, activatedRoute, router, {
             skip: 0,
             take: 20,
-            sortBy: {
-                titleStatement: {
-                    title: SortEnumType.Asc
-                }
-            }
         });
     }
 

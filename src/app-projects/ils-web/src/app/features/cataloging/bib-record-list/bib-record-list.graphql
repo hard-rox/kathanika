@@ -7,17 +7,16 @@ query bibRecordList(
     bibRecords(skip: $skip, take: $take, where: $filter, order: $sortBy) {
         items {
             id
+            title
+            author
             controlNumber
-            internationalStandardBookNumbers
-            coverImageUrl
-            titleStatement {
-                title
-                statementOfResponsibility
-            }
-            publicationDistributions {
-                namesOfPublisher
-                datesOfPublication
-            }
+            isbns
+            issns
+            publisher
+            publicationYear
+            materialType
+            createdAt
+            lastModifiedAt
         }
         pageInfo {
             hasNextPage
