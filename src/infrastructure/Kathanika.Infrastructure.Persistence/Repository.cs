@@ -317,6 +317,50 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     }
 
     /// <summary>
+    /// Adds a collection of aggregates to the underlying MongoDB collection with auditing properties applied.
+    /// </summary>
+    /// <param name="aggregates">
+    /// The collection of aggregates of type <typeparamref name="T"/> to be added to the MongoDB collection.
+    /// The type <typeparamref name="T"/> must derive from <see cref="AggregateRoot"/>.
+    /// </param>
+    /// <param name="cancellationToken">
+    /// A <see cref="CancellationToken"/> that can be used to cancel the operation.
+    /// </param>
+    /// <returns>
+    /// A collection of the added aggregates of type <typeparamref name="T"/> after completion of the operation.
+    /// </returns>
+    public async Task<IEnumerable<T>> AddAsync(IEnumerable<T> aggregates, CancellationToken cancellationToken = default)
+    {
+        IEnumerable<T> aggregateRoots = aggregates as T[] ?? aggregates.ToArray();
+
+        foreach (T aggregate in aggregateRoots)
+        {
+            SetCreationAuditProperties(aggregate);
+        }
+
+        _logger.LogInformation(
+            "Adding new documents {@Documents} of type {@DocumentType} into collection {@CollectionName}", aggregates,
+            typeof(T).Name, _collectionName);
+
+        await _collection.InsertManyAsync(aggregateRoots.ToList(), cancellationToken: cancellationToken);
+        _logger.LogInformation(
+            "Added new documents with _ids {@_ids} of type {@DocumentType} into collection {@CollectionName}",
+            aggregateRoots.ToBsonDocument()["_id"].ToJson(), typeof(T).Name, _collectionName);
+
+        List<OutboxMessage> outboxMessages = [];
+        foreach (T aggregate in aggregateRoots)
+        {
+            outboxMessages.AddRange(GetOutboxMessagesFromAggregate(aggregate));
+            aggregate.ClearDomainEvents();
+        }
+
+        if (outboxMessages.Count > 0)
+            await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
+
+        return aggregateRoots;
+    }
+
+    /// <summary>
     /// Updates an existing entity of type <typeparamref name="T"/> in the repository and persists the changes to the MongoDB collection.
     /// </summary>
     /// <typeparam name="T">

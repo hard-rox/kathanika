@@ -9,7 +9,7 @@ public sealed record BookQuickAddPayload
     public BookQuickAddPayload(KnResult<BibRecord> knResult)
         : base(knResult,
             knResult.IsSuccess
-                ? $"New book {knResult.Value.Title} created successfully."
+                ? $"New Bib record for book {knResult.Value.Title} created successfully. Bib items are creating."
                 : "New book record creation failed.")
     {
     }

@@ -39,10 +39,6 @@ public sealed class AddBibItemCommandValidator : AbstractValidator<AddBibItemCom
             .IsInEnum()
             .WithMessage("Invalid item type");
 
-        RuleFor(x => x.Status)
-            .IsInEnum()
-            .WithMessage("Invalid item status");
-
         RuleFor(x => x.ConditionNote)
             .MaximumLength(500)
             .WithMessage("Condition note must not exceed 500 characters")

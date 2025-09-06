@@ -18,7 +18,7 @@ public static class BibItemAggregateErrors
 
     public static readonly KnError BibRecordIdIsEmpty = new(
         "BibItem.BibRecordIdIsEmpty",
-        "BibRecord ID cannot be empty");
+        "BibRecord not found");
 
     public static readonly KnError BarcodeIsEmpty = new(
         "BibItem.BarcodeIsEmpty",

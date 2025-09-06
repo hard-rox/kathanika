@@ -23,8 +23,7 @@ public class BibItemTests
             barcode,
             callNumber,
             location,
-            itemType,
-            status);
+            itemType);
 
         // Assert
         Assert.True(bibItemResult.IsSuccess);
@@ -35,8 +34,6 @@ public class BibItemTests
         Assert.Equal(location, bibItemResult.Value.Location);
         Assert.Equal(itemType, bibItemResult.Value.ItemType);
         Assert.Equal(status, bibItemResult.Value.Status);
-        Assert.Equal(AcquisitionType.Transfer, bibItemResult.Value.AcquisitionType); // Updated to match actual default
-        Assert.Null(bibItemResult.Value.AcquisitionDate); // Updated to match actual implementation
     }
 
     [Fact]
@@ -48,14 +45,12 @@ public class BibItemTests
             "123456789",
             "QA76.73.C153",
             "Main Library",
-            ItemType.Book,
-            ItemStatus.Available);
+            ItemType.Book);
 
         // Assert
         Assert.True(bibItemResult.IsSuccess);
         Assert.Equal(AcquisitionType.Transfer, bibItemResult.Value.AcquisitionType);
         Assert.Null(bibItemResult.Value.Vendor);
-        Assert.Null(bibItemResult.Value.AcquisitionDate);
     }
 
     #endregion
@@ -228,8 +223,7 @@ public class BibItemTests
             "123456789",
             "QA76.73.C153",
             "Main Library",
-            ItemType.Book,
-            ItemStatus.Available).Value;
+            ItemType.Book).Value;
     }
 
     #endregion

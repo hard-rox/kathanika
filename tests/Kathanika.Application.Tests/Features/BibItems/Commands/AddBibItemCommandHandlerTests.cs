@@ -24,7 +24,6 @@ public class AddBibItemCommandHandlerTests
             "QA76.73.C153",
             "Main Library",
             ItemType.Book,
-            ItemStatus.Available,
             "Good condition",
             "Test notes");
 
@@ -39,7 +38,6 @@ public class AddBibItemCommandHandlerTests
         Assert.Equal(command.CallNumber, result.Value.CallNumber);
         Assert.Equal(command.Location, result.Value.Location);
         Assert.Equal(command.ItemType, result.Value.ItemType);
-        Assert.Equal(command.Status, result.Value.Status);
 
         await _bibItemRepository.Received(1).AddAsync(Arg.Any<BibItem>(), Arg.Any<CancellationToken>());
     }
