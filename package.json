@@ -44,7 +44,7 @@
     "express": "^5.1.0",
     "graphql": "^16.11.0",
     "rxjs": "~7.8.2",
-    "sweetalert2": "^11.22.5",
+    "sweetalert2": "^11.23.0",
     "ts-node": "^10.9.2",
     "tslib": "^2.3.0",
     "tus-js-client": "^4.3.1"
