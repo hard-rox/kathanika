@@ -55,7 +55,7 @@
     "@angular/cli": "^20.2.2",
     "@angular/compiler-cli": "^20.2.4",
     "@chromatic-com/storybook": "^4.1.1",
-    "@compodoc/compodoc": "^1.1.26",
+    "@compodoc/compodoc": "^1.1.30",
     "@faker-js/faker": "^10.0.0",
     "@graphql-codegen/cli": "^5.0.6",
     "@graphql-codegen/typescript": "^4.1.6",
