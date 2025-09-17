@@ -1,5 +1,3 @@
-using NetArchTest.Rules;
-
 namespace Kathanika.Domain.Tests.ArchTests;
 
 public class ArchTests
