@@ -49,6 +49,9 @@ public class BibItem : AggregateRoot
         if (string.IsNullOrWhiteSpace(callNumber))
             errors.Add(BibItemAggregateErrors.CallNumberIsEmpty);
 
+        if (string.IsNullOrWhiteSpace(location))
+            errors.Add(BibItemAggregateErrors.LocationIsEmpty);
+
         if (errors.Count > 0)
             return KnResult.Failure<BibItem>(errors);
 

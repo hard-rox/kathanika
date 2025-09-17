@@ -29,7 +29,8 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     private readonly ILogger<Repository<T>> _logger;
     private readonly IMongoCollection<OutboxMessage> _outboxMessageCollection;
 
-    protected Repository(IMongoDatabase database, string collectionName, ILogger<Repository<T>> logger, HybridCache hybridCache)
+    protected Repository(IMongoDatabase database, string collectionName, ILogger<Repository<T>> logger,
+        HybridCache hybridCache)
     {
         _collectionName = collectionName;
         _outboxMessageCollection = database.GetCollection<OutboxMessage>(Constants.OutboxMessageCollectionName);
@@ -329,9 +330,10 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
     /// <returns>
     /// A collection of the added aggregates of type <typeparamref name="T"/> after completion of the operation.
     /// </returns>
-    public async Task<IEnumerable<T>> AddAsync(IEnumerable<T> aggregates, CancellationToken cancellationToken = default)
+    public async Task<IReadOnlyList<T>> AddAsync(IEnumerable<T> aggregates,
+        CancellationToken cancellationToken = default)
     {
-        IEnumerable<T> aggregateRoots = aggregates as T[] ?? aggregates.ToArray();
+        IReadOnlyList<T> aggregateRoots = aggregates as T[] ?? aggregates.ToArray();
 
         foreach (T aggregate in aggregateRoots)
         {
@@ -355,7 +357,13 @@ internal abstract class Repository<T> : IRepository<T> where T : AggregateRoot
         }
 
         if (outboxMessages.Count > 0)
-            await _outboxMessageCollection.InsertManyAsync(outboxMessages, cancellationToken: cancellationToken);
+            await _outboxMessageCollection.InsertManyAsync(
+                outboxMessages,
+                new InsertManyOptions()
+                {
+                    IsOrdered = false
+                },
+                cancellationToken: cancellationToken);
 
         return aggregateRoots;
     }
