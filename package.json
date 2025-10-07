@@ -60,7 +60,7 @@
     "@graphql-codegen/cli": "^6.0.0",
     "@graphql-codegen/typescript": "^5.0.2",
     "@graphql-codegen/typescript-apollo-angular": "^4.0.1",
-    "@graphql-codegen/typescript-operations": "^5.0.1",
+    "@graphql-codegen/typescript-operations": "^5.0.2",
     "@storybook/addon-docs": "^9.1.10",
     "@storybook/addon-onboarding": "^9.1.10",
     "@storybook/angular": "^9.1.10",
