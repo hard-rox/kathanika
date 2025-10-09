@@ -8,11 +8,11 @@
     <PackageVersion Include="coverlet.collector" Version="6.0.4" />
     <PackageVersion Include="FluentValidation" Version="12.0.0" />
     <PackageVersion Include="FluentValidation.DependencyInjectionExtensions" Version="12.0.0" />
-    <PackageVersion Include="HotChocolate.Abstractions" Version="15.1.10" />
-    <PackageVersion Include="HotChocolate.AspNetCore" Version="15.1.10" />
-    <PackageVersion Include="HotChocolate.Data" Version="15.1.10" />
-    <PackageVersion Include="HotChocolate.Diagnostics" Version="15.1.10" />
-    <PackageVersion Include="HotChocolate.Types.OffsetPagination" Version="15.1.10" />
+    <PackageVersion Include="HotChocolate.Abstractions" Version="15.1.11" />
+    <PackageVersion Include="HotChocolate.AspNetCore" Version="15.1.11" />
+    <PackageVersion Include="HotChocolate.Data" Version="15.1.11" />
+    <PackageVersion Include="HotChocolate.Diagnostics" Version="15.1.11" />
+    <PackageVersion Include="HotChocolate.Types.OffsetPagination" Version="15.1.11" />
     <PackageVersion Include="MediatR" Version="12.5.0" />
     <PackageVersion Include="MediatR.Contracts" Version="2.0.1" />
     <PackageVersion Include="Microsoft.Extensions.Caching.Hybrid" Version="9.6.0" />
