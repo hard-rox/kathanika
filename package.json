@@ -70,7 +70,7 @@
     "@types/express": "^5.0.5",
     "@types/jest": "^29.5.14",
     "@types/node": "^24.10.0",
-    "angular-eslint": "20.4.0",
+    "angular-eslint": "20.6.0",
     "autoprefixer": "^10.4.21",
     "cypress": "^15.6.0",
     "eslint": "^9.38.0",
