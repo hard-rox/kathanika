@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <LangVersion>13</LangVersion>
-        <UserSecretsId>735a8f0b-2a48-408b-8884-fc62a0ee2fe8</UserSecretsId>
+        <LangVersion>14</LangVersion>
+        <UserSecretsId>kathanika-web-api</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
