@@ -199,7 +199,7 @@ public sealed class BibRecordTests
         KnResult<BibRecord> result =
             BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
         BibRecord bibRecord = result.Value;
-        var note = "This is a test note";
+        const string note = "This is a test note";
 
         // Act
         KnResult addResult = bibRecord.UpdateNote(note);
@@ -256,7 +256,7 @@ public sealed class BibRecordTests
         KnResult<BibRecord> result =
             BibRecord.CreateBookRecord("Title", "Author", "ISBN", "Publisher", 2023, "eng", 100);
         BibRecord bibRecord = result.Value;
-        var coverImageId = "cover-123";
+        const string coverImageId = "cover-123";
 
         // Act
         KnResult addResult = bibRecord.UpdateCoverImage(coverImageId);

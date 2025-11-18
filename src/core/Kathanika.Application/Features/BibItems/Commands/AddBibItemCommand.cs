@@ -8,7 +8,6 @@ public sealed record AddBibItemCommand(
     string CallNumber,
     string Location,
     ItemType ItemType,
-    ItemStatus Status = ItemStatus.Available,
     string? ConditionNote = null,
     string? Notes = null
 ) : IRequest<KnResult<BibItem>>;
