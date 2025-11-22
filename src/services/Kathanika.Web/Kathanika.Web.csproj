@@ -9,6 +9,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\aspire\Kathanika.ServiceDefaults\Kathanika.ServiceDefaults.csproj" />
         <ProjectReference Include="..\..\core\Kathanika.Application\Kathanika.Application.csproj"/>
         <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Graphql\Kathanika.Infrastructure.Graphql.csproj"/>
         <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj"/>
@@ -23,6 +24,7 @@
         <PackageReference Include="OpenTelemetry.Instrumentation.Http"/>
         <PackageReference Include="OpenTelemetry.Instrumentation.Quartz"/>
         <PackageReference Include="Serilog.AspNetCore"/>
+        <PackageReference Include="Serilog.Sinks.OpenTelemetry" />
         <PackageReference Include="tusdotnet"/>
         <PackageReference Include="Serilog.Enrichers.ClientInfo"/>
         <PackageReference Include="Serilog.Enrichers.Process"/>

@@ -33,7 +33,7 @@ public static class DependencyInjector
     {
         RegisterClassMapFromAssembly();
 
-        var connectionString = configuration.GetConnectionString("mongoDb");
+        var connectionString = configuration.GetConnectionString("mongodb");
         services.AddMongoDb(connectionString);
 
 #pragma warning disable EXTEXP0018

@@ -3,6 +3,7 @@ using Kathanika.Application.Services;
 using Kathanika.Infrastructure.Graphql;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers;
+using Kathanika.ServiceDefaults;
 using Kathanika.Web;
 using Kathanika.Web.FileOpsConfigurations;
 using OpenTelemetry.Exporter;
@@ -11,6 +12,7 @@ using OpenTelemetry.Metrics;
 using OpenTelemetry.Resources;
 using OpenTelemetry.Trace;
 using Serilog;
+using Serilog.Exceptions;
 using tusdotnet;
 using tusdotnet.Helpers;
 
@@ -18,6 +20,8 @@ const string fileServingEndpoint = "/fs";
 try
 {
     WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+
+    builder.AddServiceDefaults();
 
     ConfigureSerilog(builder.Host);
 
@@ -33,8 +37,6 @@ try
         .AddWorkers(builder.Configuration)
         .AddTus(builder.Configuration);
 
-    AddOpenTelemetry(builder);
-
     if (builder.Environment.IsDevelopment())
     {
         builder.Services.AddCors();
@@ -42,6 +44,8 @@ try
     }
 
     WebApplication app = builder.Build();
+
+    app.MapDefaultEndpoints();
 
     app.UseSerilogRequestLogging();
 
@@ -83,57 +87,20 @@ finally
     await Log.CloseAndFlushAsync();
 }
 
+return;
+
 void ConfigureSerilog(ConfigureHostBuilder host)
 {
     host.UseSerilog((context, services, configuration) =>
     {
+        var endpoint = context.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? string.Empty;
         configuration
-            .ReadFrom.Configuration(context.Configuration)
-            .ReadFrom.Services(services);
+            .ReadFrom.Services(services)
+            .Enrich.FromLogContext()
+            .Enrich.WithThreadId()
+            .Enrich.WithExceptionDetails()
+            .Enrich.WithClientIp()
+            .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code)
+            .WriteTo.OpenTelemetry(endpoint: endpoint);
     });
-}
-
-void AddOpenTelemetry(WebApplicationBuilder builder)
-{
-    const string serviceName = "Kathanika-Web-Service";
-    var otlpExportEndpoint = builder.Configuration.GetValue<string>("OtlpExportEndpoint") ?? string.Empty;
-    builder.Services.AddOpenTelemetry()
-        .ConfigureResource(resource => resource.AddService(serviceName))
-        .WithTracing(tracing => tracing
-            .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            // .AddMongoDBInstrumentation()
-            .AddQuartzInstrumentation()
-            .AddHotChocolateInstrumentation()
-            // .AddConsoleExporter()
-            .AddOtlpExporter(options =>
-            {
-                options.Protocol = OtlpExportProtocol.Grpc;
-                options.Endpoint = new Uri(otlpExportEndpoint);
-            }))
-        .WithMetrics(metrics => metrics
-            .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            // .AddConsoleExporter()
-            .AddOtlpExporter(options =>
-            {
-                options.Protocol = OtlpExportProtocol.Grpc;
-                options.Endpoint = new Uri(otlpExportEndpoint);
-            }));
-
-    builder.Logging.AddOpenTelemetry(options =>
-    {
-        options
-            .SetResourceBuilder(
-                ResourceBuilder.CreateDefault()
-                    .AddService(serviceName))
-            // .AddConsoleExporter();
-            .AddOtlpExporter();
-    });
-}
-
-namespace Kathanika.Web
-{
-    // ReSharper disable once PartialTypeWithSinglePart
-    public static partial class Program;
 }

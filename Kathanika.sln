@@ -34,6 +34,12 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Web.Tests", "test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.Web", "src\services\Kathanika.Web\Kathanika.Web.csproj", "{D26DBD89-7BD0-45C6-9F8C-92ECFE7185DF}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.AppHost", "src\aspire\Kathanika.AppHost\Kathanika.AppHost.csproj", "{1809295F-7A19-45E8-832B-DB3127AE6559}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Kathanika.ServiceDefaults", "src\aspire\Kathanika.ServiceDefaults\Kathanika.ServiceDefaults.csproj", "{0F5F54A8-E9B0-4941-83AA-38CB91CDAE92}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "aspire", "aspire", "{F7A26A54-7EED-4FED-8B31-F539F7973052}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -55,6 +61,8 @@ Global
 		{600099BE-4EF4-4DC1-A6CF-B033C58AF6D3} = {38F729CC-C4D2-4913-951F-73D8BB4E20AB}
 		{AC2FA64E-3AE0-499A-8AF6-83EF86CEEB07} = {38F729CC-C4D2-4913-951F-73D8BB4E20AB}
 		{D26DBD89-7BD0-45C6-9F8C-92ECFE7185DF} = {23524380-B5D8-42CD-B09B-99496AB1DA44}
+		{1809295F-7A19-45E8-832B-DB3127AE6559} = {F7A26A54-7EED-4FED-8B31-F539F7973052}
+		{0F5F54A8-E9B0-4941-83AA-38CB91CDAE92} = {F7A26A54-7EED-4FED-8B31-F539F7973052}
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{B4722E06-E1FC-47B4-99F0-A6D836CF111D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
@@ -105,5 +113,13 @@ Global
 		{D26DBD89-7BD0-45C6-9F8C-92ECFE7185DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D26DBD89-7BD0-45C6-9F8C-92ECFE7185DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D26DBD89-7BD0-45C6-9F8C-92ECFE7185DF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1809295F-7A19-45E8-832B-DB3127AE6559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1809295F-7A19-45E8-832B-DB3127AE6559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1809295F-7A19-45E8-832B-DB3127AE6559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1809295F-7A19-45E8-832B-DB3127AE6559}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0F5F54A8-E9B0-4941-83AA-38CB91CDAE92}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0F5F54A8-E9B0-4941-83AA-38CB91CDAE92}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0F5F54A8-E9B0-4941-83AA-38CB91CDAE92}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0F5F54A8-E9B0-4941-83AA-38CB91CDAE92}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
