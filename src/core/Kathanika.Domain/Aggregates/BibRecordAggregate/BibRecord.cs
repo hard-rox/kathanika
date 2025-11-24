@@ -1,3 +1,4 @@
+using Kathanika.Domain.DomainEvents;
 using Kathanika.Domain.Primitives;
 
 namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
@@ -49,6 +50,8 @@ public sealed class BibRecord : AggregateRoot
                 "Cover image ID cannot be null or empty."));
 
         CoverImageId = coverImageId;
+        AddDomainEvent(new FileUsedDomainEvent(coverImageId));
+
         return KnResult.Success();
     }
 
@@ -87,7 +90,8 @@ public sealed class BibRecord : AggregateRoot
         string publisher,
         int publicationYear,
         string language,
-        long numberOfPages)
+        long numberOfPages,
+        int numberOfCopies = 0)
     {
         BibRecord record = new()
         {
@@ -104,6 +108,8 @@ public sealed class BibRecord : AggregateRoot
             Subfield.Create('c', publicationYear.ToString()).Value
         ]);
         record.MarcMetadata.AddDataField("300", ' ', ' ', [Subfield.Create('a', $"{numberOfPages} pages").Value]);
+
+        record.AddDomainEvent(new BookRecordCreatedEvent(record.Id, numberOfCopies));
 
         return KnResult.Success(record);
     }

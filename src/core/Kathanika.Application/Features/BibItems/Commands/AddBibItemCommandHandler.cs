@@ -12,15 +12,18 @@ public sealed class AddBibItemCommandHandler(IBibItemRepository bibItemRepositor
             request.Barcode,
             request.CallNumber,
             request.Location,
-            request.ItemType,
-            request.Status,
-            request.ConditionNote,
-            request.Notes);
+            request.ItemType);
 
         if (bibItemResult.IsFailure)
         {
             return bibItemResult;
         }
+
+        if (request.ConditionNote is not null)
+            bibItemResult.Value.UpdateCondition(request.ConditionNote);
+
+        if (request.Notes is not null)
+            bibItemResult.Value.UpdateNotes(request.Notes);
 
         await bibItemRepository.AddAsync(bibItemResult.Value, cancellationToken);
 

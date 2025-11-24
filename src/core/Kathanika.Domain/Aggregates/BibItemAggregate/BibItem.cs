@@ -9,8 +9,8 @@ public class BibItem : AggregateRoot
     public string CallNumber { get; private set; } = string.Empty;
     public string Location { get; private set; } = string.Empty;
     public ItemType ItemType { get; private set; }
-    public ItemVendor? Vendor { get; private set; }
-    public DateOnly? AcquisitionDate { get; private set; }
+    public ItemVendor? Vendor { get; private set; } = null;
+    public DateOnly? AcquisitionDate { get; private set; } = DateOnly.FromDateTime(DateTime.Now);
     public AcquisitionType AcquisitionType { get; private set; } = AcquisitionType.Transfer;
     public ItemStatus Status { get; private set; } = ItemStatus.Available;
     public DateTime? LastCheckOutDate { get; private set; }
@@ -26,22 +26,6 @@ public class BibItem : AggregateRoot
     }
 #pragma warning restore CS8618, CS9264
 
-    private BibItem(
-        string bibRecordId,
-        string barcode,
-        string callNumber,
-        string location,
-        ItemType itemType,
-        ItemStatus status)
-    {
-        BibRecordId = bibRecordId;
-        Barcode = barcode;
-        CallNumber = callNumber;
-        Location = location;
-        ItemType = itemType;
-        Status = status;
-    }
-
     private bool IsAvailableToCheckOut()
     {
         return Status == ItemStatus.Available;
@@ -52,13 +36,7 @@ public class BibItem : AggregateRoot
         string barcode,
         string callNumber,
         string location,
-        ItemType itemType,
-        ItemStatus status = ItemStatus.Available,
-        string? conditionNote = null,
-        string? notes = null,
-        ItemVendor? vendor = null,
-        AcquisitionType acquisitionType = AcquisitionType.Transfer,
-        DateOnly? acquisitionDate = null)
+        ItemType itemType)
     {
         List<KnError> errors = [];
 
@@ -77,19 +55,13 @@ public class BibItem : AggregateRoot
         if (errors.Count > 0)
             return KnResult.Failure<BibItem>(errors);
 
-        BibItem newBibItem = new(
-            bibRecordId,
-            barcode,
-            callNumber,
-            location,
-            itemType,
-            status)
+        BibItem newBibItem = new()
         {
-            ConditionNote = conditionNote,
-            Notes = notes,
-            Vendor = vendor,
-            AcquisitionType = acquisitionType,
-            AcquisitionDate = acquisitionDate
+            BibRecordId = bibRecordId,
+            Barcode = barcode,
+            CallNumber = callNumber,
+            Location = location,
+            ItemType = itemType
         };
 
         return KnResult.Success(newBibItem);
@@ -99,9 +71,7 @@ public class BibItem : AggregateRoot
         string? barcode = null,
         string? callNumber = null,
         string? location = null,
-        ItemType? itemType = null,
-        string? conditionNote = null,
-        string? notes = null)
+        ItemType? itemType = null)
     {
         List<KnError> errors = [];
 
@@ -121,10 +91,18 @@ public class BibItem : AggregateRoot
         CallNumber = callNumber ?? CallNumber;
         Location = location ?? Location;
         ItemType = itemType ?? ItemType;
-        ConditionNote = conditionNote ?? ConditionNote;
-        Notes = notes ?? Notes;
 
         return KnResult.Success();
+    }
+
+    public void UpdateCondition(string conditionNote)
+    {
+        ConditionNote = conditionNote;
+    }
+
+    public void UpdateNotes(string notes)
+    {
+        Notes = notes;
     }
 
     public KnResult CheckOut()

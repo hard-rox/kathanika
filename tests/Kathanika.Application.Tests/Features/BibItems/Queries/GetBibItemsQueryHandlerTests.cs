@@ -174,7 +174,6 @@ public class GetBibItemsQueryHandlerTests
             barcode,
             "QA76.73.C153",
             "Main Library",
-            ItemType.Book,
-            ItemStatus.Available).Value;
+            ItemType.Book).Value;
     }
 }

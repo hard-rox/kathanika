@@ -17,14 +17,18 @@ public sealed class UpdateBibItemCommandHandler(IBibItemRepository bibItemReposi
             barcode: request.Barcode,
             callNumber: request.CallNumber,
             location: request.Location,
-            itemType: request.ItemType,
-            conditionNote: request.ConditionNote,
-            notes: request.Notes);
+            itemType: request.ItemType);
 
         if (!updateResult.IsSuccess)
         {
             return KnResult.Failure<BibItem>(updateResult.Errors);
         }
+
+        if (request.ConditionNote is not null)
+            bibItem.UpdateCondition(request.ConditionNote);
+
+        if (request.Notes is not null)
+            bibItem.UpdateNotes(request.Notes);
 
         await bibItemRepository.UpdateAsync(bibItem, cancellationToken);
 
