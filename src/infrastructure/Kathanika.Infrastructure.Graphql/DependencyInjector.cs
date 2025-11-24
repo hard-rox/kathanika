@@ -14,8 +14,10 @@ public static class DependencyInjector
         return services;
     }
 
-    public static void UseGraphQlInfrastructure(this WebApplication app)
+    public static WebApplication UseGraphQlInfrastructure(this WebApplication app)
     {
         app.MapGraphQL();
+        
+        return app;
     }
 }

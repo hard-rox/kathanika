@@ -6,13 +6,7 @@ using Kathanika.Infrastructure.Workers;
 using Kathanika.ServiceDefaults;
 using Kathanika.Web;
 using Kathanika.Web.FileOpsConfigurations;
-using OpenTelemetry.Exporter;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 using Serilog;
-using Serilog.Exceptions;
 using tusdotnet;
 using tusdotnet.Helpers;
 
@@ -22,8 +16,6 @@ try
     WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
     builder.AddServiceDefaults();
-
-    ConfigureSerilog(builder.Host);
 
     builder.Services.Configure<ApplicationOptions>(
         builder.Configuration.GetSection(nameof(ApplicationOptions))
@@ -45,11 +37,9 @@ try
 
     WebApplication app = builder.Build();
 
-    app.MapDefaultEndpoints();
-
-    app.UseSerilogRequestLogging();
-
-    app.UseGraphQlInfrastructure();
+    app.MapDefaultEndpoints()
+        .UseGraphQlInfrastructure()
+        .UseSerilogRequestLogging();
 
     if (builder.Environment.IsDevelopment())
     {
@@ -85,22 +75,4 @@ catch (Exception ex)
 finally
 {
     await Log.CloseAndFlushAsync();
-}
-
-return;
-
-void ConfigureSerilog(ConfigureHostBuilder host)
-{
-    host.UseSerilog((context, services, configuration) =>
-    {
-        var endpoint = context.Configuration["OTEL_EXPORTER_OTLP_ENDPOINT"] ?? string.Empty;
-        configuration
-            .ReadFrom.Services(services)
-            .Enrich.FromLogContext()
-            .Enrich.WithThreadId()
-            .Enrich.WithExceptionDetails()
-            .Enrich.WithClientIp()
-            .WriteTo.Console(theme: Serilog.Sinks.SystemConsole.Themes.AnsiConsoleTheme.Code)
-            .WriteTo.OpenTelemetry(endpoint: endpoint);
-    });
 }

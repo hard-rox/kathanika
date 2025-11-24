@@ -2,7 +2,12 @@ using Aspire.Hosting.Azure;
 
 IDistributedApplicationBuilder builder = DistributedApplication.CreateBuilder(args);
 
-IResourceBuilder<MongoDBServerResource> mongodb = builder.AddMongoDB("mongodb");
+IResourceBuilder<MongoDBDatabaseResource> mongodb = builder
+    .AddMongoDB("mongo")
+    .WithDataVolume("kathanika-ils-mongo-data")
+    .WithLifetime(ContainerLifetime.Persistent)
+    .AddDatabase("mongodb", "kathanika_ils");
+
 IResourceBuilder<RedisResource> redis = builder.AddRedis("redis");
 IResourceBuilder<AzureBlobStorageResource> azureBlobStorage = builder.AddAzureStorage("azureBlobStorage")
     .RunAsEmulator()
@@ -11,9 +16,7 @@ IResourceBuilder<AzureBlobStorageResource> azureBlobStorage = builder.AddAzureSt
 IResourceBuilder<ProjectResource> webService = builder
     .AddProject<Projects.Kathanika_Web>("kathanika-web-service")
     .WithReference(mongodb)
-    .WaitFor(mongodb)
     .WithReference(redis)
-    .WaitFor(azureBlobStorage)
     .WithReference(azureBlobStorage)
     .WithOtlpExporter();
 
