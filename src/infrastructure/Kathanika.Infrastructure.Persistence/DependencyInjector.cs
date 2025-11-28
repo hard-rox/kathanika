@@ -40,10 +40,7 @@ public static class DependencyInjector
         services.AddHybridCache()
             .AddSerializerFactory<CacheJsonSerializerFactory>();
 #pragma warning restore EXTEXP0018
-        services.AddStackExchangeRedisCache(opt =>
-        {
-            opt.Configuration = configuration.GetConnectionString("redis");
-        });
+        services.AddStackExchangeRedisCache(opt => { opt.Configuration = configuration.GetConnectionString("redis"); });
 
         services.AddScoped<IOutboxMessageService, OutboxMessageService>();
         services.AddSingleton<IFileMetadataService, FileMetadataService>();

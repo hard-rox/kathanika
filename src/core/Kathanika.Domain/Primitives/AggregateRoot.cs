@@ -12,7 +12,7 @@ public abstract class AggregateRoot : Entity
     [GraphQLIgnore] public string? LastModifiedByUserName { get; private set; } = null;
     [GraphQLIgnore] public DateTimeOffset? LastModifiedAt { get; private set; } = null;
 
-    [GraphQLIgnore] 
+    [GraphQLIgnore]
     public IReadOnlyList<IDomainEvent> DomainEvents
     {
         get => field ?? [];
