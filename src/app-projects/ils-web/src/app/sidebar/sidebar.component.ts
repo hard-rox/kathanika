@@ -54,8 +54,8 @@ export class SidebarComponent {
             icon: 'shopping_cart',
             isExpanded: false,
             children: [
-                {label: 'Purchase Orders', icon: 'receipt', route: '/purchase-orders'},
-                {label: 'Vendors', icon: 'business', route: '/vendors'}
+                {label: 'Purchase Orders', icon: 'receipt', route: '/acquisition/purchase-orders'},
+                {label: 'Vendors', icon: 'business', route: '/acquisition/vendors'}
             ]
         },
         {

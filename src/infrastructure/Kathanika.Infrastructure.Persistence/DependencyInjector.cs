@@ -70,7 +70,7 @@ public static class DependencyInjector
                 .GetInterfaces()
                 .FirstOrDefault(x => !x.IsGenericType
                                      && x.Name.Contains(type.Name));
-            if (interfaceType != null)
+            if (interfaceType is not null)
             {
                 services.AddScoped(interfaceType, type);
             }
