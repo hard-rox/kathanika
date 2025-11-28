@@ -33,17 +33,14 @@ public static class DependencyInjector
     {
         RegisterClassMapFromAssembly();
 
-        var connectionString = configuration.GetConnectionString("mongoDb");
+        var connectionString = configuration.GetConnectionString("mongodb");
         services.AddMongoDb(connectionString);
 
 #pragma warning disable EXTEXP0018
         services.AddHybridCache()
             .AddSerializerFactory<CacheJsonSerializerFactory>();
 #pragma warning restore EXTEXP0018
-        services.AddStackExchangeRedisCache(opt =>
-        {
-            opt.Configuration = configuration.GetConnectionString("redis");
-        });
+        services.AddStackExchangeRedisCache(opt => { opt.Configuration = configuration.GetConnectionString("redis"); });
 
         services.AddScoped<IOutboxMessageService, OutboxMessageService>();
         services.AddSingleton<IFileMetadataService, FileMetadataService>();
@@ -70,7 +67,7 @@ public static class DependencyInjector
                 .GetInterfaces()
                 .FirstOrDefault(x => !x.IsGenericType
                                      && x.Name.Contains(type.Name));
-            if (interfaceType != null)
+            if (interfaceType is not null)
             {
                 services.AddScoped(interfaceType, type);
             }

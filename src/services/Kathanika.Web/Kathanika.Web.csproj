@@ -1,14 +1,15 @@
 <Project Sdk="Microsoft.NET.Sdk.Web">
 
     <PropertyGroup>
-        <TargetFramework>net9.0</TargetFramework>
+        <TargetFramework>net10.0</TargetFramework>
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
-        <LangVersion>13</LangVersion>
-        <UserSecretsId>735a8f0b-2a48-408b-8884-fc62a0ee2fe8</UserSecretsId>
+        <LangVersion>14</LangVersion>
+        <UserSecretsId>kathanika-web-api</UserSecretsId>
     </PropertyGroup>
 
     <ItemGroup>
+        <ProjectReference Include="..\..\aspire\Kathanika.ServiceDefaults\Kathanika.ServiceDefaults.csproj" />
         <ProjectReference Include="..\..\core\Kathanika.Application\Kathanika.Application.csproj"/>
         <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Graphql\Kathanika.Infrastructure.Graphql.csproj"/>
         <ProjectReference Include="..\..\infrastructure\Kathanika.Infrastructure.Persistence\Kathanika.Infrastructure.Persistence.csproj"/>
@@ -16,19 +17,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="OpenTelemetry.Exporter.Console"/>
-        <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol"/>
-        <PackageReference Include="OpenTelemetry.Extensions.Hosting"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.Http"/>
-        <PackageReference Include="OpenTelemetry.Instrumentation.Quartz"/>
-        <PackageReference Include="Serilog.AspNetCore"/>
         <PackageReference Include="tusdotnet"/>
-        <PackageReference Include="Serilog.Enrichers.ClientInfo"/>
-        <PackageReference Include="Serilog.Enrichers.Process"/>
-        <PackageReference Include="Serilog.Enrichers.Thread"/>
-        <PackageReference Include="Serilog.Exceptions"/>
-        <PackageReference Include="Serilog.Sinks.Seq"/>
     </ItemGroup>
 
     <ItemGroup>

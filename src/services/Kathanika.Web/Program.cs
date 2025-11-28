@@ -3,13 +3,9 @@ using Kathanika.Application.Services;
 using Kathanika.Infrastructure.Graphql;
 using Kathanika.Infrastructure.Persistence;
 using Kathanika.Infrastructure.Workers;
+using Kathanika.ServiceDefaults;
 using Kathanika.Web;
 using Kathanika.Web.FileOpsConfigurations;
-using OpenTelemetry.Exporter;
-using OpenTelemetry.Logs;
-using OpenTelemetry.Metrics;
-using OpenTelemetry.Resources;
-using OpenTelemetry.Trace;
 using Serilog;
 using tusdotnet;
 using tusdotnet.Helpers;
@@ -19,7 +15,7 @@ try
 {
     WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
 
-    ConfigureSerilog(builder.Host);
+    builder.AddServiceDefaults();
 
     builder.Services.Configure<ApplicationOptions>(
         builder.Configuration.GetSection(nameof(ApplicationOptions))
@@ -33,8 +29,6 @@ try
         .AddWorkers(builder.Configuration)
         .AddTus(builder.Configuration);
 
-    AddOpenTelemetry(builder);
-
     if (builder.Environment.IsDevelopment())
     {
         builder.Services.AddCors();
@@ -43,9 +37,9 @@ try
 
     WebApplication app = builder.Build();
 
-    app.UseSerilogRequestLogging();
-
-    app.UseGraphQlInfrastructure();
+    app.MapDefaultEndpoints()
+        .UseGraphQlInfrastructure()
+        .UseSerilogRequestLogging();
 
     if (builder.Environment.IsDevelopment())
     {
@@ -81,59 +75,4 @@ catch (Exception ex)
 finally
 {
     await Log.CloseAndFlushAsync();
-}
-
-void ConfigureSerilog(ConfigureHostBuilder host)
-{
-    host.UseSerilog((context, services, configuration) =>
-    {
-        configuration
-            .ReadFrom.Configuration(context.Configuration)
-            .ReadFrom.Services(services);
-    });
-}
-
-void AddOpenTelemetry(WebApplicationBuilder builder)
-{
-    const string serviceName = "Kathanika-Web-Service";
-    var otlpExportEndpoint = builder.Configuration.GetValue<string>("OtlpExportEndpoint") ?? string.Empty;
-    builder.Services.AddOpenTelemetry()
-        .ConfigureResource(resource => resource.AddService(serviceName))
-        .WithTracing(tracing => tracing
-            .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            // .AddMongoDBInstrumentation()
-            .AddQuartzInstrumentation()
-            .AddHotChocolateInstrumentation()
-            // .AddConsoleExporter()
-            .AddOtlpExporter(options =>
-            {
-                options.Protocol = OtlpExportProtocol.Grpc;
-                options.Endpoint = new Uri(otlpExportEndpoint);
-            }))
-        .WithMetrics(metrics => metrics
-            .AddAspNetCoreInstrumentation()
-            .AddHttpClientInstrumentation()
-            // .AddConsoleExporter()
-            .AddOtlpExporter(options =>
-            {
-                options.Protocol = OtlpExportProtocol.Grpc;
-                options.Endpoint = new Uri(otlpExportEndpoint);
-            }));
-
-    builder.Logging.AddOpenTelemetry(options =>
-    {
-        options
-            .SetResourceBuilder(
-                ResourceBuilder.CreateDefault()
-                    .AddService(serviceName))
-            // .AddConsoleExporter();
-            .AddOtlpExporter();
-    });
-}
-
-namespace Kathanika.Web
-{
-    // ReSharper disable once PartialTypeWithSinglePart
-    public static partial class Program;
 }

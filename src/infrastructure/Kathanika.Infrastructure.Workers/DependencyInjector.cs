@@ -13,13 +13,13 @@ public static class DependencyInjector
         {
             //TODO: Get intervals from appSettings.
             JobKey processOutboxMessageJobKey = new(nameof(ProcessOutboxMessagesJob));
-            configure.AddJob<ProcessOutboxMessagesJob>(processOutboxMessageJobKey)
+            configure.AddJob<ProcessOutboxMessagesJob>(opt => opt.WithIdentity(processOutboxMessageJobKey))
                 .AddTrigger(trigger => trigger.ForJob(processOutboxMessageJobKey)
                     .WithSimpleSchedule(schedule => schedule.WithIntervalInMinutes(10)
                         .RepeatForever()));
 
             JobKey unusedUploadedFileCleanupJobKey = new(nameof(UnusedUploadedFileCleanupJob));
-            configure.AddJob<UnusedUploadedFileCleanupJob>(unusedUploadedFileCleanupJobKey)
+            configure.AddJob<UnusedUploadedFileCleanupJob>(opt => opt.WithIdentity(unusedUploadedFileCleanupJobKey))
                 .AddTrigger(trigger => trigger.ForJob(unusedUploadedFileCleanupJobKey)
                     .WithSimpleSchedule(schedule => schedule.WithIntervalInMinutes(10)
                         .RepeatForever()));

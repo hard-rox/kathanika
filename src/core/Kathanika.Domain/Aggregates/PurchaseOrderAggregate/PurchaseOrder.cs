@@ -4,8 +4,6 @@ namespace Kathanika.Domain.Aggregates.PurchaseOrderAggregate;
 
 public sealed class PurchaseOrder : AggregateRoot
 {
-    private readonly List<PurchaseItem> _purchaseItems = [];
-
     private PurchaseOrder()
     {
     }
@@ -15,15 +13,15 @@ public sealed class PurchaseOrder : AggregateRoot
     public string? InternalNote { get; private set; }
     public string? VendorNote { get; private set; }
     public PurchaseOrderStatus Status { get; private set; }
-    public int TotalQuantity => _purchaseItems.Sum(i => i.Quantity);
-    public decimal TotalCost => _purchaseItems.Sum(i => (i.VendorPrice ?? 0) * i.Quantity);
+    public int TotalQuantity => PurchaseItems.Sum(i => i.Quantity);
+    public decimal TotalCost => PurchaseItems.Sum(i => (i.VendorPrice ?? 0) * i.Quantity);
     public DateOnly OrderDate => DateOnly.FromDateTime(CreatedAt.Date);
 
     public IReadOnlyCollection<PurchaseItem> PurchaseItems
     {
-        get => _purchaseItems;
-        init => _purchaseItems = value?.ToList() ?? [];
-    }
+        get => field;
+        init => field = value?.ToList() ?? [];
+    } = new List<PurchaseItem>();
 
     private PurchaseOrder(
         string vendorId,
@@ -34,7 +32,7 @@ public sealed class PurchaseOrder : AggregateRoot
     {
         VendorId = vendorId;
         VendorName = vendorName;
-        _purchaseItems = purchaseItems?.ToList() ?? [];
+        PurchaseItems = purchaseItems?.ToList() ?? [];
         InternalNote = internalNote;
         VendorNote = vendorNote;
         Status = PurchaseOrderStatus.Pending;

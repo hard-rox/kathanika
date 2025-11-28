@@ -9,9 +9,6 @@ namespace Kathanika.Domain.Aggregates.BibRecordAggregate;
 /// </summary>
 public class MarcMetadata : Entity
 {
-    private readonly List<ControlField> _controlFields = [];
-    private readonly List<DataField> _dataFields = [];
-
     /// <summary>
     /// MARC21 Leader - Fixed-length 24-character field containing metadata about the record.
     /// Position 0-4: Record length, 5: Record status, 6: Type of record, 7: Bibliographic level, 8: Encoding level,
@@ -27,9 +24,9 @@ public class MarcMetadata : Entity
     /// </summary>
     public IReadOnlyList<ControlField> ControlFields
     {
-        get => _controlFields;
-        private init => _controlFields = value.ToList();
-    }
+        get => field;
+        private init => field = value.ToList();
+    } = new List<ControlField>();
 
     /// <summary>
     /// Data Fields (010-999) - Variable-length fields with indicators and subfields.
@@ -37,9 +34,9 @@ public class MarcMetadata : Entity
     /// </summary>
     public IReadOnlyList<DataField> DataFields
     {
-        get => _dataFields;
-        private init => _dataFields = value.ToList();
-    }
+        get => field;
+        private init => field = value.ToList();
+    } = new List<DataField>();
 
     private string RecalculateLeader()
     {
@@ -73,17 +70,17 @@ public class MarcMetadata : Entity
         var length = 24;
 
         // Directory entries: 12 bytes per field (control + data fields)
-        var totalFields = _controlFields.Count + _dataFields.Count;
+        var totalFields = ControlFields.Count + DataFields.Count;
         length += totalFields * 12;
 
         // Directory terminator: 1 byte
         length += 1;
 
         // Control fields data
-        length += _controlFields.Sum(field => field.Data.Length + 1);
+        length += ControlFields.Sum(field => field.Data.Length + 1);
 
         // Data fields data
-        foreach (DataField field in _dataFields)
+        foreach (DataField field in DataFields)
         {
             length += 2; // indicators
             foreach (Subfield subfield in field.Subfields)
@@ -108,7 +105,7 @@ public class MarcMetadata : Entity
         var baseAddress = 24;
 
         // Directory entries: 12 bytes per field
-        var totalFields = _controlFields.Count + _dataFields.Count;
+        var totalFields = ControlFields.Count + DataFields.Count;
         baseAddress += totalFields * 12;
 
         // Directory terminator: 1 byte
@@ -271,7 +268,7 @@ public class MarcMetadata : Entity
     {
         MarcMetadata metadata = new();
 
-        metadata._controlFields.AddRange([
+        ((List<ControlField>)metadata.ControlFields).AddRange([
             ControlField.Create("001", "KN" + Guid.NewGuid().ToString("N")[..10].ToUpper()).Value,
             ControlField.Create("005", DateTime.UtcNow.ToString("yyyyMMddHHmmss.f")).Value,
             ControlField.Create("008", GenerateFixedLengthDataElements()).Value,
@@ -283,13 +280,13 @@ public class MarcMetadata : Entity
 
     internal string GetControlFieldValue(string tag)
     {
-        ControlField? field = _controlFields.FirstOrDefault(f => f.Tag == tag);
+        ControlField? field = ControlFields.FirstOrDefault(f => f.Tag == tag);
         return field?.Data ?? string.Empty;
     }
 
     internal string GetDataFieldValue(string tag, char subfieldCode)
     {
-        DataField? field = _dataFields.FirstOrDefault(f => f.Tag == tag);
+        DataField? field = DataFields.FirstOrDefault(f => f.Tag == tag);
         if (field == null)
             return string.Empty;
 
@@ -321,7 +318,7 @@ public class MarcMetadata : Entity
         if (dataFieldResult.IsFailure)
             return KnResult.Failure(dataFieldResult.Errors);
 
-        _dataFields.Add(dataFieldResult.Value);
+        ((List<DataField>)DataFields).Add(dataFieldResult.Value);
         Leader = RecalculateLeader();
 
         return KnResult.Success();
