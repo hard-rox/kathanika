@@ -39,7 +39,7 @@
     "@angular/platform-server": "^20.2.4",
     "@angular/router": "^20.2.4",
     "@angular/service-worker": "^20.2.4",
-    "@angular/ssr": "^20.1.4",
+    "@angular/ssr": "^21.0.0",
     "apollo-angular": "^11.0.0",
     "express": "^5.1.0",
     "graphql": "^16.12.0",
