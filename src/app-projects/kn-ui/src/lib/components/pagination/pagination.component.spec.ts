@@ -63,7 +63,7 @@ describe('KnPagination', () => {
     });
 
     it('should emit pageSizeChanged on pageSize change', () => {
-        const pageSizeChangedOutputSpy = jest.spyOn(
+        const pageSizeChangedOutputSpy = vitest.spyOn(
             component['pageSizeChanged'],
             'emit',
         );
@@ -82,7 +82,7 @@ describe('KnPagination', () => {
     });
 
     it('should emit pageChanged on page change', () => {
-        const pageChangedOutputSpy = jest.spyOn(component['pageChanged'], 'emit');
+        const pageChangedOutputSpy = vitest.spyOn(component['pageChanged'], 'emit');
         component['onPageChanged'](1);
         componentRef.setInput('totalCount', 10);
         componentRef.setInput('pageSize', 3);
@@ -92,7 +92,7 @@ describe('KnPagination', () => {
     });
 
     it('should not emit pageChanged on page change when pageNumber is greater than lastPage', () => {
-        const pageChangedOutputSpy = jest.spyOn(component['pageChanged'], 'emit');
+        const pageChangedOutputSpy = vitest.spyOn(component['pageChanged'], 'emit');
         component['onPageChanged'](3);
         componentRef.setInput('totalCount', 10);
         componentRef.setInput('pageSize', 3);

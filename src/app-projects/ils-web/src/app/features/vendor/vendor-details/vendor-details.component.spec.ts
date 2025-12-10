@@ -45,7 +45,7 @@ describe('VendorDetailsComponent', () => {
     });
     
     it('should call refetch with query variables on init', () => {
-        const refetchSpy = jest.spyOn(component.queryRef, 'refetch');
+        const refetchSpy = vitest.spyOn(component.queryRef, 'refetch');
         component.ngOnInit();
         expect(refetchSpy).toHaveBeenCalledWith({ id: '11111223445688' });
     });
