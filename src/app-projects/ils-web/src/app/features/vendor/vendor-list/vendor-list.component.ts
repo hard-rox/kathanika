@@ -66,13 +66,21 @@ export class VendorListComponent extends BasePaginatedListComponent<VendorListQu
         this.init();
     }
 
+    deleteVendorSafe(vendorId: string | undefined) {
+        if (vendorId) {
+            this.deleteVendor(vendorId);
+        }
+    }
+
     deleteVendor(vendorId: string) {
         this.alertService.showConfirmation('warning', 'Are you sure you want to delete Vendor?')
             .subscribe({
                 next: (confirmed) => {
                     if (confirmed) {
                         this.deleteVendorGql.mutate({
-                            id: vendorId
+                            variables: {
+                                id: vendorId
+                            }
                         }).subscribe({
                             next: (result) => {
                                 if (result.loading) {

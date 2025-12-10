@@ -34,7 +34,7 @@
                         let idx = $index) {
                         <tr>
                             <td>{{ idx + 1 }}</td>
-                            <td>{{ item.name }}</td>
+                            <td>{{ item?.name }}</td>
                             <td>
                                 <kn-badge [content]="item?.status ?? ''" [type]="
             item?.status === vendorStatus.Active
@@ -44,7 +44,7 @@
                 : 'warning'
           "/>
                             </td>
-                            <td>{{ item.contactPersonName }}</td>
+                            <td>{{ item?.contactPersonName }}</td>
                             <td>
                                 <div class="group relative">
                                     <button kn-button variant="transparent" aria-label="Open vendor actions menu">
@@ -67,14 +67,16 @@
                                                 <span class="material-symbols-rounded my-auto"> edit </span>
                                                 <span class="my-auto">Update</span>
                                             </a>
-                                            <button (click)="deleteVendor(item.id)"
-                                                    class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
-                                                                                <span
+                                            @if (item?.id) {
+                                                <button (click)="deleteVendorSafe(item?.id)"
+                                                        class="flex space-x-2 px-4 py-2 hover:bg-theme-silver active:bg-theme-silver">
+                                                                                    <span
                                                                                     class="material-symbols-rounded my-auto">
                                                                                   delete
                                                                                 </span>
                                                 <span class="my-auto">Delete</span>
                                             </button>
+                                            }
                                         </div>
                                     </div>
                                 </div>
@@ -90,7 +92,7 @@
 
             <div class="w-full inline-flex justify-center">
                 <kn-pagination
-                    [totalCount]="queryResult.data.vendors?.totalCount ?? 0"
+                    [totalCount]="queryResult.data?.vendors?.totalCount ?? 0"
                     [pageSize]="pageSize"
                     (pageChanged)="changePage($event)"
                     (pageSizeChanged)="changePageSize($event)"

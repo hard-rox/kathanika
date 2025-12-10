@@ -40,20 +40,21 @@ export class VendorUpdateComponent implements OnInit {
         if (this.vendorId && this.vendorId.length > 0) {
             this.gql
                 .fetch({
-                    id: this.vendorId,
+                    variables: {
+                        id: this.vendorId,
+                    }
                 })
                 .pipe(finalize(() => {
                     this.isPanelLoading = false;
                 }))
                 .subscribe({
                     next: (result) => {
-                        if (result.error || result.errors) {
+                        if (result.error) {
                             this.alertService.showPopup(
                                 'error',
-                                result.error?.message ??
-                                (result.errors?.join('<br/>') as string),
+                                result.error?.message,
                             );
-                        } else if (result.data.vendor == null) {
+                        } else if (result.data?.vendor == null) {
                             this.alertService.showPopup(
                                 'error',
                                 'Returning to list page.',
@@ -76,8 +77,10 @@ export class VendorUpdateComponent implements OnInit {
 
         this.mutation
             .mutate({
-                id: this.vendorId as string,
-                patch: vendorOutput,
+                variables: {
+                    id: this.vendorId as string,
+                    patch: vendorOutput,
+                }
             })
             .pipe(finalize(() => {
                 this.isPanelLoading = false;
@@ -89,7 +92,7 @@ export class VendorUpdateComponent implements OnInit {
                         return;
                     }
                     
-                    if (result.errors || result.data?.updateVendor.errors) {
+                    if (result.error || result.data?.updateVendor.errors) {
                         this.errors = [];
                         result.data?.updateVendor.errors?.forEach((x) => {
                             switch (x.__typename) {
@@ -101,7 +104,9 @@ export class VendorUpdateComponent implements OnInit {
                                     break;
                             }
                         });
-                        result.errors?.forEach((x) => this.errors.push(x.message));
+                        if (result.error) {
+                            this.errors.push(result.error.message);
+                        }
                     } else {
                         this.alertService.showToast(
                             'success',

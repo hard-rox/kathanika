@@ -1,5 +1,5 @@
 @if (queryRef.valueChanges | async; as queryResult) {
-    @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
+    @if (!queryResult.error && queryResult.data; as data) {
         <kn-panel panelTitle="📄 Purchase Order Details">
             <a [routerLink]="['../update', data.purchaseOrder?.id]" kn-button class="float-right">
                 <span class="material-symbols-rounded">edit</span>
@@ -54,22 +54,22 @@
                                 <tr>
                                     <td>
                                         <div class="flex flex-col">
-                                            <strong>{{ item.title }}</strong>
-                                            <span class="italic text-sm">{{ item.author }}</span>
-                                            <span class="italic text-sm">{{ item.edition }}</span>
-                                            <span class="italic text-sm">{{ item.publisher }}</span>
-                                            <span class="italic text-sm">{{ item.publishingYear }}</span>
+                                            <strong>{{ item?.title }}</strong>
+                                            <span class="italic text-sm">{{ item?.author }}</span>
+                                            <span class="italic text-sm">{{ item?.edition }}</span>
+                                            <span class="italic text-sm">{{ item?.publisher }}</span>
+                                            <span class="italic text-sm">{{ item?.publishingYear }}</span>
                                         </div>
                                     </td>
                                     <td>
                                         <div class="flex flex-col">
-                                            <span class="italic text-sm">Internal Note: {{ item.internalNote }}</span>
-                                            <span class="italic text-sm">Vendor Note: {{ item.vendorNote }}</span>
+                                            <span class="italic text-sm">Internal Note: {{ item?.internalNote }}</span>
+                                            <span class="italic text-sm">Vendor Note: {{ item?.vendorNote }}</span>
                                         </div>
                                     </td>
-                                    <td class="text-right">{{ item.quantity }}</td>
-                                    <td class="font-semibold text-right">{{ item.vendorPrice | currency }}</td>
-                                    <td class="font-semibold text-right">{{ item.totalCost | currency }}</td>
+                                    <td class="text-right">{{ item?.quantity }}</td>
+                                    <td class="font-semibold text-right">{{ item?.vendorPrice | currency }}</td>
+                                    <td class="font-semibold text-right">{{ item?.totalCost | currency }}</td>
                                     <td>
                                         <div class="flex space-x-1 items-center">
                                             <button type="button" 

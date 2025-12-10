@@ -43,7 +43,6 @@ export type AddBibItemInput = {
   itemType: ItemType;
   location: Scalars['String']['input'];
   notes?: InputMaybe<Scalars['String']['input']>;
-  status?: ItemStatus;
 };
 
 export type AddBibItemPayload = {
@@ -860,7 +859,10 @@ export type BookQuickAddMutationVariables = Exact<{
 }>;
 
 
-export type BookQuickAddMutation = { __typename?: 'Mutation', bookQuickAdd: { __typename?: 'BookQuickAddPayload', message?: string | null, data?: { __typename?: 'BibRecord', id: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, description?: string | null, message: string } | { __typename?: 'ValidationError', code: string, fieldName: string, description?: string | null, message: string }> | null } };
+export type BookQuickAddMutation = { __typename?: 'Mutation', bookQuickAdd: { __typename?: 'BookQuickAddPayload', message?: string | null, data?: { __typename?: 'BibRecord', id: string } | null, errors?: Array<
+      | { __typename?: 'KnError', code: string, description?: string | null, message: string }
+      | { __typename?: 'ValidationError', code: string, fieldName: string, description?: string | null, message: string }
+    > | null } };
 
 export type BibRecordDetailsQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -884,7 +886,10 @@ export type CreatePurchaseOrderMutationVariables = Exact<{
 }>;
 
 
-export type CreatePurchaseOrderMutation = { __typename?: 'Mutation', createPurchaseOrder: { __typename?: 'CreatePurchaseOrderPayload', message?: string | null, data?: { __typename?: 'PurchaseOrder', id: string, vendorName: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type CreatePurchaseOrderMutation = { __typename?: 'Mutation', createPurchaseOrder: { __typename?: 'CreatePurchaseOrderPayload', message?: string | null, data?: { __typename?: 'PurchaseOrder', id: string, vendorName: string } | null, errors?: Array<
+      | { __typename?: 'KnError', code: string, message: string, description?: string | null }
+      | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }
+    > | null } };
 
 export type PurchaseOrderDetailsQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -915,7 +920,10 @@ export type AddVendorMutationVariables = Exact<{
 }>;
 
 
-export type AddVendorMutation = { __typename?: 'Mutation', addVendor: { __typename?: 'AddVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type AddVendorMutation = { __typename?: 'Mutation', addVendor: { __typename?: 'AddVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<
+      | { __typename?: 'KnError', code: string, message: string, description?: string | null }
+      | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }
+    > | null } };
 
 export type VendorDetailsQueryVariables = Exact<{
   id: Scalars['String']['input'];
@@ -929,7 +937,10 @@ export type DeleteVendorMutationVariables = Exact<{
 }>;
 
 
-export type DeleteVendorMutation = { __typename?: 'Mutation', deleteVendor: { __typename?: 'DeleteVendorPayload', message?: string | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type DeleteVendorMutation = { __typename?: 'Mutation', deleteVendor: { __typename?: 'DeleteVendorPayload', message?: string | null, errors?: Array<
+      | { __typename?: 'KnError', code: string, message: string, description?: string | null }
+      | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }
+    > | null } };
 
 export type VendorListQueryVariables = Exact<{
   skip: Scalars['Int']['input'];
@@ -947,7 +958,10 @@ export type UpdateVendorMutationVariables = Exact<{
 }>;
 
 
-export type UpdateVendorMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<{ __typename?: 'KnError', code: string, message: string, description?: string | null } | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }> | null } };
+export type UpdateVendorMutation = { __typename?: 'Mutation', updateVendor: { __typename?: 'UpdateVendorPayload', message?: string | null, data?: { __typename?: 'Vendor', id: string, name: string } | null, errors?: Array<
+      | { __typename?: 'KnError', code: string, message: string, description?: string | null }
+      | { __typename?: 'ValidationError', code: string, fieldName: string, message: string, description?: string | null }
+    > | null } };
 
 export const BookQuickAddDocument = gql`
     mutation BookQuickAdd($input: BookQuickAddInput!) {

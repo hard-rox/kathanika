@@ -26,6 +26,6 @@ export abstract class BaseQueryComponent<
         queryVariables?: TQueryVariables | null,
     ) {
         this.queryVariables = queryVariables;
-        this._queryRef = gql.watch(this._queryVariables);
+        this._queryRef = gql.watch({variables: this._queryVariables} as any);
     }
 }

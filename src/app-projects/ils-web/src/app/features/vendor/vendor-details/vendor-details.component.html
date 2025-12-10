@@ -1,6 +1,6 @@
 <!--<pre>{{ queryRef.valueChanges | async | json }}</pre>-->
 @if (queryRef.valueChanges | async; as queryResult) {
-    @if (!queryResult.error && !queryResult.errors && queryResult.data; as data) {
+    @if (!queryResult.error && queryResult.data; as data) {
         <div class="flex flex-col space-y-4 lg:flex-row lg:space-y-0 lg:space-x-4">
             <div class="flex-1 space-y-4">
                 <kn-panel [panelTitle]="data.vendor?.name ?? 'Vendor'">
@@ -84,8 +84,8 @@
                                 let idx = $index) {
                                 <tr>
                                     <td>{{ idx + 1 }}</td>
-                                    <td>{{ item.orderDate | date }}</td>
-                                    <td>{{ item.totalCost | currency }}</td>
+                                    <td>{{ item?.orderDate | date }}</td>
+                                    <td>{{ item?.totalCost | currency }}</td>
                                     <td>
                                         <kn-badge [content]="item?.status ?? ''"
                                                   [type]="item?.status === purchaseOrderStatus.Completed ? 'success': item?.status === purchaseOrderStatus.Pending? 'warning': 'error'"/>

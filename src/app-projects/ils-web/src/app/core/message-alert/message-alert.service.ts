@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {from, map, Observable} from "rxjs";
 import Swal from 'sweetalert2';
-import {ApolloError} from '@apollo/client/errors';
 
 @Injectable({
     providedIn: 'root'
@@ -93,10 +92,14 @@ export class MessageAlertService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    showHttpErrorPopup(error: ApolloError | any) {
-        if (error instanceof ApolloError) {
+    showHttpErrorPopup(error: any) {
+        if (error?.networkError) {
             this.showPopup('error',
                 error?.networkError?.message ?? 'There is an unfortunate GraphQL Error');
+        } else if (error?.message) {
+            this.showPopup('error', error.message);
+        } else {
+            this.showPopup('error', 'An unexpected error occurred');
         }
     }
 }
