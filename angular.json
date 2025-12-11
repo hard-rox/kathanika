@@ -118,7 +118,6 @@
             "tsConfig": "src/app-projects/kn-ui/tsconfig.spec.json"
           }
         },
-        ,
         "lint": {
           "builder": "@angular-eslint/builder:lint",
           "options": {
