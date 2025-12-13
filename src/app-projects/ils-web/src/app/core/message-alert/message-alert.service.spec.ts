@@ -4,6 +4,7 @@ import {MessageAlertService} from './message-alert.service';
 
 describe.skip('MessageAlertService', () => {
     let service: MessageAlertService;
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let swalSpy: any;
 
     beforeEach(() => {

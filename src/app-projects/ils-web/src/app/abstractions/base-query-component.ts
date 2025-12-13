@@ -26,6 +26,7 @@ export abstract class BaseQueryComponent<
         queryVariables?: TQueryVariables | null,
     ) {
         this.queryVariables = queryVariables;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this._queryRef = gql.watch({variables: this._queryVariables} as any);
     }
 }

@@ -1,4 +1,4 @@
-import {Component, Inject, Injector, OnInit, input} from '@angular/core';
+import { Component, Injector, OnInit, input, inject } from '@angular/core';
 import {ControlValueAccessor, NgControl, Validators} from '@angular/forms';
 
 @Component({
@@ -6,6 +6,8 @@ import {ControlValueAccessor, NgControl, Validators} from '@angular/forms';
 })
 export abstract class AbstractInput<TValueType>
     implements ControlValueAccessor, OnInit {
+    private readonly injector = inject<Injector>(Injector);
+
     readonly label = input('');
 
     readonly placeholder = input('');
@@ -23,9 +25,6 @@ export abstract class AbstractInput<TValueType>
     // eslint-disable-next-line @typescript-eslint/no-empty-function
     private onTouched = () => {
     };
-
-    constructor(@Inject(Injector) private readonly injector: Injector) {
-    }
 
     ngOnInit() {
         this.control = this.injector.get(NgControl);

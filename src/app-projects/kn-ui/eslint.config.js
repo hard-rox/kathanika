@@ -1,11 +1,11 @@
 // @ts-check
-const tseslint = require("typescript-eslint");
-const rootConfig = require("../../../eslint.config.js");
+const tseslint = require('typescript-eslint');
+const rootConfig = require('../../../eslint.config.js');
 
 module.exports = tseslint.config(
     ...rootConfig,
     {
-        files: ["**/*.ts"],
+        files: ['**/*.ts'],
         rules: {
             '@angular-eslint/directive-selector': [
                 'error',
@@ -35,10 +35,18 @@ module.exports = tseslint.config(
                     suffixes: [''],
                 },
             ],
-        }
+        },
     },
     {
-        files: ["**/*.html"],
+        files: ['**/*.html'],
         rules: {},
+    },
+    //TODO: Remove this override after fixing all the warnings in stories files. Add config in copilot to avoid generating unused vars in stories.
+    {
+        files: ['**/*.stories.ts'],
+        rules: {
+            '@typescript-eslint/no-unused-vars': 'off',
+            '@typescript-eslint/no-explicit-any': 'off',
+        },
     }
 );
