@@ -12,10 +12,10 @@
         [id]="control?.name"
         [ngClass]="
       (control?.dirty || control?.touched) && !control?.valid
-        ? 'border-theme-fire-red placeholder:text-theme-fire-red placeholder:text-opacity-30'
+        ? 'border-theme-fire-red placeholder:text-theme-fire-red/30'
         : isDisabled
-          ? 'border-theme-davys-gray border-opacity-50 bg-gray-200'
-          : 'border-theme-gunmetal placeholder:text-theme-gunmetal placeholder:text-opacity-20'
+          ? 'border-theme-davys-gray/50 bg-gray-200'
+          : 'border-theme-gunmetal placeholder:text-theme-gunmetal/20'
     "
         [ngModel]="value"
         [placeholder]="placeholder().length > 0 ? placeholder() : label()"
@@ -23,7 +23,7 @@
         type="text"
     />
     @if (helpText()) {
-        <p class="text-xs text-theme-gunmetal text-opacity-50 mt-1">{{ helpText() }}</p>
+        <p class="text-xs text-theme-gunmetal/50 mt-1">{{ helpText() }}</p>
     }
     <ul class="list-disc ml-4">
         @if ((control?.dirty || control?.touched) && control?.hasError('required')) {

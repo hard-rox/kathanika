@@ -20,15 +20,15 @@ export class KnButton {
         'bg-transparent',
         'border-solid',
         'border-2',
-        'hover:bg-opacity-20',
-        'active:bg-opacity-20',
+        'hover:bg-black/20',
+        'active:bg-black/20',
     ]
 
     private readonly transparentClasses = [
         'bg-transparent',
         'border-none',
-        'hover:bg-opacity-20',
-        'active:bg-opacity-20',
+        'hover:bg-black/20',
+        'active:bg-black/20',
     ]
 
     private readonly solidClasses = [
@@ -65,38 +65,32 @@ export class KnButton {
         'fill-black'
     ];
     private readonly successClasses = [
-        'bg-theme-office-green',
-        'bg-opacity-90',
-        'hover:bg-opacity-100',
-        'active:bg-opacity-100',
-        'border-theme-office-green',
-        'border-opacity-90',
-        'hover:border-opacity-100',
-        'active:border-opacity-100',
+        'bg-theme-office-green/90',
+        'hover:bg-theme-office-green/100',
+        'active:bg-theme-office-green/100',
+        'border-theme-office-green/90',
+        'hover:border-theme-office-green/100',
+        'active:border-theme-office-green/100',
         'text-white',
         'fill-white'
     ];
     private readonly warningClasses = [
-        'bg-theme-spanish-orange',
-        'bg-opacity-90',
-        'hover:bg-opacity-100',
-        'active:bg-opacity-100',
-        'border-theme-spanish-orange',
-        'border-opacity-90',
-        'hover:border-opacity-100',
-        'active:border-opacity-100',
+        'bg-theme-spanish-orange/90',
+        'hover:bg-theme-spanish-orange/100',
+        'active:bg-theme-spanish-orange/100',
+        'border-theme-spanish-orange/90',
+        'hover:border-theme-spanish-orange/100',
+        'active:border-theme-spanish-orange/100',
         'text-white',
         'fill-black'
     ]
     private readonly errorClasses = [
-        'bg-theme-fire-red',
-        'bg-opacity-90',
-        'hover:bg-opacity-100',
-        'active:bg-opacity-100',
-        'border-theme-fire-red',
-        'border-opacity-90',
-        'hover:border-opacity-100',
-        'active:border-opacity-100',
+        'bg-theme-fire-red/90',
+        'hover:bg-theme-fire-red/100',
+        'active:bg-theme-fire-red/100',
+        'border-theme-fire-red/90',
+        'hover:border-theme-fire-red/100',
+        'active:border-theme-fire-red/100',
         'text-white',
         'fill-white'
     ]
