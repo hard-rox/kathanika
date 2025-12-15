@@ -1,4 +1,4 @@
 dotnet build
 dotnet test
 npm run build
-npm run test
+npm run test -- --watch=false

@@ -20,7 +20,7 @@ describe('KnAlert', () => {
     });
 
     it('should emit onClosed output', () => {
-        const onClosedSpy = jest.spyOn(component['closed'], 'emit');
+        const onClosedSpy = vitest.spyOn(component['closed'], 'emit');
         component['close']();
         expect(onClosedSpy).toHaveBeenCalledTimes(1);
     });

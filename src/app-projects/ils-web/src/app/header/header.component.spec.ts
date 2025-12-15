@@ -1,16 +1,17 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HeaderComponent } from './header.component';
 import { SidebarService } from '../sidebar/sidebar.service';
+import { Mocked } from 'vitest';
 
 describe('HeaderComponent', () => {
     let component: HeaderComponent;
     let fixture: ComponentFixture<HeaderComponent>;
     let nativeElement: HTMLElement;
-    let sidebarService: jest.Mocked<SidebarService>;
+    let sidebarService: Mocked<SidebarService>;
 
     beforeEach(async () => {
         const mockSidebarService = {
-            toggle: jest.fn()
+            toggle: vitest.fn()
         };
         
         await TestBed.configureTestingModule({
@@ -23,7 +24,7 @@ describe('HeaderComponent', () => {
         fixture = TestBed.createComponent(HeaderComponent);
         component = fixture.componentInstance;
         nativeElement = fixture.nativeElement as HTMLElement;
-        sidebarService = TestBed.inject(SidebarService) as jest.Mocked<SidebarService>;
+        sidebarService = TestBed.inject(SidebarService) as Mocked<SidebarService>;
         fixture.detectChanges();
     });
 

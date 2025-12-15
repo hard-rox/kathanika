@@ -1,7 +1,7 @@
 <!-- Mobile backdrop -->
 @if (isMobileOpen()) {
     <div
-        class="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+        class="fixed inset-0 bg-black/50 z-40 lg:hidden"
         (keydown)="closeMobileSidebar()"
         aria-hidden="true">
     </div>
@@ -23,7 +23,7 @@
                 routerLinkActive="bg-blue-50 text-blue-700"
                 class="flex items-center px-3 py-2 text-sm text-gray-600 hover:bg-gray-100 transition-colors duration-200"
                 (click)="navigateTo(child.route!)">
-        <span class="material-symbols-rounded text-lg mr-3 flex-shrink-0" aria-hidden="true">
+        <span class="material-symbols-rounded text-lg mr-3 shrink-0" aria-hidden="true">
           {{ child.icon }}
         </span>
                 <span class="truncate">{{ child.label }}</span>
@@ -87,7 +87,7 @@
                             [attr.aria-label]="item.label"
                             type="button">
               
-              <span class="material-symbols-rounded text-xl flex-shrink-0"
+              <span class="material-symbols-rounded text-xl shrink-0"
                     [class.mr-3]="!isCollapsed() || isMobileOpen()"
                     aria-hidden="true">
                 {{ item.icon }}
@@ -114,7 +114,7 @@
                                             routerLinkActive="bg-blue-50 text-blue-700 border-l-2 border-blue-700"
                                             class="flex items-center px-3 py-2 text-sm text-gray-600 rounded-lg hover:bg-gray-100 transition-colors duration-200 ml-2"
                                             (click)="navigateTo(child.route!)">
-                      <span class="material-symbols-rounded text-lg mr-3 flex-shrink-0" aria-hidden="true">
+                      <span class="material-symbols-rounded text-lg mr-3 shrink-0" aria-hidden="true">
                         {{ child.icon }}
                       </span>
                                             <span class="truncate">{{ child.label }}</span>
@@ -134,7 +134,7 @@
                             (mouseleave)="onMenuItemLeave()"
                             (click)="navigateTo(item.route!)">
               
-              <span class="material-symbols-rounded text-xl flex-shrink-0"
+              <span class="material-symbols-rounded text-xl shrink-0"
                     [class.mr-3]="!isCollapsed() || isMobileOpen()"
                     aria-hidden="true">
                 {{ item.icon }}

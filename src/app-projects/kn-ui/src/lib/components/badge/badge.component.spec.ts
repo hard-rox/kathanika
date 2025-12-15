@@ -15,7 +15,7 @@ describe('KnBadge', () => {
         fixture.detectChanges();
     });
 
-    xit('should create', () => {
+    it.skip('should create', () => {
         fixture.componentRef.setInput('content', '');
         fixture.componentRef.setInput('type', 'info');
         expect(component).toBeTruthy();

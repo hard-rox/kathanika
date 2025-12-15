@@ -76,7 +76,7 @@ describe('BasePaginatedListComponent', () => {
     });
 
     it('should refetch query changePage', () => {
-        const queryRefRefetchSpy = jest.spyOn(component.queryRef, 'refetch');
+        const queryRefRefetchSpy = vitest.spyOn(component.queryRef, 'refetch');
         const page = 2;
 
         component.changePage(page);
@@ -101,7 +101,7 @@ describe('BasePaginatedListComponent', () => {
     });
 
     it('should refetch query on changePageSize', () => {
-        const queryRefRefetchSpy = jest.spyOn(component.queryRef, 'refetch');
+        const queryRefRefetchSpy = vitest.spyOn(component.queryRef, 'refetch');
         const pageSize = 2;
 
         component.changePageSize(pageSize);
@@ -127,7 +127,7 @@ describe('BasePaginatedListComponent', () => {
 
     it('should refetch query on init', () => {
         const queryVariables = component.queryVariables;
-        const queryRefRefetchSpy = jest.spyOn(component.queryRef, 'refetch');
+        const queryRefRefetchSpy = vitest.spyOn(component.queryRef, 'refetch');
         component['init']();
         expect(queryRefRefetchSpy).toHaveBeenCalledWith(queryVariables);
     });

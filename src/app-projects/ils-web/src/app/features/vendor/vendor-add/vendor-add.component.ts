@@ -30,7 +30,7 @@ export class VendorAddComponent {
 
     onValidFormSubmit(formValue: AddVendorInput | VendorPatchInput) {
         this.isPanelLoading = true;
-        this.gql.mutate({input: formValue as AddVendorInput})
+        this.gql.mutate({variables: {input: formValue as AddVendorInput}})
             .pipe(finalize(() => {
                 this.isPanelLoading = false;
             }))
@@ -41,7 +41,7 @@ export class VendorAddComponent {
                         return;
                     }
 
-                    if (result.errors || result.data?.addVendor.errors) {
+                    if (result.error || result.data?.addVendor.errors) {
                         this.errors = [];
                         result.data?.addVendor.errors?.forEach((x) => {
                                 switch (x?.__typename) {
@@ -54,7 +54,9 @@ export class VendorAddComponent {
                                 }
                             }
                         );
-                        result.errors?.forEach((x) => this.errors.push(x.message));
+                        if (result.error) {
+                            this.errors.push(result.error.message);
+                        }
                     } else {
                         this.alertService.showToast(
                             'success',

@@ -30,16 +30,19 @@
   "files": [],
   "references": [
     {
-      "path": "./projects/ils-web/tsconfig.app.json"
+      "path": "./src/app-projects/ils-web/tsconfig.app.json"
     },
     {
-      "path": "./projects/ils-web/tsconfig.spec.json"
+      "path": "./src/app-projects/ils-web/tsconfig.spec.json"
     },
     {
-      "path": "./projects/kn-ui/tsconfig.lib.json"
+      "path": "./src/app-projects/kn-ui/tsconfig.lib.json"
     },
     {
-      "path": "./projects/kn-ui/tsconfig.spec.json"
+      "path": "./src/app-projects/kn-ui/tsconfig.lib.prod.json"
+    },
+    {
+      "path": "./src/app-projects/kn-ui/tsconfig.spec.json"
     }
   ]
 }

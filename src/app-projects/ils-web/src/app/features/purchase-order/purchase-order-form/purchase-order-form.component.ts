@@ -17,6 +17,7 @@ import {
 import {ModalDialogService} from "../../../core/modal-dialog/modal-dialog.service";
 import {PurchaseItemFormComponent} from "../purchase-item-form/purchase-item-form.component";
 import {QueryRef} from "apollo-angular";
+import {toSignal} from "@angular/core/rxjs-interop";
 
 @Component({
     selector: 'app-purchase-order-form',
@@ -47,12 +48,20 @@ export class PurchaseOrderFormComponent extends BaseFormComponent<CreatePurchase
         }, 0);
     });
     protected readonly vendorSearchQueryRef: QueryRef<SearchVendorsQuery, SearchVendorsQueryVariables>;
+    private readonly vendorSearchResult;
+    protected readonly vendorOptions = computed<{id: string; name: string}[]>(() => {
+        const vendors = this.vendorSearchResult()?.data?.vendors?.items ?? [];
+        return vendors.filter((v): v is {id: string; name: string} => 
+            v != null && typeof v.id === 'string' && typeof v.name === 'string'
+        );
+    });
 
     constructor() {
         const vendorSearchGql = inject(SearchVendorsGQL);
 
         super();
-        this.vendorSearchQueryRef = vendorSearchGql.watch({searchTerm: ''});
+        this.vendorSearchQueryRef = vendorSearchGql.watch({variables: {searchTerm: ''}});
+        this.vendorSearchResult = toSignal(this.vendorSearchQueryRef.valueChanges);
     }
 
     createItem(data?: Partial<PurchaseItemInput>): FormGroup {

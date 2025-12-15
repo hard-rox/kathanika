@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
 import {from, map, Observable} from "rxjs";
 import Swal from 'sweetalert2';
-import {ApolloError} from '@apollo/client/errors';
 
 @Injectable({
     providedIn: 'root'
@@ -50,7 +49,7 @@ export class MessageAlertService {
                 popup: 'rounded-none',
                 confirmButton:
                     confirmationType == 'warning'
-                        ? 'bg-theme-fire-red bg-opacity-80 hover:bg-opacity-100 active:bg-opacity-100 px-4 py-2 text-white mx-2'
+                        ? 'bg-theme-fire-red/80 hover:bg-theme-fire-red/100 active:bg-theme-fire-red/100 px-4 py-2 text-white mx-2'
                         : 'bg-theme-gunmetal hover:bg-theme-rich-black active:bg-theme-rich-black px-4 py-2 text-white mx-2',
                 cancelButton:
                     'bg-theme-davys-gray hover:bg-theme-gunmetal active:bg-theme-rich-black px-4 py-2 text-white mx-2',
@@ -93,10 +92,14 @@ export class MessageAlertService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    showHttpErrorPopup(error: ApolloError | any) {
-        if (error instanceof ApolloError) {
+    showHttpErrorPopup(error: any) {
+        if (error?.networkError) {
             this.showPopup('error',
                 error?.networkError?.message ?? 'There is an unfortunate GraphQL Error');
+        } else if (error?.message) {
+            this.showPopup('error', error.message);
+        } else {
+            this.showPopup('error', 'An unexpected error occurred');
         }
     }
 }

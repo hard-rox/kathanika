@@ -3,7 +3,7 @@
 {
   "extends": "../../../tsconfig.json",
   "compilerOptions": {
-    "outDir": "../../../out-tsc/app",
+    "outDir": "./out-tsc/app",
     "types": [
       "node"
     ]
@@ -12,9 +12,6 @@
     "src/**/*.ts"
   ],
   "exclude": [
-    "src/**/*.spec.ts",
-    "cypress",
-    "./cypress.config.ts",
-    "**/*.cy.tsx"
+    "src/**/*.spec.ts"
   ]
 }

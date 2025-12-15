@@ -15,7 +15,7 @@ describe('SearchbarComponent', () => {
         fixture.detectChanges();
     });
 
-    xit('should create', () => {
+    it.skip('should create', () => {
         fixture.componentRef.setInput('options', []);
         expect(component).toBeTruthy();
     });

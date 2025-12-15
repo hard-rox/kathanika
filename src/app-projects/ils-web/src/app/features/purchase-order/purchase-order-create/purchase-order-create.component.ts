@@ -28,7 +28,7 @@ export class PurchaseOrderCreateComponent {
 
     onValidFormSubmit(formValue: CreatePurchaseOrderInput | PurchaseOrderPatchInput) {
         this.isPanelLoading = true;
-        this.gql.mutate({input: formValue as CreatePurchaseOrderInput})
+        this.gql.mutate({variables: {input: formValue as CreatePurchaseOrderInput}})
             .pipe(finalize(() => {
                 this.isPanelLoading = false;
             }))
@@ -39,7 +39,7 @@ export class PurchaseOrderCreateComponent {
                         return;
                     }
 
-                    if (result.errors || result.data?.createPurchaseOrder.errors) {
+                    if (result.error || result.data?.createPurchaseOrder.errors) {
                         this.errors = [];
                         result.data?.createPurchaseOrder.errors?.forEach((x) => {
                                 if (x?.__typename === 'ValidationError') {
@@ -49,7 +49,9 @@ export class PurchaseOrderCreateComponent {
                                 }
                             }
                         );
-                        result.errors?.forEach((x) => this.errors.push(x.message));
+                        if (result.error) {
+                            this.errors.push(result.error.message);
+                        }
                     } else {
                         this.alertService.showToast(
                             'success',

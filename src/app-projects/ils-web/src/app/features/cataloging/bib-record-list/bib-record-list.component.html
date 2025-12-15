@@ -54,31 +54,31 @@
                         <tr>
                             <td class="text-right">{{ idx + 1 }}</td>
                             <td>
-                                <a [routerLink]="[item.id]">{{ item.title }}</a>
-                                <p class="text-sm text-theme-davys-gray">{{ item.author }}</p>
+                                <a [routerLink]="[item?.id]">{{ item?.title }}</a>
+                                <p class="text-sm text-theme-davys-gray">{{ item?.author }}</p>
                                 <!--                                Creation info-->
                             </td>
-                            <td>{{ item.controlNumber }}</td>
+                            <td>{{ item?.controlNumber }}</td>
                             <td>
-                                {{ item.isbns }}/{{ item.issns }}
+                                {{ item?.isbns }}/{{ item?.issns }}
                             </td>
                             <td>
                                 <p class="text-sm text-theme-davys-gray">
-                                    {{ item.publisher }}
+                                    {{ item?.publisher }}
                                 </p>
                                 <p class="text-sm text-theme-davys-gray">
-                                    {{ item.publicationYear }}
+                                    {{ item?.publicationYear }}
                                 </p>
                             </td>
                             <td>
-                                <kn-chip>{{ item.materialType }}</kn-chip>
+                                <kn-chip>{{ item?.materialType }}</kn-chip>
                             </td>
                             <td>
                                 <div class="flex text-sm text-shadow-theme-davys-gray">
-                                    <a kn-button variant="transparent" [routerLink]="item.id">
+                                    <a kn-button variant="transparent" [routerLink]="item?.id">
                                         <span class="material-symbols-rounded"> visibility </span>
                                     </a>
-                                    <a kn-button variant="transparent" [routerLink]="['update', item.id]">
+                                    <a kn-button variant="transparent" [routerLink]="['update', item?.id]">
                                         <span class="material-symbols-rounded"> edit_square </span>
                                     </a>
                                     <button kn-button variant="transparent">
@@ -96,7 +96,7 @@
             </table>
             <div class="w-full inline-flex justify-center">
                 <kn-pagination
-                    [totalCount]="queryResult.data.bibRecords?.totalCount ?? 0"
+                    [totalCount]="queryResult.data?.bibRecords?.totalCount ?? 0"
                     [pageSize]="pageSize"
                     (pageChanged)="changePage($event)"
                     (pageSizeChanged)="changePageSize($event)"

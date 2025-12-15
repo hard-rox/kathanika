@@ -64,7 +64,7 @@ jobs:
                 run: npm run build
                 
             -   name: Test angular workspace
-                run: npm run test --code-coverage --watch=false --browsers=ChromeHeadless
+                run: npm run test -- --coverage --watch=false
 
             -   name: Upload Node.js coverage reports
                 uses: actions/upload-artifact@v4
@@ -127,13 +127,12 @@ jobs:
                       /k:"hard-rox_kathanika" \
                       /o:"kathanika" \
                       /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
-                      /d:sonar.host.url="https://sonarcloud.io" \
                       /d:sonar.cs.opencover.reportsPaths="./coverage/dotnet/**/*.xml" \
                       /d:sonar.javascript.lcov.reportPaths="./coverage/node/**/lcov.info" \
                       /d:sonar.typescript.lcov.reportPaths="./coverage/node/**/lcov.info" \
                       /d:sonar.coverage.exclusions="**/Program.cs","**/graphql/**","**/*Validator.cs","src/infrastructure/Kathanika.Infrastructure.Graphql/Schema/**.cs","src/infrastructure/Kathanika.Infrastructure.Graphql/Types/**.cs","**/*.spec.ts","**/*.cy.ts" \
                       /d:sonar.sources="src/" \
-                      /d:sonar.tests="tests/,cypress/" \
+                      /d:sonar.tests="tests/" \
                       /d:sonar.test.inclusions="**/*.spec.ts,**/*.cy.ts"
                     dotnet build
                     dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"

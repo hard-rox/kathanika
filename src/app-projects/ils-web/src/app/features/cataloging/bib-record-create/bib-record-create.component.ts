@@ -30,7 +30,7 @@ export class BibRecordCreateComponent {
     onValidFormSubmit(formValue: BookQuickAddInput) {
         console.debug(formValue);
         this.isPanelLoading.set(true);
-        this.gql.mutate({input: formValue})
+        this.gql.mutate({variables: {input: formValue}})
             .pipe(finalize(() => {
                 this.isPanelLoading.set(false);
             }))
@@ -42,7 +42,7 @@ export class BibRecordCreateComponent {
                         return;
                     }
 
-                    if (result.errors || result.data?.bookQuickAdd.errors) {
+                    if (result.error || result.data?.bookQuickAdd.errors) {
                         const newErrors: string[] = [];
                         result.data?.bookQuickAdd.errors?.forEach((x) => {
                                 if (x?.__typename === 'ValidationError') {
@@ -52,7 +52,9 @@ export class BibRecordCreateComponent {
                                 }
                             }
                         );
-                        result.errors?.forEach((x) => newErrors.push(x.message));
+                        if (result.error) {
+                            newErrors.push(result.error.message);
+                        }
                         this.errors.set(newErrors);
                     } else {
                         this.alertService.showToast(

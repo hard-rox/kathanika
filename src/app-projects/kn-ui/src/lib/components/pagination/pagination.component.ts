@@ -2,7 +2,6 @@ import {CommonModule} from '@angular/common';
 import {ChangeDetectionStrategy, Component, effect, input, output} from '@angular/core';
 import {KnButton} from '../../directives/button/button.directive';
 import {AbstractBlockComponent} from '../../abstractions/abstract-block-component';
-import {KnSelectInput} from "../../inputs/select-input/select-input.component";
 
 @Component({
     selector: 'kn-pagination',
