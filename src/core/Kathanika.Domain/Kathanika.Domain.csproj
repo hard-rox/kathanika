@@ -1,13 +1,5 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
-    <PropertyGroup>
-        <ImplicitUsings>enable</ImplicitUsings>
-        <Nullable>enable</Nullable>
-        <LangVersion>14</LangVersion>
-        <TargetFramework>net10.0</TargetFramework>
-    </PropertyGroup>
-
-    <ItemGroup>
+<ItemGroup>
         <PackageReference Include="HotChocolate.Abstractions" />
         <PackageReference Include="MediatR.Contracts" />
         <PackageReference Include="Ulid" />
@@ -18,5 +10,4 @@
             <_Parameter1>Kathanika.Domain.Tests</_Parameter1>
         </AssemblyAttribute>
     </ItemGroup>
-
 </Project>
