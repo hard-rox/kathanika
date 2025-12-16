@@ -1,0 +1,27 @@
+<Solution>
+  <Folder Name="/aspire/">
+    <Project Path="src/aspire/Kathanika.AppHost/Kathanika.AppHost.csproj" />
+    <Project Path="src/aspire/Kathanika.ServiceDefaults/Kathanika.ServiceDefaults.csproj" />
+  </Folder>
+  <Folder Name="/src/" />
+  <Folder Name="/src/core/">
+    <Project Path="src/core/Kathanika.Application/Kathanika.Application.csproj" />
+    <Project Path="src/core/Kathanika.Domain/Kathanika.Domain.csproj" />
+  </Folder>
+  <Folder Name="/src/infrastructure/">
+    <Project Path="src/infrastructure/Kathanika.Infrastructure.Graphql/Kathanika.Infrastructure.Graphql.csproj" />
+    <Project Path="src/infrastructure/Kathanika.Infrastructure.Persistence/Kathanika.Infrastructure.Persistence.csproj" />
+    <Project Path="src/infrastructure/Kathanika.Infrastructure.Workers/Kathanika.Infrastructure.Workers.csproj" />
+  </Folder>
+  <Folder Name="/src/services/">
+    <Project Path="src/services/Kathanika.Web/Kathanika.Web.csproj" />
+  </Folder>
+  <Folder Name="/tests/">
+    <Project Path="tests/Kathanika.Application.Tests/Kathanika.Application.Tests.csproj" />
+    <Project Path="tests/Kathanika.Domain.Tests/Kathanika.Domain.Tests.csproj" />
+    <Project Path="tests/Kathanika.Infrastructure.Graphql.Tests/Kathanika.Infrastructure.Graphql.Tests.csproj" />
+    <Project Path="tests/Kathanika.Infrastructure.Persistence.Tests/Kathanika.Infrastructure.Persistence.Tests.csproj" />
+    <Project Path="tests/Kathanika.Infrastructure.Workers.Tests/Kathanika.Infrastructure.Workers.Tests.csproj" />
+    <Project Path="tests/Kathanika.Web.Tests/Kathanika.Web.Tests.csproj" />
+  </Folder>
+</Solution>
