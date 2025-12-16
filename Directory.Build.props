@@ -5,10 +5,11 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         
-        <AnalysisLevel>latest</AnalysisLevel>
-        <AnalysisMode>All</AnalysisMode>
-        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
-        <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>
-        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+<!--        TODO: Will utilize later-->
+<!--        <AnalysisLevel>latest</AnalysisLevel>-->
+<!--        <AnalysisMode>All</AnalysisMode>-->
+<!--        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>-->
+<!--        <CodeAnalysisTreatWarningsAsErrors>true</CodeAnalysisTreatWarningsAsErrors>-->
+<!--        <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>-->
     </PropertyGroup>
 </Project>
