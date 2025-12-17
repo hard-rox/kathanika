@@ -4,7 +4,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageVersion Include="Aspire.Hosting.Azure.Storage" Version="13.0.2" />
-    <PackageVersion Include="Aspire.Hosting.MongoDB" Version="13.0.2" />
+    <PackageVersion Include="Aspire.Hosting.MongoDB" Version="13.1.0" />
     <PackageVersion Include="Aspire.Hosting.NodeJs" Version="9.5.2" />
     <PackageVersion Include="Aspire.Hosting.Redis" Version="13.0.2" />
     <PackageVersion Include="Azure.Storage.Blobs" Version="12.26.0" />
