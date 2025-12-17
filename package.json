@@ -62,7 +62,7 @@
     "@storybook/addon-docs": "10.1.9",
     "@storybook/addon-onboarding": "10.1.9",
     "@storybook/angular": "10.1.9",
-    "@tailwindcss/postcss": "^4.1.12",
+    "@tailwindcss/postcss": "^4.1.18",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
     "@vitest/coverage-v8": "^4.0.15",
