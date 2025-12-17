@@ -65,7 +65,7 @@
     "@tailwindcss/postcss": "^4.1.18",
     "@types/express": "^5.0.1",
     "@types/node": "^20.17.19",
-    "@vitest/coverage-v8": "^4.0.15",
+    "@vitest/coverage-v8": "^4.0.16",
     "angular-eslint": "21.1.0",
     "eslint": "^9.39.2",
     "eslint-plugin-storybook": "10.1.9",
