@@ -68,7 +68,7 @@
     "@vitest/coverage-v8": "^4.0.16",
     "angular-eslint": "21.1.0",
     "eslint": "^9.39.2",
-    "eslint-plugin-storybook": "10.1.9",
+    "eslint-plugin-storybook": "10.1.10",
     "jsdom": "^27.3.0",
     "ng-packagr": "^21.0.1",
     "postcss": "^8.5.3",
