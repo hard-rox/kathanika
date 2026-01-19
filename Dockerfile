@@ -10,17 +10,14 @@ FROM node:24-alpine AS app-build
 WORKDIR /app
 
 COPY package.json ./
-RUN ls /app
 RUN npm install
 
 COPY angular.json ./
 COPY tsconfig.json ./
 COPY .postcssrc.json ./
 COPY src/app-projects ./src/app-projects
-RUN ls /app/src/app-projects
 
 RUN npm run build -- --output-mode static
-# RUN ls dist/ils-web/browser
 
 # Stage 2: Api build
 FROM mcr.microsoft.com/dotnet/sdk:10.0-alpine AS api-build

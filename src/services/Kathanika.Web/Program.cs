@@ -55,7 +55,7 @@ try
     else
     {
         app.UseStaticFiles();
-        app.MapFallbackToFile("index.csr.html");
+        app.MapFallbackToFile("index.html");
     }
 
     app.MapGet("fs/{fileId}", async (string fileId, IFileStore fileStore) =>
