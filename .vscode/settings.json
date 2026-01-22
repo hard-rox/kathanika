@@ -17,7 +17,6 @@
     "**/.husky": true,
     "**/.config": true,
     "**/.vscode": true,
-    "**/.github": true,
     "**/.nx": true,
     "**/tmp": true,
     "**/.scannerwork": true,
