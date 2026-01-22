@@ -3,7 +3,7 @@ using Kathanika.Domain.Aggregates.BibItemAggregate;
 namespace Kathanika.Application.Features.BibItems.Commands;
 
 public sealed class UpdateBibItemCommandHandler(IBibItemRepository bibItemRepository)
-    : IRequestHandler<UpdateBibItemCommand, KnResult<BibItem>>
+    : ICommandHandler<UpdateBibItemCommand, KnResult<BibItem>>
 {
     public async Task<KnResult<BibItem>> Handle(UpdateBibItemCommand request, CancellationToken cancellationToken)
     {

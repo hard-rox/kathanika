@@ -9,12 +9,12 @@ namespace Kathanika.Infrastructure.Graphql.Schema.BibRecordGraph;
 public sealed class BibRecordMutations
 {
     public async Task<BookQuickAddPayload> BookQuickAddAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         BookQuickAddCommand input,
         CancellationToken cancellationToken
     )
     {
-        KnResult<BibRecord> knResult = await mediator.Send(input, cancellationToken);
+        KnResult<BibRecord> knResult = await dispatcher.Send(input, cancellationToken);
         return new BookQuickAddPayload(knResult);
     }
 }

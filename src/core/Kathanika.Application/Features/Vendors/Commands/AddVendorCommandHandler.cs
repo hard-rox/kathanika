@@ -5,7 +5,7 @@ namespace Kathanika.Application.Features.Vendors.Commands;
 internal sealed class AddVendorCommandHandler(
     ILogger<AddVendorCommandHandler> logger,
     IVendorRepository vendorRepository
-) : IRequestHandler<AddVendorCommand, KnResult<Vendor>>
+) : ICommandHandler<AddVendorCommand, KnResult<Vendor>>
 {
     public async Task<KnResult<Vendor>> Handle(AddVendorCommand request, CancellationToken cancellationToken)
     {

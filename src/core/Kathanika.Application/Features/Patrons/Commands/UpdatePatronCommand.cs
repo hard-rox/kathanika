@@ -1,8 +1,7 @@
 using Kathanika.Domain.Aggregates.PatronAggregate;
-
 namespace Kathanika.Application.Features.Patrons.Commands;
 
-public sealed record UpdatePatronCommand(string Id, PatronPatch Patch) : IRequest<KnResult<Patron>>;
+public sealed record UpdatePatronCommand(string Id, PatronPatch Patch) : ICommand<KnResult<Patron>>;
 
 public sealed record PatronPatch(
     string? CardNumber,

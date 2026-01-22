@@ -4,4 +4,4 @@ namespace Kathanika.Application.Features.Patrons.Queries;
 
 public sealed record GetPatronByIdQuery(
     string Id
-) : IRequest<KnResult<Patron>>;
+) : IQuery<KnResult<Patron>>;

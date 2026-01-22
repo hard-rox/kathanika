@@ -3,7 +3,7 @@ using Kathanika.Domain.Aggregates.VendorAggregate;
 namespace Kathanika.Application.Features.Vendors.Queries;
 
 internal sealed class GetVendorByIdQueryHandler(IVendorRepository vendorRepository)
-    : IRequestHandler<GetVendorByIdQuery, KnResult<Vendor>>
+    : IQueryHandler<GetVendorByIdQuery, KnResult<Vendor>>
 {
     public async Task<KnResult<Vendor>> Handle(GetVendorByIdQuery request, CancellationToken cancellationToken)
     {

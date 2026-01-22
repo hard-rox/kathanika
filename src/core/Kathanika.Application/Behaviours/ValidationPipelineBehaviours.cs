@@ -2,6 +2,10 @@ using System.Reflection;
 
 namespace Kathanika.Application.Behaviours;
 
+/// <summary>
+/// Pipeline behavior that validates commands and queries before they are handled.
+/// Works with both ICommand and IQuery through the IRequest base interface.
+/// </summary>
 public class ValidationPipelineBehaviours<TRequest, TResponse>(IEnumerable<IValidator<TRequest>> validators)
     : IPipelineBehavior<TRequest, TResponse>
     where TRequest : IRequest<TResponse>

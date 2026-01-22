@@ -14,24 +14,24 @@ public sealed class Queries
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<BibRecord>> GetBibRecordsAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         CancellationToken cancellationToken
     )
     {
         IQueryable<BibRecord> bibRecords
-            = await mediator.Send(new GetBibRecordsQuery(), cancellationToken);
+            = await dispatcher.Send(new GetBibRecordsQuery(), cancellationToken);
         return bibRecords;
     }
 
     public async Task<BibRecord?> GetBibRecordAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         IResolverContext context,
         string id,
         CancellationToken cancellationToken
     )
     {
         KnResult<BibRecord> knResult
-            = await mediator.Send(new GetBibRecordByIdQuery(id), cancellationToken);
+            = await dispatcher.Send(new GetBibRecordByIdQuery(id), cancellationToken);
         return knResult.Match(context);
     }
 }

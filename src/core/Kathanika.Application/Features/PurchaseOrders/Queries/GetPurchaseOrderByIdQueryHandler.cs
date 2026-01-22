@@ -3,7 +3,7 @@ using Kathanika.Domain.Aggregates.PurchaseOrderAggregate;
 namespace Kathanika.Application.Features.PurchaseOrders.Queries;
 
 internal sealed class GetPurchaseOrderByIdQueryHandler(IPurchaseOrderRepository vendorRepository)
-    : IRequestHandler<GetPurchaseOrderByIdQuery, KnResult<PurchaseOrder>>
+    : IQueryHandler<GetPurchaseOrderByIdQuery, KnResult<PurchaseOrder>>
 {
     public async Task<KnResult<PurchaseOrder>> Handle(GetPurchaseOrderByIdQuery request,
         CancellationToken cancellationToken)

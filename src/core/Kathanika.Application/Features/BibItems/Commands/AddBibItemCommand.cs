@@ -10,4 +10,4 @@ public sealed record AddBibItemCommand(
     ItemType ItemType,
     string? ConditionNote = null,
     string? Notes = null
-) : IRequest<KnResult<BibItem>>;
+) : ICommand<KnResult<BibItem>>;

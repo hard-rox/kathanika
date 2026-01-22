@@ -14,4 +14,4 @@ public sealed record BookQuickAddCommand(
     string? Edition = null,
     string? Note = null,
     string? CoverImageId = null
-) : IRequest<KnResult<BibRecord>>;
+) : ICommand<KnResult<BibRecord>>;

@@ -14,22 +14,22 @@ public sealed class PurchaseOrderQueries
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<PurchaseOrder>> GetPurchaseOrdersAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         CancellationToken cancellationToken
     )
     {
-        IQueryable<PurchaseOrder> patrons = await mediator.Send(new GetPurchaseOrdersQuery(), cancellationToken);
+        IQueryable<PurchaseOrder> patrons = await dispatcher.Send(new GetPurchaseOrdersQuery(), cancellationToken);
         return patrons;
     }
 
     public async Task<PurchaseOrder?> GetPurchaseOrderAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         IResolverContext context,
         string id,
         CancellationToken cancellationToken
     )
     {
-        KnResult<PurchaseOrder> knResult = await mediator.Send(new GetPurchaseOrderByIdQuery(id), cancellationToken);
+        KnResult<PurchaseOrder> knResult = await dispatcher.Send(new GetPurchaseOrderByIdQuery(id), cancellationToken);
         return knResult.Match(context);
     }
 }
