@@ -215,7 +215,7 @@ jobs:
   security-scan:
     name: Security Scan
     runs-on: ubuntu-latest
-    needs: build-and-push
+    needs: [build-and-push, quality-gate]
     permissions:
       contents: read
       security-events: write
@@ -227,7 +227,7 @@ jobs:
       - name: Run Trivy vulnerability scanner
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.quality-gate.outputs.version }}
           format: 'sarif'
           output: 'trivy-results.sarif'
           severity: 'CRITICAL,HIGH'
@@ -240,7 +240,7 @@ jobs:
       - name: Fail on critical vulnerabilities
         uses: aquasecurity/trivy-action@master
         with:
-          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.ref_name }}
+          image-ref: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ needs.quality-gate.outputs.version }}
           format: 'table'
           exit-code: '1'
           severity: 'CRITICAL'
@@ -252,7 +252,7 @@ jobs:
   deploy-dev:
     name: Deploy to Development
     runs-on: ubuntu-latest
-    needs: [build-and-push, security-scan]
+    needs: [build-and-push, security-scan, quality-gate]
     if: github.ref == 'refs/heads/main'
     environment:
       name: development
@@ -280,7 +280,7 @@ jobs:
   deploy-staging:
     name: Deploy to Staging
     runs-on: ubuntu-latest
-    needs: [build-and-push, security-scan]
+    needs: [build-and-push, security-scan, quality-gate]
     if: startsWith(github.ref, 'refs/tags/v')
     environment:
       name: staging
@@ -303,7 +303,7 @@ jobs:
   deploy-production:
     name: Deploy to Production
     runs-on: ubuntu-latest
-    needs: [build-and-push, security-scan, deploy-staging]
+    needs: [build-and-push, security-scan, deploy-staging, quality-gate]
     if: startsWith(github.ref, 'refs/tags/v')
     environment:
       name: production

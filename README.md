@@ -19,13 +19,15 @@ A modern, open-source Integrated Library System built with Angular 20, .NET 10, 
 
 ## Tech Stack
 
-**Frontend**
+### Frontend
+
 - Angular 20 (standalone components) + TypeScript 5.9
 - Apollo Angular 11 for GraphQL
 - Tailwind CSS 4 for styling
 - Jest + Cypress for testing
 
-**Backend**  
+### Backend
+
 - .NET 10 (C# 13) with ASP.NET Core
 - HotChocolate 14 GraphQL API
 - MongoDB with repository pattern
@@ -33,7 +35,8 @@ A modern, open-source Integrated Library System built with Angular 20, .NET 10, 
 - MediatR + FluentValidation
 - xUnit testing with coverage
 
-**Architecture**
+### Architecture
+
 - Layered design: Domain → Application → Infrastructure → Web
 - Domain events with MediatR pipeline behaviors
 - Sealed aggregates with private constructors
@@ -42,7 +45,7 @@ A modern, open-source Integrated Library System built with Angular 20, .NET 10, 
 
 ## Project Structure
 
-```
+```text
 kathanika/
 ├── src/
 │   ├── app-projects/          # Angular applications
@@ -144,7 +147,8 @@ dotnet format --verify-no-changes              # Lint check
 dotnet watch run --project src/services/Kathanika.Web/Kathanika.Web.csproj  # Watch mode
 ```
 
-**Code Generation**
+### Code Generation
+
 ```bash
 # Angular component
 ng generate component features/my-feature/my-component

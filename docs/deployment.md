@@ -38,19 +38,19 @@ Kathanika uses a comprehensive CI/CD pipeline built on GitHub Actions for automa
 #### Development (Automatic)
 - **Trigger:** Every push to `main` branch
 - **Auto-deploys** after quality gate and security scan pass
-- **URL:** https://dev.kathanika.example.com
+- **URL:** [https://dev.kathanika.example.com](https://dev.kathanika.example.com)
 
 #### Staging (Manual Approval)
 - **Trigger:** Version tags (`v*.*.*`)
 - **Requires:** Manual approval in GitHub Environments
 - **Includes:** Smoke tests
-- **URL:** https://staging.kathanika.example.com
+- **URL:** [https://staging.kathanika.example.com](https://staging.kathanika.example.com)
 
 #### Production (Manual Approval)
 - **Trigger:** After successful staging deployment
 - **Requires:** Manual approval in GitHub Environments
 - **Includes:** Health checks and GitHub Release creation
-- **URL:** https://kathanika.example.com
+- **URL:** [https://kathanika.example.com](https://kathanika.example.com)
 
 ## Prerequisites
 
@@ -166,7 +166,7 @@ helm install kathanika ./charts/kathanika \
 ### Semantic Versioning
 Follow [Semantic Versioning 2.0.0](https://semver.org/):
 - **Major (X.0.0):** Breaking changes
-- **Minor (0.X.0):** New features, backward compatible
+- **Minor (0.X.0):** New features, backward-compatible
 - **Patch (0.0.X):** Bug fixes
 
 ### Creating a Release
@@ -290,6 +290,6 @@ Expected: `healthy`
 
 ## Support
 
-- **Issues:** https://github.com/hard-rox/kathanika/issues
-- **Discussions:** https://github.com/hard-rox/kathanika/discussions
+- **Issues:** [https://github.com/hard-rox/kathanika/issues](https://github.com/hard-rox/kathanika/issues)
+- **Discussions:** [https://github.com/hard-rox/kathanika/discussions](https://github.com/hard-rox/kathanika/discussions)
 - **Documentation:** /docs/

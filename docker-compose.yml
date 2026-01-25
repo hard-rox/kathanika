@@ -64,7 +64,7 @@ services:
       # Connection strings
       ConnectionStrings__mongodb: mongodb://admin:${MONGO_PASSWORD:-changeme}@mongodb:27017/kathanika?authSource=admin
       ConnectionStrings__redis: redis:6379
-      ConnectionStrings__azureBlobStorage: DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;
+      ConnectionStrings__azureBlobStorage: ${AZURE_BLOB_CONNECTION_STRING:-DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;}
       
       # Application settings
       ApplicationOptions__UploadPath: /app/uploads
