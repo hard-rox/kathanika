@@ -108,7 +108,15 @@ jobs:
           dotnet sonarscanner begin \
             /k:"hard-rox_kathanika" \
             /o:"kathanika" \
-            /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
+            /d:sonar.host.url="https://sonarcloud.io" \
+            /d:sonar.token="${{ secrets.SONAR_TOKEN }}" \
+            /d:sonar.sources="src" \
+            /d:sonar.tests="tests" \
+            /d:sonar.test.inclusions="**/*.spec.ts,**/*.cy.ts" \
+            /d:sonar.cs.opencover.reportsPaths="./coverage/dotnet/**/*.xml" \
+            /d:sonar.javascript.lcov.reportPaths="./coverage/node/**/lcov.info" \
+            /d:sonar.typescript.lcov.reportPaths="./coverage/node/**/lcov.info" \
+            /d:sonar.coverage.exclusions="**/Program.cs,**/graphql/**,**/*Validator.cs,src/infrastructure/Kathanika.Infrastructure.Graphql/Schema/**.cs,src/infrastructure/Kathanika.Infrastructure.Graphql/Types/**.cs,**/*.spec.ts,**/*.cy.ts"
           dotnet build --configuration Release
           dotnet sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
 
