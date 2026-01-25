@@ -52,6 +52,15 @@ Thumbs.db
 *.sln.docstates
 *.userprefs
 
+# Environment and configuration files
+.env
+.env.local
+.env.*.local
+appsettings.Development.json
+appsettings.Production.json
+appsettings.*.json
+!appsettings.json
+
 # Mono auto generated files
 mono_crash.*
 

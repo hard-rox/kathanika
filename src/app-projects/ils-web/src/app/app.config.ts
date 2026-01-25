@@ -6,7 +6,7 @@ import { provideClientHydration, withEventReplay, withIncrementalHydration } fro
 import { provideServiceWorker } from '@angular/service-worker';
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { provideGraphqlClient } from './graphql/graphql.provider';
-import { environment } from '../environments/environment.development';
+import { environment } from '../environments/environment';
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 
 export const appConfig: ApplicationConfig = {

@@ -1,0 +1,104 @@
+services:
+  mongodb:
+    image: mongo:6
+    container_name: kathanika-mongodb
+    restart: unless-stopped
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_PASSWORD:-changeme}
+      MONGO_INITDB_DATABASE: kathanika
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb-data:/data/db
+      - mongodb-config:/data/configdb
+    networks:
+      - kathanika-network
+    healthcheck:
+      test: ["CMD", "mongosh", "--eval", "db.adminCommand('ping')"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: kathanika-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis-data:/data
+    networks:
+      - kathanika-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+  azurite:
+    image: mcr.microsoft.com/azure-storage/azurite:latest
+    container_name: kathanika-azurite
+    restart: unless-stopped
+    command: azurite --blobHost 0.0.0.0 --queueHost 0.0.0.0 --tableHost 0.0.0.0
+    ports:
+      - "10000:10000"  # Blob service
+      - "10001:10001"  # Queue service
+      - "10002:10002"  # Table service
+    volumes:
+      - azurite-data:/data
+    networks:
+      - kathanika-network
+
+  kathanika:
+    image: hard-rox/kathanika:latest
+    container_name: kathanika-app
+    restart: unless-stopped
+    ports:
+      - "8080:8080"
+    environment:
+      # ASP.NET Core
+      ASPNETCORE_ENVIRONMENT: ${ENVIRONMENT:-Production}
+      ASPNETCORE_URLS: http://+:8080
+      
+      # Connection strings
+      ConnectionStrings__mongodb: mongodb://admin:${MONGO_PASSWORD:-changeme}@mongodb:27017/kathanika?authSource=admin
+      ConnectionStrings__redis: redis:6379
+      ConnectionStrings__azureBlobStorage: ${AZURE_BLOB_CONNECTION_STRING:-DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azurite:10000/devstoreaccount1;}
+      
+      # Application settings
+      ApplicationOptions__UploadPath: /app/uploads
+      
+      # Logging
+      Serilog__MinimumLevel__Default: ${LOG_LEVEL:-Information}
+      
+      # OpenTelemetry (optional)
+      OTEL_EXPORTER_OTLP_ENDPOINT: ${OTEL_ENDPOINT:-}
+    volumes:
+      - uploads-data:/app/uploads
+    networks:
+      - kathanika-network
+    depends_on:
+      mongodb:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      azurite:
+        condition: service_started
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:8080/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  kathanika-network:
+    driver: bridge
+
+volumes:
+  mongodb-data:
+  mongodb-config:
+  redis-data:
+  azurite-data:
+  uploads-data:
