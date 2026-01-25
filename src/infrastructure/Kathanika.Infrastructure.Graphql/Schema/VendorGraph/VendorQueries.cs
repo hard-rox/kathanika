@@ -14,22 +14,22 @@ public sealed class VendorQueries
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<Vendor>> GetVendorsAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         CancellationToken cancellationToken
     )
     {
-        IQueryable<Vendor> vendors = await mediator.Send(new GetVendorsQuery(), cancellationToken);
+        IQueryable<Vendor> vendors = await dispatcher.Send(new GetVendorsQuery(), cancellationToken);
         return vendors;
     }
 
     public async Task<Vendor?> GetVendorAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         IResolverContext context,
         string id,
         CancellationToken cancellationToken
     )
     {
-        KnResult<Vendor> knResult = await mediator.Send(new GetVendorByIdQuery(id), cancellationToken);
+        KnResult<Vendor> knResult = await dispatcher.Send(new GetVendorByIdQuery(id), cancellationToken);
         return knResult.Match(context);
     }
 }

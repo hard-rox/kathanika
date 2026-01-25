@@ -11,4 +11,4 @@ public sealed record UpdateBibItemCommand(
     ItemStatus Status,
     string? ConditionNote = null,
     string? Notes = null
-) : IRequest<KnResult<BibItem>>;
+) : ICommand<KnResult<BibItem>>;

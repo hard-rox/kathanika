@@ -4,7 +4,7 @@ namespace Kathanika.Application.Features.Patrons.Commands;
 
 internal sealed class DeletePatronCommandHandler(
     IPatronRepository patronRepository)
-    : IRequestHandler<DeletePatronCommand, KnResult>
+    : ICommandHandler<DeletePatronCommand, KnResult>
 {
     public async Task<KnResult> Handle(DeletePatronCommand request, CancellationToken cancellationToken)
     {

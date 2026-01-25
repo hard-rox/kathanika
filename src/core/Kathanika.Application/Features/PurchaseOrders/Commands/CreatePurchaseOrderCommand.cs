@@ -7,7 +7,7 @@ public sealed record CreatePurchaseOrderCommand(
     PurchaseItemDto[] Items,
     string? InternalNote = null,
     string? VendorNote = null
-) : IRequest<KnResult<PurchaseOrder>>;
+) : ICommand<KnResult<PurchaseOrder>>;
 
 public sealed record PurchaseItemDto(
     string Title,

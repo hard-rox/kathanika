@@ -3,7 +3,7 @@ using Kathanika.Domain.Aggregates.BibRecordAggregate;
 namespace Kathanika.Application.Features.BibRecords.Queries;
 
 internal sealed class GetBibRecordByIdQueryHandler(IBibRecordRepository bibRecordRepository)
-    : IRequestHandler<GetBibRecordByIdQuery, KnResult<BibRecord>>
+    : IQueryHandler<GetBibRecordByIdQuery, KnResult<BibRecord>>
 {
     public async Task<KnResult<BibRecord>> Handle(GetBibRecordByIdQuery request, CancellationToken cancellationToken)
     {

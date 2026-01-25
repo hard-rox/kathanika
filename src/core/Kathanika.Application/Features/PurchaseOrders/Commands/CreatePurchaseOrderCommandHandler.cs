@@ -7,7 +7,7 @@ internal sealed class CreatePurchaseOrderCommandHandler(
     ILogger<CreatePurchaseOrderCommandHandler> logger,
     IVendorRepository vendorRepository,
     IPurchaseOrderRepository purchaseOrderRepository)
-    : IRequestHandler<CreatePurchaseOrderCommand, KnResult<PurchaseOrder>>
+    : ICommandHandler<CreatePurchaseOrderCommand, KnResult<PurchaseOrder>>
 {
     public async Task<KnResult<PurchaseOrder>> Handle(CreatePurchaseOrderCommand request, CancellationToken cancellationToken)
     {

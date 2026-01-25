@@ -14,22 +14,22 @@ public sealed class PatronQueries
     [UseFiltering]
     [UseSorting]
     public async Task<IEnumerable<Patron>> GetPatronsAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         CancellationToken cancellationToken
     )
     {
-        IQueryable<Patron> patrons = await mediator.Send(new GetPatronsQuery(), cancellationToken);
+        IQueryable<Patron> patrons = await dispatcher.Send(new GetPatronsQuery(), cancellationToken);
         return patrons;
     }
 
     public async Task<Patron?> GetPatronAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         IResolverContext context,
         string id,
         CancellationToken cancellationToken
     )
     {
-        KnResult<Patron> knResult = await mediator.Send(new GetPatronByIdQuery(id), cancellationToken);
+        KnResult<Patron> knResult = await dispatcher.Send(new GetPatronByIdQuery(id), cancellationToken);
         return knResult.Match(context);
     }
 }

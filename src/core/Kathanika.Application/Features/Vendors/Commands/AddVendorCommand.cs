@@ -12,4 +12,4 @@ public sealed record AddVendorCommand(
     string? ContactPersonName,
     string? ContactPersonPhone,
     string? ContactPersonEmail
-) : IRequest<KnResult<Vendor>>;
+) : ICommand<KnResult<Vendor>>;

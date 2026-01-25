@@ -3,7 +3,7 @@ using Kathanika.Domain.Aggregates.BibItemAggregate;
 namespace Kathanika.Application.Features.BibItems.Commands;
 
 public sealed class WithdrawBibItemCommandHandler(IBibItemRepository bibItemRepository)
-    : IRequestHandler<WithdrawBibItemCommand, KnResult<BibItem>>
+    : ICommandHandler<WithdrawBibItemCommand, KnResult<BibItem>>
 {
     public async Task<KnResult<BibItem>> Handle(WithdrawBibItemCommand request, CancellationToken cancellationToken)
     {

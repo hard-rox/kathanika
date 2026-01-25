@@ -11,13 +11,13 @@ namespace Kathanika.Infrastructure.Graphql.Schema.BibItemGraph;
 public sealed class BibItemQueries
 {
     public async Task<BibItem?> GetBibItemAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         IResolverContext context,
         string id,
         CancellationToken cancellationToken
     )
     {
-        KnResult<BibItem> knResult = await mediator.Send(new GetBibItemByIdQuery(id), cancellationToken);
+        KnResult<BibItem> knResult = await dispatcher.Send(new GetBibItemByIdQuery(id), cancellationToken);
         return knResult.Match(context);
     }
 }

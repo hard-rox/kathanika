@@ -4,7 +4,7 @@ namespace Kathanika.Application.Features.Patrons.Commands;
 
 internal sealed class UpdatePatronCommandHandler(
     IPatronRepository patronRepository
-) : IRequestHandler<UpdatePatronCommand, KnResult<Patron>>
+) : ICommandHandler<UpdatePatronCommand, KnResult<Patron>>
 {
     public async Task<KnResult<Patron>> Handle(UpdatePatronCommand request, CancellationToken cancellationToken)
     {

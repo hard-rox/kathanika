@@ -3,7 +3,7 @@ using Kathanika.Domain.Aggregates.VendorAggregate;
 namespace Kathanika.Application.Features.Vendors.Commands;
 
 internal sealed class UpdateVendorCommandHandler(IVendorRepository vendorRepository)
-    : IRequestHandler<UpdateVendorCommand, KnResult<Vendor>>
+    : ICommandHandler<UpdateVendorCommand, KnResult<Vendor>>
 {
     public async Task<KnResult<Vendor>> Handle(UpdateVendorCommand request, CancellationToken cancellationToken)
     {

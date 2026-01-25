@@ -10,32 +10,32 @@ namespace Kathanika.Infrastructure.Graphql.Schema.VendorGraph;
 public sealed class VendorMutations
 {
     public async Task<AddVendorPayload> AddVendorAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         CancellationToken cancellationToken,
         AddVendorCommand input
     )
     {
-        KnResult<Vendor> knResult = await mediator.Send(input, cancellationToken);
+        KnResult<Vendor> knResult = await dispatcher.Send(input, cancellationToken);
         return new AddVendorPayload(knResult);
     }
 
     public async Task<UpdateVendorPayload> UpdateVendorAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         CancellationToken cancellationToken,
         UpdateVendorCommand input
     )
     {
-        KnResult<Vendor> knResult = await mediator.Send(input, cancellationToken);
+        KnResult<Vendor> knResult = await dispatcher.Send(input, cancellationToken);
         return new UpdateVendorPayload(knResult);
     }
 
     public async Task<DeleteVendorPayload> DeleteVendorAsync(
-        [Service] IMediator mediator,
+        [Service] IDispatcher dispatcher,
         CancellationToken cancellationToken,
         DeleteVendorCommand input
     )
     {
-        KnResult knResult = await mediator.Send(input, cancellationToken);
+        KnResult knResult = await dispatcher.Send(input, cancellationToken);
         return new DeleteVendorPayload(input.Id, knResult);
     }
 }

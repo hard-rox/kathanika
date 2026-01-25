@@ -4,7 +4,7 @@ using Kathanika.Domain.Aggregates.VendorAggregate;
 namespace Kathanika.Application.Features.PurchaseOrders.Commands;
 
 internal sealed class UpdatePurchaseOrderCommandHandler(IPurchaseOrderRepository purchaseOrderRepository, IVendorRepository vendorRepository)
-    : IRequestHandler<UpdatePurchaseOrderCommand, KnResult<PurchaseOrder>>
+    : ICommandHandler<UpdatePurchaseOrderCommand, KnResult<PurchaseOrder>>
 {
     public async Task<KnResult<PurchaseOrder>> Handle(UpdatePurchaseOrderCommand request,
         CancellationToken cancellationToken)

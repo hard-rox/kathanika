@@ -1,3 +1,4 @@
+
 namespace Kathanika.Application.Features.Patrons.Commands;
 
-public sealed record DeletePatronCommand(string Id) : IRequest<KnResult>;
+public sealed record DeletePatronCommand(string Id) : ICommand<KnResult>;

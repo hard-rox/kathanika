@@ -6,7 +6,7 @@ namespace Kathanika.Application.Features.Vendors.Commands;
 internal sealed class DeleteVendorCommandHandler(
     IVendorRepository vendorRepository,
     IPurchaseOrderRepository purchaseOrderRepository)
-    : IRequestHandler<DeleteVendorCommand, KnResult>
+    : ICommandHandler<DeleteVendorCommand, KnResult>
 {
     public async Task<KnResult> Handle(DeleteVendorCommand request, CancellationToken cancellationToken)
     {

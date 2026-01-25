@@ -1,4 +1,5 @@
 using System.Reflection;
+using Kathanika.Application.Abstractions.Messaging;
 using MediatR;
 using NetArchTest.Rules;
 
@@ -11,19 +12,19 @@ public class ArchTests
     {
         Assembly assembly = typeof(DependencyInjector).Assembly;
 
-        TestResult result = Types.InAssembly(assembly)
+        var types = Types.InAssembly(assembly)
             .That()
             .ImplementInterface(typeof(IRequest))
             .Or()
             .ImplementInterface(typeof(IRequest<>))
             .Or()
             .ImplementInterface(typeof(INotification))
-            .Should()
-            .BeSealed()
-            .GetResult();
+            .GetTypes()
+            .Where(t => t.Namespace != "Kathanika.Application.Abstractions.Messaging")
+            .Where(t => !t.IsAbstract && !t.IsInterface)
+            .Where(t => !t.IsSealed);
 
-        Assert.True(result.IsSuccessful,
-            $"Non-sealed command/queries are: {string.Join(", ", result.FailingTypeNames ?? [])}");
+        Assert.Empty(types.Select(t => t.FullName));
     }
 
     [Fact]
@@ -31,19 +32,19 @@ public class ArchTests
     {
         Assembly assembly = typeof(DependencyInjector).Assembly;
 
-        TestResult result = Types.InAssembly(assembly)
+        var types = Types.InAssembly(assembly)
             .That()
             .ImplementInterface(typeof(IRequestHandler<,>))
             .Or()
             .ImplementInterface(typeof(IRequestHandler<>))
             .Or()
             .ImplementInterface(typeof(INotificationHandler<>))
-            .Should()
-            .BeSealed()
-            .GetResult();
+            .GetTypes()
+            .Where(t => t.Namespace != "Kathanika.Application.Abstractions.Messaging")
+            .Where(t => !t.IsAbstract && !t.IsInterface)
+            .Where(t => !t.IsSealed);
 
-        Assert.True(result.IsSuccessful,
-            $"Non-sealed handlers are: {string.Join(", ", result.FailingTypeNames ?? [])}");
+        Assert.Empty(types.Select(t => t.FullName));
     }
 
     [Fact]
@@ -51,18 +52,18 @@ public class ArchTests
     {
         Assembly assembly = typeof(DependencyInjector).Assembly;
 
-        TestResult result = Types.InAssembly(assembly)
+        var types = Types.InAssembly(assembly)
             .That()
             .ImplementInterface(typeof(IRequestHandler<,>))
             .Or()
             .ImplementInterface(typeof(IRequestHandler<>))
             .Or()
             .ImplementInterface(typeof(INotificationHandler<>))
-            .Should()
-            .HaveNameEndingWith("Handler")
-            .GetResult();
+            .GetTypes()
+            .Where(t => t.Namespace != "Kathanika.Application.Abstractions.Messaging")
+            .Where(t => !t.IsAbstract && !t.IsInterface)
+            .Where(t => !t.Name.EndsWith("Handler"));
 
-        Assert.True(result.IsSuccessful,
-            $"Non-sealed handlers are: {string.Join(", ", result.FailingTypeNames ?? [])}");
+        Assert.Empty(types.Select(t => t.FullName));
     }
 }

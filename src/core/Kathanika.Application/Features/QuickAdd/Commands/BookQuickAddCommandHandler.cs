@@ -4,7 +4,7 @@ namespace Kathanika.Application.Features.QuickAdd.Commands;
 
 internal sealed class BookQuickAddCommandHandler(
     IBibRecordRepository bibRecordRepository)
-    : IRequestHandler<BookQuickAddCommand, KnResult<BibRecord>>
+    : ICommandHandler<BookQuickAddCommand, KnResult<BibRecord>>
 {
     public async Task<KnResult<BibRecord>> Handle(BookQuickAddCommand request, CancellationToken cancellationToken)
     {

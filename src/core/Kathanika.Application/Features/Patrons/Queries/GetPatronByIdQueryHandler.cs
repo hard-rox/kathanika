@@ -3,7 +3,7 @@ using Kathanika.Domain.Aggregates.PatronAggregate;
 namespace Kathanika.Application.Features.Patrons.Queries;
 
 internal sealed class GetPatronByIdQueryHandler(IPatronRepository patronRepository)
-    : IRequestHandler<GetPatronByIdQuery, KnResult<Patron>>
+    : IQueryHandler<GetPatronByIdQuery, KnResult<Patron>>
 {
     public async Task<KnResult<Patron>> Handle(GetPatronByIdQuery request, CancellationToken cancellationToken)
     {

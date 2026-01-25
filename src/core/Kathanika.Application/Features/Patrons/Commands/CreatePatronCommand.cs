@@ -12,4 +12,4 @@ public sealed record CreatePatronCommand(
     string? Address,
     string? ContactNumber,
     string? Email
-) : IRequest<KnResult<Patron>>;
+) : ICommand<KnResult<Patron>>;
