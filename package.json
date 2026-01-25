@@ -76,7 +76,7 @@
     "tailwindcss": "^4.1.18",
     "typescript": "~5.9.2",
     "typescript-eslint": "8.53.1",
-    "vitest": "^4.0.8"
+    "vitest": "^4.0.18"
   },
   "eslintConfig": {
     "extends": [
