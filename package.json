@@ -54,7 +54,7 @@
     "@angular/compiler-cli": "^21.1.4",
     "@angular/platform-browser-dynamic": "^21.1.4",
     "@compodoc/compodoc": "^1.2.1",
-    "@graphql-codegen/cli": "^6.1.1",
+    "@graphql-codegen/cli": "^6.1.2",
     "@graphql-codegen/typescript": "^5.0.7",
     "@graphql-codegen/typescript-apollo-angular": "^4.0.1",
     "@graphql-codegen/typescript-operations": "^5.0.7",
