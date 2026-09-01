@@ -56,7 +56,7 @@
     "@compodoc/compodoc": "^2.0.0",
     "@graphql-codegen/cli": "^6.1.2",
     "@graphql-codegen/typescript": "^5.0.9",
-    "@graphql-codegen/typescript-apollo-angular": "^4.0.1",
+    "@graphql-codegen/typescript-apollo-angular": "^5.0.1",
     "@graphql-codegen/typescript-operations": "^5.0.9",
     "@storybook/addon-a11y": "10.2.9",
     "@storybook/addon-docs": "10.2.9",
